@@ -749,15 +749,6 @@ var originType=null;
 	                 		'<div class="tt none">'+
 	                 		'<span class="h3"><input type="text" value="'+(module.name?module.name:'')+'" class="addcou"/></span>'+
 	                 		'<a href="javascript:void(0);"  class="btn btn-default savecon">保存</a>'+
-	                 		'</div>'+
-	                 		'<div class="action">'+
-	                 		'<a href="javascript:void(0);" ids='+module.id+' class="editfather" mark="edit"><i class="iconfont">&#xe625;</i></a>'+
-	                 		'<a href="javascript:void(0);" ids='+module.id+' class="editfather" mark="del"><i class="iconfont">&#xe626;</i></a>'+
-	                 		'<a href="javascript:void(0);" style="text-decoration: none;" class="editfather chosec" m="close" mark="chose"><i class="iconfont">&#xe623;</i></a>'+
-	                 		'<ul class="box none"><a href="javascript:void(0);" class="courseresource"><li>课程资料</li></a>'+
-	                 		'<a href="javascript:void(0);" ids="'+module.id+'" class="addlec"><li>添加课次</li></a></ul>'+
-	                 		'</div>'+
-	                 		'</div>'+
 	                 		'</div>';
 							if(originType=="1"){
 								chapter+='<div class="action">'+
