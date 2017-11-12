@@ -27,6 +27,7 @@ import com.yuxin.wx.api.company.ICompanyMemberServiceService;
 import com.yuxin.wx.api.company.ICompanyService;
 import com.yuxin.wx.api.company.ICompanyServiceStaticService;
 import com.yuxin.wx.api.system.ISysConfigServiceService;
+import com.yuxin.wx.api.tiku.ITikuCategoryService;
 import com.yuxin.wx.api.tiku.ITikuConfigService;
 import com.yuxin.wx.api.tiku.ITikuSetService;
 import com.yuxin.wx.api.tiku.ITikuSubjectService;
@@ -34,6 +35,7 @@ import com.yuxin.wx.model.company.Company;
 import com.yuxin.wx.model.company.CompanyMemberService;
 import com.yuxin.wx.model.company.CompanyServiceStatic;
 import com.yuxin.wx.model.system.SysConfigService;
+import com.yuxin.wx.model.tiku.TikuCategory;
 import com.yuxin.wx.model.tiku.TikuConfig;
 import com.yuxin.wx.model.tiku.TikuSet;
 import com.yuxin.wx.model.tiku.TikuSubject;
@@ -72,6 +74,9 @@ public class TikuSetController {
 
     @Autowired
     private ITikuSetService tikuSetServiceImpl;
+    
+    @Autowired
+    private ITikuCategoryService tikuCategoryServiceImpl;
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model, TikuSet search) {
@@ -150,8 +155,13 @@ public class TikuSetController {
     public String toTikuSubManage(Model model, @PathVariable Integer tikuId) {
         // 查询分类下的科目,根据id 排序
         List<TikuSubject> subList = this.tikuSubjectServiceImpl.findSubByCategoryId(tikuId);
+        
+        TikuCategory category = tikuCategoryServiceImpl.findTikuCategoryById(tikuId);
+        Integer originType = category.getOriginType();
+        
         model.addAttribute("subList", subList);
         model.addAttribute("tikuId", tikuId);
+        model.addAttribute("originType", originType);
         return "tiku/set/tikuSubManage";
     }
 

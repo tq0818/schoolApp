@@ -19,6 +19,7 @@ import com.yuxin.wx.api.tiku.ITikuCategoryService;
 import com.yuxin.wx.api.tiku.ITikuChapterService;
 import com.yuxin.wx.api.tiku.ITikuSetService;
 import com.yuxin.wx.api.tiku.ITikuSubjectService;
+import com.yuxin.wx.model.tiku.TikuCategory;
 import com.yuxin.wx.model.tiku.TikuChapter;
 import com.yuxin.wx.model.tiku.TikuSet;
 import com.yuxin.wx.model.tiku.TikuSubject;
@@ -41,6 +42,12 @@ public class TikuChapterController {
 	
 	@Autowired
 	private ITikuSubjectService subServiceImpl;
+	
+	@Autowired
+    private ITikuCategoryService tikuCategoryServiceImpl;
+	
+	@Autowired
+	private ITikuSubjectService tikuSubjectServiceImpl;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model, TikuChapter search){
@@ -102,10 +109,15 @@ public class TikuChapterController {
 		search.setDelFlag(0);
 		search.setCategoryId(tikuId);
 		List<TikuSubject> subList = subServiceImpl.findTikuSubject(search);
+		
+		Integer categoryId = search.getCategoryId();
+		TikuCategory category = tikuCategoryServiceImpl.findTikuCategoryById(categoryId);
+		Integer originType = category.getOriginType();
 
 		model.addAttribute("tikuSet", tikuSet);
 		model.addAttribute("subList",subList);
 		model.addAttribute("tikuId",tikuId);
+		model.addAttribute("originType",originType);
 		return "tiku/chapterManage/tikuChapter";
 	}
 	/**
@@ -121,6 +133,12 @@ public class TikuChapterController {
 	 */
 	@RequestMapping(value="/loadChapter")
 	public String loadChapter(Model model,TikuChapter chapter){
+		Integer subjectId = chapter.getTikuSubjectId();
+		TikuSubject tikuSubject = tikuSubjectServiceImpl.findTikuSubjectById(subjectId);
+		Integer categoryId = tikuSubject.getCategoryId();
+		TikuCategory category = tikuCategoryServiceImpl.findTikuCategoryById(categoryId);
+		Integer originType = category.getOriginType();
+		
 		chapter.setDelFlag("0");
 		chapter.setCompanyId(WebUtils.getCurrentCompanyId());
 		if(chapter.getTikuSubjectId()==null){
@@ -128,6 +146,7 @@ public class TikuChapterController {
 		}
 		List<TikuChapter> chapterList = tikuChapterServiceImpl.findTikuChapter(chapter);
 		model.addAttribute("chapterList",chapterList);
+		model.addAttribute("originType",originType);
 		return "tiku/chapterManage/chapterAjax";
 	}
 	

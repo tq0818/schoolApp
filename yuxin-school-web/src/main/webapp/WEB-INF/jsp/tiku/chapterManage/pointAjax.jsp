@@ -5,11 +5,12 @@
 		<span class="info" style="display: inline-block;width: 170px;height: 32px;">
 		<a href="javascript:void(0)" style="line-height: 2.5;display: inline-block;max-width: 220px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${po.pointName}</a>
 		</span>
-		
-		<span class="pointM none">
-		<a href="javascript:void(0)" class="btn btn-sm iconfont" style="padding: 7px 7px;float: right;" pointId="${po.id}" onclick="javascript:Forms.delExamPointByChecked(this)">&#xe626;</a>
-		<a href="javascript:void(0)" class="btn btn-sm iconfont" style="padding: 7px 7px;float: right;" ht="编辑">&#xe625;</a>
-		</span>
+		<c:if test="${originType  eq 1 }">
+			<span class="pointM none">
+			<a href="javascript:void(0)" class="btn btn-sm iconfont" style="padding: 7px 7px;float: right;" pointId="${po.id}" onclick="javascript:Forms.delExamPointByChecked(this)">&#xe626;</a>
+			<a href="javascript:void(0)" class="btn btn-sm iconfont" style="padding: 7px 7px;float: right;" ht="编辑">&#xe625;</a>
+			</span>
+		</c:if>
 		
 		<span style="" class="none edit"><br/>
 		<input type="text" value="${po.pointName}" maxlength="50" class="newPointName" style="width: 153px;"/>

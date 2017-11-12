@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yuxin.wx.api.tiku.ITikuCategoryService;
 import com.yuxin.wx.api.tiku.ITikuChapterService;
 import com.yuxin.wx.api.tiku.ITikuSectionService;
 import com.yuxin.wx.api.tiku.ITikuSubjectService;
+import com.yuxin.wx.model.tiku.TikuCategory;
 import com.yuxin.wx.model.tiku.TikuChapter;
 import com.yuxin.wx.model.tiku.TikuSection;
 import com.yuxin.wx.model.tiku.TikuSubject;
@@ -40,6 +42,9 @@ public class TikuSubjectController {
 
     @Autowired
     private ITikuSectionService tikuSectionServiceImpl;
+    
+    @Autowired
+    private ITikuCategoryService tikuCategoryServiceImpl;
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model, TikuSubject search) {
@@ -111,7 +116,13 @@ public class TikuSubjectController {
     @RequestMapping(value = "/loadSubject")
     public String loadSubject(TikuSubject subject, Model model) {
         List<TikuSubject> subList = this.tikuSubjectServiceImpl.findTikuSubject(subject);
+        
+        Integer categoryId = subject.getCategoryId();
+        TikuCategory category = tikuCategoryServiceImpl.findTikuCategoryById(categoryId);
+        Integer originType = category.getOriginType();
+        
         model.addAttribute("subList", subList);
+        model.addAttribute("originType", originType);
         return "tiku/set/subAjax";
     }
 

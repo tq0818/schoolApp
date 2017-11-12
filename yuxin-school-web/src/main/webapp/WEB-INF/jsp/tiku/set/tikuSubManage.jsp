@@ -86,7 +86,9 @@
             <div class="c-content ml58">
                 <ul>
                     <ul id="subInfo"></ul>
-                    <li class="addCBtn"><a href="javascript:;" class="btn btn-sm btn-success">添加科目</a></li>
+                    <c:if test="${originType  eq 1 }">
+                    	<li class="addCBtn"><a href="javascript:;" class="btn btn-sm btn-success">添加科目</a></li>
+                    </c:if>
                     <li class="addCConter none"><input type="text" maxlength="22" id="addSubName"
                                                        style="width: 153px;"/>
                         <a href="javascript:;" class="btn btn-mini btn-success">保存</a>
