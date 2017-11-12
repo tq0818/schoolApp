@@ -136,6 +136,7 @@ public class ResourceListController {
 					rl.setSourcePath(null);
 					rl.setSourceSize(null);
 			}
+			rl.setOriginType(1);
 			resourceListServiceImpl.insert(rl);
 			json.put(JsonMsg.MSG, JsonMsg.SUCCESS);
 			

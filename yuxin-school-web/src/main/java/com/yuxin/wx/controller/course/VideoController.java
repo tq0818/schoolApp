@@ -227,6 +227,7 @@ public class VideoController {
         video.setStorageType("VIDEO_STORAGE_TYPE_LETV");
         video.setVideoStatus(Constant.VIDEO_PROCESS_INHAND);
         video.setWebVideoId(videoUnique);
+        video.setOriginType(1);
         this.videoServiceImpl.insert(video);
         VideoTag vTag = new VideoTag();
         vTag.setCompanyId(user.getCompanyId());
@@ -665,6 +666,7 @@ public class VideoController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(Video Video) {
+    	Video.setOriginType(1);
         this.videoServiceImpl.insert(Video);
         return "redirect:/video";
     }
