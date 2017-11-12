@@ -72,7 +72,7 @@ function queryCycleData(){
 	 $.ajax({ 
 		  type: "post", 
 		  url: rootPath+"/sysCyclePic/queryCycleDatas", 
-		  data:{ "picType":"wap" },
+		  data:{ "picType":"APP" },
 		  success: function(result){
 			$("#cycleDataLists li").not(":first").remove();
 			$("#cycleDataLists").append(result);
@@ -122,7 +122,7 @@ function addCyclePic(){
 	}
 	$.ajax({
 		url:  rootPath+"/sysCyclePic/addCycles",
-		data : {"clickUrl" :clickUrl,"validFlag" : valid_flag,"picUrl":picUrl, "picType":"wap"},
+		data : {"clickUrl" :clickUrl,"validFlag" : valid_flag,"picUrl":picUrl, "picType":"APP"},
 		success: function(result){
 			queryCycleData();
 			$("#cycleUrl").val('');
