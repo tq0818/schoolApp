@@ -123,13 +123,18 @@ public class TiKuQuestionController {
      */
     @RequestMapping("/selTopic")
     public String selTopic(Model model, HttpServletRequest request, TikuTopic topic) {
-
+    	//根据topic拿到originType
+    	Integer categoryId = topic.getTikuCategoryId();
+    	TikuCategory category = tikuCategoryServiceImpl.findTikuCategoryById(categoryId);
+    	Integer originType = category.getOriginType();
+    	
         // 公司id ，
         Integer companyId = WebUtils.getCurrentCompanyId();
         // 查询设置
         TikuSet tikuSet = new TikuSet();
         tikuSet.setCompanyId(companyId);
         tikuSet = this.tikuSetServiceImpl.findSetByCompanyIdAndCategoryId(tikuSet);
+        
         if (topic.getTopicName() != null && !topic.getTopicName().equals("")) {
             topic.setTopicName(topic.getTopicName().replace("<", "&lt;"));
             topic.setTopicName(topic.getTopicName().replace(">", "&gt;"));
@@ -140,13 +145,13 @@ public class TiKuQuestionController {
         topic.setPaperFlag(0);
         // 试题中不能出现子题
         topic.setChildFlag(0);
-
         List<TikuTopic> topicList = this.tikuTopicServiceImpl.findTopicByEntity(topic);
         Integer count = this.tikuTopicServiceImpl.fingCountByEntity(topic);
         PageFinder<TikuTopic> topicPage = new PageFinder<TikuTopic>(topic.getPage(), topic.getPageSize(), count, topicList);
 
         model.addAttribute("topicPage", topicPage);
         model.addAttribute("tikuSet", tikuSet);
+        model.addAttribute("originType", originType);
         // 如果是材料题返回到单独的页面，其他页面风格统一
         if ("TOPIC_TYPE_CASE".equals(topic.getTopicType())) {
             return "tiku/question/caseTopic";

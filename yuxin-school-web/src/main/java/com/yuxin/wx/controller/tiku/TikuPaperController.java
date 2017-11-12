@@ -161,8 +161,14 @@ public class TikuPaperController {
         search.setDelFlag(0);
         search.setCategoryId(tikuId);
         List<TikuSubject> subList = this.subServiceImpl.findTikuSubject(search);
-
+        
+        //拿到originType
+        Integer categoryId = search.getCategoryId();
+        TikuCategory category = tikuCategoryServiceImpl.findTikuCategoryById(categoryId);
+        Integer originType = category.getOriginType();
+        
         model.addAttribute("tikuSet", tikuSet);
+        model.addAttribute("originType", originType);
 
         model.addAttribute("subList", subList);
         model.addAttribute("tikuId", tikuId);
@@ -190,7 +196,12 @@ public class TikuPaperController {
      */
     @RequestMapping(value = "/loadAjaxInfo")
     public String loadAjaxInfo(HttpServletRequest request, TikuPaper paper, Model model) {
-        paper.setPageSize(6);
+    	//拿到originType
+    	Integer categoryId = paper.getTikuCategoryId();
+    	TikuCategory category = tikuCategoryServiceImpl.findTikuCategoryById(categoryId);
+    	Integer originType = category.getOriginType();
+        
+    	paper.setPageSize(6);
         Integer companyId = WebUtils.getCurrentCompanyId();
         paper.setCompanyId(companyId);
         Subject subject = SecurityUtils.getSubject();
@@ -216,6 +227,7 @@ public class TikuPaperController {
 
         }
         model.addAttribute("pageFinder", pageFinder);
+        model.addAttribute("originType", originType);
         return "tiku/paper/paperAjax";
     }
 

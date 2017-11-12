@@ -78,21 +78,27 @@
 				return;
 			}
 			
-			
+			//lym flag
 			$.ajax({
 				url: rootPath+"/courseVideoChapter/load/"+moduleId,
 				type:"post",
 				dataType:"json",
 				success: function(jsonData){
+					var originType = $("#originType").val();
 					$.each(jsonData,function(i){
 						var chapter=jsonData[i];
-						var html='<li id="chapter_'+chapter.id+'" class="dis" sort="'+chapter.chapterOrder+'"><p class="father">'+
-						'<i class="iconfont4">&#xe630;</i>'+
-						'<i class="iconfont2 open">&#xe62f;</i>'+
-	                    '<a href="javascript:;">第'+getChapterName()+getCname()+'&nbsp;&nbsp;<b>'+(chapter.chapterName?chapter.chapterName:"")+'</b></a>'+
-	                    '<i class="iconfont">&#xe626;</i>'+
-	                    '<i class="iconfont3 add-btns" >&#xe629;'+
-	                    '<b class="add-item">'+
+						var html='<li id="chapter_'+chapter.id+'" class="dis" sort="'+chapter.chapterOrder+'"><p class="father">';
+						if(originType=="1"){
+							html +='<i class="iconfont4">&#xe630;</i>';
+						}
+
+						html+='<i class="iconfont2 open">&#xe62f;</i>'+
+	                    '<a href="javascript:;">第'+getChapterName()+getCname()+'&nbsp;&nbsp;<b>'+(chapter.chapterName?chapter.chapterName:"")+'</b></a>';
+						if(originType=="1"){
+							html+='<i class="iconfont">&#xe626;</i><i class="iconfont3 add-btns" >&#xe629;';
+						}
+
+	                    html+='<b class="add-item">'+
 	                    '<span class="xiaojie">新增小节</span>'+
 	                    ($this.service.tikuService?'<span class="ceyan">新增测验</span>':'')+
 	                    '</b>'+
@@ -107,18 +113,24 @@
 								var sub_html='<li id="lecture_'+lecture.id+'" class="class-son" draggable="true">'
 								+'<a href="javascript:;"><span class="add-xiaojie"></span>第'
 								+$.changeNum(k+1)+getLname()+
-								'&nbsp;&nbsp;<b>'+(lecture.name?lecture.name:"")+'</b></a>'+
-								'<i class="iconfont4">&#xe630;</i>'+
-								'<i class="iconfont">&#xe626;</i></li>';
+								'&nbsp;&nbsp;<b>'+(lecture.name?lecture.name:"")+'</b></a>';
+								if(originType=="1"){
+									sub_html+='<i class="iconfont4">&#xe630;</i>'+
+									'<i class="iconfont">&#xe626;</i>';
+								}
+								sub_html+='</li>';
 								$(".t-c-l").find("#chapter_"+chapter.id+" .son").append(sub_html);
 								$(".t-c-l").find("#lecture_"+lecture.id).data("info",lecture);
 								k++;
 							}else if(lecture.type == 2){
 								var sub_html='<li id="test_'+lecture.id+'" class="class-son" draggable="true">'
 								+'<a href="javascript:;"><span class="iconfont add-ceyan">&#xe6d5;</span>测验'+
-								'&nbsp;&nbsp;<b>'+(lecture.name?lecture.name:"")+'</b></a>'+
-								'<i class="iconfont4">&#xe630;</i>'+
-								'<i class="iconfont">&#xe626;</i></li>';
+								'&nbsp;&nbsp;<b>'+(lecture.name?lecture.name:"")+'</b></a>';
+								if(originType=="1"){
+									sub_html+='<i class="iconfont4">&#xe630;</i>'+
+										'<i class="iconfont">&#xe626;</i>';
+								}
+								sub_html+='</li>';
 								$(".t-c-l").find("#chapter_"+chapter.id+" .son").append(sub_html);
 								$(".t-c-l").find("#test_"+lecture.id).data("testInfo",lecture);
 							}
@@ -493,6 +505,7 @@
 		},
 		showChapter : function(chapter){
 			chapter=$("#"+chapter.attr("id"));//别删，有用
+			var originType = $("#originType").val();
 			if(chapter.attr("id")){
 				var chapter_id=chapter.attr("id").substring(chapter.attr("id").indexOf("_")+1);
 				var chapterDetail='<div class="t-c-r-t chapter" value="'+chapter_id+'">'+
@@ -502,9 +515,11 @@
 	            '</p>'+
 	            '<p class="c">'+
 		        '<span class="c-title"></span>'+
-	            '<span class="c-content">'+
-	            '<a href="javascript:;" class="btn q-btn-primary save" id="q-save">保存</a>'+
-	            '</span>'+
+	            '<span class="c-content">';
+				if(originType=="1"){
+					chapterDetail+='<a href="javascript:;" class="btn q-btn-primary save" id="q-save">保存</a>';
+				}
+				chapterDetail+='</span>'+
 	            '</p>'+
 	            '</div>';
 				$(".t-c-r").html(chapterDetail);
@@ -542,6 +557,7 @@
 			}
 		},
 		showLecture : function(lecture){
+			var originType = $("#originType").val();
 			var chapter_id=lecture.parents(".dis").attr("id").substring(lecture.parents(".dis").attr("id").indexOf("_")+1);
 			var lecture_id=lecture.attr("id").substring(lecture.attr("id").indexOf("_")+1);
 			var lectureDetail='<div class="project-part"> '+'<h3 class="add-title">'+
@@ -639,9 +655,12 @@
                             '</div>'+
                             '</div>'+
                             '</div>'+   
-	            '<p class="c" style="text-align:center;padding:30px;">'+
-	            '<a href="javascript:;" class="btn btn-primary q-btn-primary save">保存</a>'+
-	            '</p>'+
+	            '<p class="c" style="text-align:center;padding:30px;">';
+					if(originType=="1"){
+						lectureDetail+='<a href="javascript:;" class="btn btn-primary q-btn-primary save">保存</a>';
+					}
+
+			lectureDetail+= '</p>'+
 		    '</div>'+
 		    '</div>';
 		   

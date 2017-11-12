@@ -29,10 +29,14 @@
 	    			</span>
                 </td>
                 <td width="15%" rowspan="2" class="btns">
-                    <a href="javascript:;" class="btn btn-mini btn-primary btn-topic" data-btn="delete" data-qid="${t.id }">删除</a>
-                    <a href="javascript:;" class="btn btn-mini btn-primary btn-topic" data-btn="edit" data-qid="${t.id }">编辑</a>
+                	<c:if test="${originType  eq 1 }">
+	                    <a href="javascript:;" class="btn btn-mini btn-primary btn-topic" data-btn="delete" data-qid="${t.id }">删除</a>
+	                    <a href="javascript:;" class="btn btn-mini btn-primary btn-topic" data-btn="edit" data-qid="${t.id }">编辑</a>
+                    </c:if>
                     <c:if test="${t.status != 'PAPER_STATUS_WAIT_AUDIT' }">
-                    	<a href="javascript:;" class="btn btn-mini btn-primary btn-b btn-topic" data-btn="audite" data-qid="${t.id }" disabled="disabled">审核</a>
+                    	<c:if test="${originType  eq 1 }">
+                    		<a href="javascript:;" class="btn btn-mini btn-primary btn-b btn-topic" data-btn="audite" data-qid="${t.id }" disabled="disabled">审核</a>
+                    	</c:if>
                     </c:if>
                     <c:if test="${t.status == 'PAPER_STATUS_WAIT_AUDIT' }">
                     	<a href="javascript:;" class="btn btn-mini btn-primary btn-b btn-topic" data-btn="audite" data-qid="${t.id }">审核</a>

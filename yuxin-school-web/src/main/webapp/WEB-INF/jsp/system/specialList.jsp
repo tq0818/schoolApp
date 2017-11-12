@@ -122,6 +122,7 @@
                 </tr>
                 <c:forEach items="${specialList}" var="special" varStatus="status">
                 <tr>
+                 <c:if test="${special.originType  eq 1 }"> 
                     <td>${status.index +1 }</td>
                     <td>${special.title}</td>
                     <td>${special.label }</td>
@@ -134,7 +135,9 @@
                             <i onclick="clearOrder('${special.id}')" class="btn-ico btn-cha">X</i>
                         </div>
                     </td>
+                
                 </tr>
+               </c:if> 
               </c:forEach>
            </tbody>
         </table>

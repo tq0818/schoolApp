@@ -73,6 +73,7 @@
 	<input type="hidden" name="id" value="${ct.id }"/>
 	<input type="hidden" name="lable" value="${lable }"/>
 	<input type="hidden" name="type1" value="${type }"/>
+	<input type="hidden" name="originType" id="originType" value="${ct.originType}"/>
 </form>
 <jsp:include page="/WEB-INF/jsp/menu/menu_class.jsp"></jsp:include>
 <%@include file="/WEB-INF/jsp/classType/commonTitle.jsp" %>
@@ -89,7 +90,10 @@
             	<input type="hidden" id="itemSecondId" value="${ct.itemSecondId}" />
             	<input type="hidden" id="classTypeId" value="${ct.id}" />
             	<input type="hidden" id="classTypeName" value="${ct.name }"/>
-                <a href="javascript:;" style="margin-top: 10px;" class="btn btn-mini btn-default btn-add-class"><i class="iconfont">&#xe61c;</i>新增章节</a>
+            	<c:if test="${ct.originType  eq 1 }">
+                	<a href="javascript:;" style="margin-top: 10px;" class="btn btn-mini btn-default btn-add-class"><i class="iconfont">&#xe61c;</i>新增章节</a>
+                </c:if>
+                
                 <!-- <a href="javascript:;" class="btn btn-mini btn-default">隐藏默认章节序号</a> -->
             </div>
             <div class="t-c clear" >
@@ -105,7 +109,10 @@
     </div>
    <div class="q-btns" style="text-align:center;">
                     <a href="javascript:;" class="q-cancel q-cancel2">取消</a>
-                    <a href="javascript:save();" class="q-save next">保存</a>
+                    <c:if test="${ct.originType  eq 1 }">
+                    	<a href="javascript:save();" class="q-save next">保存</a>
+                    </c:if>
+                    
      </div>
 </div>
     </div>

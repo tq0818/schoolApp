@@ -77,6 +77,7 @@ public class ClassTypeVo extends BaseEntity {
 	private Integer subjectClassOrder;//学科课程排序
 	private String  iconLable;
 	private Integer isMicroClass;	//是否微课
+	private Integer originType;/* 来源，1表示来自app，0表示来自pc */
 	public Integer getCommodityId() {
 		return commodityId;
 	}
@@ -279,7 +280,7 @@ public class ClassTypeVo extends BaseEntity {
 			Integer totalClass, Integer baseNum, Integer actualNum,
 			String lableType, String teacherId, Integer faceFlag,
 			Integer liveFlag, Integer videoFlag, Integer remoteFlag,
-			Integer recommendFlag, Integer createSchoolId) {
+			Integer recommendFlag, Integer createSchoolId, Integer originType) {
 		this.name = name;
 		this.typeCode = typeCode;
 		this.originalPrice = originalPrice;
@@ -315,27 +316,10 @@ public class ClassTypeVo extends BaseEntity {
 		this.remoteFlag = remoteFlag;
 		this.recommendFlag = recommendFlag;
 		this.createSchoolId = createSchoolId;
+		this.originType = originType;
 	}
 	public ClassTypeVo() {
 
-	}
-	@Override
-	public String toString() {
-		return "ClassTypeVo [name=" + name + ", typeCode=" + typeCode
-				+ ", originalPrice=" + originalPrice + ", realPrice="
-				+ realPrice + ", schoolsId=" + schoolsId + ", itemOneId="
-				+ itemOneId + ", itemSecondId=" + itemSecondId
-				+ ", itemOneName=" + itemOneName + ", itemSecondName="
-				+ itemSecondName + ", description=" + description
-				+ ", publishStatus=" + publishStatus + ", publishTime="
-				+ publishTime + ", isSale=" + isSale + ", cover=" + cover
-				+ ", subTitle=" + subTitle + ", detailDesc=" + detailDesc
-				+ ", createTime=" + createTime + ", creator=" + creator
-				+ ", updateTime=" + updateTime + ", updator=" + updator
-				+ ", delFlag=" + delFlag + ", modules=" + modules + ", videos="
-				+ videos + ", totalClass=" + totalClass + ", baseNum="
-				+ baseNum + ", lableType=" + lableType + ", teacherId="
-				+ teacherId + "]";
 	}
 	public Integer getFaceFlag() {
 		return faceFlag;
@@ -509,4 +493,34 @@ public class ClassTypeVo extends BaseEntity {
 	public void setIsMicroClass(Integer isMicroClass) {
 		this.isMicroClass = isMicroClass;
 	}
+	public Integer getOriginType() {
+		return originType;
+	}
+	public void setOriginType(Integer originType) {
+		this.originType = originType;
+	}
+	@Override
+	public String toString() {
+		return "ClassTypeVo [name=" + name + ", typeCode=" + typeCode + ", originalPrice=" + originalPrice
+				+ ", realPrice=" + realPrice + ", schoolsId=" + schoolsId + ", itemOneId=" + itemOneId
+				+ ", itemSecondId=" + itemSecondId + ", itemOneName=" + itemOneName + ", itemSecondName="
+				+ itemSecondName + ", itemOneCode=" + itemOneCode + ", itemSecondCode=" + itemSecondCode
+				+ ", itemThirdName=" + itemThirdName + ", itemFourthName=" + itemFourthName + ", itemThirdCode="
+				+ itemThirdCode + ", itemFourthCode=" + itemFourthCode + ", description=" + description
+				+ ", publishStatus=" + publishStatus + ", publishTime=" + publishTime + ", isSale=" + isSale
+				+ ", cover=" + cover + ", subTitle=" + subTitle + ", detailDesc=" + detailDesc + ", createTime="
+				+ createTime + ", creator=" + creator + ", updateTime=" + updateTime + ", updator=" + updator
+				+ ", delFlag=" + delFlag + ", modules=" + modules + ", videos=" + videos + ", remotes=" + remotes
+				+ ", totalClass=" + totalClass + ", baseNum=" + baseNum + ", actualNum=" + actualNum + ", lableType="
+				+ lableType + ", teacherId=" + teacherId + ", faceFlag=" + faceFlag + ", liveFlag=" + liveFlag
+				+ ", videoFlag=" + videoFlag + ", remoteFlag=" + remoteFlag + ", validityDay=" + validityDay
+				+ ", validityDate=" + validityDate + ", videoWatchCount=" + videoWatchCount + ", liveWatchCount="
+				+ liveWatchCount + ", recommendFlag=" + recommendFlag + ", createSchoolId=" + createSchoolId
+				+ ", itemTag=" + itemTag + ", tagName=" + tagName + ", relationId=" + relationId
+				+ ", classPackageCourseId=" + classPackageCourseId + ", integralFlag=" + integralFlag + ", memberFlag="
+				+ memberFlag + ", buyNumMax=" + buyNumMax + ", protocolId=" + protocolId + ", commodityId="
+				+ commodityId + ", subjectClassOrder=" + subjectClassOrder + ", iconLable=" + iconLable
+				+ ", isMicroClass=" + isMicroClass + ", originType=" + originType + "]";
+	}
+	
 }

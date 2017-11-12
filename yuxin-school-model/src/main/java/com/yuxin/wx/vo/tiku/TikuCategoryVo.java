@@ -24,6 +24,7 @@ public class TikuCategoryVo extends BaseEntity {
 	private Integer paperNo;		/*包含几套试卷*/
 	private Integer topicNo;		/*包含多少试题*/
 	private Integer delFlag;		/*禁用*/
+	private Integer originType;/* 来源，1表示来自app，0表示来自pc */
 	
 	// Constructor
 	public TikuCategoryVo() {
@@ -32,13 +33,14 @@ public class TikuCategoryVo extends BaseEntity {
 	/**
 	 * full Constructor
 	 */
-	public TikuCategoryVo(Integer id, String tikuName, String tikuDesc, Integer itemOneId, Integer itemSecondId, Integer companyId) {
+	public TikuCategoryVo(Integer id, String tikuName, String tikuDesc, Integer itemOneId, Integer itemSecondId, Integer companyId, Integer originType) {
 		setId(id);
 		this.tikuName = tikuName;
 		this.tikuDesc = tikuDesc;
 		this.itemOneId = itemOneId;
 		this.itemSecondId = itemSecondId;
 		this.companyId = companyId;
+		this.originType = originType;
 	}
 
 	// getter && setter
@@ -137,4 +139,13 @@ public class TikuCategoryVo extends BaseEntity {
 	public void setDelFlag(Integer delFlag) {
 		this.delFlag = delFlag;
 	}
+
+	public Integer getOriginType() {
+		return originType;
+	}
+
+	public void setOriginType(Integer originType) {
+		this.originType = originType;
+	}
+	
 }

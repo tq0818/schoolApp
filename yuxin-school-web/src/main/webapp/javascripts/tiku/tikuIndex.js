@@ -228,6 +228,7 @@
 								}else if(data == 'topic'){
 									var objform = document.createElement("form");
 									document.body.appendChild(objform);
+									//选择显示哪类体型那一行
 									objform.action = rootPath + "/question/show";
 									objform.method = "post";
 									

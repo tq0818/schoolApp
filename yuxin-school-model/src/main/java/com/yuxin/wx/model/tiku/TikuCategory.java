@@ -21,7 +21,7 @@ public class TikuCategory extends BaseEntity {
 	private String iconUrl;			/*题库图标地址*/
 	private Integer delFlag;		/*禁用*/
 	private String iconBackUrl;/*题库图标地址*/
-	
+	private Integer originType;/* 来源，1表示来自app，0表示来自pc */
 
 	// Constructor
 	public TikuCategory() {
@@ -30,13 +30,14 @@ public class TikuCategory extends BaseEntity {
 	/**
 	 * full Constructor
 	 */
-	public TikuCategory(Integer id, String tikuName, String tikuDesc, Integer itemOneId, Integer itemSecondId, Integer companyId) {
+	public TikuCategory(Integer id, String tikuName, String tikuDesc, Integer itemOneId, Integer itemSecondId, Integer companyId, Integer originType) {
 		setId(id);
 		this.tikuName = tikuName;
 		this.tikuDesc = tikuDesc;
 		this.itemOneId = itemOneId;
 		this.itemSecondId = itemSecondId;
 		this.companyId = companyId;
+		this.originType = originType;
 	}
 
 	// getter && setter
@@ -119,4 +120,13 @@ public class TikuCategory extends BaseEntity {
 	public void setIconBackUrl(String iconBackUrl) {
 		this.iconBackUrl = iconBackUrl;
 	}
+
+	public Integer getOriginType() {
+		return originType;
+	}
+
+	public void setOriginType(Integer originType) {
+		this.originType = originType;
+	}
+	
 }

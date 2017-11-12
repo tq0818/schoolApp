@@ -6,6 +6,8 @@
 <!-- 二级导航 -->
 <div class="u-wrap company">
     <div class="block clear">
+         	 <%-- <c:if test="${ct.originType eq 1}">
+         	 </c:if> --%>
       <c:choose>
          	 <c:when test="${ct.publishStatus=='CLASS_ON_SALE' }">
          		 <div class="labels classStatus">
@@ -19,6 +21,7 @@
 				       <div class="sanjiao"></div>
 				   </div>
          	 </c:when>
+         	 
          	 <c:otherwise>
          	 	 <div class="labels classStatus else">
 			           <s id="statusText">未发布</s> 
@@ -51,7 +54,9 @@
         </div>
         <c:choose>
           	 <c:when test="${ct.publishStatus=='CLASS_ON_SALE' }">
+          	 	<c:if test="${ct.originType eq 1}">
           		<button class="public_course" ids="${ct.id }" mark="nosale">下架</button>
+          		</c:if>
           	 </c:when>
           	 <c:otherwise>
           	 	<button class="public_course" ids="${ct.id }" mark="sale">发布</button>

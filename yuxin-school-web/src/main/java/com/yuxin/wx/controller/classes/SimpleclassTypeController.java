@@ -805,6 +805,8 @@ public class SimpleclassTypeController {
 		if(classType.getLableType()!=null && classType.getLableType().length()>0){
 			classType.setIconLable(classType.getLableType().trim());
 		}
+		//设置来源，1表示来自app，0表示来自pc，默认设置为1
+		classType.setOriginType(1);
 		ClassType classTypes=addClassTypeCommMethod(request, classType,lable,courseNum);
 		return classTypes;
 	}
@@ -861,6 +863,8 @@ public class SimpleclassTypeController {
 //			if(null!=classType.getValidityDay()&&!"".equals(classType.getValidityDay())){
 //				classType.setValidityDate(DateUtil.addDate(new Date(),classType.getValidityDay()));
 //			}
+			//设置来源，1表示来自app，0表示来自pc，默认设置为1
+			classType.setOriginType(1);
 			classTypeServiceImpl.insert(classType);
 			
 			Commodity commodity = new Commodity();
@@ -891,6 +895,8 @@ public class SimpleclassTypeController {
 			commodity.setRemoteFlag(classType.getRemoteFlag());
 			commodity.setRecommendFlag(classType.getRecommendFlag());
 			commodity.setBuyNum(0);
+			//设置来源，1表示来自app，0表示来自pc，默认设置为1
+			commodity.setOriginType(1);
 			if(null!=sets || null!=sets1){
 				commodity.setItemTag(classType.getItemTag());
 			}

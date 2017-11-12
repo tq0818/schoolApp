@@ -10,7 +10,7 @@ import com.yuxin.wx.util.ShortDateSerializer;
 
 /**
  * POJO:ClassType
- *
+ *课程类型
  * @author wang.zx
  * @date 2014-12-5
  */
@@ -61,6 +61,7 @@ public class ClassType extends BaseEntity {
     private Integer buyNumMax; /* 课程最大购买人数限制 */
 
     private Integer userId;
+    private Integer originType;/* 来源，1表示来自app，0表示来自pc */
 
     // 模块
     private List<ClassModule> classModuleList;
@@ -118,7 +119,7 @@ public class ClassType extends BaseEntity {
     public ClassType(String name, String typeCode, Double originalPrice, Double realPrice, String schoolsId, Integer itemOneId, Integer itemSecondId,
             String description, String publishStatus, Date publishTime, Integer isSale, String cover, String subTitle, String detailDesc, Date createTime,
             Integer creator, Date updateTime, Integer updator, Integer delFlag, Integer companyId, Integer baseNum, String lableType, String teacherId,
-            Integer faceFlag, Integer liveFlag, Integer videoFlag, Integer remoteFlag, Integer recommendFlag) {
+            Integer faceFlag, Integer liveFlag, Integer videoFlag, Integer remoteFlag, Integer recommendFlag, Integer originType) {
         super();
         this.name = name;
         this.typeCode = typeCode;
@@ -148,6 +149,7 @@ public class ClassType extends BaseEntity {
         this.videoFlag = videoFlag;
         this.remoteFlag = remoteFlag;
         this.recommendFlag = recommendFlag;
+        this.originType = originType;
     }
 
     // getter && setter
@@ -350,7 +352,7 @@ public class ClassType extends BaseEntity {
         this.companyId = companyId;
     }
 
-    @Override
+	@Override
     public String toString() {
         return "ClassType [name=" + this.name + ", typeCode=" + this.typeCode + ", originalPrice=" + this.originalPrice + ", realPrice=" + this.realPrice
                 + ", schoolsId=" + this.schoolsId + ", itemOneId=" + this.itemOneId + ", itemSecondId=" + this.itemSecondId + ", description="
@@ -358,7 +360,7 @@ public class ClassType extends BaseEntity {
                 + this.cover + ", subTitle=" + this.subTitle + ", detailDesc=" + this.detailDesc + ", createTime=" + this.createTime + ", creator="
                 + this.creator + ", updateTime=" + this.updateTime + ", updator=" + this.updator + ", delFlag=" + this.delFlag + ", companyId=" + this.companyId
                 + ", baseNum=" + this.baseNum + ", lableType=" + this.lableType + ", teacherId=" + this.teacherId + ", faceFlag=" + this.faceFlag + ",liveFlag="
-                + this.liveFlag + ",videoFlag=" + this.videoFlag + ",remoteFlag=" + this.remoteFlag + "]";
+                + this.liveFlag + ",videoFlag=" + this.videoFlag + ",remoteFlag=" + this.remoteFlag +",originType=" + this.originType + "]";
     }
 
     public Integer getFaceFlag() {
@@ -619,4 +621,11 @@ public class ClassType extends BaseEntity {
     public void setPaperDescription(String paperDescription) {
         this.paperDescription = paperDescription;
     }
+    public Integer getOriginType() {
+		return originType;
+	}
+
+	public void setOriginType(Integer originType) {
+		this.originType = originType;
+	}
 }

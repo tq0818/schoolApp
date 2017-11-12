@@ -124,7 +124,9 @@ a:hover {
                 </span>
             </p>
 			<div>
-				<a href="javascript:;" id="newPaper" class="btn btn-mini btn-primary" style="position: absolute;top: 76%;right: -1%;"><em class="iconfont" style="top:0px;">&#xe606;</em> 添加试卷</a>
+				<c:if test="${originType  eq 1 }">
+					<a href="javascript:;" id="newPaper" class="btn btn-mini btn-primary" style="position: absolute;top: 76%;right: -1%;"><em class="iconfont" style="top:0px;">&#xe606;</em> 添加试卷</a>
+				</c:if>
 			</div>
             <div class="search">
                 <input type="text" placeholder="试卷名称" id="pName">

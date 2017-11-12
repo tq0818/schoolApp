@@ -59,7 +59,9 @@
     <div class="mainbackground">
         <div class="heading">
             <h2 class="h5">课程资料</h2>
-            <a href="javascript:;" class="btn btn-mini btn-primary btn-upload">上传资料</a>
+            <c:if test="${ct.originType  eq 1 }">
+            	<a href="javascript:;" class="btn btn-mini btn-primary btn-upload">上传资料</a>
+            </c:if>
             <span class="line"></span>
         </div>
         <div class="select-option clear" style="display: none;">

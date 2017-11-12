@@ -41,7 +41,9 @@
 						  ${allCommdotity.iconLable}
 				  </i>
 			  </c:if>
+			  	<c:if test="${allCommdotity.originType eq 1}">
 			     <i class="add-com" id="com${allCommdotity.id}" marks="${allCommdotity.recommendFlag}" style="display: none;" onclick="Form.collectShop(${allCommdotity.id})">${allCommdotity.recommendFlag==1?'取消推荐':'加入推荐' }</i>
+			    </c:if>
 			    <div class="infos-pic">
 			      <a href="javascript:Form.showClassTypeDetail(${allCommdotity.id },'${allCommdotity.typeCode }');">
 			    	<c:if test="${allCommdotity.cover!=null }">
@@ -92,9 +94,13 @@
 			        	</c:if>
 			        </p> 
 			        <div class="btns list-btn">
-				      <a href="javascript:Form.deleteClassType(${allCommdotity.id });" class="btn btn-sm btn-default deleteGoods">删除</a>
+			        	<c:if test="${allCommdotity.originType eq 1}">
+				      		<a href="javascript:Form.deleteClassType(${allCommdotity.id });" class="btn btn-sm btn-default deleteGoods">删除</a>
+				      	</c:if>
 				    	<c:if test="${allCommdotity.publishStatus=='CLASS_ON_SALE'}">
+				    		<c:if test="${allCommdotity.originType eq 1}">
 				    	    <a href="javascript:Form.stopOnsale(${allCommdotity.id });" class="btn btn-sm btn-default downGoods">下架</a>
+				    	    </c:if>
 				    	    <a href="javascript:Form.editClassType(${allCommdotity.id });" class="btn btn-sm btn-primary">管理</a>
 				    	    <a href="<%=rootPath %>/classModuleLesson/classesResource/${allCommdotity.id }/none" target="_blank" class="btn btn-sm btn-primary">资料</a>
 				    	</c:if>
