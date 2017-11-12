@@ -25,7 +25,7 @@
 		<result property="companyDistrict" column="company_district"/>
 		<result property="memberLevel" column="member_level" />
 		<result property="serviceVersion" column="service_version"/>
-		
+
 		<result property="memberStartDate" column="member_start_date" />
 		<result property="memberEndDate" column="member_end_date" />
 		<result property="registTime" column="regist_time" />
@@ -65,7 +65,7 @@
 		<result property="orgCode" column="org_code" />
 		<result property="businessLicenseCode" column="business_license_code" />
 		<result property="serviceVersion" column="service_version"/>
-		
+
 		<result property="contacts" column="username" />
 		<result property="contactMobile" column="mobile" />
 		<result property="groupName" column="group_name" />
@@ -81,18 +81,18 @@
 	</resultMap>
 
 	<resultMap type="com.yuxin.wx.vo.company.CompanyPicsVo" id="companyPicsMap">
-	    <result property="picName" column="pic_name"/>
-	    <result property="picOriginalUrl" column="pic_original_url"/>
-	    <result property="picBigUrl" column="pic_big_url"/>
-	    <result property="picMiddleUrl" column="pic_middle_url"/>
-	    <result property="picSmallUrl" column="pic_small_url"/>
-	    <result property="picTag" column="pic_tag"/>
-	    <result property="picType" column="pic_type"/>
-	    <result property="itemOneId" column="item_one_id"/>
-	    <result property="companyId" column="company_id"/>
-	    <result property="companyLogoType" column="company_logo_type"/>
+		<result property="picName" column="pic_name"/>
+		<result property="picOriginalUrl" column="pic_original_url"/>
+		<result property="picBigUrl" column="pic_big_url"/>
+		<result property="picMiddleUrl" column="pic_middle_url"/>
+		<result property="picSmallUrl" column="pic_small_url"/>
+		<result property="picTag" column="pic_tag"/>
+		<result property="picType" column="pic_type"/>
+		<result property="itemOneId" column="item_one_id"/>
+		<result property="companyId" column="company_id"/>
+		<result property="companyLogoType" column="company_logo_type"/>
 	</resultMap>
-	
+
 	<resultMap type="com.yuxin.wx.vo.company.CompanyOrgMessageVo" id="messageListVo">
 		<result property="id" column="id"/>
 		<result property="messageType" column="message_type"/>
@@ -105,7 +105,7 @@
 		<result property="updateTime" column="update_time"/>
 		<result property="senderName" column="sender_name"/>
 	</resultMap>
-	
+
 	<resultMap type="com.yuxin.wx.vo.company.CompanyOrgMessageReadVo" id="MessageCenteMap">
 		<result property="id" column="id"/>
 		<result property="messageType" column="message_type"/>
@@ -119,14 +119,14 @@
 		<result property="readFlag" column="read_flag"/>
 		<result property="delFlag" column="del_flag"/>
 	</resultMap>
-	
+
 	<resultMap type="com.yuxin.wx.vo.company.CompanyTotalVo" id="companyTotalMap">
 		<result property="id" column="id"/>
 		<result property="sourceType" column="sourceType"/>
 		<result property="registNum" column="registNum"/>
 		<result property="registDate" column="registDate"/>
 	</resultMap>
-	
+
 	<sql id="table_columns">
 		id,
 		member_level,
@@ -220,7 +220,7 @@
 
 	<!-- 适用于主键自增类型 -->
 	<insert id="insert" parameterType="com.yuxin.wx.model.company.Company"
-		useGeneratedKeys="true" keyProperty="id">
+			useGeneratedKeys="true" keyProperty="id">
 		insert into company(
 		<include refid="table_columns" />
 		)
@@ -228,12 +228,12 @@
 		<include refid="entity_properties" />
 		)
 	</insert>
-	
-	
+
+
 
 	<!-- 批量添加 适用于主键自增类型 不支持返回主键 -->
 	<insert id="batchInsert" parameterType="java.util.List"
-		useGeneratedKeys="true">
+			useGeneratedKeys="true">
 		insert into company(
 		<include refid="table_columns" />
 		)
@@ -246,11 +246,11 @@
 	</insert>
 
 	<insert id="insertCompany" parameterType="com.yuxin.wx.model.company.Company"
-		useGeneratedKeys="true" keyProperty="id">
-	    insert into company(id,company_name,domain,member_level,status,regist_time,school_apply_flag)
+			useGeneratedKeys="true" keyProperty="id">
+		insert into company(id,company_name,domain,member_level,status,regist_time,school_apply_flag)
 		values(#{id},#{companyName},#{domain},#{memberLevel},#{status},#{registTime},#{schoolApplyFlag})
 	</insert>
-	
+
 	<!--根据主键删除 -->
 	<delete id="deleteById">
 		delete from tbl_users
@@ -262,7 +262,7 @@
 		delete from company
 		where id in
 		<foreach item="item" collection="array" open="(" separator=","
-			close=")">
+				 close=")">
 			#{item}
 		</foreach>
 	</delete>
@@ -296,7 +296,7 @@
 	</update>
 
 	<select id="findById" resultMap="companyResultMap"
-		parameterType="String">
+			parameterType="String">
 		select <include refid="table_columns" /> from company where id=#{id}
 		<!-- select <include refid="table_columns" /> from company where id = #{id} -->
 	</select>
@@ -344,14 +344,14 @@
 	</select>
 
 	<select id="pageCount" resultType="int"
-		parameterType="com.yuxin.wx.model.company.Company">
+			parameterType="com.yuxin.wx.model.company.Company">
 		select count(id) from company
 		<include refid="page_where" />
 	</select>
 
 	<!-- 查询公司业务相关信息 -->
 	<select id="queryFootPageContentById" resultMap="companyResultMap"
-		parameterType="com.yuxin.wx.model.company.Company">
+			parameterType="com.yuxin.wx.model.company.Company">
 		select
 		<include refid="table_columns" />
 		from company
@@ -359,182 +359,181 @@
 
 	<!-- 其他自定义SQL -->
 	<select id="findCompanyLevel" resultType="Integer"
-		parameterType="Integer">
+			parameterType="Integer">
 		select member_level from company where id = #{id}
 	</select>
-	
+
 	<!-- 查询公司图片库 -->
 	<select id="queryCompanyPic" resultMap="companyPicsMap" parameterType="com.yuxin.wx.vo.company.CompanyPicsVo">
-	   select id,pic_name,pic_original_url,pic_big_url,pic_middle_url,pic_small_url,pic_tag,pic_type,item_one_id,company_id from company_pics 
-	   where company_id=#{companyId} 
-	   <if test="picType != null and picType != ''">and pic_type = #{picType}</if>
-	    <if test="picTag != null and picTag != ''">and pic_tag = #{picTag}</if>
-	   <if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
-	   ORDER BY id DESC
-	   limit #{firstIndex},#{pageSize}
+		select id,pic_name,pic_original_url,pic_big_url,pic_middle_url,pic_small_url,pic_tag,pic_type,item_one_id,company_id from company_pics
+		where company_id=#{companyId}
+		<if test="picType != null and picType != ''">and pic_type = #{picType}</if>
+		<if test="picTag != null and picTag != ''">and pic_tag = #{picTag}</if>
+		<if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
+		ORDER BY id DESC
+		limit #{firstIndex},#{pageSize}
 	</select>
 
 	<select id="queryCompanyPicCount" resultType="int" parameterType="com.yuxin.wx.vo.company.CompanyPicsVo">
-	   select count(*) from company_pics 
-	   where company_id=#{companyId} 
-	   <if test="picType != null and picType != ''">and pic_type = #{picType}</if>
-	    <if test="picTag != null and picTag != ''">and pic_tag = #{picTag}</if>
-	   <if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
+		select count(*) from company_pics
+		where company_id=#{companyId}
+		<if test="picType != null and picType != ''">and pic_type = #{picType}</if>
+		<if test="picTag != null and picTag != ''">and pic_tag = #{picTag}</if>
+		<if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
 	</select>
 
 	<select id="findCompanyVoByPage" resultMap="companyVoResultMap"
-		parameterType="com.yuxin.wx.model.company.Company">
+			parameterType="com.yuxin.wx.model.company.Company">
 		SELECT
-	com.*, ca.legal_person,
-	ca.business_license_code,
-	ca.submit_time,
-	ca.audit_time,
-	ca.org_code
-FROM
-	(
+		com.*, ca.legal_person,
+		ca.business_license_code,
+		ca.submit_time,
+		ca.audit_time,
+		ca.org_code
+		FROM
+		(
 		SELECT
-			c.id,
-			c.domain,
-			c.company_name,
-			c.status,
-			c.company_logo,
-			c.regist_time,
-			c.member_level,
-			u.username,
-			u.mobile
-			<if test="myType == 'group'">
+		c.id,
+		c.domain,
+		c.company_name,
+		c.status,
+		c.company_logo,
+		c.regist_time,
+		c.member_level,
+		u.username,
+		u.mobile
+		<if test="myType == 'group'">
 			,cc.create_time,
 			csg.group_name,
 			cc.id as crm_id
-			</if>
-		FROM
-			company AS c
-		inner JOIN
-		users AS u ON u.company_id = c.id
-	AND u.user_type = 'USER_TYPE_ORG'
-	<if test="myType == 'group'">
-		inner join crm_company as cc on cc.company_id = c.id
-		inner join crm_sales_group as csg on csg.id = cc.group_id
-	</if>
-	where 1=1
-	<if test="isGL == 'no'">
-		<if test="groupId != null and groupId != ''">and cc.group_id = #{groupId}</if>
-	</if>
-	<if test="myType == 'group'">
-		and (cc.saler_id = '0' or cc.saler_id is null)
-		AND (cc.next_track_type is NULL OR cc.next_track_type !='CRM_TRACK_TYPE_DELETE')
-		<if test="startTime != null and startTime != ''"><![CDATA[and cc.create_time >= #{startTime}]]></if>
-		<if test="endTime != null and endTime != ''"><![CDATA[and cc.create_time <= #{endTime}]]></if>
-	</if>
-	<if test="status != null and status != ''">and c.status = #{status}
-		<if test="status == 1 or status == 5">
-			<if test="startTime != null and startTime != ''"><![CDATA[and Date(c.regist_time) >= #{startTime}]]></if>
-			<if test="endTime != null and endTime != ''"><![CDATA[and Date(c.regist_time) <= #{endTime}]]></if>
 		</if>
-	</if>
-	<if test="userMonile != null and userMonile != ''">and (u.mobile like '%${userMonile}%' or c.company_name like '%${userMonile}%')</if>
-	<if test="myType == 'com'">
-		<if test="startTime != null and startTime != ''"><![CDATA[and c.regist_time >= #{startTime}]]></if>
-		<if test="endTime != null and endTime != ''"><![CDATA[and c.regist_time <= #{endTime}]]></if>
-	</if>
-	<if test="crmFlag != null">and (c.crm_flag = #{crmFlag} or c.crm_flag is null)</if>
-	) com
-LEFT JOIN company_authority AS ca ON com.id = ca.company_id
-where 1=1
-	<if test="status == 2">
-		<if test="startTime != null and startTime != ''"><![CDATA[and Date(ca.submit_time) >= #{startTime}]]></if>
-		<if test="endTime != null and endTime != ''"><![CDATA[and Date(ca.submit_time) <= #{endTime}]]></if>
-	</if>
-	<if test="status == 4">
-		<if test="startTime != null and startTime != ''"><![CDATA[and Date(ca.audit_time) >= #{startTime}]]></if>
-		<if test="endTime != null and endTime != ''"><![CDATA[and Date(ca.audit_time) <= #{endTime}]]></if>
-	</if>
+		FROM
+		company AS c
+		inner JOIN users AS u on c.is_area=u.is_area and (u.edu_area_school is null and c.edu_area_school is null or u.edu_area_school=c.edu_area_school)
+		AND u.user_type = 'USER_TYPE_ORG'
+		<if test="myType == 'group'">
+			inner join crm_company as cc on cc.company_id = c.id
+			inner join crm_sales_group as csg on csg.id = cc.group_id
+		</if>
+		where 1=1
+		<if test="isGL == 'no'">
+			<if test="groupId != null and groupId != ''">and cc.group_id = #{groupId}</if>
+		</if>
+		<if test="myType == 'group'">
+			and (cc.saler_id = '0' or cc.saler_id is null)
+			AND (cc.next_track_type is NULL OR cc.next_track_type !='CRM_TRACK_TYPE_DELETE')
+			<if test="startTime != null and startTime != ''"><![CDATA[and cc.create_time >= #{startTime}]]></if>
+			<if test="endTime != null and endTime != ''"><![CDATA[and cc.create_time <= #{endTime}]]></if>
+		</if>
+		<if test="status != null and status != ''">and c.status = #{status}
+			<if test="status == 1 or status == 5">
+				<if test="startTime != null and startTime != ''"><![CDATA[and Date(c.regist_time) >= #{startTime}]]></if>
+				<if test="endTime != null and endTime != ''"><![CDATA[and Date(c.regist_time) <= #{endTime}]]></if>
+			</if>
+		</if>
+		<if test="userMonile != null and userMonile != ''">and (u.mobile like '%${userMonile}%' or c.company_name like '%${userMonile}%')</if>
+		<if test="myType == 'com'">
+			<if test="startTime != null and startTime != ''"><![CDATA[and c.regist_time >= #{startTime}]]></if>
+			<if test="endTime != null and endTime != ''"><![CDATA[and c.regist_time <= #{endTime}]]></if>
+		</if>
+		<if test="crmFlag != null">and (c.crm_flag = #{crmFlag} or c.crm_flag is null)</if>
+		) com
+		LEFT JOIN company_authority AS ca ON com.id = ca.company_id
+		where 1=1
+		<if test="status == 2">
+			<if test="startTime != null and startTime != ''"><![CDATA[and Date(ca.submit_time) >= #{startTime}]]></if>
+			<if test="endTime != null and endTime != ''"><![CDATA[and Date(ca.submit_time) <= #{endTime}]]></if>
+		</if>
+		<if test="status == 4">
+			<if test="startTime != null and startTime != ''"><![CDATA[and Date(ca.audit_time) >= #{startTime}]]></if>
+			<if test="endTime != null and endTime != ''"><![CDATA[and Date(ca.audit_time) <= #{endTime}]]></if>
+		</if>
 		order by com.id desc
-		
+
 		limit #{firstIndex},#{pageSize}
 	</select>
-	
+
 	<select id="findTotalCount" parameterType="com.yuxin.wx.model.company.Company" resultType="Integer">
 		SELECT
-	count(com.id)
-FROM
-	(
-		SELECT
-			c.id,
-			c.company_name,
-			c.domain,
-			c.status,
-			c.company_logo,
-			u.username,
-			u.mobile
+		count(com.id)
 		FROM
-			company AS c
+		(
+		SELECT
+		c.id,
+		c.company_name,
+		c.domain,
+		c.status,
+		c.company_logo,
+		u.username,
+		u.mobile
+		FROM
+		company AS c
 		inner JOIN
-		users AS u ON u.company_id = c.id
-	AND u.user_type = 'USER_TYPE_ORG'
-	<if test="myType == 'group'">
-		inner join crm_company as cc on cc.company_id = c.id
-		inner join crm_sales_group as csg on csg.id = cc.group_id
-	</if>
-	where 1=1
-	<if test="isGL == 'no'">
-		<if test="groupId != null and groupId != ''">and cc.group_id = #{groupId}</if>
-	</if>
-	<if test="myType == 'group'">
-		and (cc.saler_id = '0' or cc.saler_id is null)
-		AND (cc.next_track_type is NULL OR cc.next_track_type !='CRM_TRACK_TYPE_DELETE')
-	</if>
-	<if test="status != null and status != ''">and c.status = #{status}
-		<if test="status == 1 or status == 5">
-			<if test="startTime != null and startTime != ''"><![CDATA[and Date(c.regist_time) >= #{startTime}]]></if>
-			<if test="endTime != null and endTime != ''"><![CDATA[and Date(c.regist_time) <= #{endTime}]]></if>
+		users AS u on c.is_area=u.is_area and (u.edu_area_school is null and c.edu_area_school is null or u.edu_area_school=c.edu_area_school)
+		AND u.user_type = 'USER_TYPE_ORG'
+		<if test="myType == 'group'">
+			inner join crm_company as cc on cc.company_id = c.id
+			inner join crm_sales_group as csg on csg.id = cc.group_id
 		</if>
-	</if>
-	<if test="userMonile != null and userMonile != ''">and (u.mobile like '%${userMonile}%' or c.company_name like '%${userMonile}%')</if>
-	<if test="myType == 'com'">
-		<if test="startTime != null and startTime != ''"><![CDATA[and c.regist_time >= #{startTime}]]></if>
-		<if test="endTime != null and endTime != ''"><![CDATA[and c.regist_time <= #{endTime}]]></if>
-	</if>
-	<if test="crmFlag != null">and (c.crm_flag = #{crmFlag} or c.crm_flag is null)</if>
-	) com
-LEFT JOIN company_authority AS ca ON com.id = ca.company_id
-where 1=1
-	<if test="status == 2">
-		<if test="startTime != null and startTime != ''"><![CDATA[and Date(ca.submit_time) >= #{startTime}]]></if>
-		<if test="endTime != null and endTime != ''"><![CDATA[and Date(ca.submit_time) <= #{endTime}]]></if>
-	</if>
-	<if test="status == 4">
-		<if test="startTime != null and startTime != ''"><![CDATA[and Date(ca.audit_time) >= #{startTime}]]></if>
-		<if test="endTime != null and endTime != ''"><![CDATA[and Date(ca.audit_time) <= #{endTime}]]></if>
-	</if>
+		where 1=1
+		<if test="isGL == 'no'">
+			<if test="groupId != null and groupId != ''">and cc.group_id = #{groupId}</if>
+		</if>
+		<if test="myType == 'group'">
+			and (cc.saler_id = '0' or cc.saler_id is null)
+			AND (cc.next_track_type is NULL OR cc.next_track_type !='CRM_TRACK_TYPE_DELETE')
+		</if>
+		<if test="status != null and status != ''">and c.status = #{status}
+			<if test="status == 1 or status == 5">
+				<if test="startTime != null and startTime != ''"><![CDATA[and Date(c.regist_time) >= #{startTime}]]></if>
+				<if test="endTime != null and endTime != ''"><![CDATA[and Date(c.regist_time) <= #{endTime}]]></if>
+			</if>
+		</if>
+		<if test="userMonile != null and userMonile != ''">and (u.mobile like '%${userMonile}%' or c.company_name like '%${userMonile}%')</if>
+		<if test="myType == 'com'">
+			<if test="startTime != null and startTime != ''"><![CDATA[and c.regist_time >= #{startTime}]]></if>
+			<if test="endTime != null and endTime != ''"><![CDATA[and c.regist_time <= #{endTime}]]></if>
+		</if>
+		<if test="crmFlag != null">and (c.crm_flag = #{crmFlag} or c.crm_flag is null)</if>
+		) com
+		LEFT JOIN company_authority AS ca ON com.id = ca.company_id
+		where 1=1
+		<if test="status == 2">
+			<if test="startTime != null and startTime != ''"><![CDATA[and Date(ca.submit_time) >= #{startTime}]]></if>
+			<if test="endTime != null and endTime != ''"><![CDATA[and Date(ca.submit_time) <= #{endTime}]]></if>
+		</if>
+		<if test="status == 4">
+			<if test="startTime != null and startTime != ''"><![CDATA[and Date(ca.audit_time) >= #{startTime}]]></if>
+			<if test="endTime != null and endTime != ''"><![CDATA[and Date(ca.audit_time) <= #{endTime}]]></if>
+		</if>
 		order by com.id desc
-		
+
 	</select>
-	
+
 	<!-- 查询一级图片库一级条件 -->
 	<select id="queryOneCondtion" resultMap="companyPicsMap">
-	    select id,pic_original_url, pic_tag,item_one_id,company_id from company_pics GROUP BY pic_tag having pic_tag !='' 
+		select id,pic_original_url, pic_tag,item_one_id,company_id from company_pics GROUP BY pic_tag having pic_tag !=''
 	</select>
-	
+
 	<!-- 图片库 -->
 	<select id="queryCompanyPrivatePic" resultMap="companyPicsMap" parameterType="com.yuxin.wx.vo.company.CompanyPicsVo">
-	   select id,pic_name,pic_original_url,pic_tag,pic_type,item_one_id,company_id from company_pics where pic_tag!=''
-	   <if test="picType != null and picType != ''">and pic_type = #{picType}</if>
-	    <if test="picTag != null and picTag != ''">and pic_tag = #{picTag}</if>
-	   <if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
-	    ORDER BY id DESC
-	   limit #{firstIndex},#{pageSize}
+		select id,pic_name,pic_original_url,pic_tag,pic_type,item_one_id,company_id from company_pics where pic_tag!=''
+		<if test="picType != null and picType != ''">and pic_type = #{picType}</if>
+		<if test="picTag != null and picTag != ''">and pic_tag = #{picTag}</if>
+		<if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
+		ORDER BY id DESC
+		limit #{firstIndex},#{pageSize}
 	</select>
-	
+
 	<select id="queryCompanyPrivatePicCount" resultType="int" parameterType="com.yuxin.wx.vo.company.CompanyPicsVo">
-	   select count(*) from company_pics where pic_tag!=''
-	   <if test="picType != null and picType != ''">and pic_type = #{picType}</if>
-	    <if test="picTag != null and picTag != ''">and pic_tag = #{picTag}</if>
-	   <if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
+		select count(*) from company_pics where pic_tag!=''
+		<if test="picType != null and picType != ''">and pic_type = #{picType}</if>
+		<if test="picTag != null and picTag != ''">and pic_tag = #{picTag}</if>
+		<if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
 	</select>
-	
+
 	<select id="queryCompanyByCopanyCondition" parameterType="com.yuxin.wx.model.company.Company" resultMap="companyResultMap">
-	    select
+		select
 		id,company_name,domain
 		from company
 		where 1=1
@@ -544,82 +543,82 @@ where 1=1
 		<if test="companyNameEn != null and companyNameEn != ''">and company_name_en = #{companyNameEn}</if>
 		limit 0,1;
 	</select>
-	
+
 	<select id="findStatus" parameterType="String" resultType="String">
 		select status from company where id=#{companyId}
 	</select>
-	
+
 	<select id="findCompanyId" resultType="Integer" parameterType="String">
 		select id from company
 		<if test="types != 'all'">
 			where buy_flag = 1
 		</if>
 	</select>
-	
+
 	<select id="findCompanyIdAndLevel" resultMap="companyResultMap">
-		select id,member_level from company 
-		where member_level > 20 
+		select id,member_level from company
+		where member_level > 20
 	</select>
-	
+
 	<select id="querySpecialName" parameterType="string" resultMap="companySpecialDomainList">
 		select id,domain_name from company_special_domain
 		where 1=1
 		<if test="domainName != null and domainName != ''">domain_name = #{domainName}</if>
 	</select>
-	
+
 	<!-- 查询所有公司信息 -->
 	<select id="queryAllCompany" resultMap="companyResultMap">
 		select
 		<include refid="table_columns" />
 		from company where status=3
 	</select>
-	
+
 	<!-- 查询消息列表 -->
 	<select id="queryMessageList" parameterType="com.yuxin.wx.vo.company.CompanyOrgMessageVo" resultMap="messageListVo">
-		select id,message_type,title,content,status,company_id,send_time,sender,sender_name 
+		select id,message_type,title,content,status,company_id,send_time,sender,sender_name
 		from company_org_message
 		<where>
-		    <if test="companyId != null and companyId != ''">company_id=#{companyId}</if> 
+			<if test="companyId != null and companyId != ''">company_id=#{companyId}</if>
 			<if test="messageType != null and messageType != ''">and message_type=#{messageType}</if>
 		</where>
 		order by status desc, update_time is null, update_time desc, send_time desc
 		limit #{firstIndex},#{pageSize}
 	</select>
-	
+
 	<select id="queryMessageCount" parameterType="com.yuxin.wx.vo.company.CompanyOrgMessageVo" resultType="int">
-		select count(id) 
+		select count(id)
 		from company_org_message
 		<where>
-		   <if test="companyId != null and companyId != ''">company_id=#{companyId}</if> 
+			<if test="companyId != null and companyId != ''">company_id=#{companyId}</if>
 			<if test="messageType != null and messageType != ''">and message_type=#{messageType}</if>
 		</where>
 	</select>
-	
-	
+
+
 	<select id="queryMessageServiceList" parameterType="com.yuxin.wx.vo.company.CompanyOrgMessageVo" resultMap="messageListVo">
-		select id,message_type,title,content,status,company_id,send_time,sender 
-		from company_org_message 
+		select id,message_type,title,content,status,company_id,send_time,sender
+		from company_org_message
 		where company_id = #{companyId} or company_id is null
 		and status = '1'
 		order by send_time desc
 		limit #{limit};
 	</select>
-	
+
 	<!-- 根据id查询消息 -->
 	<select id="queryMessageById" parameterType="com.yuxin.wx.vo.company.CompanyOrgMessageVo" resultMap="messageListVo">
 		select id,message_type,title,content,status,company_id,send_time,sender,sender_name
 		from company_org_message where id=#{id}
 	</select>
-	
+
 	<!-- 新增消息 -->
 	<insert id="insertMsg" parameterType="com.yuxin.wx.vo.company.CompanyOrgMessageVo" useGeneratedKeys="true" keyProperty="id">
-		insert into company_org_message(id,message_type,title,content,status,company_id,send_time,sender,sender_name) 
-values(#{id},#{messageType},#{title},#{content},#{status},#{companyId},#{sendTime},#{sender},#{senderName})
+		insert into company_org_message(id,message_type,title,content,status,company_id,send_time,sender,sender_name)
+		values(#{id},#{messageType},#{title},#{content},#{status},#{companyId},#{sendTime},#{sender},#{senderName})
 	</insert>
-	
+
 	<!-- 修改消息 -->
 	<update id="updateMsg" parameterType="com.yuxin.wx.vo.company.CompanyOrgMessageVo">
-	  update company_org_message
+		update company_org_message
 		<trim prefix="set" suffixOverrides=",">
 			<if test="messageType != null and messageType != ''">message_type = #{messageType},</if>
 			<if test="title != null and title != ''">title = #{title},</if>
@@ -634,38 +633,38 @@ values(#{id},#{messageType},#{title},#{content},#{status},#{companyId},#{sendTim
 	</update>
 	<!-- 删除消息 -->
 	<delete id="deleteMsg" parameterType="int">
-	      delete from company_org_message where id=#{id}
+		delete from company_org_message where id=#{id}
 	</delete>
 	<!-- 查询消息中心列表 -->
 	<select id="queryMessageCenterList" parameterType="com.yuxin.wx.vo.company.CompanyOrgMessageReadVo" resultMap="MessageCenteMap">
 		select a.id,a.message_type,a.title,a.content,a.status,a.company_id,a.send_time,0 as org_message_id,0 as read_flag
-	from company_org_message a
-	where (a.company_id is null
-	    or a.company_id= #{companyId})
-	and not exists(
-	    select 'x' from company_org_message_read b where a.id=b.org_message_id and b.company_id=#{companyId}) and a.status=1
+		from company_org_message a
+		where (a.company_id is null
+		or a.company_id= #{companyId})
+		and not exists(
+		select 'x' from company_org_message_read b where a.id=b.org_message_id and b.company_id=#{companyId}) and a.status=1
 		<if test="messageType != null and messageType != ''">and a.message_type = #{messageType}</if>
 		<if test="readFlag != null">and (b.read_flag=#{readFlag} or b.read_flag is null)</if>
 		<if test="registTime != null">and a.send_time <![CDATA[>]]> #{registTime}</if>
-		
-	union all
-	
-	select a.id,
-	       a.message_type,
-	       a.title,
-	       a.content,
-	       a.`status`,
-	       a.company_id,
-	       a.send_time,
-	       b.id,
-	       b.read_flag
-	  from company_org_message_read b LEFT JOIN company_org_message a on a.id= b.org_message_id
-	 WHERE b.company_id=#{companyId}
-	   and (a.company_id is null
-	    or a.company_id= #{companyId})
-	   and a.status= 1
-	   and(b.del_flag= 0
-	    or b.del_flag is null)
+
+		union all
+
+		select a.id,
+		a.message_type,
+		a.title,
+		a.content,
+		a.`status`,
+		a.company_id,
+		a.send_time,
+		b.id,
+		b.read_flag
+		from company_org_message_read b LEFT JOIN company_org_message a on a.id= b.org_message_id
+		WHERE b.company_id=#{companyId}
+		and (a.company_id is null
+		or a.company_id= #{companyId})
+		and a.status= 1
+		and(b.del_flag= 0
+		or b.del_flag is null)
 		<if test="messageType != null and messageType != ''">and a.message_type = #{messageType}</if>
 		<if test="readFlag != null">and (b.read_flag=#{readFlag} or b.read_flag is null)</if>
 		<if test="registTime != null">and a.send_time <![CDATA[>]]> #{registTime}</if>
@@ -674,32 +673,32 @@ values(#{id},#{messageType},#{title},#{content},#{status},#{companyId},#{sendTim
 	<select id="queryMessageCenterCount" parameterType="com.yuxin.wx.vo.company.CompanyOrgMessageReadVo" resultType="int">
 		select COUNT(*) from(
 		select a.id,a.message_type,a.title,a.content,a.status,a.company_id,a.send_time,0 as org_mssage_id,0 as read_flag
-	from company_org_message a
-	where (a.company_id is null
-	    or a.company_id= #{companyId})
-	and not exists(
-	    select 'x' from company_org_message_read b where a.id=b.org_message_id and b.company_id=#{companyId}) and a.status=1
+		from company_org_message a
+		where (a.company_id is null
+		or a.company_id= #{companyId})
+		and not exists(
+		select 'x' from company_org_message_read b where a.id=b.org_message_id and b.company_id=#{companyId}) and a.status=1
 		<if test="messageType != null and messageType != ''">and a.message_type = #{messageType}</if>
 		<if test="readFlag != null">and (b.read_flag=#{readFlag} or b.read_flag is null)</if>
 		<if test="registTime != null">and a.send_time <![CDATA[>]]> #{registTime}</if>
-	union all
-	
-	select a.id,
-	       a.message_type,
-	       a.title,
-	       a.content,
-	       a.`status`,
-	       a.company_id,
-	       a.send_time,
-	       b.id,
-	       b.read_flag
-	  from company_org_message_read b LEFT JOIN company_org_message a on a.id= b.org_message_id
-	 WHERE b.company_id=#{companyId}
-	   and (a.company_id is null
-	    or a.company_id= #{companyId})
-	   and a.status= 1
-	   and(b.del_flag= 0
-	    or b.del_flag is null)
+		union all
+
+		select a.id,
+		a.message_type,
+		a.title,
+		a.content,
+		a.`status`,
+		a.company_id,
+		a.send_time,
+		b.id,
+		b.read_flag
+		from company_org_message_read b LEFT JOIN company_org_message a on a.id= b.org_message_id
+		WHERE b.company_id=#{companyId}
+		and (a.company_id is null
+		or a.company_id= #{companyId})
+		and a.status= 1
+		and(b.del_flag= 0
+		or b.del_flag is null)
 		<if test="messageType != null and messageType != ''">and a.message_type = #{messageType}</if>
 		<if test="readFlag != null">and (b.read_flag=#{readFlag} or b.read_flag is null)</if>
 		<if test="registTime != null">and a.send_time <![CDATA[>]]> #{registTime}</if>
@@ -709,31 +708,31 @@ values(#{id},#{messageType},#{title},#{content},#{status},#{companyId},#{sendTim
 	<select id="queryCompanyNotReadNum" parameterType="com.yuxin.wx.vo.company.CompanyOrgMessageReadVo" resultType="int">
 		select COUNT(*) from(
 		select a.id,a.message_type,a.title,a.content,a.status,a.company_id,a.send_time,0 as org_mssage_id,0 as read_flag
-	from company_org_message a
-	where (a.company_id is null
-	    or a.company_id= #{companyId})
-	and not exists(
-	    select 'x' from company_org_message_read b where a.id=b.org_message_id and b.company_id=#{companyId}) and a.status=1
+		from company_org_message a
+		where (a.company_id is null
+		or a.company_id= #{companyId})
+		and not exists(
+		select 'x' from company_org_message_read b where a.id=b.org_message_id and b.company_id=#{companyId}) and a.status=1
 		<if test="registTime != null">and a.send_time <![CDATA[>]]> #{registTime}</if>
-	union all
-	
-	select a.id,
-	       a.message_type,
-	       a.title,
-	       a.content,
-	       a.`status`,
-	       a.company_id,
-	       a.send_time,
-	       b.id,
-	       b.read_flag
-	  from company_org_message_read b LEFT JOIN company_org_message a on a.id= b.org_message_id
-	 WHERE b.company_id=#{companyId}
-	   and (a.company_id is null
-	    or a.company_id= #{companyId})
-	   and a.status= 1
-	   and(b.del_flag= 0
-	    or b.del_flag is null)
-	    <if test="registTime != null">and a.send_time <![CDATA[>]]> #{registTime}</if>
+		union all
+
+		select a.id,
+		a.message_type,
+		a.title,
+		a.content,
+		a.`status`,
+		a.company_id,
+		a.send_time,
+		b.id,
+		b.read_flag
+		from company_org_message_read b LEFT JOIN company_org_message a on a.id= b.org_message_id
+		WHERE b.company_id=#{companyId}
+		and (a.company_id is null
+		or a.company_id= #{companyId})
+		and a.status= 1
+		and(b.del_flag= 0
+		or b.del_flag is null)
+		<if test="registTime != null">and a.send_time <![CDATA[>]]> #{registTime}</if>
 		) a where a.read_flag=0
 	</select>
 	<!-- 添加阅读记录 -->
@@ -750,23 +749,23 @@ values(#{id},#{messageType},#{title},#{content},#{status},#{companyId},#{sendTim
 		</trim>
 		<where>id = #{id}</where>
 	</update>
-	
+
 	<select id="querymessageCenterById" parameterType="map" resultMap="MessageCenteMap">
 		select id,company_id,org_message_id,read_flag,del_flag from company_org_message_read where org_message_id=#{id} and company_id=#{companyId} limit 1
 	</select>
-	
+
 	<!-- 公司注册来源统计 -->
 	<select id="querySourceList" parameterType="com.yuxin.wx.vo.company.CompanyTotalVo" resultMap="companyTotalMap">
 		select utm_source as sourceType, count(id) as registNum from company
 		<where>
-		  1=1
-		  	<if test="sourceType != null and sourceType != ''">and utm_source = #{sourceType}</if>
-		  	<if test="timeLen !=null and marks != null">
+			1=1
+			<if test="sourceType != null and sourceType != ''">and utm_source = #{sourceType}</if>
+			<if test="timeLen !=null and marks != null">
 				<choose>
 					<when test="marks == 'today'">and (TO_DAYS(NOW())-TO_DAYS(regist_time))=#{timeLen}</when>
 					<when test="marks == 'yesday'">and (TO_DAYS(NOW())-TO_DAYS(regist_time))=#{timeLen}</when>
 					<otherwise>
-					and TO_DAYS(NOW())-TO_DAYS(regist_time)<![CDATA[<=]]>#{timeLen}
+						and TO_DAYS(NOW())-TO_DAYS(regist_time)<![CDATA[<=]]>#{timeLen}
 					</otherwise>
 				</choose>
 			</if>
@@ -775,19 +774,19 @@ values(#{id},#{messageType},#{title},#{content},#{status},#{companyId},#{sendTim
 		</where>
 		GROUP BY utm_source
 	</select>
-	
+
 	<!-- 公司注册来源人数统计 -->
 	<select id="queryRegistNumList" parameterType="com.yuxin.wx.vo.company.CompanyTotalVo" resultMap="companyTotalMap">
 		select date_format(regist_time, "%Y-%m-%d") as registDate, count(id) as registNum from company
 		<where>
-		  1=1
-		  	<if test="sourceType != null and sourceType != ''">and utm_source = #{sourceType}</if>
-		  	<if test="timeLen !=null and marks != null">
+			1=1
+			<if test="sourceType != null and sourceType != ''">and utm_source = #{sourceType}</if>
+			<if test="timeLen !=null and marks != null">
 				<choose>
 					<when test="marks == 'today'">and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(date_format(regist_time, "%Y-%m-%d")))=#{timeLen}</when>
 					<when test="marks == 'yesday'">and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(date_format(regist_time, "%Y-%m-%d")))=#{timeLen}</when>
 					<otherwise>
-					and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(date_format(regist_time, "%Y-%m-%d")))<![CDATA[<=]]>#{timeLen}
+						and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(date_format(regist_time, "%Y-%m-%d")))<![CDATA[<=]]>#{timeLen}
 					</otherwise>
 				</choose>
 			</if>
@@ -799,34 +798,34 @@ values(#{id},#{messageType},#{title},#{content},#{status},#{companyId},#{sendTim
 	<select id="queryRegistNumListCount" parameterType="com.yuxin.wx.vo.company.CompanyTotalVo" resultType="int">
 		select count(*) from (select date_format(regist_time, "%Y-%m-%d") as registDate, count(id) as registNum from company
 		<where>
-		  1=1
-		  	<if test="sourceType != null and sourceType != ''">and utm_source = #{sourceType}</if>
-		  	<if test="timeLen !=null and marks != null">
+			1=1
+			<if test="sourceType != null and sourceType != ''">and utm_source = #{sourceType}</if>
+			<if test="timeLen !=null and marks != null">
 				<choose>
 					<when test="marks == 'today'">and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(date_format(regist_time, "%Y-%m-%d")))=#{timeLen}</when>
 					<when test="marks == 'yesday'">and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(date_format(regist_time, "%Y-%m-%d")))=#{timeLen}</when>
 					<otherwise>
-					and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(date_format(regist_time, "%Y-%m-%d")))<![CDATA[<=]]>#{timeLen}
+						and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(date_format(regist_time, "%Y-%m-%d")))<![CDATA[<=]]>#{timeLen}
 					</otherwise>
 				</choose>
 			</if>
 			<if test="startTime != null">and date_format(regist_time, "%Y-%m-%d") <![CDATA[>=]]> '${startTime}'</if>
 			<if test="endTime != null"> and date_format(regist_time, "%Y-%m-%d") <![CDATA[<=]]> '${endTime}'</if>
 		</where>
-		GROUP BY date_format(regist_time, "%Y-%m-%d")) a 
+		GROUP BY date_format(regist_time, "%Y-%m-%d")) a
 	</select>
 	<!-- 注册人数图表数据 -->
 	<select id="queryRegistNumChar" parameterType="com.yuxin.wx.vo.company.CompanyTotalVo" resultMap="companyTotalMap">
 		select date_format(regist_time, "%Y-%m-%d") as registDate, count(id) as registNum from company
 		<where>
-		  1=1
-		  	<if test="sourceType != null and sourceType != ''">and utm_source = #{sourceType}</if>
-		  	<if test="timeLen !=null and marks != null">
+			1=1
+			<if test="sourceType != null and sourceType != ''">and utm_source = #{sourceType}</if>
+			<if test="timeLen !=null and marks != null">
 				<choose>
 					<when test="marks == 'today'">and (TO_DAYS(NOW())-TO_DAYS(regist_time))=#{timeLen}</when>
 					<when test="marks == 'yesday'">and (TO_DAYS(NOW())-TO_DAYS(regist_time))=#{timeLen}</when>
 					<otherwise>
-					and TO_DAYS(NOW())-TO_DAYS(regist_time)<![CDATA[<=]]>#{timeLen}
+						and TO_DAYS(NOW())-TO_DAYS(regist_time)<![CDATA[<=]]>#{timeLen}
 					</otherwise>
 				</choose>
 			</if>
@@ -835,7 +834,7 @@ values(#{id},#{messageType},#{title},#{content},#{status},#{companyId},#{sendTim
 		</where>
 		GROUP BY date_format(regist_time, "%Y-%m-%d")
 	</select>
-	
+
 	<select id="queryCompanyBuyFlag" resultMap="companyResultMap" parameterType="com.yuxin.wx.model.company.Company">
 		select
 		<include refid="table_columns" />
@@ -843,7 +842,7 @@ values(#{id},#{messageType},#{title},#{content},#{status},#{companyId},#{sendTim
 		<include refid="page_where" />
 	</select>
 	<select id="queryRegisterCompany" parameterType="map" resultType="com.yuxin.wx.vo.company.CompanyUserVo">
-		select 
+		select
 		c.id,
 		c.member_level memberLevel,
 		c.company_name companyName,
@@ -874,92 +873,93 @@ values(#{id},#{messageType},#{title},#{content},#{status},#{companyId},#{sendTim
 		c.buy_flag buyFlag,
 		u.mobile,
 		u.username
-		from company c left join users u on c.id=u.company_id
+		from company c
+		left join users u on c.is_area=u.is_area and (u.edu_area_school is null and c.edu_area_school is null or u.edu_area_school=c.edu_area_school)
 		<where>
-		   1=1 and u.user_type='USER_TYPE_ORG'
-		  	<if test="sourceType != null and sourceType != ''">and c.utm_source = #{sourceType}</if>
-		  	<if test="timeLen !=null and marks != null">
+			1=1 and u.user_type='USER_TYPE_ORG'
+			<if test="sourceType != null and sourceType != ''">and c.utm_source = #{sourceType}</if>
+			<if test="timeLen !=null and marks != null">
 				<choose>
 					<when test="marks == 'today'">and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(date_format(regist_time, "%Y-%m-%d")))=#{timeLen}</when>
 					<when test="marks == 'yesday'">and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(date_format(regist_time, "%Y-%m-%d")))=#{timeLen}</when>
 					<otherwise>
-					and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(date_format(regist_time, "%Y-%m-%d")))<![CDATA[<=]]>#{timeLen}
+						and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(date_format(regist_time, "%Y-%m-%d")))<![CDATA[<=]]>#{timeLen}
 					</otherwise>
 				</choose>
 			</if>
 			<if test="startTime != null">and date_format(regist_time, "%Y-%m-%d") <![CDATA[>=]]> '${startTime}'</if>
 			<if test="endTime != null"> and date_format(regist_time, "%Y-%m-%d") <![CDATA[<=]]> '${endTime}'</if>
 		</where>
-	
+
 	</select>
 	<select id="checkCompanyDomain" resultMap="companyResultMap" parameterType="string" >
-		select 
-		<include refid="table_columns" /> 
-		from company 
+		select
+		<include refid="table_columns" />
+		from company
 		where domain=#{domain}
 	</select>
-	
+
 	<select id="checkCompanyName" resultMap="companyResultMap" parameterType="string" >
-		select 
-		<include refid="table_columns" /> 
-		from company 
+		select
+		<include refid="table_columns" />
+		from company
 		where company_name=#{companyName}
 	</select>
-	
+
 	<!-- 查询会员等级私有云图片 -->
 	<select id="queryPrivatePic" resultMap="companyPicsMap" parameterType="com.yuxin.wx.vo.company.CompanyPicsVo">
-	   select id,pic_name,pic_original_url,pic_big_url,pic_middle_url,pic_small_url,pic_tag,pic_type,item_one_id,company_id from company_pics 
-	   where company_id=#{companyId} 
-	   <if test="picType != null and picType != ''">and pic_type = #{picType}</if>
-	   <if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
-	   AND (pic_tag ='' or pic_tag is null)
-	   ORDER BY id DESC
-	   limit #{firstIndex},#{pageSize}
+		select id,pic_name,pic_original_url,pic_big_url,pic_middle_url,pic_small_url,pic_tag,pic_type,item_one_id,company_id from company_pics
+		where company_id=#{companyId}
+		<if test="picType != null and picType != ''">and pic_type = #{picType}</if>
+		<if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
+		AND (pic_tag ='' or pic_tag is null)
+		ORDER BY id DESC
+		limit #{firstIndex},#{pageSize}
 	</select>
 	<!-- 查询会员等级私有云图片count -->
 	<select id="queryPrivatePicCount" resultType="int" parameterType="com.yuxin.wx.vo.company.CompanyPicsVo">
-	   select count(*) from company_pics 
-	   where company_id=#{companyId} 
-	   <if test="picType != null and picType != ''">and pic_type = #{picType}</if>
-	   <if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
-	  AND (pic_tag ='' or pic_tag is null)
+		select count(*) from company_pics
+		where company_id=#{companyId}
+		<if test="picType != null and picType != ''">and pic_type = #{picType}</if>
+		<if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
+		AND (pic_tag ='' or pic_tag is null)
 	</select>
 	<!-- 查询会员等级公有云图片 -->
-		<select id="queryPublicPic" resultMap="companyPicsMap" parameterType="com.yuxin.wx.vo.company.CompanyPicsVo">
-	   select id,pic_name,pic_original_url,pic_big_url,pic_middle_url,pic_small_url,pic_tag,pic_type,item_one_id,company_id from company_pics 
-	   where company_id=0 
-	   <if test="picType != null and picType != ''">and pic_type = #{picType}</if>
-	   <if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
-	   ORDER BY id asc
-	   limit #{firstIndex},#{pageSize}
+	<select id="queryPublicPic" resultMap="companyPicsMap" parameterType="com.yuxin.wx.vo.company.CompanyPicsVo">
+		select id,pic_name,pic_original_url,pic_big_url,pic_middle_url,pic_small_url,pic_tag,pic_type,item_one_id,company_id from company_pics
+		where company_id=0
+		<if test="picType != null and picType != ''">and pic_type = #{picType}</if>
+		<if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
+		ORDER BY id asc
+		limit #{firstIndex},#{pageSize}
 	</select>
 	<!-- 查询会员等级公有云图片count -->
 	<select id="queryPublicPicCount" resultType="int" parameterType="com.yuxin.wx.vo.company.CompanyPicsVo">
-	   select count(*) from company_pics 
-	   where company_id=0
-	   <if test="picType != null and picType != ''">and pic_type = #{picType}</if>
-	   <if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
+		select count(*) from company_pics
+		where company_id=0
+		<if test="picType != null and picType != ''">and pic_type = #{picType}</if>
+		<if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
 	</select>
-	
+
 	<select id="findDomainById" parameterType="Integer" resultType="String">
 		select domain from company
 		where id = #{id}
 	</select>
-	
+
 	<select id="queryRegisterInfoList" resultType="com.yuxin.wx.vo.query.RegisterInfoVo" parameterType="com.yuxin.wx.vo.query.RegisterInfoVo">
 		select c.utm_url as utmUrl,
-			   u.mobile as mobile,
-			   c.regist_time as registTime,
-			   c.company_name as companyName,
-			   u.username as userName
-		from company c LEFT JOIN users u on c.id=u.company_id and u.user_type='USER_TYPE_ORG'
+		u.mobile as mobile,
+		c.regist_time as registTime,
+		c.company_name as companyName,
+		u.username as userName
+		from company c LEFT JOIN users u on c.is_area=u.is_area and (u.edu_area_school is null and c.edu_area_school is null or u.edu_area_school=c.edu_area_school)  and u.user_type='USER_TYPE_ORG'
 		where c.utm_url is not NULL and utm_url != ''
 		<if test="timeLen !=null and marks != null">
 			<choose>
 				<when test="marks == 'today'">and (TO_DAYS(NOW())-TO_DAYS(c.regist_time))=#{timeLen}</when>
 				<when test="marks == 'yesday'">and (TO_DAYS(NOW())-TO_DAYS(c.regist_time))=#{timeLen}</when>
 				<otherwise>
-				and TO_DAYS(NOW())-TO_DAYS(c.regist_time)<![CDATA[<=]]>#{timeLen}
+					and TO_DAYS(NOW())-TO_DAYS(c.regist_time)<![CDATA[<=]]>#{timeLen}
 				</otherwise>
 			</choose>
 		</if>
@@ -968,38 +968,38 @@ values(#{id},#{messageType},#{title},#{content},#{status},#{companyId},#{sendTim
 		order by c.regist_time desc
 		limit #{firstIndex},#{pageSize}
 	</select>
-	
+
 	<select id="queryRegisterInfoCount" resultType="int" parameterType="com.yuxin.wx.vo.query.RegisterInfoVo">
-		select count(*)
-		from company c LEFT JOIN users u on c.id=u.company_id and u.user_type='USER_TYPE_ORG'
+		select count(1)
+		from company c LEFT JOIN users u on c.is_area=u.is_area and (u.edu_area_school is null and c.edu_area_school is null or u.edu_area_school=c.edu_area_school)  and u.user_type='USER_TYPE_ORG'
 		where c.utm_url is not NULL and utm_url != ''
 		<if test="timeLen !=null and marks != null">
 			<choose>
 				<when test="marks == 'today'">and (TO_DAYS(NOW())-TO_DAYS(c.regist_time))=#{timeLen}</when>
 				<when test="marks == 'yesday'">and (TO_DAYS(NOW())-TO_DAYS(c.regist_time))=#{timeLen}</when>
 				<otherwise>
-				and TO_DAYS(NOW())-TO_DAYS(c.regist_time)<![CDATA[<=]]>#{timeLen}
+					and TO_DAYS(NOW())-TO_DAYS(c.regist_time)<![CDATA[<=]]>#{timeLen}
 				</otherwise>
 			</choose>
 		</if>
 		<if test="startTime != null">and c.regist_time <![CDATA[>=]]> '${startTime}'</if>
 		<if test="endTime != null">and c.regist_time <![CDATA[<=]]> '${endTime}'</if>
 	</select>
-	
+
 	<select id="queryRegisterInfoExport" resultType="com.yuxin.wx.vo.query.RegisterInfoVo" parameterType="com.yuxin.wx.vo.query.RegisterInfoVo">
 		select c.utm_url as utmUrl,
-			   u.mobile as mobile,
-			   c.regist_time as registTime,
-			   c.company_name as companyName,
-			   u.username as userName
-		from company c LEFT JOIN users u on c.id=u.company_id and u.user_type='USER_TYPE_ORG'
+		u.mobile as mobile,
+		c.regist_time as registTime,
+		c.company_name as companyName,
+		u.username as userName
+		from company c LEFT JOIN users u on c.is_area=u.is_area and (u.edu_area_school is null and c.edu_area_school is null or u.edu_area_school=c.edu_area_school)  and u.user_type='USER_TYPE_ORG'
 		where c.utm_url is not NULL and utm_url != ''
 		<if test="timeLen !=null and marks != null">
 			<choose>
 				<when test="marks == 'today'">and (TO_DAYS(NOW())-TO_DAYS(c.regist_time))=#{timeLen}</when>
 				<when test="marks == 'yesday'">and (TO_DAYS(NOW())-TO_DAYS(c.regist_time))=#{timeLen}</when>
 				<otherwise>
-				and TO_DAYS(NOW())-TO_DAYS(c.regist_time)<![CDATA[<=]]>#{timeLen}
+					and TO_DAYS(NOW())-TO_DAYS(c.regist_time)<![CDATA[<=]]>#{timeLen}
 				</otherwise>
 			</choose>
 		</if>
@@ -1007,7 +1007,7 @@ values(#{id},#{messageType},#{title},#{content},#{status},#{companyId},#{sendTim
 		<if test="endTime != null and endTime != ''">and c.regist_time <![CDATA[<=]]> '${endTime}'</if>
 		order by c.regist_time desc
 	</select>
-	
+
 	<select id="queryServiceOpenFlag" resultType="int" parameterType="map">
 		select del_flag
 		from sys_config_service

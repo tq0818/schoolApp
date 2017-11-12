@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yuxin.wx.system.mapper.SysConfigTeacherMapper">
 	<resultMap type="com.yuxin.wx.model.system.SysConfigTeacher"
-		id="sysConfigTeacherResultMap">
+			   id="sysConfigTeacherResultMap">
 		<result property="id" column="id" />
 		<result property="name" column="name" />
 		<result property="teacherType" column="teacher_type" />
@@ -50,13 +50,13 @@
 	</resultMap>
 
 	<resultMap type="com.yuxin.wx.model.system.SysConfigTeacher"
-		id="sysConfigTeacherResultSimpleVo">
+			   id="sysConfigTeacherResultSimpleVo">
 		<result property="id" column="id" />
 		<result property="name" column="name" />
 	</resultMap>
 
 	<resultMap type="com.yuxin.wx.vo.system.SysConfigTeachersVo"
-		id="teacheDtailMap">
+			   id="teacheDtailMap">
 		<result property="id" column="id" />
 		<result property="teacherName" column="name" />
 		<result property="mobile" column="mobile" />
@@ -64,7 +64,7 @@
 		<result property="itemOneId" column="item_one_id" />
 		<result property="itemSecondId" column="item_second_id" />
 	</resultMap>
-	
+
 	<resultMap type="com.yuxin.wx.vo.system.TeachersVo" id="teachersVoMap">
 		<result property="id" column="id" />
 		<result property="name" column="name" />
@@ -85,7 +85,6 @@
 		<result property="itemOneName" column="item_name"/>
 		<result property="inviteCode" column="invite_code" />
 	</resultMap>
-
 	<sql id="table_columns">
 		id,
 		name,
@@ -105,7 +104,6 @@
 		emergency_contact_name,
 		emergency_contact_phone,
 		work_time,
-		school_id,
 		unionpay_no,
 		bank_name,
 		bank_account_name,
@@ -116,7 +114,6 @@
 		creator,
 		update_time,
 		updator,
-		company_id,
 		resume,
 		education_code,
 		headpic_url,
@@ -128,7 +125,53 @@
 		school_name,
 		sort_id,
 		school_short_name,
-		remark
+		remark,
+		edu_area_school,
+		is_area
+	</sql>
+	<sql id="table_columns_st">
+		st.id,
+		st.name,
+		st.teacher_type,
+		st.sex,
+		st.mobile,
+		st.home_phone,
+		st.birthday,
+		st.id_number,
+		st.email,
+		st.job_type,
+		st.home_address,
+		st.address,
+		st.company,
+		st.post,
+		st.work_phone,
+		st.emergency_contact_name,
+		st.emergency_contact_phone,
+		st.work_time,
+		st.unionpay_no,
+		st.bank_name,
+		st.bank_account_name,
+		st.bank_account_num,
+		st.status_code,
+		st.del_flag,
+		st.create_time,
+		st.creator,
+		st.update_time,
+		st.updator,
+		st.resume,
+		st.education_code,
+		st.headpic_url,
+		st.user_id,
+		st.is_distinguished,
+		st.invite_code,
+		st.teacher_level,
+		st.teacher_area,
+		st.school_name,
+		st.sort_id,
+		st.school_short_name,
+		st.remark,
+		st.edu_area_school,
+		st.is_area
 	</sql>
 	<sql id="entity_properties">
 		#{id},
@@ -149,7 +192,6 @@
 		#{emergencyContactName},
 		#{emergencyContactPhone},
 		#{workTime},
-		#{schoolId},
 		#{unionpayNo},
 		#{bankName},
 		#{bankAccountName},
@@ -177,26 +219,103 @@
 
 	<!-- 适用于主键自增类型 -->
 	<insert id="insert" parameterType="com.yuxin.wx.model.system.SysConfigTeacher"
-		useGeneratedKeys="true" keyProperty="id">
+			useGeneratedKeys="true" keyProperty="id">
 		insert into sys_config_teacher(
 		<include refid="table_columns" />
 		)
-		values (
-		<include refid="entity_properties" />
-		)
+		select
+		#{id},
+		#{name},
+		#{teacherType},
+		#{sex},
+		#{mobile},
+		#{homePhone},
+		#{birthday},
+		#{idNumber},
+		#{email},
+		#{jobType},
+		#{homeAddress},
+		#{address},
+		#{company},
+		#{post},
+		#{workPhone},
+		#{emergencyContactName},
+		#{emergencyContactPhone},
+		#{workTime},
+		#{unionpayNo},
+		#{bankName},
+		#{bankAccountName},
+		#{bankAccountNum},
+		#{statusCode},
+		#{delFlag},
+		#{createTime},
+		#{creator},
+		#{updateTime},
+		#{updator},
+		#{resume},
+		#{educationCode},
+		#{headpicUrl},
+		#{userId},
+		#{isDistinguished},
+		#{inviteCode},
+		#{teacherLevel},
+		#{teacherArea},
+		#{schoolName},
+		#{sortId},
+		#{schoolShortName},
+		#{remark},edu_area_school,is_area
+		from company where id=#{companyId}
 	</insert>
 
 	<!-- 批量添加 适用于主键自增类型 不支持返回主键 -->
 	<insert id="batchInsert" parameterType="java.util.List"
-		useGeneratedKeys="true">
+			useGeneratedKeys="true">
 		insert into sys_config_teacher(
 		<include refid="table_columns" />
 		)
-		values
-		<foreach item="item" collection="list" separator=",">
-			(
-			<include refid="entity_properties" />
-			)
+		<foreach item="item" collection="list" separator="union">
+			select
+			#{item.id},
+			#{item.name},
+			#{item.teacherType},
+			#{item.sex},
+			#{item.mobile},
+			#{item.homePhone},
+			#{item.birthday},
+			#{item.idNumber},
+			#{item.email},
+			#{item.jobType},
+			#{item.homeAddress},
+			#{item.address},
+			#{item.company},
+			#{item.post},
+			#{item.workPhone},
+			#{item.emergencyContactName},
+			#{item.emergencyContactPhone},
+			#{item.workTime},
+			#{item.unionpayNo},
+			#{item.bankName},
+			#{item.bankAccountName},
+			#{item.bankAccountNum},
+			#{item.statusCode},
+			#{item.delFlag},
+			#{item.createTime},
+			#{item.creator},
+			#{item.updateTime},
+			#{item.updator},
+			#{item.resume},
+			#{item.educationCode},
+			#{item.headpicUrl},
+			#{item.userId},
+			#{item.isDistinguished},
+			#{item.inviteCode},
+			#{item.teacherLevel},
+			#{item.teacherArea},
+			#{item.schoolName},
+			#{item.sortId},
+			#{item.schoolShortName},
+			#{item.remark}
+			from company where id=#{companyId}
 		</foreach>
 	</insert>
 
@@ -211,7 +330,7 @@
 		delete from sys_config_teacher
 		where id in
 		<foreach item="item" collection="array" open="(" separator=","
-			close=")">
+				 close=")">
 			#{item}
 		</foreach>
 	</delete>
@@ -236,7 +355,6 @@
 			<if test="emergencyContactName != null and emergencyContactName != ''">emergency_contact_name = #{emergencyContactName},</if>
 			<if test="emergencyContactPhone != null and emergencyContactPhone != ''">emergency_contact_phone = #{emergencyContactPhone},</if>
 			<if test="workTime != null and workTime != ''">work_time = #{workTime},</if>
-			<if test="schoolId != null and schoolId != ''">school_id = #{schoolId},</if>
 			<if test="unionpayNo != null and unionpayNo != ''">unionpay_no = #{unionpayNo},</if>
 			<if test="bankName != null and bankName != ''">bank_name = #{bankName},</if>
 			<if test="bankAccountName != null and bankAccountName != ''">bank_account_name = #{bankAccountName},</if>
@@ -247,7 +365,6 @@
 			<if test="creator != null and creator != ''">creator = #{creator},</if>
 			<if test="updateTime != null and updateTime != ''">update_time = #{updateTime},</if>
 			<if test="updator != null and updator != ''">updator = #{updator},</if>
-			<if test="companyId != null and companyId != ''">company_id = #{companyId},</if>
 			<if test="resume != null ">resume = #{resume},</if>
 			<if test="teacherId != null and teacherId != ''">teacher_id = #{teacherId},</if>
 			<if test="educationCode != null and educationCode != ''">education_code = #{educationCode},</if>
@@ -255,7 +372,6 @@
 			<if test="headpicUrl != null and headpicUrl != ''">headpic_url = #{headpicUrl},</if>
 			<if test="isDistinguished != null">is_distinguished = #{isDistinguished},</if>
 			<if test="inviteCode != null and inviteCode !=''">invite_code = #{inviteCode},</if>
-
 			<if test="teacherLevel != null and teacherLevel !=''">teacher_level = #{teacherLevel},</if>
 			<if test="teacherArea != null and teacherArea !=''">teacher_area = #{teacherArea},</if>
 			<if test="schoolName != null and schoolName !=''">school_name = #{schoolName},</if>
@@ -264,7 +380,7 @@
 		</trim>
 		<where>id = #{id}</where>
 	</update>
-	
+
 	<update id="updateauthTeacher" parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
 		update sys_config_teacher
 		<trim prefix="set" suffixOverrides=",">
@@ -285,7 +401,6 @@
 			<if test="emergencyContactName != null and emergencyContactName != ''">emergency_contact_name = #{emergencyContactName},</if>
 			<if test="emergencyContactPhone != null and emergencyContactPhone != ''">emergency_contact_phone = #{emergencyContactPhone},</if>
 			<if test="workTime != null and workTime != ''">work_time = #{workTime},</if>
-			<if test="schoolId != null and schoolId != ''">school_id = #{schoolId},</if>
 			<if test="unionpayNo != null and unionpayNo != ''">unionpay_no = #{unionpayNo},</if>
 			<if test="bankName != null and bankName != ''">bank_name = #{bankName},</if>
 			<if test="bankAccountName != null and bankAccountName != ''">bank_account_name = #{bankAccountName},</if>
@@ -296,7 +411,6 @@
 			<if test="creator != null and creator != ''">creator = #{creator},</if>
 			<if test="updateTime != null and updateTime != ''">update_time = #{updateTime},</if>
 			<if test="updator != null and updator != ''">updator = #{updator},</if>
-			<if test="companyId != null and companyId != ''">company_id = #{companyId},</if>
 			<if test="resume != null and resume != ''">resume = #{resume},</if>
 			<if test="teacherId != null and teacherId != ''">teacher_id = #{teacherId},</if>
 			<if test="educationCode != null and educationCode != ''">education_code = #{educationCode},</if>
@@ -308,13 +422,13 @@
 			<if test="teacherArea != null and teacherArea !=''">teacher_area = #{teacherArea},</if>
 			<if test="schoolName != null and schoolName !=''">school_name = #{schoolName},</if>
 			<if test="schoolShortName != null and schoolShortName !=''">school_short_name = #{schoolShortName},</if>
-			
+
 		</trim>
 		<where>id = #{id}</where>
 	</update>
 
 	<select id="findById" resultMap="sysConfigTeacherResultMap"
-		parameterType="String">
+			parameterType="String">
 		select
 		<include refid="table_columns" />
 		from sys_config_teacher
@@ -389,32 +503,58 @@
 	</sql>
 
 	<select id="page" resultMap="sysConfigTeacherResultMap"
-		parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
+			parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
 		select
-		<include refid="table_columns" />
-		from sys_config_teacher
-		where teacher_type!='PERSON_TEACHER'
-		<if test="name != null and name != ''">and name like '%${name}%'</if>
-		<if test="teacherType != null and teacherType != ''">and teacher_type = #{teacherType}</if>
-		<if test="statusCode != null and statusCode != ''">and status_code = #{statusCode}</if>
-		<if test="mobile != null and mobile != ''">and mobile = #{mobile}</if>
-		<if test="schoolId != null and schoolId != ''">and school_id = #{schoolId}</if>
-		<if test="userId != null and userId !=''">and user_id = #{userId}</if>
+		<include refid="table_columns_st" />
+		from sys_config_teacher st
+		inner join company c on c.is_area=st.is_area and c.is_area!=0 and (st.edu_area_school is null and c.edu_area_school is null or st.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		where st.teacher_type!='PERSON_TEACHER'
+		<if test="name != null and name != ''">and st.name like '%${name}%'</if>
+		<if test="teacherType != null and teacherType != ''">and st.teacher_type = #{teacherType}</if>
+		<if test="statusCode != null and statusCode != ''">and st.status_code = #{statusCode}</if>
+		<if test="mobile != null and mobile != ''">and st.mobile = #{mobile}</if>
+		<if test="userId != null and userId !=''">and st.user_id = #{userId}</if>
+		union
+		select
+		<include refid="table_columns_st" />
+		from sys_config_teacher st
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		where st.teacher_type!='PERSON_TEACHER'
+		<if test="name != null and name != ''">and st.name like '%${name}%'</if>
+		<if test="teacherType != null and teacherType != ''">and st.teacher_type = #{teacherType}</if>
+		<if test="statusCode != null and statusCode != ''">and st.status_code = #{statusCode}</if>
+		<if test="mobile != null and mobile != ''">and st.mobile = #{mobile}</if>
+		<if test="userId != null and userId !=''">and st.user_id = #{userId}</if>
 		ORDER BY update_time DESC
 		limit #{firstIndex},#{pageSize}
 	</select>
 
 	<select id="pageCount" resultType="int"
-		parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
-		select count(id) from sys_config_teacher
+			parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
+		select id from(select count(st.id) id from sys_config_teacher st
+		inner join company c on c.is_area=st.is_area and c.is_area!=0 and (st.edu_area_school is null and c.edu_area_school is null or st.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
 		where
-		teacher_type!='PERSON_TEACHER'
-		<if test="name != null and name != ''">and name like '%${name}%'</if>
-		<if test="teacherType != null and teacherType != ''">and teacher_type = #{teacherType}</if>
-		<if test="statusCode != null and statusCode != ''">and status_code = #{statusCode}</if>
-		<if test="mobile != null and mobile != ''">and mobile = #{mobile}</if>
-		<if test="schoolId != null and schoolId != ''">and school_id = #{schoolId}</if>
-		<if test="userId != null and userId !=''">and user_id = #{userId}</if>
+		st.teacher_type!='PERSON_TEACHER'
+		<if test="name != null and name != ''">and st.name like '%${name}%'</if>
+		<if test="teacherType != null and teacherType != ''">and st.teacher_type = #{teacherType}</if>
+		<if test="statusCode != null and statusCode != ''">and st.status_code = #{statusCode}</if>
+		<if test="mobile != null and mobile != ''">and st.mobile = #{mobile}</if>
+		<if test="userId != null and userId !=''">and st.user_id = #{userId}</if>
+		union
+		select count(st.id) id from sys_config_teacher st
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		where
+		st.teacher_type!='PERSON_TEACHER'
+		<if test="name != null and name != ''">and st.name like '%${name}%'</if>
+		<if test="teacherType != null and teacherType != ''">and st.teacher_type = #{teacherType}</if>
+		<if test="statusCode != null and statusCode != ''">and st.status_code = #{statusCode}</if>
+		<if test="mobile != null and mobile != ''">and st.mobile = #{mobile}</if>
+		<if test="userId != null and userId !=''">and st.user_id = #{userId}</if>
+		) c order by c.id desc limit 1
 	</select>
 
 	<!-- 其他自定义SQL -->
@@ -423,8 +563,20 @@
 		SELECT
 		sct.id,
 		sct.name
-		FROM sys_config_teacher sct WHERE
-		sct.school_id = #{schoolId} and
+		FROM sys_config_teacher sct
+		inner join company c on c.is_area=sct.is_area and c.is_area!=0 and (sct.edu_area_school is null and c.edu_area_school is null or sct.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		WHERE
+		sct.teacher_type = #{teacherType}
+		and sct.del_flag = 0
+		union
+		SELECT
+		sct.id,
+		sct.name
+		FROM sys_config_teacher sct
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		WHERE
 		sct.teacher_type = #{teacherType}
 		and sct.del_flag = 0
 	</select>
@@ -433,8 +585,20 @@
 		SELECT
 		sct.id,
 		sct.name
-		FROM sys_config_teacher sct WHERE
-		sct.school_id = #{schoolId} and
+		FROM sys_config_teacher sct
+		inner join company c on c.is_area=sct.is_area and c.is_area!=0 and (sct.edu_area_school is null and c.edu_area_school is null or sct.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		WHERE
+		sct.teacher_type != 'PERSON_TEACHER'
+		and sct.del_flag = 0
+		union
+		SELECT
+		sct.id,
+		sct.name
+		FROM sys_config_teacher sct
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		WHERE
 		sct.teacher_type != 'PERSON_TEACHER'
 		and sct.del_flag = 0
 	</select>
@@ -445,24 +609,36 @@
 		sct.name
 		FROM
 		sys_config_teacher sct
+		inner join company c on c.is_area=sct.is_area and c.is_area!=0 and (sct.edu_area_school is null and c.edu_area_school is null or sct.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
 		LEFT JOIN sys_config_teacher_lesson sctl ON sct.id =
 		sctl.teacher_id
-		WHERE
-		sct.school_id = #{schoolId} and sct.teacher_type =
+		WHERE sct.teacher_type =
+		#{teacherType} and sctl.module_id = #{moduleId} and sct.del_flag = 0
+		union
+		SELECT
+		sct.id,
+		sct.name
+		FROM
+		sys_config_teacher sct
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		LEFT JOIN sys_config_teacher_lesson sctl ON sct.id =
+		sctl.teacher_id
+		WHERE sct.teacher_type =
 		#{teacherType} and sctl.module_id = #{moduleId} and sct.del_flag = 0
 	</select>
 
 
 	<!-- 分页查询教师信息 -->
 	<select id="queryTeachersByKeys" resultMap="sysConfigTeacherResultMap"
-		parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
+			parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
 		SELECT
-		*
-		FROM
-		sys_config_teacher a
-		left join
-		sys_config_teacher_lesson b
-		on a.id = b.teacher_id
+		a.*,b.*
+		FROM sys_config_teacher a
+		inner join company c on c.is_area=a.is_area and c.is_area!=0 and (a.edu_area_school is null and c.edu_area_school is null or a.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		left join sys_config_teacher_lesson b on a.id = b.teacher_id
 		WHERE a.teacher_type='PERSON_TEACHER'
 		<if test="itemOneId != null and itemOneId != ''">and b.item_one_id = #{itemOneId}</if>
 		<if test="itemSecondId != null and itemSecondId != ''">and b.item_second_id= #{itemSecondId}</if>
@@ -471,18 +647,34 @@
 		<if test="mobile != null and mobile != ''">and a.mobile = #{mobile}</if>
 		<if test="statusCode != null and statusCode != ''">and status_code = #{statusCode}</if>
 		<if test="idNumber != null and idNumber != ''">and id_number = #{idNumber}</if>
-		<if test="schoolId != null and schoolId != ''">and school_id = #{schoolId}</if>
-		GROUP BY a.id
-		ORDER BY a.update_time DESC
+		union
+		SELECT
+		a.*,b.*
+		FROM sys_config_teacher a
+		inner join company c on c.is_area=1
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		left join sys_config_teacher_lesson b on a.id = b.teacher_id
+		WHERE a.teacher_type='PERSON_TEACHER'
+		<if test="itemOneId != null and itemOneId != ''">and b.item_one_id = #{itemOneId}</if>
+		<if test="itemSecondId != null and itemSecondId != ''">and b.item_second_id= #{itemSecondId}</if>
+		<if test="moduleId != null and moduleId != ''">and b.module_id= #{moduleId}</if>
+		<if test="name != null and name != ''">and a.name like '%${name}%'</if>
+		<if test="mobile != null and mobile != ''">and a.mobile = #{mobile}</if>
+		<if test="statusCode != null and statusCode != ''">and status_code = #{statusCode}</if>
+		<if test="idNumber != null and idNumber != ''">and id_number = #{idNumber}</if>
+		GROUP BY id
+		ORDER BY update_time DESC
 		limit #{firstIndex},#{pageSize}
 	</select>
 
 	<select id="queryTeachersByKeysCount" resultType="Integer"
-		parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
-		select count(1) from (SELECT
+			parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
+		select id from(select count(1) id from (SELECT
 		a.id
 		FROM
 		sys_config_teacher a
+		inner join company c on c.is_area=a.is_area and c.is_area!=0 and (a.edu_area_school is null and c.edu_area_school is null or a.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
 		left join
 		sys_config_teacher_lesson b
 		on a.id = b.teacher_id
@@ -492,102 +684,216 @@
 		<if test="name != null and name != ''">and a.name like '%${name}%'</if>
 		<if test="mobile != null and mobile != ''">and mobile = #{mobile}</if>
 		<if test="statusCode != null and statusCode != ''">and status_code = #{statusCode}</if>
-		<if test="schoolId != null and schoolId != ''">and school_id = #{schoolId}</if>
 		GROUP BY a.id
-		) teacher limit 1
+		)
+		union
+		select count(1) id from (SELECT
+		a.id
+		FROM
+		sys_config_teacher a
+		inner join company c on c.is_area=1
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		left join
+		sys_config_teacher_lesson b
+		on a.id = b.teacher_id
+		WHERE a.teacher_type='PERSON_TEACHER'
+		<if test="itemOneId != null and itemOneId != ''">and b.item_one_id = #{itemOneId}</if>
+		<if test="itemSecondId != null and itemSecondId != ''">and b.item_second_id= #{itemSecondId}</if>
+		<if test="name != null and name != ''">and a.name like '%${name}%'</if>
+		<if test="mobile != null and mobile != ''">and mobile = #{mobile}</if>
+		<if test="statusCode != null and statusCode != ''">and status_code = #{statusCode}</if>
+		GROUP BY a.id
+		)) c order by c.id desc limit 1
 	</select>
 
 
 
 	<select id="queryForCheck" resultMap="sysConfigTeacherResultMap"
-		parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
-		select id,name
-		from sys_config_teacher
-		<include refid="page_where" />
+			parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
+		select st.id,st.name
+		from sys_config_teacher st
+		inner join company c on c.is_area=st.is_area and c.is_area!=0 and (st.edu_area_school is null and c.edu_area_school is null or st.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id
+		<if test="name != null and name != ''">and st.name = #{name}</if>
+		<if test="teacherType != null and teacherType != ''">and st.teacher_type = #{teacherType}</if>
+		<if test="mobile != null and mobile != ''">and st.mobile = #{mobile}</if>
+		<if test="schoolId != null and schoolId != ''">and s.id = #{schoolId}</if>
+		<if test="companyId != null and companyId != ''">and c.id = #{companyId}</if>
+		<if test="delFlag != null">and st.del_flag = #{delFlag}</if>
+		union
+		select st.id,st.name
+		from sys_config_teacher st
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id
+		<if test="name != null and name != ''">and st.name = #{name}</if>
+		<if test="teacherType != null and teacherType != ''">and st.teacher_type = #{teacherType}</if>
+		<if test="mobile != null and mobile != ''">and st.mobile = #{mobile}</if>
+		<if test="schoolId != null and schoolId != ''">and s.id = #{schoolId}</if>
+		<if test="companyId != null and companyId != ''">and c.id = #{companyId}</if>
+		<if test="delFlag != null">and st.del_flag = #{delFlag}</if>
 	</select>
 
 	<select id="queryForClassType" resultMap="sysConfigTeacherResultMap"
-		parameterType="java.util.Map">
+			parameterType="java.util.Map">
 		select a.id,a.name
 		from sys_config_teacher
 		a,sys_config_teacher_lesson b
+		inner join company c on c.is_area=a.is_area and c.is_area!=0 and (a.edu_area_school is null and c.edu_area_school is null or a.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
 		where
 		a.id=b.teacher_id
 		and
 		b.item_one_id = #{itemOneId}
 		and
 		b.item_second_id= #{itemSecondId}
+		union
+		select a.id,a.name
+		from sys_config_teacher
+		a,sys_config_teacher_lesson b
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		where
+		a.id=b.teacher_id
 		and
-		a.school_id=#{schoolId}
+		b.item_one_id = #{itemOneId}
+		and
+		b.item_second_id= #{itemSecondId}
 	</select>
 
 	<!-- 根据公司id 和 工作类型 查询 -->
 	<select id="findTeacherBySchoolId" resultType="Integer"
-		parameterType="Integer">
-		select count(id)
+			parameterType="Integer">
+		select id (select count(st.id) id
+		from sys_config_teacher st
+		inner join company c on c.is_area=st.is_area and c.is_area!=0 and (st.edu_area_school is null and c.edu_area_school is null or st.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{school_id}
+		where st.teacher_type = 'PERSON_TEACHER'
+		and st.del_flag = 0
+		union
+		select count(st.id) id
 		from sys_config_teacher
-		where teacher_type = 'PERSON_TEACHER'
-		and school_id = #{school_id}
-		and del_flag = 0
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{school_id}
+		where st.teacher_type = 'PERSON_TEACHER'
+		and st.del_flag = 0
+		) c order by c.id desc limit 1
 	</select>
 	<select id="findSenateBySchoolId" resultType="Integer"
-		parameterType="Integer">
-		select count(id)
-		from sys_config_teacher
-		where teacher_type not in('PERSON_TEACHER')
-		and school_id = #{school_id}
-		and del_flag = 0
+			parameterType="Integer">
+		select id from (select count(st.id) id
+		from sys_config_teacher st
+		inner join company c on c.is_area=st.is_area and c.is_area!=0 and (st.edu_area_school is null and c.edu_area_school is null or st.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{school_id}
+		where st.teacher_type not in('PERSON_TEACHER')
+		and st.del_flag = 0
+		union
+		select count(st.id) id
+		from sys_config_teacher st
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{school_id}
+		where st.teacher_type not in('PERSON_TEACHER')
+		and st.del_flag = 0
+		)c order by c.id desc limit 1
 	</select>
 	<!-- ycl-start -->
 	<select id="findByCompany" resultMap="sysConfigTeacherResultMap"
-		parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
+			parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
 		select
-		<include refid="table_columns" />
-		from sys_config_teacher
-		where del_flag = 0 and company_id =
-		#{companyId} and school_id = #{schoolId}
+		<include refid="table_columns_st" />
+		from sys_config_teacher st
+		inner join company c on c.is_area=st.is_area and c.is_area!=0 and (st.edu_area_school is null and c.edu_area_school is null or st.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		where st.del_flag = 0 and c.id =#{companyId}
 		<if test="teacherType != null and teacherType != ''">
 			<if test="teacherType == 'all'">
-				and (teacher_type = 'PERSON_MANAGER' or teacher_type =
-				'PERSON_ASSISTANT' or teacher_type = 'PERSON_WAITER')
+				and (st.teacher_type = 'PERSON_MANAGER' or st.teacher_type =
+				'PERSON_ASSISTANT' or st.teacher_type = 'PERSON_WAITER')
 			</if>
 			<if test="teacherType != 'all'">
-				and teacher_type = #{teacherType}
+				and st.teacher_type = #{teacherType}
 			</if>
 		</if>
-		<if test="mobile != null and mobile != ''">and mobile = #{mobile}</if>
-		<if test="name != null and name != ''">and name LIKE '%${name}%'</if>
-		and status_code = 'TEACHER_USERD' order by sort_id is null, sort_id asc, create_time desc
+		<if test="mobile != null and mobile != ''">and st.mobile = #{mobile}</if>
+		<if test="name != null and name != ''">and st.name LIKE '%${name}%'</if>
+		and st.status_code = 'TEACHER_USERD'
+		union
+		select
+		<include refid="table_columns_st" />
+		from sys_config_teacher st
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		where st.del_flag = 0 and c.id =#{companyId}
+		<if test="teacherType != null and teacherType != ''">
+			<if test="teacherType == 'all'">
+				and (st.teacher_type = 'PERSON_MANAGER' or st.teacher_type =
+				'PERSON_ASSISTANT' or st.teacher_type = 'PERSON_WAITER')
+			</if>
+			<if test="teacherType != 'all'">
+				and st.teacher_type = #{teacherType}
+			</if>
+		</if>
+		<if test="mobile != null and mobile != ''">and st.mobile = #{mobile}</if>
+		<if test="name != null and name != ''">and st.name LIKE '%${name}%'</if>
+		and st.status_code = 'TEACHER_USERD'
+		order by sort_id is null, sort_id asc, create_time desc
 		limit #{firstIndex},#{pageSize}
 	</select>
 
 	<select id="findByCompanyCount" resultType="Integer"
-		parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
-		select count(id)
-		from sys_config_teacher
-		where del_flag = 0 and company_id = #{companyId}
-		and school_id = #{schoolId}
+			parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
+		select id from(
+		select count(st.id) id
+		from sys_config_teacher st
+		inner join company c on c.is_area=st.is_area and c.is_area!=0 and (st.edu_area_school is null and c.edu_area_school is null or st.edu_area_school=c.edu_area_school)
+		inner join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		where st.del_flag = 0 and c.id = #{companyId}
 		<if test="teacherType != null and teacherType != ''">
 			<if test="teacherType == 'all'">
-				and (teacher_type = 'PERSON_MANAGER' or teacher_type =
-				'PERSON_ASSISTANT' or teacher_type = 'PERSON_WAITER')
+				and (st.teacher_type = 'PERSON_MANAGER' or st.teacher_type =
+				'PERSON_ASSISTANT' or st.teacher_type = 'PERSON_WAITER')
 			</if>
 			<if test="teacherType != 'all'">
-				and teacher_type = #{teacherType}
+				and st.teacher_type = #{teacherType}
 			</if>
 		</if>
-		<if test="mobile != null and mobile != ''">and mobile = #{mobile}</if>
-		<if test="name != null and name != ''">and name LIKE '%${name}%'</if>
-		and status_code = 'TEACHER_USERD' order by sort_id is null,sort_id asc
+		<if test="mobile != null and mobile != ''">and st.mobile = #{mobile}</if>
+		<if test="name != null and name != ''">and st.name LIKE '%${name}%'</if>
+		union
+		select count(st.id) id
+		from sys_config_teacher st
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		where st.del_flag = 0 and c.id = #{companyId}
+		<if test="teacherType != null and teacherType != ''">
+			<if test="teacherType == 'all'">
+				and (st.teacher_type = 'PERSON_MANAGER' or st.teacher_type =
+				'PERSON_ASSISTANT' or st.teacher_type = 'PERSON_WAITER')
+			</if>
+			<if test="teacherType != 'all'">
+				and st.teacher_type = #{teacherType}
+			</if>
+		</if>
+		<if test="mobile != null and mobile != ''">and st.mobile = #{mobile}</if>
+		<if test="name != null and name != ''">and st.name LIKE '%${name}%'</if>
+		and st.status_code = 'TEACHER_USERD'
+		) c order by c.id desc limit 1
 	</select>
 
 	<select id="findTeacherIdByMobile" parameterType="com.yuxin.wx.model.system.SysConfigTeacher"
-		resultMap="sysConfigTeacherResultMap">
+			resultMap="sysConfigTeacherResultMap">
 		select
-		<include refid="table_columns" />
-		from sys_config_teacher
-		where del_flag = 0 and company_id =
-		#{companyId} and mobile = ${mobile}
+		<include refid="table_columns_st" />
+		from sys_config_teacher st
+		inner join company c on c.is_area=st.is_area and c.is_area!=0 and (st.edu_area_school is null and c.edu_area_school is null or st.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		where st.del_flag = 0 and c.id =#{companyId} and st.mobile = ${mobile}
+		union
+		select
+		<include refid="table_columns_st" />
+		from sys_config_teacher st
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		where st.del_flag = 0 and c.id =#{companyId} and st.mobile = ${mobile}
 	</select>
 	<!-- ycl-end -->
 
@@ -595,7 +901,7 @@
 	<!-- 如果以上的方法没用的话，会直接删除 2015-05-04. 如果有新增加的方法，则写到该注释的下方 -->
 
 	<select id="queryAllTeachersWithItemOneId" resultMap="sysConfigTeacherResultMap"
-		parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
+			parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
 		SELECT
 		sct.id,
 		sct.`name`,
@@ -630,7 +936,7 @@
 	</select>
 
 	<select id="queryAllTeachersCountWithItemOneId" resultType="Integer"
-		parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
+			parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
 		select count(id) from (
 		SELECT
 		sct.*
@@ -648,29 +954,48 @@
 
 	<select id="findAssistantBySchool" resultMap="sysConfigTeacherResultMap">
 		select
-		<include refid="table_columns" />
-		from sys_config_teacher
-		where school_id = #{schoolId} and
-		teacher_type = 'PERSON_ASSISTANT' and
-		del_flag = 0
+		<include refid="table_columns_st" />
+		from sys_config_teacher st
+		inner join company c on c.is_area=st.is_area and c.is_area!=0 and (st.edu_area_school is null and c.edu_area_school is null or st.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		where st.teacher_type = 'PERSON_ASSISTANT' and st.del_flag = 0
+		union
+		select
+		<include refid="table_columns_st" />
+		from sys_config_teacher st
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		where st.teacher_type = 'PERSON_ASSISTANT' and st.del_flag = 0
 	</select>
 
 	<select id="queryTeacherByName" parameterType="com.yuxin.wx.vo.system.SysConfigTeachersVo"
-		resultMap="teacheDtailMap">
+			resultMap="teacheDtailMap">
 		select distinct a.id,a.name,a.sex,a.mobile from sys_config_teacher a
+		inner join company c on c.is_area=a.is_area and c.is_area!=0 and (a.edu_area_school is null and c.edu_area_school is null or a.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
 		LEFT JOIN sys_config_teacher_lesson b on a.id=b.teacher_id
-		where status_code='TEACHER_USERD' and del_flag=0
+		where a.status_code='TEACHER_USERD' and a.del_flag=0
 		<if test="teacherName != null and teacherName != ''">and a.name LIKE '%${teacherName}%'</if>
-		<if test="userId != null and userId != ''">and user_id = #{userId}</if>
-		<if test="schoolId != null and schoolId != ''">and school_id = #{schoolId}</if>
-		<if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
+		<if test="userId != null and userId != ''">and a.user_id = #{userId}</if>
+		<if test="companyId != null and companyId != ''">and c.id = #{companyId}</if>
+		<if test="teacherType ==6  and teacherType != null">and a.teacher_type = 'PERSON_TEACHER'</if>
+		<if test="teacherType ==7  and teacherType != null">and a.teacher_type != 'PERSON_TEACHER'</if>
+		union
+		select distinct a.id,a.name,a.sex,a.mobile from sys_config_teacher a
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		LEFT JOIN sys_config_teacher_lesson b on a.id=b.teacher_id
+		where a.status_code='TEACHER_USERD' and a.del_flag=0
+		<if test="teacherName != null and teacherName != ''">and a.name LIKE '%${teacherName}%'</if>
+		<if test="userId != null and userId != ''">and a.user_id = #{userId}</if>
+		<if test="companyId != null and companyId != ''">and c.id = #{companyId}</if>
 		<if test="teacherType ==6  and teacherType != null">and a.teacher_type = 'PERSON_TEACHER'</if>
 		<if test="teacherType ==7  and teacherType != null">and a.teacher_type != 'PERSON_TEACHER'</if>
 	</select>
 
 
 	<select id="findByUserId" resultMap="sysConfigTeacherResultMap"
-		parameterType="Integer">
+			parameterType="Integer">
 		select
 		<include refid="table_columns" />
 		from sys_config_teacher
@@ -679,35 +1004,63 @@
 
 	<!-- 查询所有教师 -->
 	<select id="queryTeachers" resultMap="sysConfigTeacherResultMap"
-		parameterType="java.util.Map">
+			parameterType="java.util.Map">
 		select DISTINCT a.id,a.name,a.teacher_type from sys_config_teacher a
+		inner join company c on c.is_area=a.is_area and c.is_area!=0 and (a.edu_area_school is null and c.edu_area_school is null or a.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
 		LEFT JOIN sys_config_teacher_lesson b
-		on a.id=b.teacher_id where a.status_code='TEACHER_USERD' and
+		on a.id=b.teacher_id
+		where a.status_code='TEACHER_USERD' and
 		a.teacher_type='PERSON_TEACHER' and a.del_flag=0 and
-		a.company_id=#{companyId}
-		<if test="schoolId != null and schoolId != ''">and a.school_id = #{schoolId}</if>
+		c.id=#{companyId}
+		<if test="schoolId != null and schoolId != ''">and s.id = #{schoolId}</if>
 		<if test="itemOneId != null and itemOneId != ''">and b.item_one_id = #{itemOneId}</if>
 		<if test="itemSecondId != null and itemSecondId != ''">and b.item_second_id= #{itemSecondId}</if>
 		<if test="id != null and id != ''">and a.id = #{id}</if>
-		order by a.id desc
-	</select>
-	
-	<!-- 查询所有教务 -->
-	<select id="findAssistants" resultMap="sysConfigTeacherResultMap"
-		parameterType="java.util.Map">
+		union
 		select DISTINCT a.id,a.name,a.teacher_type from sys_config_teacher a
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
 		LEFT JOIN sys_config_teacher_lesson b
-		on a.id=b.teacher_id where a.status_code='TEACHER_USERD' and
-		a.teacher_type='PERSON_ASSISTANT' and a.del_flag=0 and
-		a.company_id=#{companyId}
-		<if test="schoolId != null and schoolId != ''">and a.school_id = #{schoolId}</if>
+		on a.id=b.teacher_id
+		where a.status_code='TEACHER_USERD' and
+		a.teacher_type='PERSON_TEACHER' and a.del_flag=0 and
+		c.id=#{companyId}
+		<if test="schoolId != null and schoolId != ''">and s.id = #{schoolId}</if>
 		<if test="itemOneId != null and itemOneId != ''">and b.item_one_id = #{itemOneId}</if>
 		<if test="itemSecondId != null and itemSecondId != ''">and b.item_second_id= #{itemSecondId}</if>
-		order by a.id desc
+		<if test="id != null and id != ''">and a.id = #{id}</if>
+		order by id desc
+	</select>
+
+	<!-- 查询所有教务 -->
+	<select id="findAssistants" resultMap="sysConfigTeacherResultMap"
+			parameterType="java.util.Map">
+		select DISTINCT a.id,a.name,a.teacher_type from sys_config_teacher a
+		inner join company c on c.is_area=a.is_area and c.is_area!=0 and (a.edu_area_school is null and c.edu_area_school is null or a.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		LEFT JOIN sys_config_teacher_lesson b
+		on a.id=b.teacher_id
+		where a.status_code='TEACHER_USERD' and
+		a.teacher_type='PERSON_ASSISTANT' and a.del_flag=0 and
+		c.id=#{companyId}
+		<if test="itemOneId != null and itemOneId != ''">and b.item_one_id = #{itemOneId}</if>
+		<if test="itemSecondId != null and itemSecondId != ''">and b.item_second_id= #{itemSecondId}</if>
+		select DISTINCT a.id,a.name,a.teacher_type from sys_config_teacher a
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		LEFT JOIN sys_config_teacher_lesson b
+		on a.id=b.teacher_id
+		where a.status_code='TEACHER_USERD' and
+		a.teacher_type='PERSON_ASSISTANT' and a.del_flag=0 and
+		c.id=#{companyId}
+		<if test="itemOneId != null and itemOneId != ''">and b.item_one_id = #{itemOneId}</if>
+		<if test="itemSecondId != null and itemSecondId != ''">and b.item_second_id= #{itemSecondId}</if>
+		order by id desc
 	</select>
 
 	<select id="findteachersByUserId" resultMap="sysConfigTeacherResultMap"
-		parameterType="Integer">
+			parameterType="Integer">
 		select
 		<include refid="table_columns" />
 		from sys_config_teacher
@@ -716,75 +1069,158 @@
 
 	<!-- 条件查询教师信息 -->
 	<select id="queryTeachersBycondition" resultMap="sysConfigTeacherResultMap"
-		parameterType="java.util.Map">
+			parameterType="java.util.Map">
 		select DISTINCT a.id,a.name,a.teacher_type from sys_config_teacher a
+		inner join company c on c.is_area=a.is_area and c.is_area!=0 and (a.edu_area_school is null and c.edu_area_school is null or a.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
 		LEFT JOIN sys_config_teacher_lesson b
 		on a.id=b.teacher_id where a.status_code='TEACHER_USERD' and
-		a.del_flag=0 and a.company_id=#{companyId}
-		<if test="schoolId != null and schoolId != ''">and a.school_id = #{schoolId}</if>
+		a.del_flag=0 and c.id=#{companyId}
+		<if test="schoolId != null and schoolId != ''">and s.id = #{schoolId}</if>
 		<if test="itemOneId != null and itemOneId != ''">and b.item_one_id = #{itemOneId}</if>
 		<if test="itemSecondId != null and itemSecondId != ''">and b.item_second_id= #{itemSecondId}</if>
 		<if test="userId != null and userId != ''">and a.user_id = #{userId}</if>
 		<if test="teacherType != null and teacherType != ''">
-		<choose>
-			<when test="teacherType == 'PERSON_TEACHER'">
-				and a.teacher_type= #{teacherType}
-			</when>
-			<otherwise>
-				and a.teacher_type!= 'PERSON_TEACHER'
-			</otherwise>
-		</choose>
+			<choose>
+				<when test="teacherType == 'PERSON_TEACHER'">
+					and a.teacher_type= #{teacherType}
+				</when>
+				<otherwise>
+					and a.teacher_type!= 'PERSON_TEACHER'
+				</otherwise>
+			</choose>
 		</if>
-<!-- 		<if test="teacherType != null and teacherType != ''">and a.teacher_type= #{teacherType}</if> -->
-		order by a.id desc
+		union
+		select DISTINCT a.id,a.name,a.teacher_type from sys_config_teacher a
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		LEFT JOIN sys_config_teacher_lesson b
+		on a.id=b.teacher_id where a.status_code='TEACHER_USERD' and
+		a.del_flag=0 and c.id=#{companyId}
+		<if test="schoolId != null and schoolId != ''">and s.id = #{schoolId}</if>
+		<if test="itemOneId != null and itemOneId != ''">and b.item_one_id = #{itemOneId}</if>
+		<if test="itemSecondId != null and itemSecondId != ''">and b.item_second_id= #{itemSecondId}</if>
+		<if test="userId != null and userId != ''">and a.user_id = #{userId}</if>
+		<if test="teacherType != null and teacherType != ''">
+			<choose>
+				<when test="teacherType == 'PERSON_TEACHER'">
+					and a.teacher_type= #{teacherType}
+				</when>
+				<otherwise>
+					and a.teacher_type!= 'PERSON_TEACHER'
+				</otherwise>
+			</choose>
+		</if>
+		order by id desc
 	</select>
 
 	<select id="findSysConfigTeacherByParam" resultMap="sysConfigTeacherResultMap"
-		parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
-		select id, name, mobile from sys_config_teacher
-		<include refid="page_where_check" />
+			parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
+		select st.id, st.name, st.mobile from sys_config_teacher st
+		inner join company c on c.is_area=st.is_area and c.is_area!=0 and (st.edu_area_school is null and c.edu_area_school is null or st.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		where 1=1
+		<if test="name != null and name != ''">and st.name = #{name}</if>
+		<if test="teacherType != null and teacherType != ''">and st.teacher_type = #{teacherType}</if>
+		<if test="mobile != null and mobile != ''">and st.mobile = #{mobile}</if>
+		<if test="companyId != null and companyId != ''">and c.id = #{companyId}</if>
+		<if test="delFlag != null">and st.del_flag = #{delFlag}</if>
+		union
+		select st.id, st.name, st.mobile from sys_config_teacher st
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		where 1=1
+		<if test="name != null and name != ''">and st.name = #{name}</if>
+		<if test="teacherType != null and teacherType != ''">and st.teacher_type = #{teacherType}</if>
+		<if test="mobile != null and mobile != ''">and st.mobile = #{mobile}</if>
+		<if test="companyId != null and companyId != ''">and c.id = #{companyId}</if>
+		<if test="delFlag != null">and st.del_flag = #{delFlag}</if>
 	</select>
 	<select id="findSysConfigTeacherByCompany" resultMap="sysConfigTeacherResultMap"
-		parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
-		select <include refid="table_columns" /> from sys_config_teacher
-		where status_code='TEACHER_USERD' and del_flag=0 and
-		company_id=#{companyId}
+			parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
+		select <include refid="table_columns_st" /> from sys_config_teacher st
+		inner join company c on c.is_area=st.is_area and c.is_area!=0 and (st.edu_area_school is null and c.edu_area_school is null or st.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id
+		<if test="schoolId != null and schoolId != ''">and s.id=#{schoolId}</if>
+		where st.status_code='TEACHER_USERD' and st.del_flag=0 and
+		c.id=#{companyId}
 		<if test="teacherType != null and teacherType != ''">
-			and teacher_type = #{teacherType}
+			and st.teacher_type = #{teacherType}
 		</if>
-		<if test="schoolId != null and schoolId != ''">and school_id = #{schoolId}</if>
-		<if test="userId != null and userId != ''">and user_id = #{userId}</if>
+		<if test="schoolId != null and schoolId != ''">and s.id = #{schoolId}</if>
+		<if test="userId != null and userId != ''">and st.user_id = #{userId}</if>
+		union
+		select <include refid="table_columns_st" /> from sys_config_teacher st
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		where status_code='TEACHER_USERD' and st.del_flag=0 and
+		c.id=#{companyId}
+		<if test="teacherType != null and teacherType != ''">
+			and st.teacher_type = #{teacherType}
+		</if>
+		<if test="schoolId != null and schoolId != ''">and s.id = #{schoolId}</if>
+		<if test="userId != null and userId != ''">and st.user_id = #{userId}</if>
 		order by id desc
 	</select>
 	<select id="findSysConfigTeacherByName" resultMap="sysConfigTeacherResultMap"
-		parameterType="java.util.Map">
-		select id, name, mobile from sys_config_teacher
-		where status_code='TEACHER_USERD' and del_flag=0 and
-		company_id=#{companyId}
-		<if test="schoolId != null and schoolId != ''">and school_id = #{schoolId}</if>
-		<if test="teacherName != null and teacherName != ''">and name like '%${teacherName}%'</if>
+			parameterType="java.util.Map">
+		select st.id, st.name, st.mobile from sys_config_teacher st
+		inner join company c on c.is_area=st.is_area and c.is_area!=0 and (st.edu_area_school is null and c.edu_area_school is null or st.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		where st.status_code='TEACHER_USERD' and st.del_flag=0 and
+		c.id=#{companyId}
+		<if test="schoolId != null and schoolId != ''">and s.id = #{schoolId}</if>
+		<if test="teacherName != null and teacherName != ''">and st.name like '%${teacherName}%'</if>
+		union
+		select st.id, st.name, mobile from sys_config_teacher st
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id and s.id=#{schoolId}
+		where st.status_code='TEACHER_USERD' and st.del_flag=0 and
+		c.id=#{companyId}
+		<if test="schoolId != null and schoolId != ''">and s.id = #{schoolId}</if>
+		<if test="teacherName != null and teacherName != ''">and st.name like '%${teacherName}%'</if>
 		order by id desc
 	</select>
 	<select id="findMobileCount" resultType="int" parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
-		select count(mobile) 
-		from sys_config_teacher
-		where mobile = #{mobile} and company_id = #{companyId}
+		select id from (select count(st.mobile) id
+		from sys_config_teacher st
+		inner join company c on c.is_area=st.is_area and c.is_area!=0 and (st.edu_area_school is null and c.edu_area_school is null or st.edu_area_school=c.edu_area_school)
+		where st.mobile = #{mobile} and c.id = #{companyId}
+		union
+		select count(st.mobile) id
+		from sys_config_teacher st
+		inner join company c on c.is_area=0
+		where st.mobile = #{mobile} and c.id = #{companyId}
+		)c order by c.id desc limit 1
 	</select>
-	
+
 	<select id="findTeacherByUserId" parameterType="com.yuxin.wx.model.system.SysConfigTeacher" resultType="com.yuxin.wx.model.system.SysConfigTeacher">
-		select * from sys_config_teacher where teacher_type = 'PERSON_TEACHER' and company_id = #{companyId} and user_id = #{userId}
+		select st.* from sys_config_teacher st
+		inner join company c on c.is_area=st.is_area and c.is_area!=0 and (st.edu_area_school is null and c.edu_area_school is null or st.edu_area_school=c.edu_area_school)
+		where st.teacher_type = 'PERSON_TEACHER' and c.id = #{companyId} and user_id = #{userId}
+		union
+		select st.* from sys_config_teacher st
+		inner join company c on c.is_area=0
+		where st.teacher_type = 'PERSON_TEACHER' and c.id = #{companyId} and user_id = #{userId}
 	</select>
-    <select id="findByInviteCode" resultMap="sysConfigTeacherResultMap" parameterType="com.yuxin.wx.vo.system.TeachersVo">
-        select <include refid="table_columns" />
-        from sys_config_teacher
-        where company_id = #{companyId}
-        <if test="inviteCode != null and inviteCode != ''">and invite_code = #{inviteCode}</if>
-        limit 1
-    </select>
-    
-    
-    
-    <select id="queryTeachersData" resultMap="teachersVoMap" parameterType="com.yuxin.wx.vo.system.TeachersVo">
+	<select id="findByInviteCode" resultMap="sysConfigTeacherResultMap" parameterType="com.yuxin.wx.vo.system.TeachersVo">
+		select <include refid="table_columns_st" />
+		from sys_config_teacher st
+		inner join company c on c.is_area=st.is_area and c.is_area!=0 and (st.edu_area_school is null and c.edu_area_school is null or st.edu_area_school=c.edu_area_school)
+		where c.id = #{companyId}
+		<if test="inviteCode != null and inviteCode != ''">and st.invite_code = #{inviteCode}</if>
+		union
+		select <include refid="table_columns" />
+		from sys_config_teacher st
+		inner join company c on c.is_area=0
+		where c.id = #{companyId}
+		<if test="inviteCode != null and inviteCode != ''">and st.invite_code = #{inviteCode}</if>
+		limit 1
+	</select>
+
+
+
+	<select id="queryTeachersData" resultMap="teachersVoMap" parameterType="com.yuxin.wx.vo.system.TeachersVo">
 		SELECT
 		a.id,
 		a. NAME,
@@ -794,6 +1230,8 @@
 		class_type.courseNum,
 		commodity.stuNum
 		from sys_config_teacher a
+		inner join company c on c.is_area=a.is_area and c.is_area!=0 and (a.edu_area_school is null and c.edu_area_school is null or a.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id
 		left join (
 		SELECT
 		count(id) as courseNum,
@@ -820,32 +1258,96 @@
 		AND a.teacher_type = "PERSON_TEACHER"
 		AND a.del_flag = 0
 		AND a.is_distinguished = 1
-	  <if test="name != null and name != ''">and a.name like '%${name}%'</if>
-	  <choose>
-			<when test="schoolsId != null and schoolsId != ''">and a.school_id in(${schoolsId})</when>
+		<if test="name != null and name != ''">and a.name like '%${name}%'</if>
+		<choose>
+			<when test="schoolsId != null and schoolsId != ''">and s.id in(${schoolsId})</when>
 			<otherwise>
-				<if test="schoolId != null and schoolId != ''">and a.school_id = #{schoolId}</if>
+				<if test="schoolId != null and schoolId != ''">and s.id = #{schoolId}</if>
 			</otherwise>
-	 </choose>
-      <if test="cusorder != null and cusorder != '' and cusorder=='all'">
-		  ORDER BY a.create_time DESC
-      </if>
-	  limit #{firstIndex},#{pageSize}
+		</choose>
+		union
+		SELECT
+		a.id,
+		a. NAME,
+		a.mobile,
+		a.headpic_url,
+		a.resume,
+		class_type.courseNum,
+		commodity.stuNum
+		from sys_config_teacher a
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id
+		left join (
+		SELECT
+		count(id) as courseNum,
+		teacher_id
+		FROM
+		class_type
+		WHERE
+		is_sale = 1
+		AND del_flag = 0
+		group by teacher_id
+		) as class_type on class_type.teacher_id = a.id
+		left join (
+		SELECT
+		sum(com.base_num + com.buy_num) as stuNum,
+		ct.teacher_id
+		FROM
+		commodity com
+		INNER JOIN commodity_product_realtion pr ON com.id = pr.com_id
+		INNER JOIN class_type ct ON ct.id = pr.product_id
+		WHERE com. STATUS = 1
+		GROUP BY ct.teacher_id
+		) as commodity on commodity.teacher_id = a.id
+		WHERE a.status_code = "TEACHER_USERD"
+		AND a.teacher_type = "PERSON_TEACHER"
+		AND a.del_flag = 0
+		AND a.is_distinguished = 1
+		<if test="name != null and name != ''">and a.name like '%${name}%'</if>
+		<choose>
+			<when test="schoolsId != null and schoolsId != ''">and s.id in(${schoolsId})</when>
+			<otherwise>
+				<if test="schoolId != null and schoolId != ''">and s.id = #{schoolId}</if>
+			</otherwise>
+		</choose>
+		<if test="cusorder != null and cusorder != '' and cusorder=='all'">
+			ORDER BY create_time DESC
+		</if>
+		limit #{firstIndex},#{pageSize}
 	</select>
 	<select id="queryTeachersDataCount" resultType="Integer" parameterType="com.yuxin.wx.vo.system.TeachersVo">
-	   select count(a.id) from sys_config_teacher a 
-	where a.status_code='TEACHER_USERD' and a.teacher_type='PERSON_TEACHER' and a.del_flag=0 and a.is_distinguished=1 and a.company_id=#{companyId}
-	 <if test="name != null and name != ''">and a.name like '%${name}%'</if>
-      <choose>
-			<when test="schoolsId != null and schoolsId != ''">and a.school_id in(${schoolsId})</when>
+		select id from( select count(a.id) id from sys_config_teacher a
+		inner join company c on c.is_area=a.is_area and c.is_area!=0 and (a.edu_area_school is null and c.edu_area_school is null or a.edu_area_school=c.edu_area_school)
+		left join sys_config_school s on c.id = s.company_id
+		where a.status_code='TEACHER_USERD' and a.teacher_type='PERSON_TEACHER' and a.del_flag=0 and a.is_distinguished=1 and c.id=#{companyId}
+		<if test="name != null and name != ''">and a.name like '%${name}%'</if>
+		<choose>
+			<when test="schoolsId != null and schoolsId != ''">and s.id in(${schoolsId})</when>
 			<otherwise>
-				<if test="schoolId != null and schoolId != ''">and a.school_id = #{schoolId}</if>
+				<if test="schoolId != null and schoolId != ''">and s.id = #{schoolId}</if>
 			</otherwise>
-	 </choose>
-      <if test="cusorder != null and cusorder != '' and cusorder=='all'">
-      	 ORDER BY (select ROUND((select sum(score) from video_course_comment where teacher_id=a.id and del_flag=0 and is_distinguished=1)/(select count(id) from video_course_comment where teacher_id=a.id and del_flag=0 and is_distinguished=1),0)) DESC,(select sum(com.base_num + com.buy_num) from commodity com inner join commodity_product_realtion pr on com.id=pr.com_id inner JOIN class_type ct on ct.id=pr.product_id 
-where com.status=1 and ct.teacher_id=a.id and com.company_id=#{companyId} and ct.company_id=#{companyId}) DESC
-      </if>
+		</choose>
+		<if test="cusorder != null and cusorder != '' and cusorder=='all'">
+			ORDER BY (select ROUND((select sum(score) from video_course_comment where teacher_id=a.id and del_flag=0 and is_distinguished=1)/(select count(id) from video_course_comment where teacher_id=a.id and del_flag=0 and is_distinguished=1),0)) DESC,(select sum(com.base_num + com.buy_num) from commodity com inner join commodity_product_realtion pr on com.id=pr.com_id inner JOIN class_type ct on ct.id=pr.product_id
+			where com.status=1 and ct.teacher_id=a.id and com.company_id=#{companyId} and ct.company_id=#{companyId}) DESC
+		</if>
+		union
+		select count(a.id) id from sys_config_teacher a
+		inner join company c on c.is_area=0
+		left join sys_config_school s on c.id = s.company_id
+		where a.status_code='TEACHER_USERD' and a.teacher_type='PERSON_TEACHER' and a.del_flag=0 and a.is_distinguished=1 and c.id=#{companyId}
+		<if test="name != null and name != ''">and a.name like '%${name}%'</if>
+		<choose>
+			<when test="schoolsId != null and schoolsId != ''">and s.id in(${schoolsId})</when>
+			<otherwise>
+				<if test="schoolId != null and schoolId != ''">and s.id = #{schoolId}</if>
+			</otherwise>
+		</choose>
+		<if test="cusorder != null and cusorder != '' and cusorder=='all'">
+			ORDER BY (select ROUND((select sum(score) from video_course_comment where teacher_id=a.id and del_flag=0 and is_distinguished=1)/(select count(id) from video_course_comment where teacher_id=a.id and del_flag=0 and is_distinguished=1),0)) DESC,(select sum(com.base_num + com.buy_num) from commodity com inner join commodity_product_realtion pr on com.id=pr.com_id inner JOIN class_type ct on ct.id=pr.product_id
+			where com.status=1 and ct.teacher_id=a.id and com.company_id=#{companyId} and ct.company_id=#{companyId}) DESC
+		</if>
+		)c order by c.id desc limit 1
 	</select>
 	<update id="updateSortId" parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
 		update sys_config_teacher set
@@ -854,10 +1356,10 @@ where com.status=1 and ct.teacher_id=a.id and com.company_id=#{companyId} and ct
 	<select id="checkSortCount" resultType="Integer">
 		select count(sort_id) from sys_config_teacher
 	</select>
-	
-	
+
+
 	<select id="findTeacherBySubject" resultMap="sysConfigTeacherResultMap"
-		parameterType="map">
+			parameterType="map">
 		select
 		sct.id,sct.name
 		from sys_config_teacher sct,sys_config_item sci,sys_config_teacher_lesson sctl
@@ -870,8 +1372,8 @@ where com.status=1 and ct.teacher_id=a.id and com.company_id=#{companyId} and ct
 		</if>
 
 		and sci.id = sctl.item_one_id and sci.status = 1 and sci.del_flag = 0 and sctl.teacher_id = sct.id and sct.teacher_type ='PERSON_TEACHER' and sct.status_code = 'TEACHER_USERD' and sct.del_flag = 0
-        group by sct.id
-		
+		group by sct.id
+
 	</select>
 
 

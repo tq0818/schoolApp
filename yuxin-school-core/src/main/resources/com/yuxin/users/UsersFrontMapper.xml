@@ -31,10 +31,10 @@
 		<result property="memberEndTime" column="member_end_time" />
 		<result property="integralRemaining" column="integral_remaining" />
 		<result property="memberStatus" column="member_status" />
-        <result property="recharge" column="recharge" />
-        <result property="wxOpenId" column="wx_open_id" />
+		<result property="recharge" column="recharge" />
+		<result property="wxOpenId" column="wx_open_id" />
 	</resultMap>
-	
+
 	<resultMap type="com.yuxin.wx.vo.user.UsersStudentInfo" id="userStuResultMap">
 		<result property="id" column="id"/>
 		<result property="mobile" column="mobile"/>
@@ -42,7 +42,7 @@
 		<result property="nickName" column="nick_name"/>
 		<result property="memberEndTime" column="member_end_time"/>
 	</resultMap>
-	
+
 	<resultMap type="com.yuxin.wx.vo.user.UsersFrontVo" id="usersFrontVoResultMap">
 		<result property="id" column="id" />
 		<result property="username" column="username" />
@@ -68,7 +68,7 @@
 		<result property="promoteSource" column="promote_source" />
 		<result property="promoteKeyword" column="promote_keyword" />
 		<result property="nickName" column="nick_name" />
-	
+
 		<result property="stuId" column="stuId"/>
 		<result property="name" column="name" />
 		<result property="sex" column="sex" />
@@ -94,19 +94,19 @@
 		<result property="schoolId" column="school_id" />
 		<result property="companyId" column="company_id" />
 		<result property="remarkName" column="remark_name" />
-		
+
 		<result property="memberLevel" column="member_level" />
 		<result property="memberId" column="member_id" />
 		<result property="memberBuyLength" column="member_buy_length" />
 		<result property="memberEndTime" column="member_end_time" />
 		<result property="integralRemaining" column="integral_remaining" />
 		<result property="memberStatus" column="member_status" />
-		
+
 		<result property="weibo" column="weibo" />
 		<result property="invitCode" column="invite_code"/>
-        <result property="recharge" column="recharge"/>
+		<result property="recharge" column="recharge"/>
 	</resultMap>
-	
+
 	<resultMap type="com.yuxin.wx.vo.user.UsersFrontIntegralVo" id="userFrontIntegralMapVo">
 		<result property="userId" column="userId" />
 		<result property="integralRemaining" column="integralRemaining" />
@@ -114,16 +114,14 @@
 		<result property="stuName" column="stuName" />
 		<result property="mobile" column="mobile" />
 	</resultMap>
-	
+
 	<sql id="table_columns">
 		id,
 		username,
 		password,
 		mobile,
 		email,
-		school_id,
 		status,
-		company_id,
 		email_auth_sign,
 		email_auth_sendtime,
 		email_auth_code,
@@ -145,10 +143,41 @@
 		member_end_time,
 		integral_remaining,
 		member_status,
-        recharge,
-        wx_open_id
-    </sql>
-     <sql id="table_vo_columns">
+		recharge,
+		wx_open_id
+	</sql>
+	<sql id="table_columns_u">
+		u.id,
+		u.username,
+		u.password,
+		u.mobile,
+		u.email,
+		u.status,
+		u.email_auth_sign,
+		u.email_auth_sendtime,
+		u.email_auth_code,
+		u.user_city,
+		u.uuid,
+		u.head_pic_min,
+		u.head_pic_mid,
+		u.head_pic_max,
+		u.regist_time,
+		u.interests,
+		u.vip_flag,
+		u.regist_type,
+		u.promote_source,
+		u.promote_keyword,
+		u.nick_name,
+		u.member_level,
+		u.member_id,
+		u.member_buy_length,
+		u.member_end_time,
+		u.integral_remaining,
+		u.member_status,
+		u.recharge,
+		u.wx_open_id
+	</sql>
+	<sql id="table_vo_columns">
 		u.id,
 		u.username,
 		u.password,
@@ -194,8 +223,8 @@
 		s.update_time,
 		s.updator,
 		s.delete_flag,
-		s.school_id,
-		s.company_id,
+		null school_id,
+		null company_id,
 		s.remark_name,
 		u.member_level,
 		u.member_id,
@@ -206,16 +235,14 @@
 		u.qq,
 		u.weibo,
 		u.invite_code
-    </sql>
+	</sql>
 	<sql id="entity_properties">
 		#{id},
 		#{username},
 		#{password},
 		#{mobile},
 		#{email},
-		#{schoolId},
 		#{status},
-		#{companyId},
 		#{emailAuthSign},
 		#{emailAuthSendtime},
 		#{emailAuthCode},
@@ -237,8 +264,8 @@
 		#{memberEndTime},
 		#{integralRemaining},
 		#{memberStatus},
-        #{recharge},
-        #{wxOpenId}
+		#{recharge},
+		#{wxOpenId}
 	</sql>
 	<sql id="batch_entity_properties">
 		#{item.id},
@@ -246,9 +273,7 @@
 		#{item.password},
 		#{item.mobile},
 		#{item.email},
-		#{item.schoolId},
 		#{item.status},
-		#{item.companyId},
 		#{item.emailAuthSign},
 		#{item.emailAuthSendtime},
 		#{item.emailAuthCode},
@@ -270,34 +295,34 @@
 		#{item.memberEndTime},
 		#{item.integralRemaining},
 		#{item.memberStatus},
-        #{item.recharge}
+		#{item.recharge}
 	</sql>
-	
+
 	<!-- 适用于主键自增类型 -->
 	<insert id="insert" parameterType="com.yuxin.wx.model.user.UsersFront" useGeneratedKeys="true" keyProperty="id">
-		insert into users_front( <include refid="table_columns" /> ) 
+		insert into users_front( <include refid="table_columns" /> )
 		values ( <include refid="entity_properties" /> )
 	</insert>
 	<insert id="insert2" parameterType="com.yuxin.wx.model.user.UsersFront" useGeneratedKeys="true" keyProperty="id">
-		insert into users_front( <include refid="table_columns" /> ) 
+		insert into users_front( <include refid="table_columns" /> )
 		values ( <include refid="entity_properties" /> )
 	</insert>
-	
+
 	<!-- 批量添加 适用于主键自增类型  不支持返回主键-->
 	<insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
-		insert into users_front( <include refid="table_columns" /> ) 
-		values 
+		insert into users_front( <include refid="table_columns" /> )
+		values
 		<foreach item="item" collection="list" separator="," >
 			( <include refid="entity_properties" /> )
 		</foreach>
 	</insert>
-	
+
 	<!--根据主键删除 -->
 	<delete id="deleteById">
 		delete from users_front
 		where id = #{id}
 	</delete>
-	
+
 	<!-- 根据ID批量删除 -->
 	<delete id="deleteByIds">
 		delete from users_front
@@ -306,17 +331,15 @@
 			#{item}
 		</foreach>
 	</delete>
-	
+
 	<update id="update" parameterType="com.yuxin.wx.model.user.UsersFront">
-		update users_front 
+		update users_front
 		<trim prefix="set" suffixOverrides=",">
 			<if test="username != null and username != ''">username = #{username},</if>
 			<if test="password != null and password != ''">password = #{password},</if>
 			<if test="mobile != null and mobile != ''">mobile = #{mobile},</if>
 			<if test="email != null and email != ''">email = #{email},</if>
-			<if test="schoolId != null and schoolId != ''">school_id = #{schoolId},</if>
 			<if test="status != null">status = #{status},</if>
-			<if test="companyId != null and companyId != ''">company_id = #{companyId},</if>
 			<if test="emailAuthSign != null and emailAuthSign != ''">email_auth_sign = #{emailAuthSign},</if>
 			<if test="emailAuthSendtime != null and emailAuthSendtime != ''">email_auth_sendtime = #{emailAuthSendtime},</if>
 			<if test="emailAuthCode != null and emailAuthCode != ''">email_auth_code = #{emailAuthCode},</if>
@@ -339,20 +362,18 @@
 			<if test="memberEndTime != null and memberEndTime != ''">member_end_time = #{memberEndTime},</if>
 			<if test="integralRemaining != null">integral_remaining = #{integralRemaining},</if>
 			<if test="memberStatus != null">member_status = #{memberStatus},</if>
-            <if test="recharge != null">recharge = #{recharge},</if>
+			<if test="recharge != null">recharge = #{recharge},</if>
 		</trim>
 		<where>id = #{id}</where>
 	</update>
-		<update id="updateNull" parameterType="com.yuxin.wx.model.user.UsersFront">
-		update users_front 
+	<update id="updateNull" parameterType="com.yuxin.wx.model.user.UsersFront">
+		update users_front
 		<trim prefix="set" suffixOverrides=",">
 			<if test="username != null and username != ''">username = #{username},</if>
 			<if test="password != null and password != ''">password = #{password},</if>
 			<if test="mobile != null and mobile != ''">mobile = #{mobile},</if>
 			<if test="email != null and email != ''">email = #{email},</if>
-			<if test="schoolId != null and schoolId != ''">school_id = #{schoolId},</if>
 			<if test="status != null">status = #{status},</if>
-			<if test="companyId != null and companyId != ''">company_id = #{companyId},</if>
 			<if test="emailAuthSign != null and emailAuthSign != ''">email_auth_sign = #{emailAuthSign},</if>
 			<if test="emailAuthSendtime != null and emailAuthSendtime != ''">email_auth_sendtime = #{emailAuthSendtime},</if>
 			<if test="emailAuthCode != null and emailAuthCode != ''">email_auth_code = #{emailAuthCode},</if>
@@ -369,7 +390,7 @@
 			<if test="promoteKeyword != null and promoteKeyword != ''">promote_keyword = #{promoteKeyword},</if>
 			<if test="userSign != null and userSign != ''">user_sign = #{userSign},</if>
 			<if test="nickName != null and nickName != ''">nick_name = #{nickName},</if>
-            <if test="recharge != null">recharge = #{recharge},</if>
+			<if test="recharge != null">recharge = #{recharge},</if>
 			member_level = #{memberLevel},
 			member_id = #{memberId},
 			member_buy_length = #{memberBuyLength},
@@ -386,14 +407,15 @@
 	</select>
 	<select id="findVoById" resultMap="usersFrontVoResultMap" parameterType="Integer" >
 		select <include refid="table_vo_columns" />
-		from users_front u left join student s on u.id=s.user_id
+		from users_front u
+		inner join student s on u.id=s.user_id
 		where u.id = #{id}
 	</select>
 	<select id="queryAll" resultMap="usersFrontResultMap">
-		select <include refid="table_columns" /> 
+		select <include refid="table_columns" />
 		from users_front
 	</select>
-	
+
 	<!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
 	<sql id="page_where">
 		<trim prefix="where" prefixOverrides="and | or ">
@@ -401,9 +423,7 @@
 			<if test="password != null and password != ''">and password = #{password}</if>
 			<if test="mobile != null and mobile != ''">and mobile = #{mobile}</if>
 			<if test="email != null and email != ''">and email = #{email}</if>
-			<if test="schoolId != null and schoolId != ''">and school_id = #{schoolId}</if>
 			<if test="status != null and status != ''">and status = #{status}</if>
-			<if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
 			<if test="emailAuthSign != null and emailAuthSign != ''">and email_auth_sign = #{emailAuthSign}</if>
 			<if test="emailAuthSendtime != null and emailAuthSendtime != ''">and email_auth_sendtime = #{emailAuthSendtime}</if>
 			<if test="emailAuthCode != null and emailAuthCode != ''">and email_auth_code = #{emailAuthCode}</if>
@@ -425,78 +445,122 @@
 			<if test="memberBuyLength != null and memberBuyLength != ''">and member_buy_length = #{memberBuyLength}</if>
 			<if test="memberEndTime != null and memberEndTime != ''">and member_end_time = #{memberEndTime}</if>
 			<if test="integralRemaining != null and integralRemaining != ''">and integral_remaining = #{integralRemaining}</if>
-            <if test="recharge != null">and recharge = #{recharge}</if>
+			<if test="recharge != null">and recharge = #{recharge}</if>
 		</trim>
 	</sql>
-	
+
 	<select id="page" resultMap="usersFrontResultMap" parameterType="com.yuxin.wx.model.user.UsersFront">
 		select <include refid="table_columns" />
 		from users_front
 		<include refid="page_where" />
 		limit #{firstIndex},#{pageSize}
 	</select>
-	
+
 	<select id="pageCount" resultType="int" parameterType="com.yuxin.wx.model.user.UsersFront">
 		select count(id) from users_front
 		<include refid="page_where" />
 	</select>
-	
+
 	<!-- 其他自定义SQL -->
-	
+
 	<select id="findUsersFrontByEmail" resultMap="usersFrontResultMap" parameterType="com.yuxin.wx.model.user.UsersFront">
-		select <include refid="table_columns" />
-		from users_front
-		where 
-			email = #{email}
-			and status=1 and company_id=#{companyId}
-			limit 1
+		select <include refid="table_columns_u" />
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on (s.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=s.edu_school and c.is_area=2)  and c.id=#{companyId}
+		where
+		u.email = #{email}
+		and u.status=1
+		union
+		select <include refid="table_columns_u" />
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		where
+		u.email = #{email}
+		and u.status=1
+		limit 1
 	</select>
 	<select id="findUsersFrontByMobile" resultMap="usersFrontResultMap" parameterType="com.yuxin.wx.model.user.UsersFront">
-		select <include refid="table_columns" />
-		from users_front
-		where 
-			(mobile = #{mobile} or username=#{username})
-			and company_id=#{companyId} limit 0,1
+		select <include refid="table_columns_u" />
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on (s.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=s.edu_school and c.is_area=2)  and c.id=#{companyId}
+		where
+		(u.mobile = #{mobile} or u.username=#{username})
+		union
+		select <include refid="table_columns_u" />
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		where
+		(u.mobile = #{mobile} or u.username=#{username})
+		limit 0,1
 	</select>
 	<select id="findUsersFrontByMobileAndUsername" resultType="int" parameterType="com.yuxin.wx.model.user.UsersFront">
 		select count(*)
-		from ( 
+		from (
 		<if test="mobile != null and mobile != ''">
-		(select id
-		from users_front
-		where company_id=#{companyId}
-		and mobile = #{mobile}
-		and member_id is not null and member_status=1 and (member_buy_length>0 || member_buy_length=-1) and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(member_end_time) <![CDATA[<]]> 0 || member_end_time is null))
+			(select u.id
+			from users_front u
+			inner join student s on s.user_id=u.id
+			inner join company c on (s.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=s.edu_school and c.is_area=2)  and c.id=#{companyId}
+			where  u.mobile = #{mobile}
+			and u.member_id is not null and u.member_status=1 and (u.member_buy_length>0 || u.member_buy_length=-1) and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(u.member_end_time) <![CDATA[<]]> 0 || u.member_end_time is null)
+			union
+			select u.id
+			from users_front u
+			inner join student s on s.user_id=u.id
+			inner join company c on c.is_area=0  and c.id=#{companyId}
+			where  u.mobile = #{mobile}
+			and u.member_id is not null and u.member_status=1 and (u.member_buy_length>0 || u.member_buy_length=-1) and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(u.member_end_time) <![CDATA[<]]> 0 || u.member_end_time is null)
+			)
 		</if>
 		<if test="mobile != null and mobile != '' and username != null and username != ''">
-		union
+			union
 		</if>
 		<if test="username != null and username != ''">
-		(select id
-		from users_front
-		where company_id=#{companyId}
-		and username = #{username}
-		and member_id is not null and member_status=1 and (member_buy_length>0 || member_buy_length=-1) and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(member_end_time) <![CDATA[<]]> 0 || member_end_time is null)) 
+			(select u.id
+			from users_front u
+			inner join student s on s.user_id=u.id
+			inner join company c on (s.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=s.edu_school and c.is_area=2)  and c.id=#{companyId}
+			where u.username = #{username}
+			and u.member_id is not null and u.member_status=1 and (u.member_buy_length>0 || u.member_buy_length=-1) and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(u.member_end_time) <![CDATA[<]]> 0 || u.member_end_time is null)
+			union
+			select u.id
+			from users_front u
+			inner join student s on s.user_id=u.id
+			inner join company c on c.is_area=0  and c.id=#{companyId}
+			where u.username = #{username}
+			and u.member_id is not null and u.member_status=1 and (u.member_buy_length>0 || u.member_buy_length=-1) and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(u.member_end_time) <![CDATA[<]]> 0 || u.member_end_time is null)
+			)
 		</if>) as a
 	</select>
 	<select id="findUsersFrontByUsername" resultMap="usersFrontResultMap" parameterType="com.yuxin.wx.model.user.UsersFront">
-		select <include refid="table_columns" />
-		from users_front
-		where 
-			username = #{username}
-			and company_id=#{companyId} limit 0,1
+		select <include refid="table_columns_u" />
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on (s.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=s.edu_school and c.is_area=2)  and c.id=#{companyId}
+		where u.username = #{username}
+		union
+		select <include refid="table_columns_u" />
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		where u.username = #{username}
+		limit 0,1
 	</select>
-	
+
 	<select id="findUserList" resultType="com.yuxin.wx.vo.user.UsersFrontVo" parameterType="com.yuxin.wx.vo.user.UsersFrontVo">
-		select 
+		select
 		uf.id,
 		uf.username,
 		uf.password,
 		uf.mobile,
 		st.email,
-		uf.school_id as schoolId,
+		s.id as schoolId,
 		uf.status,
-		uf.company_id as companyId,
+		c.id as companyId,
 		uf.email_auth_sign as emailAuthSign,
 		uf.email_auth_sendtime as emailAuthSendtime,
 		uf.email_auth_code as emailAuthCode,
@@ -511,30 +575,72 @@
 		uf.regist_type as registType,
 		uf.promote_source as promoteSource,
 		uf.promote_keyword as promoteKeyword,
-        uf.recharge as recharge,
+		uf.recharge as recharge,
 		st.name,
 		s.school_name as schoolName
-		from users_front uf left join student st on uf.id=st.user_id left join sys_config_school s on uf.school_id=s.id 
-		where uf.company_id=#{companyId}
-			<if test="schoolId != null"> and uf.school_id=#{schoolId}</if>
-			<if test="startDate != null"> and date_format(uf.regist_time, "%Y-%m-%d") <![CDATA[>=]]> '${startDate}'</if>
-			<if test="endDate != null"> and date_format(uf.regist_time, "%Y-%m-%d") <![CDATA[<=]]> '${endDate}'</if>
-			<if test="vipFlag != null"> and uf.vip_flag = #{vipFlag}</if>
-			<if test="registType != null"> and uf.regist_type = #{registType}</if>
-			<if test="timeLen !=null and timeLen != 1">and TO_DAYS(DATE_FORMAT(NOW(),'%Y-%m-%d'))-TO_DAYS(DATE_FORMAT(uf.regist_time,'%Y-%m-%d'))<![CDATA[<=]]>#{timeLen}</if>
-			<if test="timeLen !=null and timeLen == 1">and TO_DAYS(DATE_FORMAT(NOW(),'%Y-%m-%d'))-TO_DAYS(DATE_FORMAT(uf.regist_time,'%Y-%m-%d'))<![CDATA[=]]>#{timeLen}</if>
-			limit #{firstIndex},#{pageSize}
+		from users_front uf
+		inner join student st on uf.id=st.user_id
+		inner join company c on (st.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=st.edu_school and c.is_area=2)  and c.id=#{companyId}
+		inner join sys_config_school s on c.school_id=s.id
+		where 1=1
+		<if test="schoolId != null"> and s.id=#{schoolId}</if>
+		<if test="startDate != null"> and date_format(uf.regist_time, "%Y-%m-%d") <![CDATA[>=]]> '${startDate}'</if>
+		<if test="endDate != null"> and date_format(uf.regist_time, "%Y-%m-%d") <![CDATA[<=]]> '${endDate}'</if>
+		<if test="vipFlag != null"> and uf.vip_flag = #{vipFlag}</if>
+		<if test="registType != null"> and uf.regist_type = #{registType}</if>
+		<if test="timeLen !=null and timeLen != 1">and TO_DAYS(DATE_FORMAT(NOW(),'%Y-%m-%d'))-TO_DAYS(DATE_FORMAT(uf.regist_time,'%Y-%m-%d'))<![CDATA[<=]]>#{timeLen}</if>
+		<if test="timeLen !=null and timeLen == 1">and TO_DAYS(DATE_FORMAT(NOW(),'%Y-%m-%d'))-TO_DAYS(DATE_FORMAT(uf.regist_time,'%Y-%m-%d'))<![CDATA[=]]>#{timeLen}</if>
+		union
+		select
+		uf.id,
+		uf.username,
+		uf.password,
+		uf.mobile,
+		st.email,
+		s.id as schoolId,
+		uf.status,
+		c.id as companyId,
+		uf.email_auth_sign as emailAuthSign,
+		uf.email_auth_sendtime as emailAuthSendtime,
+		uf.email_auth_code as emailAuthCode,
+		uf.user_city as userCity,
+		uf.uuid,
+		uf.head_pic_min as headPicMin,
+		uf.head_pic_mid as headPicMid,
+		uf.head_pic_max as headPicMax,
+		uf.regist_time as registTime,
+		uf.interests,
+		uf.vip_flag vipFlag,
+		uf.regist_type as registType,
+		uf.promote_source as promoteSource,
+		uf.promote_keyword as promoteKeyword,
+		uf.recharge as recharge,
+		st.name,
+		s.school_name as schoolName
+		from users_front uf
+		inner join student st on uf.id=st.user_id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		inner join sys_config_school s on c.school_id=s.id
+		where 1=1
+		<if test="schoolId != null"> and s.id=#{schoolId}</if>
+		<if test="startDate != null"> and date_format(uf.regist_time, "%Y-%m-%d") <![CDATA[>=]]> '${startDate}'</if>
+		<if test="endDate != null"> and date_format(uf.regist_time, "%Y-%m-%d") <![CDATA[<=]]> '${endDate}'</if>
+		<if test="vipFlag != null"> and uf.vip_flag = #{vipFlag}</if>
+		<if test="registType != null"> and uf.regist_type = #{registType}</if>
+		<if test="timeLen !=null and timeLen != 1">and TO_DAYS(DATE_FORMAT(NOW(),'%Y-%m-%d'))-TO_DAYS(DATE_FORMAT(uf.regist_time,'%Y-%m-%d'))<![CDATA[<=]]>#{timeLen}</if>
+		<if test="timeLen !=null and timeLen == 1">and TO_DAYS(DATE_FORMAT(NOW(),'%Y-%m-%d'))-TO_DAYS(DATE_FORMAT(uf.regist_time,'%Y-%m-%d'))<![CDATA[=]]>#{timeLen}</if>
+		limit #{firstIndex},#{pageSize}
 	</select>
 	<select id="findUserVipList" resultType="com.yuxin.wx.vo.user.UsersFrontVo" parameterType="com.yuxin.wx.vo.user.UsersFrontVo">
-		select 
+		select
 		uf.id,
 		uf.username,
 		uf.password,
 		uf.mobile,
 		uf.email,
-		uf.school_id as schoolId,
+		s.id as schoolId,
 		uf.status,
-		uf.company_id as companyId,
+		c.id as companyId,
 		uf.email_auth_sign as emailAuthSign,
 		uf.email_auth_sendtime as emailAuthSendtime,
 		uf.email_auth_code as emailAuthCode,
@@ -554,12 +660,15 @@
 		uf.member_buy_length as memberBuyLength,
 		uf.member_end_time as memberEndTime,
 		uf.member_status as memberStatus,
-        uf.recharge as recharge,
+		uf.recharge as recharge,
 		st.name,
 		st.id as stuId,
 		s.school_name as schoolName
-		from users_front uf left join student st on uf.id=st.user_id left join sys_config_school s on uf.school_id=s.id 
-		where uf.company_id=#{companyId} and  uf.member_buy_length is not NULL
+		from users_front uf
+		inner join student st on uf.id=st.user_id
+		inner join company c on (st.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=st.edu_school and c.is_area=2)  and c.id=#{companyId}
+		inner join sys_config_school s on c.school_id=s.id
+		where uf.member_buy_length is not NULL
 		<if test="mobile != null and mobile != ''">and uf.mobile like '%${mobile}%'</if>
 		<if test="name != null and name != ''">and st.name like '%${name}%'</if>
 		<if test="memberId != null and memberId != ''">and uf.member_id = #{memberId}</if>
@@ -567,7 +676,7 @@
 		<if test="timeLen !=null and timeMark != null">
 			<choose>
 				<when test="timeMark == 'ing'">and TO_DAYS(uf.member_end_time)-TO_DAYS(NOW())<![CDATA[<=]]>#{timeLen} and TO_DAYS(uf.member_end_time)-TO_DAYS(NOW())<![CDATA[>=]]>0
-					 and uf.member_buy_length <![CDATA[<>]]> -1 and uf.member_buy_length <![CDATA[<>]]> 0
+					and uf.member_buy_length <![CDATA[<>]]> -1 and uf.member_buy_length <![CDATA[<>]]> 0
 					<if test="startDate != null and startDate != ''">
 						and uf.member_end_time <![CDATA[>=]]> #{startDate }
 					</if>
@@ -576,7 +685,7 @@
 					</if>
 				</when>
 				<when test="timeMark == 'old'">and TO_DAYS(NOW())-TO_DAYS(uf.member_end_time)<![CDATA[>]]> 0
-					 and uf.member_buy_length <![CDATA[<>]]> -1 and uf.member_buy_length <![CDATA[<>]]> 0
+					and uf.member_buy_length <![CDATA[<>]]> -1 and uf.member_buy_length <![CDATA[<>]]> 0
 					<if test="startDate != null and startDate != ''">
 						and uf.member_end_time <![CDATA[>=]]> #{startDate }
 					</if>
@@ -594,15 +703,89 @@
 				</otherwise>
 			</choose>
 		</if>
-		
+		union
+		select
+		uf.id,
+		uf.username,
+		uf.password,
+		uf.mobile,
+		uf.email,
+		s.id as schoolId,
+		uf.status,
+		c.id as companyId,
+		uf.email_auth_sign as emailAuthSign,
+		uf.email_auth_sendtime as emailAuthSendtime,
+		uf.email_auth_code as emailAuthCode,
+		uf.user_city as userCity,
+		uf.uuid,
+		uf.head_pic_min as headPicMin,
+		uf.head_pic_mid as headPicMid,
+		uf.head_pic_max as headPicMax,
+		uf.regist_time as registTime,
+		uf.interests,
+		uf.vip_flag vipFlag,
+		uf.regist_type as registType,
+		uf.promote_source as promoteSource,
+		uf.promote_keyword as promoteKeyword,
+		uf.member_id as memberId,
+		uf.member_level as memberLevel,
+		uf.member_buy_length as memberBuyLength,
+		uf.member_end_time as memberEndTime,
+		uf.member_status as memberStatus,
+		uf.recharge as recharge,
+		st.name,
+		st.id as stuId,
+		s.school_name as schoolName
+		from users_front uf
+		inner join student st on uf.id=st.user_id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		inner join sys_config_school s on c.school_id=s.id
+		where uf.member_buy_length is not NULL
+		<if test="mobile != null and mobile != ''">and uf.mobile like '%${mobile}%'</if>
+		<if test="name != null and name != ''">and st.name like '%${name}%'</if>
+		<if test="memberId != null and memberId != ''">and uf.member_id = #{memberId}</if>
+		<if test="username != null and username != ''">and username like '%${username}%'</if>
+		<if test="timeLen !=null and timeMark != null">
+			<choose>
+				<when test="timeMark == 'ing'">and TO_DAYS(uf.member_end_time)-TO_DAYS(NOW())<![CDATA[<=]]>#{timeLen} and TO_DAYS(uf.member_end_time)-TO_DAYS(NOW())<![CDATA[>=]]>0
+					and uf.member_buy_length <![CDATA[<>]]> -1 and uf.member_buy_length <![CDATA[<>]]> 0
+					<if test="startDate != null and startDate != ''">
+						and uf.member_end_time <![CDATA[>=]]> #{startDate }
+					</if>
+					<if test="endDate != null and endDate != ''">
+						and uf.member_end_time <![CDATA[<=]]> #{endDate }
+					</if>
+				</when>
+				<when test="timeMark == 'old'">and TO_DAYS(NOW())-TO_DAYS(uf.member_end_time)<![CDATA[>]]> 0
+					and uf.member_buy_length <![CDATA[<>]]> -1 and uf.member_buy_length <![CDATA[<>]]> 0
+					<if test="startDate != null and startDate != ''">
+						and uf.member_end_time <![CDATA[>=]]> #{startDate }
+					</if>
+					<if test="endDate != null and endDate != ''">
+						and uf.member_end_time <![CDATA[<=]]> #{endDate }
+					</if>
+				</when>
+				<otherwise>
+					<if test="startDate != null and startDate != ''">
+						and (uf.member_end_time <![CDATA[>=]]> #{startDate } or uf.member_buy_length = -1 or uf.member_buy_length = 0)
+					</if>
+					<if test="endDate != null and endDate != ''">
+						and uf.member_end_time <![CDATA[<=]]> #{endDate }
+					</if>
+				</otherwise>
+			</choose>
+		</if>
 		order by st.create_time desc
 		limit #{firstIndex},#{pageSize}
 	</select>
-	
+
 	<select id="findUserVipListCount" resultType="int" parameterType="com.yuxin.wx.vo.user.UsersFrontVo">
 		select count(uf.id)
-		from users_front uf left join student st on uf.id=st.user_id left join sys_config_school s on uf.school_id=s.id 
-		where uf.company_id=#{companyId} and  uf.member_buy_length is not NULL
+		from users_front uf
+		inner join student st on uf.id=st.user_id
+		inner join company c on (st.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=st.edu_school and c.is_area=2)  and c.id=#{companyId}
+		inner join sys_config_school s on c.school_id=s.id
+		where uf.member_buy_length is not NULL
 		<if test="mobile != null and mobile != ''">and uf.mobile like '%${mobile}%'</if>
 		<if test="name != null and name != ''">and st.name like '%${name}%'</if>
 		<if test="memberId != null and memberId != ''">and uf.member_id = #{memberId}</if>
@@ -610,16 +793,16 @@
 		<if test="timeLen !=null and timeMark != null">
 			<choose>
 				<when test="timeMark == 'ing'">and TO_DAYS(uf.member_end_time)-TO_DAYS(NOW())<![CDATA[<=]]>#{timeLen} and TO_DAYS(uf.member_end_time)-TO_DAYS(NOW())<![CDATA[>=]]>0
-					 and uf.member_buy_length <![CDATA[<>]]> -1 and uf.member_buy_length <![CDATA[<>]]> 0
+					and uf.member_buy_length <![CDATA[<>]]> -1 and uf.member_buy_length <![CDATA[<>]]> 0
 					<if test="startDate != null and startDate != ''">
 						and uf.member_end_time <![CDATA[>=]]> #{startDate }
 					</if>
 					<if test="endDate != null and endDate != ''">
-						and uf.member_end_time <![CDATA[<=]]> #{endDate } 
+						and uf.member_end_time <![CDATA[<=]]> #{endDate }
 					</if>
 				</when>
 				<when test="timeMark == 'old'">and TO_DAYS(NOW())-TO_DAYS(uf.member_end_time)<![CDATA[>]]> 0
-					 and uf.member_buy_length <![CDATA[<>]]> -1 and uf.member_buy_length <![CDATA[<>]]> 0
+					and uf.member_buy_length <![CDATA[<>]]> -1 and uf.member_buy_length <![CDATA[<>]]> 0
 					<if test="startDate != null and startDate != ''">
 						and uf.member_end_time <![CDATA[>=]]> #{startDate }
 					</if>
@@ -632,24 +815,64 @@
 						and (uf.member_end_time <![CDATA[>=]]> #{startDate } or uf.member_buy_length = -1 or uf.member_buy_length = 0)
 					</if>
 					<if test="endDate != null and endDate != ''">
-						and uf.member_end_time <![CDATA[<=]]> #{endDate } 
+						and uf.member_end_time <![CDATA[<=]]> #{endDate }
 					</if>
 				</otherwise>
 			</choose>
 		</if>
-		
+		union
+		select count(uf.id)
+		from users_front uf
+		inner join student st on uf.id=st.user_id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		inner join sys_config_school s on c.school_id=s.id
+		where uf.member_buy_length is not NULL
+		<if test="mobile != null and mobile != ''">and uf.mobile like '%${mobile}%'</if>
+		<if test="name != null and name != ''">and st.name like '%${name}%'</if>
+		<if test="memberId != null and memberId != ''">and uf.member_id = #{memberId}</if>
+		<if test="username != null and username != ''">and username like '%${username}%'</if>
+		<if test="timeLen !=null and timeMark != null">
+			<choose>
+				<when test="timeMark == 'ing'">and TO_DAYS(uf.member_end_time)-TO_DAYS(NOW())<![CDATA[<=]]>#{timeLen} and TO_DAYS(uf.member_end_time)-TO_DAYS(NOW())<![CDATA[>=]]>0
+					and uf.member_buy_length <![CDATA[<>]]> -1 and uf.member_buy_length <![CDATA[<>]]> 0
+					<if test="startDate != null and startDate != ''">
+						and uf.member_end_time <![CDATA[>=]]> #{startDate }
+					</if>
+					<if test="endDate != null and endDate != ''">
+						and uf.member_end_time <![CDATA[<=]]> #{endDate }
+					</if>
+				</when>
+				<when test="timeMark == 'old'">and TO_DAYS(NOW())-TO_DAYS(uf.member_end_time)<![CDATA[>]]> 0
+					and uf.member_buy_length <![CDATA[<>]]> -1 and uf.member_buy_length <![CDATA[<>]]> 0
+					<if test="startDate != null and startDate != ''">
+						and uf.member_end_time <![CDATA[>=]]> #{startDate }
+					</if>
+					<if test="endDate != null and endDate != ''">
+						and uf.member_end_time <![CDATA[<=]]> #{endDate }
+					</if>
+				</when>
+				<otherwise>
+					<if test="startDate != null and startDate != ''">
+						and (uf.member_end_time <![CDATA[>=]]> #{startDate } or uf.member_buy_length = -1 or uf.member_buy_length = 0)
+					</if>
+					<if test="endDate != null and endDate != ''">
+						and uf.member_end_time <![CDATA[<=]]> #{endDate }
+					</if>
+				</otherwise>
+			</choose>
+		</if>
 		order by st.create_time desc limit 1
 	</select>
 	<select id="findUserVipListForExportExcel" resultType="com.yuxin.wx.vo.user.UsersFrontVo" parameterType="com.yuxin.wx.vo.user.UsersFrontVo">
-		select 
+		select
 		uf.id,
 		uf.username,
 		uf.password,
 		uf.mobile,
 		uf.email,
-		uf.school_id as schoolId,
+		s.id as schoolId,
 		uf.status,
-		uf.company_id as companyId,
+		c.id as companyId,
 		uf.email_auth_sign as emailAuthSign,
 		uf.email_auth_sendtime as emailAuthSendtime,
 		uf.email_auth_code as emailAuthCode,
@@ -669,12 +892,15 @@
 		uf.member_buy_length as memberBuyLength,
 		uf.member_end_time as memberEndTime,
 		uf.member_status as memberStatus,
-        uf.recharge,
+		uf.recharge,
 		st.name,
 		st.id as stuId,
 		s.school_name as schoolName
-		from users_front uf left join student st on uf.id=st.user_id left join sys_config_school s on uf.school_id=s.id 
-		where uf.company_id=#{companyId} and  uf.member_buy_length is not NULL
+		from users_front uf
+		inner join student st on uf.id=st.user_id
+		inner join company c on (st.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=st.edu_school and c.is_area=2)  and c.id=#{companyId}
+		inner join sys_config_school s on c.school_id=s.id
+		where uf.member_buy_length is not NULL
 		<if test="mobile != null and mobile != ''">and uf.mobile like '%${mobile}%'</if>
 		<if test="name != null and name != ''">and st.name like '%${name}%'</if>
 		<if test="memberId != null and memberId != ''">and uf.member_id = #{memberId}</if>
@@ -682,7 +908,7 @@
 		<if test="timeLen !=null and timeMark != null">
 			<choose>
 				<when test="timeMark == 'ing'">and TO_DAYS(uf.member_end_time)-TO_DAYS(NOW())<![CDATA[<=]]>#{timeLen} and TO_DAYS(uf.member_end_time)-TO_DAYS(NOW())<![CDATA[>=]]>0
-					 and uf.member_buy_length <![CDATA[<>]]> -1 and uf.member_buy_length <![CDATA[<>]]> 0
+					and uf.member_buy_length <![CDATA[<>]]> -1 and uf.member_buy_length <![CDATA[<>]]> 0
 					<if test="startDate != null and startDate != ''">
 						and uf.member_end_time <![CDATA[>=]]> #{startDate }
 					</if>
@@ -691,12 +917,12 @@
 					</if>
 				</when>
 				<when test="timeMark == 'old'">and TO_DAYS(NOW())-TO_DAYS(uf.member_end_time)<![CDATA[>]]> 0
-					 and uf.member_buy_length <![CDATA[<>]]> -1 and uf.member_buy_length <![CDATA[<>]]> 0
+					and uf.member_buy_length <![CDATA[<>]]> -1 and uf.member_buy_length <![CDATA[<>]]> 0
 					<if test="startDate != null and startDate != ''">
 						and uf.member_end_time <![CDATA[>=]]> #{startDate }
 					</if>
 					<if test="endDate != null and endDate != ''">
-						and uf.member_end_time <![CDATA[<=]]> #{endDate } 
+						and uf.member_end_time <![CDATA[<=]]> #{endDate }
 					</if>
 				</when>
 				<otherwise>
@@ -709,20 +935,16 @@
 				</otherwise>
 			</choose>
 		</if>
-		
-		order by st.create_time desc
-	</select>
-	
-	<select id="findUserVipsList" resultType="com.yuxin.wx.vo.user.UsersFrontVo" parameterType="com.yuxin.wx.vo.user.UsersFrontVo">
-		select 
+		union
+		select
 		uf.id,
 		uf.username,
 		uf.password,
 		uf.mobile,
 		uf.email,
-		uf.school_id as schoolId,
+		s.id as schoolId,
 		uf.status,
-		uf.company_id as companyId,
+		c.id as companyId,
 		uf.email_auth_sign as emailAuthSign,
 		uf.email_auth_sendtime as emailAuthSendtime,
 		uf.email_auth_code as emailAuthCode,
@@ -741,150 +963,406 @@
 		uf.member_level as memberLevel,
 		uf.member_buy_length as memberBuyLength,
 		uf.member_end_time as memberEndTime,
-        ur.recharge as recharge,
+		uf.member_status as memberStatus,
+		uf.recharge,
+		st.name,
+		st.id as stuId,
+		s.school_name as schoolName
+		from users_front uf
+		inner join student st on uf.id=st.user_id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		inner join sys_config_school s on c.school_id=s.id
+		where uf.member_buy_length is not NULL
+		<if test="mobile != null and mobile != ''">and uf.mobile like '%${mobile}%'</if>
+		<if test="name != null and name != ''">and st.name like '%${name}%'</if>
+		<if test="memberId != null and memberId != ''">and uf.member_id = #{memberId}</if>
+		<if test="username != null and username != ''">and username like '%${username}%'</if>
+		<if test="timeLen !=null and timeMark != null">
+			<choose>
+				<when test="timeMark == 'ing'">and TO_DAYS(uf.member_end_time)-TO_DAYS(NOW())<![CDATA[<=]]>#{timeLen} and TO_DAYS(uf.member_end_time)-TO_DAYS(NOW())<![CDATA[>=]]>0
+					and uf.member_buy_length <![CDATA[<>]]> -1 and uf.member_buy_length <![CDATA[<>]]> 0
+					<if test="startDate != null and startDate != ''">
+						and uf.member_end_time <![CDATA[>=]]> #{startDate }
+					</if>
+					<if test="endDate != null and endDate != ''">
+						and uf.member_end_time <![CDATA[<=]]> #{endDate }
+					</if>
+				</when>
+				<when test="timeMark == 'old'">and TO_DAYS(NOW())-TO_DAYS(uf.member_end_time)<![CDATA[>]]> 0
+					and uf.member_buy_length <![CDATA[<>]]> -1 and uf.member_buy_length <![CDATA[<>]]> 0
+					<if test="startDate != null and startDate != ''">
+						and uf.member_end_time <![CDATA[>=]]> #{startDate }
+					</if>
+					<if test="endDate != null and endDate != ''">
+						and uf.member_end_time <![CDATA[<=]]> #{endDate }
+					</if>
+				</when>
+				<otherwise>
+					<if test="startDate != null and startDate != ''">
+						and (uf.member_end_time <![CDATA[>=]]> #{startDate } or uf.member_buy_length = -1 or uf.member_buy_length = 0)
+					</if>
+					<if test="endDate != null and endDate != ''">
+						and uf.member_end_time <![CDATA[<=]]> #{endDate }
+					</if>
+				</otherwise>
+			</choose>
+		</if>
+		order by st.create_time desc
+	</select>
+
+	<select id="findUserVipsList" resultType="com.yuxin.wx.vo.user.UsersFrontVo" parameterType="com.yuxin.wx.vo.user.UsersFrontVo">
+		select
+		uf.id,
+		uf.username,
+		uf.password,
+		uf.mobile,
+		uf.email,
+		s.id as schoolId,
+		uf.status,
+		c.id as companyId,
+		uf.email_auth_sign as emailAuthSign,
+		uf.email_auth_sendtime as emailAuthSendtime,
+		uf.email_auth_code as emailAuthCode,
+		uf.user_city as userCity,
+		uf.uuid,
+		uf.head_pic_min as headPicMin,
+		uf.head_pic_mid as headPicMid,
+		uf.head_pic_max as headPicMax,
+		uf.regist_time as registTime,
+		uf.interests,
+		uf.vip_flag vipFlag,
+		uf.regist_type as registType,
+		uf.promote_source as promoteSource,
+		uf.promote_keyword as promoteKeyword,
+		uf.member_id as memberId,
+		uf.member_level as memberLevel,
+		uf.member_buy_length as memberBuyLength,
+		uf.member_end_time as memberEndTime,
+		ur.recharge as recharge,
 		st.name,
 		s.school_name as schoolName
-		from users_front uf left join student st on uf.id=st.user_id left join sys_config_school s on uf.school_id=s.id 
-		where uf.company_id=#{companyId} and  uf.member_id is not NULL and uf.member_id <![CDATA[<>]]> '0'
+		from users_front uf
+		inner join student st on uf.id=st.user_id
+		inner join company c on (st.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=st.edu_school and c.is_area=2)  and c.id=#{companyId}
+		inner join sys_config_school s on c.school_id=s.id
+		where  uf.member_id is not NULL and uf.member_id <![CDATA[<>]]> '0'
+		<if test="timeLen !=null">and TO_DAYS(NOW())-TO_DAYS(uf.regist_time)<![CDATA[<=]]>#{timeLen}</if>
+		union
+		select
+		uf.id,
+		uf.username,
+		uf.password,
+		uf.mobile,
+		uf.email,
+		s.id as schoolId,
+		uf.status,
+		c.id as companyId,
+		uf.email_auth_sign as emailAuthSign,
+		uf.email_auth_sendtime as emailAuthSendtime,
+		uf.email_auth_code as emailAuthCode,
+		uf.user_city as userCity,
+		uf.uuid,
+		uf.head_pic_min as headPicMin,
+		uf.head_pic_mid as headPicMid,
+		uf.head_pic_max as headPicMax,
+		uf.regist_time as registTime,
+		uf.interests,
+		uf.vip_flag vipFlag,
+		uf.regist_type as registType,
+		uf.promote_source as promoteSource,
+		uf.promote_keyword as promoteKeyword,
+		uf.member_id as memberId,
+		uf.member_level as memberLevel,
+		uf.member_buy_length as memberBuyLength,
+		uf.member_end_time as memberEndTime,
+		ur.recharge as recharge,
+		st.name,
+		s.school_name as schoolName
+		from users_front uf
+		inner join student st on uf.id=st.user_id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		inner join sys_config_school s on c.school_id=s.id
+		where  uf.member_id is not NULL and uf.member_id <![CDATA[<>]]> '0'
 		<if test="timeLen !=null">and TO_DAYS(NOW())-TO_DAYS(uf.regist_time)<![CDATA[<=]]>#{timeLen}</if>
 		limit #{firstIndex},#{pageSize}
 	</select>
-	
+
 	<select id="countList" resultType="int" parameterType="com.yuxin.wx.vo.user.UsersFrontVo">
-		select 
-		count(*)
-		from users_front uf 
-		where uf.company_id=#{companyId}
-			<if test="schoolId != null"> and uf.school_id=#{schoolId}</if>
-			<if test="startDate != null"> and date_format(uf.regist_time, "%Y-%m-%d") <![CDATA[>=]]> '${startDate}'</if>
-			<if test="endDate != null"> and date_format(uf.regist_time, "%Y-%m-%d") <![CDATA[<=]]> '${endDate}'</if>
-			<if test="vipFlag != null"> and uf.vip_flag = #{vipFlag}</if>
-			<if test="registType != null"> and uf.regist_type = #{registType}</if>
-			<if test="timeLen !=null">and TO_DAYS(NOW())-TO_DAYS(uf.regist_time)<![CDATA[<=]]>#{timeLen}</if>
+		select
+		count(1)
+		from users_front uf
+		inner join student st on uf.id=st.user_id
+		inner join company c on (st.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=st.edu_school and c.is_area=2)  and c.id=#{companyId}
+		inner join sys_config_school s on c.school_id=s.id
+		where 1=1
+		<if test="schoolId != null"> and s.id=#{schoolId}</if>
+		<if test="startDate != null"> and date_format(uf.regist_time, "%Y-%m-%d") <![CDATA[>=]]> '${startDate}'</if>
+		<if test="endDate != null"> and date_format(uf.regist_time, "%Y-%m-%d") <![CDATA[<=]]> '${endDate}'</if>
+		<if test="vipFlag != null"> and uf.vip_flag = #{vipFlag}</if>
+		<if test="registType != null"> and uf.regist_type = #{registType}</if>
+		<if test="timeLen !=null">and TO_DAYS(NOW())-TO_DAYS(uf.regist_time)<![CDATA[<=]]>#{timeLen}</if>
+		union
+		select
+		count(1)
+		from users_front uf
+		inner join student st on uf.id=st.user_id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		inner join sys_config_school s on c.school_id=s.id
+		where 1=1
+		<if test="schoolId != null"> and s.id=#{schoolId}</if>
+		<if test="startDate != null"> and date_format(uf.regist_time, "%Y-%m-%d") <![CDATA[>=]]> '${startDate}'</if>
+		<if test="endDate != null"> and date_format(uf.regist_time, "%Y-%m-%d") <![CDATA[<=]]> '${endDate}'</if>
+		<if test="vipFlag != null"> and uf.vip_flag = #{vipFlag}</if>
+		<if test="registType != null"> and uf.regist_type = #{registType}</if>
+		<if test="timeLen !=null">and TO_DAYS(NOW())-TO_DAYS(uf.regist_time)<![CDATA[<=]]>#{timeLen}</if>
 		limit 1
 	</select>
 	<select id="countUserByDate" resultType="map" parameterType="com.yuxin.wx.vo.user.UsersFrontVo">
-	select  count(u.id) num,date_format(regist_time, "%Y-%m-%d") registTime
+		select  count(u.id) num,date_format(u.regist_time, "%Y-%m-%d") registTime
 		from users_front u
-		left join student s
-		on s.user_id = u.id
-		LEFT JOIN sys_config_dict d
-		ON d.`item_code` = s.`edu_school`
-		where u.company_id=#{companyId}
-			<if test="schoolId != null"> and u.school_id=#{schoolId}</if>
-			<if test="startDate != null"> and date_format(regist_time, "%Y-%m-%d") <![CDATA[>=]]> '${startDate}'</if>
-			<if test="endDate != null"> and date_format(regist_time, "%Y-%m-%d") <![CDATA[<=]]> '${endDate}'</if>
-			<if test="vipFlag != null"> and vip_flag = #{vipFlag}</if>
-			<if test="registType != null"> and regist_type = #{registType}</if>
-			<if test="timeLen !=null">and TO_DAYS(NOW())-TO_DAYS(regist_time)<![CDATA[<=]]>#{timeLen}</if>
-			<if test="eduArea != null and eduArea!=''"> and s.edu_area=#{eduArea}</if>
-			<if test="eduSchool != null and eduSchool!=''"> and d.item_code =#{eduSchool}</if>
-			<if test="isStu != null and isStu == 1"> and edu_identity = 0 AND IFNULL(u.`teacher_flag`,0) != 1</if>
-			group by date_format(regist_time, "%Y-%m-%d")
+		inner join student s on u.id=s.user_id
+		inner join company c on (s.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=s.edu_school and c.is_area=2)  and c.id=#{companyId}
+		inner join sys_config_school sc on c.id=sc.company_id
+		LEFT JOIN sys_config_dict d ON d.`item_code` = s.`edu_school`
+		where 1=1
+		<if test="schoolId != null"> and sc.id=#{schoolId}</if>
+		<if test="startDate != null"> and date_format(u.regist_time, "%Y-%m-%d") <![CDATA[>=]]> '${startDate}'</if>
+		<if test="endDate != null"> and date_format(u.regist_time, "%Y-%m-%d") <![CDATA[<=]]> '${endDate}'</if>
+		<if test="vipFlag != null"> and u.vip_flag = #{vipFlag}</if>
+		<if test="registType != null"> and u.regist_type = #{registType}</if>
+		<if test="timeLen !=null">and TO_DAYS(NOW())-TO_DAYS(u.regist_time)<![CDATA[<=]]>#{timeLen}</if>
+		<if test="eduArea != null and eduArea!=''"> and s.edu_area=#{eduArea}</if>
+		<if test="eduSchool != null and eduSchool!=''"> and d.item_code =#{eduSchool}</if>
+		<if test="isStu != null and isStu == 1"> and u.edu_identity = 0 AND IFNULL(u.`teacher_flag`,0) != 1</if>
+		union
+		select  count(u.id) num,date_format(u.regist_time, "%Y-%m-%d") registTime
+		from users_front u
+		inner join student s on u.id=s.user_id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		inner join sys_config_school sc on c.id=sc.company_id
+		LEFT JOIN sys_config_dict d ON d.`item_code` = s.`edu_school`
+		where 1=1
+		<if test="schoolId != null"> and sc.id=#{schoolId}</if>
+		<if test="startDate != null"> and date_format(u.regist_time, "%Y-%m-%d") <![CDATA[>=]]> '${startDate}'</if>
+		<if test="endDate != null"> and date_format(u.regist_time, "%Y-%m-%d") <![CDATA[<=]]> '${endDate}'</if>
+		<if test="vipFlag != null"> and u.vip_flag = #{vipFlag}</if>
+		<if test="registType != null"> and u.regist_type = #{registType}</if>
+		<if test="timeLen !=null">and TO_DAYS(NOW())-TO_DAYS(u.regist_time)<![CDATA[<=]]>#{timeLen}</if>
+		<if test="eduArea != null and eduArea!=''"> and s.edu_area=#{eduArea}</if>
+		<if test="eduSchool != null and eduSchool!=''"> and d.item_code =#{eduSchool}</if>
+		<if test="isStu != null and isStu == 1"> and u.edu_identity = 0 AND IFNULL(u.`teacher_flag`,0) != 1</if>
+		group by date_format(u.regist_time, "%Y-%m-%d")
 	</select>
 	<select id="countOffLine" resultType="com.yuxin.wx.vo.user.UsersFrontVo" parameterType="com.yuxin.wx.vo.user.UsersFrontVo">
-		select 
+		select
 		uf.id,
 		uf.vip_flag vipFlag,
 		uf.regist_type registType
-		from users_front uf 
-		where uf.company_id=#{companyId}
-			<if test="schoolId != null"> and uf.school_id=#{schoolId}</if>
-			<if test="startDate != null"> and date_format(uf.regist_time, "%Y-%m-%d") <![CDATA[>=]]> '${startDate}'</if>
-			<if test="endDate != null"> and date_format(uf.regist_time, "%Y-%m-%d") <![CDATA[<=]]> '${endDate}'</if>
-			<if test="vipFlag != null"> and uf.vip_flag = #{vipFlag}</if>
-			<if test="registType != null"> and uf.regist_type = #{registType}</if>
-			<if test="timeLen !=null">and TO_DAYS(NOW())-TO_DAYS(uf.regist_time)<![CDATA[<=]]>#{timeLen}</if>
+		from users_front uf
+		inner join student s on s.user_id=uf.id
+		inner join company c on (s.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=s.edu_school and c.is_area=2)  and c.id=#{companyId}
+		inner join sys_config_school scs on scs.company_id=c.id
+		where 1=1
+		<if test="schoolId != null"> and scs.id=#{schoolId}</if>
+		<if test="startDate != null"> and date_format(uf.regist_time, "%Y-%m-%d") <![CDATA[>=]]> '${startDate}'</if>
+		<if test="endDate != null"> and date_format(uf.regist_time, "%Y-%m-%d") <![CDATA[<=]]> '${endDate}'</if>
+		<if test="vipFlag != null"> and uf.vip_flag = #{vipFlag}</if>
+		<if test="registType != null"> and uf.regist_type = #{registType}</if>
+		<if test="timeLen !=null">and TO_DAYS(NOW())-TO_DAYS(uf.regist_time)<![CDATA[<=]]>#{timeLen}</if>
+		union
+		select
+		uf.id,
+		uf.vip_flag vipFlag,
+		uf.regist_type registType
+		from users_front uf
+		inner join student s on s.user_id=uf.id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		inner join sys_config_school scs on scs.company_id=c.id
+		where 1=1
+		<if test="schoolId != null"> and scs.id=#{schoolId}</if>
+		<if test="startDate != null"> and date_format(uf.regist_time, "%Y-%m-%d") <![CDATA[>=]]> '${startDate}'</if>
+		<if test="endDate != null"> and date_format(uf.regist_time, "%Y-%m-%d") <![CDATA[<=]]> '${endDate}'</if>
+		<if test="vipFlag != null"> and uf.vip_flag = #{vipFlag}</if>
+		<if test="registType != null"> and uf.regist_type = #{registType}</if>
+		<if test="timeLen !=null">and TO_DAYS(NOW())-TO_DAYS(uf.regist_time)<![CDATA[<=]]>#{timeLen}</if>
 	</select>
-	
+
 	<!-- 根据学员查询前台账号 -->
 	<select id="findUserFrontByStudentId" parameterType="int" resultMap="usersFrontResultMap">
-		select u.* 
+		select u.*
 		from users_front u INNER JOIN student s on s.user_id=u.id
 		where s.id=#{stuId}
 	</select>
-	
+
 	<!-- 公司学员积分统计 -->
 	<select id="queryStudentIntegral" parameterType="com.yuxin.wx.vo.user.UsersFrontIntegralVo" resultMap="userFrontIntegralMapVo">
 		select u.id as userId,u.integral_remaining as integralRemaining,u.username,s.id as stuId,s.name as stuName,s.mobile as mobile
-		from users_front u INNER JOIN student s on s.user_id=u.id
-		where u.company_id=#{companyId} and s.delete_flag=0
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on (s.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=s.edu_school and c.is_area=2)  and c.id=#{companyId}
+		where s.delete_flag=0
 		<if test="stuName != null and stuName != ''">and s.name like '%${stuName}%'</if>
-	    <if test="mobile != null and mobile != ''">and s.mobile like '%${mobile}%'</if>
-	    <if test="username != null and username != ''">and u.username like '%${username}%'</if>
-	    limit #{firstIndex},#{pageSize}
+		<if test="mobile != null and mobile != ''">and s.mobile like '%${mobile}%'</if>
+		<if test="username != null and username != ''">and u.username like '%${username}%'</if>
+		union
+		select u.id as userId,u.integral_remaining as integralRemaining,u.username,s.id as stuId,s.name as stuName,s.mobile as mobile
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		where s.delete_flag=0
+		<if test="stuName != null and stuName != ''">and s.name like '%${stuName}%'</if>
+		<if test="mobile != null and mobile != ''">and s.mobile like '%${mobile}%'</if>
+		<if test="username != null and username != ''">and u.username like '%${username}%'</if>
+		limit #{firstIndex},#{pageSize}
 	</select>
-	
+
 	<select id="queryStudentIntegralCount" parameterType="com.yuxin.wx.vo.user.UsersFrontIntegralVo" resultType="int">
 		select count(u.id)
-		from users_front u INNER JOIN student s on s.user_id=u.id
-		where u.company_id=#{companyId} and s.delete_flag=0
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on (s.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=s.edu_school and c.is_area=2)  and c.id=#{companyId}
+		where s.delete_flag=0
 		<if test="stuName != null and stuName != ''">and s.name like '%${stuName}%'</if>
-	    <if test="mobile != null and mobile != ''">and s.mobile like '%${mobile}%'</if>
-	    <if test="username != null and username != ''">and u.username like '%${username}%'</if>
-	    limit 1
+		<if test="mobile != null and mobile != ''">and s.mobile like '%${mobile}%'</if>
+		<if test="username != null and username != ''">and u.username like '%${username}%'</if>
+		union
+		select count(u.id)
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		where s.delete_flag=0
+		<if test="stuName != null and stuName != ''">and s.name like '%${stuName}%'</if>
+		<if test="mobile != null and mobile != ''">and s.mobile like '%${mobile}%'</if>
+		<if test="username != null and username != ''">and u.username like '%${username}%'</if>
+		limit 1
 	</select>
 	<select id="findUsersFrontByMemberId" parameterType="int"  resultMap="usersFrontResultMap">
-			select   * from 
-			users_front  where  member_id=#{memberId}
+		select   * from
+		users_front  where  member_id=#{memberId}
 	</select>
-	
+
 	<select id="findUserMemberByCompanyId" parameterType="map" resultMap="userStuResultMap">
 		select u.id,
-			u.mobile,
-			u.member_end_time,
-			u.nick_name,
-			s.name
+		u.mobile,
+		u.member_end_time,
+		u.nick_name,
+		s.name
 		from users_front u
-		left join student s
-			on u.id = s.user_id
-		where u.company_id = #{companyId}
-			and u.status = 1
-			and u.member_status = 1
-			and u.member_buy_length != -1
-			and u.member_end_time >= #{date}
+		inner join student s on s.user_id=u.id
+		inner join company c on (s.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=s.edu_school and c.is_area=2)  and c.id=#{companyId}
+		where  u.status = 1
+		and u.member_status = 1
+		and u.member_buy_length != -1
+		and u.member_end_time >= #{date}
+		union
+		select u.id,
+		u.mobile,
+		u.member_end_time,
+		u.nick_name,
+		s.name
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		where  u.status = 1
+		and u.member_status = 1
+		and u.member_buy_length != -1
+		and u.member_end_time >= #{date}
 	</select>
-	
+
 	<select id="findConponsUsersByCondition" resultMap="usersFrontResultMap" parameterType="com.yuxin.wx.model.user.UsersFront" >
-		select id,username,mobile
-		from users_front
-		where company_id=#{companyId}
-		<if test="status != null">and status = #{status}</if>
-		<if test="vipFlag != null"> and vip_flag = #{vipFlag}</if>
-		<if test="memberLevel != null">and member_id in(${memberLevel}) and member_status=1 and (member_buy_length>0 || member_buy_length=-1) and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(member_end_time) <![CDATA[<]]> 0 || member_end_time is null)</if>
-		<if test="username != null and username != ''">and username = #{username}</if>
-		<if test="mobile != null and mobile != ''">and mobile = #{mobile}</if>
+		select u.id,u.username,u.mobile
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on (s.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=s.edu_school and c.is_area=2)  and c.id=#{companyId}
+		where 1=1
+		<if test="status != null">and u.status = #{status}</if>
+		<if test="vipFlag != null"> and u.vip_flag = #{vipFlag}</if>
+		<if test="memberLevel != null">and u.member_id in(${memberLevel}) and u.member_status=1 and (u.member_buy_length>0 || u.member_buy_length=-1) and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(u.member_end_time) <![CDATA[<]]> 0 || u.member_end_time is null)</if>
+		<if test="username != null and username != ''">and u.username = #{username}</if>
+		<if test="mobile != null and mobile != ''">and u.mobile = #{mobile}</if>
+		union
+		select u.id,u.username,u.mobile
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		where 1=1
+		<if test="status != null">and u.status = #{status}</if>
+		<if test="vipFlag != null"> and u.vip_flag = #{vipFlag}</if>
+		<if test="memberLevel != null">and u.member_id in(${memberLevel}) and u.member_status=1 and (u.member_buy_length>0 || u.member_buy_length=-1) and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(u.member_end_time) <![CDATA[<]]> 0 || u.member_end_time is null)</if>
+		<if test="username != null and username != ''">and u.username = #{username}</if>
+		<if test="mobile != null and mobile != ''">and u.mobile = #{mobile}</if>
 	</select>
 	<!-- 根据邀请码查找userFrontVo -->
 	<select id="findUserVoByInvitCode" resultMap="usersFrontVoResultMap" parameterType="map">
-		SELECT id from users_front a,student b WHERE a.id=b.user_id and a.company_id = #{companyId} and a.invite_code = #{code} limit 1
+		SELECT id from users_front a,student b
+		inner join company c on (b.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=b.edu_school and c.is_area=2)  and c.id=#{companyId}
+		WHERE a.id=b.user_id and a.invite_code = #{code}
+		union
+		SELECT id from users_front a,student b
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		WHERE a.id=b.user_id and a.invite_code = #{code}
+		limit 1
 	</select>
-	
+
 	<!-- 检查数量 -->
 	<select id="findUsersfrontCountByMobileOrUsername" resultType="int" parameterType="com.yuxin.wx.vo.student.SelectStudentOrUsersfrontVo">
 		select count(uf.id)
 		from users_front uf
-		where uf.company_id = #{companyId} and	( uf.username = #{username} or uf.mobile = #{mobile} )
-	</select>
-	
-	<select id="findUsersfrontByMobileOrUsername" resultMap="usersFrontResultMap" parameterType="com.yuxin.wx.vo.student.SelectStudentOrUsersfrontVo">
-		select <include refid="table_columns" />
+		inner join student s on s.user_id=uf.id
+		inner join company c on (s.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=s.edu_school and c.is_area=2)  and c.id=#{companyId}
+		where ( uf.username = #{username} or uf.mobile = #{mobile} )
+		union
+		select count(uf.id)
 		from users_front uf
-		where uf.company_id = #{companyId} and	( uf.username = #{username} or uf.mobile = #{mobile} )
-		<if test="mobile != null and mobile != ''"> 
-			ORDER BY field(uf.mobile,#{mobile} ) desc  
+		inner join student s on s.user_id=uf.id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		where ( uf.username = #{username} or uf.mobile = #{mobile} )
+	</select>
+
+	<select id="findUsersfrontByMobileOrUsername" resultMap="usersFrontResultMap" parameterType="com.yuxin.wx.vo.student.SelectStudentOrUsersfrontVo">
+		select <include refid="table_columns_u" />
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on (s.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=s.edu_school and c.is_area=2)  and c.id=#{companyId}
+		where (u.username = #{username} or u.mobile = #{mobile} )
+		union
+		select <include refid="table_columns_u" />
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		where (u.username = #{username} or u.mobile = #{mobile} )
+		<if test="mobile != null and mobile != ''">
+			ORDER BY field(u.mobile,#{mobile} ) desc
 		</if>
 		limit 0,1
 	</select>
 	<select id="findUsersFrontOnlyByMobile" resultMap="usersFrontResultMap" parameterType="com.yuxin.wx.vo.student.SelectStudentOrUsersfrontVo">
-		select <include refid="table_columns" />
-		from users_front
-		where mobile = #{mobile} and company_id=#{companyId} limit 0,1
+		select <include refid="table_columns_u" />
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on (s.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=s.edu_school and c.is_area=2)  and c.id=#{companyId}
+		where u.mobile = #{mobile}
+		union
+		select <include refid="table_columns_u" />
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		where u.mobile = #{mobile}
+		limit 0,1
 	</select>
 	<select id="findUsersFrontOnlyByUsername" resultMap="usersFrontResultMap" parameterType="com.yuxin.wx.vo.student.SelectStudentOrUsersfrontVo">
-		select <include refid="table_columns" />
-		from users_front
-		where username = #{username} and company_id=#{companyId} limit 0,1
+		select <include refid="table_columns_u" />
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on (s.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=s.edu_school and c.is_area=2)  and c.id=#{companyId}
+		where u.username = #{username}
+		union
+		select <include refid="table_columns_u" />
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		where u.username = #{username}
+		limit 0,1
 	</select>
 
 

@@ -35,7 +35,7 @@
 		<result property="commodityType" column="commodity_type"/>
 		<result property="rangeItemPackageCategory" column="range_item_package_category"/>
 	</resultMap>
-	
+
 	<resultMap type="com.yuxin.wx.vo.company.CompanyCouponsPatchVo" id="companyCouponsPatchVoResultMap">
 		<result property="id" column="id" />
 		<result property="name" column="name" />
@@ -70,11 +70,11 @@
 		<result property="commodityType" column="commodity_type"/>
 		<result property="rangeItemPackageCategory" column="range_item_package_category"/>
 		<association property="rangeItemOneName" column="range_item_one" javaType="String"
-		select="selectRangeItemOneNameById"></association>
+					 select="selectRangeItemOneNameById"></association>
 		<association property="rangeItemSecondName" column="range_item_second" javaType="String"
-		select="selectRangeItemSecondNameById"></association>
+					 select="selectRangeItemSecondNameById"></association>
 		<association property="rangeItemCourseName" column="range_item_course" javaType="String"
-		select="selectRangeItemCourseNameById"></association>
+					 select="selectRangeItemCourseNameById"></association>
 	</resultMap>
 	<sql id="table_columns">
 		id,
@@ -109,7 +109,7 @@
 		send_date,
 		commodity_type,
 		range_item_package_category
-    </sql>
+	</sql>
 	<sql id="entity_properties">
 		#{id},
 		#{name},
@@ -178,28 +178,28 @@
 		#{item.commodityType},
 		#{item.rangeItemPackageCategory}
 	</sql>
-	
+
 	<!-- 适用于主键自增类型 -->
 	<insert id="insert" parameterType="com.yuxin.wx.model.company.CompanyCouponsPatch" useGeneratedKeys="true" keyProperty="id">
-		insert into company_coupons_patch( <include refid="table_columns" /> ) 
+		insert into company_coupons_patch( <include refid="table_columns" /> )
 		values ( <include refid="entity_properties" /> )
 	</insert>
-	
+
 	<!-- 批量添加 适用于主键自增类型  不支持返回主键-->
 	<insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
-		insert into company_coupons_patch( <include refid="table_columns" /> ) 
-		values 
+		insert into company_coupons_patch( <include refid="table_columns" /> )
+		values
 		<foreach item="item" collection="list" separator="," >
 			( <include refid="entity_properties" /> )
 		</foreach>
 	</insert>
-	
+
 	<!--根据主键删除 -->
 	<delete id="deleteById">
 		delete from company_coupons_patch
 		where id = #{id}
 	</delete>
-	
+
 	<!-- 根据ID批量删除 -->
 	<delete id="deleteByIds">
 		delete from company_coupons_patch
@@ -208,9 +208,9 @@
 			#{item}
 		</foreach>
 	</delete>
-	
+
 	<update id="update" parameterType="com.yuxin.wx.model.company.CompanyCouponsPatch">
-		update company_coupons_patch 
+		update company_coupons_patch
 		<trim prefix="set" suffixOverrides=",">
 			<if test="name != null and name != ''">name = #{name},</if>
 			<if test="totalNum != null and totalNum != ''">total_num = #{totalNum},</if>
@@ -245,18 +245,18 @@
 		</trim>
 		<where>id = #{id}</where>
 	</update>
-	
+
 	<select id="findById" resultMap="companyCouponsPatchResultMap" parameterType="String" >
 		select <include refid="table_columns" />
 		from company_coupons_patch
 		where id = #{id}
 	</select>
-	
+
 	<select id="queryAll" resultMap="companyCouponsPatchResultMap">
-		select <include refid="table_columns" /> 
+		select <include refid="table_columns" />
 		from company_coupons_patch
 	</select>
-	
+
 	<!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
 	<sql id="page_where">
 		<trim prefix="where" prefixOverrides="and | or ">
@@ -288,56 +288,56 @@
 			<if test="userList != null and userList != ''">and user_list = #{userList}</if>
 		</trim>
 	</sql>
-	
+
 	<select id="page" resultMap="companyCouponsPatchResultMap" parameterType="com.yuxin.wx.model.company.CompanyCouponsPatch">
 		select <include refid="table_columns" />
 		from company_coupons_patch
 		<include refid="page_where" />
 		limit #{firstIndex},#{pageSize}
 	</select>
-	
+
 	<select id="pageCount" resultType="int" parameterType="com.yuxin.wx.model.company.CompanyCouponsPatch">
 		select count(id) from company_coupons_patch
 		<include refid="page_where" />
 	</select>
-	
+
 	<!-- 其他自定义SQL -->
 	<select id="queryCouponsByCondition" resultMap="companyCouponsPatchResultMap" parameterType="com.yuxin.wx.model.company.CompanyCouponsPatch">
 		select <include refid="table_columns" />
 		from company_coupons_patch
 		where company_id=#{companyId}
-			<if test="name != null and name != ''">and name = #{name}</if>
-			<if test="totalNum != null and totalNum != ''">and total_num = #{totalNum}</if>
-			<if test="usedNum != null and usedNum != ''">and used_num = #{usedNum}</if>
-			<if test="remainNum != null and remainNum != ''">and remain_num = #{remainNum}</if>
-			<if test="status != null and status != ''">and status = #{status}</if>
-			<if test="issueWay != null and issueWay != ''">and issue_way = #{issueWay}</if>
-			<if test="forCrowd != null and forCrowd != ''">and for_crowd = #{forCrowd}</if>
-			<if test="useWay != null and useWay != ''">and use_way = #{useWay}</if>
-			<if test="useRange != null and useRange != ''">and use_range = #{useRange}</if>
-			<if test="timeLimitFrom != null and timeLimitFrom != ''">and time_limit_from = #{timeLimitFrom}</if>
-			<if test="timeLimitTo != null and timeLimitTo != ''">and time_limit_to = #{timeLimitTo}</if>
-			<if test="promoCodePrefix != null and promoCodePrefix != ''">and promo_code_prefix = #{promoCodePrefix}</if>
-			<if test="promoCodeLength != null and promoCodeLength != ''">and promo_code_length = #{promoCodeLength}</if>
-			<if test="noticWay != null and noticWay != ''">and notic_way = #{noticWay}</if>
-			<if test="noticSmsContents != null and noticSmsContents != ''">and notic_sms_contents = #{noticSmsContents}</if>
-			<if test="noticMsgContents != null and noticMsgContents != ''">and notic_msg_contents = #{noticMsgContents}</if>
-			<if test="insCashNum != null and insCashNum != ''">and ins_cash_num = #{insCashNum}</if>
-			<if test="overNum != null and overNum != ''">and over_num = #{overNum}</if>
-			<if test="overCutNum != null and overCutNum != ''">and over_cut_num = #{overCutNum}</if>
-			<if test="discountNum != null and discountNum != ''">and discount_num = #{discountNum}</if>
-			<if test="memberList != null and memberList != ''">and member_list = #{memberList}</if>
-			<if test="description != null and description != ''">and description = #{description}</if>
-			<if test="rangeItemOne != null and rangeItemOne != ''">and range_item_one = #{rangeItemOne}</if>
-			<if test="rangeItemSecond != null and rangeItemSecond != ''">and range_item_second = #{rangeItemSecond}</if>
-			<if test="rangeItemCourse != null and rangeItemCourse != ''">and range_item_course = #{rangeItemCourse}</if>
-			<if test="userList != null and userList != ''">and user_list = #{userList}</if>
+		<if test="name != null and name != ''">and name = #{name}</if>
+		<if test="totalNum != null and totalNum != ''">and total_num = #{totalNum}</if>
+		<if test="usedNum != null and usedNum != ''">and used_num = #{usedNum}</if>
+		<if test="remainNum != null and remainNum != ''">and remain_num = #{remainNum}</if>
+		<if test="status != null and status != ''">and status = #{status}</if>
+		<if test="issueWay != null and issueWay != ''">and issue_way = #{issueWay}</if>
+		<if test="forCrowd != null and forCrowd != ''">and for_crowd = #{forCrowd}</if>
+		<if test="useWay != null and useWay != ''">and use_way = #{useWay}</if>
+		<if test="useRange != null and useRange != ''">and use_range = #{useRange}</if>
+		<if test="timeLimitFrom != null and timeLimitFrom != ''">and time_limit_from = #{timeLimitFrom}</if>
+		<if test="timeLimitTo != null and timeLimitTo != ''">and time_limit_to = #{timeLimitTo}</if>
+		<if test="promoCodePrefix != null and promoCodePrefix != ''">and promo_code_prefix = #{promoCodePrefix}</if>
+		<if test="promoCodeLength != null and promoCodeLength != ''">and promo_code_length = #{promoCodeLength}</if>
+		<if test="noticWay != null and noticWay != ''">and notic_way = #{noticWay}</if>
+		<if test="noticSmsContents != null and noticSmsContents != ''">and notic_sms_contents = #{noticSmsContents}</if>
+		<if test="noticMsgContents != null and noticMsgContents != ''">and notic_msg_contents = #{noticMsgContents}</if>
+		<if test="insCashNum != null and insCashNum != ''">and ins_cash_num = #{insCashNum}</if>
+		<if test="overNum != null and overNum != ''">and over_num = #{overNum}</if>
+		<if test="overCutNum != null and overCutNum != ''">and over_cut_num = #{overCutNum}</if>
+		<if test="discountNum != null and discountNum != ''">and discount_num = #{discountNum}</if>
+		<if test="memberList != null and memberList != ''">and member_list = #{memberList}</if>
+		<if test="description != null and description != ''">and description = #{description}</if>
+		<if test="rangeItemOne != null and rangeItemOne != ''">and range_item_one = #{rangeItemOne}</if>
+		<if test="rangeItemSecond != null and rangeItemSecond != ''">and range_item_second = #{rangeItemSecond}</if>
+		<if test="rangeItemCourse != null and rangeItemCourse != ''">and range_item_course = #{rangeItemCourse}</if>
+		<if test="userList != null and userList != ''">and user_list = #{userList}</if>
 	</select>
-	
+
 	<!-- 查询过期要清除的 优惠券 -->
 	<select id="findCouponsByDate" parameterType="Date" resultType="Integer">
 		select id from company_coupons_patch
-		where #{cleantime} >= time_limit_to 
+		where #{cleantime} >= time_limit_to
 	</select>
 	<!-- 根据批次id查询 码 -->
 	<select id="findCodeByPatchId" parameterType="Integer" resultType="String">
@@ -353,7 +353,7 @@
 		</foreach>
 	</delete>
 	<!-- 删除优惠券库 -->
-	
+
 	<delete id="delLibByPatch" parameterType="Integer">
 		delete from company_coupons_lib
 		where patch_id = #{id}
@@ -422,29 +422,48 @@
 		from commodity
 		where id = #{range_item_course}
 	</select>
-	
+
 	<select id="queryCouponsPatchById" resultMap="companyCouponsPatchVoResultMap" parameterType="Integer">
 		select <include refid="table_columns" />
-		from company_coupons_patch ccp 
+		from company_coupons_patch ccp
 		where ccp.id=#{id} and del_flag = '0'
 		limit 1
 	</select>
 	<select id="queryCouponseBycondtion" parameterType="com.yuxin.wx.model.company.CompanyCouponsPatch" resultMap="companyCouponsPatchResultMap">
-		select <include refid="table_columns" /> 
+		select <include refid="table_columns" />
 		from company_coupons_patch
 		where company_id=#{companyId} and del_flag=0
 		<if test="name != null and name != ''">and name = #{name}</if>
 	</select>
-	
-	
+
+
 	<select id="queryAllUsers" parameterType="Integer" resultType="com.yuxin.wx.model.user.UsersFront">
+		select u.id,u.mobile
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on (s.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=s.edu_school and c.is_area=2)  and c.id=#{companyId}
+		where u.status='1'
+		union
 		select id,mobile
-		from users_front where company_id=#{companyId} and status='1'
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		where u.status='1'
 	</select>
 	<select id="queryMemberUsers" parameterType="com.yuxin.wx.model.user.UsersFront" resultType="com.yuxin.wx.model.user.UsersFront">
-		select id,mobile
-		from users_front where company_id=#{companyId}  and member_id=#{memberId} and status='1' and member_status = '1' and (member_buy_length>0 || member_buy_length=-1)
-		and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(member_end_time) <![CDATA[<]]> 0 || member_end_time is null)
+		select u.id,u.mobile
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on (s.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=s.edu_school and c.is_area=2)  and c.id=#{companyId}
+		where u.member_id=#{memberId} and u.status='1' and u.member_status = '1' and (u.member_buy_length>0 || u.member_buy_length=-1)
+		and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(member_end_time) <![CDATA[<]]> 0 || u.member_end_time is null)
+		union
+		select u.id,u.mobile
+		from users_front u
+		inner join student s on s.user_id=u.id
+		inner join company c on c.is_area=0  and c.id=#{companyId}
+		where u.member_id=#{memberId} and u.status='1' and u.member_status = '1' and (u.member_buy_length>0 || u.member_buy_length=-1)
+		and (TO_DAYS(date_format(NOW(), "%Y-%m-%d"))-TO_DAYS(member_end_time) <![CDATA[<]]> 0 || u.member_end_time is null)
 	</select>
 	<select id="queryAlreadyBuyClassUsers" parameterType="Integer" resultType="com.yuxin.wx.model.user.UsersFront">
 		select id,mobile

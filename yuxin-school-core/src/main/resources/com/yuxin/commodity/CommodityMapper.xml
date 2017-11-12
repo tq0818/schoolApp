@@ -35,7 +35,7 @@
 		<result property="itemFourthCode" column="item_fourth_code" />
 		<result property="isMicroClass" column="is_micro_class" />
 	</resultMap>
-	
+
 	<resultMap type="com.yuxin.wx.vo.commodity.CommodityVo" id="commodityVoResultMap">
 		<result property="id" column="id" />
 		<result property="name" column="name" />
@@ -149,28 +149,28 @@
 		#{isMicroClass},
 		#{originType}
 	</sql>
-	
+
 	<!-- 适用于主键自增类型 -->
 	<insert id="insert" parameterType="com.yuxin.wx.model.commodity.Commodity" useGeneratedKeys="true" keyProperty="id">
-		insert into commodity( <include refid="table_columns" /> ) 
+		insert into commodity( <include refid="table_columns" /> )
 		values ( <include refid="entity_properties" /> )
 	</insert>
-	
+
 	<!-- 批量添加 适用于主键自增类型  不支持返回主键-->
 	<insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
-		insert into commodity( <include refid="table_columns" /> ) 
-		values 
+		insert into commodity( <include refid="table_columns" /> )
+		values
 		<foreach item="item" collection="list" separator="," >
 			( <include refid="entity_properties" /> )
 		</foreach>
 	</insert>
-	
+
 	<!--根据主键删除 -->
 	<delete id="deleteById">
 		delete from tbl_users
 		where id = #{id}
 	</delete>
-	
+
 	<!-- 根据ID批量删除 -->
 	<delete id="deleteByIds">
 		delete from commodity
@@ -179,9 +179,9 @@
 			#{item}
 		</foreach>
 	</delete>
-	
+
 	<update id="update" parameterType="com.yuxin.wx.model.commodity.Commodity">
-		update commodity 
+		update commodity
 		<trim prefix="set" suffixOverrides=",">
 			<if test="name != null and name != ''">name = #{name},</if>
 			<if test="coverUrl != null and coverUrl != ''">cover_url = #{coverUrl},</if>
@@ -217,18 +217,18 @@
 		</trim>
 		<where>id = #{id}</where>
 	</update>
-	
+
 	<select id="findById" resultMap="commodityResultMap" parameterType="String" >
 		select <include refid="table_columns" />
 		from commodity
 		where id = #{id}
 	</select>
-	
+
 	<select id="queryAll" resultMap="commodityResultMap">
-		select <include refid="table_columns" /> 
+		select <include refid="table_columns" />
 		from commodity
 	</select>
-	
+
 	<!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
 	<sql id="page_where">
 		<trim prefix="where" prefixOverrides="and | or ">
@@ -255,45 +255,45 @@
 			<if test="remoteFlag != null and remoteFlag != ''">and remote_flag = #{remoteFlag}</if>
 		</trim>
 	</sql>
-	
+
 	<select id="page" resultMap="commodityResultMap" parameterType="com.yuxin.wx.model.commodity.Commodity">
 		select <include refid="table_columns" />
 		from commodity
 		<include refid="page_where" />
 		limit #{firstIndex},#{pageSize}
 	</select>
-	
+
 	<select id="pageCount" resultType="int" parameterType="com.yuxin.wx.model.commodity.Commodity">
 		select count(id) from commodity
 		<include refid="page_where" />
 	</select>
-	
+
 	<select id="queryProduct"  resultMap="commodityVoResultMap" parameterType="com.yuxin.wx.vo.commodity.CommodityVo">
 		select c.*,pr.product_id as classTypeId,(c.base_num + c.buy_num) as actualNum from commodity c left join commodity_product_realtion pr on c.id=pr.com_id
 		<where>
-		<if test="schoolId != null and schoolId != ''"> and c.school_id=#{schoolId}</if> 
-		<if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
-		<if test="itemSecondId != null and itemSecondId != ''">and item_second_id = #{itemSecondId}</if>
-		<if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
-		<if test="lableType != null and lableType != ''">and lable_type = #{lableType}</if>
-		<if test="status != null and status != ''">and status = #{status}</if>
+			<if test="schoolId != null and schoolId != ''"> and c.school_id=#{schoolId}</if>
+			<if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
+			<if test="itemSecondId != null and itemSecondId != ''">and item_second_id = #{itemSecondId}</if>
+			<if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
+			<if test="lableType != null and lableType != ''">and lable_type = #{lableType}</if>
+			<if test="status != null and status != ''">and status = #{status}</if>
 		</where>
 		limit #{firstIndex},#{pageSize}
 	</select>
-	
+
 	<select id="queryProductCount"  resultType="int" parameterType="com.yuxin.wx.vo.commodity.CommodityVo">
 		select count(c.id) from commodity c left join commodity_product_realtion pr on c.id=pr.com_id
 		<where>
-		<if test="schoolId != null and schoolId != ''"> and c.school_id=#{schoolId}</if> 
-		<if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
-		<if test="itemSecondId != null and itemSecondId != ''">and item_second_id = #{itemSecondId}</if>
-		<if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
-		<if test="status != null and status != ''">and status = #{status}</if>
+			<if test="schoolId != null and schoolId != ''"> and c.school_id=#{schoolId}</if>
+			<if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
+			<if test="itemSecondId != null and itemSecondId != ''">and item_second_id = #{itemSecondId}</if>
+			<if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
+			<if test="status != null and status != ''">and status = #{status}</if>
 		</where>
 	</select>
 	<!-- 其他自定义SQL -->
 	<select id="findProduct" resultMap="commodityVoResultMap"
-		parameterType="com.yuxin.wx.vo.commodity.CommodityVo">
+			parameterType="com.yuxin.wx.vo.commodity.CommodityVo">
 		select c.*,pr.product_id as classTypeId,(c.base_num + c.buy_num) as
 		actualNum from commodity c left join commodity_product_realtion pr on
 		c.id=pr.com_id
@@ -303,7 +303,7 @@
 		<if test="itemOneIds != null and itemOneIds != ''">
 			and c.item_one_id in
 			<foreach item="item" collection="itemOneIds" open="(" separator=","
-				close=")">
+					 close=")">
 				#{item}
 			</foreach>
 		</if>
@@ -315,18 +315,18 @@
 		<if test="cusorder !=null and cusorder !=''"> order by ${cusorder} </if>
 		<if test="cuslimit !=null and cuslimit !=''"> limit ${cuslimit} </if>
 	</select>
-	
+
 	<select id="findCommodityIdByClassTypeId" parameterType="Integer" resultType="Integer">
 		select b.com_id
 		from class_type a,commodity_product_realtion b
-		where 
-			b.product_id = a.id
+		where
+		b.product_id = a.id
 		and
-			a.id = #{classTypeId}
+		a.id = #{classTypeId}
 		limit 1
 	</select>
-		<select id="findCommodityByClassTypeId" parameterType="map" resultMap="commodityVoResultMap">
-		select c.*,pr.product_id as classTypeId,(c.base_num + c.buy_num) as actualNum 
+	<select id="findCommodityByClassTypeId" parameterType="map" resultMap="commodityVoResultMap">
+		select c.*,pr.product_id as classTypeId,(c.base_num + c.buy_num) as actualNum
 		from commodity c , commodity_product_realtion pr
 		where  c.status=1
 		and c.id=pr.com_id
@@ -335,51 +335,54 @@
 		<if test="classTypeTwo !=null and classTypeTwo!='' ">  or pr.product_id= #{classTypeTwo}</if>
 		<if test="classTypeOne !=null and classTypeOne!=''">)</if>
 	</select>
-	
+
 	<update id="updateBuyNumById" parameterType="Integer">
 		update commodity set buy_num=buy_num+1
 		where id = #{id}
 	</update>
-	
+
 	<select id="querycommByCompanyId" parameterType="Integer" resultMap="commodityResultMap">
-		select <include refid="table_columns" /> 
+		select <include refid="table_columns" />
 		from commodity where company_id=#{companyId}
 	</select>
-	
+
 	<select id="findComId" parameterType="com.yuxin.wx.model.commodity.Commodity" resultType="Integer">
 		select id from commodity
-		where company_id = #{companyId} and 
-			school_id = #{schoolId} and 
-			item_one_id = #{itemOneId} and 
-			item_second_id = #{itemSecondId} and 
-			status = #{status}
+		where company_id = #{companyId} and
+		school_id = #{schoolId} and
+		item_one_id = #{itemOneId} and
+		item_second_id = #{itemSecondId} and
+		status = #{status}
 	</select>
 	<update id="updateStatus" parameterType="map">
 		update commodity set
-			status = #{status}
-		where id in 
+		status = #{status}
+		where id in
 		<foreach collection="comId" item="item" open="(" separator="," close=")">
 			#{item}
 		</foreach>
 	</update>
-	
+
 	<select id="findCommodityName" parameterType="Integer" resultType="String">
 		select name from commodity where id = #{id}
 	</select>
-	
-	
+
+
 	<select id="queryCourseByTeacherIds" parameterType="map" resultMap="commodityVoResultMap">
-		select temp.*,sct.school_short_name,sct.name teacher_name from (select com.*,(com.base_num + com.buy_num) as actualNum, ct.teacher_id from commodity com inner join commodity_product_realtion pr on com.id=pr.com_id inner JOIN class_type ct on ct.id=pr.product_id 
+		select temp.*,sct.school_short_name,sct.name teacher_name from (select com.*,(com.base_num + com.buy_num) as actualNum, ct.teacher_id
+		from commodity com
+		inner join commodity_product_realtion pr on com.id=pr.com_id
+		inner JOIN class_type ct on ct.id=pr.product_id
 		where com.status=1 and ct.is_sale = 1 and ct.teacher_id  in
 		<foreach collection="teacherIds" item="item" open="(" separator="," close=")">
 			#{item}
 		</foreach>
-		 and com.company_id=#{companyId} and com.school_id=#{schoolId}
+		and com.company_id=#{companyId} and com.school_id=#{schoolId}
 		ORDER BY com.id DESC)temp LEFT JOIN sys_config_teacher sct ON sct.id = temp.teacher_id
 	</select>
-	
+
 	<update id="updateSpecialOrder" parameterType="com.yuxin.wx.vo.commodity.CommodityVo">
-	    update commodity set special_order = #{specialOrder} where id = #{id}
+		update commodity set special_order = #{specialOrder} where id = #{id}
 	</update>
 
 	<!-- 课程搜索 lym -->

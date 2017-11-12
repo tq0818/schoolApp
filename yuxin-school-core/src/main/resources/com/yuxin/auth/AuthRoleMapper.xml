@@ -13,7 +13,7 @@
 		<result property="updateTime" column="update_time" />
 		<result property="updator" column="updator" />
 	</resultMap>
-	
+
 	<resultMap type="com.yuxin.wx.vo.privilege.UserRolesListVo" id="userRoleListVoResultMap">
 		<result property="userId" column="id"/>
 		<result property="username" column="username"/>
@@ -30,7 +30,7 @@
 		<result property="roleNames" column="roleNames"/>
 		<result property="userRole" column="userRole"/>
 	</resultMap>
-	
+
 	<resultMap type="com.yuxin.wx.model.auth.AuthRole" id="authRoleList">
 		<result property="id" column="id"/>
 		<result property="roleUid" column="role_uid"/>
@@ -38,7 +38,7 @@
 		<result property="roleName" column="role_name"/>
 		<result property="roleFlag" column="roleFlag"/>
 	</resultMap>
-	
+
 	<sql id="table_columns">
 		id,
 		role_uid,
@@ -51,7 +51,7 @@
 		update_time,
 		updator,
 		role_flag
-    </sql>
+	</sql>
 	<sql id="entity_properties">
 		#{id},
 		#{roleUid},
@@ -79,25 +79,25 @@
 	</sql>
 	<!-- 适用于主键自增类型 -->
 	<insert id="insert" parameterType="com.yuxin.wx.model.auth.AuthRole" useGeneratedKeys="true" keyProperty="id">
-		insert into auth_role( <include refid="table_columns" /> ) 
+		insert into auth_role( <include refid="table_columns" /> )
 		values ( <include refid="entity_properties" /> )
 	</insert>
-	
+
 	<!-- 批量添加 适用于主键自增类型  不支持返回主键-->
 	<insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
-		insert into auth_role( <include refid="table_columns" /> ) 
-		values 
+		insert into auth_role( <include refid="table_columns" /> )
+		values
 		<foreach item="item" collection="list" separator="," >
 			( <include refid="batch_entity_properties" /> )
 		</foreach>
 	</insert>
-	
+
 	<!--根据主键删除 -->
 	<delete id="deleteById">
 		delete from auth_role
 		where id = #{id}
 	</delete>
-	
+
 	<!-- 根据ID批量删除 -->
 	<delete id="deleteByIds">
 		delete from auth_role
@@ -106,14 +106,14 @@
 			#{item}
 		</foreach>
 	</delete>
-	
-		<!-- 根据ID批量删除 -->
+
+	<!-- 根据ID批量删除 -->
 	<delete id="deleteAll">
 		delete from auth_role
 	</delete>
-	
+
 	<update id="update" parameterType="com.yuxin.wx.model.auth.AuthRole">
-		update auth_role 
+		update auth_role
 		<trim prefix="set" suffixOverrides=",">
 			<if test="roleUid != null">role_uid = #{roleUid},</if>
 			<if test="roleName != null and roleName != ''">role_name = #{roleName},</if>
@@ -127,21 +127,21 @@
 		</trim>
 		<where>id = #{id}</where>
 	</update>
-	
+
 	<select id="findById" resultMap="authRoleResultMap" parameterType="String" >
 		select <include refid="table_columns" />
 		from auth_role
 		where id = #{id}
 	</select>
-	
+
 	<select id="queryAll" resultMap="authRoleResultMap">
-		select <include refid="table_columns" /> 
+		select <include refid="table_columns" />
 		from auth_role order by id asc
 	</select>
-	
-	<!-- 根据公告id查询角色信息 
+
+	<!-- 根据公告id查询角色信息
 	<select id="queryAllRoleById" resultMap="authRoleResultMap" parameterType="String">
-		select <include refid="table_columns" /> 
+		select <include refid="table_columns" />
 		from auth_role
 		<where>
 			1=1
@@ -149,7 +149,7 @@
 		</where>
 		order by id asc
 	</select>-->
-	
+
 	<!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
 	<sql id="page_where">
 		<trim prefix="where" prefixOverrides="and | or ">
@@ -163,54 +163,59 @@
 			<if test="updator != null and updator != ''">and updator = #{updator}</if>
 		</trim>
 	</sql>
-	
+
 	<select id="page" resultMap="authRoleResultMap" parameterType="com.yuxin.wx.model.auth.AuthRole">
 		select <include refid="table_columns" />
 		from auth_role
 		<include refid="page_where" />
 		limit #{firstIndex},#{pageSize}
 	</select>
-	
+
 	<select id="pageCount" resultType="int" parameterType="com.yuxin.wx.model.auth.AuthRole">
 		select count(id) from auth_role
 		<include refid="page_where" />
 	</select>
-	
+
 	<!-- 其他自定义SQL -->
-	
+
 	<select id="findListByUser" resultType="com.yuxin.wx.model.auth.AuthRole" parameterType="int">
 		select r.id roleId,r.role_name roleName,ul.create_time from auth_role r,auth_user_role ul where ul.role_id=r.id and ul.user_id=#{userId}
 	</select>
-	
+
 	<select id="findAuthRoleListByUser" resultMap="authRoleList" parameterType="int">
 		select distinct r.id,r.role_uid,r.role_name roleName,r.role_flag roleFlag,ul.create_time from auth_role r,auth_user_role ul where ul.role_uid=r.role_uid and ul.user_id=#{userId}
 	</select>
-	
+
 	<select id="queryAllUser" parameterType="com.yuxin.wx.vo.privilege.UserRolesListVo" resultMap="userRoleListVoResultMap">
-		select u.id,u.username,u.real_name,u.sex,u.status,u.mobile,u.company_id,u.school_id from users u
-		where u.company_id=#{companyId} and u.school_id = #{schoolId}
+		select u.id,u.username,u.real_name,u.sex,u.status,u.mobile,c.id as company_id,scs.id as school_id
+		from users u
+		inner join company c on c.is_area=u.is_area and (u.edu_area_school is null and c.edu_area_school is null or u.edu_area_school=c.edu_area_school)
+		inner join sys_config_school scs on scs.company_id=c.id
+		where  c.id=#{companyId}
 		<if test="realName != null and realName != ''">and u.real_name like '%${realName}%'</if>
 		<if test="mobile != null and mobile != ''">and u.mobile = #{mobile}</if>
 		<if test="username != null and username != ''">and u.username like '%${username}%'</if>
 		limit #{firstIndex},#{pageSize}
 	</select>
-	
+
 	<select id="queryAllUserCount" parameterType="com.yuxin.wx.vo.privilege.UserRolesListVo" resultType="int">
 		select count(u.id) from users u
-		where u.company_id=#{companyId} and u.school_id = #{schoolId}
+		inner join company c on c.is_area=u.is_area and (u.edu_area_school is null and c.edu_area_school is null or u.edu_area_school=c.edu_area_school)
+		inner join sys_config_school scs on scs.company_id=c.id
+		where c.id=#{companyId} and scs.id = #{schoolId}
 		<if test="realName != null and realName != ''">and u.real_name like '%${realName}%'</if>
 		<if test="mobile != null and mobile != ''">and u.mobile = #{mobile}</if>
 		<if test="username != null and username != ''">and u.username like '%${username}%'</if>
 	</select>
-	
+
 	<select id="findByCompanyId" resultMap="authRoleResultMap" parameterType="Integer">
 		select <include refid="table_columns" />
 		from auth_role
 		where company_id = #{companyId} and company_id!=-1
 	</select>
-	
+
 	<select id="queryRolesByCondition" resultMap="authRoleResultMap" parameterType="com.yuxin.wx.model.auth.AuthRole">
-		select <include refid="table_columns" /> 
+		select <include refid="table_columns" />
 		from auth_role
 		where 1=1
 		<if test="roleUid != null">and role_uid != #{roleUid}</if>
@@ -218,12 +223,12 @@
 		<if test="roleName != null and roleName != ''">and role_name = #{roleName}</if>
 		order by id asc
 	</select>
-	
+
 	<select id="queryRolesByUid" resultMap="authRoleResultMap" parameterType="String">
-		select <include refid="table_columns" /> 
+		select <include refid="table_columns" />
 		from auth_role where 1=1
 		<if test="roleUid != null">and role_uid not in(${roleUid})</if>
 		order by id asc
 	</select>
-	
+
 </mapper>
