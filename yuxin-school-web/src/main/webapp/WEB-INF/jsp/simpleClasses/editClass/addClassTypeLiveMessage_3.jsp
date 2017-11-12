@@ -66,7 +66,9 @@
             	 	<input type="hidden" id="moduleNoId" value=""/>
 
 					 <input type="hidden" name="originType" id="originType" value="${ct.originType}"/>
-	                  <a href="javascript:;" class="btn btn-primary btn-addlink addCourse"><em class="iconfont">&#xe606;</em>新增课程单元</a>
+					 <c:if test="${ct.originType  eq 1 }">
+	                	  <a href="javascript:;" class="btn btn-primary btn-addlink addCourse"><em class="iconfont">&#xe606;</em>新增课程单元</a>
+					 </c:if>
 <!-- 	                <a href="javascript:;" class="btn btn-primary btn-addlink addcourseDetail"><em class="iconfont">&#xe606;</em>新增课次</a> -->
 	            	
 	            </div>
