@@ -11,6 +11,7 @@
 		<result property="iconUrl" column="icon_url" />
 		<result property="iconBackUrl" column="icon_back_url" />
 		<result property="delFlag" column="del_flag" />
+		<result property="originType" column="origin_type" />
 		
 	</resultMap>
 
@@ -27,6 +28,7 @@
 		<result property="iconUrl" column="icon_url" />
 		<result property="iconBackUrl" column="icon_back_url" />
 		<result property="delFlag" column="del_flag" />
+		<result property="originType" column="origin_type" />
 	</resultMap>
 
 	<sql id="table_columns">
@@ -38,7 +40,8 @@
 		company_id,
 		icon_url,
 		icon_back_url,
-		del_flag
+		del_flag,
+		origin_type
 	</sql>
 	<sql id="entity_properties">
 		#{id},
@@ -49,7 +52,8 @@
 		#{companyId},
 		#{iconUrl},
 		#{iconBackUrl},
-		#{delFlag}
+		#{delFlag},
+		#{originType}
 	</sql>
 	<sql id="batch_entity_properties">
 		#{item.id},
@@ -57,7 +61,8 @@
 		#{item.tikuDesc},
 		#{item.itemOneId},
 		#{item.itemSecondId},
-		#{item.companyId}
+		#{item.companyId},
+		#{item.originType}
 	</sql>
 
 	<!-- 适用于主键自增类型 -->
@@ -159,7 +164,7 @@
 	<!-- 其他自定义SQL -->
 	<select id="findTikuCategoryVo" resultMap="tikuCategoryResultMapVo"
 		parameterType="com.yuxin.wx.vo.tiku.TikuCategoryVo">
-		select tc.id,tc.tiku_name,tc.tiku_desc,tc.icon_url,tc.del_flag,(select count(ts.id) from
+		select tc.id,tc.tiku_name,tc.origin_type,tc.tiku_desc,tc.icon_url,tc.del_flag,(select count(ts.id) from
 		tiku_subject as ts where ts.category_id = tc.id and ts.del_flag = 0) as subject_no,
 		(select count(tp.id) from tiku_paper as tp where tp.tiku_category_id =
 		tc.id) as paper_no,

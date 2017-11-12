@@ -47,6 +47,7 @@
 		<result property="itemThirdCode" column="item_third_code" />
 		<result property="itemFourthCode" column="item_fourth_code" />
 		<result property="paperDescription" column="paper_description" />
+		<result property="originType" column="origin_type"/>
 	</resultMap>
 	
 	<resultMap type="com.yuxin.wx.vo.classes.ClassTypeVo" id="classTypeVoResultMap">
@@ -102,6 +103,7 @@
 		<result property="iconLable" column="icon_lable"/>
 		<result property="subjectClassOrder" column="subject_class_order"/>
 		<result property="isMicroClass" column="is_micro_class"/>
+		<result property="originType" column="origin_type"/>
 	</resultMap>
 	
 	<sql id="table_columns">
@@ -150,7 +152,8 @@
 		item_third_code,
 		item_fourth_code,
 		is_micro_class,
-		paper_description
+		paper_description,
+		origin_type
     </sql>
 	<sql id="entity_properties">
 		#{id},
@@ -198,7 +201,8 @@
 		#{itemThirdCode},
 		#{itemFourthCode},
 		#{isMicroClass},
-		#{paperDescription}
+		#{paperDescription},
+		#{originType}
 	</sql>
 	
 	<sql id="batch_entity_properties">
@@ -247,7 +251,8 @@
 		#{item.itemThirdCode},
 		#{item.itemFourthCode},
 		#{item.isMicroClass},
-		#{item.paperDescription}
+		#{item.paperDescription},
+		#{item.originType}
 	</sql>
 	
 	<!-- 适用于主键自增类型 -->
@@ -328,6 +333,7 @@
 		    <if test="publishStatus == 'CLASS_STOP_SALE' or delFlag ==1">subject_class_order = null</if>
 		    <if test="isMicroClass != null">is_micro_class = #{isMicroClass}</if>
 		    <if test="paperDescription != null and paperDescription!=''">paper_description = #{paperDescription}</if>
+		    <if test="originType != null and originType''">origin_type = #{originType}</if>
 
 		 </trim>
 		<where>id = #{id}</where>
@@ -378,6 +384,7 @@
 			<if test="itemSecondCode != null and itemSecondCode != ''">and item_second_code = #{itemSecondCode}</if>
 			<if test="itemThirdCode != null and itemThirdCode != ''">and item_third_code = #{itemThirdCode}</if>
 			<if test="itemFourthCode != null and itemFourthCode != ''">and item_fourth_code = #{itemFourthCode}</if>
+			<if test="originType != null and originType != ''">and origin_type = #{originType}</if>
 		</trim>
 	</sql>
 	
@@ -470,6 +477,7 @@
 		<if test="classType.itemOneCode != null and classType.itemOneCode != ''">and a.item_one_code = #{classType.itemOneCode}</if>
 		<if test="classType.itemSecondCode != null and classType.itemSecondCode != ''">and a.item_second_code = #{classType.itemSecondCode}</if>
 		<if test="classType.itemThirdCode != null and classType.itemThirdCode != ''">and a.item_third_code = #{classType.itemThirdCode}</if>
+		<if test="classType.itemThirdCode != null and classType.itemThirdCode != ''">and a.origin_type = #{classType.originType}</if>
 		<if test="classType.itemFourthCode != null and classType.itemFourthCode != ''">
             and a.item_fourth_code in
             <foreach item="item" index="index" collection="codes" open="(" separator="," close=")">#{item}</foreach>

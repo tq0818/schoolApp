@@ -111,7 +111,8 @@
 		item_second_code,
 		item_third_code,
 		item_fourth_code,
-		is_micro_class
+		is_micro_class,
+		origin_type
   </sql>
 	<sql id="entity_properties">
 		#{id},
@@ -145,7 +146,8 @@
 		#{itemSecondCode},
 		#{itemThirdCode},
 		#{itemFourthCode},
-		#{isMicroClass}
+		#{isMicroClass},
+		#{originType}
 	</sql>
 	
 	<!-- 适用于主键自增类型 -->
