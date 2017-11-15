@@ -43,7 +43,7 @@ $(function(){
 	            </c:if>
 	            <c:if test="${empty sessionScope.SERVICE_CLASS_PACKAGE or sessionScope.SERVICE_CLASS_PACKAGE == 1 }">
 	             <shiro:hasPermission name="class_package">  
-	             <li code="course_package"><a href="<%=rootPath %>/classPackage/list" >课程包</a></li>
+	            <%-- <li code="course_package"><a href="<%=rootPath %>/classPackage/list" >课程包</a></li>--%>
 	            </shiro:hasPermission>
 	            </c:if>
 	        </ul>
@@ -64,7 +64,7 @@ $(function(){
 	            <li code="open_class_set"><a href="<%=rootPath %>/liveOpenCourse/toLiveShow" >公开课</a></li>
 	            </shiro:hasPermission>
 	             <shiro:hasPermission name="class_package">  
-	             <li code="course_package"><a href="<%=rootPath %>/classPackage/list" >课程包</a></li>
+	             <%--<li code="course_package"><a href="<%=rootPath %>/classPackage/list" >课程包</a></li>--%>
 	            </shiro:hasPermission>
 	        </ul>
         	</c:otherwise>

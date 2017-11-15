@@ -359,9 +359,9 @@
 		u.head_pic_url headPicUrl,s.school_name,
 		u.proxy_org_id
 		from users u
-		inner join company c on c.is_area=u.is_area and (u.edu_area_school is null and c.edu_area_school is null or u.edu_area_school=c.edu_area_school)
-		left join sys_config_school s on c.id = s.company_id
-		where username = #{userName} limit 1
+		inner join company c on c.is_area=u.is_area
+		inner join sys_config_school s on c.id = s.company_id
+		where username = #{userName} and c.is_area=0 limit 1
 	</select>
 
 	<select id="queryAll" resultMap="usersResultMap">
