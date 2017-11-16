@@ -52,6 +52,49 @@ public class Commodity extends BaseEntity {
 	private String itemFourthCode;
 	private Integer isMicroClass; /* 是否属于微课标签，1:是；0：否 */
 	private Integer originType;/* 来源，1表示来自app，0表示来自pc */
+
+
+	/****app上架信息*****/
+	private float appPrice;
+
+	private float appSalePrice;
+
+	private String appImgUrl;
+
+	private String isShelves;
+
+	public float getAppPrice() {
+		return appPrice;
+	}
+
+	public void setAppPrice(float appPrice) {
+		this.appPrice = appPrice;
+	}
+
+	public float getAppSalePrice() {
+		return appSalePrice;
+	}
+
+	public void setAppSalePrice(float appSalePrice) {
+		this.appSalePrice = appSalePrice;
+	}
+
+	public String getAppImgUrl() {
+		return appImgUrl;
+	}
+
+	public void setAppImgUrl(String appImgUrl) {
+		this.appImgUrl = appImgUrl;
+	}
+
+	public String getIsShelves() {
+		return isShelves;
+	}
+
+	public void setIsShelves(String isShelves) {
+		this.isShelves = isShelves;
+	}
+
 	public Integer getBaseNum() {
 		return baseNum;
 	}
