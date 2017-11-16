@@ -25,7 +25,7 @@
 	<script type="text/javascript" src="<%=rootPath%>/plugins/jquery.scrollTo-2.1.0/jquery.scrollTo.min.js"></script>
 	<script type="text/javascript" src="<%=rootPath%>/javascripts/common/utils.js"></script>
 	<script type="text/javascript" src="<%=rootPath%>/javascripts/common/sidebar.js"></script>
-<script type="text/javascript" src="<%=rootPath%>/javascripts/UploadProgressUtils.js"></script>
+	<script type="text/javascript" src="<%=rootPath%>/javascripts/UploadProgressUtils.js"></script>
 	<!-- sha1加密算法 -->
 	<script type="text/javascript" src="<%=rootPath%>/javascripts/common/sha1.js"></script>
 	<decorator:head />

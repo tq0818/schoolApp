@@ -529,6 +529,11 @@
       	 <pattern>/companyRechargePatch/gotoRechargeCardManagePage</pattern>
       	 <pattern>/companyRechargePatch/gotoRechargeCardCreatePage</pattern>
       	 <pattern>/companyRechargePatch/gotoRechargeCardOpenFlagPage</pattern>
+
+
+        <!-- 已上架课程 -->
+        <pattern>/appNewClasses/goShelvesCourses</pattern>
+
     </decorator>
 
 </decorators>

@@ -66,6 +66,9 @@ $(function(){
 	             <shiro:hasPermission name="class_package">  
 	             <%--<li code="course_package"><a href="<%=rootPath %>/classPackage/list" >课程包</a></li>--%>
 	            </shiro:hasPermission>
+				<%--<shiro:hasPermission name="">--%>
+					<li code="course_package"><a href="<%=rootPath %>/appNewClasses/goShelvesCourses" >已上架课程</a></li>
+				<%--</shiro:hasPermission>--%>
 	        </ul>
         	</c:otherwise>
         </c:choose>

@@ -6,3 +6,9 @@
 <% String rootPath=request.getContextPath();
 	Users loginUser=(Users)session.getAttribute("loginUser");
 %>
+<%--新增样式begin--%>
+<link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/addNewStyle.css" />
+<%--新增样式end--%>
+<%--新增script begin--%>
+<script src="<%=rootPath %>/javascripts/addNewCommonScript.js" ></script>
+<%--新增script end--%>
