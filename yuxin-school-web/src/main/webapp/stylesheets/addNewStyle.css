@@ -18,3 +18,5 @@
 .classification>li{display: inline-block;margin: 10px;width: 15%;}
 .screeningConditions>li,.screeningConditions>li label{display: inline-block;}
 .submitCourse{margin: 50px;text-align: center;}
+/*批量首页推荐*/
+.recommendationNum{width: 20px;height: 18px;}
