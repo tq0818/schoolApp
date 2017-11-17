@@ -16,9 +16,16 @@ public class  shelvesCourses {
      * 跳转到已上架课程页面
      * @return
      */
-    @RequestMapping(value="/goShelvesCourses")
-    public String goShelvesCourses(){
+    @RequestMapping(value="/shelvesCourses")
+    public String gotoShelvesCourses(){
         return "simpleClasses/appNewClasses/shelvesCourses";
+    }
+    /**
+     * 跳转到上架信息编辑
+     */
+    @RequestMapping(value="/InformationEditing")
+    public String gotoInformationEditing(){
+        return "simpleClasses/appNewClasses/informationEditing";
     }
 
 

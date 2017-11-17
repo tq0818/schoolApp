@@ -532,8 +532,9 @@
 
 
         <!-- 已上架课程 -->
-        <pattern>/appNewClasses/goShelvesCourses</pattern>
-
+        <pattern>/appNewClasses/shelvesCourses</pattern>
+        <!--编辑已上架课程-->
+        <pattern>/appNewClasses/InformationEditing</pattern>
     </decorator>
 
 </decorators>

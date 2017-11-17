@@ -244,56 +244,8 @@
                         <td>
                             <span><a href="javascript:;" class="btn btn-primary btn-sm">下架</a></span>
                             <span><a href="javascript:;" class="btn btn-primary btn-sm">推荐</a></span>
-                            <span><a href="javascript:;" class="btn btn-primary btn-sm">编辑</a></span>
+                            <span><a href="/appNewClasses/InformationEditing" class="btn btn-primary btn-sm">编辑</a></span>
                         </td>
-                    </tr>
-                    <tr data-buy="false">
-                        <td><input type="checkbox" class="signUpMany" uname="sdsdsd" value=""></td>
-                        <td><img src="/images/1.jpg" alt="" class="shelvesIcon"></td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2017-11-14</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
-                    <tr data-buy="false">
-                        <td><input type="checkbox" class="signUpMany" uname="sdsdsd" value=""></td>
-                        <td><img src="/images/1.jpg" alt="" class="shelvesIcon"></td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2017-11-14</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
-                    <tr data-buy="false">
-                        <td><input type="checkbox" class="signUpMany" uname="sdsdsd" value=""></td>
-                        <td><img src="/images/1.jpg" alt="" class="shelvesIcon"></td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2017-11-14</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
                     </tr>
                 </tbody>
             </table>

@@ -1,2 +1,20 @@
 /*已上架课程*/
 .shelvesIcon{width: 20px;height: 20px;}
+/*编辑上架课程*/
+.informationEditHeader{width: 100%;height: 400px;}
+.informationEditImg{position: relative;}
+.informationEditImg,.informationEditDetail{display: inline-block;float: left;}
+.informationEditImg >img{width: 600px;height: 400px;}
+.informationEditChoose{text-align: center;position: absolute; left: 50%;top: 50%;height: 40px;width: 80px;margin-left: -40px;margin-top: -20px; }
+.informationEditChoose>a{line-height: 40px;background: grey;position: absolute;left: 0;display: inline-block;width: 80px;
+    height: 40px;color: #fff;border-radius: 3px;text-decoration: none;cursor: pointer;}
+.informationEditChoose a>input{width: 80px;height: 40px;opacity: 0;position: absolute;left: 0;cursor: pointer;z-index: 1;}
+.informationEditDetail{position: relative;margin-left: 20px;width: 500px;height: 400px;background: #f7f7f7;}
+.informationEditDetail label{display: inline-block;}
+.courseDetail{position: absolute;right: 20px;bottom: 20px;}
+.informationEditDetail li{height: 40px;line-height: 40px;padding-left: 15px;font-size: 16px;color: #999;}
+.courseList{width: 100%;height: 150px;border: 1px solid #e4e4e4;}
+.courseList >li{margin: 5px;}
+.classification>li{display: inline-block;margin: 10px;width: 15%;}
+.screeningConditions>li,.screeningConditions>li label{display: inline-block;}
+.submitCourse{margin: 50px;text-align: center;}
