@@ -10,6 +10,39 @@
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/operate.css" />
     
     <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
+	<!-- <script type="text/javascript">
+	
+	var id = $("#id").val();
+	 
+	var name = $("#name").val();
+	 
+	var sort = $("#sort").val();
+	
+	$.ajax({
+		
+		url : rootPath + "/appNewClasses/goShelvesCourses",
+		type : "post",
+	    data :{id:0},
+		dataType : "json",
+		success : function(data){
+			/* var firstList = data.firstList;
+			var htmltext =  "<a href=''>"; 
+			$("#itemOneCodeList").append('<a>你好</a>'); */
+			/* for(var i = 0 ; i < firstList.length ;i++){
+				var sysid = firstList[i].id;
+				var sysName = firstList[i].name;
+				htmltext = htmltext + name +"</a>";
+				
+				console.log(sysName);
+			} */
+			
+		},
+		 error:function(e){
+			 console.log(e);
+         }
+	});
+	
+	</script> -->
 </head>
 <body style="position:relative;">
     <!-- 二级导航 -->
@@ -21,177 +54,117 @@
             <p class="c">
                 <span class="t-title">课程分类</span>
                 <span class="t-content" id="itemOneCodeList">
-                    <a href="javascript:Form.queryAllCommdityByItemNew(1,'all');" data-code="all" class="btn btn-mini btn-default btn-success">全部</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1,'TYPE_LOW');" data-code="TYPE_LOW" class="btn btn-mini btn-default">小低</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1,'TYPE_HIGH');" data-code="TYPE_HIGH" class="btn btn-mini btn-default">小高</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1,'TYPE_MID');" data-code="TYPE_MID" class="btn btn-mini btn-default">初中</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1,'TYPE_HIHER');" data-code="TYPE_HIHER" class="btn btn-mini btn-default">高中</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1,'TYPE_AS');" data-code="TYPE_AS" class="btn btn-mini btn-default">数学思维拓展</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1,'TYPE_YD');" data-code="TYPE_YD" class="btn btn-mini btn-default">绘本阅读</a>
-
+                    <a href="javascript:Form.queryAllSysApp(1,'all');" data-code="all" class="btn btn-mini btn-default btn-success">全部</a>
+					<c:forEach items="${firstList}" var="list" varStatus="status">
+                           <a href="javascript:Form.queryAllSysApp(${list.id });" data-code="${list.id }" class="btn btn-mini btn-default">${list.name }</a>
+                    </c:forEach>
                 </span>
             </p>
             <p class="c">
                 <span class="t-title">学段</span>
                 <span class="t-content" id="itemSecondCodeList">
-                     <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="all" class="btn btn-mini btn-default btn-success">全部</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="MIN_UP" class="btn btn-mini btn-default">幼升小</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="GRADE_FOUR" class="btn btn-mini btn-default">四年级</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="GRADE_FIVE" class="btn btn-mini btn-default">五年级</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="GRADE_SIX" class="btn btn-mini btn-default">六年级</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="GRADE_UP" class="btn btn-mini btn-default">小升初</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="MID_ONE" class="btn btn-mini btn-default">初一</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="MID_EXAM" class="btn btn-mini btn-default">中考</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="MID_UP" class="btn btn-mini btn-default">初升高</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="HIHER_ONE" class="btn btn-mini btn-default">高一</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="HIHER_EXAM" class="btn btn-mini btn-default">高考</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="HIHER_TWO" class="btn btn-mini btn-default">高二</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="HIHER_THREE" class="btn btn-mini btn-default">高三</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="GRADE_QT" class="btn btn-mini btn-default">其他</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="GRADE_SED" class="btn btn-mini btn-default">二年级</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="GRADE_THREE" class="btn btn-mini btn-default">三年级</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="MID_SED" class="btn btn-mini btn-default">初二</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="GRADE_ONE" class="btn btn-mini btn-default">一年级</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="MID_THREE" class="btn btn-mini btn-default">初三</a>
-
+                     <a href="javascript:Form.queryAllSysApp(1);" data-code="all" class="btn btn-mini btn-default btn-success">全部</a>
+					<c:forEach items="${thirdList}" var="list" varStatus="status">
+                           <a href="javascript:Form.queryAllSysApp(${list.id });" data-code="${list.id }" class="btn btn-mini btn-default">${list.name }</a>
+                    </c:forEach>
                 </span>
             </p>
             <p class="c">
                 <span class="t-title">学科</span>
                 <span class="t-content" id="itemThirdCodeList">
-                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="all" class="btn btn-mini btn-default btn-success">全部</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="SUBJECT_YJ" class="btn btn-mini btn-default">幼教</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="SUBJECT_YW" class="btn btn-mini btn-default">语文</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="SUBJECT_SX" class="btn btn-mini btn-default">数学</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="SUBJECT_YY" class="btn btn-mini btn-default">英语</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="SUBJECT_WL" class="btn btn-mini btn-default">物理</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="SUBJECT_HX" class="btn btn-mini btn-default">化学</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="SUBJECT_QT" class="btn btn-mini btn-default">其他</a>
-
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="SUBJECT_XL" class="btn btn-mini btn-default">心理健康</a>
-
+                    <a href="javascript:Form.queryAllSysApp(1);" data-code="all" class="btn btn-mini btn-default btn-success">全部</a>
+					<c:forEach items="${fourthList}" var="list" varStatus="status">
+                           <a href="javascript:Form.queryAllSysApp(${list.id });" data-code="${list.id }" class="btn btn-mini btn-default">${list.name }</a>
+                    </c:forEach>
                 </span>
             </p>
             <p class="c">
                 <span class="t-title">知识点专题</span>
                 <span class="t-content" id="itemFourthCodeList">
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="小高-四年级-语文-知识点" class="btn btn-mini btn-default">小高-四年级-语文-知识点</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="小高-四年级-语文-知识点" class="btn btn-mini btn-default">小高-四年级-语文-知识点</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="初中-初一-语文-知识点" class="btn btn-mini btn-default">初中-初一-语文-知识点</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="初中-初一-语文-知识点" class="btn btn-mini btn-default">初中-初一-语文-知识点</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="高中-高一-语文-知识点" class="btn btn-mini btn-default">高中-高一-语文-知识点</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="高中-高一-语文-知识点" class="btn btn-mini btn-default">高中-高一-语文-知识点</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="儿童微影评：心语解码" class="btn btn-mini btn-default">儿童微影评：心语解码</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="儿童微影评：心语解码" class="btn btn-mini btn-default">儿童微影评：心语解码</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="经典阅读：大话西游" class="btn btn-mini btn-default">经典阅读：大话西游</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="经典阅读：大话西游" class="btn btn-mini btn-default">经典阅读：大话西游</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="古诗品析：临渊明道" class="btn btn-mini btn-default">古诗品析：临渊明道</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="古诗品析：临渊明道" class="btn btn-mini btn-default">古诗品析：临渊明道</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="思维写作：写作育心" class="btn btn-mini btn-default">思维写作：写作育心</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="思维写作：写作育心" class="btn btn-mini btn-default">思维写作：写作育心</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="口语交际" class="btn btn-mini btn-default">口语交际</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="口语交际" class="btn btn-mini btn-default">口语交际</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="走进古代诗歌" class="btn btn-mini btn-default">走进古代诗歌</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="走进古代诗歌" class="btn btn-mini btn-default">走进古代诗歌</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="作文体验" class="btn btn-mini btn-default">作文体验</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="作文体验" class="btn btn-mini btn-default">作文体验</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="《论语》中的智慧" class="btn btn-mini btn-default">《论语》中的智慧</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="《论语》中的智慧" class="btn btn-mini btn-default">《论语》中的智慧</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="学法指导" class="btn btn-mini btn-default">学法指导</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="学法指导" class="btn btn-mini btn-default">学法指导</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="核心数学思想" class="btn btn-mini btn-default">核心数学思想</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="核心数学思想" class="btn btn-mini btn-default">核心数学思想</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="情意体验" class="btn btn-mini btn-default">情意体验</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="情意体验" class="btn btn-mini btn-default">情意体验</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="通识高中数学" class="btn btn-mini btn-default">通识高中数学</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="通识高中数学" class="btn btn-mini btn-default">通识高中数学</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="知识拓展" class="btn btn-mini btn-default">知识拓展</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="知识拓展" class="btn btn-mini btn-default">知识拓展</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="思想方法" class="btn btn-mini btn-default">思想方法</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="思想方法" class="btn btn-mini btn-default">思想方法</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="绘本阅读" class="btn btn-mini btn-default">绘本阅读</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="绘本阅读" class="btn btn-mini btn-default">绘本阅读</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="双语科学" class="btn btn-mini btn-default">双语科学</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="双语科学" class="btn btn-mini btn-default">双语科学</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="小学听说课" class="btn btn-mini btn-default">小学听说课</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="小学听说课" class="btn btn-mini btn-default">小学听说课</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="进阶绘本阅读" class="btn btn-mini btn-default">进阶绘本阅读</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="进阶绘本阅读" class="btn btn-mini btn-default">进阶绘本阅读</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="看电影学英语" class="btn btn-mini btn-default">看电影学英语</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="看电影学英语" class="btn btn-mini btn-default">看电影学英语</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="小说欣赏入门" class="btn btn-mini btn-default">小说欣赏入门</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="小说欣赏入门" class="btn btn-mini btn-default">小说欣赏入门</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="Steam课程" class="btn btn-mini btn-default">Steam课程</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="Steam课程" class="btn btn-mini btn-default">Steam课程</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="英语电影欣赏" class="btn btn-mini btn-default">英语电影欣赏</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="英语电影欣赏" class="btn btn-mini btn-default">英语电影欣赏</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="理解幼小衔接" class="btn btn-mini btn-default">理解幼小衔接</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="理解幼小衔接" class="btn btn-mini btn-default">理解幼小衔接</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="幼小衔接家庭教育" class="btn btn-mini btn-default">幼小衔接家庭教育</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="幼小衔接家庭教育" class="btn btn-mini btn-default">幼小衔接家庭教育</a>
 
-                           <a href="javascript:Form.queryAllCommdityByItemNew(1);" data-code="绘本知识点" class="btn btn-mini btn-default">绘本知识点</a>
+                           <a href="javascript:Form.queryAllSysApp(1);" data-code="绘本知识点" class="btn btn-mini btn-default">绘本知识点</a>
 
                 </span>
             </p>
             <p class="c">
                 <span class="t-title">知识点</span>
                 <span class="t-content" id="statusList">
-                	<a href="javascript:Form.queryAllCommdityByItemNew(1)" ids="all" class="btn btn-mini btn-default btn-success">全部</a>
-                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="CLASS_UNPUBLISHED" class="btn btn-mini btn-default">未上架</a>
-                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="CLASS_ON_SALE" class="btn btn-mini btn-default">招生中</a>
-                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="CLASS_STOP_SALE" class="btn btn-mini btn-default">已下架</a>
+                	<a href="javascript:Form.queryAllSysApp(1)" ids="all" class="btn btn-mini btn-default btn-success">全部</a>
+                    <a href="javascript:Form.queryAllSysApp(1);" ids="CLASS_UNPUBLISHED" class="btn btn-mini btn-default">未上架</a>
+                    <a href="javascript:Form.queryAllSysApp(1);" ids="CLASS_ON_SALE" class="btn btn-mini btn-default">招生中</a>
+                    <a href="javascript:Form.queryAllSysApp(1);" ids="CLASS_STOP_SALE" class="btn btn-mini btn-default">已下架</a>
                 </span>
             </p>
             <p class="c">
                 <span class="t-title">阶段</span>
                 <span class="t-content" id="flagList">
-                	<a href="javascript:Form.queryAllCommdityByItemNew(1)" ids="all" class="btn btn-mini btn-default btn-success">全部</a>
-                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="IS_LIVE" class="btn btn-mini btn-default">直播</a>
-                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="IS_VIDEO" class="btn btn-mini btn-default">录播</a>
-                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="IS_FACE" class="btn btn-mini btn-default">面授</a>
-                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="IS_REMOTE" class="btn btn-mini btn-default">其他</a>
+                	<c:forEach items="${secondList}" var="list" varStatus="status">
+                           <a href="javascript:Form.queryAllSysApp(${list.id });" data-code="${list.id }" class="btn btn-mini btn-default">${list.name }</a>
+                    </c:forEach>
                 </span>
             </p>
             <p class="c">
                 <span class="t-title">类型</span>
                 <span class="t-content" id="">
-                	<a href="javascript:Form.queryAllCommdityByItemNew(1)" ids="all" class="btn btn-mini btn-default btn-success">全部</a>
-                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="IS_LIVE" class="btn btn-mini btn-default">直播</a>
-                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="IS_VIDEO" class="btn btn-mini btn-default">录播</a>
-                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="IS_FACE" class="btn btn-mini btn-default">面授</a>
-                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="IS_REMOTE" class="btn btn-mini btn-default">其他</a>
+                	<a href="javascript:Form.queryAllSysApp(1)" ids="all" class="btn btn-mini btn-default btn-success">全部</a>
+                    <a href="javascript:Form.queryAllSysApp(1);" ids="IS_LIVE" class="btn btn-mini btn-default">直播</a>
+                    <a href="javascript:Form.queryAllSysApp(1);" ids="IS_VIDEO" class="btn btn-mini btn-default">录播</a>
+                    <a href="javascript:Form.queryAllSysApp(1);" ids="IS_FACE" class="btn btn-mini btn-default">面授</a>
+                    <a href="javascript:Form.queryAllSysApp(1);" ids="IS_REMOTE" class="btn btn-mini btn-default">其他</a>
                 </span>
             </p>
         </div>
@@ -244,7 +217,7 @@
                         <td>
                             <span><a href="javascript:;" class="btn btn-primary btn-sm">下架</a></span>
                             <span><a href="javascript:;" class="btn btn-primary btn-sm">推荐</a></span>
-                            <span><a href="/appNewClasses/InformationEditing" class="btn btn-primary btn-sm">编辑</a></span>
+                            <span><a href="/manage/appNewClasses/InformationEditing" class="btn btn-primary btn-sm">编辑</a></span>
                         </td>
                     </tr>
                 </tbody>
@@ -319,7 +292,7 @@
             $("body").css("position","relative")
         });
     </script>
-    <script type="text/javascript" src="<%=rootPath %>/javascripts/class/classIndex.js"></script>
+    <script type="text/javascript" src="<%=rootPath %>/javascripts/app/shelvesCourses.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/classes.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 </body>

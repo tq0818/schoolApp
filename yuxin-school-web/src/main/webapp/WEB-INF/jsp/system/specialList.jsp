@@ -125,7 +125,7 @@
                  <c:if test="${special.originType  eq 1 }"> 
                     <td>${status.index +1 }</td>
                     <td>${special.title}</td>
-                    <td>${special.label }</td>
+                    <td>${special.label }</td> 
                     <td>
                         <a href="javascript:void(0)" onclick="updateSpecial('${special.id}')" class="btn btn-mini btn-primary">编辑</a>
                         <a id="status${special.id}" status="${special.status}" href="javascript:void(0)" onclick="updateStatus('${special.id}')"  class="btn btn-mini btn-default"><c:if test="${special.status == 0}">上架</c:if> <c:if test="${special.status == 1}">下架</c:if></a>
@@ -133,7 +133,7 @@
                             <input id="orderFlag${special.id}" type="text" value="${special.orderFlag}" class="sortnume"> 
                             <i onclick="updateOrder('${special.id}')" class="btn-ico btn-gou">√</i>
                             <i onclick="clearOrder('${special.id}')" class="btn-ico btn-cha">X</i>
-                        </div>
+                        </div> 
                     </td>
                 
                 </tr>

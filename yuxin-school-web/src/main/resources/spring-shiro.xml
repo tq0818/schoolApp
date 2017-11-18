@@ -88,7 +88,9 @@
 			/payment/aliNotifyUrl=anon
 			/sysNews/yunduoNews=anon
 			/sysNews/yunduoNewsDetail=anon
+			/sysDictApp/showSys=anon
 			/** = user
+			
         </value>
     </property>
 

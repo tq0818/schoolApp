@@ -1,26 +1,32 @@
 package com.yuxin.wx.model.app;
 
+import java.io.Serializable;
+
 import com.yuxin.wx.common.BaseEntity;
 
 /**
  * Created by lym_gxm on 17/11/16.
  * App基础数据
  */
-public class SysDictApp extends BaseEntity {
-
+public class SysDictApp  implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Integer id;
     private String name;
 
-    private String level;
+    private Integer level;
 
     private String code;
 
     private String type;
 
-    private String parentId;
+    private Integer parentId;
 
     private String parentCode;
 
-    private String sort;
+    private Integer sort;
 
     public String getName() {
         return name;
@@ -30,13 +36,7 @@ public class SysDictApp extends BaseEntity {
         this.name = name;
     }
 
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
+   
 
     public String getCode() {
         return code;
@@ -54,13 +54,7 @@ public class SysDictApp extends BaseEntity {
         this.type = type;
     }
 
-    public String getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(String parentId) {
-        this.parentId = parentId;
-    }
+   
 
     public String getParentCode() {
         return parentCode;
@@ -70,11 +64,37 @@ public class SysDictApp extends BaseEntity {
         this.parentCode = parentCode;
     }
 
-    public String getSort() {
-        return sort;
-    }
+	public Integer getLevel() {
+		return level;
+	}
 
-    public void setSort(String sort) {
-        this.sort = sort;
-    }
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+
+	public Integer getSort() {
+		return sort;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+   
 }
