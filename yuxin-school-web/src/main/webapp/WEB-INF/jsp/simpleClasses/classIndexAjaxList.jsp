@@ -57,7 +57,7 @@
 
 			    <div class="infos-title">
 			        <h2 class="h5">
-			        	 <a href="javascript:Form.showClassTypeDetail(${allCommdotity.id },'${allCommdotity.typeCode }');" title="${allCommdotity.name }">
+			        	 <a href="javascript:Form.showClassTypeDetail(${allCommdotity.id }'${allCommdotity.typeCode }');" title="${allCommdotity.name }">
 				          <c:choose>
 				          	<c:when test="${fn:length(allCommdotity.name)>15}">
 				          		${fn:substring(allCommdotity.name, 0, 15)}...
@@ -97,15 +97,13 @@
 			        	<c:if test="${allCommdotity.originType eq 1}">
 				      		<a href="javascript:Form.deleteClassType(${allCommdotity.id });" class="btn btn-sm btn-default deleteGoods">删除</a>
 				      	</c:if>
-				    	<c:if test="${allCommdotity.publishStatus=='CLASS_ON_SALE'}">
-				    		<c:if test="${allCommdotity.originType eq 1}">
-				    	    <a href="javascript:Form.stopOnsale(${allCommdotity.id });" class="btn btn-sm btn-default downGoods">下架</a>
-				    	    </c:if>
+				    	<c:if test="${allCommdotity.isShelves == 1}">
+				    	    <a href="javascript:Form.stopOnsale(${allCommdotity.appId });" class="btn btn-sm btn-default downGoods">下架</a>
 				    	    <a href="javascript:Form.editClassType(${allCommdotity.id });" class="btn btn-sm btn-primary">管理</a>
 				    	    <a href="<%=rootPath %>/classModuleLesson/classesResource/${allCommdotity.id }/none" target="_blank" class="btn btn-sm btn-primary">资料</a>
 				    	</c:if>
-				    	<c:if test="${allCommdotity.publishStatus=='CLASS_STOP_SALE'}">
-				    	    <a href="javascript:Form.classTypeOnsale(${allCommdotity.id });" class="btn btn-sm btn-default upSale">上架</a>
+				    	<c:if test="${allCommdotity.isShelves == '' or allCommdotity.isShelves == 0}">
+				    	    <a href="javascript:Form.classTypeOnsale(${allCommdotity.appId});" class="btn btn-sm btn-default upSale">上架</a>
 				    		<a href="javascript:Form.editClassType(${allCommdotity.id });" class="btn btn-sm btn-primary">管理</a>
 				    	</c:if>
 				    	<c:if test="${allCommdotity.publishStatus=='CLASS_UNPUBLISHED'}">

@@ -104,6 +104,21 @@
 		<result property="subjectClassOrder" column="subject_class_order"/>
 		<result property="isMicroClass" column="is_micro_class"/>
 		<result property="originType" column="origin_type"/>
+
+
+		<result property="imgUrl" column="imgUrl"/>
+		<result property="isShelves" column="isShelves"/>
+		<result property="reserveTime" column="reserveTime"/>
+		<result property="shelvesTime" column="shelvesTime"/>
+		<result property="appPrice" column="appPrice"/>
+		<result property="salePrice" column="salePrice"/>
+		<result property="appId" column="appId"/>
+
+
+
+
+
+
 	</resultMap>
 	
 	<sql id="table_columns">
@@ -456,7 +471,7 @@
 	
 	<!-- 查询班型并分页 -->
 	<select id="queryClassTypesByPage" resultMap="classTypeVoResultMap" parameterType="map">
-		SELECT a.*, c.buy_num as actualNum
+		<!--SELECT a.*, c.buy_num as actualNum
         FROM class_type a left join commodity_product_realtion pr on
 		pr.product_id = a.id
 		INNER JOIN commodity c ON c.id = pr.com_id 
@@ -483,31 +498,63 @@
             <foreach item="item" index="index" collection="codes" open="(" separator="," close=")">#{item}</foreach>
         </if>
 		ORDER BY a.subject_class_order is null,a.subject_class_order asc, a.update_time DESC
+		limit #{classType.firstIndex},#{classType.pageSize}-->
+		SELECT a.*, c.buy_num as actualNum,app.img_url as imgUrl,case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,app.reserve_time as reserveTime,app.shelves_time as shelvesTime,app.price as appPrice,app.sale_price as salePrice,app.id as appId
+		FROM class_type a
+		inner join commodity_product_realtion pr on pr.product_id = a.id
+		INNER JOIN commodity c ON c.id = pr.com_id
+		left join app_shelves app on app.comdity_id=c.id
+		where a.del_flag=0 and a.company_id = #{classType.companyId} and c.type='COMMODITY_CLASS'
+		<if test="classType.name != null and classType.name != ''">and a.name like '%${classType.name}%'</if>
+		<if test="classType.itemOneId != null and classType.itemOneId != ''">and a.item_one_id = #{classType.itemOneId}</if>
+		<if test="classType.itemSecondId != null and classType.itemSecondId != ''">and a.item_second_id = #{classType.itemSecondId}</if>
+		<if test="classType.isShelves != null and classType.isShelves != ''">and app.is_shelves = #{classType.isShelves}</if>
+		<if test="classType.createSchoolId !=null and classType.createSchoolId != ''">and a.create_school_id = #{classType.createSchoolId}</if>
+		<if test="classType.itemTag != null and classType.itemTag != ''">and find_in_set(#{classType.itemTag},a.item_tag)>0</if>
+		<if test="classType.itemTag2 != null and classType.itemTag2 != ''">and find_in_set(#{classType.itemTag2},a.item_tag)>0</if>
+		<if test="classType.teacherId != null and classType.teacherId != ''">and a.teacher_id =${classType.teacherId} </if>
+		<if test="classType.teachersId != null and classType.teachersId != ''">or a.teacher_id in(${classType.teachersId}) </if>
+		<if test="classType.faceFlag != null and classType.faceFlag != ''">and a.face_flag = ${classType.faceFlag}</if>
+		<if test="classType.liveFlag != null and classType.liveFlag != ''">and a.live_flag = ${classType.liveFlag}</if>
+		<if test="classType.videoFlag != null and classType.videoFlag != ''">and a.video_flag = ${classType.videoFlag}</if>
+		<if test="classType.remoteFlag != null and classType.remoteFlag != ''">and a.remote_flag = ${classType.remoteFlag}</if>
+		<if test="classType.itemOneCode != null and classType.itemOneCode != ''">and a.item_one_code = #{classType.itemOneCode}</if>
+		<if test="classType.itemSecondCode != null and classType.itemSecondCode != ''">and a.item_second_code = #{classType.itemSecondCode}</if>
+		<if test="classType.itemThirdCode != null and classType.itemThirdCode != ''">and a.item_third_code = #{classType.itemThirdCode}</if>
+		<if test="classType.itemThirdCode != null and classType.itemThirdCode != ''">and a.origin_type = #{classType.originType}</if>
+		<if test="classType.itemFourthCode != null and classType.itemFourthCode != ''">
+			and a.item_fourth_code in
+			<foreach item="item" index="index" collection="codes" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		ORDER BY a.subject_class_order is null,a.subject_class_order asc, a.update_time DESC
 		limit #{classType.firstIndex},#{classType.pageSize}
 	</select>
 	
 	
 	<select id="queryCounts" resultType="int" parameterType="map">
-		SELECT count(id) FROM class_type
-		where del_flag=0 and company_id = #{classType.companyId}
-		<if test="classType.name != null and classType.name != ''">and name like '%${classType.name}%'</if>
-		<if test="classType.itemOneId != null and classType.itemOneId != ''">and item_one_id = #{classType.itemOneId}</if>
-		<if test="classType.itemSecondId != null and classType.itemSecondId != ''">and item_second_id = #{classType.itemSecondId}</if>
-		<if test="classType.publishStatus != null and classType.publishStatus != ''">and publish_status = #{classType.publishStatus}</if>
-		<if test="classType.createSchoolId !=null and classType.createSchoolId != ''">and create_school_id = #{classType.createSchoolId}</if>
-		<if test="classType.itemTag != null and classType.itemTag != ''">and find_in_set(#{classType.itemTag},item_tag)>0</if>
-		<if test="classType.itemTag2 != null and classType.itemTag2 != ''">and find_in_set(#{classType.itemTag2},item_tag)>0</if>
-		<if test="classType.teacherId != null and classType.teacherId != ''">and teacher_id =${classType.teacherId} </if>
-		<if test="classType.teachersId != null and classType.teachersId != ''">or teacher_id in(${classType.teachersId}) </if>
-		<if test="classType.faceFlag != null and classType.faceFlag != ''">and face_flag = ${classType.faceFlag}</if>
-		<if test="classType.liveFlag != null and classType.liveFlag != ''">and live_flag = ${classType.liveFlag}</if>
-		<if test="classType.videoFlag != null and classType.videoFlag != ''">and video_flag = ${classType.videoFlag}</if>
-		<if test="classType.remoteFlag != null and classType.remoteFlag != ''">and remote_flag = ${classType.remoteFlag}</if>
-		<if test="classType.itemOneCode != null and classType.itemOneCode != ''">and item_one_code = #{classType.itemOneCode}</if>
-		<if test="classType.itemSecondCode != null and classType.itemSecondCode != ''">and item_second_code = #{classType.itemSecondCode}</if>
-		<if test="classType.itemThirdCode != null and classType.itemThirdCode != ''">and item_third_code = #{classType.itemThirdCode}</if>
+		SELECT count(ct.id) FROM class_type ct
+		inner join commodity_product_realtion pr on pr.product_id = ct.id
+		INNER JOIN commodity c ON c.id = pr.com_id
+		left join app_shelves app on app.comdity_id=c.id
+		where ct.del_flag=0 and ct.company_id = #{classType.companyId}
+		<if test="classType.name != null and classType.name != ''">and ct.name like '%${classType.name}%'</if>
+		<if test="classType.itemOneId != null and classType.itemOneId != ''">and ct.item_one_id = #{classType.itemOneId}</if>
+		<if test="classType.itemSecondId != null and classType.itemSecondId != ''">and ct.item_second_id = #{classType.itemSecondId}</if>
+		<if test="classType.isShelves != null and classType.isShelves != ''">and app.is_shelves = #{classType.isShelves}</if>
+		<if test="classType.createSchoolId !=null and classType.createSchoolId != ''">and ct.create_school_id = #{classType.createSchoolId}</if>
+		<if test="classType.itemTag != null and classType.itemTag != ''">and ct.find_in_set(#{classType.itemTag},item_tag)>0</if>
+		<if test="classType.itemTag2 != null and classType.itemTag2 != ''">and ct.find_in_set(#{classType.itemTag2},item_tag)>0</if>
+		<if test="classType.teacherId != null and classType.teacherId != ''">and ct.teacher_id =${classType.teacherId} </if>
+		<if test="classType.teachersId != null and classType.teachersId != ''">or ct.teacher_id in(${classType.teachersId}) </if>
+		<if test="classType.faceFlag != null and classType.faceFlag != ''">and ct.face_flag = ${classType.faceFlag}</if>
+		<if test="classType.liveFlag != null and classType.liveFlag != ''">and ct.live_flag = ${classType.liveFlag}</if>
+		<if test="classType.videoFlag != null and classType.videoFlag != ''">and ct.video_flag = ${classType.videoFlag}</if>
+		<if test="classType.remoteFlag != null and classType.remoteFlag != ''">and ct.remote_flag = ${classType.remoteFlag}</if>
+		<if test="classType.itemOneCode != null and classType.itemOneCode != ''">and ct.item_one_code = #{classType.itemOneCode}</if>
+		<if test="classType.itemSecondCode != null and classType.itemSecondCode != ''">and ct.item_second_code = #{classType.itemSecondCode}</if>
+		<if test="classType.itemThirdCode != null and classType.itemThirdCode != ''">and ct.item_third_code = #{classType.itemThirdCode}</if>
 		<if test="classType.itemFourthCode != null and classType.itemFourthCode != ''">
-            and item_fourth_code in
+            and ct.item_fourth_code in
             <foreach item="item" index="index" collection="codes" open="(" separator="," close=")">#{item}</foreach>
         </if>
 	</select>
