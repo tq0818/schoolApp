@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuxin.wx.auth.mapper.app.SysDictAppMapper">
+	<resultMap type="com.yuxin.wx.model.app.SysDictApp" id="sysDictAppResultMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="level" column="level" />
+		<result property="code" column="code" />
+		<result property="type" column="type" />
+		<result property="parentId" column="parent_id" />
+		<result property="parentCode" column="parent_code" />
+		<result property="sort" column="sort" />
+	</resultMap>
+	
+	<select id="findSysDictAppByParentId"  parameterType="Integer" resultMap="sysDictAppResultMap" >
+		select id,name,level,parent_id,sort,code,type,parent_code
+		from sys_dict_app
+		where parent_id = #{id}
+		ORDER BY sort
+	</select>
+	
+	<sql id="table_columns">
+		id,
+		name,
+		level,
+		code,
+		type,
+		parent_id,
+		parent_code,
+		sort
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{name},
+		#{level},
+		#{code},
+		#{type},
+		#{parentId},
+		#{parentCode},
+		#{sort}
+	</sql>
+	
+	<sql id="batch_entity_properties">
+		#{item.id},
+		#{item.name},
+		#{item.level},
+		#{item.code},
+		#{item.type},
+		#{item.parentId},
+		#{item.parentCode},
+		#{item.sort},
+	</sql>
+	
+
+	
+	
+	
+</mapper>
