@@ -8,7 +8,7 @@
     <title>课程</title>
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/manage.css">
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/classes.css">
-     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/operate.css" />
+    <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/operate.css" />
     <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
     
 </head>
@@ -115,7 +115,7 @@
    </div>
 </div>
 <div class="add-layer-bg none"></div>
-<script type="text/javascript">
+    <script type="text/javascript">
 	$(document).ready(function(){
 		$.ajax({
 			url : rootPath + "/companyServiceStatic/queryCompanyNoServices",
@@ -180,8 +180,8 @@
 		$("body").css("position","relative")
 	});
 </script>
-<script type="text/javascript" src="<%=rootPath %>/javascripts/class/classIndex.js"></script>
- <script type="text/javascript" src="<%=rootPath %>/javascripts/classes.js"></script>
- <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
+    <script type="text/javascript" src="<%=rootPath %>/javascripts/class/classIndex.js"></script>
+    <script type="text/javascript" src="<%=rootPath %>/javascripts/classes.js"></script>
+    <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 </body>
 </html>
