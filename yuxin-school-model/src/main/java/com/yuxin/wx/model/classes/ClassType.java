@@ -88,6 +88,77 @@ public class ClassType extends BaseEntity {
 
     private Integer isMicroClass;//是否微课
 
+
+    private String imgUrl;
+
+    private String isShelves;
+
+    private String reserveTime;
+
+    private String shelvesTime;
+
+    private String appPrice;
+
+    private String salePrice;
+
+    private String appId;
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public String getIsShelves() {
+        return isShelves;
+    }
+
+    public void setIsShelves(String isShelves) {
+        this.isShelves = isShelves;
+    }
+
+    public String getReserveTime() {
+        return reserveTime;
+    }
+
+    public void setReserveTime(String reserveTime) {
+        this.reserveTime = reserveTime;
+    }
+
+    public String getShelvesTime() {
+        return shelvesTime;
+    }
+
+    public void setShelvesTime(String shelvesTime) {
+        this.shelvesTime = shelvesTime;
+    }
+
+    public String getAppPrice() {
+        return appPrice;
+    }
+
+    public void setAppPrice(String appPrice) {
+        this.appPrice = appPrice;
+    }
+
+    public String getSalePrice() {
+        return salePrice;
+    }
+
+    public void setSalePrice(String salePrice) {
+        this.salePrice = salePrice;
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
+
     public Integer getRelationId() {
         return this.relationId;
     }
