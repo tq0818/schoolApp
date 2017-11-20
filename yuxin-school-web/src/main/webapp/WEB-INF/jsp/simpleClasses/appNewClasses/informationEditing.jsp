@@ -1,11 +1,10 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <html>
 <head>
     <%@include file="/decorators/import.jsp" %>
     <title>编辑上架课程</title>
-    <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/manage.css">
+<%--    <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/manage.css">
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/classes.css">
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/operate.css" />
 
@@ -13,7 +12,21 @@
     <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.datetimepicker.js"></script>
 
 
-    <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
+    <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>--%>
+    <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/fatstyle.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/manage.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/company.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/classes.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/splitscreen.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/classedit.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/popupwin.css">
+    <link rel="stylesheet" type="text/css" href="<%=rootPath%>/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" />
+    <link rel="stylesheet" type="text/css" href="<%=rootPath %>/plugins/select2/select2.css"/>
+    <script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/plupload.full.min.js"></script>
+    <script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/i18n/zh_CN.js"></script>
+    <script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/moxie.js"></script>
+    <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.2.1/jquery.js"></script>
+    <script type="text/javascript" src="http://cdn.staticfile.org/qiniu-js-sdk/1.0.14-beta/qiniu.js"></script>
 </head>
 <body style="position:relative;">
 <!-- 二级导航 -->
@@ -30,18 +43,43 @@
                 <ul>
                     <li>
                         <label>课程名称:</label>
-                        <span>XXXXXXXX</span>
+                        <span>
+                             <c:choose>
+                                 <c:when test="${fn:length(searchAndResult.name)>15}">
+                                     ${fn:substring(searchAndResult.name, 0, 15)}...
+                                 </c:when>
+                                 <c:otherwise>
+                                     ${searchAndResult.name }
+                                 </c:otherwise>
+                             </c:choose>
+                        </span>
                     </li>
                     <li>
-                        <label>课程名称:</label>
-                        <span>XXXXXXXX</span>
+                        <label>教师:</label>
+                        <span>${searchAndResult.teacherName}</span>
                     </li>
                     <li>
-                        <label>课程名称:</label>
-                        <span>XXXXXXXX</span>
+                        <label>学校:</label>
+                        <span>${searchAndResult.schoolName}</span>
+                    </li>
+                    <c:if test="${searchAndResult.liveFlag eq 1}">
+                        <li>
+                            <label>时长:</label>
+                            <span>${searchAndResult.lessonDate} ${searchAndResult.lessonTimeStart}~${searchAndResult.lessonDate} ${searchAndResult.lessonTimeEnd}</span>
+                        </li>
+                    </c:if>
+                    <c:if test="${searchAndResult.liveFlag ne 1}">
+                        <li>
+                            <label>时长:</label>
+                            <span>${searchAndResult.lessonDate}</span>
+                        </li>
+                    </c:if>
+                    <li>
+                        <label>学习人数:</label>
+                        <span>${searchAndResult.actualNum}人学习</span>
                     </li>
                 </ul>
-                <a href="##" class="courseDetail btn btn-default">课程详情</a>
+                <a href="##" class="courseDetail btn btn-default" onclick="queryClassDetails(${searchAndResult.id});">课程详情</a>
             </div>
         </div>
         <div>
@@ -50,118 +88,81 @@
                     <label>课程分类</label>
                     <ul class="courseList">
                         <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
+                           <select id="courseCaId" onchange="chooseSlibMenu($(this));">
+                               <c:forEach var="menu" items="${firstMenus}">
+                                   <option value="${menu.id}">${menu.name}</option>
+                               </c:forEach>
+                           </select>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <label>课程分类</label>
+                    <label>学段</label>
+                    <ul class="courseList">
+                        <select id="gradeId" onchange="chooseSlibMenu($(this));">
+                            <c:forEach var="menu" items="${secondeMenus}" varStatus="status">
+                                <option value="${menu.id}">${menu.name}</option>
+                            </c:forEach>
+                        </select>
+                    </ul>
+                </li>
+                <li>
+                    <label>学科</label>
                     <ul class="courseList">
                         <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
+                            <select id="subjectId" onchange="chooseSlibMenu($(this));">
+                                <c:forEach var="menu" items="${thirdMenus}">
+                                    <option value="${menu.id}">${menu.name}</option>
+                                </c:forEach>
+                            </select>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <label>课程分类</label>
+                    <label>知识点专题</label>
                     <ul class="courseList">
                         <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
+                            <select id="kwonProId" onchange="chooseSlibMenu($(this));">
+                                <c:forEach var="menu" items="${forthMenus}">
+                                    <option value="${menu.id}">${menu.name}</option>
+                                </c:forEach>
+                            </select>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <label>课程分类</label>
+                    <label>知识点</label>
                     <ul class="courseList">
                         <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
+                            <select id="knowId" onchange="chooseSlibMenu($(this));">
+                                <c:forEach var="menu" items="${fifthMenus}">
+                                    <option value="${menu.id}">${menu.name}</option>
+                                </c:forEach>
+                            </select>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <label>课程分类</label>
+                    <label>阶段</label>
                     <ul class="courseList">
                         <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
+                            <select id="stageId">
+                                <c:forEach var="menu" items="${jieduanMenus}">
+                                    <option value="${menu.id}">${menu.name}</option>
+                                </c:forEach>
+                            </select>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <label>课程分类</label>
+                    <label>类型</label>
                     <ul class="courseList">
                         <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <label>课程分类</label>
-                    <ul class="courseList">
-                        <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
-                        </li>
-                        <li>
-                            <input type="button" value="语文">
+                            <select id="typeId">
+                                <c:forEach var="menu" items="${leixingMenus}">
+                                    <option value="${menu.id}">${menu.name}</option>
+                                </c:forEach>
+                            </select>
                         </li>
                     </ul>
                 </li>
@@ -170,93 +171,57 @@
         <div>
             <ul class="screeningConditions">
                 <li>
-                    <label>价格：</label><input type="text">
+                    <label>价格：</label><input type="text" value="${searchAndResult.originalPrice}">
                 </li>
                 <li>
-                    <label>价格：</label><input type="text">
+                    <label>实际价格：</label><input type="text" value="${searchAndResult.realPrice}">
                 </li>
+                <c:if test="${searchAndResult.liveFlag == '1'}">
+                    <li>
+                        <label>直播开始时间：</label><input type="text" value="${searchAndResult.lessonDate} ${searchAndResult.lessonTimeStart}:00" disabled="disabled">
+                    </li>
+                </c:if>
                 <li>
-                    <label>价格：</label><input type="text">
-                </li>
-                <li>
-                    <label>价格：</label><input type="text">
+                    <label>课程标签：</label><input type="text" id="labDesc">
                 </li>
             </ul>
         </div>
         <div class="submitCourse">
-            <button class="btn btn-success">立即上架</button>
-            <button class="btn btn-warning">预约上架</button>
-            <input type="text" placeholder="指定上架时间" id="choiceTimeUpload">
+            <button class="btn btn-success" onclick="toShelves('1');">立即上架</button>
+            <button class="btn btn-warning" onclick="toShelves('0');">预约上架</button>
+            <input type="text" placeholder="指定上架时间" id="shelvesTime">
         </div>
     </div>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $.ajax({
-            url : rootPath + "/companyServiceStatic/queryCompanyNoServices",
-            type : "post",
-            dataType : 'json',
-            success : function(jsonData) {
-                var count=jsonData.length;
-                var html="";
-                if(count==1){
-                    $.each(jsonData,function(i,item){
-                        if(item.groupCode=='SERVICE_LIVE'){
-                            html+='<ul class="tabsn c4"><li class="b2">录播</li>'+
-                                '<li class="b3">面授</li>'+
-                                '<li class="b4">混合</li>'+
-                                '<li class="b5">其他</li></ul>';
-                        }else if(item.groupCode=='SERVICE_VIDEO'){
-                            html+='<ul class="tabsn c4"><li class="b1">直播</li>'+
-                                '<li class="b3">面授</li>'+
-                                '<li class="b4">混合</li>'+
-                                '<li class="b5">其他</li></ul>';
-                        }else if(item.groupCode=='SERVICE_FACE'){
-                            html+='<ul class="tabsn c4"><li class="b1">直播</li>'+
-                                '<li class="b2">录播</li>'+
-                                '<li class="b4">混合</li>'+
-                                '<li class="b5">其他</li></ul>';
-                        }
-                    });
-                }else if(count==2){
-                    var num1,num2;
-                    $.each(jsonData,function(i,item){
-                        if(i==0){
-                            num1=item.groupCode;
-                        }else{
-                            num2=item.groupCode;
-                        }
-                    })
-                    if((num1=="SERVICE_LIVE"&&num2=="SERVICE_VIDEO")||(num1=="SERVICE_VIDEO"&&num2=="SERVICE_LIVE")){
-                        html+='<ul class="tabsn c2"><li class="b3">面授</li>'+
-                            '<li class="b5">其他</li></ul>';
-                    }
-                    if((num1=="SERVICE_LIVE"&&num2=="SERVICE_FACE")||(num1=="SERVICE_FACE"&&num2=="SERVICE_LIVE")){
-                        html+='<ul class="tabsn c2"><li class="b2">录播</li>'+
-                            '<li class="b5">其他</li></ul>';
-                    }
-                    if((num1=="SERVICE_FACE"&&num2=="SERVICE_VIDEO")||(num1=="SERVICE_VIDEO"&&num2=="SERVICE_FACE")){
-                        html+='<ul class="tabsn c2"><li class="b1">直播</li>'+
-                            '<li class="b5">其他</li></ul>';
-                    }
-                }else if(count==3){
-                    html+='<ul class="tabsn c8">'+
-                        '<li class="b5">其他</li></ul>';
-                }else{
-                    html+='<ul class="tabsn"><li class="b1">直播</li>'+
-                        '<li class="b2">录播</li>'+
-                        '<li class="b3">面授</li>'+
-                        '<li class="b4">混合</li>'+
-                        '<li class="b5">其他</li></ul>';
-                }
-                $("#lsOne").append(html);
-            }
-        });
-        $("body").css("position","relative")
-        $('#choiceTimeUpload').datetimepicker();
-    });
-</script>
-<script type="text/javascript" src="<%=rootPath %>/javascripts/class/classIndex.js"></script>
-<script type="text/javascript" src="<%=rootPath %>/javascripts/classes.js"></script>
+        <c:if test="${searchAndResult.liveFlag==1 }">
+            <input id="lab" name="lab" value="live" type="hidden"/>
+        </c:if>
+        <c:if test="${searchAndResult.videoFlag==1 }">
+            <input id="lab" name="lab" value="video" type="hidden"/>
+        </c:if>
+        <c:if test="${searchAndResult.faceFlag==1 }">
+            <input id="lab" name="lab" value="face" type="hidden"/>
+        </c:if>
+        <c:if test="${searchAndResult.liveFlag==0&&searchAndResult.videoFlag==0&&allCommdotity.faceFlag==0 }">
+            <input id="lab" name="lab" value="remote" type="hidden"/>
+        </c:if>
+        <div id="shelvesInfo">
+            <input name="id" type="hidden" id="commodityId" value="${searchAndResult.id}"/>
+            <input name="appId" type="hidden" id="appId" value="${searchAndResult.appId}"/>
+        </div>
+    <form method="post" id="myForm">
+
+    </form>
+
+<script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/classIndex.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
+<script type="text/javascript" src="<%=rootPath %>/javascripts/plus/jquery.cookie.js"></script>
+<script type="text/javascript" src="<%=rootPath%>/javascripts/popupwin.js"></script>
+<script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript" src="<%=rootPath %>/plugins/select2/select2.js"></script>
+<script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery-ui.js"></script>
+<script type="text/javascript" src="<%=rootPath %>/javascripts/common/DateUtils.js"></script>
+<script type="text/javascript" src="<%=rootPath%>/javascripts/ajaxfileupload.js"></script>
 </body>
 </html>

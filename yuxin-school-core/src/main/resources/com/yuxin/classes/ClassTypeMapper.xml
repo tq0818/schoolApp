@@ -115,6 +115,15 @@
 		<result property="appId" column="appId"/>
 
 
+		<result property="lessonDate" column="lesson_date"/>
+		<result property="lessonTimeStart" column="lesson_time_start"/>
+		<result property="lessonTimeEnd" column="lesson_time_end"/>
+		<result property="lessonName" column="lesson_name"/>
+		<result property="teacherName" column="teacher_name"/>
+		<result property="schoolName" column="school_short_name"/>
+		<result property="labDesc" column="lab_desc"/>
+
+
 
 
 
@@ -219,6 +228,37 @@
 		#{paperDescription},
 		#{originType}
 	</sql>
+
+	<sql id="app_table_columns">
+		comdity_id,
+		is_shelves,
+		price,
+		sale_price,
+		category_id,
+		grade_id,
+		subject_id,
+		knowledge_pro_id,
+		knowledge_id,
+		stage_id,
+		type_id,
+		img_url,
+		create_time
+	</sql>
+	<sql id="app_table_columns_properties">
+		#{id},
+		#{isShelves},
+		#{appPrice},
+		#{salePrice},
+		#{courseCaId},
+		#{gradeId},
+		#{subjectId},
+		#{kwonProId},
+		#{knowId},
+		#{stageId},
+		#{typeId},
+		#{imgUrl},
+		now()
+	</sql>
 	
 	<sql id="batch_entity_properties">
 		#{item.id},
@@ -269,7 +309,13 @@
 		#{item.paperDescription},
 		#{item.originType}
 	</sql>
-	
+
+	<!--插入app上架信息-->
+	<insert id="insertAppShelvesInfo" parameterType="com.yuxin.wx.vo.classes.ClassTypeVo">
+		insert into app_shelves( <include refid="app_table_columns" /> )
+		values ( <include refid="app_table_columns_properties" /> )
+	</insert>
+
 	<!-- 适用于主键自增类型 -->
 	<insert id="insert" parameterType="com.yuxin.wx.model.classes.ClassType" useGeneratedKeys="true" keyProperty="id">
 		insert into class_type( <include refid="table_columns" /> ) 
@@ -468,7 +514,46 @@
 		  ORDER BY a.update_time DESC
 		  limit #{firstIndex},#{pageSize}
 	</select>
-	
+
+	<!--查询单条录播课程数据信息-->
+	<select id="querySingleOtherClassTypeInfo" resultMap="classTypeVoResultMap" parameterType="map">
+		select ct.*,c.buy_num as actualNum,app.img_url as imgUrl,sct.NAME teacher_name,sct.school_short_name,
+		case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,app.reserve_time,
+		v.video_time as lesson_date,app.id as appId,app.lab_desc
+		 from commodity c
+		join commodity_product_realtion cpr on cpr.com_id=c.id
+		join class_type ct on ct.id=cpr.product_id
+		join sys_config_teacher sct ON ct.teacher_id = sct.id
+		join class_type_module_relation ctmr on ct.id = ctmr.class_type_id
+		join class_module_lesson cml on ctmr.module_id = cml.id
+		join course_video_chapter cvc on cml.id=cvc.module_id
+		join course_video_lecture cvl on cvl.chapter_id=cvc.id
+		join video v on cvl.video_id=v.id
+		left join app_shelves app on app.comdity_id=c.id
+		where c.id=#{classType.id} and ct.del_flag=0 and c.type='COMMODITY_CLASS'
+	</select>
+
+	<!--查询单条直播播课程数据信息-->
+	<select id="querySingleLiveClassTypeInfo" resultMap="classTypeVoResultMap" parameterType="map">
+		select
+		ct.*,cml.lesson_date,
+		cml.lesson_time_start,
+		cml.lesson_time_end,
+		cml.lesson_name,sct.NAME teacher_name,sct.school_short_name,
+		c.buy_num as actualNum,app.img_url as imgUrl,case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,app.reserve_time,app.id as appId,
+		app.lab_desc
+		FROM class_module_lesson cml
+		JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id`
+		JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id`
+		JOIN class_type ct ON ct.id = ctmr.`class_type_id`
+		join commodity_product_realtion pr on ct.id = pr.product_id
+		join commodity c on c.id = pr.com_id
+		JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
+		left join `app_shelves` app on app.`comdity_id`=c.id
+		where c.id = #{classType.id} and ct.del_flag=0 and c.type='COMMODITY_CLASS'
+		ORDER BY cml.`lesson_date`
+	</select>
+
 	<!-- 查询班型并分页 -->
 	<select id="queryClassTypesByPage" resultMap="classTypeVoResultMap" parameterType="map">
 		<!--SELECT a.*, c.buy_num as actualNum
@@ -508,7 +593,7 @@
 		<if test="classType.name != null and classType.name != ''">and a.name like '%${classType.name}%'</if>
 		<if test="classType.itemOneId != null and classType.itemOneId != ''">and a.item_one_id = #{classType.itemOneId}</if>
 		<if test="classType.itemSecondId != null and classType.itemSecondId != ''">and a.item_second_id = #{classType.itemSecondId}</if>
-		<if test="classType.isShelves != null and classType.isShelves != ''">and app.is_shelves = #{classType.isShelves}</if>
+		<if test="classType.isShelves != null and classType.isShelves != ''">(and app.is_shelves = #{classType.isShelves} or app.is_shelves is null)</if>
 		<if test="classType.createSchoolId !=null and classType.createSchoolId != ''">and a.create_school_id = #{classType.createSchoolId}</if>
 		<if test="classType.itemTag != null and classType.itemTag != ''">and find_in_set(#{classType.itemTag},a.item_tag)>0</if>
 		<if test="classType.itemTag2 != null and classType.itemTag2 != ''">and find_in_set(#{classType.itemTag2},a.item_tag)>0</if>

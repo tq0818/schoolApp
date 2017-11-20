@@ -80,7 +80,7 @@ public class ClassTypeVo extends BaseEntity {
 	private Integer originType;/* 来源，1表示来自app，0表示来自pc */
 
 
-
+	/**新增app属性**/
 	private String imgUrl;
 
 	private String isShelves;
@@ -89,11 +89,172 @@ public class ClassTypeVo extends BaseEntity {
 
 	private String shelvesTime;
 
-	private String appPrice;
+	private Double appPrice;
 
-	private String salePrice;
+	private Double salePrice;
 
 	private String appId;
+
+	private String lessonDate;
+
+	private String lessonTimeStart;
+
+	private String lessonTimeEnd;
+
+	private String lessonName;
+
+	private String teacherName;
+
+	private String schoolName;
+
+	private String lessonLength;
+
+
+	private String courseCaId;
+
+	private String gradeId;
+
+	private String subjectId;
+
+	private String kwonProId;
+
+	private String knowId;
+
+	private String stageId;
+
+	private String typeId;
+
+	private String labDesc;
+
+	private String shelvesFlag;
+
+	public String getShelvesFlag() {
+		return shelvesFlag;
+	}
+
+	public void setShelvesFlag(String shelvesFlag) {
+		this.shelvesFlag = shelvesFlag;
+	}
+
+	public String getLabDesc() {
+		return labDesc;
+	}
+
+	public void setLabDesc(String labDesc) {
+		this.labDesc = labDesc;
+	}
+
+	public String getCourseCaId() {
+		return courseCaId;
+	}
+
+	public void setCourseCaId(String courseCaId) {
+		this.courseCaId = courseCaId;
+	}
+
+	public String getGradeId() {
+		return gradeId;
+	}
+
+	public void setGradeId(String gradeId) {
+		this.gradeId = gradeId;
+	}
+
+	public String getSubjectId() {
+		return subjectId;
+	}
+
+	public void setSubjectId(String subjectId) {
+		this.subjectId = subjectId;
+	}
+
+	public String getKwonProId() {
+		return kwonProId;
+	}
+
+	public void setKwonProId(String kwonProId) {
+		this.kwonProId = kwonProId;
+	}
+
+	public String getKnowId() {
+		return knowId;
+	}
+
+	public void setKnowId(String knowId) {
+		this.knowId = knowId;
+	}
+
+	public String getStageId() {
+		return stageId;
+	}
+
+	public void setStageId(String stageId) {
+		this.stageId = stageId;
+	}
+
+	public String getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(String typeId) {
+		this.typeId = typeId;
+	}
+
+	public String getLessonLength() {
+		return lessonLength;
+	}
+
+	public void setLessonLength(String lessonLength) {
+		this.lessonLength = lessonLength;
+	}
+
+	public String getSchoolName() {
+		return schoolName;
+	}
+
+	public void setSchoolName(String schoolName) {
+		this.schoolName = schoolName;
+	}
+
+	public String getTeacherName() {
+		return teacherName;
+	}
+
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
+	}
+
+	public String getLessonDate() {
+		return lessonDate;
+	}
+
+	public void setLessonDate(String lessonDate) {
+		this.lessonDate = lessonDate;
+	}
+
+	public String getLessonTimeStart() {
+		return lessonTimeStart;
+	}
+
+	public void setLessonTimeStart(String lessonTimeStart) {
+		this.lessonTimeStart = lessonTimeStart;
+	}
+
+	public String getLessonTimeEnd() {
+		return lessonTimeEnd;
+	}
+
+	public void setLessonTimeEnd(String lessonTimeEnd) {
+		this.lessonTimeEnd = lessonTimeEnd;
+	}
+
+	public String getLessonName() {
+		return lessonName;
+	}
+
+	public void setLessonName(String lessonName) {
+		this.lessonName = lessonName;
+	}
 
 	public String getAppId() {
 		return appId;
@@ -135,19 +296,19 @@ public class ClassTypeVo extends BaseEntity {
 		this.shelvesTime = shelvesTime;
 	}
 
-	public String getAppPrice() {
+	public Double getAppPrice() {
 		return appPrice;
 	}
 
-	public void setAppPrice(String appPrice) {
+	public void setAppPrice(Double appPrice) {
 		this.appPrice = appPrice;
 	}
 
-	public String getSalePrice() {
+	public Double getSalePrice() {
 		return salePrice;
 	}
 
-	public void setSalePrice(String salePrice) {
+	public void setSalePrice(Double salePrice) {
 		this.salePrice = salePrice;
 	}
 

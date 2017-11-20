@@ -443,4 +443,24 @@ public interface IClassTypeService  {
 	 * @return
 	 */
 	int countSubjectClassOrder(String itemOenCode);
+
+	/**
+	 * 查询单条直播商品信息
+	 * @param search
+	 * @return
+     */
+	ClassTypeVo querySingleLiveClassTypeInfo(ClassTypeVo search);
+
+	/**
+	 * 查询其它视频播放信息
+	 * @param search
+	 * @return
+     */
+	ClassTypeVo querySingOtherClassTypeInfo(ClassTypeVo search);
+
+	/**
+	 * 插入app上架信息
+	 * @param cto
+     */
+	void insertAppShelvesInfo(ClassTypeVo cto);
 }
