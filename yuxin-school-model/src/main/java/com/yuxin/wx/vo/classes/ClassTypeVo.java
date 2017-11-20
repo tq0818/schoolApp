@@ -109,6 +109,15 @@ public class ClassTypeVo extends BaseEntity {
 
 	private String lessonLength;
 
+	private String lastPerson;
+
+	public String getLastPerson() {
+		return lastPerson;
+	}
+
+	public void setLastPerson(String lastPerson) {
+		this.lastPerson = lastPerson;
+	}
 
 	private String courseCaId;
 
