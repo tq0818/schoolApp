@@ -69,6 +69,98 @@
 	    		})
                 this.queryAllCommdityByItemNew(1);
 			},
+			queryshelvesCoursesApp : function(page){
+				var datas = {"page":page};
+				var categoryName = '',
+				gradeName = ''
+				subjectName = '',
+				knowledgeName = '',
+				knowledgeProName = '',
+				stageName = '',
+				typeCode = '';
+				$("#categoryNameList").find("a").each(function(i){
+					if($(this).hasClass('btn-success')){
+						categoryName=$(this).attr("data-code");
+					}
+				});
+				if(categoryName!='all'){
+                    datas.categoryName=categoryName;
+				}
+				$("#gradeNameList").find("a").each(function(i){
+					if($(this).hasClass('btn-success')){
+						gradeName=$(this).attr("data-code");
+					}
+				});
+				if(gradeName!='all'){
+					datas.gradeName=gradeName;
+				}
+				$("#subjectNameList").find("a").each(function(i){
+					if($(this).hasClass('btn-success')){
+						subjectName=$(this).attr("data-code");
+					}
+				});
+				if(subjectName!='all'){
+					datas.subjectName=subjectName;
+				}
+				$("#knowledgeNameList").find("a").each(function(i){
+					if($(this).hasClass('btn-success')){
+						knowledgeName=$(this).attr("data-code");
+					}
+				});
+				if(knowledgeName!='all'){
+					datas.knowledgeName=knowledgeName;
+				}
+				$("#knowledgeProNameList").find("a").each(function(i){
+					if($(this).hasClass('btn-success')){
+						knowledgeProName=$(this).attr("data-code");
+					}
+				});
+				if(knowledgeProName!='all'){
+					datas.knowledgeProName=knowledgeProName;
+				}
+				$("#stageNameList").find("a").each(function(i){
+					if($(this).hasClass('btn-success')){
+						stageName=$(this).attr("data-code");
+					}
+				});
+				if(stageName!='all'){
+					datas.stageName=stageName;
+				}
+				$("#typeCodeList").find("a").each(function(i){
+					if($(this).hasClass('btn-success')){
+						typeCode=$(this).attr("data-code");
+					}
+				});
+				if(typeCode!='all'){
+					datas.typeCode=typeCode;
+				}
+				$.ajax({
+					url : rootPath + "/shelvesCourse/findShelvesCourseByapge",
+					type : "post",
+					data:datas,
+					beforeSend:function(XMLHttpRequest){
+			            $(".loading").show();
+			            $(".loading-bg").show();
+			        },
+					success : function(result) {
+						$("#ShelvesCourseDetailList").html(result);
+					},
+					 complete:function(XMLHttpRequest,textStatus){
+							$(".loading").hide();
+				            $(".loading-bg").hide();
+				     }
+				});
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			},
+			
 			queryAllSysApp : function(id){
 
 				$.ajax({
@@ -82,12 +174,12 @@
 						$("#itemThirdCodeList").append(result.fourthList);
 						$("#flagList").append(result.secondList);*/
 						var aHtml = "";
-						if(result.thirdList.length > 0){
-						for(var i = 0;i<result.thirdList.size;i++ ){
-							aHtml+='<a href="javascript:Form.queryAllSysApp('+${list.id }+');" data-code="'+${list.id }+'" class="btn btn-mini btn-default">'+${list.name }+'</a>';
+//						if(result.thirdList.length > 0){
+						for(var i = 0;i<result.thirdList.length;i++ ){
+							aHtml+='<a href="javascript:Form.queryAllSysApp();" data-code="" class="btn btn-mini btn-default">1</a>';
 							$("#itemSecondCodeList").append(aHtml);
 						}
-						}
+//						}
 						
 					},
 					 complete:function(XMLHttpRequest,textStatus){
@@ -602,8 +694,9 @@
 			}
 			
 		}
-	$(document).ready(function(){
+	$(document).ready(function(){		
 		Form.init();
+		Form.queryshelvesCoursesApp();
 	})
 	window.Form=Form;
 })(jQuery)

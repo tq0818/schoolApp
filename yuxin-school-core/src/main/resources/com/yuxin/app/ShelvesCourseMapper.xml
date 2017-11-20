@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuxin.wx.auth.mapper.app.ShelvesCourseMapper">
+	<select id="queryShelvesCoursesByPage"  parameterType="map" resultType="com.yuxin.wx.model.app.ShelvesCourse">
+	SELECT 
+		app.id as aid,
+		a.id as id,
+		app.img_url as imgUrl,
+		a.`name` as name,
+		app.grade_name as gradeName,
+		app.subject_name as subjectName,
+		app.knowledge_name as knowledgeName,
+		app.knowledge_pro_name as knowledgeProName,
+		app.stage_name as stageName,
+		a.type_code as typeCode,
+		c.buy_num as buyNum,
+		case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
+		cml.lesson_date as reserveTime,
+		cml.lesson_time_start as reserveHour,
+		app.shelves_time as shelvesTime,
+		app.price as appprice,
+		app.sale_price as salePrice
+			FROM  app_shelves app
+			INNER JOIN commodity c ON app.comdity_id=c.id
+			inner join commodity_product_realtion pr on c.id = pr.com_id
+			left join class_type a on pr.product_id = a.id
+			left JOIN class_type_module_relation ctmr ON a.id = ctmr.`class_type_id`
+			left JOIN class_module_no cmn ON ctmr.`module_id` = cmn.`module_id`
+			left JOIN class_module_lesson cml ON cml.`module_no_id` = cmn.`id`
+			where a.is_sale = 1
+			<if test="gradeName != null and gradeName != ''">and app.grade_name = #{gradeName}</if>
+			<if test="subjectName != null and subjectName != ''">and app.subject_name = #{subjectName}</if>
+			<if test="knowledgeName != null and knowledgeName != ''">and app.knowledge_name = #{knowledgeName}</if>
+			<if test="knowledgeProName != null and knowledgeProName != ''">and app.knowledge_pro_name = #{knowledgeProName}</if>
+			<if test="stageName != null and stageName != ''">and app.stage_name = #{stageName}</if>
+			<if test="typeCode != null and typeCode != ''">and a.type_code = #{typeCode}</if>
+			<if test="categoryName != null and categoryName != ''">and app.category_name = #{categoryName}</if>
+			<!-- limit #{course.firstIndex},#{course.pageSize} -->
+	</select>
+	
+	<!-- <resultMap type="com.yuxin.wx.model.app.ShelvesCourse" id="loadMap">
+		<id property="id" column="aid"/>
+		<result property="imgUrl" column="imgUrl"/>
+		<result property="gradeName" column="gradeName"/>
+		<result property="subjectName" column="subjectName"/>
+		<result property="knowledgeName" column="knowledgeName"/>
+		<result property="knowledgeProName" column="knowledgeProName"/>
+		<result property="stageName" column="stageName"/>
+		<result property="reserveTime" column="reserveTime"/>
+		<result property="shelvesTime" column="shelvesTime"/>
+		<result property="appprice" column="appprice"/>
+		<result property="salePrice" column="salePrice"/>
+		<association property="commodity"  javaType="com.yuxin.wx.model.commodity.Commodity">
+			<id property="id" column="id"/>
+			<result property="buyNum" column="buyNum" />
+		</association>
+		<association property="classType"  javaType="com.yuxin.wx.model.classes.ClassType">
+			<id property="id" column="id"/>
+			<result property="name" column="name" />
+			<result property="typeCode" column="typeCode" />
+		</association>
+	</resultMap>
+    -->
+</mapper>

@@ -19,7 +19,7 @@
        }
        
        function updateStatus(specialId){
-      	   var status = $('#status'+specialId).attr("status");
+    	   var status = $('#status'+specialId).attr("status");
            if(status == 1){
       			status = 0;
       		}else if(status ==0){
