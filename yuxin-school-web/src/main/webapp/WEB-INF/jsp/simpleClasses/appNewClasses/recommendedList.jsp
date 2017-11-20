@@ -51,11 +51,7 @@
 <div class="loading-bg lp-units-loading-bg" style="display:none"></div>
 <!--  ajax加载中div结束 -->
 
-<%--弹出框--%>
-<div class="popupContainer">
-    <span class="closePopupContainer">x</span>
-</div>
-<div class="popupOpacity"></div>
+
 
 <script type="text/javascript" src="<%=rootPath %>/javascripts/system/newsManage.js"></script>
 </body>

@@ -216,8 +216,8 @@
                         <td>1</td>
                         <td>
                             <span><a href="javascript:;" class="btn btn-primary btn-sm">下架</a></span>
-                            <span><a href="javascript:;" class="btn btn-primary btn-sm">推荐</a></span>
-                            <span><a href="/manage/appNewClasses/InformationEditing" class="btn btn-primary btn-sm">编辑</a></span>
+                            <span><a href="/appNewClasses/homeRecommendation" class="btn btn-primary btn-sm">推荐</a></span>
+                            <span><a href="##" class="btn btn-primary btn-sm eidtShelvesCourses">编辑</a></span>
                         </td>
                     </tr>
                 </tbody>
@@ -226,6 +226,12 @@
             <div class="pages pagination"></div>
         </div><input type="hidden" id="rowCount" value="68266"><input type="hidden" id="pageNo" value="1"><input type="hidden" id="maxCount" value="999999999">
     </div>
+
+    <%--弹出框--%>
+    <div class="popupContainer">
+        <span class="closePopupContainer">x</span>
+    </div>
+    <div class="popupOpacity"></div>
 
     <script type="text/javascript">
         $(document).ready(function(){

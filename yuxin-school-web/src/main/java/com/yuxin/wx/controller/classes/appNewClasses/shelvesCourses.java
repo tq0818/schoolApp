@@ -100,6 +100,14 @@ public class  shelvesCourses {
         return "simpleClasses/appNewClasses/recommendSpecialList";
     }
 
+	/**
+	 * 跳转到首页推荐
+	 */
+	@RequestMapping(value="/homeRecommendation")
+	public String gotohomeRecommendation(){
+		return "simpleClasses/appNewClasses/homeRecommendation";
+	}
+
 
 
 }
