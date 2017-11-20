@@ -234,6 +234,8 @@
 		is_shelves,
 		price,
 		sale_price,
+		shelves_time,
+		reserve_time,
 		category_id,
 		grade_id,
 		subject_id,
@@ -242,13 +244,17 @@
 		stage_id,
 		type_id,
 		img_url,
-		create_time
+		last_person,
+		create_time,
+		lab_desc
 	</sql>
 	<sql id="app_table_columns_properties">
 		#{id},
 		#{isShelves},
 		#{appPrice},
 		#{salePrice},
+		#{shelvesTime},
+		#{reserveTime},
 		#{courseCaId},
 		#{gradeId},
 		#{subjectId},
@@ -257,7 +263,9 @@
 		#{stageId},
 		#{typeId},
 		#{imgUrl},
-		now()
+		#{lastPerson},
+		now(),
+		#{labDesc}
 	</sql>
 	
 	<sql id="batch_entity_properties">

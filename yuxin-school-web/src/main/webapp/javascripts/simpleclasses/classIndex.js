@@ -836,6 +836,10 @@ function toShelves(flag){
 	var appId = $("#appId").val();
 	var shelvesTime = $("#shelvesTime").val();
 	var labDesc = $("#labDesc").val();
+	if(""== $.trim(shelvesTime)){
+		alert("预约上架时间不能为空");
+		return;
+	}
 
 	$.ajax({
 		url : "/simpleClasses/insertShelvesInfo",

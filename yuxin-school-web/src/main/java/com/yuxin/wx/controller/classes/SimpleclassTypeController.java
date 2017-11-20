@@ -220,10 +220,14 @@ public class SimpleclassTypeController {
 			if(!"1".equals(cto.getShelvesFlag())){
 				cto.setReserveTime(cto.getShelvesTime());
 				cto.setShelvesTime(null);
+			}else{
+				cto.setIsShelves("1");
+			}
+			if(null==cto.getShelvesTime()||"".equals(cto.getShelvesTime())){
+				cto.setShelvesTime(null);
 			}
 			if (null == appId || "".equals(appId)) {
 				//插入数据入库
-				cto.setIsShelves("1");
 				classTypeServiceImpl.insertAppShelvesInfo(cto);
 			} else {
 				//更新数据入库
