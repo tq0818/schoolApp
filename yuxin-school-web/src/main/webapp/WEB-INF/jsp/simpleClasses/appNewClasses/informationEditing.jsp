@@ -85,85 +85,73 @@
             <ul class="classification">
                 <li>
                     <label>课程分类</label>
-                    <ul class="courseList">
-                        <li>
+
                            <select id="courseCaId" onchange="chooseSlibMenu($(this));">
                                <c:forEach var="menu" items="${firstMenus}">
                                    <option value="${menu.id}">${menu.name}</option>
                                </c:forEach>
                            </select>
-                        </li>
-                    </ul>
+
                 </li>
                 <li>
                     <label>学段</label>
-                    <ul class="courseList">
+
                         <select id="gradeId" onchange="chooseSlibMenu($(this));">
                             <c:forEach var="menu" items="${secondeMenus}" varStatus="status">
                                 <option value="${menu.id}">${menu.name}</option>
                             </c:forEach>
                         </select>
-                    </ul>
+
                 </li>
                 <li>
                     <label>学科</label>
-                    <ul class="courseList">
-                        <li>
+
                             <select id="subjectId" onchange="chooseSlibMenu($(this));">
                                 <c:forEach var="menu" items="${thirdMenus}">
                                     <option value="${menu.id}">${menu.name}</option>
                                 </c:forEach>
                             </select>
-                        </li>
-                    </ul>
+
                 </li>
                 <li>
                     <label>知识点专题</label>
-                    <ul class="courseList">
-                        <li>
+
                             <select id="kwonProId" onchange="chooseSlibMenu($(this));">
                                 <c:forEach var="menu" items="${forthMenus}">
                                     <option value="${menu.id}">${menu.name}</option>
                                 </c:forEach>
                             </select>
-                        </li>
-                    </ul>
+
                 </li>
                 <li>
                     <label>知识点</label>
-                    <ul class="courseList">
-                        <li>
+
                             <select id="knowId" onchange="chooseSlibMenu($(this));">
                                 <c:forEach var="menu" items="${fifthMenus}">
                                     <option value="${menu.id}">${menu.name}</option>
                                 </c:forEach>
                             </select>
-                        </li>
-                    </ul>
+
                 </li>
                 <li>
                     <label>阶段</label>
-                    <ul class="courseList">
-                        <li>
+
                             <select id="stageId">
                                 <c:forEach var="menu" items="${jieduanMenus}">
                                     <option value="${menu.id}">${menu.name}</option>
                                 </c:forEach>
                             </select>
-                        </li>
-                    </ul>
+
                 </li>
                 <li>
                     <label>类型</label>
-                    <ul class="courseList">
-                        <li>
+
                             <select id="typeId">
                                 <c:forEach var="menu" items="${leixingMenus}">
                                     <option value="${menu.id}">${menu.name}</option>
                                 </c:forEach>
                             </select>
-                        </li>
-                    </ul>
+
                 </li>
             </ul>
         </div>
