@@ -213,7 +213,8 @@
 		$("body").css("position","relative")
 	});
 </script>
-<script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/classIndex.js"></script>
+<%-- <script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/informationEditing.js"></script> --%>
+ <script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/classIndex.js"></script>
  <script type="text/javascript" src="<%=rootPath %>/javascripts/classes.js"></script>
  <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 </body>

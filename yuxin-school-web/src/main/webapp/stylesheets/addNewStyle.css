@@ -1,15 +1,15 @@
-/*已上架课程*/
+/*宸蹭笂鏋惰绋�/
 .shelvesIcon{width: 20px;height: 20px;}
-/*编辑上架课程*/
-.informationEditHeader{width: 100%;height: 400px;}
+/*缂栬緫涓婃灦璇剧▼*/
+.informationEditHeader{width: 100%;height: 100px;}
 .informationEditImg{position: relative;}
 .informationEditImg,.informationEditDetail{display: inline-block;float: left;}
-.informationEditImg >img{width: 600px;height: 400px;}
+.informationEditImg >img{width: 100px;height: 100px;}
 .informationEditChoose{text-align: center;position: absolute; left: 50%;top: 50%;height: 40px;width: 80px;margin-left: -40px;margin-top: -20px; }
 .informationEditChoose>a{line-height: 40px;background: grey;position: absolute;left: 0;display: inline-block;width: 80px;
     height: 40px;color: #fff;border-radius: 3px;text-decoration: none;cursor: pointer;}
 .informationEditChoose a>input{width: 80px;height: 40px;opacity: 0;position: absolute;left: 0;cursor: pointer;z-index: 1;}
-.informationEditDetail{position: relative;margin-left: 20px;width: 500px;height: 400px;background: #f7f7f7;}
+.informationEditDetail{position: relative;margin-left: 20px;width: 100px;height: 100px;background: #f7f7f7;}
 .informationEditDetail label{display: inline-block;}
 .courseDetail{position: absolute;right: 20px;bottom: 20px;}
 .informationEditDetail li{height: 40px;line-height: 40px;padding-left: 15px;font-size: 16px;color: #999;}
@@ -18,10 +18,10 @@
 .classification>li{display: inline-block;margin: 10px;width: 15%;}
 .screeningConditions>li,.screeningConditions>li label{display: inline-block;}
 .submitCourse{margin: 50px;text-align: center;}
-/*批量首页推荐*/
+/*鎵归噺棣栭〉鎺ㄨ崘*/
 .recommendationNum{width: 20px;height: 18px;}
-/*弹出框*/
-.popupContainer{display: none;z-index: 100;position: fixed;left: 50%;top: 50%;width: 800px;margin-left: -400px;margin-top: -250px;background: #fff;height: 500px;}
+/*寮瑰嚭妗*/
+.popupContainer{overflow-y:auto;display: none;z-index: 100;position: fixed;left: 50%;top: 50%;width: 800px;margin-left: -400px;margin-top: -250px;background: #fff;height: 500px;}
 .popupOpacity{display: none;position: fixed;left: 0;top: 0;height: 100%;width: 100%;background: rgba(0,0,0,.6);}
 .closePopupContainer{position: absolute;right: -10px;top: -10px;display: inline-block;height: 20px;width: 20px;color: #fff;
 border-radius: 10px;background: #1a91a3;text-align: center;line-height: 16px;font-size: 18px;font-weight: bold;cursor: pointer;}

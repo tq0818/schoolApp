@@ -197,62 +197,13 @@
         </div>
     </div>
     </div>
-    <div class="u-wrap classes">
-        <div class="mainbackground nopadding">
+    <div class="aaaaaaaa">
+        <div class="bbbbbbbb">
 			<div id="ShelvesCourseDetailList">
 			
 			</div>
         </div>
-<<<<<<< HEAD
-=======
-        <div class="user-list">
-            <table class="table table-center" id="tableList">
-                <tbody>
-                    <tr data-buy="true">
-                        <th width="1%"><input type="checkbox" class="checkboxAll"></th>
-                        <th width="5%">课程图片</th>
-                        <th width="5%">课程名称</th>
-                        <th width="10%">学段</th>
-                        <th width="5%">学科</th>
-                        <th width="10%">知识点专题</th>
-                        <th width="10%">知识点</th>
-                        <th width="5%">阶段</th>
-                        <th width="8%">类型</th>
-                        <th width="6%">上架时间</th>
-                        <th width="6%">直播时间</th>
-                        <th width="3%">学习人数</th>
-                        <th width="3%">价格</th>
-                        <th width="3%">实际价格</th>
-                        <th width="20%">操作</th>
-                    </tr>
-                    <tr data-buy="false">
-                        <td><input type="checkbox" class="signUpMany" uname="sdsdsd" value=""></td>
-                        <td><img src="/images/1.jpg" alt="" class="shelvesIcon"></td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2017-11-14</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>
-                            <span><a href="javascript:;" class="btn btn-primary btn-sm">下架</a></span>
-                            <span><a href="/appNewClasses/homeRecommendation" class="btn btn-primary btn-sm">推荐</a></span>
-                            <span><a href="##" class="btn btn-primary btn-sm eidtShelvesCourses">编辑</a></span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="pages pagination"></div>
-        </div><input type="hidden" id="rowCount" value="68266"><input type="hidden" id="pageNo" value="1"><input type="hidden" id="maxCount" value="999999999">
->>>>>>> branch 'feature_app' of http://git.winshare-edu.com:80/winshare/winshare-yuxin-school.git
-    </div>
+	</div>
 
     <%--弹出框--%>
     <div class="popupContainer">

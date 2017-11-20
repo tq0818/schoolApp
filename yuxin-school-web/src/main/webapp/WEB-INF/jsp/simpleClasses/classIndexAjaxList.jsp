@@ -106,7 +106,7 @@
 						</c:if>
 						<c:if test="${allCommdotity.isShelves == '' or allCommdotity.isShelves == 0}">
 							<%--<a href="javascript:Form.classTypeOnsale('${allCommdotity.appId}_${allCommdotity.id}');" class="btn btn-sm btn-default upSale">上架</a>--%>
-							<a href="##" class="btn btn-sm btn-default upSale eidtShelvesCourses">上架</a>
+							<a href="javascript:toOnsaleEdit('${allCommdotity.appId}_${allCommdotity.id}');" class="btn btn-sm btn-default upSale eidtShelvesCourses">上架</a>
 							<a href="javascript:Form.editClassType(${allCommdotity.id });" class="btn btn-sm btn-primary">管理</a>
 						</c:if>
 						<c:if test="${allCommdotity.publishStatus=='CLASS_UNPUBLISHED'}">
@@ -139,190 +139,11 @@
 <%--弹出框--%>
 <div class="popupContainer">
 	<span class="closePopupContainer">x</span>
-	
-	
-	
-	<!-- 二级导航 -->
-    <div class="u-wrap classes">
-        <div class="informationEditHeader">
-            <div class="informationEditImg">
-                <img src="/images/1.jpg" alt="">
-                <div class="informationEditChoose">
-                    <a href="##" ><input type="file">选择图片</a>
-                </div>
-            </div>
-            <div class="informationEditDetail">
-                <ul>
-                    <li>
-                        <label>课程名称:</label>
-                        <span>
-                             <c:choose>
-                                 <c:when test="${fn:length(searchAndResult.name)>15}">
-                                     ${fn:substring(searchAndResult.name, 0, 15)}...
-                                 </c:when>
-                                 <c:otherwise>
-                                     ${searchAndResult.name }
-                                 </c:otherwise>
-                             </c:choose>
-                        </span>
-                    </li>
-                    <li>
-                        <label>教师:</label>
-                        <span>${searchAndResult.teacherName}</span>
-                    </li>
-                    <li>
-                        <label>学校:</label>
-                        <span>${searchAndResult.schoolName}</span>
-                    </li>
-                    <c:if test="${searchAndResult.liveFlag eq 1}">
-                        <li>
-                            <label>时长:</label>
-                            <span>${searchAndResult.lessonDate} ${searchAndResult.lessonTimeStart}~${searchAndResult.lessonDate} ${searchAndResult.lessonTimeEnd}</span>
-                        </li>
-                    </c:if>
-                    <c:if test="${searchAndResult.liveFlag ne 1}">
-                        <li>
-                            <label>时长:</label>
-                            <span>${searchAndResult.lessonDate}</span>
-                        </li>
-                    </c:if>
-                    <li>
-                        <label>学习人数:</label>
-                        <span>${searchAndResult.actualNum}人学习</span>
-                    </li>
-                </ul>
-                <a href="##" class="courseDetail btn btn-default" onclick="queryClassDetails(${searchAndResult.id});">课程详情</a>
-            </div>
-        </div>
-        <div>
-            <ul class="classification">
-                <li>
-                    <label>课程分类</label>
-                    <ul class="courseList">
-                        <li>
-                           <select id="courseCaId" onchange="chooseSlibMenu($(this));">
-                               <c:forEach var="menu" items="${firstMenus}">
-                                   <option value="${menu.id}">${menu.name}</option>
-                               </c:forEach>
-                           </select>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <label>学段</label>
-                    <ul class="courseList">
-                        <select id="gradeId" onchange="chooseSlibMenu($(this));">
-                            <c:forEach var="menu" items="${secondeMenus}" varStatus="status">
-                                <option value="${menu.id}">${menu.name}</option>
-                            </c:forEach>
-                        </select>
-                    </ul>
-                </li>
-                <li>
-                    <label>学科</label>
-                    <ul class="courseList">
-                        <li>
-                            <select id="subjectId" onchange="chooseSlibMenu($(this));">
-                                <c:forEach var="menu" items="${thirdMenus}">
-                                    <option value="${menu.id}">${menu.name}</option>
-                                </c:forEach>
-                            </select>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <label>知识点专题</label>
-                    <ul class="courseList">
-                        <li>
-                            <select id="kwonProId" onchange="chooseSlibMenu($(this));">
-                                <c:forEach var="menu" items="${forthMenus}">
-                                    <option value="${menu.id}">${menu.name}</option>
-                                </c:forEach>
-                            </select>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <label>知识点</label>
-                    <ul class="courseList">
-                        <li>
-                            <select id="knowId" onchange="chooseSlibMenu($(this));">
-                                <c:forEach var="menu" items="${fifthMenus}">
-                                    <option value="${menu.id}">${menu.name}</option>
-                                </c:forEach>
-                            </select>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <label>阶段</label>
-                    <ul class="courseList">
-                        <li>
-                            <select id="stageId">
-                                <c:forEach var="menu" items="${jieduanMenus}">
-                                    <option value="${menu.id}">${menu.name}</option>
-                                </c:forEach>
-                            </select>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <label>类型</label>
-                    <ul class="courseList">
-                        <li>
-                            <select id="typeId">
-                                <c:forEach var="menu" items="${leixingMenus}">
-                                    <option value="${menu.id}">${menu.name}</option>
-                                </c:forEach>
-                            </select>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <div>
-            <ul class="screeningConditions">
-                <li>
-                    <label>价格：</label><input type="text" value="${searchAndResult.originalPrice}">
-                </li>
-                <li>
-                    <label>实际价格：</label><input type="text" value="${searchAndResult.realPrice}">
-                </li>
-                <c:if test="${searchAndResult.liveFlag == '1'}">
-                    <li>
-                        <label>直播开始时间：</label><input type="text" value="${searchAndResult.lessonDate} ${searchAndResult.lessonTimeStart}:00" disabled="disabled">
-                    </li>
-                </c:if>
-                <li>
-                    <label>课程标签：</label><input type="text" id="labDesc">
-                </li>
-            </ul>
-        </div>
-        <div class="submitCourse">
-            <button class="btn btn-success" onclick="toShelves('1');">立即上架</button>
-            <button class="btn btn-warning" onclick="toShelves('0');">预约上架</button>
-            <input type="text" placeholder="指定上架时间" id="shelvesTime">
+	<div class="aaaaaaaa">
+        <div id="bbbbbbbb">
+        
         </div>
     </div>
-        <c:if test="${searchAndResult.liveFlag==1 }">
-            <input id="lab" name="lab" value="live" type="hidden"/>
-        </c:if>
-        <c:if test="${searchAndResult.videoFlag==1 }">
-            <input id="lab" name="lab" value="video" type="hidden"/>
-        </c:if>
-        <c:if test="${searchAndResult.faceFlag==1 }">
-            <input id="lab" name="lab" value="face" type="hidden"/>
-        </c:if>
-        <c:if test="${searchAndResult.liveFlag==0&&searchAndResult.videoFlag==0&&allCommdotity.faceFlag==0 }">
-            <input id="lab" name="lab" value="remote" type="hidden"/>
-        </c:if>
-        <div id="shelvesInfo">
-            <input name="id" type="hidden" id="commodityId" value="${searchAndResult.id}"/>
-            <input name="appId" type="hidden" id="appId" value="${searchAndResult.appId}"/>
-        </div>
-    <form method="post" id="myForm">
-	
-	
 </div>
 <div class="popupOpacity"></div>
 
@@ -503,4 +324,5 @@
 		});
 	});
 </script>
+<script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/informationEditing.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/javascripts/class/editClass/validatePrivilige.js"></script>

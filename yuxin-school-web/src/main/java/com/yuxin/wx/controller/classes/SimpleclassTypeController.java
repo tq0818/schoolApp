@@ -242,6 +242,8 @@ public class SimpleclassTypeController {
 	public String showAppShelvesEdit(HttpServletRequest request,Model model){
 		String ids = request.getParameter("ids");
 		String zhiboFlag = request.getParameter("zhiboFlag");
+//		String zhiboFlag = "1";
+		
 		if(null!=ids && ids.split("_").length>0){
 			List<SysDictApp> firstMenus = null;
 			String [] idsStr = ids.split("_");
