@@ -50,6 +50,9 @@
 </div>
 <div class="loading-bg lp-units-loading-bg" style="display:none"></div>
 <!--  ajax加载中div结束 -->
+
+
+
 <script type="text/javascript" src="<%=rootPath %>/javascripts/system/newsManage.js"></script>
 </body>
 </html>
