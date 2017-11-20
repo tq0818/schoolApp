@@ -691,8 +691,103 @@
 				// 	return;
 				// }
 				$("#myForm").attr("action",rootPath+"/simpleClasses/addClassType").submit();
-			}
-			
+			},
+			showAllShelvesClssType : function(id,typeStr){
+				var allHtml = '<a href="javascript:Form.showAllShelvesClssType(\'all\',\'allToAll\');" data-code="all" class="btn btn-mini btn-default btn-success">全部</a>';
+				if("courseCaId"==typeStr && 'all'==id){
+					$("#gradeId").html(allHtml.replace("allToAll","gradeId"));
+					$("#subjectId").html(allHtml.replace("allToAll","subjectId"));
+					$("#kwonProId").html(allHtml.replace("allToAll","kwonProId"));
+					$("#knowId").html(allHtml.replace("allToAll","kwonId"));
+					$("#stageId").html(allHtml.replace("allToAll","stageId"))
+					$("#typeId").html(allHtml.replace("allToAll","stageId"));
+					//查询课程信息
+					return;
+				}else if("gradeId"==typeStr  && 'all'==id){
+					$("#subjectId").html(allHtml.replace("allToAll","subjectId"));
+					$("#kwonProId").html(allHtml.replace("allToAll","kwonProId"));
+					$("#knowId").html(allHtml.replace("allToAll","kwonId"));
+					//查询课程信息
+					return;
+				}else if("subjectId"==typeStr  && 'all'==id){
+					$("#kwonProId").html(allHtml.replace("allToAll","kwonProId"));
+					$("#knowId").html(allHtml.replace("allToAll","kwonId"));
+					//查询课程信息
+					return;
+				}else if("kwonProId"==typeStr  && 'all'==id){
+					$("#knowId").html(allHtml.replace("allToAll","knowId"));
+					//查询课程信息
+					return;
+				}
+				$.ajax({
+					url : "/simpleClasses/querySlibMenu",
+					type : "post",
+					data : {"parentId":id,"typeId":typeStr},
+					success : function(result) {
+
+						var data = result.comm;
+						var stages = result.stages;
+						var types = result.types;
+						var html='';
+						if("courseCaId"==typeStr){
+							//更新学段
+							html +=allHtml.replace("allToAll","gradeId");
+							for(var i=0;i<data.length;i++){
+								html +='<a href="javascript:Form.showAllShelvesClssType(\''+data[i].id+'\',\'gradeId\');" data-code="all" class="btn btn-mini btn-default">'+data[i].name+'</a>';
+							}
+							$("#gradeId").html(html);
+							$("#subjectId").html(allHtml.replace("allToAll","subjectId"));
+							$("#kwonProId").html(allHtml.replace("allToAll","kwonProId"));
+							$("#kwonId").html(allHtml.replace("allToAll","kwonId"));
+
+							//更新阶段和类型
+							html='';
+							html +=allHtml.replace("allToAll","stageId");
+							for(var i=0;i<stages.length;i++){
+								html +='<a href="javascript:Form.showAllShelvesClssType(\''+stages[i].id+'\',\'stageId\');" data-code="all" class="btn btn-mini btn-default">'+stages[i].name+'</a>';
+							}
+							$("#stageId").html(html);
+							html='';
+							html +=allHtml.replace("allToAll","typeId");
+							for(var i=0;i<types.length;i++){
+								html +='<a href="javascript:Form.showAllShelvesClssType(\''+types[i].id+'\',\'typeId\');" data-code="all" class="btn btn-mini btn-default">'+types[i].name+'</a>';
+							}
+							$("#typeId").html(html);
+						}else if("gradeId"==typeStr){
+							//跟新科目
+							html +=allHtml.replace("allToAll","subjectId");
+							for(var i=0;i<data.length;i++){
+								html +='<a href="javascript:Form.showAllShelvesClssType(\''+data[i].id+'\',\'subjectId\');" data-code="all" class="btn btn-mini btn-default">'+data[i].name+'</a>';
+							}
+							$("#subjectId").html(html);
+							$("#kwonProId").html(allHtml.replace("allToAll","kwonProId"));
+							$("#kwonId").html(allHtml.replace("allToAll","kwonId"));
+						}else if("subjectId"==typeStr){
+							//更新知识点专题
+							html +=allHtml.replace("allToAll","kwonProId");
+							for(var i=0;i<data.length;i++){
+								html +='<a href="javascript:Form.showAllShelvesClssType(\''+data[i].id+'\',\'kwonProId\');" data-code="all" class="btn btn-mini btn-default">'+data[i].name+'</a>';
+							}
+							$("#kwonProId").html(html);
+							$("#kwonId").html(allHtml.replace("allToAll","kwonId"));
+						}else if("kwonProId"==typeStr){
+							//更新知识点
+							html +=allHtml.replace("allToAll","knowId");
+							for(var i=0;i<data.length;i++){
+								html +='<a href="javascript:Form.showAllShelvesClssType(\''+data[i].id+'\',\'knowId\');" data-code="all" class="btn btn-mini btn-default">'+data[i].name+'</a>';
+							}
+							$("#knowId").html(html);
+						}
+
+						//查询课程信息
+					}
+				});
+
+
+
+
+
+			},
 		}
 	$(document).ready(function(){		
 		Form.init();

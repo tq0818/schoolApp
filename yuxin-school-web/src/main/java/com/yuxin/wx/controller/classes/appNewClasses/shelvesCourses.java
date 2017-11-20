@@ -2,7 +2,9 @@ package com.yuxin.wx.controller.classes.appNewClasses;
 
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,46 +31,12 @@ public class  shelvesCourses {
      * @return
      */
     @RequestMapping(value="/shelvesCourses",method=RequestMethod.GET)
-    public String gotoShelvesCourses(Model model,HttpServletRequest request,Integer id){
-    	/*List<SysDictApp> firstList = new ArrayList<SysDictApp>();
-    	List<SysDictApp> secondList = new ArrayList<SysDictApp>();
-    	List<SysDictApp> thirdList = new ArrayList<SysDictApp>();
-    	List<SysDictApp> fourthList = new ArrayList<SysDictApp>();
-//		Integer id = (Integer) request.getAttribute("id");
-		
-    	List<SysDictApp> list = sysDictAppServiceImpl.findSysDictAppByParentId(0);
-    	for (SysDictApp sysDictApp : list) {
-    		if (sysDictApp.getLevel() == 1) {
-				firstList.add(sysDictApp);
-    		}
-		}
-    	List<SysDictApp> list2 = sysDictAppServiceImpl.findSysDictAppByParentId(id);
-    	
-		for (SysDictApp sysDictApp : list2) {
-			if (sysDictApp.getLevel() == 1) {
-				firstList.add(sysDictApp);
-			} else if (sysDictApp.getLevel() == 2) {
-				secondList.add(sysDictApp);
-			} else if (sysDictApp.getLevel() == 3) {
-				thirdList.add(sysDictApp);
-			} else if (sysDictApp.getLevel() == 4) {
-//				sysDictApp.setListName(sysDictApp.getListCode());
-				fourthList.add(sysDictApp);
-//				System.out.println(re.getItemName());
-			}
-//			for (SysConfigItem na : names) {
-//				if (re.getItemCode().equals(na.getItemCode())) {
-//					re.setItemName(na.getItemName());
-//					System.out.println(re.getItemName());
-//					break;
-//				}
-//			}
-		}
-		model.addAttribute("firstList", firstList);
-		model.addAttribute("secondList", secondList);
-		model.addAttribute("thirdList", thirdList);
-		model.addAttribute("fourthList", fourthList);*/
-    	
+    public String gotoShelvesCourses(Model model,HttpServletRequest request){
+        //获取一级菜单
+        Map<String,List<SysDictApp>> linked = new LinkedHashMap<String,List<SysDictApp>>();
+        SysDictApp search = new SysDictApp();
+        List<SysDictApp> slibMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
+        model.addAttribute("firstMenus",slibMenus);
         return "simpleClasses/appNewClasses/shelvesCourses";
     }
     /**
