@@ -30,7 +30,6 @@
 </head>
 <body style="position:relative;">
 <!-- 二级导航 -->
-<jsp:include page="/WEB-INF/jsp/menu/menu_class.jsp"></jsp:include>
     <div class="u-wrap classes">
         <div class="informationEditHeader">
             <div class="informationEditImg">
@@ -211,8 +210,7 @@
     <form method="post" id="myForm">
 
     </form>
-
-<script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/classIndex.js"></script>
+<script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/informationEditing.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/plus/jquery.cookie.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/popupwin.js"></script>

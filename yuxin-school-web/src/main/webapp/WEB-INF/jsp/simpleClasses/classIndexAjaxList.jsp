@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <% String rootPath=request.getContextPath(); %>
+
 <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
 
 <form method="post" id="myForm">
@@ -105,7 +106,7 @@
 						</c:if>
 						<c:if test="${allCommdotity.isShelves == '' or allCommdotity.isShelves == 0}">
 							<%--<a href="javascript:Form.classTypeOnsale('${allCommdotity.appId}_${allCommdotity.id}');" class="btn btn-sm btn-default upSale">上架</a>--%>
-							<a href="javascript:toOnsaleEdit('${allCommdotity.appId}_${allCommdotity.id}','${allCommdotity.liveFlag}');" class="btn btn-sm btn-default upSale">上架</a>
+							<a href="javascript:toOnsaleEdit('${allCommdotity.appId}_${allCommdotity.id}');" class="btn btn-sm btn-default upSale eidtShelvesCourses">上架</a>
 							<a href="javascript:Form.editClassType(${allCommdotity.id });" class="btn btn-sm btn-primary">管理</a>
 						</c:if>
 						<c:if test="${allCommdotity.publishStatus=='CLASS_UNPUBLISHED'}">
@@ -135,6 +136,30 @@
 </div>
 <input type="hidden" id="itemOneId" name="itemOneId" value="${itemOneId }"/>
 <input type="hidden" id="searchName" value="${searchName }"/>
+<%--弹出框--%>
+<div class="popupContainer">
+	<span class="closePopupContainer">x</span>
+	<div class="aaaaaaaa">
+        <div id="bbbbbbbb">
+        
+        </div>
+    </div>
+</div>
+<div class="popupOpacity"></div>
+
+<script>
+    //关闭弹窗
+    $('.closePopupContainer').click(function () {
+        $('.popupContainer').hide();
+        $('.popupOpacity').hide();
+    });
+    //点击上架打开弹窗
+    $('.eidtShelvesCourses').click(function () {
+        $('.popupContainer').show();
+        $('.popupOpacity').show();
+    });
+</script>
+
 <script type="text/javascript">
 	var orderCount = ${orderCount};
 	function resizeLayout(){
@@ -299,4 +324,5 @@
 		});
 	});
 </script>
+<script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/informationEditing.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/javascripts/class/editClass/validatePrivilige.js"></script>
