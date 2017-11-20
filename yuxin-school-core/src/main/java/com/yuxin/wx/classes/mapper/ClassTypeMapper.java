@@ -124,4 +124,10 @@ public interface ClassTypeMapper extends BaseMapper<ClassType> {
 	int countSubjectClassOrder(String itemOenId);
 
     List<ClassType> findClassByItemRelation(Map<String, Object> map);
+
+	List<ClassTypeVo> querySingleLiveClassTypeInfo(Map<Object, Object> map);
+
+	List<ClassTypeVo> querySingleOtherClassTypeInfo(Map<Object, Object> map);
+
+	void insertAppShelvesInfo(ClassTypeVo cto);
 }

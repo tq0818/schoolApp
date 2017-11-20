@@ -9,5 +9,7 @@ import com.yuxin.wx.model.classes.ClassType;
 
 
 public interface SysDictAppMapper extends BaseMapper<SysDictApp>{
-	List<SysDictApp> findSysDictAppByParentId(Integer id);
+	List<SysDictApp> findSysDictAppByParentId(SysDictApp sda);
+
+	/*List<SysDictApp> findSysDictAppFirst();*/
 }

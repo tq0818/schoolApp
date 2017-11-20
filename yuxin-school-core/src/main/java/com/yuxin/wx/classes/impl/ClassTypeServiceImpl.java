@@ -1,12 +1,8 @@
 package com.yuxin.wx.classes.impl;
 
-import java.util.ArrayList;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -332,22 +328,33 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 	
 			for(ClassTypeVo comm:data)
 			{
-			Integer videoFlag=comm.getVideoFlag();
-			Integer liveFlag=comm.getLiveFlag();
-			Integer faceFlag=comm.getFaceFlag();
-			Integer remoteFlag=comm.getRemoteFlag();
-			if(videoFlag==null){
-				comm.setVideoFlag(0);
-			}
-			if(liveFlag==null){
-				comm.setLiveFlag(0);
-			}
-			if(faceFlag==null){
-				comm.setFaceFlag(0);
-			}
-			if(remoteFlag==null){
-				comm.setRemoteFlag(0);
-			}
+				Integer videoFlag=comm.getVideoFlag();
+				Integer liveFlag=comm.getLiveFlag();
+				Integer faceFlag=comm.getFaceFlag();
+				Integer remoteFlag=comm.getRemoteFlag();
+				if(videoFlag==null){
+					comm.setVideoFlag(0);
+				}
+				if(liveFlag==null){
+					comm.setLiveFlag(0);
+				}
+				if(faceFlag==null){
+					comm.setFaceFlag(0);
+				}
+				if(remoteFlag==null){
+					comm.setRemoteFlag(0);
+				}
+
+				if(null!=comm.getAppPrice()){
+					comm.setOriginalPrice(comm.getAppPrice());
+				}
+
+				if(null!=comm.getSalePrice()){
+					comm.setRealPrice(comm.getSalePrice());
+				}
+				if(null!=comm.getImgUrl()){
+					comm.setCover(comm.getImgUrl());
+				}
 		}
 		int rowCount=classTypeMapper.queryCounts(map);
 		PageFinder<ClassTypeVo> pageFinder=new PageFinder<ClassTypeVo>(search.getPage(), search.getPageSize(), rowCount, data);
@@ -508,4 +515,65 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 		int count = classTypeMapper.countSubjectClassOrder(itemOneCode);
 		return count;
 	}
+
+	@Override
+	public ClassTypeVo querySingOtherClassTypeInfo(ClassTypeVo search) {
+		Map<Object,Object>map = new HashMap<Object,Object>();
+		map.put("classType",search);
+		List<ClassTypeVo> classTypes = classTypeMapper.querySingleOtherClassTypeInfo(map);
+		if(null!=classTypes && classTypes.size()>0){
+			return classTypes.get(0);
+		}
+		return null;
+	}
+
+	@Override
+	public void insertAppShelvesInfo(ClassTypeVo cto) {
+		classTypeMapper.insertAppShelvesInfo(cto);
+	}
+
+	@Override
+	public ClassTypeVo querySingleLiveClassTypeInfo(ClassTypeVo search) {
+		Map<Object,Object>map = new HashMap<Object,Object>();
+		map.put("classType",search);
+		List<ClassTypeVo> classTypes = classTypeMapper.querySingleLiveClassTypeInfo(map);
+		if(null!=classTypes && classTypes.size()>0){
+			for(ClassTypeVo ctv : classTypes){
+				String lessonStartTime = ctv.getLessonDate()+" "+ctv.getLessonTimeStart()+":00";
+				String lessonEndTime = ctv.getLessonDate()+" "+ctv.getLessonTimeEnd()+":00";
+				Date lessonStartDate =this.getDate(lessonStartTime);
+				Date lessonSEndDate = this.getDate(lessonEndTime);
+				if(lessonStartDate.getTime()>new Date().getTime()){
+					ctv.setLessonLength(String.valueOf((lessonSEndDate.getTime()-lessonStartDate.getTime())/(1000*60)));
+					return ctv;
+				}
+
+			}
+			ClassTypeVo ctOne = classTypes.get(0);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:MM:SS");
+			Date lessonStartDate =this.getDate(ctOne.getLessonDate()+" "+ctOne.getLessonTimeStart()+":00");
+			Date lessonSEndDate = this.getDate(ctOne.getLessonDate()+" "+ctOne.getLessonTimeEnd()+":00");
+			ctOne.setLessonLength(String.valueOf((lessonSEndDate.getTime()-lessonStartDate.getTime())/(1000*60)));
+
+			return ctOne;
+		}
+		return null;
+	}
+
+	/**
+	 * 将字符串转换为Date类型数据
+	 * @param dateStr
+	 * @return
+     */
+	public Date getDate(String dateStr){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:MM:SS");
+		try {
+			return sdf.parse(dateStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
+
+

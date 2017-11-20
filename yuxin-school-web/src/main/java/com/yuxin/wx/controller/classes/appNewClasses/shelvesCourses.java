@@ -30,7 +30,7 @@ public class  shelvesCourses {
      */
     @RequestMapping(value="/shelvesCourses",method=RequestMethod.GET)
     public String gotoShelvesCourses(Model model,HttpServletRequest request,Integer id){
-    	List<SysDictApp> firstList = new ArrayList<SysDictApp>();
+    	/*List<SysDictApp> firstList = new ArrayList<SysDictApp>();
     	List<SysDictApp> secondList = new ArrayList<SysDictApp>();
     	List<SysDictApp> thirdList = new ArrayList<SysDictApp>();
     	List<SysDictApp> fourthList = new ArrayList<SysDictApp>();
@@ -67,7 +67,7 @@ public class  shelvesCourses {
 		model.addAttribute("firstList", firstList);
 		model.addAttribute("secondList", secondList);
 		model.addAttribute("thirdList", thirdList);
-		model.addAttribute("fourthList", fourthList);
+		model.addAttribute("fourthList", fourthList);*/
     	
         return "simpleClasses/appNewClasses/shelvesCourses";
     }
@@ -99,6 +99,14 @@ public class  shelvesCourses {
     public String gotorecommendSpecialList(){
         return "simpleClasses/appNewClasses/recommendSpecialList";
     }
+
+	/**
+	 * 跳转到首页推荐
+	 */
+	@RequestMapping(value="/homeRecommendation")
+	public String gotohomeRecommendation(){
+		return "simpleClasses/appNewClasses/homeRecommendation";
+	}
 
 
 

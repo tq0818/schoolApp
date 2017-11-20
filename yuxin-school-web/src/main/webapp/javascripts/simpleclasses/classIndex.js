@@ -574,6 +574,12 @@
 					type : "post",
 					data : {"id":id,"publishStatus":'CLASS_ON_SALE'},
 					success : function(result) {
+						var idds = id.split("_");
+						if(idds.length==1){
+							id=idds[0];
+						}else{
+							id=idds[1];
+						}
 						var st="";
 						$("#statusList").find("a").each(function(i){
 							if($(this).hasClass('btn-success')){
@@ -710,3 +716,137 @@
 	})
 	window.Form=Form;
 })(jQuery)
+
+
+function toOnsaleEdit(ids,liveFlag){
+	$("#myForm01").html("");
+	var input="<input type='hidden' value='"+ids+"' name='ids'/><input type='hidden' value='"+liveFlag+"' name='zhiboFlag'/>";
+	$("#myForm01").html(input);
+	$("#myForm01").attr("action",rootPath+"/simpleClasses/showAppShelvesEdit").submit();
+}
+
+function chooseSlibMenu(obj){
+	var id = obj.attr("id");
+	var parentId = obj.val();
+
+	$.ajax({
+		url : "/simpleClasses/querySlibMenu",
+		type : "post",
+		data : {"parentId":parentId,"typeId":id},
+		success : function(result) {
+
+			var data = result.comm;
+			var stages = result.stages;
+			var types = result.types;
+
+			if("courseCaId"==id){
+				$("#gradeId").html("");
+				var html='';
+				for(var i=0;i<data.length;i++){
+					if(i==0){
+						html+=' <option value="'+data[i].id+'" selected="selected">'+data[i].name+'</option>';
+					}else{
+						html+=' <option value="'+data[i].id+'">'+data[i].name+'</option>';
+					}
+				}
+				$("#gradeId").html(html);
+				chooseSlibMenu($("#gradeId"));
+
+				//阶段
+				$("#stageId").html("");
+				var html='';
+				for(var i=0;i<stages.length;i++){
+					if(i==0){
+						html+=' <option value="'+stages[i].id+'" selected="selected">'+stages[i].name+'</option>';
+					}else{
+						html+=' <option value="'+stages[i].id+'">'+stages[i].name+'</option>';
+					}
+				}
+				$("#stageId").html(html);
+
+				//类型
+				$("#typeId").html("");
+				var html='';
+				for(var i=0;i<types.length;i++){
+					if(i==0){
+						html+=' <option value="'+types[i].id+'" selected="selected">'+types[i].name+'</option>';
+					}else{
+						html+=' <option value="'+types[i].id+'">'+types[i].name+'</option>';
+					}
+				}
+				$("#typeId").html(html);
+
+
+			}else if("gradeId"==id){
+				$("#subjectId").html("");
+				var html='';
+				for(var i=0;i<data.length;i++){
+					if(i==0){
+						html+=' <option value="'+data[i].id+'" selected="selected">'+data[i].name+'</option>';
+					}else{
+						html+=' <option value="'+data[i].id+'">'+data[i].name+'</option>';
+					}
+				}
+				$("#subjectId").html(html);
+				chooseSlibMenu($("#subjectId"));
+			}else if("subjectId"==id){
+				$("#kwonProId").html("");
+				var html='';
+				for(var i=0;i<data.length;i++){
+					if(i==0){
+						html+=' <option value="'+data[i].id+'" selected="selected">'+data[i].name+'</option>';
+					}else{
+						html+=' <option value="'+data[i].id+'">'+data[i].name+'</option>';
+					}
+				}
+				$("#kwonProId").html(html);
+				chooseSlibMenu($("#kwonProId"));
+			}else if("kwonProId"==id){
+				$("#knowId").html("");
+				var html='';
+				for(var i=0;i<data.length;i++){
+					if(i==0){
+						html+=' <option value="'+data[i].id+'" selected="selected">'+data[i].name+'</option>';
+					}else{
+						html+=' <option value="'+data[i].id+'">'+data[i].name+'</option>';
+					}
+				}
+				$("#knowId").html(html);
+			}
+		}
+	});
+}
+
+function queryClassDetails(id){
+	$("#myForm").html("");
+	var input="<input type='hidden' value='"+id+"' name='id'/><input type='hidden' value='"+$("#lab").val()+"' name='lable'/>";
+	$("#myForm").html(input);
+	$("#myForm").attr("action","/editSimpleCourse/editClassTypeMessage").submit();
+}
+
+function toShelves(flag){
+	var courseCaId = $("#courseCaId").val();
+	var gradeId = $("#gradeId").val();
+	var subjectId = $("#subjectId").val();
+	var kwonProId = $("#kwonProId").val();
+	var knowId = $("#knowId").val();
+	var stageId = $("#stageId").val();
+	var typeId = $("#typeId").val();
+	var id = $("#commodityId").val();
+	var appId = $("#appId").val();
+	var shelvesTime = $("#shelvesTime").val();
+	var labDesc = $("#labDesc").val();
+
+	$.ajax({
+		url : "/simpleClasses/insertShelvesInfo",
+		type : "post",
+		data : {"id":id,"appId":appId,"courseCaId":courseCaId,"gradeId":gradeId,"subjectId":subjectId,"kwonProId":kwonProId,"knowId":knowId,"stageId":stageId,"typeId":typeId,"shelvesFlag":flag,"shelvesTime":shelvesTime,"labDesc":labDesc},
+		success : function(result) {
+			if("1"==result){
+				alert("成功")
+			}else{
+				alert("失败")
+			}
+		}
+	});
+}

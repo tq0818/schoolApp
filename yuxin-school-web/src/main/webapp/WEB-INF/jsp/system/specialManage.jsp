@@ -40,7 +40,7 @@
             </span> 
         </div>
         <div id="specialList">
-        
+
         </div>
     </div>
 </div>
