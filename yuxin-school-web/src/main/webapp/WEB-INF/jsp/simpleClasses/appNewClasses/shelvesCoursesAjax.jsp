@@ -44,21 +44,40 @@
             <c:forEach items="${courseList}" var="course" varStatus="status"> 
             <tr>
                 <td><input type="checkbox" class="signUpMany" uname="sdsdsd" value=""></td>
-                <td><img src="/images/1.jpg" alt="" class="shelvesIcon"></td>
-                <td>${course.name}</td>
-                <td>${course.gradeName}</td>
-                <td>${course.subjectName}</td>
-                <td>${course.knowledgeName}</td>
-                <td>${course.knowledgeProName}</td>
-                <td>${course.stageName}</td>
-                <c:if test="${course.typeCode=='CLASS_TYPE_NOMAL'}">
-                <td>普通</td>
-                </c:if>
-                <td><fmt:formatDate value="${course.shelvesTime}" pattern="yyyy-MM-dd" /></td>
-                <td><fmt:formatDate value="${course.reserveTime}" pattern="yyyy-MM-dd" />-${course.reserveHour}</td>
-                <td>${course.buyNum}</td>
-                <td>${course.salePrice}</td>
-                <td>${course.appprice}</td>
+                <c:choose>
+                	<c:when test="${course.imgUrl eq ''}">  
+                		<td><img src="${course.imgUrl}" alt="" class="shelvesIcon"></td>
+                 	</c:when>
+                 	<c:otherwise> 
+                		<td><img src="${course.cover}" alt="" class="shelvesIcon"></td>
+                	</c:otherwise>
+				</c:choose>
+                <td>${course.lessonName}</td>
+                <td>${course.itemSecondName}</td>
+                <td>${course.itemThirdName}</td>
+                <td>${course.itemFourthName}</td>
+                <td>${course.itemTag}</td>
+                <td>${course.tagName}</td>
+                <td>${course.typeCode}</td>
+                <td>${course.shelvesTime}</td>
+				<td>${course.lessonDate}${course.lessonTimeStart}</td>
+                <td>${course.actualNum}</td>
+                <c:choose>
+                	<c:when test="${course.appPrice eq ''}">  
+                		<td>${course.appPrice}</td>
+                 	</c:when>
+                 	<c:otherwise> 
+                		<td>${course.originalPrice}</td>
+                	</c:otherwise>
+				</c:choose>
+				<c:choose>
+                	<c:when test="${course.appPrice eq ''}">  
+                		<td>${course.salePrice}</td>
+                 	</c:when>
+                 	<c:otherwise> 
+                		<td>${course.realPrice}</td>
+                	</c:otherwise>
+				</c:choose>
                 <td>
                     <span><a href="javascript:;" class="btn btn-primary btn-sm">下架</a></span>
                     <span><a href="javascript:;" class="btn btn-primary btn-sm">推荐</a></span>

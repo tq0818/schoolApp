@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.yuxin.wx.api.app.IShelvesCourseService;
 import com.yuxin.wx.model.app.ShelvesCourse;
 import com.yuxin.wx.model.commodity.CommoditySpecial;
+import com.yuxin.wx.vo.classes.ClassTypeVo;
 @Controller
 @RequestMapping("/shelvesCourse")
 public class ShelvesCourseController {	
@@ -31,20 +32,27 @@ public class ShelvesCourseController {
 		try{
 			String pageNum = request.getParameter("pageNum");
 			String pageSize = request.getParameter("pageSize");
-			String categoryName = request.getParameter("categoryName");
-			String gradeName = request.getParameter("gradeName");
-			String subjectName = request.getParameter("subjectName");
-			String knowledgeName = request.getParameter("knowledgeName");
-			String knowledgeProName = request.getParameter("knowledgeProName");
-			String stageName = request.getParameter("stageName");
+			//课程分类
+			String categoryid = request.getParameter("categoryid");
+			//学段
+			String gradeid = request.getParameter("gradeid");
+			//学科
+			String subjectid = request.getParameter("subjectid");
+			//专题
+			String knowledgeid = request.getParameter("knowledgeid");
+			//知识点
+			String knowledgeProid = request.getParameter("knowledgeProid");
+			//阶段
+			String stageid = request.getParameter("stageid");
+			//类型
 			String typeCode = request.getParameter("typeCode");
-			List<ShelvesCourse> courseList = shelvesCourseService.queryShelvesCoursesByPage(
-					categoryName,
-					gradeName,
-					subjectName,
-					knowledgeName,
-					knowledgeProName,
-					stageName,
+			List<ClassTypeVo> courseList = shelvesCourseService.queryShelvesCoursesByPage(
+					categoryid,
+					gradeid,
+					subjectid,
+					knowledgeid,
+					knowledgeProid,
+					stageid,
 					typeCode
 					);
 			
