@@ -100,7 +100,7 @@
 							<a href="javascript:Form.deleteClassType(${allCommdotity.id });" class="btn btn-sm btn-default deleteGoods">删除</a>
 						</c:if>
 						<c:if test="${allCommdotity.isShelves == 1}">
-							<a href="javascript:Form.stopOnsale(${allCommdotity.appId });" class="btn btn-sm btn-default downGoods">下架</a>
+							<a href="javascript:Form.stopClassOnsale(${allCommdotity.appId });" class="btn btn-sm btn-default downGoods">下架</a>
 							<a href="javascript:Form.editClassType(${allCommdotity.id });" class="btn btn-sm btn-primary">管理</a>
 							<a href="<%=rootPath %>/classModuleLesson/classesResource/${allCommdotity.id }/none" target="_blank" class="btn btn-sm btn-primary">资料</a>
 						</c:if>
