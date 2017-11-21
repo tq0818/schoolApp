@@ -116,6 +116,7 @@ function queryClassDetails(id){
 	$("#myForm").attr("action","/editSimpleCourse/editClassTypeMessage").submit();
 }
 
+
 function toShelves(flag){
 	var courseCaId = $("#courseCaId").val();
 	var gradeId = $("#gradeId").val();
@@ -128,7 +129,7 @@ function toShelves(flag){
 	var appId = $("#appId").val();
 	var shelvesTime = $("#shelvesTime").val();
 	var labDesc = $("#labDesc").val();
-	if(""== $.trim(shelvesTime)){
+	if("0"==flag && ""== $.trim(shelvesTime) ){
 		alert("预约上架时间不能为空");
 		return;
 	}
@@ -140,6 +141,10 @@ function toShelves(flag){
 		success : function(result) {
 			if("1"==result){
 				alert("成功")
+				$('.popupContainer').hide();
+				$('.popupOpacity').hide();
+				Form.queryAllCommdityByItemNew(1);
+
 			}else{
 				alert("失败")
 			}
