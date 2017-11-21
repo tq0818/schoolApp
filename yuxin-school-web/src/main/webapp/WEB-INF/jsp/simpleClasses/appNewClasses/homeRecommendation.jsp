@@ -30,34 +30,67 @@
             <ul>
                 <li>
                     <label>课程名称:</label>
-                    <span>XXXXXXXX</span>
+                        <span>
+                             <c:choose>
+                                 <c:when test="${fn:length(searchAndResult.name)>15}">
+                                     ${fn:substring(searchAndResult.name, 0, 15)}...
+                                 </c:when>
+                                 <c:otherwise>
+                                     ${searchAndResult.name }
+                                 </c:otherwise>
+                             </c:choose>
+                        </span>
                 </li>
                 <li>
-                    <label>课程名称:</label>
-                    <span>XXXXXXXX</span>
+                    <label>教师:</label>
+                    <span>${searchAndResult.teacherName}</span>
                 </li>
                 <li>
-                    <label>课程名称:</label>
-                    <span>XXXXXXXX</span>
+                    <label>学校:</label>
+                    <span>${searchAndResult.schoolName}</span>
+                </li>
+                <c:if test="${searchAndResult.liveFlag eq 1}">
+                    <li>
+                        <label>时长:</label>
+                        <span>${searchAndResult.lessonDate} ${searchAndResult.lessonTimeStart}~${searchAndResult.lessonDate} ${searchAndResult.lessonTimeEnd}</span>
+                    </li>
+                </c:if>
+                <c:if test="${searchAndResult.liveFlag ne 1}">
+                    <li>
+                        <label>时长:</label>
+                        <span>${searchAndResult.lessonDate}</span>
+                    </li>
+                </c:if>
+                <li>
+                    <label>学习人数:</label>
+                    <span>${searchAndResult.actualNum}人学习</span>
                 </li>
             </ul>
-            <a href="##" class="courseDetail btn btn-default">课程详情</a>
+            <a href="##" class="courseDetail btn btn-default" onclick="queryClassDetails(${searchAndResult.id});">课程详情</a>
         </div>
     </div>
     <div>
         <div>
             <label for="">推荐位置</label>
-            <a href="##" class="btn btn-default">全部</a>
-            <a href="##" class="btn btn-default">直播</a>
-            <a href="##" class="btn btn-default">中考</a>
-            <a href="##" class="btn btn-default">高考</a>
-            <a href="##" class="btn btn-default">微课</a>
+            <a href="javascript:void(0)" class="btn btn-default">${firstMenu.name}</a>
         </div>
         <div class="recommendationSection">
             <label for="">推荐学段</label>
-            <a href="##" class="btn btn-default active">全部</a>
-            <a href="##" class="btn btn-default">数学</a>
-            <a href="##" class="btn btn-default">语文</a>
+            <div id="gradeList">
+                <a href="javascript:void(0)" class="btn btn-default active">全部</a>
+                <a href="javascript:void(0)" class="btn btn-default">一年级</a>
+                <a href="javascript:void(0)" class="btn btn-default">二年级</a>
+                <a href="javascript:void(0)" class="btn btn-default">三年级</a>
+                <a href="javascript:void(0)" class="btn btn-default">四年级</a>
+                <a href="javascript:void(0)" class="btn btn-default">五年级</a>
+                <a href="javascript:void(0)" class="btn btn-default">六年级</a>
+                <a href="javascript:void(0)" class="btn btn-default">初一</a>
+                <a href="javascript:void(0)" class="btn btn-default">初二</a>
+                <a href="javascript:void(0)" class="btn btn-default">初三</a>
+                <a href="javascript:void(0)" class="btn btn-default">高一</a>
+                <a href="javascript:void(0)" class="btn btn-default">高二</a>
+                <a href="javascript:void(0)" class="btn btn-default">高三</a>
+            </div>
         </div>
         <div>
             <label for="">推荐顺序</label>
