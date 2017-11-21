@@ -8,6 +8,7 @@ import com.yuxin.wx.model.classes.ClassType;
 import com.yuxin.wx.model.commodity.Commodity;
 import com.yuxin.wx.vo.classes.ClassPackageConditionVo;
 import com.yuxin.wx.vo.classes.ClassTypeVo;
+import com.yuxin.wx.vo.classes.FirstRecommend;
 import com.yuxin.wx.vo.company.MemberLevelAndClassTypeVo;
 /**
  * Service Interface:ClassType
@@ -463,4 +464,10 @@ public interface IClassTypeService  {
 	 * @param cto
      */
 	void insertAppShelvesInfo(ClassTypeVo cto);
+
+	/**
+	 * 插入首页推荐信息
+	 * @param frs
+     */
+	void insertFirstRecommond(List<FirstRecommend> frs);
 }

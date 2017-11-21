@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.yuxin.wx.vo.classes.FirstRecommend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;import com.yuxin.wx.common.BaseServiceImpl;
@@ -537,6 +538,11 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 	@Override
 	public void insertAppShelvesInfo(ClassTypeVo cto) {
 		classTypeMapper.insertAppShelvesInfo(cto);
+	}
+
+	@Override
+	public void insertFirstRecommond(List<FirstRecommend> frs) {
+		classTypeMapper.insertFirstRecommond(frs);
 	}
 
 	@Override

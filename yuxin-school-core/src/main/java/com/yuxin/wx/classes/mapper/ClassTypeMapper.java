@@ -8,6 +8,7 @@ import com.yuxin.wx.model.classes.ClassType;
 import com.yuxin.wx.model.commodity.Commodity;
 import com.yuxin.wx.vo.classes.ClassPackageConditionVo;
 import com.yuxin.wx.vo.classes.ClassTypeVo;
+import com.yuxin.wx.vo.classes.FirstRecommend;
 import com.yuxin.wx.vo.company.MemberLevelAndClassTypeVo;
 import com.yuxin.wx.common.BaseMapper;
 import com.yuxin.wx.common.PageFinder;
@@ -130,4 +131,10 @@ public interface ClassTypeMapper extends BaseMapper<ClassType> {
 	List<ClassTypeVo> querySingleOtherClassTypeInfo(Map<Object, Object> map);
 
 	void insertAppShelvesInfo(ClassTypeVo cto);
+
+	/**
+	 * 批量插入首页推荐数据
+	 * @param frs
+     */
+	void insertFirstRecommond(List<FirstRecommend> frs);
 }

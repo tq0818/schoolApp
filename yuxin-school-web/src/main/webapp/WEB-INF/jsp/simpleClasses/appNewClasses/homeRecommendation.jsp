@@ -132,16 +132,17 @@
 
 function saveRecommond(){
     var ids = "";
+    var appId="1";
     $("#gradeList").find("a").each(function(){
         if($(this).hasClass("active")){
-            ids+=$(this).attr("id");
+            ids+=$(this).attr("id")+",";
         }
     });
     if(""==ids){
         alert("请选择推荐学段");
         return;
     }
-    var sort=("#sort").val();
+    var sort=$("#sort").val();
     if(sort){
         //判断是否填写数字
         var reg = new RegExp("^[0-9]*$");
@@ -151,9 +152,9 @@ function saveRecommond(){
         return;
     }
     $.ajax({
-        url : rootPath +"/simpleClasses/insertShelvesInfo",
+        url : rootPath +"/appNewClasses/insertRcommondInfo",
         type : "post",
-        data : {"ids":ids,"sort":sort},
+        data : {"ids":ids,"sort":sort,"appId":appId},
         success : function(result) {
             if("1"==result){
                 alert("推荐成功")
