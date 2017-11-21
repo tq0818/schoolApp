@@ -70,7 +70,7 @@ $(function(){
 					<li code="course_package"><a href="<%=rootPath %>/appNewClasses/shelvesCourses" >已上架课程</a></li>
 				<%--</shiro:hasPermission>--%>
 					<%--<shiro:hasPermission name="">--%>
-				<li code="course_package"><a href="<%=rootPath %>/appNewClasses/recommendedList" >首页推荐专题列表</a></li>
+				<li code="course_package"><a href="<%=rootPath %>/specialModel/getModelList" >首页推荐专题列表</a></li>
 					<%--</shiro:hasPermission>--%>
 	        </ul>
         	</c:otherwise>

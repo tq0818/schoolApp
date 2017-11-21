@@ -431,4 +431,25 @@
 		<if test="itemFourthCode != null and itemFourthCode != ''">and item_fourth_code =#{itemFourthCode}</if>
 		ORDER  BY cerate_time
 	</select>
+
+	<select id="getModelList" resultMap="commodityVoResultMap">
+		select id,name from sys_dict_app WHERE type = 'CATEGORY'
+	</select>
+
+
+
+	<!--查询推荐专题列表-->
+	<select id="getModelListByIds" parameterType="map" resultMap="commodityVoResultMap">
+		select * from commodity comm
+		left join app_shelves app on app.comdity_id = comm.id
+		left join sys_dict_app sda on sda.id = app.type_id
+		where 1=1
+		<if test="classTypeOne !=null and classTypeOne!=''">and (pr.product_id = #{classTypeOne}</if>
+		<if test="classTypeTwo !=null and classTypeTwo!='' ">and pr.product_id= #{classTypeTwo}</if>
+		<if test="classTypeOne !=null and classTypeOne!=''">and (pr.product_id = #{classTypeOne}</if>
+		<if test="classTypeTwo !=null and classTypeTwo!='' ">and pr.product_id= #{classTypeTwo}</if>
+		<if test="classTypeOne !=null and classTypeOne!=''">and (pr.product_id = #{classTypeOne}</if>
+		<if test="classTypeTwo !=null and classTypeTwo!='' ">and pr.product_id= #{classTypeTwo}</if>
+	</select>
+
 </mapper>

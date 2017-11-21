@@ -95,6 +95,16 @@ public class CommodityVo extends BaseEntity {
     private String  paperDescription;
     private Integer userId;
 
+    public Integer getSout() {
+        return sout;
+    }
+
+    public void setSout(Integer sout) {
+        this.sout = sout;
+    }
+
+    private Integer sout;
+
     private Date previewDate;//预览时间
     private String range;//范围
     

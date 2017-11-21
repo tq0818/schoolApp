@@ -1133,7 +1133,7 @@
 		<if test="timeLen !=null">and TO_DAYS(NOW())-TO_DAYS(u.regist_time)<![CDATA[<=]]>#{timeLen}</if>
 		<if test="eduArea != null and eduArea!=''"> and s.edu_area=#{eduArea}</if>
 		<if test="eduSchool != null and eduSchool!=''"> and d.item_code =#{eduSchool}</if>
-		<if test="isStu != null and isStu == 1"> and u.edu_identity = 0 AND IFNULL(u.`teacher_flag`,0) != 1</if>
+		<!--<if test="isStu != null and isStu == 1"> and u.edu_identity = 0 AND IFNULL(u.`teacher_flag`,0) != 1</if>-->
 		union
 		select  count(u.id) num,date_format(u.regist_time, "%Y-%m-%d") registTime
 		from users_front u
@@ -1150,7 +1150,7 @@
 		<if test="timeLen !=null">and TO_DAYS(NOW())-TO_DAYS(u.regist_time)<![CDATA[<=]]>#{timeLen}</if>
 		<if test="eduArea != null and eduArea!=''"> and s.edu_area=#{eduArea}</if>
 		<if test="eduSchool != null and eduSchool!=''"> and d.item_code =#{eduSchool}</if>
-		<if test="isStu != null and isStu == 1"> and u.edu_identity = 0 AND IFNULL(u.`teacher_flag`,0) != 1</if>
+		<!--<if test="isStu != null and isStu == 1"> and u.edu_identity = 0 AND IFNULL(u.`teacher_flag`,0) != 1</if>-->
 		group by date_format(u.regist_time, "%Y-%m-%d")
 	</select>
 	<select id="countOffLine" resultType="com.yuxin.wx.vo.user.UsersFrontVo" parameterType="com.yuxin.wx.vo.user.UsersFrontVo">

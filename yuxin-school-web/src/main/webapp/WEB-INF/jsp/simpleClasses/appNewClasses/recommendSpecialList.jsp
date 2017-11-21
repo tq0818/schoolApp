@@ -90,7 +90,7 @@
             $('#specialList').load(url,data)
         }
 
-        $(document).ready(function(){
+      /*  $(document).ready(function(){
 
             $(".pagenations").pagination('${count}', {
                 next_text : "下一页",
@@ -105,7 +105,7 @@
                     findSpecialByapge(pageNo);
                 }
             });
-        });
+        });*/
     </script>
 </head>
 <body>
@@ -120,8 +120,8 @@
             <c:forEach items="${specialList}" var="special" varStatus="status">
                 <tr>
                 <c:if test="${special.originType  eq 1 }">
-                    <td>${status.index +1 }</td>
-                    <td>${special.title}</td>
+                    <td>${status.sout }</td>
+                    <td>${special.name}</td>
                     <td>
                         <a href="javascript:void(0)" onclick="updateSpecial('${special.id}')" class="btn btn-mini btn-primary">编辑</a>
                     </td>

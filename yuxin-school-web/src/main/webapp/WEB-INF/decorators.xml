@@ -536,7 +536,7 @@
         <!--编辑已上架课程-->
         <pattern>/appNewClasses/InformationEditing</pattern>
         <!--首页推荐专题列表-->
-        <pattern>/appNewClasses/recommendedList</pattern>
+        <pattern>/specialModel/getModelList</pattern>
         <!--批量首页推荐-->
         <pattern>/appNewClasses/pageRecommendation</pattern>
         <!--首页推荐-->

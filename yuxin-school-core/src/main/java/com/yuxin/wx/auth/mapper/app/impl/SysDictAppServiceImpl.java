@@ -26,6 +26,17 @@ public class SysDictAppServiceImpl extends BaseServiceImpl implements ISysDictAp
 		return list;
 	}
 
+	@Override
+	public List<SysDictApp> getStudySectionById(Integer modelId) {
+		return sysDictAppMapper.getStudySectionById(modelId);
+	}
+
+	@Override
+	public String getModelById(Integer modelId) {
+		return sysDictAppMapper.getModelById(modelId);
+	}
+
+
 /*	@Override
 	public List<SysDictApp> findSysDictAppFirst() {
 		List<SysDictApp> list = sysDictAppMapper.findSysDictAppFirst();

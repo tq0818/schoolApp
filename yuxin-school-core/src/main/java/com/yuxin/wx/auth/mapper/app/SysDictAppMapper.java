@@ -12,4 +12,11 @@ public interface SysDictAppMapper extends BaseMapper<SysDictApp>{
 	List<SysDictApp> findSysDictAppByParentId(SysDictApp sda);
 
 	/*List<SysDictApp> findSysDictAppFirst();*/
+
+
+	List<SysDictApp> getStudySectionById(Integer modelId);
+
+	List<SysDictApp> findSysDictAppByParentById(Integer modelId);
+
+	String  getModelById(Integer modelId);
 }
