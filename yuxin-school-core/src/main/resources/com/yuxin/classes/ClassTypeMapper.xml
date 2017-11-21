@@ -122,13 +122,18 @@
 		<result property="teacherName" column="teacher_name"/>
 		<result property="schoolName" column="school_short_name"/>
 		<result property="labDesc" column="lab_desc"/>
-
-
-
-
-
-
 	</resultMap>
+
+	<sql id="table_columns_first">
+		app_shelves_id,
+		grade_id,
+		sort
+	</sql>
+	<sql id="batch_entity_properties_first">
+		#{item.appShelvesId},
+		#{item.gradeNo},
+		#{item.sort}
+	</sql>
 	
 	<sql id="table_columns">
 		id,
@@ -328,6 +333,15 @@
 	<insert id="insert" parameterType="com.yuxin.wx.model.classes.ClassType" useGeneratedKeys="true" keyProperty="id">
 		insert into class_type( <include refid="table_columns" /> ) 
 		values ( <include refid="entity_properties" /> )
+	</insert>
+
+	<!-- 批量添加 适用于主键自增类型  不支持返回主键-->
+	<insert id="insertFirstRecommond" parameterType="java.util.List">
+		insert into first_recommend( <include refid="table_columns_first" /> )
+		values
+		<foreach item="item" collection="list" separator="," >
+			( <include refid="batch_entity_properties_first" /> )
+		</foreach>
 	</insert>
 	
 	<!-- 批量添加 适用于主键自增类型  不支持返回主键-->

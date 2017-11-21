@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.yuxin.wx.api.classes.IClassTypeService;
 import com.yuxin.wx.api.commodity.ICommodityService;
 import com.yuxin.wx.vo.classes.ClassTypeVo;
+import com.yuxin.wx.vo.classes.FirstRecommend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.yuxin.wx.api.app.ISysDictAppService;
 import com.yuxin.wx.model.app.SysDictApp;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
@@ -138,6 +140,34 @@ public class shelvesCourses {
         model.addAttribute("searchAndResult",searchAndResult);
 
         return "simpleClasses/appNewClasses/homeRecommendation";
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/insertRcommondInfo",method=RequestMethod.POST)
+    public String insertRcommondInfo(HttpServletRequest request,String ids,String sort,String appId){
+
+        try {
+            List<FirstRecommend> frs = new ArrayList<FirstRecommend>();
+            if(null!=ids && !"".equals(ids)){
+                String[]idStrs = ids.split(",");
+                for(String idStr : idStrs){
+                    FirstRecommend fr = new FirstRecommend();
+                    fr.setAppShelvesId(appId);
+                    fr.setGradeNo(idStr);
+
+                    if("".equals(sort) || null==sort){
+                        fr.setSort(null);
+                    }else{
+                        fr.setSort(sort);
+                    }
+                    frs.add(fr);
+                }
+                classTypeServiceImpl.insertFirstRecommond(frs);
+            }
+            return "1";
+        }catch (Exception e){
+            return "0";
+        }
     }
 
 }
