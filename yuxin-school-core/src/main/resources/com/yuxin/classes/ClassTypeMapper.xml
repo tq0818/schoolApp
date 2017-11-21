@@ -526,7 +526,8 @@
 	<!--查询单条录播课程数据信息-->
 	<select id="querySingleOtherClassTypeInfo" resultMap="classTypeVoResultMap" parameterType="map">
 		select ct.*,c.buy_num as actualNum,app.img_url as imgUrl,sct.NAME teacher_name,sct.school_short_name,
-		case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,app.reserve_time,
+		case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
+		app.reserve_time as reserveTime,app.shelves_time as shelvesTime,app.price as appPrice,app.sale_price as salePrice,
 		v.video_time as lesson_date,app.id as appId,app.lab_desc
 		 from commodity c
 		join commodity_product_realtion cpr on cpr.com_id=c.id
@@ -548,7 +549,9 @@
 		cml.lesson_time_start,
 		cml.lesson_time_end,
 		cml.lesson_name,sct.NAME teacher_name,sct.school_short_name,
-		c.buy_num as actualNum,app.img_url as imgUrl,case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,app.reserve_time,app.id as appId,
+		c.buy_num as actualNum,app.img_url as imgUrl,case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
+		app.reserve_time as reserveTime,app.shelves_time as shelvesTime,app.price as appPrice,app.sale_price as salePrice
+		app.id as appId,
 		app.lab_desc
 		FROM (
 				SELECT
@@ -577,7 +580,9 @@
 		cml.lesson_time_start,
 		cml.lesson_time_end,
 		cml.lesson_name,sct.NAME teacher_name,sct.school_short_name,
-		c.buy_num as actualNum,app.img_url as imgUrl,case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,app.reserve_time,app.id as appId,
+		c.buy_num as actualNum,app.img_url as imgUrl,case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
+		app.reserve_time as reserveTime,app.shelves_time as shelvesTime,app.price as appPrice,app.sale_price as salePrice,
+		app.id as appId,
 		app.lab_desc
 		FROM (
 			SELECT
