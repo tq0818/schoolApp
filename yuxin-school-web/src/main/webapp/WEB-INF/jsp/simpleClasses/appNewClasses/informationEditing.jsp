@@ -198,6 +198,7 @@
     <form method="post" id="myForm">
 
     </form>
+
 <script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/informationEditing.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/plus/jquery.cookie.js"></script>
