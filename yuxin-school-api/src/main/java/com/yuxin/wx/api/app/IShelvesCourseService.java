@@ -1,5 +1,6 @@
 package com.yuxin.wx.api.app;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.yuxin.wx.common.PageFinder;
@@ -18,4 +19,8 @@ public interface IShelvesCourseService {
 			String stageName,
 			String typeCode
 			);
+	
+	void update (ClassTypeVo classTypeVo);
+	
+	ShelvesCourse findOne(Serializable id);
 }

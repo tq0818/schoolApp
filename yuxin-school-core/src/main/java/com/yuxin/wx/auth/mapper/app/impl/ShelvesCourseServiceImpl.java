@@ -1,5 +1,6 @@
 package com.yuxin.wx.auth.mapper.app.impl;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +44,18 @@ public class ShelvesCourseServiceImpl implements IShelvesCourseService{
 		
 		List<ShelvesCourse> list = shelvesCourseMapper.queryShelvesCoursesByPage(map);
 		return list;
+	}
+
+	@Override
+	public void update(ClassTypeVo classTypeVo) {
+		shelvesCourseMapper.update(classTypeVo);
+		
+	}
+
+	@Override
+	public ShelvesCourse findOne(Serializable id) {
+		
+		return shelvesCourseMapper.findOne(id);
 	}
 	
 

@@ -22,7 +22,7 @@ function chooseSlibMenu(obj){
 	var parentId = obj.val();
 
 	$.ajax({
-		url : "/simpleClasses/querySlibMenu",
+		url : rootPath +"/simpleClasses/querySlibMenu",
 		type : "post",
 		data : {"parentId":parentId,"typeId":id},
 		success : function(result) {
@@ -135,7 +135,7 @@ function toShelves(flag){
 	}
 
 	$.ajax({
-		url : "/simpleClasses/insertShelvesInfo",
+		url : rootPath +"/simpleClasses/insertShelvesInfo",
 		type : "post",
 		data : {"id":id,"appId":appId,"courseCaId":courseCaId,"gradeId":gradeId,"subjectId":subjectId,"kwonProId":kwonProId,"knowId":knowId,"stageId":stageId,"typeId":typeId,"shelvesFlag":flag,"shelvesTime":shelvesTime,"labDesc":labDesc},
 		success : function(result) {

@@ -559,6 +559,26 @@
 					}
 				});
 			},
+			stopClassOnsale : function(id){
+				$.confirm("您确定要下架此课程?下架后学员将无法再报名此课程。",function(a){
+					if(a==true){
+						$.ajax({
+							url : rootPath + "/simpleClasses/stopClassOnsale",
+							type : "post",
+							data : {"id":id},
+							success : function(result) {
+								if("1"==result){
+									alert("成功")
+								}else{
+									alert("失败")
+								}
+							}
+						});
+					}else{
+						return;
+					}
+				});
+			},
 			deleteClassType : function(id){
 				$.confirm("您确定要删除此课程?",function(a){
 					if(a==true){

@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yuxin.wx.api.app.IShelvesCourseService;
 import com.yuxin.wx.api.app.ISysDictAppService;
 import com.yuxin.wx.api.course.ICourseExerciseService;
 import com.yuxin.wx.api.system.*;
@@ -176,6 +177,8 @@ public class SimpleclassTypeController {
 
 	@Autowired
 	private ISysDictAppService sysDictAppServiceImpl;
+	@Autowired
+	private IShelvesCourseService shelvesCourseServiceImpl;
 
 
 
@@ -1794,6 +1797,20 @@ public class SimpleclassTypeController {
 		classType.setUpdator(WebUtils.getCurrentUserId(request));
 		classTypeServiceImpl.update(classType);
 		return classTypeServiceImpl.findClassTypeById(classType.getId());
+	}
+	@ResponseBody
+	@RequestMapping(value="/stopClassOnsale",method=RequestMethod.POST)
+	public String stopClassOnsale(HttpServletRequest request){
+		try {
+			Integer id = Integer.valueOf(request.getParameter("id"));
+			ClassTypeVo classTypeVo = new ClassTypeVo();
+			classTypeVo.setId(id);
+			classTypeVo.setIsShelves("0");
+			shelvesCourseServiceImpl.update(classTypeVo);
+			return "1";
+		}catch (Exception e){
+			return "0";
+		}
 	}
 	
 	/**
