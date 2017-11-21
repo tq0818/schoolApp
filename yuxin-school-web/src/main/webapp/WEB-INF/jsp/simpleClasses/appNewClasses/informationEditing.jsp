@@ -8,8 +8,7 @@
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/classes.css">
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/operate.css" />
 
-    <link href="<%=rootPath%>/stylesheets/jquery.datetimepicker.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.datetimepicker.js"></script>
+
 
 
     <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>--%>
@@ -20,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/splitscreen.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/classedit.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/popupwin.css">
-    <link rel="stylesheet" type="text/css" href="<%=rootPath%>/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" />
+    <%--<link rel="stylesheet" type="text/css" href="<%=rootPath%>/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" />--%>
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/plugins/select2/select2.css"/>
     <script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/plupload.full.min.js"></script>
     <script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/i18n/zh_CN.js"></script>
@@ -176,7 +175,7 @@
         <div class="submitCourse">
             <button class="btn btn-success" onclick="toShelves('1');">立即上架</button>
             <button class="btn btn-warning" onclick="toShelves('0');">预约上架</button>
-            <input type="text" placeholder="指定上架时间" value='${searchAndResult.reserveTime}' id="shelvesTime">
+            <input type="text" placeholder="指定上架时间" id="shelvesTime">
         </div>
     </div>
         <c:if test="${searchAndResult.liveFlag==1 }">
