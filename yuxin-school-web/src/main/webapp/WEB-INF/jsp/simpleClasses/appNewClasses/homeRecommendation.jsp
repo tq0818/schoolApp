@@ -71,7 +71,7 @@
     <div>
         <div>
             <label for="">推荐位置</label>
-            <a href="javascript:void(0)" class="btn btn-default">${firstMenu.name}</a>
+            <a href="javascript:void(0)" class="btn btn-default recommendLocation btn-success">${firstMenu.name}</a>
         </div>
         <div class="recommendationSection">
             <label for="">推荐学段</label>
@@ -93,10 +93,10 @@
         </div>
         <div>
             <label for="">推荐顺序</label>
-            <input type="text">
+            <input type="text" class="orderRecommend">
         </div>
-        <div>
-            <button class="btn btn-success">提交推荐</button>
+        <div class="uploadRecommend">
+            <button class="btn btn-success ">提交推荐</button>
         </div>
     </div>
 
