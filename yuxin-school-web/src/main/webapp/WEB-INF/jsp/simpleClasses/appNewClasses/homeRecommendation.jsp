@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <html>
@@ -17,7 +16,7 @@
 </head>
 <body style="position:relative;">
 <!-- 二级导航 -->
-<jsp:include page="/WEB-INF/jsp/menu/menu_class.jsp"></jsp:include>
+<%--<jsp:include page="/WEB-INF/jsp/menu/menu_class.jsp"></jsp:include>--%>
 <div class="u-wrap classes">
     <div class="informationEditHeader">
         <div class="informationEditImg">
@@ -77,19 +76,19 @@
         <div class="recommendationSection">
             <label for="">推荐学段</label>
             <div id="gradeList">
-                <a href="javascript:void(0)" class="btn btn-default">全部</a>
-                <a href="javascript:void(0)" class="btn btn-default">一年级</a>
-                <a href="javascript:void(0)" class="btn btn-default">二年级</a>
-                <a href="javascript:void(0)" class="btn btn-default">三年级</a>
-                <a href="javascript:void(0)" class="btn btn-default">四年级</a>
-                <a href="javascript:void(0)" class="btn btn-default">五年级</a>
-                <a href="javascript:void(0)" class="btn btn-default">六年级</a>
-                <a href="javascript:void(0)" class="btn btn-default">初一</a>
-                <a href="javascript:void(0)" class="btn btn-default">初二</a>
-                <a href="javascript:void(0)" class="btn btn-default">初三</a>
-                <a href="javascript:void(0)" class="btn btn-default">高一</a>
-                <a href="javascript:void(0)" class="btn btn-default">高二</a>
-                <a href="javascript:void(0)" class="btn btn-default">高三</a>
+                <a href="javascript:void(0)" id="all" class="btn btn-default">全部</a>
+                <a href="javascript:void(0)" id="1" class="btn btn-default">一年级</a>
+                <a href="javascript:void(0)" id="2" class="btn btn-default">二年级</a>
+                <a href="javascript:void(0)" id="3" class="btn btn-default">三年级</a>
+                <a href="javascript:void(0)" id="4" class="btn btn-default">四年级</a>
+                <a href="javascript:void(0)" id="5" class="btn btn-default">五年级</a>
+                <a href="javascript:void(0)" id="6" class="btn btn-default">六年级</a>
+                <a href="javascript:void(0)" id="7" class="btn btn-default">初一</a>
+                <a href="javascript:void(0)" id="8" class="btn btn-default">初二</a>
+                <a href="javascript:void(0)" id="9" class="btn btn-default">初三</a>
+                <a href="javascript:void(0)" id="10" class="btn btn-default">高一</a>
+                <a href="javascript:void(0)" id="11" class="btn btn-default">高二</a>
+                <a href="javascript:void(0)" id="12" class="btn btn-default">高三</a>
             </div>
         </div>
         <div>
@@ -102,73 +101,6 @@
     </div>
 
 </div>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $.ajax({
-            url : rootPath + "/companyServiceStatic/queryCompanyNoServices",
-            type : "post",
-            dataType : 'json',
-            success : function(jsonData) {
-                var count=jsonData.length;
-                var html="";
-                if(count==1){
-                    $.each(jsonData,function(i,item){
-                        if(item.groupCode=='SERVICE_LIVE'){
-                            html+='<ul class="tabsn c4"><li class="b2">录播</li>'+
-                                '<li class="b3">面授</li>'+
-                                '<li class="b4">混合</li>'+
-                                '<li class="b5">其他</li></ul>';
-                        }else if(item.groupCode=='SERVICE_VIDEO'){
-                            html+='<ul class="tabsn c4"><li class="b1">直播</li>'+
-                                '<li class="b3">面授</li>'+
-                                '<li class="b4">混合</li>'+
-                                '<li class="b5">其他</li></ul>';
-                        }else if(item.groupCode=='SERVICE_FACE'){
-                            html+='<ul class="tabsn c4"><li class="b1">直播</li>'+
-                                '<li class="b2">录播</li>'+
-                                '<li class="b4">混合</li>'+
-                                '<li class="b5">其他</li></ul>';
-                        }
-                    });
-                }else if(count==2){
-                    var num1,num2;
-                    $.each(jsonData,function(i,item){
-                        if(i==0){
-                            num1=item.groupCode;
-                        }else{
-                            num2=item.groupCode;
-                        }
-                    })
-                    if((num1=="SERVICE_LIVE"&&num2=="SERVICE_VIDEO")||(num1=="SERVICE_VIDEO"&&num2=="SERVICE_LIVE")){
-                        html+='<ul class="tabsn c2"><li class="b3">面授</li>'+
-                            '<li class="b5">其他</li></ul>';
-                    }
-                    if((num1=="SERVICE_LIVE"&&num2=="SERVICE_FACE")||(num1=="SERVICE_FACE"&&num2=="SERVICE_LIVE")){
-                        html+='<ul class="tabsn c2"><li class="b2">录播</li>'+
-                            '<li class="b5">其他</li></ul>';
-                    }
-                    if((num1=="SERVICE_FACE"&&num2=="SERVICE_VIDEO")||(num1=="SERVICE_VIDEO"&&num2=="SERVICE_FACE")){
-                        html+='<ul class="tabsn c2"><li class="b1">直播</li>'+
-                            '<li class="b5">其他</li></ul>';
-                    }
-                }else if(count==3){
-                    html+='<ul class="tabsn c8">'+
-                        '<li class="b5">其他</li></ul>';
-                }else{
-                    html+='<ul class="tabsn"><li class="b1">直播</li>'+
-                        '<li class="b2">录播</li>'+
-                        '<li class="b3">面授</li>'+
-                        '<li class="b4">混合</li>'+
-                        '<li class="b5">其他</li></ul>';
-                }
-                $("#lsOne").append(html);
-            }
-        });
-        $("body").css("position","relative")
-        $('#choiceTimeUpload').datetimepicker();
-    });
-</script>
-<script type="text/javascript" src="<%=rootPath %>/javascripts/class/classIndex.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/classes.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 <script>
@@ -195,9 +127,9 @@
             for(var i=1; i<allChildren.length;i++){
                 allChildren.eq(i).removeClass('active');
             }
-
         }
     });
+
 
 
 

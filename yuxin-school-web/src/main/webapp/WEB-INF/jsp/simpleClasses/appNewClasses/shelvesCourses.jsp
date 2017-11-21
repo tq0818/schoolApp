@@ -109,8 +109,8 @@
                         <td>1</td>
                         <td>1</td>
                         <td>
-                            <span><a href="javascript:;" class="btn btn-primary btn-sm">下架</a></span>
-                            <span><a href="##" class="btn btn-primary btn-sm recommendCourse">推荐</a></span>
+                            <span><a href="##" class="btn btn-primary btn-sm">下架</a></span>
+                            <span><a href="javascript:toRcommon('3','1','130');" class="btn btn-primary btn-sm recommendCourse">推荐</a></span>
                             <span><a href="##" class="btn btn-primary btn-sm eidtShelvesCourses">编辑</a></span>
                         </td>
                     </tr>
@@ -124,6 +124,11 @@
     <%--弹出框--%>
     <div class="popupContainer">
         <span class="closePopupContainer">x</span>
+        <div class="toRecommon">
+            <div id="toRecommon">
+
+            </div>
+        </div>
     </div>
     <div class="popupOpacity"></div>
 
@@ -132,6 +137,29 @@
             $('.popupContainer').show();
             $('.popupOpacity').show();
         });
+
+
+
+        function toRcommon(categerorId,zhiboFlag,commodityId){
+
+            $.ajax({
+                url :"/appNewClasses/homeRecommendation",
+                type : "post",
+                data:{"categerorId":categerorId,"zhiboFlag":zhiboFlag,"commodityId":commodityId},
+                beforeSend:function(XMLHttpRequest){
+                    $(".loading").show();
+                    $(".loading-bg").show();
+                },
+                success : function(result) {
+                    $("#toRecommon").html(result);
+                },
+                complete:function(XMLHttpRequest,textStatus){
+                    $(".loading").hide();
+                    $(".loading-bg").hide();
+                }
+            });
+        }
+
     </script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/app/shelvesCourses.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/classes.js"></script>

@@ -6,7 +6,9 @@ import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.yuxin.wx.api.classes.IClassTypeService;
 import com.yuxin.wx.api.commodity.ICommodityService;
+import com.yuxin.wx.vo.classes.ClassTypeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +30,8 @@ public class shelvesCourses {
 
     @Autowired
     private ICommodityService iCommodityService;
+    @Autowired
+    private IClassTypeService classTypeServiceImpl;
 
     /**
      * 跳转到已上架课程页面
@@ -106,8 +110,33 @@ public class shelvesCourses {
     /**
      * 跳转到首页推荐
      */
-    @RequestMapping(value = "/homeRecommendation")
-    public String gotohomeRecommendation() {
+    @RequestMapping(value = "/homeRecommendation",method=RequestMethod.POST)
+    public String gotohomeRecommendation(HttpServletRequest request,Model model) {
+        String categerorId = request.getParameter("categerorId");
+        String zhiboFlag = request.getParameter("zhiboFlag");
+        String commodityId = request.getParameter("commodityId");
+        SysDictApp search = new SysDictApp();
+        List<SysDictApp> slibMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
+        if(null!=slibMenus && slibMenus.size()>0){
+            for(SysDictApp sda : slibMenus){
+                if(String.valueOf(sda.getId()).equals(categerorId)){
+                    model.addAttribute("firstMenu",sda);
+                    break;
+                }
+            }
+        }
+        ClassTypeVo searchAndResult = new ClassTypeVo();
+        if("1".equals(zhiboFlag)){
+            //查询直播课程信息
+            searchAndResult.setId(Integer.parseInt(commodityId));
+            searchAndResult = classTypeServiceImpl.querySingleLiveClassTypeInfo(searchAndResult);
+        }else{
+            //查询录播信息
+            searchAndResult.setId(Integer.parseInt(commodityId));
+            searchAndResult = classTypeServiceImpl.querySingOtherClassTypeInfo(searchAndResult);
+        }
+        model.addAttribute("searchAndResult",searchAndResult);
+
         return "simpleClasses/appNewClasses/homeRecommendation";
     }
 
