@@ -29,6 +29,7 @@ public class ShelvesCourse extends BaseEntity{
 	private Integer buyNum;//学习人数
 	private float salePrice;//出售价格
 	private float appprice;//实际价格
+	private Integer isShelves;//是否上架，1上架，0未上架
 	public String getImgUrl() {
 		return imgUrl;
 	}
@@ -119,7 +120,12 @@ public class ShelvesCourse extends BaseEntity{
 	public void setReserveHour(String reserveHour) {
 		this.reserveHour = reserveHour;
 	}
-	
+	public Integer getIsShelves() {
+		return isShelves;
+	}
+	public void setIsShelves(Integer isShelves) {
+		this.isShelves = isShelves;
+	}
 	
 	
 }

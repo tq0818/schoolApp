@@ -22,7 +22,7 @@ function chooseSlibMenu(obj){
 	var parentId = obj.val();
 
 	$.ajax({
-		url : "/simpleClasses/querySlibMenu",
+		url : rootPath +"/simpleClasses/querySlibMenu",
 		type : "post",
 		data : {"parentId":parentId,"typeId":id},
 		success : function(result) {
@@ -116,6 +116,7 @@ function queryClassDetails(id){
 	$("#myForm").attr("action","/editSimpleCourse/editClassTypeMessage").submit();
 }
 
+
 function toShelves(flag){
 	var courseCaId = $("#courseCaId").val();
 	var gradeId = $("#gradeId").val();
@@ -128,18 +129,22 @@ function toShelves(flag){
 	var appId = $("#appId").val();
 	var shelvesTime = $("#shelvesTime").val();
 	var labDesc = $("#labDesc").val();
-	if(""== $.trim(shelvesTime)){
+	if("0"==flag && ""== $.trim(shelvesTime) ){
 		alert("预约上架时间不能为空");
 		return;
 	}
 
 	$.ajax({
-		url : "/simpleClasses/insertShelvesInfo",
+		url : rootPath +"/simpleClasses/insertShelvesInfo",
 		type : "post",
 		data : {"id":id,"appId":appId,"courseCaId":courseCaId,"gradeId":gradeId,"subjectId":subjectId,"kwonProId":kwonProId,"knowId":knowId,"stageId":stageId,"typeId":typeId,"shelvesFlag":flag,"shelvesTime":shelvesTime,"labDesc":labDesc},
 		success : function(result) {
 			if("1"==result){
 				alert("成功")
+				$('.popupContainer').hide();
+				$('.popupOpacity').hide();
+				Form.queryAllCommdityByItemNew(1);
+
 			}else{
 				alert("失败")
 			}

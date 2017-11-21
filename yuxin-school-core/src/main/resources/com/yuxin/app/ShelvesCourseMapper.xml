@@ -61,4 +61,19 @@
 		</association>
 	</resultMap>
     -->
+    <select id="findOne" parameterType="Long"  resultType="com.yuxin.wx.model.app.ShelvesCourse">
+		select *
+	    from app_shelves where id=#{id}
+	</select>
+	
+	<update id="update" parameterType="com.yuxin.wx.vo.classes.ClassTypeVo">
+		update app_shelves 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="name != null and name != ''">name = #{name},</if>
+			<if test="isShelves != null and isShelves != ''">isShelves = #{is_shelves},</if>
+			
+		 </trim>
+		<where>id = #{id}</where>
+	</update>
+    
 </mapper>
