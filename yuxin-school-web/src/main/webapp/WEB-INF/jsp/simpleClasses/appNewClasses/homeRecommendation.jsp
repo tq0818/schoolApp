@@ -77,7 +77,7 @@
         <div class="recommendationSection">
             <label for="">推荐学段</label>
             <div id="gradeList">
-                <a href="javascript:void(0)" class="btn btn-default active">全部</a>
+                <a href="javascript:void(0)" class="btn btn-default">全部</a>
                 <a href="javascript:void(0)" class="btn btn-default">一年级</a>
                 <a href="javascript:void(0)" class="btn btn-default">二年级</a>
                 <a href="javascript:void(0)" class="btn btn-default">三年级</a>
@@ -173,14 +173,24 @@
 <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 <script>
 //    推荐学段复选
-    $('.recommendationSection').children('a').click(function(){
+    $('#gradeList').children('a').click(function(){
         if($(this).hasClass('active')){
             $(this).removeClass('active');
+            $('#gradeList').children('a').eq(0).removeClass('active');
         }else {
             $(this).addClass('active');
         }
-
     });
+//    点击全部，则全部选中
+    $('#gradeList').children('a').eq(0).click(function(){
+        var allChildren = $('#gradeList').children('a');
+        for(var i=1; i<allChildren.length;i++){
+            allChildren.eq(i).addClass('active');
+        }
+    });
+
+
+
 </script>
 </body>
 </html>
