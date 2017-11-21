@@ -11,7 +11,7 @@ import com.yuxin.wx.model.commodity.CommoditySpecial;
 import com.yuxin.wx.vo.classes.ClassTypeVo;
 
 public interface ShelvesCourseMapper{
-	public List<ShelvesCourse> queryShelvesCoursesByPage(Map<String, Object> map);
+	List<ClassTypeVo> queryShelvesCoursesByPage(Map<String, Object> map);
 	
 	void update(ClassTypeVo classTypeVo);
 	

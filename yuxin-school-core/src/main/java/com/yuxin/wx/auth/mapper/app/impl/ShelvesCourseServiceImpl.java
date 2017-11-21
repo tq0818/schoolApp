@@ -24,25 +24,25 @@ public class ShelvesCourseServiceImpl implements IShelvesCourseService{
 	private ShelvesCourseMapper shelvesCourseMapper;
 
 	@Override
-	public List<ShelvesCourse> queryShelvesCoursesByPage(
-			String categoryName,
-			String gradeName,
-			String subjectName,
-			String knowledgeName,
-			String knowledgeProName,
-			String stageName,
+	public List<ClassTypeVo> queryShelvesCoursesByPage(
+			String categoryid,
+			String gradeid,
+			String subjectid,
+			String knowledgeid,
+			String knowledgeProid,
+			String stageid,
 			String typeCode
 			) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("categoryName", categoryName);
-		map.put("gradeName", gradeName);
-		map.put("subjectName", subjectName);
-		map.put("knowledgeName", knowledgeName);
-		map.put("knowledgeProName", knowledgeProName);
-		map.put("stageName", stageName);
+		map.put("categoryid", categoryid);
+		map.put("gradeid", gradeid);
+		map.put("subjectid", subjectid);
+		map.put("knowledgeid", knowledgeid);
+		map.put("knowledgeProid", knowledgeProid);
+		map.put("stageid", stageid);
 		map.put("typeCode", typeCode);
 		
-		List<ShelvesCourse> list = shelvesCourseMapper.queryShelvesCoursesByPage(map);
+		List<ClassTypeVo> list = shelvesCourseMapper.queryShelvesCoursesByPage(map);
 		return list;
 	}
 
