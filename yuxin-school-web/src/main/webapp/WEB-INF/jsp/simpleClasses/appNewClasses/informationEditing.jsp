@@ -8,11 +8,14 @@
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/classes.css">
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/operate.css" />
 
-    <link href="<%=rootPath%>/stylesheets/jquery.datetimepicker.css" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.datetimepicker.js"></script>
+
 
 
     <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>--%>
+
+    <link href="<%=rootPath%>/stylesheets/jedate.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.jedate.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/fatstyle.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/manage.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/company.css"/>
@@ -20,7 +23,7 @@
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/splitscreen.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/classedit.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/popupwin.css">
-    <link rel="stylesheet" type="text/css" href="<%=rootPath%>/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" />
+    <%--<link rel="stylesheet" type="text/css" href="<%=rootPath%>/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" />--%>
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/plugins/select2/select2.css"/>
     <script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/plupload.full.min.js"></script>
     <script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/i18n/zh_CN.js"></script>
@@ -176,7 +179,7 @@
         <div class="submitCourse">
             <button class="btn btn-success" onclick="toShelves('1');">立即上架</button>
             <button class="btn btn-warning" onclick="toShelves('0');">预约上架</button>
-            <input type="text" placeholder="指定上架时间" id="shelvesTime">
+            <input type="text" placeholder="指定上架时间" id="shelvesTime" readonly>
         </div>
     </div>
         <c:if test="${searchAndResult.liveFlag==1 }">
@@ -199,16 +202,26 @@
 
     </form>
 
+
 <script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/informationEditing.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/plus/jquery.cookie.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/popupwin.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-<script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<%--<script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>--%>
+<%--<script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>--%>
 <script type="text/javascript" src="<%=rootPath %>/plugins/select2/select2.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery-ui.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/common/DateUtils.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/ajaxfileupload.js"></script>
+
+<script>
+    $.jeDate("#shelvesTime",{
+        format:"YYYY-MM-DD hh:mm:ss",               //日期格式
+        isTime: true,
+        minDate:"2000-01-01 00:00:00"
+    })
+</script>
+
 </body>
 </html>
