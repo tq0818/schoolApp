@@ -110,7 +110,7 @@
                         <td>1</td>
                         <td>
                             <span><a href="javascript:;" class="btn btn-primary btn-sm">下架</a></span>
-                            <span><a href="/appNewClasses/homeRecommendation" class="btn btn-primary btn-sm">推荐</a></span>
+                            <span><a href="##" class="btn btn-primary btn-sm recommendCourse">推荐</a></span>
                             <span><a href="##" class="btn btn-primary btn-sm eidtShelvesCourses">编辑</a></span>
                         </td>
                     </tr>
@@ -126,6 +126,13 @@
         <span class="closePopupContainer">x</span>
     </div>
     <div class="popupOpacity"></div>
+
+    <script>
+        $('.recommendCourse').click(function(){
+            $('.popupContainer').show();
+            $('.popupOpacity').show();
+        });
+    </script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/app/shelvesCourses.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/classes.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>

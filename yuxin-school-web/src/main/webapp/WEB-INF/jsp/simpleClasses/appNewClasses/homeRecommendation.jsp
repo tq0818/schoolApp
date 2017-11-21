@@ -53,9 +53,11 @@
             <a href="##" class="btn btn-default">高考</a>
             <a href="##" class="btn btn-default">微课</a>
         </div>
-        <div>
+        <div class="recommendationSection">
             <label for="">推荐学段</label>
-            <a href="##" class="btn btn-default">全部</a>
+            <a href="##" class="btn btn-default active">全部</a>
+            <a href="##" class="btn btn-default">数学</a>
+            <a href="##" class="btn btn-default">语文</a>
         </div>
         <div>
             <label for="">推荐顺序</label>
@@ -136,5 +138,16 @@
 <script type="text/javascript" src="<%=rootPath %>/javascripts/class/classIndex.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/classes.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
+<script>
+//    推荐学段复选
+    $('.recommendationSection').children('a').click(function(){
+        if($(this).hasClass('active')){
+            $(this).removeClass('active');
+        }else {
+            $(this).addClass('active');
+        }
+
+    });
+</script>
 </body>
 </html>
