@@ -246,4 +246,6 @@ public interface ICommodityService {
 
 	List<CommodityVo> getModelListByIds(Map<String, Object> param);
 
+	int getModelListByIdsCount(Map<String, Object> param);
+
 }

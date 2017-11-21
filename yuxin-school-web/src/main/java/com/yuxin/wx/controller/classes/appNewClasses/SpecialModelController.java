@@ -3,7 +3,9 @@ package com.yuxin.wx.controller.classes.appNewClasses;
 
 import com.yuxin.wx.api.app.ISysDictAppService;
 import com.yuxin.wx.api.commodity.ICommodityService;
+import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.app.SysDictApp;
+import com.yuxin.wx.vo.classes.ClassVo;
 import com.yuxin.wx.vo.commodity.CommodityVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,52 +52,48 @@ public class SpecialModelController {
     /**
      * 跳转到批量首页推荐
      *
-     * @param modell
-     * @param modelId        模块ID
-     * @param modelName      模块名称
-     * @param studySectionId 学段ID
-     * @param subjectId      科目ID
-     * @param itemId         知识点ID
-     * @param topicsId       知识点专题ID
+     * @param model
+     * @param categoryid        模块ID
+     * @param gradeId 学段ID
+     * @param subjectid      科目ID
+     * @param knowId         知识点ID
+     * @param knowledgeid       知识点专题ID
      * @param typeId         类型ID
-     * @param stageId        阶段ID
+     * @param stageid        阶段ID
      * @return
      */
-    @RequestMapping(value = "/getModelListByIds")
-    public String getModelListByIds(Model modell, Integer modelId, String modelName, Integer studySectionId,
-                                    Integer subjectId, Integer itemId, Integer topicsId, Integer typeId, Integer stageId) {
-        //根据modelid查找学段list
-        List<SysDictApp> list = iSysDictAppService.getStudySectionById(modelId);
-
+    @RequestMapping(value = "/getModelListByIds",method = RequestMethod.POST)
+    public String getModelListByIds(Model model,Integer categoryid, Integer gradeId,
+                                    Integer subjectid, Integer knowId, Integer knowledgeid, Integer typeId, Integer stageid,Integer page,Integer pageSize) {
         //根据传入的各个ID查询课程list
-        Map<String, Object> param = new HashMap<String, Object>();
-        if (studySectionId != null && studySectionId.toString() != "") {
-            param.put("studySectionId", studySectionId);
+        Map<String, Object> param = new HashMap<>();
+        if (categoryid != null && categoryid.toString() != "") {
+            param.put("categoryid", categoryid);
         }
-        if (subjectId != null && subjectId.toString() != "") {
-            param.put("subjectId", subjectId);
+        if (gradeId != null && gradeId.toString() != "") {
+            param.put("studySectionId", gradeId);
         }
-        if (itemId != null && itemId.toString() != "") {
-            param.put("itemId", itemId);
+        if (subjectid != null && subjectid.toString() != "") {
+            param.put("subjectId", subjectid);
         }
-        if (topicsId != null && topicsId.toString() != "") {
-            param.put("topicsId", topicsId);
+        if (knowId != null && knowId.toString() != "") {
+            param.put("itemId", knowId);
+        }
+        if (knowledgeid != null && knowledgeid.toString() != "") {
+            param.put("topicsId", knowledgeid);
         }
         if (typeId != null && typeId.toString() != "") {
             param.put("typeId", typeId);
         }
-        if (stageId != null && stageId.toString() != "") {
-            param.put("stageId", stageId);
+        if (stageid != null && stageid.toString() != "") {
+            param.put("stageId", stageid);
         }
-
         List<CommodityVo> commList = iCommodityService.getModelListByIds(param);
-
-        modell.addAttribute("modelName", modelName);
-        modell.addAttribute("list", list);
-        modell.addAttribute("commList", commList);
-        return "simpleClasses/appNewClasses/pageRecommendation";
+//        int count = iCommodityService.getModelListByIdsCount(param);
+//        PageFinder<CommodityVo> classVoPage = new PageFinder<>(page,pageSize,count,commList);
+        model.addAttribute("commList",commList);
+        return "simpleClasses/appNewClasses/classListAjax";
     }
-
 
     @ResponseBody
     @RequestMapping(value = "/queryMenu", method = RequestMethod.POST)
@@ -109,7 +107,6 @@ public class SpecialModelController {
                 List<SysDictApp> grades = new ArrayList<>();
                 List<SysDictApp> stages = new ArrayList<>();
                 List<SysDictApp> types = new ArrayList<>();
-                List<SysDictApp> subjct = new ArrayList<>();
                 for (SysDictApp data : slibMenus) {
                     if ("GRADE".equals(data.getType())) {
                         grades.add(data);
@@ -126,11 +123,6 @@ public class SpecialModelController {
         } else {
             linked.put("comm", slibMenus);
         }
-
-        //获取课程列表
-
-
-
         return linked;
     }
 }

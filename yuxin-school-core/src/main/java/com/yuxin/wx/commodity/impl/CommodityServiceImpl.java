@@ -264,4 +264,9 @@ public class CommodityServiceImpl extends BaseServiceImpl implements ICommodityS
         return commodityMapper.getModelListByIds( param) ;
     }
 
+    @Override
+    public int getModelListByIdsCount(Map<String, Object> param) {
+        return commodityMapper.getModelListByIdsCount( param) ;
+    }
+
 }

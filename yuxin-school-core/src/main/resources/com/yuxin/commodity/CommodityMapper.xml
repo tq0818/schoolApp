@@ -440,16 +440,105 @@
 
 	<!--查询推荐专题列表-->
 	<select id="getModelListByIds" parameterType="map" resultMap="commodityVoResultMap">
-		select * from commodity comm
-		left join app_shelves app on app.comdity_id = comm.id
-		left join sys_dict_app sda on sda.id = app.type_id
-		where 1=1
-		<if test="classTypeOne !=null and classTypeOne!=''">and (pr.product_id = #{classTypeOne}</if>
-		<if test="classTypeTwo !=null and classTypeTwo!='' ">and pr.product_id= #{classTypeTwo}</if>
-		<if test="classTypeOne !=null and classTypeOne!=''">and (pr.product_id = #{classTypeOne}</if>
-		<if test="classTypeTwo !=null and classTypeTwo!='' ">and pr.product_id= #{classTypeTwo}</if>
-		<if test="classTypeOne !=null and classTypeOne!=''">and (pr.product_id = #{classTypeOne}</if>
-		<if test="classTypeTwo !=null and classTypeTwo!='' ">and pr.product_id= #{classTypeTwo}</if>
+		select
+		ct.*,
+		cml.lesson_date as lesson_date,
+		cml.lesson_time_start as lesson_time_start,
+		sct.NAME teacher_name,
+		sct.school_short_name,
+		c.buy_num as actualNum,
+		app.img_url as imgUrl,
+		case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
+		app.reserve_time,
+		app.id as appId,
+		app.lab_desc,
+		app.`price` as appPrice,
+		app.`sale_price`,
+		sys1.name as categoryName,
+		sys2.name as gradeName,
+		sys3.name as subjectName,
+		sys4.name as knowProName,
+		sys5.name as knowName,
+		sys6.name as stageName,
+		sys7.name as typeName
+		from (
+		SELECT
+		ml.module_no_id,
+		ml.lesson_date,
+		ml.lesson_time_start,
+		ml.lesson_time_end,
+		ml.lesson_name
+		FROM
+		class_module_lesson ml
+		WHERE
+		ml.lesson_date >= now()
+		ORDER BY
+		ml.lesson_date ASC
+		) cml
+		JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id`
+		JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id`
+		JOIN class_type ct ON ct.id = ctmr.`class_type_id`
+		join commodity_product_realtion pr on ct.id = pr.product_id
+		join commodity c on c.id = pr.com_id
+		JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
+		join `app_shelves` app on app.`comdity_id`=c.id
+		join sys_dict_app sys1 on sys1.id=app.`category_id`
+		join sys_dict_app sys2 on sys2.id=app.`grade_id`
+		join sys_dict_app sys3 on sys3.id=app.`subject_id`
+		join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id`
+		join sys_dict_app sys5 on sys5.id=app.`knowledge_id`
+		join sys_dict_app sys6 on sys6.id=app.`stage_id`
+		join sys_dict_app sys7 on sys7.id=app.`type_id`
+		where  ct.del_flag=0 and c.type='COMMODITY_CLASS'
+		and c.status = 1
+		<if test="categoryid !=null and categoryid!=''">and app.category_id = #{categoryid}</if>
+		<if test="gradeId !=null and gradeId!='' ">and app.grade_id= #{gradeId}</if>
+		<if test="subjectid !=null and subjectid!=''">and app.subject_id = #{subjectid}</if>
+		<if test="knowId !=null and knowId!='' ">and app.knowledge_id= #{knowId}</if>
+		<if test="typeId !=null and typeId!=''">and app.type_id = #{typeId}</if>
+		<if test="knowledgeid !=null and knowledgeid!='' ">and app.knowledge_pro_id= #{knowledgeid}</if>
+		<if test="stageid !=null and stageid!='' ">and app.stage_id= #{stageid}</if>
+	</select>
+
+	<select id="getModelListByIdsCount" parameterType="map" resultType="int">
+		select count(*)
+		from (
+		SELECT
+		ml.module_no_id,
+		ml.lesson_date,
+		ml.lesson_time_start,
+		ml.lesson_time_end,
+		ml.lesson_name
+		FROM
+		class_module_lesson ml
+		WHERE
+		ml.lesson_date >= now()
+		ORDER BY
+		ml.lesson_date ASC
+		) cml
+		JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id`
+		JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id`
+		JOIN class_type ct ON ct.id = ctmr.`class_type_id`
+		join commodity_product_realtion pr on ct.id = pr.product_id
+		join commodity c on c.id = pr.com_id
+		JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
+		join `app_shelves` app on app.`comdity_id`=c.id
+		join sys_dict_app sys1 on sys1.id=app.`category_id`
+		join sys_dict_app sys2 on sys2.id=app.`grade_id`
+		join sys_dict_app sys3 on sys3.id=app.`subject_id`
+		join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id`
+		join sys_dict_app sys5 on sys5.id=app.`knowledge_id`
+		join sys_dict_app sys6 on sys6.id=app.`stage_id`
+		join sys_dict_app sys7 on sys7.id=app.`type_id`
+		where  ct.del_flag=0 and c.type='COMMODITY_CLASS'
+		and c.status = 1
+		<if test="categoryid !=null and categoryid!=''">and app.category_id = #{categoryid}</if>
+		<if test="gradeId !=null and gradeId!='' ">and app.grade_id= #{gradeId}</if>
+		<if test="subjectid !=null and subjectid!=''">and app.subject_id = #{subjectid}</if>
+		<if test="knowId !=null and knowId!='' ">and app.knowledge_id= #{knowId}</if>
+		<if test="typeId !=null and typeId!=''">and app.type_id = #{typeId}</if>
+		<if test="knowledgeid !=null and knowledgeid!='' ">and app.knowledge_pro_id= #{knowledgeid}</if>
+		<if test="stageid !=null and stageid!='' ">and app.stage_id= #{stageid}</if>
 	</select>
 
 </mapper>

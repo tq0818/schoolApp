@@ -78,4 +78,6 @@ public interface CommodityMapper extends BaseMapper<Commodity> {
 	List<CommodityVo> getStudySectionById(Integer modelId);
 
 	List<CommodityVo> getModelListByIds(Map<String, Object> param);
+
+	int getModelListByIdsCount(Map<String, Object> param);
 }

@@ -8,7 +8,6 @@
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/manage.css">
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/classes.css">
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/operate.css" />
-
     <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
 </head>
 <body style="position:relative;">
@@ -21,7 +20,7 @@
             <p class="c">
                 <span class="t-title">课程分类</span>
                 <span class="t-content" id="itemOneCodeList">
-                     <a href="javascript:Form.showAllShelvesClssType('${menu.id}','courseCaId');" data-code="MIN_UP" class="btn btn-mini btn-default">${modelName}</a>
+                     <a href="javascript:Form.showAllShelvesClssType('${menu.id}','courseCaId');" data-code="MIN_UP" class="btn btn-mini btn-default  btn-success">${modelName}</a>
                 </span>
             </p>
             <p class="c">
@@ -29,6 +28,7 @@
                 <span class="t-content" id="itemSecondCodeList">
                      <a href="javascript:Form.showAllShelvesClssType('all','gradeId');" data-code="all" class="btn btn-mini btn-default btn-success">全部</a>
                     <c:forEach items="${grades}" var="grade">
+
                            <a href="javascript:Form.showAllShelvesClssType('${grade.id}','gradeId');" data-code="MIN_UP" class="btn btn-mini btn-default">${grade.name}</a>
                     </c:forEach>
                 </span>
@@ -72,8 +72,13 @@
         </div>
     </div>
 </div>
+
 <%--已上架课程列表--%>
-<div class="mainbackground nopadding">
+
+<div id="modelList">
+
+</div>
+<%--<div class="mainbackground nopadding">
     <div class="heading">
         <h2 class="h5" style="display: inline-block;">已上架课程</h2>
         <div style="margin-top: 10px;text-align:right;padding:0 10px;display: inline-block;margin-left: 75%;">
@@ -81,7 +86,20 @@
         </div>
         <span class="line"></span>
     </div>
-    <div class="user-list">
+
+    <div class="u-wrap classes">
+        <div class="mainbackground nopadding">
+
+        </div>
+
+
+
+    </div><input type="hidden" id="rowCount" value="68266">
+    <input type="hidden" id="pageNo" value="1">
+    <input type="hidden" id="maxCount" value="999999999">
+</div>--%>
+
+  <%--  <div class="user-list">
         <table class="table table-center" id="tableList">
             <tbody>
             <tr data-buy="true">
@@ -127,6 +145,7 @@
 
         <div class="pages pagination"></div>
     </div><input type="hidden" id="rowCount" value="68266"><input type="hidden" id="pageNo" value="1"><input type="hidden" id="maxCount" value="999999999">
+--%>
 </div>
 
 <script type="text/javascript">
