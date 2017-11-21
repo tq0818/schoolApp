@@ -183,9 +183,19 @@
     });
 //    点击全部，则全部选中
     $('#gradeList').children('a').eq(0).click(function(){
+
         var allChildren = $('#gradeList').children('a');
-        for(var i=1; i<allChildren.length;i++){
-            allChildren.eq(i).addClass('active');
+
+        //如果全部有active则删除全部的选中，否则全部选中
+        if($(this).hasClass('active')){
+            for(var i=1; i<allChildren.length;i++){
+                allChildren.eq(i).addClass('active');
+            }
+        }else{
+            for(var i=1; i<allChildren.length;i++){
+                allChildren.eq(i).removeClass('active');
+            }
+
         }
     });
 
