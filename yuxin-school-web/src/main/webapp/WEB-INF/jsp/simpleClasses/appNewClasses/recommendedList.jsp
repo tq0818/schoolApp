@@ -36,6 +36,8 @@
             <%--<span class="rb fr">--%>
                     <%--<a href="<%=rootPath %>/commodity/toAddSpecialPage"  class="btn btn-mini btn-primary"><em class="iconfont">&#xe606;</em>新增专题</a>--%>
             <%--</span>--%>
+        </div>
+        <div>
             <table class="table table-center">
                 <tbody>
                 <tr>
@@ -45,14 +47,14 @@
                 </tr>
                 <c:forEach items="${specialList}" var="special" >
                     <tr>
-                   <%-- <c:if test="${special.originType  eq 1 }">--%>
+                            <%-- <c:if test="${special.originType  eq 1 }">--%>
                         <td>${special.sout }</td>
                         <td>${special.name}</td>
                         <td>
                             <a href="<%=rootPath %>/appNewClasses/pageRecommendation?modelId=${special.id}" class="btn btn-mini btn-primary eidtRecommondList">编辑</a>
                         </td>
-                        </tr>
-                   <%-- </c:if>--%>
+                    </tr>
+                    <%-- </c:if>--%>
                 </c:forEach>
                 </tbody>
             </table>

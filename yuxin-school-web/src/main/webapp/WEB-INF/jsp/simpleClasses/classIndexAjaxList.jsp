@@ -146,7 +146,6 @@
     </div>
 </div>
 <div class="popupOpacity"></div>
-
 <script>
     //关闭弹窗
     $('.closePopupContainer').click(function () {

@@ -9,9 +9,10 @@
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/operate.css" />
 
 
-
-
     <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>--%>
+
+
+
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/fatstyle.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/manage.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/company.css"/>
@@ -19,7 +20,6 @@
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/splitscreen.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/classedit.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/popupwin.css">
-    <%--<link rel="stylesheet" type="text/css" href="<%=rootPath%>/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" />--%>
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/plugins/select2/select2.css"/>
     <script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/plupload.full.min.js"></script>
     <script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/i18n/zh_CN.js"></script>
@@ -157,6 +157,9 @@
         <div>
             <ul class="screeningConditions">
                 <li>
+                    <label>课程标签：</label><input type="text" id="labDesc" value="${searchAndResult.labDesc}">
+                </li>
+                <li>
                     <label>价格：</label><input type="text" value="${searchAndResult.originalPrice}">
                 </li>
                 <li>
@@ -164,18 +167,15 @@
                 </li>
                 <c:if test="${searchAndResult.liveFlag == '1'}">
                     <li>
-                        <label>直播开始时间：</label><input type="text" value="${searchAndResult.lessonDate} ${searchAndResult.lessonTimeStart}:00" disabled="disabled">
+                        <label>开始时间：</label><input type="text" value="${searchAndResult.lessonDate} ${searchAndResult.lessonTimeStart}:00" disabled="disabled">
                     </li>
                 </c:if>
-                <li>
-                    <label>课程标签：</label><input type="text" id="labDesc" value="${searchAndResult.labDesc}">
-                </li>
             </ul>
         </div>
         <div class="submitCourse">
             <button class="btn btn-success" onclick="toShelves('1');">立即上架</button>
             <button class="btn btn-warning" onclick="toShelves('0');">预约上架</button>
-            <input type="text" placeholder="指定上架时间" id="shelvesTime" value="${searchAndResult.reserveTime}">
+            <input type="text" placeholder="指定上架时间" id="shelvesTime" value="${searchAndResult.reserveTime}" readonly>
         </div>
     </div>
         <c:if test="${searchAndResult.liveFlag==1 }">
@@ -203,11 +203,20 @@
 <script type="text/javascript" src="<%=rootPath %>/javascripts/plus/jquery.cookie.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/popupwin.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-<script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script type="text/javascript" src="<%=rootPath %>/plugins/select2/select2.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery-ui.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/common/DateUtils.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/ajaxfileupload.js"></script>
+
+<link rel="stylesheet" href="<%=rootPath %>/stylesheets/jedate.css">
+<script src="<%=rootPath %>/javascripts/plus/jquery.jedate.min.js"></script>
+<script>
+    $.jeDate("#shelvesTime",{
+        format:"YYYY-MM-DD hh:mm:ss",
+        isTime:true,
+        minDate:"2014-09-19 00:00:00"
+    })
+</script>
+
 </body>
 </html>

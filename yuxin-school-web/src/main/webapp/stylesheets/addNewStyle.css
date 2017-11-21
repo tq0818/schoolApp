@@ -17,9 +17,9 @@
 .courseList >li{margin: 5px;}
 .classification>li{display: inline-block;margin: 10px 25px 30px 0;width: 20%;}
 .screeningConditions>li,.screeningConditions>li label{display: inline-block;}
-.screeningConditions>li{margin-right: 35px;}
+.screeningConditions>li{margin-right: 35px;margin-bottom: 20px;}
 .screeningConditions input{border: 1px solid #ebebeb;}
-.submitCourse{margin: 40px;text-align: center;}
+.submitCourse{margin: 5px;text-align: center;}
 .submitCourse button{margin: 10px;}
 /*鎵归噺棣栭〉鎺ㄨ崘*/
 .recommendationNum{width: 20px;height: 18px;}
@@ -29,3 +29,4 @@
 .popupOpacity{display: none;position: fixed;left: 0;top: 0;height: 100%;width: 100%;background: rgba(0,0,0,.6);}
 .closePopupContainer{position: absolute;right: -10px;top: -10px;display: inline-block;height: 20px;width: 20px;color: #fff;
 border-radius: 10px;background: #1a91a3;text-align: center;line-height: 16px;font-size: 18px;font-weight: bold;cursor: pointer;}
+input[disabled]{cursor: not-allowed;}
