@@ -93,10 +93,10 @@
         </div>
         <div>
             <label for="">推荐顺序</label>
-            <input type="text">
+            <input type="text" id="sort" value="">
         </div>
         <div>
-            <button class="btn btn-success">提交推荐</button>
+            <button class="btn btn-success" onclick="saveRecommond();">提交推荐</button>
         </div>
     </div>
 
@@ -130,7 +130,41 @@
         }
     });
 
-
+function saveRecommond(){
+    var ids = "";
+    $("#gradeList").find("a").each(function(){
+        if($(this).hasClass("active")){
+            ids+=$(this).attr("id");
+        }
+    });
+    if(""==ids){
+        alert("请选择推荐学段");
+        return;
+    }
+    var sort=("#sort").val();
+    if(sort){
+        //判断是否填写数字
+        var reg = new RegExp("^[0-9]*$");
+        if(!reg.test(sort)){
+            alert("请输入数字!");
+        }
+        return;
+    }
+    $.ajax({
+        url : rootPath +"/simpleClasses/insertShelvesInfo",
+        type : "post",
+        data : {"ids":ids,"sort":sort},
+        success : function(result) {
+            if("1"==result){
+                alert("推荐成功")
+                $('.popupContainer').hide();
+                $('.popupOpacity').hide();
+            }else{
+                alert("推荐失败")
+            }
+        }
+    });
+}
 
 
 </script>
