@@ -355,6 +355,13 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 				if(null!=comm.getImgUrl()){
 					comm.setCover(comm.getImgUrl());
 				}
+				if("1".equals(comm.getIsShelves()) && null!=comm.getReserveTime()){
+					if(new Date().getTime()>this.getDate(comm.getReserveTime()).getTime()){
+						comm.setIsShelves("1");
+					}else{
+						comm.setIsShelves("0");
+					}
+				}
 		}
 		int rowCount=classTypeMapper.queryCounts(map);
 		PageFinder<ClassTypeVo> pageFinder=new PageFinder<ClassTypeVo>(search.getPage(), search.getPageSize(), rowCount, data);

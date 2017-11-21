@@ -569,6 +569,7 @@
 							success : function(result) {
 								if("1"==result){
 									alert("成功")
+									Form.queryAllCommdityByItemNew(1);
 								}else{
 									alert("失败")
 								}

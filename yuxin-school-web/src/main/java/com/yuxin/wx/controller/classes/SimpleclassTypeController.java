@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -214,6 +215,12 @@ public class SimpleclassTypeController {
 		return linked;
 	}
 
+	public String getDateFormatter(){
+		Date date=new Date();
+		DateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:MM:SS");
+		return df.format(date);
+	}
+
 	@ResponseBody
 	@RequestMapping(value="/insertShelvesInfo",method=RequestMethod.POST)
 	public String insertShelvesInfo(HttpServletRequest request,ClassTypeVo cto){
@@ -222,10 +229,10 @@ public class SimpleclassTypeController {
 			String appId = cto.getAppId();
 			if(!"1".equals(cto.getShelvesFlag())){
 				cto.setReserveTime(cto.getShelvesTime());
-				cto.setShelvesTime(null);
 			}else{
-				cto.setIsShelves("1");
+				cto.setShelvesTime(this.getDateFormatter());
 			}
+			cto.setIsShelves("1");
 			if(null==cto.getShelvesTime()||"".equals(cto.getShelvesTime())){
 				cto.setShelvesTime(null);
 			}
@@ -234,6 +241,9 @@ public class SimpleclassTypeController {
 				classTypeServiceImpl.insertAppShelvesInfo(cto);
 			} else {
 				//更新数据入库
+				cto.setId(Integer.parseInt(appId));
+				shelvesCourseServiceImpl.update(cto);
+
 			}
 			return "1";
 		}catch (Exception e){
@@ -245,8 +255,7 @@ public class SimpleclassTypeController {
 	public String showAppShelvesEdit(HttpServletRequest request,Model model){
 		String ids = request.getParameter("ids");
 		String zhiboFlag = request.getParameter("zhiboFlag");
-//		String zhiboFlag = "1";
-		
+
 		if(null!=ids && ids.split("_").length>0){
 			List<SysDictApp> firstMenus = null;
 			String [] idsStr = ids.split("_");

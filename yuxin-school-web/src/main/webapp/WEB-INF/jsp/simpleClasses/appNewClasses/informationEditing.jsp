@@ -176,7 +176,7 @@
         <div class="submitCourse">
             <button class="btn btn-success" onclick="toShelves('1');">立即上架</button>
             <button class="btn btn-warning" onclick="toShelves('0');">预约上架</button>
-            <input type="text" placeholder="指定上架时间" id="shelvesTime">
+            <input type="text" placeholder="指定上架时间" value='${searchAndResult.reserveTime}' id="shelvesTime">
         </div>
     </div>
         <c:if test="${searchAndResult.liveFlag==1 }">

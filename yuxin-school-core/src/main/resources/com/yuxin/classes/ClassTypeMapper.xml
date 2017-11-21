@@ -550,7 +550,18 @@
 		cml.lesson_name,sct.NAME teacher_name,sct.school_short_name,
 		c.buy_num as actualNum,app.img_url as imgUrl,case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,app.reserve_time,app.id as appId,
 		app.lab_desc
-		FROM class_module_lesson cml
+		FROM (
+				SELECT
+					ml.module_no_id,
+					ml.`lesson_date`,
+					ml.lesson_time_start,
+					ml.lesson_time_end,
+					ml.lesson_name
+				FROM
+					class_module_lesson ml
+				ORDER BY
+					ml.lesson_date ASC
+			) cml
 		JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id`
 		JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id`
 		JOIN class_type ct ON ct.id = ctmr.`class_type_id`
@@ -559,39 +570,42 @@
 		JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
 		left join `app_shelves` app on app.`comdity_id`=c.id
 		where c.id = #{classType.id} and ct.del_flag=0 and c.type='COMMODITY_CLASS'
-		ORDER BY cml.`lesson_date`
+		HAVING MAX(cml.lesson_date) <![CDATA[<=]]> NOW()
+		UNION
+		select
+		ct.*,cml.lesson_date,
+		cml.lesson_time_start,
+		cml.lesson_time_end,
+		cml.lesson_name,sct.NAME teacher_name,sct.school_short_name,
+		c.buy_num as actualNum,app.img_url as imgUrl,case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,app.reserve_time,app.id as appId,
+		app.lab_desc
+		FROM (
+			SELECT
+				ml.module_no_id,
+				ml.lesson_date,
+				ml.lesson_time_start,
+				ml.lesson_time_end,
+				ml.lesson_name
+			FROM
+				class_module_lesson ml
+			WHERE
+				ml.lesson_date <![CDATA[>=]]> now()
+			ORDER BY
+				ml.lesson_date ASC
+			) cml
+		JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id`
+		JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id`
+		JOIN class_type ct ON ct.id = ctmr.`class_type_id`
+		join commodity_product_realtion pr on ct.id = pr.product_id
+		join commodity c on c.id = pr.com_id
+		JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
+		left join `app_shelves` app on app.`comdity_id`=c.id
+		where c.id = #{classType.id} and ct.del_flag=0 and c.type='COMMODITY_CLASS'
+		GROUP BY c.id
 	</select>
 
 	<!-- 查询班型并分页 -->
 	<select id="queryClassTypesByPage" resultMap="classTypeVoResultMap" parameterType="map">
-		<!--SELECT a.*, c.buy_num as actualNum
-        FROM class_type a left join commodity_product_realtion pr on
-		pr.product_id = a.id
-		INNER JOIN commodity c ON c.id = pr.com_id 
-		where a.del_flag=0 and a.company_id = #{classType.companyId} and c.type='COMMODITY_CLASS'
-		<if test="classType.name != null and classType.name != ''">and a.name like '%${classType.name}%'</if>
-		<if test="classType.itemOneId != null and classType.itemOneId != ''">and a.item_one_id = #{classType.itemOneId}</if>
-		<if test="classType.itemSecondId != null and classType.itemSecondId != ''">and a.item_second_id = #{classType.itemSecondId}</if>
-		<if test="classType.publishStatus != null and classType.publishStatus != ''">and a.publish_status = #{classType.publishStatus}</if>
-		<if test="classType.createSchoolId !=null and classType.createSchoolId != ''">and a.create_school_id = #{classType.createSchoolId}</if>
-		<if test="classType.itemTag != null and classType.itemTag != ''">and find_in_set(#{classType.itemTag},a.item_tag)>0</if>
-		<if test="classType.itemTag2 != null and classType.itemTag2 != ''">and find_in_set(#{classType.itemTag2},a.item_tag)>0</if>
-		<if test="classType.teacherId != null and classType.teacherId != ''">and a.teacher_id =${classType.teacherId} </if>
-		<if test="classType.teachersId != null and classType.teachersId != ''">or a.teacher_id in(${classType.teachersId}) </if>
-		<if test="classType.faceFlag != null and classType.faceFlag != ''">and a.face_flag = ${classType.faceFlag}</if>
-		<if test="classType.liveFlag != null and classType.liveFlag != ''">and a.live_flag = ${classType.liveFlag}</if>
-		<if test="classType.videoFlag != null and classType.videoFlag != ''">and a.video_flag = ${classType.videoFlag}</if>
-		<if test="classType.remoteFlag != null and classType.remoteFlag != ''">and a.remote_flag = ${classType.remoteFlag}</if>
-		<if test="classType.itemOneCode != null and classType.itemOneCode != ''">and a.item_one_code = #{classType.itemOneCode}</if>
-		<if test="classType.itemSecondCode != null and classType.itemSecondCode != ''">and a.item_second_code = #{classType.itemSecondCode}</if>
-		<if test="classType.itemThirdCode != null and classType.itemThirdCode != ''">and a.item_third_code = #{classType.itemThirdCode}</if>
-		<if test="classType.itemThirdCode != null and classType.itemThirdCode != ''">and a.origin_type = #{classType.originType}</if>
-		<if test="classType.itemFourthCode != null and classType.itemFourthCode != ''">
-            and a.item_fourth_code in
-            <foreach item="item" index="index" collection="codes" open="(" separator="," close=")">#{item}</foreach>
-        </if>
-		ORDER BY a.subject_class_order is null,a.subject_class_order asc, a.update_time DESC
-		limit #{classType.firstIndex},#{classType.pageSize}-->
 		SELECT a.*, c.buy_num as actualNum,app.img_url as imgUrl,case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,app.reserve_time as reserveTime,app.shelves_time as shelvesTime,app.price as appPrice,app.sale_price as salePrice,app.id as appId
 		FROM class_type a
 		inner join commodity_product_realtion pr on pr.product_id = a.id

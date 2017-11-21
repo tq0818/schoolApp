@@ -106,7 +106,7 @@
 						</c:if>
 						<c:if test="${allCommdotity.isShelves == '' or allCommdotity.isShelves == 0}">
 							<%--<a href="javascript:Form.classTypeOnsale('${allCommdotity.appId}_${allCommdotity.id}');" class="btn btn-sm btn-default upSale">上架</a>--%>
-							<a href="javascript:toOnsaleEdit('${allCommdotity.appId}_${allCommdotity.id}');" class="btn btn-sm btn-default upSale eidtShelvesCourses">上架</a>
+							<a href="javascript:toOnsaleEdit('${allCommdotity.appId}_${allCommdotity.id}','${allCommdotity.liveFlag}');" class="btn btn-sm btn-default upSale eidtShelvesCourses">上架</a>
 							<a href="javascript:Form.editClassType(${allCommdotity.id });" class="btn btn-sm btn-primary">管理</a>
 						</c:if>
 						<c:if test="${allCommdotity.publishStatus=='CLASS_UNPUBLISHED'}">
