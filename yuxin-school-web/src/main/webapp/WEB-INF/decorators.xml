@@ -539,8 +539,7 @@
         <pattern>/specialModel/getModelList</pattern>
         <!--批量首页推荐-->
         <pattern>/appNewClasses/pageRecommendation</pattern>
-        <!--首页推荐-->
-        <pattern>/appNewClasses/homeRecommendation</pattern>
+
 
     </decorator>
 
