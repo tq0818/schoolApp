@@ -139,8 +139,8 @@
 <%--弹出框--%>
 <div class="popupContainer">
 	<span class="closePopupContainer">x</span>
-	<div class="aaaaaaaa">
-        <div id="bbbbbbbb">
+	<div class="shelvesdetilascontainer">
+        <div id="shelvesdetils">
 
         </div>
     </div>
