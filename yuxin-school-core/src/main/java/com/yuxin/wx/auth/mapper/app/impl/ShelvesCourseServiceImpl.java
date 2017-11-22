@@ -57,6 +57,12 @@ public class ShelvesCourseServiceImpl implements IShelvesCourseService{
 		
 		return shelvesCourseMapper.findOne(id);
 	}
+
+	@Override
+	public void updateAll(ClassTypeVo classTypeVo) {
+		shelvesCourseMapper.updateAll(classTypeVo);
+		
+	}
 	
 
 }

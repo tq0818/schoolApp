@@ -74,7 +74,6 @@
         </div>
     </div>
 
-
     <script type="text/javascript" src="<%=rootPath %>/javascripts/app/shelvesCourses.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/classes.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
