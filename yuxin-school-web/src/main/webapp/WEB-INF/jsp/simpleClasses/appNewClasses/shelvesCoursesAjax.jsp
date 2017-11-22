@@ -81,7 +81,7 @@
                 <td>
                     <span><a href="javascript:;" class="btn btn-primary btn-sm">下架</a></span>
                     <span><a href="javascript: toRcommon('${course.courseCaId}','${course.liveFlag}','${course.id}');" class="btn btn-primary btn-sm recommendCourse">推荐</a></span>
-                    <span><a href="##" class="btn btn-primary btn-sm editCourse">编辑</a></span>
+                    <span><a href="javascript:toOnsaleEdit('${course.appId}_${course.id}','${course.liveFlag}');" class="btn btn-primary btn-sm editCourse">编辑</a></span>
                 </td>
             </tr>
              </c:forEach> 
@@ -94,22 +94,37 @@
 <%--弹出框--%>
 <div class="popupContainer">
     <span class="closePopupContainer">x</span>
-    <div class="toRecommon">
-        <div id="toRecommon">
-
+    <div class="toRcommon">
+        <div id="toRcommon">
+1
         </div>
     </div>
 </div>
 <div class="popupOpacity"></div>
 
+<%--弹出框--%>
+<div class="popupContainerEdit">
+    <span class="closePopupContainer">x</span>
+    <div class="shelves">
+        <div id="shelvesList">
+2
+        </div>
+    </div>
+</div>
+
+
 <script>
     $('.editCourse').click(function(){
+        $('.popupContainerEdit').show();
+        $('.popupOpacity').show();
+    });
+    $('.recommendCourse').click(function(){
         $('.popupContainer').show();
         $('.popupOpacity').show();
     });
-    $('.recommentCourse').click(function(){
-        $('.popupContainer').show();
-        $('.popupOpacity').show();
+
+    $('.closePopupContainer').click(function(){
+        $('.popupContainerEdit').hide();
     });
 
 
@@ -135,4 +150,8 @@
     }
 
 </script>
+
+
+<script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/shelvesCoursesAjax.js"></script>
+
 </html>
