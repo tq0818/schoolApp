@@ -171,10 +171,13 @@
         if(batchReleaseArray.length>0){
             $.ajax({
                 type : 'post',
-                url : '/simpleClasses/stopClassOnsaleAll',
+                
+                url : rootPath + '/simpleClasses/stopClassOnsaleAll',
                 data : {
-                    batchReleaseArray : batchReleaseArray
+                    "batchReleaseArray" : batchReleaseArray
                 },
+                dataType : 'json',
+                traditional: true,
                 success : function(data){
                     if(data){
                         alert("成功");
