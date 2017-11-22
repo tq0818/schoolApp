@@ -55,6 +55,7 @@ public class QueQuestion extends BaseEntity {
 	private List<Integer> questionNotins;/* 课程分类时，标签=学科 */
 
 	private String searchKey;// 搜索条件
+	private Integer questionscore; /* 问题积分 */
 
 	// Constructor
 	public QueQuestion() {
@@ -394,4 +395,13 @@ public class QueQuestion extends BaseEntity {
 	public void setSearchKey(String searchKey) {
 		this.searchKey = searchKey;
 	}
+
+	public Integer getQuestionscore() {
+		return questionscore;
+	}
+
+	public void setQuestionscore(Integer questionscore) {
+		this.questionscore = questionscore;
+	}
+	
 }

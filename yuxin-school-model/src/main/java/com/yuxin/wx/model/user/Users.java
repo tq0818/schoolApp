@@ -49,7 +49,7 @@ public class Users extends BaseEntity {
 	private String  schoolName;
 	private String domain;/*公司域名*/
 	private Integer proxyOrgId;
-
+	private Integer userscore;/*用户积分*/
 	// Constructor
 	public Users() {
 	}
@@ -419,4 +419,13 @@ public class Users extends BaseEntity {
 	public void setProxyOrgId(Integer proxyOrgId) {
 		this.proxyOrgId = proxyOrgId;
 	}
+
+	public Integer getUserscore() {
+		return userscore;
+	}
+
+	public void setUserscore(Integer userscore) {
+		this.userscore = userscore;
+	}
+	
 }
