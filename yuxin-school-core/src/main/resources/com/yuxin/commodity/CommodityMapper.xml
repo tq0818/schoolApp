@@ -532,13 +532,13 @@
 		join sys_dict_app sys7 on sys7.id=app.`type_id`
 		where  ct.del_flag=0 and c.type='COMMODITY_CLASS'
 		and c.status = 1
-		<if test="categoryid !=null and categoryid!=''">and app.category_id = #{categoryid}</if>
-		<if test="gradeId !=null and gradeId!='' ">and app.grade_id= #{gradeId}</if>
-		<if test="subjectid !=null and subjectid!=''">and app.subject_id = #{subjectid}</if>
-		<if test="knowId !=null and knowId!='' ">and app.knowledge_id= #{knowId}</if>
-		<if test="typeId !=null and typeId!=''">and app.type_id = #{typeId}</if>
-		<if test="knowledgeid !=null and knowledgeid!='' ">and app.knowledge_pro_id= #{knowledgeid}</if>
-		<if test="stageid !=null and stageid!='' ">and app.stage_id= #{stageid}</if>
+		<if test="categoryid != null and categoryid != ''">and app.category_id = #{categoryid}</if>
+		<if test="gradeid != null and gradeid != ''">and app.grade_id = #{gradeid}</if>
+		<if test="subjectid != null and subjectid != ''">and app.subject_id = #{subjectid}</if>
+		<if test="knowledgeProid != null and knowledgeProid != ''">and app.knowledge_pro_id = #{knowledgeProid}</if>
+		<if test="knowledgeid != null and knowledgeid != ''">and app.knowledge_id = #{knowledgeid}</if>
+		<if test="stageid != null and stageid != ''">and app.stage_id = #{stageid}</if>
+		<if test="typeCode != null and typeCode != ''">and app.type_id = #{typeCode}</if>
 	</select>
 
 </mapper>
