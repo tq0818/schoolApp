@@ -150,5 +150,25 @@ function toShelves(flag){
 		}
 	});			
 }
-
+function stopClassOnsale(id){
+	$.confirm("您确定要下架此课程?下架后学员将无法再报名此课程。",function(a){
+		if(a==true){
+			$.ajax({
+				url : rootPath + "/simpleClasses/stopClassOnsale",
+				type : "post",
+				data : {"id":id},
+				success : function(result) {
+					if("1"==result){
+						alert("成功")
+						Form.showAllShelvesClssType('all','courseCaId');
+					}else{
+						alert("失败")
+					}
+				}
+			});
+		}else{
+			return;
+		}
+	});
+}
 

@@ -1813,6 +1813,11 @@ public class SimpleclassTypeController {
 		classTypeServiceImpl.update(classType);
 		return classTypeServiceImpl.findClassTypeById(classType.getId());
 	}
+	/***
+	 * 下架
+	 * @param request
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="/stopClassOnsale",method=RequestMethod.POST)
 	public String stopClassOnsale(HttpServletRequest request){
@@ -1821,10 +1826,32 @@ public class SimpleclassTypeController {
 			ClassTypeVo classTypeVo = new ClassTypeVo();
 			classTypeVo.setId(id);
 			classTypeVo.setIsShelves("0");
-			shelvesCourseServiceImpl.update(classTypeVo);
+			shelvesCourseServiceImpl.updateAll(classTypeVo);
 			return "1";
 		}catch (Exception e){
 			return "0";
+		}
+	}
+	/***
+	 * 批量下架
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/stopClassOnsaleAll",method=RequestMethod.POST)
+	public Integer stopClassOnsaleAll(Integer[] ids){
+		try {
+		List <ClassTypeVo> list = new ArrayList();
+		ClassTypeVo classTypeVo = new ClassTypeVo();
+		for (Integer integer : ids) {
+			classTypeVo.setAppId(String.valueOf(integer));
+			classTypeVo.setIsShelves("0");
+			shelvesCourseServiceImpl.update(classTypeVo);
+		}	
+			
+			return 1;
+		}catch (Exception e){
+			return 0;
 		}
 	}
 	

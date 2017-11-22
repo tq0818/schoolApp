@@ -21,6 +21,8 @@ public interface IShelvesCourseService {
 			);
 	
 	void update (ClassTypeVo classTypeVo);
+	void updateAll (ClassTypeVo classTypeVo);
+//	void updateAll (List<ClassTypeVo> list);
 	
 	ShelvesCourse findOne(Serializable id);
 }

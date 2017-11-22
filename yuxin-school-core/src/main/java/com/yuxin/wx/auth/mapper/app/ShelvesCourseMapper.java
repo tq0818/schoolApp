@@ -14,6 +14,8 @@ public interface ShelvesCourseMapper{
 	List<ClassTypeVo> queryShelvesCoursesByPage(Map<String, Object> map);
 	
 	void update(ClassTypeVo classTypeVo);
+	void updateAll(ClassTypeVo classTypeVo);
+//	void updateAll(List<ClassTypeVo> list);
 	
 	ShelvesCourse findOne(Serializable id);
 }

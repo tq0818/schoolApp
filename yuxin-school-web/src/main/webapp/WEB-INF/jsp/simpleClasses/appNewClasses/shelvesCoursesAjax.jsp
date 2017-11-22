@@ -16,12 +16,12 @@
     <div class="heading">
         <h2 class="h5" style="display: inline-block;">已上架课程</h2>
         <div class="batchRelease">
-            <span><a href="javascript:;" class="btn btn-primary signUpMany">批量下架</a></span>
+            <span><a href="javascript:;" class="btn btn-primary signUpMany" id="batchRelease">批量下架</a></span>
         </div>
         <span class="line"></span>
     </div>
     <div class="user-list">
-        <table class="table table-center">
+        <table class="table table-center" id="batchReleaseList">
             <tbody>
             <tr>
                 <th width="1%"><input type="checkbox" class="checkboxAll"></th>
@@ -78,11 +78,12 @@
                 	</c:otherwise>
 				</c:choose>
                 <td>
-                    <span><a href="javascript:;" class="btn btn-primary btn-sm">下架</a></span>
+                    <a href="javascript:stopClassOnsale(${course.appId });" class="btn btn-primary btn-sm">下架</a>
                     <span><a href="javascript: toRcommon('${course.courseCaId}','${course.liveFlag}','${course.id}');" class="btn btn-primary btn-sm recommendCourse">推荐</a></span>
                     <span><a href="javascript:toOnsaleEdit('${course.appId}_${course.id}','${course.liveFlag}');" class="btn btn-primary btn-sm editCourse">编辑</a></span>
                 </td>
             </tr>
+
              </c:forEach> 
             </tbody>
         </table>
@@ -149,5 +150,25 @@
 
 
 <script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/shelvesCoursesAjax.js"></script>
+
+<script>
+    //批量下架調用接口
+    $('#batchRelease').click(function(){
+        var batchRelease = {};
+        var batchReleaseList = $('.batchReleaseList').
+
+        $.ajax({
+            type : 'post',
+            url : '',
+            data : {
+
+            },
+            success : function(data){
+                alert("成功");
+            }
+
+        });
+    });
+</script>
 
 </html>
