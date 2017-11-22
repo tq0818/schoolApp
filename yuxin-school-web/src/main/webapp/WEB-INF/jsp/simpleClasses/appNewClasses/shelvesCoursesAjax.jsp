@@ -80,8 +80,8 @@
 				</c:choose>
                 <td>
                     <span><a href="javascript:;" class="btn btn-primary btn-sm">下架</a></span>
-                    <span><a href="javascript:;" class="btn btn-primary btn-sm">推荐</a></span>
-                    <span><a href="/appNewClasses/InformationEditing" class="btn btn-primary btn-sm">编辑</a></span>
+                    <span><a href="javascript:;" class="btn btn-primary btn-sm recommentCourse">推荐</a></span>
+                    <span><a href="##" class="btn btn-primary btn-sm editCourse">编辑</a></span>
                 </td>
             </tr>
              </c:forEach> 
@@ -91,4 +91,48 @@
         <div class="pages pagination"></div>
     </div><input type="hidden" id="rowCount" value="68266"><input type="hidden" id="pageNo" value="1"><input type="hidden" id="maxCount" value="999999999">
 </div>
+<%--弹出框--%>
+<div class="popupContainer">
+    <span class="closePopupContainer">x</span>
+    <div class="toRecommon">
+        <div id="toRecommon">
+
+        </div>
+    </div>
+</div>
+<div class="popupOpacity"></div>
+
+<script>
+    $('.editCourse').click(function(){
+        $('.popupContainer').show();
+        $('.popupOpacity').show();
+    });
+    $('.recommentCourse').click(function(){
+        $('.popupContainer').show();
+        $('.popupOpacity').show();
+    });
+
+
+
+    function toRcommon(categerorId,zhiboFlag,commodityId){
+
+        $.ajax({
+            url :"/appNewClasses/homeRecommendation",
+            type : "post",
+            data:{"categerorId":categerorId,"zhiboFlag":zhiboFlag,"commodityId":commodityId},
+            beforeSend:function(XMLHttpRequest){
+                $(".loading").show();
+                $(".loading-bg").show();
+            },
+            success : function(result) {
+                $("#toRecommon").html(result);
+            },
+            complete:function(XMLHttpRequest,textStatus){
+                $(".loading").hide();
+                $(".loading-bg").hide();
+            }
+        });
+    }
+
+</script>
 </html>  
