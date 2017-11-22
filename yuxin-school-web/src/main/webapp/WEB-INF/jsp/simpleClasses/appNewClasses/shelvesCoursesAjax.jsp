@@ -8,12 +8,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--已上架课程列表--%>
-<html lang="eeee">
+<html lang="en">
 <head>
  <%@include file="/decorators/import.jsp" %>
  
 </head>
-<div class="mainbackground nopadding alreadyCourse">
     <div class="heading">
         <h2 class="h5" style="display: inline-block;">已上架课程</h2>
         <div class="batchRelease">
@@ -26,20 +25,20 @@
             <tbody>
             <tr>
                 <th width="1%"><input type="checkbox" class="checkboxAll"></th>
-                <th width="5%">课程图片</th>
+                <th width="6%">课程图片</th>
                 <th width="5%">课程名称</th>
-                <th width="10%">学段</th>
+                <th width="5%">学段</th>
                 <th width="5%">学科</th>
                 <th width="10%">知识点专题</th>
                 <th width="10%">知识点</th>
                 <th width="5%">阶段</th>
                 <th width="6%">类型</th>
-                <th width="7%">上架时间</th>
+                <th width="8%">上架时间</th>
                 <th width="8%">直播时间</th>
                 <th width="5%">学习人数</th>
                 <th width="5%">价格</th>
                 <th width="5%">实际价格</th>
-                <th width="16%">操作</th>
+                <th width="20%">操作</th>
             </tr>
             <c:forEach items="${courseList}" var="course" varStatus="status"> 
             <tr>
@@ -90,7 +89,6 @@
 
         <div class="pages pagination"></div>
     </div><input type="hidden" id="rowCount" value="68266"><input type="hidden" id="pageNo" value="1"><input type="hidden" id="maxCount" value="999999999">
-</div>
 <%--弹出框--%>
 <div class="popupContainer">
     <span class="closePopupContainer">x</span>
@@ -111,8 +109,6 @@
         </div>
     </div>
 </div>
-
-
 <script>
     $('.editCourse').click(function(){
         $('.popupContainerEdit').show();
