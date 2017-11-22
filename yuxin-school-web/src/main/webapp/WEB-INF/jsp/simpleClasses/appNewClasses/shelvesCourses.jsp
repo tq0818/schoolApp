@@ -54,7 +54,7 @@
             <p class="c">
                 <span class="t-title">阶段</span>
                 <span class="t-content" id="stageId">
-                	<a href="Form.showAllShelvesClssType('all','stageId');" ids="all" class="btn btn-mini btn-default btn-success">全部</a>
+                	<a href="javascript:Form.showAllShelvesClssType('all','stageId');" ids="all" class="btn btn-mini btn-default btn-success">全部</a>
                 </span>
             </p>
             <p class="c">

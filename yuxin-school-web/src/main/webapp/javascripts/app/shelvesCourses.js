@@ -746,6 +746,16 @@
 					fillType(datas);
 					queryClassTypesShelves(datas);
 					return;
+				}else if("stageId"==typeStr || "typeId"==typeStr){
+					fillKnowPro(datas);
+					fillGrade(datas);
+					fillSubject(datas);
+					fillKnowPro(datas);
+					fillKnow(datas);
+					fillStage(datas);
+					fillType(datas);
+					queryClassTypesShelves(datas);
+					return;
 				}
 				$.ajax({
 					url :  rootPath +"/simpleClasses/querySlibMenu",
@@ -887,6 +897,7 @@ function queryClassTypesShelves(datas){
 }
 
 function fillCategory(datas){
+	var categoryid = '';
 	$("#courseCaId").find("a").each(function(i){
 		if($(this).hasClass('btn-success')){
 			categoryid=$(this).attr("data-code");
@@ -898,6 +909,7 @@ function fillCategory(datas){
 }
 
 function fillGrade(datas){
+	var gradeid = '';
 	$("#gradeId").find("a").each(function(i){
 		if($(this).hasClass('btn-success')){
 			gradeid=$(this).attr("data-code");
@@ -909,6 +921,7 @@ function fillGrade(datas){
 }
 
 function fillSubject(datas){
+	var subjectid = '';
 	$("#subjectId").find("a").each(function(i){
 		if($(this).hasClass('btn-success')){
 			subjectid=$(this).attr("data-code");
@@ -920,6 +933,7 @@ function fillSubject(datas){
 }
 
 function fillKnowPro(datas){
+	var knowledgeProid = '';
 	$("#kwonProId").find("a").each(function(i){
 		if($(this).hasClass('btn-success')){
 			knowledgeProid=$(this).attr("data-code");
@@ -931,17 +945,19 @@ function fillKnowPro(datas){
 }
 
 function fillKnow(datas){
+	var knowledgeid = '';
 	$("#knowId").find("a").each(function(i){
 		if($(this).hasClass('btn-success')){
-			knowId=$(this).attr("data-code");
+			knowledgeid=$(this).attr("data-code");
 		}
 	});
-	if(knowId!='all'){
-		datas.knowId=knowId;
+	if(knowledgeid!='all'){
+		datas.knowledgeid=knowledgeid;
 	}
 }
 
 function fillStage(datas){
+	var stageid = '';
 	$("#stageId").find("a").each(function(i){
 		if($(this).hasClass('btn-success')){
 			stageid=$(this).attr("data-code");
@@ -953,6 +969,7 @@ function fillStage(datas){
 }
 
 function fillType(datas){
+	var typeCode = '';
 	$("#typeId").find("a").each(function(i){
 		if($(this).hasClass('btn-success')){
 			typeCode=$(this).attr("data-code");
