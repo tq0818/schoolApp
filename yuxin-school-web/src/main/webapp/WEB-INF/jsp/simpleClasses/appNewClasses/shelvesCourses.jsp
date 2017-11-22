@@ -67,7 +67,7 @@
     </div>
     </div>
     <div class="u-wrap classes">
-        <div class="mainbackground nopadding">
+        <div class="mainbackground nopadding alreadyCourse">
 			<div id="ShelvesCourseDetailList">
 			
 			</div>
