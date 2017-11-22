@@ -1820,7 +1820,7 @@ public class SimpleclassTypeController {
 			ClassTypeVo classTypeVo = new ClassTypeVo();
 			classTypeVo.setId(id);
 			classTypeVo.setIsShelves("0");
-			shelvesCourseServiceImpl.updateAll(classTypeVo);
+			shelvesCourseServiceImpl.update(classTypeVo);
 			return "1";
 		}catch (Exception e){
 			return "0";
@@ -1838,7 +1838,7 @@ public class SimpleclassTypeController {
 		List <ClassTypeVo> list = new ArrayList();
 		ClassTypeVo classTypeVo = new ClassTypeVo();
 		for (Integer integer : ids) {
-			classTypeVo.setAppId(String.valueOf(integer));
+			classTypeVo.setId(integer);
 			classTypeVo.setIsShelves("0");
 			shelvesCourseServiceImpl.update(classTypeVo);
 		}	
