@@ -24,7 +24,7 @@
 /*鎵归噺棣栭〉鎺ㄨ崘*/
 .recommendationNum{width: 20px;height: 18px;}
 /*寮瑰嚭妗*/
-.popupContainer,.popupContainerEdit{box-shadow: 0 10px 10px 5px;padding: 10px 20px;border-radius: 3px;display: none;z-index: 100;position: fixed;
+.popupContainer,.popupContainerEdit,.popupContainerRecommendation{box-shadow: 0 10px 10px 5px;padding: 10px 20px;border-radius: 3px;display: none;z-index: 100;position: fixed;
     left: 50%;top: 10%;width: 800px;margin-left: -400px;background: #fff;height: 530px;}
 .popupOpacity{display: none;position: fixed;left: 0;top: 0;height: 100%;width: 100%;background: rgba(0,0,0,.6);}
 .closePopupContainer{position: absolute;right: -10px;top: -10px;display: inline-block;height: 20px;width: 20px;color: #fff;
@@ -35,3 +35,7 @@ input[disabled]{cursor: not-allowed;}
 .uploadRecommend{text-align: center;}
 .batchRelease{margin-top: 10px;text-align:right;padding:0 10px;display: inline-block;margin-left: 74%;}
 .alreadyCourse{padding: 0 !important;}
+.popupContainerRecommendation{height: 300px;top: 25%;}
+.sureBatchRecommendation{text-align: center;margin-top: 50px;}
+.recommendBatchRecommendation{margin-top: 30px;}
+
