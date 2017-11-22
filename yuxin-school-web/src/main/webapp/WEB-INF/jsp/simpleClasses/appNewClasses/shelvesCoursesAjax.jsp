@@ -125,9 +125,6 @@
     $('.closePopupContainer').click(function(){
         $('.popupContainerEdit').hide();
     });
-
-
-
     function toRcommon(categerorId,zhiboFlag,commodityId){
 
         $.ajax({
@@ -147,12 +144,9 @@
             }
         });
     }
-
 </script>
 
-
 <script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/shelvesCoursesAjax.js"></script>
-
 <script>
     //批量下架調用接口
     $('#batchRelease').click(function(){
@@ -171,30 +165,32 @@
         }
 
         if(batchReleaseArray.length>0){
-            $.ajax({
-                type : 'post',
-                
-                url : rootPath + '/simpleClasses/stopClassOnsaleAll',
-                data : {
-                    "batchReleaseArray" : batchReleaseArray
-                },
-                dataType : 'json',
-                traditional: true,
-                success : function(data){
-                    if(data){
-                        alert("成功");
-                    }else {
-                        alert("失败");
-                    }
+            $.confirm("确认下架所选课程？",function(s){
+                if(s==true){
+                    $.ajax({
+                        type : 'post',
+
+                        url : rootPath + '/simpleClasses/stopClassOnsaleAll',
+                        data : {
+                            "batchReleaseArray" : batchReleaseArray
+                        },
+                        dataType : 'json',
+                        traditional: true,
+                        success : function(data){
+                            if(data=='1'){
+                                alert('下架课程成功！')
+                            }else {
+                                alert("下架课程失败!");
+                            }
+                        }
+                    });
                 }
             });
         }else {
-            alert("请勾选要删除的课程");
+            alert("请勾选要下架的课程！");
         }
 
     });
-
-
     $(document).ready(function(){
         $(".pagination").pagination('${pageFinder.rowCount}', {
             next_text : "下一页",
