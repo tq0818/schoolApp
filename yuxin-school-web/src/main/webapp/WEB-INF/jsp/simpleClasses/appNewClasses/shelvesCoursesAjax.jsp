@@ -13,10 +13,10 @@
  <%@include file="/decorators/import.jsp" %>
  
 </head>
-<div class="mainbackground nopadding">
+<div class="mainbackground nopadding alreadyCourse">
     <div class="heading">
         <h2 class="h5" style="display: inline-block;">已上架课程</h2>
-        <div style="margin-top: 10px;text-align:right;padding:0 10px;display: inline-block;margin-left: 75%;">
+        <div class="batchRelease">
             <span><a href="javascript:;" class="btn btn-primary signUpMany">批量下架</a></span>
         </div>
         <span class="line"></span>
@@ -36,10 +36,10 @@
                 <th width="6%">类型</th>
                 <th width="7%">上架时间</th>
                 <th width="8%">直播时间</th>
-                <th width="3%">学习人数</th>
-                <th width="3%">价格</th>
-                <th width="3%">实际价格</th>
-                <th width="20%">操作</th>
+                <th width="5%">学习人数</th>
+                <th width="5%">价格</th>
+                <th width="5%">实际价格</th>
+                <th width="16%">操作</th>
             </tr>
             <c:forEach items="${courseList}" var="course" varStatus="status"> 
             <tr>
@@ -80,8 +80,8 @@
 				</c:choose>
                 <td>
                     <span><a href="javascript:;" class="btn btn-primary btn-sm">下架</a></span>
-                    <span><a href="javascript:toRcommon('${course.courseCaId}','${course.liveFlag}','${course.id}');" class="btn btn-primary btn-sm recommendCourse">推荐</a></span>
-                    <span><a href="##" class="btn btn-primary btn-sm editCourse">编辑</a></span>
+                    <span><a href="javascript: toRcommon('${course.courseCaId}','${course.liveFlag}','${course.id}');" class="btn btn-primary btn-sm recommendCourse">推荐</a></span>
+                    <span><a href="javascript:toOnsaleEdit('${course.appId}_${course.id}','${course.liveFlag}');" class="btn btn-primary btn-sm editCourse">编辑</a></span>
                 </td>
             </tr>
              </c:forEach> 
@@ -102,14 +102,29 @@
 </div>
 <div class="popupOpacity"></div>
 
+<%--弹出框--%>
+<div class="popupContainerEdit">
+    <span class="closePopupContainer">x</span>
+    <div class="shelves">
+        <div id="shelvesList">
+
+        </div>
+    </div>
+</div>
+
+
 <script>
     $('.editCourse').click(function(){
-        $('.popupContainer').show();
+        $('.popupContainerEdit').show();
         $('.popupOpacity').show();
     });
     $('.recommendCourse').click(function(){
         $('.popupContainer').show();
         $('.popupOpacity').show();
+    });
+
+    $('.closePopupContainer').click(function(){
+        $('.popupContainerEdit').hide();
     });
 
 
@@ -135,4 +150,8 @@
     }
 
 </script>
+
+
+<script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/shelvesCoursesAjax.js"></script>
+
 </html>
