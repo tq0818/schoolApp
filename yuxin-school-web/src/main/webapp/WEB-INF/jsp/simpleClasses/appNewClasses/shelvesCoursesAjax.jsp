@@ -42,7 +42,7 @@
             </tr>
             <c:forEach items="${courseList.data}" var="course" varStatus="status">
             <tr>
-                <td><input type="checkbox" class="signUpMany" uname="sdsdsd" value=""></td>
+                <td><input type="checkbox" class="signUpMany" uname="sdsdsd" value="" data-id="${course.appId }"></td>
                 <c:choose>
                 	<c:when test="${course.imgUrl eq ''}">  
                 		<td><img src="${course.imgUrl}" alt="" class="shelvesIcon"></td>
@@ -156,20 +156,42 @@
 <script>
     //批量下架調用接口
     $('#batchRelease').click(function(){
-        var batchRelease = {};
-        var batchReleaseList = $('.batchReleaseList').
+        //判断哪些复选框被选中
+        var batchReleaseList = $('#batchReleaseList').find('tr');
+        var batchReleaseArray = [];
+        var batchReleaseListId = '';
+        var batchReleaseListInput = '';
 
-        $.ajax({
-            type : 'post',
-            url : '',
-            data : {
-
-            },
-            success : function(data){
-                alert("成功");
+        for(var i=1;i<batchReleaseList.length;i++){
+            batchReleaseListInput = batchReleaseList.eq(i).find('.signUpMany');
+            if(batchReleaseListInput.prop('checked')){
+                batchReleaseListId = batchReleaseListInput.attr('data-id');
+                batchReleaseArray.push(Number(batchReleaseListId));
             }
+        }
 
-        });
+        if(batchReleaseArray.length>0){
+            $.ajax({
+                type : 'post',
+                
+                url : rootPath + '/simpleClasses/stopClassOnsaleAll',
+                data : {
+                    "batchReleaseArray" : batchReleaseArray
+                },
+                dataType : 'json',
+                traditional: true,
+                success : function(data){
+                    if(data){
+                        alert("成功");
+                    }else {
+                        alert("失败");
+                    }
+                }
+            });
+        }else {
+            alert("请勾选要删除的课程");
+        }
+
     });
 
 
@@ -193,5 +215,4 @@
         });
     });
 </script>
-
 </html>

@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.imageio.ImageIO;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -58,6 +59,7 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.util.IOUtils;
 import com.yuxin.wx.api.classes.IClassModuleLessonService;
 import com.yuxin.wx.api.classes.IClassModuleNoService;
 import com.yuxin.wx.api.classes.IClassModuleService;
@@ -1839,19 +1841,19 @@ public class SimpleclassTypeController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/stopClassOnsaleAll",method=RequestMethod.POST)
-	public Integer stopClassOnsaleAll(Integer[] ids){
+	public String stopClassOnsaleAll(HttpServletRequest request){
 		try {
-		List <ClassTypeVo> list = new ArrayList();
-		ClassTypeVo classTypeVo = new ClassTypeVo();
-		for (Integer integer : ids) {
-			classTypeVo.setId(integer);
-			classTypeVo.setIsShelves("0");
-			shelvesCourseServiceImpl.update(classTypeVo);
-		}	
-			
-			return 1;
+			String[] s = request.getParameterValues("batchReleaseArray"); 
+			ClassTypeVo classTypeVo = new ClassTypeVo();
+		        for (int i=0;i<s.length;i++){ 
+		        	classTypeVo.setId(Integer.valueOf(s[i]));
+		        	classTypeVo.setIsShelves("0");
+		        	shelvesCourseServiceImpl.update(classTypeVo);
+		        	
+		        }
+			return "1";
 		}catch (Exception e){
-			return 0;
+			return "0";
 		}
 	}
 	
