@@ -34,7 +34,11 @@ public class QuestionAnswer extends BaseEntity {
 	private String name;			/*回复人*/
 	private String imgurl;			/*头像地址*/
 	private String times;			/*时间*/
-
+	private int likeanswer;     /*点赞数 */
+	private Integer isThumbs;//是否被点赞
+	private Integer th_user_id;//点赞用户
+	private Integer thumbsFlag;//0未点赞，1为点赞
+	private Integer isAdopt;//该用户的回答是否被采纳
 	// Constructor
 	public QuestionAnswer() {
 	}
@@ -215,4 +219,45 @@ public class QuestionAnswer extends BaseEntity {
 	public void setReplyUserType(String replyUserType) {
 		this.replyUserType = replyUserType;
 	}
+
+	public int getLikeanswer() {
+		return likeanswer;
+	}
+
+	public void setLikeanswer(int likeanswer) {
+		this.likeanswer = likeanswer;
+	}
+
+	public Integer getIsThumbs() {
+		return isThumbs;
+	}
+
+	public void setIsThumbs(Integer isThumbs) {
+		this.isThumbs = isThumbs;
+	}
+
+	public Integer getTh_user_id() {
+		return th_user_id;
+	}
+
+	public void setTh_user_id(Integer th_user_id) {
+		this.th_user_id = th_user_id;
+	}
+
+	public Integer getThumbsFlag() {
+		return thumbsFlag;
+	}
+
+	public void setThumbsFlag(Integer thumbsFlag) {
+		this.thumbsFlag = thumbsFlag;
+	}
+
+	public Integer getIsAdopt() {
+		return isAdopt;
+	}
+
+	public void setIsAdopt(Integer isAdopt) {
+		this.isAdopt = isAdopt;
+	}
+	
 }
