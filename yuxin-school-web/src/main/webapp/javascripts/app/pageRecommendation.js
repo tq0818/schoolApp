@@ -782,7 +782,7 @@
                 return;
             }
             $.ajax({
-                url: "/specialModel/queryMenu",
+                url: rootPath +"/specialModel/queryMenu",
                 type: "post",
                 data: {"parentId": id, "typeId": typeStr},
                 success: function (result) {
@@ -859,11 +859,19 @@
                         if(typeCode!='all'){
                             datas.typeCode=typeCode;
                         }
+                        $("#stageId").find("a").each(function(i){
+                            if($(this).hasClass('btn-success')){
+                                stageid=$(this).attr("data-code");
+                            }
+                        });
+                        if(stageid!='all'){
+                            datas.stageid=stageid;
+                        }
                     } else if ("subjectId" == typeStr) {
                         //更新知识点专题
                         html += allHtml.replace("allToAll", "kwonProId");
                         for (var i = 0; i < data.length; i++) {
-                            html += '<a href="javascript:Form.showAllShelvesClssType(\'' + data[i].id + '\',\'kwonProId\');" data-code="all" class="btn btn-mini btn-default">' + data[i].name + '</a>';
+                            html += '<a href="javascript:Form.showAllShelvesClssType(\'' + data[i].id + '\',\'kwonProId\');" data-code=\'' + data[i].id + '\' class="btn btn-mini btn-default">' + data[i].name + '</a>';
                         }
                         $("#kwonProId").html(html);
                         $("#kwonId").html(allHtml.replace("allToAll", "kwonId"));
@@ -914,7 +922,7 @@
                         //更新知识点
                         html += allHtml.replace("allToAll", "knowId");
                         for (var i = 0; i < data.length; i++) {
-                            html += '<a href="javascript:Form.showAllShelvesClssType(\'' + data[i].id + '\',\'knowId\');" data-code="all" class="btn btn-mini btn-default">' + data[i].name + '</a>';
+                            html += '<a href="javascript:Form.showAllShelvesClssType(\'' + data[i].id + '\',\'knowId\');" data-code=\'' + data[i].id + '\' class="btn btn-mini btn-default">' + data[i].name + '</a>';
                         }
                         $("#knowId").html(html);
 

@@ -19,17 +19,17 @@
         <div class="classes-type">
             <p class="c">
                 <span class="t-title">课程分类</span>
-                <span class="t-content" id="itemOneCodeList">
-                     <a href="javascript:Form.showAllShelvesClssType('${menu.id}','courseCaId');" data-code="MIN_UP" class="btn btn-mini btn-default  btn-success">${modelName}</a>
+                <span class="t-content" id="courseCaId">
+                     <a href="javascript:Form.showAllShelvesClssType('${modelId}','courseCaId');" data-code="${modelId}" class="btn btn-mini btn-default  btn-success">${modelName}</a>
                 </span>
             </p>
             <p class="c">
                 <span class="t-title">学段</span>
-                <span class="t-content" id="itemSecondCodeList">
+                <span class="t-content" id="gradeId">
                      <a href="javascript:Form.showAllShelvesClssType('all','gradeId');" data-code="all" class="btn btn-mini btn-default btn-success">全部</a>
                     <c:forEach items="${grades}" var="grade">
 
-                           <a href="javascript:Form.showAllShelvesClssType('${grade.id}','gradeId');" data-code="MIN_UP" class="btn btn-mini btn-default">${grade.name}</a>
+                           <a href="javascript:Form.showAllShelvesClssType('${grade.id}','gradeId');" data-code="${grade.id}" class="btn btn-mini btn-default">${grade.name}</a>
                     </c:forEach>
                 </span>
             </p>
@@ -56,7 +56,7 @@
                 <span class="t-content" id="stageId">
                 	<a href="Form.showAllShelvesClssType('all','stageId');" ids="all" class="btn btn-mini btn-default btn-success">全部</a>
                     <c:forEach items="${stages}" var="stage">
-                        <a href="javascript:Form.showAllShelvesClssType('${stage.id}','typeId');" data-code="MIN_UP" class="btn btn-mini btn-default">${stage.name}</a>
+                        <a href="javascript:Form.showAllShelvesClssType('${stage.id}','typeId');" data-code="${stage.id}" class="btn btn-mini btn-default">${stage.name}</a>
                     </c:forEach>
                 </span>
             </p>
@@ -65,7 +65,7 @@
                 <span class="t-content" id="typeId">
                 	<a href="javascript:Form.showAllShelvesClssType('all','typeId');" ids="all" class="btn btn-mini btn-default btn-success">全部</a>
                     <c:forEach items="${types}" var="type">
-                        <a href="javascript:Form.showAllShelvesClssType('${type.id}','typeId');" data-code="MIN_UP" class="btn btn-mini btn-default">${type.name}</a>
+                        <a href="javascript:Form.showAllShelvesClssType('${type.id}','typeId');" data-code="${type.id}" class="btn btn-mini btn-default">${type.name}</a>
                     </c:forEach>
                 </span>
             </p>

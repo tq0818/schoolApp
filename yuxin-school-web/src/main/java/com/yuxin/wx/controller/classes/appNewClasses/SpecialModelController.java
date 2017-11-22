@@ -63,27 +63,27 @@ public class SpecialModelController {
      * @return
      */
     @RequestMapping(value = "/getModelListByIds",method = RequestMethod.POST)
-    public String getModelListByIds(Model model,Integer categoryid, Integer gradeId,
-                                    Integer subjectid, Integer knowId, Integer knowledgeid, Integer typeId, Integer stageid,Integer page,Integer pageSize) {
+    public String getModelListByIds(Model model,Integer categoryid, Integer gradeid,
+                                    Integer subjectid, Integer knowledgeProid, Integer knowledgeid, Integer typeCode, Integer stageid,Integer page,Integer pageSize) {
         //根据传入的各个ID查询课程list
         Map<String, Object> param = new HashMap<>();
         if (categoryid != null && categoryid.toString() != "") {
             param.put("categoryid", categoryid);
         }
-        if (gradeId != null && gradeId.toString() != "") {
-            param.put("studySectionId", gradeId);
+        if (gradeid != null && gradeid.toString() != "") {
+            param.put("studySectionId", gradeid);
         }
         if (subjectid != null && subjectid.toString() != "") {
             param.put("subjectId", subjectid);
         }
-        if (knowId != null && knowId.toString() != "") {
-            param.put("itemId", knowId);
+        if (knowledgeProid != null && knowledgeProid.toString() != "") {
+            param.put("itemId", knowledgeProid);
         }
         if (knowledgeid != null && knowledgeid.toString() != "") {
             param.put("topicsId", knowledgeid);
         }
-        if (typeId != null && typeId.toString() != "") {
-            param.put("typeId", typeId);
+        if (typeCode != null && typeCode.toString() != "") {
+            param.put("typeId", typeCode);
         }
         if (stageid != null && stageid.toString() != "") {
             param.put("stageId", stageid);

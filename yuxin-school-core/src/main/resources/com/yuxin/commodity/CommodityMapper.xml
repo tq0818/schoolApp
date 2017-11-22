@@ -490,7 +490,7 @@
 		join sys_dict_app sys6 on sys6.id=app.`stage_id`
 		join sys_dict_app sys7 on sys7.id=app.`type_id`
 		where  ct.del_flag=0 and c.type='COMMODITY_CLASS'
-		and c.status = 1
+		and c.status = 1 and app.is_shelves = 1 and app.reserve_time is null
 		<if test="categoryid !=null and categoryid!=''">and app.category_id = #{categoryid}</if>
 		<if test="gradeId !=null and gradeId!='' ">and app.grade_id= #{gradeId}</if>
 		<if test="subjectid !=null and subjectid!=''">and app.subject_id = #{subjectid}</if>
