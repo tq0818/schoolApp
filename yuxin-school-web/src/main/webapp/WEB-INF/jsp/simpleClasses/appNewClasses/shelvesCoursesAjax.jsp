@@ -13,10 +13,10 @@
  <%@include file="/decorators/import.jsp" %>
  
 </head>
-<div class="mainbackground nopadding">
+<div class="mainbackground nopadding alreadyCourse">
     <div class="heading">
         <h2 class="h5" style="display: inline-block;">已上架课程</h2>
-        <div style="margin-top: 10px;text-align:right;padding:0 10px;display: inline-block;margin-left: 75%;">
+        <div class="batchRelease">
             <span><a href="javascript:;" class="btn btn-primary signUpMany">批量下架</a></span>
         </div>
         <span class="line"></span>
@@ -36,10 +36,10 @@
                 <th width="6%">类型</th>
                 <th width="7%">上架时间</th>
                 <th width="8%">直播时间</th>
-                <th width="3%">学习人数</th>
-                <th width="3%">价格</th>
-                <th width="3%">实际价格</th>
-                <th width="20%">操作</th>
+                <th width="5%">学习人数</th>
+                <th width="5%">价格</th>
+                <th width="5%">实际价格</th>
+                <th width="16%">操作</th>
             </tr>
             <c:forEach items="${courseList}" var="course" varStatus="status"> 
             <tr>
@@ -96,7 +96,7 @@
     <span class="closePopupContainer">x</span>
     <div class="toRcommon">
         <div id="toRcommon">
-1
+
         </div>
     </div>
 </div>
@@ -107,7 +107,7 @@
     <span class="closePopupContainer">x</span>
     <div class="shelves">
         <div id="shelvesList">
-2
+
         </div>
     </div>
 </div>

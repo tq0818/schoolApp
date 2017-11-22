@@ -33,3 +33,5 @@ input[disabled]{cursor: not-allowed;}
 .recommendationSection .active,.recommendationSection a:hover{background: #1ca983;color: #fff;}
 #gradeList a,.recommendLocation,.orderRecommend{margin: 10px;}
 .uploadRecommend{text-align: center;}
+.batchRelease{margin-top: 10px;text-align:right;padding:0 10px;display: inline-block;margin-left: 74%;}
+.alreadyCourse{padding: 0 !important;}
