@@ -25,6 +25,7 @@
 		<result property="updator" column="updator"/>
 		<result property="updateTime" column="update_time"/>
 		<result property="oldData" column="old_data"/>
+		<result property="originType" column="origin_type"/>
 	</resultMap>
 	
 	<sql id="table_columns">
@@ -50,7 +51,8 @@
 		upload_type,
 		updator,
 		update_time,
-		old_data
+		old_data,
+		origin_type
     </sql>
 	<sql id="entity_properties">
 		#{id},
@@ -75,7 +77,8 @@
 		#{uploadType},
 		#{updator},
 		#{updateTime},
-		#{oldData}
+		#{oldData},
+		#{originType}
 	</sql>
 	<sql id="batch_entity_properties">
 		#{item.id},
@@ -100,7 +103,8 @@
 		#{item.uploadType},
 		#{item.updator},
 		#{item.updateTime},
-		#{item.oldData}
+		#{item.oldData},
+		#{item.originType}
 	</sql>
 	
 	<!-- 适用于主键自增类型 -->
@@ -197,6 +201,7 @@
 			<if test="updator != null">and updator = #{updator}</if>
 			<if test="updateTime != null">and update_time = #{updateTime}</if>
 			<if test="oldData != null">and old_data = #{oldData}</if>
+			<if test="originType != null">and origin_type = #{originType}</if>
 		</trim>
 	</sql>
 	
@@ -223,6 +228,7 @@
 		<if test="updator != null">and updator = #{updator}</if>
 		<if test="updateTime != null">and update_time = #{updateTime}</if>
 		<if test="oldData != null">and old_data = #{oldData}</if>
+		<if test="originType != null">and origin_type = #{originType}</if>
 	</sql>
 	
 	<select id="page" resultMap="resourceListResultMap" parameterType="com.yuxin.wx.model.resource.ResourceList">

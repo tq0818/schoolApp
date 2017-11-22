@@ -7,7 +7,7 @@
         <ul class="nav nav-left navspace tikuhader">
             <li><a href="<%=request.getContextPath() %>/tikuCategory/toTiku" class="tiku">题库</a></li>
             <shiro:hasPermission name="tiku_exam">
-            	<li><a href="<%=request.getContextPath() %>/tikuExam/toTikuExamIndex" class="exam">考试</a></li>
+            	<%--<li><a href="<%=request.getContextPath() %>/tikuExam/toTikuExamIndex" class="exam">考试</a></li>--%>
             </shiro:hasPermission>
             <c:if test="${sessionScope.loginUser.companyId == 18093}">
       			<li><a href="<%=request.getContextPath() %>/sysStudentScore/competitionScore" class="competitionScore">竞赛成绩</a></li>

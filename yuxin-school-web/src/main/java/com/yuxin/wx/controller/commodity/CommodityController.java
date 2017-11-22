@@ -313,6 +313,7 @@ public class CommodityController {
 			special.setTeacherIds(teacherIds);
 			special.setCommodityIds(commodityIds);
 			special.setCreateTime(new Date());
+			special.setOriginType(1);
 			if(StringUtils.isBlank(specialId)){
 				special.setStatus(0);
 				commoditySpecialServiceImpl.insert(special);

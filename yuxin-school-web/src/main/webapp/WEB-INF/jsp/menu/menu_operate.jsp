@@ -13,7 +13,7 @@
             <li code="community_qa"><a href="<%=request.getContextPath() %>/Question/comQuestionIndex">问答</a></li>
             </shiro:hasPermission>
             <shiro:hasPermission name="teacher_person_status">
-            <li code="teacher_person_status"><a href="<%=request.getContextPath() %>/classModule/dynamics">老师动态</a></li>
+            <%--<li code="teacher_person_status"><a href="<%=request.getContextPath() %>/classModule/dynamics">老师动态</a></li>--%>
             </shiro:hasPermission>
              <shiro:hasPermission name="teacher_person_comment">  
             <li code="teacher_person_comment"><a href="<%=request.getContextPath() %>/classModule/comment">课程评论</a></li>
@@ -22,7 +22,7 @@
                 <li code="special_topic"><a href="<%=request.getContextPath() %>/commodity/toSpecialPage">专题模块</a></li>
             </shiro:hasPermission>
             <shiro:hasPermission name="netschool_news">  
-            <li code="netschool_news"><a href="<%=request.getContextPath() %>/sysConfigNews/showNews">新闻资讯</a></li>
+            <%--<li code="netschool_news"><a href="<%=request.getContextPath() %>/sysConfigNews/showNews">新闻资讯</a></li>--%>
             </shiro:hasPermission>
             <shiro:hasPermission name="financial">
             <li code="financial"><a href="<%=request.getContextPath() %>/payOrder/toOrder">财  务</a></li>
@@ -30,19 +30,19 @@
        
          	<shiro:hasAnyRoles name="机构管理员,分校管理员,运营,课程顾问,客服,直播老师,助教">
             <shiro:hasPermission name="query_statistics">
-            <li code="query_statistics"><a href="<%=request.getContextPath() %>/query/page/student" id="chaxuntongji">查询统计</a></li>
+            <%--<li code="query_statistics"><a href="<%=request.getContextPath() %>/query/page/student" id="chaxuntongji">查询统计</a></li>--%>
             </shiro:hasPermission>
             </shiro:hasAnyRoles>
             <shiro:hasRole name="代理机构">
             <shiro:hasPermission name="query_statistics">
-            <li code="query_statistics"><a href="<%=request.getContextPath() %>/query/page/payMaster" id="chaxuntongji">查询统计</a></li>
+            <%--<li code="query_statistics"><a href="<%=request.getContextPath() %>/query/page/payMaster" id="chaxuntongji">查询统计</a></li>--%>
             </shiro:hasPermission>
             </shiro:hasRole>
             <shiro:hasPermission name="promotion_head">
-			  <li code="sales"><a href="<%=request.getContextPath() %>/companyCouponsConfig/showCouponsList">促  销</a></li>
+			  <%--<li code="sales"><a href="<%=request.getContextPath() %>/companyCouponsConfig/showCouponsList">促  销</a></li>--%>
             </shiro:hasPermission>
             <shiro:hasPermission name="member_class">
- 			  <li code="member_class"><a href="<%=request.getContextPath() %>/classType/memberClass">会员课程</a></li>
+ 			  <%--<li code="member_class"><a href="<%=request.getContextPath() %>/classType/memberClass">会员课程</a></li>--%>
 			</shiro:hasPermission>
  			  <li code="certificate_list" id="certificate_list" style="display: none;"><a href="<%=request.getContextPath() %>/certificateConfig/toCertificateList">证书管理</a></li>
             
@@ -50,10 +50,10 @@
             <li code="order"><a href="<%=request.getContextPath() %>/query/page/payMaster">订单</a></li>
             <li code="free"><a href="<%=request.getContextPath() %>/query/page/fee">费用</a></li> --%>
             <shiro:hasPermission name="studycard_head">
-			  <li code="studycard_head"><a href="<%=request.getContextPath() %>/companyStudyCard/gotoStudyCardsManage">学习卡</a></li>
+			  <%--<li code="studycard_head"><a href="<%=request.getContextPath() %>/companyStudyCard/gotoStudyCardsManage">学习卡</a></li>--%>
 			</shiro:hasPermission>
 			<shiro:hasPermission name="student_star">
- 			  <li code="student_star"><a href="<%=request.getContextPath() %>/studentStar/studentStarIndex">学员心声</a></li>
+ 			  <%--<li code="student_star"><a href="<%=request.getContextPath() %>/studentStar/studentStarIndex">学员心声</a></li>--%>
 			</shiro:hasPermission>
         </ul>
     </div>

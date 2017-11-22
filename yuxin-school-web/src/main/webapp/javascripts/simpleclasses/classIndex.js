@@ -559,6 +559,27 @@
 					}
 				});
 			},
+			stopClassOnsale : function(id){
+				$.confirm("您确定要下架此课程?下架后学员将无法再报名此课程。",function(a){
+					if(a==true){
+						$.ajax({
+							url : rootPath + "/simpleClasses/stopClassOnsale",
+							type : "post",
+							data : {"id":id},
+							success : function(result) {
+								if("1"==result){
+									alert("成功")
+									Form.queryAllCommdityByItemNew(1);
+								}else{
+									alert("失败")
+								}
+							}
+						});
+					}else{
+						return;
+					}
+				});
+			},
 			deleteClassType : function(id){
 				$.confirm("您确定要删除此课程?",function(a){
 					if(a==true){
@@ -574,6 +595,12 @@
 					type : "post",
 					data : {"id":id,"publishStatus":'CLASS_ON_SALE'},
 					success : function(result) {
+						var idds = id.split("_");
+						if(idds.length==1){
+							id=idds[0];
+						}else{
+							id=idds[1];
+						}
 						var st="";
 						$("#statusList").find("a").each(function(i){
 							if($(this).hasClass('btn-success')){
@@ -673,6 +700,24 @@
 					}
 				});
 			},
+//			toOnsaleEdit : function(ids,zhiboFlag){
+//				$.ajax({
+//					url : rootPath + "/simpleClasses/showAppShelvesEdit",
+//					type : "post",
+//					data:{"ids":ids,"zhiboFlag":zhiboFlag},
+//					beforeSend:function(XMLHttpRequest){
+//			            $(".loading").show();
+//			            $(".loading-bg").show();
+//			        },
+//					success : function(result) {
+//						$("#bbbbbbbb").html(result);
+//					},
+//					 complete:function(XMLHttpRequest,textStatus){
+//							$(".loading").hide();
+//				            $(".loading-bg").hide();
+//				     }
+//				});
+//			},
 			addClassType : function(mark){
 				$("#lab").val(mark);
 				var itemOneId="";
@@ -710,3 +755,17 @@
 	})
 	window.Form=Form;
 })(jQuery)
+
+
+//function toOnsaleEdit(ids,liveFlag){
+	
+//	$("#myForm01").html("");
+//	var input="<input type='hidden' value='"+ids+"' name='ids'/><input type='hidden' value='"+liveFlag+"' name='zhiboFlag'/>";
+//	$("#myForm01").html(input);
+//	$("#myForm01").attr("action",rootPath+"/simpleClasses/showAppShelvesEdit").submit();
+	
+	
+	
+//}
+
+

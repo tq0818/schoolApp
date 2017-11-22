@@ -8,6 +8,7 @@ import com.yuxin.wx.model.classes.ClassType;
 import com.yuxin.wx.model.commodity.Commodity;
 import com.yuxin.wx.vo.classes.ClassPackageConditionVo;
 import com.yuxin.wx.vo.classes.ClassTypeVo;
+import com.yuxin.wx.vo.classes.FirstRecommend;
 import com.yuxin.wx.vo.company.MemberLevelAndClassTypeVo;
 /**
  * Service Interface:ClassType
@@ -443,4 +444,30 @@ public interface IClassTypeService  {
 	 * @return
 	 */
 	int countSubjectClassOrder(String itemOenCode);
+
+	/**
+	 * 查询单条直播商品信息
+	 * @param search
+	 * @return
+     */
+	ClassTypeVo querySingleLiveClassTypeInfo(ClassTypeVo search);
+
+	/**
+	 * 查询其它视频播放信息
+	 * @param search
+	 * @return
+     */
+	ClassTypeVo querySingOtherClassTypeInfo(ClassTypeVo search);
+
+	/**
+	 * 插入app上架信息
+	 * @param cto
+     */
+	void insertAppShelvesInfo(ClassTypeVo cto);
+
+	/**
+	 * 插入首页推荐信息
+	 * @param frs
+     */
+	void insertFirstRecommond(List<FirstRecommend> frs);
 }

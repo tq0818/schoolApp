@@ -48,6 +48,7 @@ public class VideoVo extends BaseEntity {
 	private Integer convertType;	/* 资源处理情况*/
 	private String excep;			/* 错误描述*/
 	private String filePath;
+	private Integer	originType;		/*视频来源0为pc，1为app*/
 	// 简称
 	private String sortName;
 
@@ -318,4 +319,13 @@ public class VideoVo extends BaseEntity {
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
+
+	public Integer getOriginType() {
+		return originType;
+	}
+
+	public void setOriginType(Integer originType) {
+		this.originType = originType;
+	}
+	
 }

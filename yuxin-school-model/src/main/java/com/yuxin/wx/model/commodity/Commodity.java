@@ -51,6 +51,50 @@ public class Commodity extends BaseEntity {
 	private String itemThirdCode;
 	private String itemFourthCode;
 	private Integer isMicroClass; /* 是否属于微课标签，1:是；0：否 */
+	private Integer originType;/* 来源，1表示来自app，0表示来自pc */
+
+
+	/****app上架信息*****/
+	private float appPrice;
+
+	private float appSalePrice;
+
+	private String appImgUrl;
+
+	private String isShelves;
+
+	public float getAppPrice() {
+		return appPrice;
+	}
+
+	public void setAppPrice(float appPrice) {
+		this.appPrice = appPrice;
+	}
+
+	public float getAppSalePrice() {
+		return appSalePrice;
+	}
+
+	public void setAppSalePrice(float appSalePrice) {
+		this.appSalePrice = appSalePrice;
+	}
+
+	public String getAppImgUrl() {
+		return appImgUrl;
+	}
+
+	public void setAppImgUrl(String appImgUrl) {
+		this.appImgUrl = appImgUrl;
+	}
+
+	public String getIsShelves() {
+		return isShelves;
+	}
+
+	public void setIsShelves(String isShelves) {
+		this.isShelves = isShelves;
+	}
+
 	public Integer getBaseNum() {
 		return baseNum;
 	}
@@ -77,7 +121,7 @@ public class Commodity extends BaseEntity {
 			Integer companyId, Integer creator, Date cerateTime,
 			Integer updator, Date updateTime, String status, String classType,
 			Integer baseNum, String lableType,Integer faceFlag,Integer liveFlag,
-			Integer videoFlag,Integer remoteFlag) {
+			Integer videoFlag,Integer remoteFlag,Integer originType) {
 		super();
 		this.name = name;
 		this.coverUrl = coverUrl;
@@ -101,6 +145,7 @@ public class Commodity extends BaseEntity {
 		this.liveFlag=liveFlag;
 		this.remoteFlag=remoteFlag;
 		this.videoFlag=videoFlag;
+		this.originType=originType;
 	}
 
 	// getter && setter
@@ -390,20 +435,29 @@ public class Commodity extends BaseEntity {
 		this.isMicroClass = isMicroClass;
 	}
 
+	public Integer getOriginType() {
+		return originType;
+	}
+
+	public void setOriginType(Integer originType) {
+		this.originType = originType;
+	}
+
 	@Override
 	public String toString() {
-		return "Commodity [name=" + name + ", coverUrl=" + coverUrl
-				+ ", overview=" + overview + ", originalPrice=" + originalPrice
-				+ ", realPrice=" + realPrice + ", type=" + type
-				+ ", itemOneId=" + itemOneId + ", itemSecondId=" + itemSecondId
-				+ ", schoolId=" + schoolId + ", companyId=" + companyId
-				+ ", creator=" + creator + ", cerateTime=" + cerateTime
-				+ ", updator=" + updator + ", updateTime=" + updateTime
-				+ ", status=" + status + ", classType=" + classType
-				+ ", baseNum=" + baseNum + ", lableType=" + lableType
-				+ ", faceFlag=" + faceFlag + ", liveFlag=" + liveFlag
-				+ ", videoFlag=" + videoFlag + ", remoteFlag=" + remoteFlag
-				+ "]";
+		return "Commodity [name=" + name + ", coverUrl=" + coverUrl + ", overview=" + overview + ", originalPrice="
+				+ originalPrice + ", realPrice=" + realPrice + ", type=" + type + ", itemOneId=" + itemOneId
+				+ ", itemSecondId=" + itemSecondId + ", schoolId=" + schoolId + ", companyId=" + companyId
+				+ ", creator=" + creator + ", cerateTime=" + cerateTime + ", updator=" + updator + ", updateTime="
+				+ updateTime + ", status=" + status + ", classType=" + classType + ", baseNum=" + baseNum
+				+ ", lableType=" + lableType + ", faceFlag=" + faceFlag + ", liveFlag=" + liveFlag + ", videoFlag="
+				+ videoFlag + ", remoteFlag=" + remoteFlag + ", recommendFlag=" + recommendFlag + ", buyNum=" + buyNum
+				+ ", itemTag=" + itemTag + ", tagName=" + tagName + ", integralFlag=" + integralFlag + ", memberFlag="
+				+ memberFlag + ", itemOneCode=" + itemOneCode + ", itemSecondCode=" + itemSecondCode
+				+ ", itemThirdCode=" + itemThirdCode + ", itemFourthCode=" + itemFourthCode + ", isMicroClass="
+				+ isMicroClass + ", originType=" + originType + "]";
 	}
+
+	
 	
 }

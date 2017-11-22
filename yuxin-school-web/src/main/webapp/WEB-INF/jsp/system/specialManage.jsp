@@ -37,10 +37,10 @@
             <span class="line"></span>
             <span class="rb fr">
                     <a href="<%=rootPath %>/commodity/toAddSpecialPage"  class="btn btn-mini btn-primary"><em class="iconfont">&#xe606;</em>新增专题</a>
-            </span>
+            </span> 
         </div>
         <div id="specialList">
-        
+
         </div>
     </div>
 </div>

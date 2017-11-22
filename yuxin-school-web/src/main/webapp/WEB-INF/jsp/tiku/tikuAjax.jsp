@@ -25,10 +25,12 @@
 					    	<b fullName="${cv.tikuName}">${cv.tikuName}</b>
 					    </c:otherwise>
 						</c:choose>
-						<span style="display: none;" class="manageGL">
-						<i class="iconfont btn-edit-pro delInfo" tikuId="${cv.id}">&#xe626;</i>
-						<i class="iconfont btn-edit-pro editInfo" tikuId="${cv.id}">&#xe625;</i>
-						</span>
+						<c:if test="${cv.originType  eq 1 }">
+							<span style="display: none;" class="manageGL">
+							<i class="iconfont btn-edit-pro delInfo" tikuId="${cv.id}">&#xe626;</i>
+							<i class="iconfont btn-edit-pro editInfo" tikuId="${cv.id}">&#xe625;</i>
+							</span>
+						</c:if>
 					</div>
 					<div class="c">
 						<c:if test="${fn:length(cv.tikuDesc) > 25 }">
@@ -55,11 +57,13 @@
 				</ul>
 			</div>
 			<div class="b-btns" style="text-align: center;">
-				<c:if test="${cv.delFlag == '0' }">
-					<i class="iconfont left btn-ok btn-switch jinYong" title="已启用，点击停用" tikuId="${cv.id}">&#xe636;</i>
-				</c:if>
-				<c:if test="${cv.delFlag == '1' }">
-					<i class="iconfont left btn-ok btn-switch qiYong" style="color:red;" title="已停用，点击启用" tikuId="${cv.id}">&#xe635;</i>
+				<c:if test="${cv.originType  eq 1 }">
+					<c:if test="${cv.delFlag == '0' }">
+						<i class="iconfont left btn-ok btn-switch jinYong" title="已启用，点击停用" tikuId="${cv.id}">&#xe636;</i>
+					</c:if>
+					<c:if test="${cv.delFlag == '1' }">
+						<i class="iconfont left btn-ok btn-switch qiYong" style="color:red;" title="已停用，点击启用" tikuId="${cv.id}">&#xe635;</i>
+					</c:if>
 				</c:if>
 				<div class="btn-add glTiku" name="twoToCreate" style="cursor: pointer;" title="管理题库" cvid="${cv.id}">管理</div>
 			</div>

@@ -47,9 +47,12 @@
 				<td width="10%"><span class="c">编辑者</span> <span class="p">${paper.creatorName}</span>
 				</td>
 				<td style="width:170px;" rowspan="2" class="btns">
+				<c:if test="${originType  eq 1 }">
 					<a href="javascript:;" class="btn btn-mini btn-primary" paperId="${paper.id}" onclick="javascript:Forms.delPaper(this)" style="display:inline-block;">删除</a>
+				</c:if>
 					<shiro:hasAnyRoles name="机构管理员,试卷审核员">
 						<c:if test="${isAudit == 'yes' }">
+						<c:if test="${originType  eq 1 }">
 							<c:if test="${paper.paperStatus == 'PAPER_STATUS_WAIT_AUDIT' }">
 								<a href="javascript:;" class="btn btn-mini btn-primary" paperId="${paper.id}" btn="audite" onclick="javascript:Forms.editPaper(this)" style="display:inline-block;">审核</a>
 							</c:if>
@@ -57,8 +60,11 @@
 								<a href="javascript:;" class="btn btn-mini btn-primary disabled" paperId="${paper.id}" btn="audite" onclick="javascript:void(0)" style="display:inline-block;">审核</a>
 							</c:if>
 						</c:if>
+						</c:if>
 					</shiro:hasAnyRoles>
+					<c:if test="${originType  eq 1 }">
 					<a href="javascript:;" class="btn btn-mini btn-primary" paperId="${paper.id}" btn="edit" onclick="javascript:Forms.editPaper(this)" style="display:inline-block;">编辑</a>
+ 					</c:if>
  					<a href="javascript:;" class="btn btn-mini btn-primary" paperId="${paper.id}" btn="edit" onclick="javascript:Forms.statistics(this)" style="display:inline-block;">统计</a>
 				</td>
 			</tr>

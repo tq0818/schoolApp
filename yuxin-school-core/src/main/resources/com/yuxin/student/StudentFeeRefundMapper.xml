@@ -16,7 +16,7 @@
 		<result property="createTime" column="create_time" />
 		<result property="creator" column="creator" />
 	</resultMap>
-	
+
 	<resultMap type="com.yuxin.wx.vo.fee.RefundVo" id="stuRefundMap">
 		<result property="id" column="id" />
 		<result property="stuId" column="stu_id" />
@@ -39,7 +39,7 @@
 		<result property="classTypeId" column="classTypeId"/>
 		<result property="classTypeName" column="classTypeName"/>
 	</resultMap>
-	
+
 	<sql id="table_columns">
 		id,
 		stu_id,
@@ -54,7 +54,7 @@
 		create_type,
 		create_time,
 		creator
-    </sql>
+	</sql>
 	<sql id="entity_properties">
 		#{id},
 		#{stuId},
@@ -85,28 +85,28 @@
 		#{item.createTime},
 		#{item.creator}
 	</sql>
-	
-	<!-- 适用于主键自增类型 -->				
+
+	<!-- 适用于主键自增类型 -->
 	<insert id="insert" parameterType="com.yuxin.wx.model.student.StudentFeeRefund" useGeneratedKeys="true" keyProperty="id">
-		insert into student_fee_refund( <include refid="table_columns" /> ) 
+		insert into student_fee_refund( <include refid="table_columns" /> )
 		values ( <include refid="entity_properties" /> )
 	</insert>
-	
+
 	<!-- 批量添加 适用于主键自增类型  不支持返回主键-->
 	<insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
-		insert into student_fee_refund( <include refid="table_columns" /> ) 
-		values 
+		insert into student_fee_refund( <include refid="table_columns" /> )
+		values
 		<foreach item="item" collection="list" separator="," >
 			( <include refid="entity_properties" /> )
 		</foreach>
 	</insert>
-	
+
 	<!--根据主键删除 -->
 	<delete id="deleteById">
 		delete from tbl_users
 		where id = #{id}
 	</delete>
-	
+
 	<!-- 根据ID批量删除 -->
 	<delete id="deleteByIds">
 		delete from student_fee_refund
@@ -115,9 +115,9 @@
 			#{item}
 		</foreach>
 	</delete>
-	
+
 	<update id="update" parameterType="com.yuxin.wx.model.student.StudentFeeRefund">
-		update student_fee_refund 
+		update student_fee_refund
 		<trim prefix="set" suffixOverrides=",">
 			<if test="stuId != null and stuId != ''">stu_id = #{stuId},</if>
 			<if test="payMasterId != null and payMasterId != ''">pay_master_id = #{payMasterId},</if>
@@ -134,18 +134,18 @@
 		</trim>
 		<where>id = #{id}</where>
 	</update>
-	
+
 	<select id="findById" resultMap="studentFeeRefundResultMap" parameterType="String" >
 		select <include refid="table_columns" />
 		from student_fee_refund
 		where id = #{id}
 	</select>
-	
+
 	<select id="queryAll" resultMap="studentFeeRefundResultMap">
-		select <include refid="table_columns" /> 
+		select <include refid="table_columns" />
 		from student_fee_refund
 	</select>
-	
+
 	<!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
 	<sql id="page_where">
 		<trim prefix="where" prefixOverrides="and | or ">
@@ -163,19 +163,19 @@
 			<if test="creator != null and creator != ''">and creator = #{creator}</if>
 		</trim>
 	</sql>
-	
+
 	<select id="page" resultMap="studentFeeRefundResultMap" parameterType="com.yuxin.wx.model.student.StudentFeeRefund">
 		select <include refid="table_columns" />
 		from student_fee_refund
 		<include refid="page_where" />
 		limit #{firstIndex},#{pageSize}
 	</select>
-	
+
 	<select id="pageCount" resultType="int" parameterType="com.yuxin.wx.model.student.StudentFeeRefund">
 		select count(id) from student_fee_refund
 		<include refid="page_where" />
 	</select>
-	
+
 	<!-- 其他自定义SQL -->
 	<select id="queryRefundList" resultMap="stuRefundMap" parameterType="com.yuxin.wx.vo.fee.RefundVo">
 		select distinct p.id as payMasterId,p.item_one_id as itemOneId,p.item_one_name as itemOneName,p.item_second_id as itemSecondId,p.item_second_name itemSecondName,p.exam_term_id as examTermId,p.exam_term_name as examTermName,p.commodity_id as classTypeId,p.class_type_name as classTypeName,p.apply_time as applyTime,
@@ -193,16 +193,16 @@
 		<if test="stuName != null and stuName != ''"> and s.name = #{stuName} </if>
 		<if test="identityId != null and identityId != ''"> and s.identity_id = #{identityId} </if>
 		<if test="stageStatus != null and stageStatus != ''"> and s.stage_status = #{stageStatus} </if>
-		<if test="companyId != null and companyId != ''"> and s.company_id = #{companyId} </if>
+		<if test="companyId != null and companyId != ''"> and p.company_id = #{companyId} </if>
 		<if test="schoolId != null and schoolId != ''"> and p.school_id = #{schoolId} </if>
 		<if test="startDate != null"> and date_format(f.refund_date, "%Y-%m-%d") <![CDATA[>=]]> '${startDate}'</if>
 		<if test="endDate != null"> and date_format(f.refund_date, "%Y-%m-%d") <![CDATA[<=]]> '${endDate}'</if>
 		<if test="timeLen !=null">and TO_DAYS(NOW())-TO_DAYS(f.refund_date)<![CDATA[<=]]>#{timeLen}</if>
 		order by f.id desc limit #{firstIndex},#{pageSize}
 	</select>
-	
+
 	<select id="pageCount2" resultType="int" parameterType="com.yuxin.wx.vo.fee.RefundVo">
-		select count(id) from 
+		select count(id) from
 		(select distinct p.item_one_id as itemOneId,p.item_one_name as itemOneName,p.item_second_id as itemSecondId,p.item_second_name itemSecondName,p.exam_term_id as examTermId,p.exam_term_name as examTermName,p.commodity_id as classTypeId,p.class_type_name as classTypeName,p.apply_time as applyTime,
 		p.campus_id as campusId, p.class_type_hour as classTypeHour,p.updator,p.pay_status_code as payStatusCode,p.total_amount as totalAmount,
 		p.training_fee as trainingFee ,p.exam_agent_fee as examAgentFee ,p.offer_amount as offerAmount,p.is_agent as isAgent,p.is_agent_material_complete as isAgentMaterialComplete,p.payment_type_code as paymentTypeCode,
@@ -218,23 +218,23 @@
 		<if test="stuName != null and stuName != ''"> and s.name = #{stuName} </if>
 		<if test="identityId != null and identityId != ''"> and s.identity_id = #{identityId} </if>
 		<if test="stageStatus != null and stageStatus != ''"> and s.stage_status = #{stageStatus} </if>
-		<if test="companyId != null and companyId != ''"> and s.company_id = #{companyId} </if>
+		<if test="companyId != null and companyId != ''"> and p.company_id = #{companyId} </if>
 		<if test="schoolId != null and schoolId != ''"> and p.school_id = #{schoolId} </if>
 		<if test="startDate != null"> and date_format(f.refund_date, "%Y-%m-%d") <![CDATA[>=]]> '${startDate}'</if>
 		<if test="endDate != null"> and date_format(f.refund_date, "%Y-%m-%d") <![CDATA[<=]]> '${endDate}'</if>
 		<if test="timeLen !=null">and TO_DAYS(NOW())-TO_DAYS(f.refund_date)<![CDATA[<=]]>#{timeLen}</if>
 		) u
 	</select>
-	
+
 	<select id="queryByPayMasterId" parameterType="int" resultMap="studentFeeRefundResultMap">
 		select <include refid="table_columns" />
 		from student_fee_refund
 		where pay_master_id=#{payMasterId}
 	</select>
-	
+
 	<select id="querythTotalMoney" parameterType="com.yuxin.wx.vo.fee.RefundVo" resultType="com.yuxin.wx.vo.fee.StagingTotalVo">
 		select IFNULL(SUM(u.refundFee),0) as thFee,IFNULL(SUM(u.posRefund),0) as posFee,IFNULL(SUM(u.checkRefund),0) as checkFee,IFNULL(SUM(u.remitRefund),0) as remitFee,
-		IFNULL(SUM(u.cashRefund),0) as cashFee,IFNULL(SUM(u.refundFee),0) as totalMoney from 
+		IFNULL(SUM(u.cashRefund),0) as cashFee,IFNULL(SUM(u.refundFee),0) as totalMoney from
 		(select distinct p.item_one_id as itemOneId,p.item_one_name as itemOneName,p.item_second_id as itemSecondId,p.item_second_name itemSecondName,p.exam_term_id as examTermId,p.exam_term_name as examTermName,p.commodity_id as classTypeId,p.class_type_name as classTypeName,p.apply_time as applyTime,
 		p.campus_id as campusId, p.class_type_hour as classTypeHour,p.updator,p.pay_status_code as payStatusCode,p.total_amount as totalAmount,
 		p.training_fee as trainingFee ,p.exam_agent_fee as examAgentFee ,p.offer_amount as offerAmount,p.is_agent as isAgent,p.is_agent_material_complete as isAgentMaterialComplete,p.payment_type_code as paymentTypeCode,
@@ -250,7 +250,7 @@
 		<if test="stuName != null and stuName != ''"> and s.name = #{stuName} </if>
 		<if test="identityId != null and identityId != ''"> and s.identity_id = #{identityId} </if>
 		<if test="stageStatus != null and stageStatus != ''"> and s.stage_status = #{stageStatus} </if>
-		<if test="companyId != null and companyId != ''"> and s.company_id = #{companyId} </if>
+		<if test="companyId != null and companyId != ''"> and p.company_id = #{companyId} </if>
 		<if test="schoolId != null and schoolId != ''"> and p.school_id = #{schoolId} </if>
 		<if test="startDate != null"> and date_format(f.refund_date, "%Y-%m-%d") <![CDATA[>=]]> '${startDate}'</if>
 		<if test="endDate != null"> and date_format(f.refund_date, "%Y-%m-%d") <![CDATA[<=]]> '${endDate}'</if>

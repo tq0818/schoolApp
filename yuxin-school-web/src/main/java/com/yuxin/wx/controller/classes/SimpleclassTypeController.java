@@ -4,22 +4,22 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 import javax.imageio.ImageIO;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yuxin.wx.api.app.IShelvesCourseService;
+import com.yuxin.wx.api.app.ISysDictAppService;
 import com.yuxin.wx.api.course.ICourseExerciseService;
 import com.yuxin.wx.api.system.*;
+import com.yuxin.wx.model.app.SysDictApp;
 import com.yuxin.wx.model.system.*;
+import org.apache.commons.collections.map.LinkedMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -59,6 +59,7 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.util.IOUtils;
 import com.yuxin.wx.api.classes.IClassModuleLessonService;
 import com.yuxin.wx.api.classes.IClassModuleNoService;
 import com.yuxin.wx.api.classes.IClassModuleService;
@@ -177,6 +178,223 @@ public class SimpleclassTypeController {
 	@Autowired
 	private ISysConfigItemRelationService sysConfigItemRelationServiceImpl;
 
+	@Autowired
+	private ISysDictAppService sysDictAppServiceImpl;
+	@Autowired
+	private IShelvesCourseService shelvesCourseServiceImpl;
+
+
+
+
+	@ResponseBody
+	@RequestMapping(value="/querySlibMenu",method=RequestMethod.POST)
+	public Map<String,List<SysDictApp>> querySlibMenu(HttpServletRequest request,String parentId,String typeId){
+		Map<String,List<SysDictApp>> linked = new LinkedHashMap<String,List<SysDictApp>>();
+		SysDictApp search = new SysDictApp();
+		search.setParentId(Integer.parseInt(parentId));
+		List<SysDictApp> slibMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
+		if("courseCaId".equals(typeId)){
+			if(null!=slibMenus && slibMenus.size()>0){
+				List<SysDictApp>grades = new ArrayList<SysDictApp>();
+				List<SysDictApp>stages = new ArrayList<SysDictApp>();
+				List<SysDictApp>types = new ArrayList<SysDictApp>();
+				for(SysDictApp data : slibMenus){
+					if("GRADE".equals(data.getType())){
+						grades.add(data);
+					}else if("STAGE".equals(data.getType())){
+						stages.add(data);
+					}else if("TYPE".equals(data.getType())){
+						types.add(data);
+					}
+				}
+				linked.put("comm",grades);
+				linked.put("stages",stages);
+				linked.put("types",types);
+			}
+		}else{
+			linked.put("comm",slibMenus);
+		}
+		return linked;
+	}
+
+	public String getDateFormatter(){
+		Date date=new Date();
+		DateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:MM:SS");
+		return df.format(date);
+	}
+
+	@ResponseBody
+	@RequestMapping(value="/insertShelvesInfo",method=RequestMethod.POST)
+	public String insertShelvesInfo(HttpServletRequest request,ClassTypeVo cto){
+
+		try {
+
+			Object imgUrlObj = request.getSession().getAttribute("imgUrl");
+			if(null!=imgUrlObj){
+				cto.setImgUrl((String) imgUrlObj);
+			}
+
+			String appId = cto.getAppId();
+			if(!"1".equals(cto.getShelvesFlag())){
+				cto.setReserveTime(cto.getShelvesTime());
+			}else{
+				cto.setShelvesTime(new Date().toLocaleString());
+			}
+			cto.setIsShelves("1");
+			if(null==cto.getShelvesTime()||"".equals(cto.getShelvesTime())){
+				cto.setShelvesTime(null);
+			}
+			if (null == appId || "".equals(appId)) {
+				//插入数据入库
+				classTypeServiceImpl.insertAppShelvesInfo(cto);
+			} else {
+				//更新数据入库
+				cto.setId(Integer.parseInt(appId));
+				shelvesCourseServiceImpl.update(cto);
+
+			}
+			return "1";
+		}catch (Exception e){
+			return "0";
+		}
+	}
+
+	@RequestMapping(value="/showAppShelvesEdit",method=RequestMethod.POST)
+	public String showAppShelvesEdit(HttpServletRequest request,Model model){
+		String ids = request.getParameter("ids");
+		String zhiboFlag = request.getParameter("zhiboFlag");
+
+		if(null!=ids && ids.split("_").length>0){
+			List<SysDictApp> firstMenus = null;
+			String [] idsStr = ids.split("_");
+			String commodityId = null;
+			String appId = null;
+			if(idsStr.length==2){
+				appId = idsStr[0];
+				commodityId = idsStr[1];
+			}
+			ClassTypeVo searchAndResult = new ClassTypeVo();
+			if("1".equals(zhiboFlag)){
+				//查询直播课程信息
+				searchAndResult.setId(Integer.parseInt(commodityId));
+				searchAndResult = classTypeServiceImpl.querySingleLiveClassTypeInfo(searchAndResult);
+			}else{
+				//查询录播信息
+				searchAndResult.setId(Integer.parseInt(commodityId));
+				searchAndResult = classTypeServiceImpl.querySingOtherClassTypeInfo(searchAndResult);
+			}
+
+
+
+			//查询分类一级分类
+			SysDictApp search = new SysDictApp();
+			firstMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
+			if("1".equals(zhiboFlag)){
+				for(SysDictApp first : firstMenus){
+					if("ZHIBO".equals(first.getCode())){
+						firstMenus.clear();
+						firstMenus.add(first);
+						break;
+					}
+				}
+			}else{
+				List<SysDictApp>feizhibo = new ArrayList<SysDictApp>();
+				for(SysDictApp first : firstMenus){
+					if(!"ZHIBO".equals(first.getCode())){
+						feizhibo.add(first);
+					}
+				}
+				firstMenus.clear();
+				firstMenus.addAll(feizhibo);
+			}
+
+			//查询二级菜单
+			List<SysDictApp>secondeMenus = null;
+			if(null!=firstMenus && firstMenus.size()>0){
+				search.setParentId(firstMenus.get(0).getId());
+				secondeMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
+
+				if(null!=secondeMenus && secondeMenus.size()>0){
+					List<SysDictApp>grades = new ArrayList<SysDictApp>();
+					for(SysDictApp grade : secondeMenus){
+						if("GRADE".equals(grade.getType())){
+							grades.add(grade);
+						}
+					}
+					secondeMenus.clear();
+					secondeMenus.addAll(grades);
+				}
+
+
+			}
+			//查询三级菜单
+			List<SysDictApp>thirdMenus = null;
+			if(null!=secondeMenus && secondeMenus.size()>0){
+				search.setParentId(secondeMenus.get(0).getId());
+				thirdMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
+			}
+
+			//查询四级菜单
+			List<SysDictApp>forthMenus = null;
+			if(null!=thirdMenus && thirdMenus.size()>0){
+				search.setParentId(thirdMenus.get(0).getId());
+				forthMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
+			}
+
+			//查询五级菜单
+			List<SysDictApp>fifthMenus = null;
+			if(null!=forthMenus && forthMenus.size()>0){
+				search.setParentId(forthMenus.get(0).getId());
+				fifthMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
+			}
+
+			//查询阶段信息
+			List<SysDictApp>jieduanMenus = null;
+			if(null!=firstMenus && firstMenus.size()>0){
+				search.setParentId(firstMenus.get(0).getId());
+				jieduanMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
+				if(null!=jieduanMenus && jieduanMenus.size()>0){
+					List<SysDictApp>jieduans = new ArrayList<SysDictApp>();
+					for(SysDictApp grade : jieduanMenus){
+						if("STAGE".equals(grade.getType())){
+							jieduans.add(grade);
+						}
+					}
+					jieduanMenus.clear();
+					jieduanMenus.addAll(jieduans);
+				}
+			}
+			//查询类型信息
+			List<SysDictApp>leixingMenus = null;
+			if(null!=firstMenus && firstMenus.size()>0){
+				search.setParentId(firstMenus.get(0).getId());
+				leixingMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
+				if(null!=leixingMenus && leixingMenus.size()>0){
+					List<SysDictApp>leixings = new ArrayList<SysDictApp>();
+					for(SysDictApp leixing : leixingMenus){
+						if("TYPE".equals(leixing.getType())){
+							leixings.add(leixing);
+						}
+					}
+					leixingMenus.clear();
+					leixingMenus.addAll(leixings);
+				}
+			}
+			model.addAttribute("commodityId",commodityId);
+			model.addAttribute("appId",appId);
+			model.addAttribute("firstMenus",firstMenus);
+			model.addAttribute("secondeMenus",secondeMenus);
+			model.addAttribute("thirdMenus",thirdMenus);
+			model.addAttribute("forthMenus",forthMenus);
+			model.addAttribute("fifthMenus",fifthMenus);
+			model.addAttribute("jieduanMenus",jieduanMenus);
+			model.addAttribute("leixingMenus",leixingMenus);
+			model.addAttribute("searchAndResult",searchAndResult);
+
+		}
+		return "simpleClasses/appNewClasses/informationEditing";
+	}
+
 	/**
 	 * 
 	 * Class Name: ClassTypeController.java
@@ -249,6 +467,15 @@ public class SimpleclassTypeController {
 	 */
 	@RequestMapping(value="/showAllclassType",method=RequestMethod.POST)
 	public String showAllProjectProduct(ClassType search,Model model){
+
+		if("CLASS_UNPUBLISHED".equals(search.getPublishStatus())){
+			search.setIsShelves("0");
+		}else if("CLASS_ON_SALE".equals(search.getPublishStatus())){
+			search.setIsShelves("1");
+		}else if("CLASS_STOP_SALE".equals(search.getPublishStatus())){
+			search.setIsShelves("0");
+		}
+
 		Users currentUser = WebUtils.getCurrentUser();
 		model.addAttribute("itemOneId", search.getItemOneId());
 		if(currentUser!=null)
@@ -805,6 +1032,8 @@ public class SimpleclassTypeController {
 		if(classType.getLableType()!=null && classType.getLableType().length()>0){
 			classType.setIconLable(classType.getLableType().trim());
 		}
+		//设置来源，1表示来自app，0表示来自pc，默认设置为1
+		classType.setOriginType(1);
 		ClassType classTypes=addClassTypeCommMethod(request, classType,lable,courseNum);
 		return classTypes;
 	}
@@ -861,6 +1090,8 @@ public class SimpleclassTypeController {
 //			if(null!=classType.getValidityDay()&&!"".equals(classType.getValidityDay())){
 //				classType.setValidityDate(DateUtil.addDate(new Date(),classType.getValidityDay()));
 //			}
+			//设置来源，1表示来自app，0表示来自pc，默认设置为1
+			classType.setOriginType(1);
 			classTypeServiceImpl.insert(classType);
 			
 			Commodity commodity = new Commodity();
@@ -891,6 +1122,8 @@ public class SimpleclassTypeController {
 			commodity.setRemoteFlag(classType.getRemoteFlag());
 			commodity.setRecommendFlag(classType.getRecommendFlag());
 			commodity.setBuyNum(0);
+			//设置来源，1表示来自app，0表示来自pc，默认设置为1
+			commodity.setOriginType(1);
 			if(null!=sets || null!=sets1){
 				commodity.setItemTag(classType.getItemTag());
 			}
@@ -1581,6 +1814,47 @@ public class SimpleclassTypeController {
 		classType.setUpdator(WebUtils.getCurrentUserId(request));
 		classTypeServiceImpl.update(classType);
 		return classTypeServiceImpl.findClassTypeById(classType.getId());
+	}
+	/***
+	 * 下架
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/stopClassOnsale",method=RequestMethod.POST)
+	public String stopClassOnsale(HttpServletRequest request){
+		try {
+			Integer id = Integer.valueOf(request.getParameter("id"));
+			ClassTypeVo classTypeVo = new ClassTypeVo();
+			classTypeVo.setId(id);
+			classTypeVo.setIsShelves("0");
+			shelvesCourseServiceImpl.update(classTypeVo);
+			return "1";
+		}catch (Exception e){
+			return "0";
+		}
+	}
+	/***
+	 * 批量下架
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/stopClassOnsaleAll",method=RequestMethod.POST)
+	public String stopClassOnsaleAll(HttpServletRequest request){
+		try {
+			String[] s = request.getParameterValues("batchReleaseArray"); 
+			ClassTypeVo classTypeVo = new ClassTypeVo();
+		        for (int i=0;i<s.length;i++){ 
+		        	classTypeVo.setId(Integer.valueOf(s[i]));
+		        	classTypeVo.setIsShelves("0");
+		        	shelvesCourseServiceImpl.update(classTypeVo);
+		        	
+		        }
+			return "1";
+		}catch (Exception e){
+			return "0";
+		}
 	}
 	
 	/**

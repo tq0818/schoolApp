@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yuxin.wx.api.tiku.ITikuCategoryService;
+import com.yuxin.wx.api.tiku.ITikuChapterService;
 import com.yuxin.wx.api.tiku.ITikuSectionService;
+import com.yuxin.wx.model.tiku.TikuCategory;
+import com.yuxin.wx.model.tiku.TikuChapter;
 import com.yuxin.wx.model.tiku.TikuSection;
 import com.yuxin.wx.utils.WebUtils;
 
@@ -30,6 +34,12 @@ public class TikuSectionController {
 	
 	@Autowired
 	private ITikuSectionService tikuSectionServiceImpl;
+	
+	@Autowired
+    private ITikuCategoryService tikuCategoryServiceImpl;
+	
+	@Autowired
+    private ITikuChapterService tikuChapterServiceImpl;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model, TikuSection search){
@@ -81,10 +91,17 @@ public class TikuSectionController {
 	 */
 	@RequestMapping(value="/loadSection")
 	public String loadSection(Model model,TikuSection section){
+		Integer chapterId = section.getChapterId();
+		TikuChapter chapter = tikuChapterServiceImpl.findTikuChapterById(chapterId);
+		Integer categoryId = chapter.getTikuCategoryId();
+		TikuCategory category = tikuCategoryServiceImpl.findTikuCategoryById(categoryId);
+		Integer originType = category.getOriginType();
+		
 		section.setDelFlag(0);
 		section.setCompanyId(WebUtils.getCurrentCompanyId());
 		List<TikuSection> secList = tikuSectionServiceImpl.findTikuSection(section);
 		model.addAttribute("secList",secList);
+		model.addAttribute("originType",originType);
 		return "tiku/chapterManage/sectionAjax";
 	}
 	

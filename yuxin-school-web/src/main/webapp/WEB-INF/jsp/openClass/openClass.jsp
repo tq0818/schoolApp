@@ -10,81 +10,81 @@
 	<link href="<%=rootPath%>/stylesheets/jquery.datetimepicker.css" rel="stylesheet" type="text/css"/>
 	<script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.datetimepicker.js"></script>
 	<script type="text/javascript" src="<%=rootPath %>/javascripts/openClass/liveShow.js"></script>
-	<%-- <script type="text/javascript" src="<%=rootPath%>/javascripts/common/message.js"></script> --%>
+	 <%--<script type="text/javascript" src="<%=rootPath%>/javascripts/common/message.js"></script>--%>
 	<style type="text/css">
-        .btn - upload {
+        .btn-upload {
 	        float: right;
-	        margin - top: -15px
+	        margin-top: -15px
 	    }
 	    .h5 {
 	        width: 100px
 	    }
-	    .up - input {
+	    .up-input {
 	        position: relative;
 	        width: 166px;
 	        height: 32px;
 	        opacity: 0;
 	        filter: alpha(opacity = 0);
-	        z - index: 1
+	        z-index: 1
 	    }
 	    .upfile {
 	        position: relative;
-	        display: inline - block
+	        display: inline-block
 	    }
-	    .upfile.btn - up {
+	    .upfile.btn-up {
 	        position: absolute;
 	        top: 0;
 	        left: 0;
 	    }
 	    .register {
 	        position: fixed;
-	        left: 50 % ;
-	        top: 50 % ;
+	        left: 50% ;
+	        top: 50% ;
 	        width: 400px;
 	        height: 400px;
-	        margin - left: -200px;
-	        margin - top: -200px;
-	        padding - bottom: 15px;
-	        background - color: #fff;
-	        border: 1px solid# ddd;
-	        border - radius: 5px;
-	        box - shadow: 0 0 30px rgba(0, 0, 0, 0.2);
-	        z - index: 999
+	        margin-left: -200px;
+	        margin-top: -200px;
+	        padding-bottom: 15px;
+	        background-color: #fff;
+	        border: 1px solid #ddd;
+	        border-radius: 5px;
+	        box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+	        z-index: 999
 	    }
 	    .none {
 	        display: none;
 	    }
-	    .register.reg - close {
+	    .register.reg-close {
 	        position: absolute;
 	        top: 12px;
 	        right: 12px;
 	        width: 12px;
 	        height: 12px;
-	        background - image: url('../images/index-icons.png');
-	        background - repeat: no - repeat;
-	        background - position: 0 0;
+	        background-image: url('../images/index-icons.png');
+	        background-repeat: no-repeat;
+	        background-position: 0 0;
 	        cursor: pointer;
 	    }
-	    .register.reg - title {
+	    .register.reg-title {
 	        padding: 15px 30px;
-	        border - bottom: 1px solid# e5e5e5;
+	        border-bottom:1px solid #e5e5e5;
 	    }
-	    .register.reg - form {
+	    .register.reg-form {
 	        padding: 0 60px;
 	    }
-	    .register.reg - bottom {
+	    .register.reg-bottom {
 	        padding: 2px 52px;
-	        border - top: 1px solid# e5e5e5;
+	        border-top: 1px solid #e5e5e5;
 	    }
-	    .mark - bg {
+	    .mark-bg {
 	        position: fixed;
 	        top: 0;
 	        right: 0;
 	        bottom: 0;
 	        left: 0;
-	        background - color: #fff;
-	        background - color: rgba(255, 255, 255, 0.6);
-	        opacity: .6\ 9;
+	        background-color: #fff;
+	        background-color: rgba(255, 255, 255, 0.6);
+	        opacity: 0.69;
 	        filter: alpha(opacity = 60);
 	    }
 	</style>

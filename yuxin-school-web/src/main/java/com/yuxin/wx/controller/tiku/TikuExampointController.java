@@ -15,9 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yuxin.wx.api.tiku.ITikuCategoryService;
 import com.yuxin.wx.api.tiku.ITikuExampointService;
+import com.yuxin.wx.api.tiku.ITikuSectionService;
+import com.yuxin.wx.model.tiku.TikuCategory;
 import com.yuxin.wx.model.tiku.TikuChapter;
 import com.yuxin.wx.model.tiku.TikuExampoint;
+import com.yuxin.wx.model.tiku.TikuSection;
 import com.yuxin.wx.utils.WebUtils;
 
 /**
@@ -31,6 +35,12 @@ public class TikuExampointController {
 	
 	@Autowired
 	private ITikuExampointService tikuExampointServiceImpl;
+	
+	@Autowired
+    private ITikuCategoryService tikuCategoryServiceImpl;
+	
+	@Autowired
+    private ITikuSectionService tikuSectionServiceImpl;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String list(Model model, TikuExampoint search){
@@ -82,10 +92,17 @@ public class TikuExampointController {
 	 */
 	@RequestMapping(value="/loadExamPoint")
 	public String loadExamPoint(TikuExampoint exampoint,Model model){
+		Integer sectionId = exampoint.getSectionId();
+		TikuSection section = tikuSectionServiceImpl.findTikuSectionById(sectionId);
+		Integer categoryId = section.getTikuCategoryId();
+		TikuCategory category = tikuCategoryServiceImpl.findTikuCategoryById(categoryId);
+		Integer originType = category.getOriginType();
+		
 		exampoint.setCompanyId(WebUtils.getCurrentCompanyId());
 		exampoint.setDelFlag(0);
 		List<TikuExampoint> pointList = tikuExampointServiceImpl.findTikuExampoint(exampoint);
 		model.addAttribute("pointList",pointList);
+		model.addAttribute("originType",originType);
 		return "tiku/chapterManage/pointAjax";
 	}
 	

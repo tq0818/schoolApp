@@ -126,17 +126,19 @@
         	</span></p>
         </td>
         <td rtype="${vo.resourceType}">
-        	<a class="btn btn-mini btn-default edit" href="javascript:;" videoName="${vo.videoName}" videoId="${vo.id}">编辑</a>
-            <c:if test="${vo.resourceType == 'video'}">
-                <c:if test="${vo.videoStatus == 'VIDEO_PROCESS_DELETE'}">
-                    <a class="btn btn-mini btn-default disable" href="javascript:;" videoId="${vo.id}">启用</a>
-                </c:if>
-                <c:if test="${vo.videoStatus != 'VIDEO_PROCESS_DELETE'}">
-                    <a class="btn btn-mini btn-default disable" href="javascript:;" videoId="${vo.id}">禁用</a>
-                </c:if>
-                <input type="hidden" value="${vo.videoStatus}"/>
-            </c:if>
-            <a class="btn btn-mini btn-default delete" href="javascript:;" videoId="${vo.id}" ccid="${vo.videoCcId}" stype="${vo.storageType}">删除</a>
+        	<c:if test="${vo.originType  eq 1 }">
+	        	<a class="btn btn-mini btn-default edit" href="javascript:;" videoName="${vo.videoName}" videoId="${vo.id}">编辑</a>
+	            <c:if test="${vo.resourceType == 'video'}">
+	                <c:if test="${vo.videoStatus == 'VIDEO_PROCESS_DELETE'}">
+	                    <a class="btn btn-mini btn-default disable" href="javascript:;" videoId="${vo.id}">启用</a>
+	                </c:if>
+	                <c:if test="${vo.videoStatus != 'VIDEO_PROCESS_DELETE'}">
+	                    <a class="btn btn-mini btn-default disable" href="javascript:;" videoId="${vo.id}">禁用</a>
+	                </c:if>
+	                <input type="hidden" value="${vo.videoStatus}"/>
+	            </c:if>
+	            <a class="btn btn-mini btn-default delete" href="javascript:;" videoId="${vo.id}" ccid="${vo.videoCcId}" stype="${vo.storageType}">删除</a>
+        	</c:if>
         </td>
     </tr>
 </c:forEach>

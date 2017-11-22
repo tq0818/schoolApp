@@ -33,6 +33,7 @@ public class Video extends BaseEntity {
 	private Integer schoolId;			/*校区Id*/
 	private String	webVideoId;			/*视频播放id*/
 	private String	webVideoDomain;		/*视频来源*/
+	private Integer	originType;		/*视频来源0为pc，1为app*/
 	
 	private String storageType;     /*视频存储类型*/ 
 	private String filePath;
@@ -44,7 +45,7 @@ public class Video extends BaseEntity {
 	/**
 	 * full Constructor
 	 */
-	public Video(Integer id, String videoName, String videoCcId, String videoTime, Double vodeoSize, String videoStatus, Integer itemOneId, Integer itemSecondId, String videoTag, String videoPic, Integer creator, Date createTime, Integer updator, Date updateTime,Integer companyId,Integer schoolId) {
+	public Video(Integer id, String videoName, String videoCcId, String videoTime, Double vodeoSize, String videoStatus, Integer itemOneId, Integer itemSecondId, String videoTag, String videoPic, Integer creator, Date createTime, Integer updator, Date updateTime,Integer companyId,Integer schoolId, Integer	originType) {
 		setId(id);
 		this.videoName = videoName;
 		this.videoCcId = videoCcId;
@@ -61,6 +62,7 @@ public class Video extends BaseEntity {
 		this.updateTime = updateTime;
 		this.companyId = companyId;
 		this.schoolId = schoolId;
+		this.originType = originType;
 	}
 
 	// getter && setter
@@ -246,6 +248,14 @@ public class Video extends BaseEntity {
 
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
+	}
+
+	public Integer getOriginType() {
+		return originType;
+	}
+
+	public void setOriginType(Integer originType) {
+		this.originType = originType;
 	}
 	
 }

@@ -68,7 +68,9 @@
             <a class="btn btn-mini btn-default types" href="javascript:;" data-type="TOPIC_TYPE_CASE">材料题</a>
         </p>
         <div style="float: right;margin-top:-24px">
+        <c:if test="${cate.originType  eq 1 }">
             <a href="javascript:;" class="btn btn-mini btn-primary btn-topic" data-btn="create" data-qid="0"><em class="iconfont" style="top:0px;">&#xe606;</em> 添加试题</a>
+        </c:if>
         </div>
         <div class="table-list">
         </div>

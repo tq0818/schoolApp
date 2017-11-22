@@ -47,6 +47,7 @@
 		<result property="itemThirdCode" column="item_third_code" />
 		<result property="itemFourthCode" column="item_fourth_code" />
 		<result property="paperDescription" column="paper_description" />
+		<result property="originType" column="origin_type"/>
 	</resultMap>
 	
 	<resultMap type="com.yuxin.wx.vo.classes.ClassTypeVo" id="classTypeVoResultMap">
@@ -102,7 +103,37 @@
 		<result property="iconLable" column="icon_lable"/>
 		<result property="subjectClassOrder" column="subject_class_order"/>
 		<result property="isMicroClass" column="is_micro_class"/>
+		<result property="originType" column="origin_type"/>
+
+
+		<result property="imgUrl" column="imgUrl"/>
+		<result property="isShelves" column="isShelves"/>
+		<result property="reserveTime" column="reserveTime"/>
+		<result property="shelvesTime" column="shelvesTime"/>
+		<result property="appPrice" column="appPrice"/>
+		<result property="salePrice" column="salePrice"/>
+		<result property="appId" column="appId"/>
+
+
+		<result property="lessonDate" column="lesson_date"/>
+		<result property="lessonTimeStart" column="lesson_time_start"/>
+		<result property="lessonTimeEnd" column="lesson_time_end"/>
+		<result property="lessonName" column="lesson_name"/>
+		<result property="teacherName" column="teacher_name"/>
+		<result property="schoolName" column="school_short_name"/>
+		<result property="labDesc" column="lab_desc"/>
 	</resultMap>
+
+	<sql id="table_columns_first">
+		app_shelves_id,
+		grade_id,
+		sort
+	</sql>
+	<sql id="batch_entity_properties_first">
+		#{item.appShelvesId},
+		#{item.gradeNo},
+		#{item.sort}
+	</sql>
 	
 	<sql id="table_columns">
 		id,
@@ -150,7 +181,8 @@
 		item_third_code,
 		item_fourth_code,
 		is_micro_class,
-		paper_description
+		paper_description,
+		origin_type
     </sql>
 	<sql id="entity_properties">
 		#{id},
@@ -198,7 +230,47 @@
 		#{itemThirdCode},
 		#{itemFourthCode},
 		#{isMicroClass},
-		#{paperDescription}
+		#{paperDescription},
+		#{originType}
+	</sql>
+
+	<sql id="app_table_columns">
+		comdity_id,
+		is_shelves,
+		price,
+		sale_price,
+		shelves_time,
+		reserve_time,
+		category_id,
+		grade_id,
+		subject_id,
+		knowledge_pro_id,
+		knowledge_id,
+		stage_id,
+		type_id,
+		img_url,
+		last_person,
+		create_time,
+		lab_desc
+	</sql>
+	<sql id="app_table_columns_properties">
+		#{id},
+		#{isShelves},
+		#{appPrice},
+		#{salePrice},
+		#{shelvesTime},
+		#{reserveTime},
+		#{courseCaId},
+		#{gradeId},
+		#{subjectId},
+		#{kwonProId},
+		#{knowId},
+		#{stageId},
+		#{typeId},
+		#{imgUrl},
+		#{lastPerson},
+		now(),
+		#{labDesc}
 	</sql>
 	
 	<sql id="batch_entity_properties">
@@ -247,13 +319,29 @@
 		#{item.itemThirdCode},
 		#{item.itemFourthCode},
 		#{item.isMicroClass},
-		#{item.paperDescription}
+		#{item.paperDescription},
+		#{item.originType}
 	</sql>
-	
+
+	<!--插入app上架信息-->
+	<insert id="insertAppShelvesInfo" parameterType="com.yuxin.wx.vo.classes.ClassTypeVo">
+		insert into app_shelves( <include refid="app_table_columns" /> )
+		values ( <include refid="app_table_columns_properties" /> )
+	</insert>
+
 	<!-- 适用于主键自增类型 -->
 	<insert id="insert" parameterType="com.yuxin.wx.model.classes.ClassType" useGeneratedKeys="true" keyProperty="id">
 		insert into class_type( <include refid="table_columns" /> ) 
 		values ( <include refid="entity_properties" /> )
+	</insert>
+
+	<!-- 批量添加 适用于主键自增类型  不支持返回主键-->
+	<insert id="insertFirstRecommond" parameterType="java.util.List">
+		insert into first_recommend( <include refid="table_columns_first" /> )
+		values
+		<foreach item="item" collection="list" separator="," >
+			( <include refid="batch_entity_properties_first" /> )
+		</foreach>
 	</insert>
 	
 	<!-- 批量添加 适用于主键自增类型  不支持返回主键-->
@@ -328,6 +416,7 @@
 		    <if test="publishStatus == 'CLASS_STOP_SALE' or delFlag ==1">subject_class_order = null</if>
 		    <if test="isMicroClass != null">is_micro_class = #{isMicroClass}</if>
 		    <if test="paperDescription != null and paperDescription!=''">paper_description = #{paperDescription}</if>
+		    <if test="originType != null and originType''">origin_type = #{originType}</if>
 
 		 </trim>
 		<where>id = #{id}</where>
@@ -378,6 +467,7 @@
 			<if test="itemSecondCode != null and itemSecondCode != ''">and item_second_code = #{itemSecondCode}</if>
 			<if test="itemThirdCode != null and itemThirdCode != ''">and item_third_code = #{itemThirdCode}</if>
 			<if test="itemFourthCode != null and itemFourthCode != ''">and item_fourth_code = #{itemFourthCode}</if>
+			<if test="originType != null and originType != ''">and origin_type = #{originType}</if>
 		</trim>
 	</sql>
 	
@@ -446,18 +536,105 @@
 		  ORDER BY a.update_time DESC
 		  limit #{firstIndex},#{pageSize}
 	</select>
-	
+
+	<!--查询单条录播课程数据信息-->
+	<select id="querySingleOtherClassTypeInfo" resultMap="classTypeVoResultMap" parameterType="map">
+		select ct.*,c.buy_num as actualNum,app.img_url as imgUrl,sct.NAME teacher_name,sct.school_short_name,
+		case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
+		app.reserve_time as reserveTime,app.shelves_time as shelvesTime,app.price as appPrice,app.sale_price as salePrice,
+		v.video_time as lesson_date,app.id as appId,app.lab_desc
+		 from commodity c
+		join commodity_product_realtion cpr on cpr.com_id=c.id
+		join class_type ct on ct.id=cpr.product_id
+		join sys_config_teacher sct ON ct.teacher_id = sct.id
+		join class_type_module_relation ctmr on ct.id = ctmr.class_type_id
+		join class_module_lesson cml on ctmr.module_id = cml.id
+		join course_video_chapter cvc on cml.id=cvc.module_id
+		join course_video_lecture cvl on cvl.chapter_id=cvc.id
+		join video v on cvl.video_id=v.id
+		left join app_shelves app on app.comdity_id=c.id
+		where c.id=#{classType.id} and ct.del_flag=0 and c.type='COMMODITY_CLASS'
+	</select>
+
+	<!--查询单条直播播课程数据信息-->
+	<select id="querySingleLiveClassTypeInfo" resultMap="classTypeVoResultMap" parameterType="map">
+		select
+		ct.*,cml.lesson_date,
+		cml.lesson_time_start,
+		cml.lesson_time_end,
+		cml.lesson_name,sct.NAME teacher_name,sct.school_short_name,
+		c.buy_num as actualNum,app.img_url as imgUrl,case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
+		app.reserve_time as reserveTime,app.shelves_time as shelvesTime,app.price as appPrice,app.sale_price as salePrice,
+		app.id as appId,
+		app.lab_desc
+		FROM (
+				SELECT
+					ml.module_no_id,
+					ml.`lesson_date`,
+					ml.lesson_time_start,
+					ml.lesson_time_end,
+					ml.lesson_name
+				FROM
+					class_module_lesson ml
+				ORDER BY
+					ml.lesson_date ASC
+			) cml
+		JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id`
+		JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id`
+		JOIN class_type ct ON ct.id = ctmr.`class_type_id`
+		join commodity_product_realtion pr on ct.id = pr.product_id
+		join commodity c on c.id = pr.com_id
+		JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
+		left join `app_shelves` app on app.`comdity_id`=c.id
+		where c.id = #{classType.id} and ct.del_flag=0 and c.type='COMMODITY_CLASS'
+		HAVING MAX(cml.lesson_date) <![CDATA[<=]]> NOW()
+		UNION
+		select
+		ct.*,cml.lesson_date,
+		cml.lesson_time_start,
+		cml.lesson_time_end,
+		cml.lesson_name,sct.NAME teacher_name,sct.school_short_name,
+		c.buy_num as actualNum,app.img_url as imgUrl,case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
+		app.reserve_time as reserveTime,app.shelves_time as shelvesTime,app.price as appPrice,app.sale_price as salePrice,
+		app.id as appId,
+		app.lab_desc
+		FROM (
+			SELECT
+				ml.module_no_id,
+				ml.lesson_date,
+				ml.lesson_time_start,
+				ml.lesson_time_end,
+				ml.lesson_name
+			FROM
+				class_module_lesson ml
+			WHERE
+				ml.lesson_date <![CDATA[>=]]> now()
+			ORDER BY
+				ml.lesson_date ASC
+			) cml
+		JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id`
+		JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id`
+		JOIN class_type ct ON ct.id = ctmr.`class_type_id`
+		join commodity_product_realtion pr on ct.id = pr.product_id
+		join commodity c on c.id = pr.com_id
+		JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
+		left join `app_shelves` app on app.`comdity_id`=c.id
+		where c.id = #{classType.id} and ct.del_flag=0 and c.type='COMMODITY_CLASS'
+		GROUP BY c.id
+	</select>
+
 	<!-- 查询班型并分页 -->
 	<select id="queryClassTypesByPage" resultMap="classTypeVoResultMap" parameterType="map">
-		SELECT a.*, c.buy_num as actualNum
-        FROM class_type a left join commodity_product_realtion pr on
-		pr.product_id = a.id
-		INNER JOIN commodity c ON c.id = pr.com_id 
+		SELECT a.*, c.buy_num as actualNum,app.img_url as imgUrl,case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,app.reserve_time as reserveTime,app.shelves_time as shelvesTime,app.price as appPrice,app.sale_price as salePrice,app.id as appId
+		FROM class_type a
+		inner join commodity_product_realtion pr on pr.product_id = a.id
+		INNER JOIN commodity c ON c.id = pr.com_id
+		left join app_shelves app on app.comdity_id=c.id
 		where a.del_flag=0 and a.company_id = #{classType.companyId} and c.type='COMMODITY_CLASS'
 		<if test="classType.name != null and classType.name != ''">and a.name like '%${classType.name}%'</if>
 		<if test="classType.itemOneId != null and classType.itemOneId != ''">and a.item_one_id = #{classType.itemOneId}</if>
 		<if test="classType.itemSecondId != null and classType.itemSecondId != ''">and a.item_second_id = #{classType.itemSecondId}</if>
-		<if test="classType.publishStatus != null and classType.publishStatus != ''">and a.publish_status = #{classType.publishStatus}</if>
+		<if test="classType.isShelves != null and classType.isShelves != ''">(and app.is_shelves = #{classType.isShelves} or app.is_shelves is null)</if>
 		<if test="classType.createSchoolId !=null and classType.createSchoolId != ''">and a.create_school_id = #{classType.createSchoolId}</if>
 		<if test="classType.itemTag != null and classType.itemTag != ''">and find_in_set(#{classType.itemTag},a.item_tag)>0</if>
 		<if test="classType.itemTag2 != null and classType.itemTag2 != ''">and find_in_set(#{classType.itemTag2},a.item_tag)>0</if>
@@ -470,36 +647,40 @@
 		<if test="classType.itemOneCode != null and classType.itemOneCode != ''">and a.item_one_code = #{classType.itemOneCode}</if>
 		<if test="classType.itemSecondCode != null and classType.itemSecondCode != ''">and a.item_second_code = #{classType.itemSecondCode}</if>
 		<if test="classType.itemThirdCode != null and classType.itemThirdCode != ''">and a.item_third_code = #{classType.itemThirdCode}</if>
+		<if test="classType.itemThirdCode != null and classType.itemThirdCode != ''">and a.origin_type = #{classType.originType}</if>
 		<if test="classType.itemFourthCode != null and classType.itemFourthCode != ''">
-            and a.item_fourth_code in
-            <foreach item="item" index="index" collection="codes" open="(" separator="," close=")">#{item}</foreach>
-        </if>
+			and a.item_fourth_code in
+			<foreach item="item" index="index" collection="codes" open="(" separator="," close=")">#{item}</foreach>
+		</if>
 		ORDER BY a.subject_class_order is null,a.subject_class_order asc, a.update_time DESC
 		limit #{classType.firstIndex},#{classType.pageSize}
 	</select>
 	
 	
 	<select id="queryCounts" resultType="int" parameterType="map">
-		SELECT count(id) FROM class_type
-		where del_flag=0 and company_id = #{classType.companyId}
-		<if test="classType.name != null and classType.name != ''">and name like '%${classType.name}%'</if>
-		<if test="classType.itemOneId != null and classType.itemOneId != ''">and item_one_id = #{classType.itemOneId}</if>
-		<if test="classType.itemSecondId != null and classType.itemSecondId != ''">and item_second_id = #{classType.itemSecondId}</if>
-		<if test="classType.publishStatus != null and classType.publishStatus != ''">and publish_status = #{classType.publishStatus}</if>
-		<if test="classType.createSchoolId !=null and classType.createSchoolId != ''">and create_school_id = #{classType.createSchoolId}</if>
-		<if test="classType.itemTag != null and classType.itemTag != ''">and find_in_set(#{classType.itemTag},item_tag)>0</if>
-		<if test="classType.itemTag2 != null and classType.itemTag2 != ''">and find_in_set(#{classType.itemTag2},item_tag)>0</if>
-		<if test="classType.teacherId != null and classType.teacherId != ''">and teacher_id =${classType.teacherId} </if>
-		<if test="classType.teachersId != null and classType.teachersId != ''">or teacher_id in(${classType.teachersId}) </if>
-		<if test="classType.faceFlag != null and classType.faceFlag != ''">and face_flag = ${classType.faceFlag}</if>
-		<if test="classType.liveFlag != null and classType.liveFlag != ''">and live_flag = ${classType.liveFlag}</if>
-		<if test="classType.videoFlag != null and classType.videoFlag != ''">and video_flag = ${classType.videoFlag}</if>
-		<if test="classType.remoteFlag != null and classType.remoteFlag != ''">and remote_flag = ${classType.remoteFlag}</if>
-		<if test="classType.itemOneCode != null and classType.itemOneCode != ''">and item_one_code = #{classType.itemOneCode}</if>
-		<if test="classType.itemSecondCode != null and classType.itemSecondCode != ''">and item_second_code = #{classType.itemSecondCode}</if>
-		<if test="classType.itemThirdCode != null and classType.itemThirdCode != ''">and item_third_code = #{classType.itemThirdCode}</if>
+		SELECT count(ct.id) FROM class_type ct
+		inner join commodity_product_realtion pr on pr.product_id = ct.id
+		INNER JOIN commodity c ON c.id = pr.com_id
+		left join app_shelves app on app.comdity_id=c.id
+		where ct.del_flag=0 and ct.company_id = #{classType.companyId}
+		<if test="classType.name != null and classType.name != ''">and ct.name like '%${classType.name}%'</if>
+		<if test="classType.itemOneId != null and classType.itemOneId != ''">and ct.item_one_id = #{classType.itemOneId}</if>
+		<if test="classType.itemSecondId != null and classType.itemSecondId != ''">and ct.item_second_id = #{classType.itemSecondId}</if>
+		<if test="classType.isShelves != null and classType.isShelves != ''">and app.is_shelves = #{classType.isShelves}</if>
+		<if test="classType.createSchoolId !=null and classType.createSchoolId != ''">and ct.create_school_id = #{classType.createSchoolId}</if>
+		<if test="classType.itemTag != null and classType.itemTag != ''">and ct.find_in_set(#{classType.itemTag},item_tag)>0</if>
+		<if test="classType.itemTag2 != null and classType.itemTag2 != ''">and ct.find_in_set(#{classType.itemTag2},item_tag)>0</if>
+		<if test="classType.teacherId != null and classType.teacherId != ''">and ct.teacher_id =${classType.teacherId} </if>
+		<if test="classType.teachersId != null and classType.teachersId != ''">or ct.teacher_id in(${classType.teachersId}) </if>
+		<if test="classType.faceFlag != null and classType.faceFlag != ''">and ct.face_flag = ${classType.faceFlag}</if>
+		<if test="classType.liveFlag != null and classType.liveFlag != ''">and ct.live_flag = ${classType.liveFlag}</if>
+		<if test="classType.videoFlag != null and classType.videoFlag != ''">and ct.video_flag = ${classType.videoFlag}</if>
+		<if test="classType.remoteFlag != null and classType.remoteFlag != ''">and ct.remote_flag = ${classType.remoteFlag}</if>
+		<if test="classType.itemOneCode != null and classType.itemOneCode != ''">and ct.item_one_code = #{classType.itemOneCode}</if>
+		<if test="classType.itemSecondCode != null and classType.itemSecondCode != ''">and ct.item_second_code = #{classType.itemSecondCode}</if>
+		<if test="classType.itemThirdCode != null and classType.itemThirdCode != ''">and ct.item_third_code = #{classType.itemThirdCode}</if>
 		<if test="classType.itemFourthCode != null and classType.itemFourthCode != ''">
-            and item_fourth_code in
+            and ct.item_fourth_code in
             <foreach item="item" index="index" collection="codes" open="(" separator="," close=")">#{item}</foreach>
         </if>
 	</select>

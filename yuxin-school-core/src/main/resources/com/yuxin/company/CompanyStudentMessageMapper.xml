@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yuxin.wx.company.mapper.CompanyStudentMessageMapper">
 	<resultMap type="com.yuxin.wx.model.company.CompanyStudentMessage"
-		id="companyStudentMessageResultMap">
+			   id="companyStudentMessageResultMap">
 		<result property="id" column="id" />
 		<result property="title" column="title" />
 		<result property="content" column="content" />
@@ -29,17 +29,17 @@
 		<result property="itemSecondCode" column="item_second_code" />
 		<result property="itemThirdCode" column="item_third_code" />
 		<association property="creatorName" column="creator"
-			javaType="String" select="findCreatorName"></association>
+					 javaType="String" select="findCreatorName"></association>
 		<association property="mobile" column="creator"
-			javaType="String" select="findMobile"></association>
+					 javaType="String" select="findMobile"></association>
 		<association property="username" column="creator"
-			javaType="String" select="findUsername"></association>
+					 javaType="String" select="findUsername"></association>
 		<association property="groupOneName" column="group_one_id"
-			javaType="String" select="findGroupname"></association>
+					 javaType="String" select="findGroupname"></association>
 		<association property="groupTwoName" column="group_two_id"
-			javaType="String" select="findGroupname"></association>
+					 javaType="String" select="findGroupname"></association>
 	</resultMap>
-<resultMap type="com.yuxin.wx.vo.student.StuMessageVo" id="stuMessageVoResultMap">
+	<resultMap type="com.yuxin.wx.vo.student.StuMessageVo" id="stuMessageVoResultMap">
 		<result property="id" column="id"/>
 		<result property="name" column="name"/>
 		<result property="phone" column="mobile"/>
@@ -47,7 +47,7 @@
 		<result property="applyTime" column="apply_time"/>
 		<result property="companyId" column="company_id"/>
 	</resultMap>
-	
+
 	<sql id="table_columns">
 		id,
 		title,
@@ -129,7 +129,7 @@
 
 	<!-- 适用于主键自增类型 -->
 	<insert id="insert" parameterType="com.yuxin.wx.model.company.CompanyStudentMessage"
-		useGeneratedKeys="true" keyProperty="id">
+			useGeneratedKeys="true" keyProperty="id">
 		insert into company_student_message(
 		<include refid="table_columns" />
 		)
@@ -140,7 +140,7 @@
 
 	<!-- 批量添加 适用于主键自增类型 不支持返回主键 -->
 	<insert id="batchInsert" parameterType="java.util.List"
-		useGeneratedKeys="true">
+			useGeneratedKeys="true">
 		insert into company_student_message(
 		<include refid="table_columns" />
 		)
@@ -163,7 +163,7 @@
 		delete from company_student_message
 		where id in
 		<foreach item="item" collection="array" open="(" separator=","
-			close=")">
+				 close=")">
 			#{item}
 		</foreach>
 	</delete>
@@ -197,7 +197,7 @@
 	</update>
 
 	<select id="findById" resultMap="companyStudentMessageResultMap"
-		parameterType="Integer">
+			parameterType="Integer">
 		select
 		<include refid="table_columns" />
 		from company_student_message
@@ -238,7 +238,7 @@
 	</sql>
 
 	<select id="page" resultMap="companyStudentMessageResultMap"
-		parameterType="com.yuxin.wx.model.company.CompanyStudentMessage">
+			parameterType="com.yuxin.wx.model.company.CompanyStudentMessage">
 		select
 		<include refid="table_columns" />
 		from company_student_message
@@ -247,7 +247,7 @@
 	</select>
 
 	<select id="pageCount" resultType="int"
-		parameterType="com.yuxin.wx.model.company.CompanyStudentMessage">
+			parameterType="com.yuxin.wx.model.company.CompanyStudentMessage">
 		select count(id) from company_student_message
 		<include refid="page_where" />
 	</select>
@@ -277,14 +277,14 @@
 	</select>
 	<select id="selMsgByCond" resultMap="companyStudentMessageResultMap"
 
-		parameterType="com.yuxin.wx.model.company.CompanyStudentMessage">
+			parameterType="com.yuxin.wx.model.company.CompanyStudentMessage">
 		select
 		<include refid="table_columns" />
 		from company_student_message
 		where company_id = #{companyId}
 		and
-		school_id = #{schoolId} and 
-		message_type != 'STUDENT_MESSAGE_OTHER' 
+		school_id = #{schoolId} and
+		message_type != 'STUDENT_MESSAGE_OTHER'
 		<if test="itemOneCode != null and itemOneCode != ''">
 			and item_one_code = #{itemOneCode}
 		</if>
@@ -298,7 +298,7 @@
 			and message_type = #{messageType}
 		</if>
 		<if
-			test="messageMethod != null and messageMethod != '' and 
+				test="messageMethod != null and messageMethod != '' and
 
 messageMethod != 'all'">
 			and message_method = #{messageMethod}
@@ -308,12 +308,12 @@ messageMethod != 'all'">
 	</select>
 	<select id="selMsgCount" resultType="Integer"
 
-		parameterType="com.yuxin.wx.model.company.CompanyStudentMessage">
+			parameterType="com.yuxin.wx.model.company.CompanyStudentMessage">
 		select count(id)
 		from company_student_message
 		where company_id =
 		#{companyId}
-		and school_id = #{schoolId} and 
+		and school_id = #{schoolId} and
 		message_type != 'STUDENT_MESSAGE_OTHER'
 		<if test="itemOneCode != null and itemOneCode != ''">
 			and item_one_code = #{itemOneCode}
@@ -331,174 +331,174 @@ messageMethod != 'all'">
 			and message_type = #{messageType}
 		</if>
 		<if
-			test="messageMethod != null and messageMethod != '' and 
+				test="messageMethod != null and messageMethod != '' and
 
 messageMethod != 'all'">
 			and message_method = #{messageMethod}
 		</if>
 	</select>
-	
-	<!-- 学员通知情况 -->
-	<select id="findStudentMsgByClassId" resultMap="stuMessageVoResultMap" 
 
-parameterType="com.yuxin.wx.vo.student.StuMessageVo">
+	<!-- 学员通知情况 -->
+	<select id="findStudentMsgByClassId" resultMap="stuMessageVoResultMap"
+
+			parameterType="com.yuxin.wx.vo.student.StuMessageVo">
 		select aa.id,
-			aa.name,
-			aa.mobile,
-			aa.email,
-			aa.apply_time 
+		aa.name,
+		aa.mobile,
+		aa.email,
+		aa.apply_time
 		from(
-			select h.id,
-				s.name,
-				s.mobile,
-				s.email,
-				m.apply_time
-			from student s
-			<choose>
-				<when test="messageMethod == 'STUDENT_MESSAGE_EMAIL'">inner join company_email_history h on s.user_id = h.receiver_user_id</when>
-				<otherwise>inner join company_message_history h on s.id = h.receiver_user_id</otherwise>
-			</choose>
-		                and h.message_id = #{messageId} and 
-						h.send_status = #{status}
-				inner join student_pay_master m on m.stu_id = s.id
-					and m.commodity_id = #{classTypeId} and
-					m.school_id = #{schoolId} and 
-					m.item_one_id = #{itemOneId} and 
-					m.item_second_id = #{itemSecondId} and 
-					m.company_id = #{companyId}
-					and	m.delete_flag = 0 and (m.pay_status_code='ORDER_PAID' or m.pay_status_code='ORDER_PART_PAY' or m.pay_status_code='ORDER_FINISHED' or m.pay_status_code='ORDER_PAID_NO_COURSE')
-				group by h.id
+		select h.id,
+		s.name,
+		s.mobile,
+		s.email,
+		m.apply_time
+		from student s
+		<choose>
+			<when test="messageMethod == 'STUDENT_MESSAGE_EMAIL'">inner join company_email_history h on s.user_id = h.receiver_user_id</when>
+			<otherwise>inner join company_message_history h on s.id = h.receiver_user_id</otherwise>
+		</choose>
+		and h.message_id = #{messageId} and
+		h.send_status = #{status}
+		inner join student_pay_master m on m.stu_id = s.id
+		and m.commodity_id = #{classTypeId} and
+		m.school_id = #{schoolId} and
+		m.item_one_id = #{itemOneId} and
+		m.item_second_id = #{itemSecondId} and
+		m.company_id = #{companyId}
+		and	m.delete_flag = 0 and (m.pay_status_code='ORDER_PAID' or m.pay_status_code='ORDER_PART_PAY' or m.pay_status_code='ORDER_FINISHED' or m.pay_status_code='ORDER_PAID_NO_COURSE')
+		group by h.id
 		) aa
 		order by aa.id
 		limit #{firstIndex},#{pageSize}
 	</select>
-	
-	<select id="findStudentMsgCountByClassId" resultType="Integer" 
 
-parameterType="com.yuxin.wx.vo.student.StuMessageVo">
-	select count(aa.id) from
-	(select h.id
-			from student s 
-			<choose>
-				<when test="messageMethod == 'STUDENT_MESSAGE_EMAIL'">inner join company_email_history h on s.user_id = h.receiver_user_id</when>
-				<otherwise>inner join company_message_history h on s.id = h.receiver_user_id</otherwise>
-			</choose>
-	                and h.message_id = #{messageId} and 
-					h.send_status = #{status}
-			inner join student_pay_master m on m.stu_id = s.id
-				and m.commodity_id = #{classTypeId} and
-				m.school_id = #{schoolId} and 
-				m.item_one_id = #{itemOneId} and 
-				m.item_second_id = #{itemSecondId} and 
-				m.company_id = #{companyId}
-				and	m.delete_flag = 0 and (m.pay_status_code='ORDER_PAID' or m.pay_status_code='ORDER_PART_PAY' or m.pay_status_code='ORDER_FINISHED' or m.pay_status_code='ORDER_PAID_NO_COURSE')
+	<select id="findStudentMsgCountByClassId" resultType="Integer"
+
+			parameterType="com.yuxin.wx.vo.student.StuMessageVo">
+		select count(aa.id) from
+		(select h.id
+		from student s
+		<choose>
+			<when test="messageMethod == 'STUDENT_MESSAGE_EMAIL'">inner join company_email_history h on s.user_id = h.receiver_user_id</when>
+			<otherwise>inner join company_message_history h on s.id = h.receiver_user_id</otherwise>
+		</choose>
+		and h.message_id = #{messageId} and
+		h.send_status = #{status}
+		inner join student_pay_master m on m.stu_id = s.id
+		and m.commodity_id = #{classTypeId} and
+		m.school_id = #{schoolId} and
+		m.item_one_id = #{itemOneId} and
+		m.item_second_id = #{itemSecondId} and
+		m.company_id = #{companyId}
+		and	m.delete_flag = 0 and (m.pay_status_code='ORDER_PAID' or m.pay_status_code='ORDER_PART_PAY' or m.pay_status_code='ORDER_FINISHED' or m.pay_status_code='ORDER_PAID_NO_COURSE')
 		group by h.id ) aa
 	</select>
-	
-	<!-- 学员通知情况 根据moduleId  查询 -->
-	<select id="findStudentMsgByModuleId" resultMap="stuMessageVoResultMap" 
 
-parameterType="com.yuxin.wx.vo.student.StuMessageVo">
+	<!-- 学员通知情况 根据moduleId  查询 -->
+	<select id="findStudentMsgByModuleId" resultMap="stuMessageVoResultMap"
+
+			parameterType="com.yuxin.wx.vo.student.StuMessageVo">
 		select aa.id,
-			aa.name,
-			aa.mobile,
-			aa.email,
-			aa.apply_time
+		aa.name,
+		aa.mobile,
+		aa.email,
+		aa.apply_time
 		from(
-			select h.id,
-				s.name,
-				s.mobile,
-				s.email,
-				m.apply_time
-			from student s 
-			<choose>
-				<when test="messageMethod == 'STUDENT_MESSAGE_EMAIL'">inner join company_email_history h on s.user_id = h.receiver_user_id</when>
-				<otherwise>inner join company_message_history h on s.id = h.receiver_user_id</otherwise>
-			</choose>
-				and h.message_id = #{messageId}
-				and h.send_status = #{status}
-			inner join student_pay_master m on m.stu_id = s.id 
-				and m.school_id = #{schoolId}
-				and m.item_one_id = #{itemOneId}
-				and m.item_second_id = #{itemSecondId}
-				and m.company_id = #{companyId}
-				and	m.delete_flag = 0 and (m.pay_status_code='ORDER_PAID' or m.pay_status_code='ORDER_PART_PAY' or m.pay_status_code='ORDER_FINISHED' or m.pay_status_code='ORDER_PAID_NO_COURSE')
-			inner join student_pay_slave p on p.pay_master_id = m.id 
-				and p.resource_id = #{moduleNoId} 
-			group by h.id
+		select h.id,
+		s.name,
+		s.mobile,
+		s.email,
+		m.apply_time
+		from student s
+		<choose>
+			<when test="messageMethod == 'STUDENT_MESSAGE_EMAIL'">inner join company_email_history h on s.user_id = h.receiver_user_id</when>
+			<otherwise>inner join company_message_history h on s.id = h.receiver_user_id</otherwise>
+		</choose>
+		and h.message_id = #{messageId}
+		and h.send_status = #{status}
+		inner join student_pay_master m on m.stu_id = s.id
+		and m.school_id = #{schoolId}
+		and m.item_one_id = #{itemOneId}
+		and m.item_second_id = #{itemSecondId}
+		and m.company_id = #{companyId}
+		and	m.delete_flag = 0 and (m.pay_status_code='ORDER_PAID' or m.pay_status_code='ORDER_PART_PAY' or m.pay_status_code='ORDER_FINISHED' or m.pay_status_code='ORDER_PAID_NO_COURSE')
+		inner join student_pay_slave p on p.pay_master_id = m.id
+		and p.resource_id = #{moduleNoId}
+		group by h.id
 		) aa
 		order by aa.id
 		limit #{firstIndex},#{pageSize}
 	</select>
-	<select id="findStudentMsgCountByModuleId" resultType="Integer" 
+	<select id="findStudentMsgCountByModuleId" resultType="Integer"
 
-parameterType="com.yuxin.wx.vo.student.StuMessageVo">
+			parameterType="com.yuxin.wx.vo.student.StuMessageVo">
 		select count(*)
 		from(
-			select count(*)
-			from student s 
-			<choose>
-				<when test="messageMethod == 'STUDENT_MESSAGE_EMAIL'">inner join company_email_history h on s.user_id = h.receiver_user_id</when>
-				<otherwise>inner join company_message_history h on s.id = h.receiver_user_id</otherwise>
-			</choose>
-				and h.message_id = #{messageId}
-				and h.send_status = #{status}
-			inner join student_pay_master m on m.stu_id = s.id 
-				and m.school_id = #{schoolId}
-				and m.item_one_id = #{itemOneId}
-				and m.item_second_id = #{itemSecondId}
-				and m.company_id = #{companyId}
-				and	m.delete_flag = 0 and (m.pay_status_code='ORDER_PAID' or m.pay_status_code='ORDER_PART_PAY' or m.pay_status_code='ORDER_FINISHED' or m.pay_status_code='ORDER_PAID_NO_COURSE')
-			inner join student_pay_slave p on p.pay_master_id = m.id 
-				and p.resource_id = #{moduleNoId} 
-			group by h.id
+		select count(*)
+		from student s
+		<choose>
+			<when test="messageMethod == 'STUDENT_MESSAGE_EMAIL'">inner join company_email_history h on s.user_id = h.receiver_user_id</when>
+			<otherwise>inner join company_message_history h on s.id = h.receiver_user_id</otherwise>
+		</choose>
+		and h.message_id = #{messageId}
+		and h.send_status = #{status}
+		inner join student_pay_master m on m.stu_id = s.id
+		and m.school_id = #{schoolId}
+		and m.item_one_id = #{itemOneId}
+		and m.item_second_id = #{itemSecondId}
+		and m.company_id = #{companyId}
+		and	m.delete_flag = 0 and (m.pay_status_code='ORDER_PAID' or m.pay_status_code='ORDER_PART_PAY' or m.pay_status_code='ORDER_FINISHED' or m.pay_status_code='ORDER_PAID_NO_COURSE')
+		inner join student_pay_slave p on p.pay_master_id = m.id
+		and p.resource_id = #{moduleNoId}
+		group by h.id
 		) aa
 	</select>
-	
+
 	<!-- 学员通知情况 根据分组  查询 -->
 	<select id="findStudentMsgByGroup" resultMap="stuMessageVoResultMap" parameterType="com.yuxin.wx.vo.student.StuMessageVo">
 		select aa.id,
-			aa.name,
-			aa.mobile,
-			aa.email,
-			aa.apply_time
+		aa.name,
+		aa.mobile,
+		aa.email,
+		aa.apply_time
 		from(
-			select h.id,
-				s.name,
-				s.mobile,
-				s.email,
-				h.send_time as apply_time
-			from student s 
-			<choose>
-				<when test="messageMethod == 'STUDENT_MESSAGE_EMAIL'">inner join company_email_history h on s.user_id = h.receiver_user_id</when>
-				<otherwise>inner join company_message_history h on s.id = h.receiver_user_id</otherwise>
-			</choose>
-			where h.message_id = #{messageId} and h.send_status = #{status}
+		select h.id,
+		s.name,
+		s.mobile,
+		s.email,
+		h.send_time as apply_time
+		from student s
+		<choose>
+			<when test="messageMethod == 'STUDENT_MESSAGE_EMAIL'">inner join company_email_history h on s.user_id = h.receiver_user_id</when>
+			<otherwise>inner join company_message_history h on s.id = h.receiver_user_id</otherwise>
+		</choose>
+		where h.message_id = #{messageId} and h.send_status = #{status}
 		) aa
 		order by aa.id
 		limit #{firstIndex},#{pageSize}
 	</select>
 	<select id="findStudentMsgByGroupCount" resultType="int" parameterType="com.yuxin.wx.vo.student.StuMessageVo">
 		select count(h.id)
-			from student s 
-			<choose>
-				<when test="messageMethod == 'STUDENT_MESSAGE_EMAIL'">inner join company_email_history h on s.user_id = h.receiver_user_id</when>
-				<otherwise>inner join company_message_history h on s.id = h.receiver_user_id</otherwise>
-			</choose>
-			where h.message_id = #{messageId} and h.send_status = #{status}
+		from student s
+		<choose>
+			<when test="messageMethod == 'STUDENT_MESSAGE_EMAIL'">inner join company_email_history h on s.user_id = h.receiver_user_id</when>
+			<otherwise>inner join company_message_history h on s.id = h.receiver_user_id</otherwise>
+		</choose>
+		where h.message_id = #{messageId} and h.send_status = #{status}
 	</select>
-	
+
 	<insert id="insertUserMessage" parameterType="com.yuxin.wx.model.user.UserMessage" useGeneratedKeys="true" keyProperty="id">
 		insert into user_message (id,user_id,message_id,read_flag)
 		values (null,#{userId},#{messageId},#{readFlag})
 	</insert>
-		
+
 	<select id="findNoticeList" resultMap="stuMessageVoResultMap" parameterType="com.yuxin.wx.vo.student.StuMessageVo">
 		select h.id,
-			s.name,
-			s.company_id,
-			h.send_time as apply_time,
-		 <choose>
+		s.name,
+		h.company_id,
+		h.send_time as apply_time,
+		<choose>
 			<when test="messageMethod == 'STUDENT_MESSAGE_EMAIL'">
 				h.receiver_email email
 				from company_email_history h
@@ -510,14 +510,14 @@ parameterType="com.yuxin.wx.vo.student.StuMessageVo">
 				left join student s on s.id = h.receiver_user_id
 			</otherwise>
 		</choose>
-		where h.message_id = #{messageId} and 
-           h.send_status = #{status}
-		order by s.id 
+		where h.message_id = #{messageId} and
+		h.send_status = #{status}
+		order by s.id
 		limit #{firstIndex},#{pageSize}
 	</select>
 	<select id="findNoticeListCount" resultType="Integer" parameterType="com.yuxin.wx.vo.student.StuMessageVo">
 		select count(*)
-		 <choose>
+		<choose>
 			<when test="messageMethod == 'STUDENT_MESSAGE_EMAIL'">
 				from company_email_history h
 				left join student s on s.user_id = h.receiver_user_id
@@ -527,13 +527,13 @@ parameterType="com.yuxin.wx.vo.student.StuMessageVo">
 				left join student s on s.id = h.receiver_user_id
 			</otherwise>
 		</choose>
-		where h.message_id = #{messageId} and 
-           h.send_status = #{status}
-		order by s.id 
+		where h.message_id = #{messageId} and
+		h.send_status = #{status}
+		order by s.id
 	</select>
 	<select id="findSameCount" parameterType="com.yuxin.wx.model.user.UserMessage" resultType="Integer">
 		select count(um.id) from user_message as um inner join company_student_message as csm on csm.id = um.message_id
 		where um.user_id = #{userId} and csm.content = #{content}
 	</select>
-	
+
 </mapper>

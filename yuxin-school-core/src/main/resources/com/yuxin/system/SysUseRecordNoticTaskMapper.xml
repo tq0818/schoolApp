@@ -17,7 +17,7 @@
 		<result property="deadDate" column="dead_date" />
 		<result property="noticType" column="notic_type"/>
 	</resultMap>
-	
+
 	<sql id="table_columns">
 		id,
 		bussiness_type,
@@ -66,28 +66,28 @@
 		#{item.deadDate},
 		#{item.noticType}
 	</sql>
-	
+
 	<!-- 适用于主键自增类型 -->
 	<insert id="insert" parameterType="com.yuxin.wx.model.system.SysUseRecordNoticTask" useGeneratedKeys="true" keyProperty="id">
-		insert into sys_use_record_notic_task( <include refid="table_columns" /> ) 
+		insert into sys_use_record_notic_task( <include refid="table_columns" /> )
 		values ( <include refid="entity_properties" /> )
 	</insert>
-	
+
 	<!-- 批量添加 适用于主键自增类型  不支持返回主键-->
 	<insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
-		insert into sys_use_record_notic_task( <include refid="table_columns" /> ) 
-		values 
+		insert into sys_use_record_notic_task( <include refid="table_columns" /> )
+		values
 		<foreach item="item" collection="list" separator="," >
 			( <include refid="entity_properties" /> )
 		</foreach>
 	</insert>
-	
+
 	<!--根据主键删除 -->
 	<delete id="deleteById">
 		delete from sys_use_record_notic_task
 		where id = #{id}
 	</delete>
-	
+
 	<!-- 根据ID批量删除 -->
 	<delete id="deleteByIds">
 		delete from sys_use_record_notic_task
@@ -96,9 +96,9 @@
 			#{item}
 		</foreach>
 	</delete>
-	
+
 	<update id="update" parameterType="com.yuxin.wx.model.system.SysUseRecordNoticTask">
-		update sys_use_record_notic_task 
+		update sys_use_record_notic_task
 		<trim prefix="set" suffixOverrides=",">
 			<if test="bussinessType != null">bussiness_type = #{bussinessType},</if>
 			<if test="recordDateTime != null and recordDateTime != ''">record_date_time = #{recordDateTime},</if>
@@ -116,18 +116,18 @@
 		</trim>
 		<where>id = #{id}</where>
 	</update>
-	
+
 	<select id="findById" resultMap="sysUseRecordNoticTaskResultMap" parameterType="String" >
 		select <include refid="table_columns" />
 		from sys_use_record_notic_task
 		where id = #{id}
 	</select>
-	
+
 	<select id="queryAll" resultMap="sysUseRecordNoticTaskResultMap">
-		select <include refid="table_columns" /> 
+		select <include refid="table_columns" />
 		from sys_use_record_notic_task
 	</select>
-	
+
 	<!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
 	<sql id="page_where">
 		<trim prefix="where" prefixOverrides="and | or ">
@@ -146,32 +146,32 @@
 			<if test="noticType != null">and notic_type = #{noticType}</if>
 		</trim>
 	</sql>
-	
+
 	<select id="page" resultMap="sysUseRecordNoticTaskResultMap" parameterType="com.yuxin.wx.model.system.SysUseRecordNoticTask">
 		select <include refid="table_columns" />
 		from sys_use_record_notic_task
 		<include refid="page_where" />
 		limit #{firstIndex},#{pageSize}
 	</select>
-	
+
 	<select id="pageCount" resultType="int" parameterType="com.yuxin.wx.model.system.SysUseRecordNoticTask">
 		select count(id) from sys_use_record_notic_task
 		<include refid="page_where" />
 	</select>
-	
+
 	<!-- 其他自定义SQL -->
-	<select id="findByCompanyId" parameterType="com.yuxin.wx.model.system.SysUseRecordNoticTask" 
-		resultMap="sysUseRecordNoticTaskResultMap">
+	<select id="findByCompanyId" parameterType="com.yuxin.wx.model.system.SysUseRecordNoticTask"
+			resultMap="sysUseRecordNoticTaskResultMap">
 		select <include refid="table_columns"/>	from sys_use_record_notic_task
 		where company_id = #{companyId}
-			and record_data = #{recordData}
-			and notic_type = #{noticType}
-			and record_date_month = #{recordDateMonth}
-			and bussiness_type = #{bussinessType}
+		and record_data = #{recordData}
+		and notic_type = #{noticType}
+		and record_date_month = #{recordDateMonth}
+		and bussiness_type = #{bussinessType}
 		order by id desc
 		limit 1
 	</select>
-	
+
 	<!-- 查询公司机构管理员和运营 -->
 	<select id="queryCompanyManageUsers" resultType="com.yuxin.wx.model.user.Users" parameterType="int">
 		SELECT
@@ -189,9 +189,10 @@
 						u.mobile mobile
 					FROM
 						users u
+						inner join company c on c.is_area=u.is_area and (u.edu_area_school is null and c.edu_area_school is null or u.edu_area_school=c.edu_area_school)
+						and c.id = #{companyId}
 					WHERE
-						u.company_id = #{companyId}
-					AND u. STATUS = 1
+						u. STATUS = 1
 				) AS susers ON aur.user_id = susers.userId
 			) s_aur_susers
 		WHERE
@@ -208,7 +209,7 @@
 				AND ar.company_id = 0
 			)
 	</select>
-	
+
 	<select id="queryNeedSendList" resultMap="sysUseRecordNoticTaskResultMap">
 		select <include refid="table_columns" />
 		from sys_use_record_notic_task surnt

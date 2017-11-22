@@ -27,10 +27,10 @@ $(function(){
             <li code="student_agent_material"><a href="<%=rootPath %>/studentAgentMaterial/stuMaterial">报考材料</a></li>     
             </shiro:hasPermission> --%>
              <shiro:hasPermission name="student_urge_fee">         
-            <li code="student_urge_fee"><a href="<%=rootPath %>/fee/page/urgeFee">催缴</a></li>    
+            <%--<li code="student_urge_fee"><a href="<%=rootPath %>/fee/page/urgeFee">催缴</a></li>    --%>
             </shiro:hasPermission>
              <shiro:hasPermission name="student_agent">          
-            <li code="student_agent"><a href="<%=rootPath %>/exam/registerPage">代报考</a></li>
+            <%--<li code="student_agent"><a href="<%=rootPath %>/exam/registerPage">代报考</a></li>--%>
             </shiro:hasPermission>
 <%--              <shiro:hasPermission name="netschool_remote">  
             <li code="netschool_remote"><a href="<%=rootPath %>/fee/stuLong">远程结费</a></li>
@@ -42,7 +42,7 @@ $(function(){
             <li code="student_order"><a href="<%=rootPath %>/payOrder/toOrder" >转账确认</a></li>
             </shiro:hasPermission> --%>
           <shiro:hasPermission name="company_member_vip">
-            <li code="company_member_vip"><a href="<%=rootPath %>/companyMemberConfig/companyMemberVip" >会员管理</a></li>
+           <%-- <li code="company_member_vip"><a href="<%=rootPath %>/companyMemberConfig/companyMemberVip" >会员管理</a></li>--%>
            </shiro:hasPermission> 
         </ul>
     </div>

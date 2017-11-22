@@ -39,6 +39,7 @@ public class ResourceList extends BaseEntity {
 	private Date updateTime;
 	private Integer oldData;		/* 1 : 旧数据*/
 	private Integer uploadFrontId;
+	private Integer	originType;		/*视频来源0为pc，1为app*/
 
 	// Constructor
 	public ResourceList() {
@@ -48,7 +49,7 @@ public class ResourceList extends BaseEntity {
 			String uploadUserName, Integer uploadType, Integer delFlag,
 			String uuid, Integer companyId, String fileCategory, Date delTime,
 			Integer sysItemOne, Integer sysItemSecond, Integer schoolId,
-			String tag, String sourcePath, String sourceSize) {
+			String tag, String sourcePath, String sourceSize, Integer originType) {
 		super();
 		this.fileName = fileName;
 		this.fileType = fileType;
@@ -69,6 +70,7 @@ public class ResourceList extends BaseEntity {
 		this.tag = tag;
 		this.sourcePath = sourcePath;
 		this.sourceSize = sourceSize;
+		this.originType = originType;
 	}
 
 
@@ -263,4 +265,11 @@ public class ResourceList extends BaseEntity {
 	public void setUploadFrontId(Integer uploadFrontId) {
 		this.uploadFrontId = uploadFrontId;
 	}
+	public Integer getOriginType() {
+		return originType;
+	}
+	public void setOriginType(Integer originType) {
+		this.originType = originType;
+	}
+	
 }

@@ -84,6 +84,10 @@ public class CommoditySpecial extends BaseEntity implements Serializable{
 	 * 选中学科
 	 */
 	private Integer subjectId;
+	/**
+	 * 来源，1表示来自app，0表示来自pc
+	 */
+	private Integer originType;
 	
 	/**
 	 * 非执久化属性
@@ -240,6 +244,14 @@ public class CommoditySpecial extends BaseEntity implements Serializable{
 
 	public void setCommodityType(String commodityType) {
 		this.commodityType = commodityType;
+	}
+
+	public Integer getOriginType() {
+		return originType;
+	}
+
+	public void setOriginType(Integer originType) {
+		this.originType = originType;
 	}
 	
 }

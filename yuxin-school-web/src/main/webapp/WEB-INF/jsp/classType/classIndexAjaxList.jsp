@@ -96,7 +96,7 @@
 			    	    <a href="javascript:Form.editClassType(${allCommdotity.id });" class="btn btn-sm btn-primary">管理</a>
 			    	</c:if>
 			    	<c:if test="${allCommdotity.publishStatus=='CLASS_STOP_SALE'}">
-			    	    <a href="javascript:Form.classTypeOnsale(${allCommdotity.id });" class="btn btn-sm btn-default upSale">上架</a>
+			    	    <a href="javascript:toOnsaleEdit('${allCommdotity.appId}_${allCommdotity.id}','${allCommdotity.liveFlag}');" class="btn btn-sm btn-default upSale ">上架</a>
 			    		<a href="javascript:Form.editClassType(${allCommdotity.id });" class="btn btn-sm btn-primary">管理</a>
 			    	</c:if>
 			    	<c:if test="${allCommdotity.publishStatus=='CLASS_UNPUBLISHED'}">
@@ -120,6 +120,10 @@
  </div>
  <input type="hidden" id="itemOneId" name="itemOneId" value="${itemOneId }"/>
  <input type="hidden" id="searchName" value="${searchName }"/>
+
+
+
+
  <script type="text/javascript">
  function resizeLayout(){
 	 var w=$(".upload-layer").width();

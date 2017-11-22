@@ -5,11 +5,12 @@
 		<span class="info" sectionId="${sec.id}" style="display: inline-block;width: 170px;height: 32px;">
 		<a href="javascript:void(0)" sectionId="${sec.id}" style="line-height: 2.5">${sec.sectionName}</a>
 		</span>
-		
-		<span class="sectionM none">
-		<a href="javascript:void(0)" class="btn btn-sm iconfont" style="padding: 7px 7px;float: right;" secDelId="${sec.id}" onclick="javascript:Forms.delSection(this)">&#xe626;</a>
-		<a href="javascript:void(0)" class="btn btn-sm iconfont" style="padding: 7px 7px;float: right;" ht="编辑">&#xe625;</a>
-		</span>
+		<c:if test="${originType  eq 1 }">
+			<span class="sectionM none">
+			<a href="javascript:void(0)" class="btn btn-sm iconfont" style="padding: 7px 7px;float: right;" secDelId="${sec.id}" onclick="javascript:Forms.delSection(this)">&#xe626;</a>
+			<a href="javascript:void(0)" class="btn btn-sm iconfont" style="padding: 7px 7px;float: right;" ht="编辑">&#xe625;</a>
+			</span>
+		</c:if>
 		
 		<span style="" class="none edit"><br/>
 		<input type="text" value="${sec.sectionName}"  maxlength="22" class="newSectionName" style="width: 153px;"/>

@@ -5,11 +5,12 @@
 		<span class="info" style="display: inline-block;width: 170px;height: 32px;">
 		<a href="javascript:;" style="line-height: 2.5">${sub.subjectName}</a>
 		</span>
-
-		<span class="setM">
-		<a href="javascript:;" class="btn btn-mini iconfont" ht="编辑" style="padding: 7px 7px;">&#xe625;</a>
-		<a href="javascript:;" class="btn btn-mini iconfont" style="padding: 7px 7px;" subId="${sub.id}" onclick="javascript:Forms.delSubject(this)">&#xe626;</a>
-		</span>
+		<c:if test="${originType  eq 1 }">
+			<span class="setM">
+			<a href="javascript:;" class="btn btn-mini iconfont" ht="编辑" style="padding: 7px 7px;">&#xe625;</a>
+			<a href="javascript:;" class="btn btn-mini iconfont" style="padding: 7px 7px;" subId="${sub.id}" onclick="javascript:Forms.delSubject(this)">&#xe626;</a>
+			</span>
+		</c:if>
 		
 		<span style="" class="none edit"><br/>
 		<input type="text" value="${sub.subjectName}" maxlength="22" class="newSubName" style="width: 152px;"/>

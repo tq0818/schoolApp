@@ -165,6 +165,7 @@ public class TikuCategoryServiceImpl extends BaseServiceImpl implements ITikuCat
 
 	@Override
 	public void insertTikuAndSub(TikuCategory category, String [] subNames) {
+		category.setOriginType(1);
 		// TODO Auto-generated method stub
 		if(category.getId()!=null){
 			tikuCategoryMapper.update(category);

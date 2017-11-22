@@ -122,7 +122,9 @@ a:hover {
 							
 							</ul>
 							<li class="addCBtn">
+							<c:if test="${originType  eq 1 }">
 								<a href="javascript:void(0)" class="btn btn-sm btn-success">添加一章</a>
+							</c:if>
 							</li>
 							<li class="addCConter none">
 								<input type="text" id="addChapterName" maxlength="22" style="width: 153px;"/>
@@ -143,7 +145,9 @@ a:hover {
 							
 							</ul>
 							<li class="addSBtn">
+							<c:if test="${originType  eq 1 }">
 								<a href="javascript:void(0)" class="btn btn-sm btn-success">添加一节</a>
+							</c:if>
 							</li>
 							<li class="addSConter none">
 								<input type="text" id="addSectionName" maxlength="22" style="width: 153px;"/>
@@ -164,7 +168,9 @@ a:hover {
 							
 							</ul>
 							<li class="addPBtn">
+							<c:if test="${originType  eq 1 }">
 								<a href="javascript:void(0)"  class="btn btn-sm btn-success">添加考点</a>
+							</c:if>
 							</li>
 							<li class="addPConter none">
 								<input type="text" id="addPointName" maxlength="50" style="width: 153px;"/>

@@ -326,6 +326,8 @@
 		<mapper resource="com/yuxin/query/StudentStatisticsMapper.xml"/>
 		<mapper resource="com/yuxin/watchInfo/WatchInfoMapper.xml" />
 		<mapper resource="com/yuxin/query/SysPlayLogsMapper.xml" />
+		<mapper resource="com/yuxin/app/SysDictAppMapper.xml" />
+		<mapper resource="com/yuxin/app/ShelvesCourseMapper.xml" />
 	</mappers>
 
 </configuration>

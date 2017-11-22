@@ -64,8 +64,13 @@
             	 	<input type="hidden" id="itemSecondId" value="${ct.itemSecondId }"/>
             	 	<input type="hidden" id="moduleId" value=""/>
             	 	<input type="hidden" id="moduleNoId" value=""/>
-	                  <a href="javascript:;" class="btn btn-primary btn-addlink addCourse"><em class="iconfont">&#xe606;</em>新增课程单元</a>
+
+					 <input type="hidden" name="originType" id="originType" value="${ct.originType}"/>
+					 <c:if test="${ct.originType  eq 1 }">
+	                	  <a href="javascript:;" class="btn btn-primary btn-addlink addCourse"><em class="iconfont">&#xe606;</em>新增课程单元</a>
+					 </c:if>
 <!-- 	                <a href="javascript:;" class="btn btn-primary btn-addlink addcourseDetail"><em class="iconfont">&#xe606;</em>新增课次</a> -->
+	            	
 	            </div>
 				<div>
 					 <ul class="sortable base-sort item-panel courseliList" >
@@ -73,7 +78,9 @@
                  	</ul>
 				</div>
                 <p class="c text-center" style="margin-top:20px;">
-                    <a href="javascript:save();" class="btn btn-primary">保存</a>
+                    <c:if test="${ct.originType  eq 1 }">
+                      <a href="javascript:save();" class="btn btn-primary">保存</a>
+                    </c:if>
                     <a href="<%=rootPath %>/simpleClasses/showClassTypePage" class="btn btn-default">取消</a>
                 </p>
             </div>

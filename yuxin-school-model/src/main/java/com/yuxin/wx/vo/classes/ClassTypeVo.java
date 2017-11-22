@@ -77,6 +77,250 @@ public class ClassTypeVo extends BaseEntity {
 	private Integer subjectClassOrder;//学科课程排序
 	private String  iconLable;
 	private Integer isMicroClass;	//是否微课
+	private Integer originType;/* 来源，1表示来自app，0表示来自pc */
+
+
+	/**新增app属性**/
+	private String imgUrl;
+
+	private String isShelves;
+
+	private String reserveTime;
+
+	private String shelvesTime;
+
+	private Double appPrice;
+
+	private Double salePrice;
+
+	private String appId;
+
+	private String lessonDate;
+
+	private String lessonTimeStart;
+
+	private String lessonTimeEnd;
+
+	private String lessonName;
+
+	private String teacherName;
+
+	private String schoolName;
+
+	private String lessonLength;
+
+	private String lastPerson;
+
+	public String getLastPerson() {
+		return lastPerson;
+	}
+
+	public void setLastPerson(String lastPerson) {
+		this.lastPerson = lastPerson;
+	}
+
+	private String courseCaId;
+
+	private String gradeId;
+
+	private String subjectId;
+
+	private String kwonProId;
+
+	private String knowId;
+
+	private String stageId;
+
+	private String typeId;
+
+	private String labDesc;
+
+	private String shelvesFlag;
+
+	public String getShelvesFlag() {
+		return shelvesFlag;
+	}
+
+	public void setShelvesFlag(String shelvesFlag) {
+		this.shelvesFlag = shelvesFlag;
+	}
+
+	public String getLabDesc() {
+		return labDesc;
+	}
+
+	public void setLabDesc(String labDesc) {
+		this.labDesc = labDesc;
+	}
+
+	public String getCourseCaId() {
+		return courseCaId;
+	}
+
+	public void setCourseCaId(String courseCaId) {
+		this.courseCaId = courseCaId;
+	}
+
+	public String getGradeId() {
+		return gradeId;
+	}
+
+	public void setGradeId(String gradeId) {
+		this.gradeId = gradeId;
+	}
+
+	public String getSubjectId() {
+		return subjectId;
+	}
+
+	public void setSubjectId(String subjectId) {
+		this.subjectId = subjectId;
+	}
+
+	public String getKwonProId() {
+		return kwonProId;
+	}
+
+	public void setKwonProId(String kwonProId) {
+		this.kwonProId = kwonProId;
+	}
+
+	public String getKnowId() {
+		return knowId;
+	}
+
+	public void setKnowId(String knowId) {
+		this.knowId = knowId;
+	}
+
+	public String getStageId() {
+		return stageId;
+	}
+
+	public void setStageId(String stageId) {
+		this.stageId = stageId;
+	}
+
+	public String getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(String typeId) {
+		this.typeId = typeId;
+	}
+
+	public String getLessonLength() {
+		return lessonLength;
+	}
+
+	public void setLessonLength(String lessonLength) {
+		this.lessonLength = lessonLength;
+	}
+
+	public String getSchoolName() {
+		return schoolName;
+	}
+
+	public void setSchoolName(String schoolName) {
+		this.schoolName = schoolName;
+	}
+
+	public String getTeacherName() {
+		return teacherName;
+	}
+
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
+	}
+
+	public String getLessonDate() {
+		return lessonDate;
+	}
+
+	public void setLessonDate(String lessonDate) {
+		this.lessonDate = lessonDate;
+	}
+
+	public String getLessonTimeStart() {
+		return lessonTimeStart;
+	}
+
+	public void setLessonTimeStart(String lessonTimeStart) {
+		this.lessonTimeStart = lessonTimeStart;
+	}
+
+	public String getLessonTimeEnd() {
+		return lessonTimeEnd;
+	}
+
+	public void setLessonTimeEnd(String lessonTimeEnd) {
+		this.lessonTimeEnd = lessonTimeEnd;
+	}
+
+	public String getLessonName() {
+		return lessonName;
+	}
+
+	public void setLessonName(String lessonName) {
+		this.lessonName = lessonName;
+	}
+
+	public String getAppId() {
+		return appId;
+	}
+
+	public void setAppId(String appId) {
+		this.appId = appId;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
+	public String getIsShelves() {
+		return isShelves;
+	}
+
+	public void setIsShelves(String isShelves) {
+		this.isShelves = isShelves;
+	}
+
+	public String getReserveTime() {
+		return reserveTime;
+	}
+
+	public void setReserveTime(String reserveTime) {
+		this.reserveTime = reserveTime;
+	}
+
+	public String getShelvesTime() {
+		return shelvesTime;
+	}
+
+	public void setShelvesTime(String shelvesTime) {
+		this.shelvesTime = shelvesTime;
+	}
+
+	public Double getAppPrice() {
+		return appPrice;
+	}
+
+	public void setAppPrice(Double appPrice) {
+		this.appPrice = appPrice;
+	}
+
+	public Double getSalePrice() {
+		return salePrice;
+	}
+
+	public void setSalePrice(Double salePrice) {
+		this.salePrice = salePrice;
+	}
+
 	public Integer getCommodityId() {
 		return commodityId;
 	}
@@ -279,7 +523,7 @@ public class ClassTypeVo extends BaseEntity {
 			Integer totalClass, Integer baseNum, Integer actualNum,
 			String lableType, String teacherId, Integer faceFlag,
 			Integer liveFlag, Integer videoFlag, Integer remoteFlag,
-			Integer recommendFlag, Integer createSchoolId) {
+			Integer recommendFlag, Integer createSchoolId, Integer originType) {
 		this.name = name;
 		this.typeCode = typeCode;
 		this.originalPrice = originalPrice;
@@ -315,27 +559,10 @@ public class ClassTypeVo extends BaseEntity {
 		this.remoteFlag = remoteFlag;
 		this.recommendFlag = recommendFlag;
 		this.createSchoolId = createSchoolId;
+		this.originType = originType;
 	}
 	public ClassTypeVo() {
 
-	}
-	@Override
-	public String toString() {
-		return "ClassTypeVo [name=" + name + ", typeCode=" + typeCode
-				+ ", originalPrice=" + originalPrice + ", realPrice="
-				+ realPrice + ", schoolsId=" + schoolsId + ", itemOneId="
-				+ itemOneId + ", itemSecondId=" + itemSecondId
-				+ ", itemOneName=" + itemOneName + ", itemSecondName="
-				+ itemSecondName + ", description=" + description
-				+ ", publishStatus=" + publishStatus + ", publishTime="
-				+ publishTime + ", isSale=" + isSale + ", cover=" + cover
-				+ ", subTitle=" + subTitle + ", detailDesc=" + detailDesc
-				+ ", createTime=" + createTime + ", creator=" + creator
-				+ ", updateTime=" + updateTime + ", updator=" + updator
-				+ ", delFlag=" + delFlag + ", modules=" + modules + ", videos="
-				+ videos + ", totalClass=" + totalClass + ", baseNum="
-				+ baseNum + ", lableType=" + lableType + ", teacherId="
-				+ teacherId + "]";
 	}
 	public Integer getFaceFlag() {
 		return faceFlag;
@@ -509,4 +736,34 @@ public class ClassTypeVo extends BaseEntity {
 	public void setIsMicroClass(Integer isMicroClass) {
 		this.isMicroClass = isMicroClass;
 	}
+	public Integer getOriginType() {
+		return originType;
+	}
+	public void setOriginType(Integer originType) {
+		this.originType = originType;
+	}
+	@Override
+	public String toString() {
+		return "ClassTypeVo [name=" + name + ", typeCode=" + typeCode + ", originalPrice=" + originalPrice
+				+ ", realPrice=" + realPrice + ", schoolsId=" + schoolsId + ", itemOneId=" + itemOneId
+				+ ", itemSecondId=" + itemSecondId + ", itemOneName=" + itemOneName + ", itemSecondName="
+				+ itemSecondName + ", itemOneCode=" + itemOneCode + ", itemSecondCode=" + itemSecondCode
+				+ ", itemThirdName=" + itemThirdName + ", itemFourthName=" + itemFourthName + ", itemThirdCode="
+				+ itemThirdCode + ", itemFourthCode=" + itemFourthCode + ", description=" + description
+				+ ", publishStatus=" + publishStatus + ", publishTime=" + publishTime + ", isSale=" + isSale
+				+ ", cover=" + cover + ", subTitle=" + subTitle + ", detailDesc=" + detailDesc + ", createTime="
+				+ createTime + ", creator=" + creator + ", updateTime=" + updateTime + ", updator=" + updator
+				+ ", delFlag=" + delFlag + ", modules=" + modules + ", videos=" + videos + ", remotes=" + remotes
+				+ ", totalClass=" + totalClass + ", baseNum=" + baseNum + ", actualNum=" + actualNum + ", lableType="
+				+ lableType + ", teacherId=" + teacherId + ", faceFlag=" + faceFlag + ", liveFlag=" + liveFlag
+				+ ", videoFlag=" + videoFlag + ", remoteFlag=" + remoteFlag + ", validityDay=" + validityDay
+				+ ", validityDate=" + validityDate + ", videoWatchCount=" + videoWatchCount + ", liveWatchCount="
+				+ liveWatchCount + ", recommendFlag=" + recommendFlag + ", createSchoolId=" + createSchoolId
+				+ ", itemTag=" + itemTag + ", tagName=" + tagName + ", relationId=" + relationId
+				+ ", classPackageCourseId=" + classPackageCourseId + ", integralFlag=" + integralFlag + ", memberFlag="
+				+ memberFlag + ", buyNumMax=" + buyNumMax + ", protocolId=" + protocolId + ", commodityId="
+				+ commodityId + ", subjectClassOrder=" + subjectClassOrder + ", iconLable=" + iconLable
+				+ ", isMicroClass=" + isMicroClass + ", originType=" + originType + "]";
+	}
+	
 }

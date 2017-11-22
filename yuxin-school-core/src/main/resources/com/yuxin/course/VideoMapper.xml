@@ -22,6 +22,7 @@
 		<result property="webVideoId" column="web_video_id"/>
 		<result property="webVideoDomain" column="web_video_domain"/>
 		<result property="filePath" column="file_path"/>
+		<result property="originType" column="origin_type"/>
 	</resultMap>
 	
 	<resultMap type="com.yuxin.wx.vo.course.VideoVo" id="videoVoResultMap">
@@ -48,6 +49,7 @@
 		<result property="webVideoId" column="web_video_id"/>
 		<result property="webVideoDomain" column="web_video_domain"/>
         <result property="resourceType" column="resourceType"/>
+        <result property="originType" column="origin_type"/>
 	</resultMap>
     <resultMap type="com.yuxin.wx.vo.course.VideoVo" id="ResourceResultMap">
         <result property="id" column="id" />
@@ -74,6 +76,7 @@
         <result property="convertType" column="convertType"/>
         <result property="excep" column="excep"/>
 		<result property="filePath" column="filePath"/>
+		<result property="originType" column="origin_type"/>
     </resultMap>
 	<sql id="table_columns">
 		id,
@@ -95,7 +98,8 @@
 		storage_type,
 		web_video_id,
 		web_video_domain,
-		file_path
+		file_path,
+		origin_type
     </sql>
     <sql id="table_school_columns">
 		v.id,
@@ -104,6 +108,7 @@
 		video_cc_id,
 		video_time,
 		vodeo_size,
+		v.origin_type,
 		video_status,
 		item_one_id,
 		item_second_id,
@@ -141,7 +146,8 @@
 		#{storageType},
 		#{webVideoId},
 		#{webVideoDomain},
-		#{filePath}
+		#{filePath},
+		#{originType}
 	</sql>
 	<sql id="batch_entity_properties">
 		#{item.id},
@@ -162,7 +168,8 @@
 		#{item.schoolId},
 		#{item.webVideoId},
 		#{item.webVideoDomain},
-		#{item.filePath}
+		#{item.filePath},
+		#{item.originType},
 	</sql>
 	
 	<!-- 适用于主键自增类型 -->
@@ -409,6 +416,7 @@
         SELECT 
         v.id AS id,
         v.video_name videoName,
+        v.origin_type as originType,
         v.video_cc_id as videoCcId,
         v.video_time as videoTime,
         v.vodeo_size as videoSize,
@@ -473,6 +481,7 @@
                 rl.id AS id,
                 rl.file_name AS videoName,
                 null AS videoCcId,
+                rl.origin_type AS originType,
                 rl.upload_time AS createTime,
                 rl.file_size AS videoSize,
                 rl.del_flag AS videoStatus,

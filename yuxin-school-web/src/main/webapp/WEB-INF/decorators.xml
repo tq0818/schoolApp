@@ -529,6 +529,18 @@
       	 <pattern>/companyRechargePatch/gotoRechargeCardManagePage</pattern>
       	 <pattern>/companyRechargePatch/gotoRechargeCardCreatePage</pattern>
       	 <pattern>/companyRechargePatch/gotoRechargeCardOpenFlagPage</pattern>
+
+
+        <!-- 已上架课程 -->
+        <pattern>/appNewClasses/shelvesCourses</pattern>
+        <!--编辑已上架课程-->
+        <pattern>/appNewClasses/InformationEditing</pattern>
+        <!--首页推荐专题列表-->
+        <pattern>/specialModel/getModelList</pattern>
+        <!--批量首页推荐-->
+        <pattern>/appNewClasses/pageRecommendation</pattern>
+
+
     </decorator>
 
 </decorators>
