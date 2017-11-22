@@ -27,7 +27,10 @@
 		sys4.name as itemFourthName,
 		sys5.name as itemTag,
 		sys6.name as tagName,
-		sys7.name as typeCode
+		sys7.name as typeCode,
+		c.live_flag as liveFlag,
+		c.id,
+		app.category_id as courseCaId
 		FROM (
 			SELECT
 				ml.module_no_id,
@@ -92,7 +95,10 @@
 		sys4.name as itemFourthName,
 		sys5.name as itemTag,
 		sys6.name as tagName,
-		sys7.name as typeCode
+		sys7.name as typeCode,
+		c.live_flag as liveFlag,
+		c.id,
+		app.category_id as courseCaId
 		FROM (
 				SELECT
 					ml.module_no_id,
@@ -154,7 +160,10 @@
 		sys4.name as itemFourthName,
 		sys5.name as itemTag,
 		sys6.name as tagName,
-		sys7.name as typeCode
+		sys7.name as typeCode,
+		c.live_flag as liveFlag,
+		c.id,
+		app.category_id as courseCaId
 		from commodity c
 		join commodity_product_realtion cpr on cpr.com_id=c.id
 		join class_type ct on ct.id=cpr.product_id

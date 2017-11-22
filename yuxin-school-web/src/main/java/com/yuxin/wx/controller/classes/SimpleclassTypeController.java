@@ -230,7 +230,7 @@ public class SimpleclassTypeController {
 			if(!"1".equals(cto.getShelvesFlag())){
 				cto.setReserveTime(cto.getShelvesTime());
 			}else{
-				cto.setShelvesTime(this.getDateFormatter());
+				cto.setShelvesTime(new Date().toLocaleString());
 			}
 			cto.setIsShelves("1");
 			if(null==cto.getShelvesTime()||"".equals(cto.getShelvesTime())){

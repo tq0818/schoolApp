@@ -67,53 +67,14 @@
     </div>
     </div>
     <div class="u-wrap classes">
-        <div class="mainbackground nopadding">
+        <div class="mainbackground nopadding alreadyCourse">
 			<div id="ShelvesCourseDetailList">
 			
 			</div>
         </div>
     </div>
 
-    <%--弹出框--%>
-    <div class="popupContainer">
-        <span class="closePopupContainer">x</span>
-        <div class="toRecommon">
-            <div id="toRecommon">
 
-            </div>
-        </div>
-    </div>
-    <div class="popupOpacity"></div>
-
-    <script>
-        $('.recommendCourse').click(function(){
-            $('.popupContainer').show();
-            $('.popupOpacity').show();
-        });
-
-
-
-        function toRcommon(categerorId,zhiboFlag,commodityId){
-
-            $.ajax({
-                url :"/appNewClasses/homeRecommendation",
-                type : "post",
-                data:{"categerorId":categerorId,"zhiboFlag":zhiboFlag,"commodityId":commodityId},
-                beforeSend:function(XMLHttpRequest){
-                    $(".loading").show();
-                    $(".loading-bg").show();
-                },
-                success : function(result) {
-                    $("#toRecommon").html(result);
-                },
-                complete:function(XMLHttpRequest,textStatus){
-                    $(".loading").hide();
-                    $(".loading-bg").hide();
-                }
-            });
-        }
-
-    </script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/app/shelvesCourses.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/classes.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
