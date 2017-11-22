@@ -40,7 +40,7 @@
                 <th width="5%">实际价格</th>
                 <th width="20%">操作</th>
             </tr>
-            <c:forEach items="${courseList}" var="course" varStatus="status"> 
+            <c:forEach items="${courseList.data}" var="course" varStatus="status">
             <tr>
                 <td><input type="checkbox" class="signUpMany" uname="sdsdsd" value=""></td>
                 <c:choose>
@@ -88,7 +88,9 @@
             </tbody>
         </table>
 
-        <div class="pages pagination"></div>
+        <div class="pages">
+            <ul class="pagination"></ul>
+        </div>
     </div><input type="hidden" id="rowCount" value="68266"><input type="hidden" id="pageNo" value="1"><input type="hidden" id="maxCount" value="999999999">
 <%--弹出框--%>
 <div class="popupContainer">
@@ -167,6 +169,27 @@
                 alert("成功");
             }
 
+        });
+    });
+
+
+    $(document).ready(function(){
+        $(".pagination").pagination('${pageFinder.rowCount}', {
+            next_text : "下一页",
+            prev_text : "上一页",
+            current_page :'${pageFinder.pageNo-1}',
+            link_to : "javascript:void(0)",
+            num_display_entries : 8,
+            items_per_page : '${pageFinder.pageSize}',
+            num_edge_entries : 1,
+            callback:function(page,jq){
+                var pageNo = page + 1;
+                if($("#searchName").val()){
+                    Form.queryCommodityByName(pageNo);
+                }else{
+                    Form.queryAllCommdityByItemNew(pageNo);
+                }
+            }
         });
     });
 </script>

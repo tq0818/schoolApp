@@ -10,14 +10,17 @@ import com.yuxin.wx.model.commodity.CommoditySpecial;
 import com.yuxin.wx.vo.classes.ClassTypeVo;
 
 public interface IShelvesCourseService {
-	public List<ClassTypeVo> queryShelvesCoursesByPage(
+	PageFinder<ClassTypeVo> queryShelvesCoursesByPage(
 			String categoryid,
 			String gradeid,
 			String subjectid,
 			String knowledgeid,
 			String knowledgeProid,
 			String stageid,
-			String typeCode
+			String typeCode,
+			Integer pageNum,
+			Integer pageSize,
+			Integer firstIndex
 			);
 	
 	void update (ClassTypeVo classTypeVo);

@@ -18,4 +18,6 @@ public interface ShelvesCourseMapper{
 //	void updateAll(List<ClassTypeVo> list);
 	
 	ShelvesCourse findOne(Serializable id);
+
+	int queryShelvesCoursesCount(Map<String, Object> map);
 }
