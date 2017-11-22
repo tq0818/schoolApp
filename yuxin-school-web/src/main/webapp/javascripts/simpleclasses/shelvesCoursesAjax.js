@@ -159,8 +159,10 @@ function stopClassOnsale(id){
 				data : {"id":id},
 				success : function(result) {
 					if("1"==result){
-						alert("成功")
-						Form.showAllShelvesClssType('all','courseCaId');
+                        $.confirm("成功",function () {
+                            location.reload();
+                        });
+						// Form.showAllShelvesClssType('all','courseCaId');
 					}else{
 						alert("失败")
 					}
