@@ -226,6 +226,12 @@ public class SimpleclassTypeController {
 	public String insertShelvesInfo(HttpServletRequest request,ClassTypeVo cto){
 
 		try {
+
+			Object imgUrlObj = request.getSession().getAttribute("imgUrl");
+			if(null!=imgUrlObj){
+				cto.setImgUrl((String) imgUrlObj);
+			}
+
 			String appId = cto.getAppId();
 			if(!"1".equals(cto.getShelvesFlag())){
 				cto.setReserveTime(cto.getShelvesTime());

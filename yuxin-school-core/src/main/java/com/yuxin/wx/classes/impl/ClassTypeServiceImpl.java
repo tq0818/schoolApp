@@ -529,8 +529,13 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 		Map<Object,Object>map = new HashMap<Object,Object>();
 		map.put("classType",search);
 		List<ClassTypeVo> classTypes = classTypeMapper.querySingleOtherClassTypeInfo(map);
+
 		if(null!=classTypes && classTypes.size()>0){
-			return classTypes.get(0);
+			ClassTypeVo ctv = classTypes.get(0);
+			if(null!=ctv.getImgUrl()&&!"".equals(ctv.getImgUrl())){
+				ctv.setCover(ctv.getImgUrl());
+			}
+			return ctv;
 		}
 		return null;
 	}
@@ -550,7 +555,7 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 		Map<Object,Object>map = new HashMap<Object,Object>();
 		map.put("classType",search);
 		List<ClassTypeVo> classTypes = classTypeMapper.querySingleLiveClassTypeInfo(map);
-		if(null!=classTypes && classTypes.size()>0){
+		/*if(null!=classTypes && classTypes.size()>0){
 			for(ClassTypeVo ctv : classTypes){
 				String lessonStartTime = ctv.getLessonDate()+" "+ctv.getLessonTimeStart()+":00";
 				String lessonEndTime = ctv.getLessonDate()+" "+ctv.getLessonTimeEnd()+":00";
@@ -569,6 +574,13 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 			ctOne.setLessonLength(String.valueOf((lessonSEndDate.getTime()-lessonStartDate.getTime())/(1000*60)));
 
 			return ctOne;
+		}*/
+		if(null!=classTypes && classTypes.size()>0){
+			ClassTypeVo ctv = classTypes.get(0);
+			if(null!=ctv.getImgUrl()&&!"".equals(ctv.getImgUrl())){
+				ctv.setCover(ctv.getImgUrl());
+			}
+			return ctv;
 		}
 		return null;
 	}

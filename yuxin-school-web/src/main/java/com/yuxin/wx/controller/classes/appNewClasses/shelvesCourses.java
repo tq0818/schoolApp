@@ -8,8 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.yuxin.wx.api.classes.IClassTypeService;
 import com.yuxin.wx.api.commodity.ICommodityService;
+import com.yuxin.wx.utils.FileUtil;
+import com.yuxin.wx.utils.PropertiesUtil;
+import com.yuxin.wx.utils.WebUtils;
 import com.yuxin.wx.vo.classes.ClassTypeVo;
 import com.yuxin.wx.vo.classes.FirstRecommend;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.yuxin.wx.api.app.ISysDictAppService;
 import com.yuxin.wx.model.app.SysDictApp;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 
 /**
@@ -34,7 +41,10 @@ public class shelvesCourses {
     private ICommodityService iCommodityService;
     @Autowired
     private IClassTypeService classTypeServiceImpl;
+    @Autowired
+    private PropertiesUtil propertiesUtil;
 
+    private Log log= LogFactory.getLog("log");
     /**
      * 跳转到已上架课程页面
      *
@@ -117,6 +127,7 @@ public class shelvesCourses {
         String categerorId = request.getParameter("categerorId");
         String zhiboFlag = request.getParameter("zhiboFlag");
         String commodityId = request.getParameter("commodityId");
+
         SysDictApp search = new SysDictApp();
         List<SysDictApp> slibMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
         if(null!=slibMenus && slibMenus.size()>0){
@@ -138,6 +149,8 @@ public class shelvesCourses {
             searchAndResult = classTypeServiceImpl.querySingOtherClassTypeInfo(searchAndResult);
         }
         model.addAttribute("searchAndResult",searchAndResult);
+        String commodityPicUrl="http://"+propertiesUtil.getProjectImageUrl()+"/";
+        model.addAttribute("commodityPicUrl", commodityPicUrl);
 
         return "simpleClasses/appNewClasses/homeRecommendation";
     }
@@ -168,6 +181,28 @@ public class shelvesCourses {
         }catch (Exception e){
             return "0";
         }
+    }
+
+    /**
+     * 保存图片
+     * @param multiPartRquest
+     * @param req
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="/savePic",method=RequestMethod.POST)
+    public String queryPic(MultipartRequest multiPartRquest, HttpServletRequest req){
+        MultipartFile multipartFile = multiPartRquest.getFile("imgData");
+        String realPath=null;
+        try {
+            realPath = FileUtil.upload(multipartFile, "/img", WebUtils.getCurrentCompanyId()+"");
+        } catch (Exception e) {
+            log.error("文件上传失败!",e);
+            e.printStackTrace();
+        }
+        req.getSession().setAttribute("imgUrl", realPath);
+        String url="http://"+propertiesUtil.getProjectImageUrl()+"/"+realPath;
+        return "{\"url\":\""+url+"\"}";
     }
 
 }
