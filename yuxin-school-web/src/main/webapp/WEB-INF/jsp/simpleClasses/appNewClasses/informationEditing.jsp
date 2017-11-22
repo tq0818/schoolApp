@@ -20,21 +20,20 @@
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/splitscreen.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/classedit.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/popupwin.css">
-    <link rel="stylesheet" type="text/css" href="<%=rootPath %>/plugins/select2/select2.css"/>
-    <script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/plupload.full.min.js"></script>
-    <script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/i18n/zh_CN.js"></script>
-    <script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/moxie.js"></script>
-    <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.2.1/jquery.js"></script>
-    <script type="text/javascript" src="http://cdn.staticfile.org/qiniu-js-sdk/1.0.14-beta/qiniu.js"></script>
+    <script type="text/javascript" src="<%=rootPath %>/javascripts/plus/jquery.min.js"></script>
+    <script type="text/javascript" src="<%=rootPath%>/javascripts/ajaxfileupload.js"></script>
+    <script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/informationEditing.js"></script>
+    <link rel="stylesheet" href="<%=rootPath %>/stylesheets/jedate.css">
+    <script src="<%=rootPath %>/javascripts/plus/jquery.jedate.min.js"></script>
 </head>
 <body style="position:relative;">
 <!-- 二级导航 -->
     <div class="u-wrap classes">
         <div class="informationEditHeader">
             <div class="informationEditImg">
-                <img src="/images/1.jpg" alt="">
+                <img src="${commodityPicUrl }${allCommdotity.cover}" id="pic" alt="">
                 <div class="informationEditChoose">
-                    <a href="##" ><input type="file">选择图片</a>
+                    <a href="##" ><input type="file" name="imgData" id="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic();">选择图片</a>
                 </div>
             </div>
             <div class="informationEditDetail">
@@ -160,10 +159,10 @@
                     <label>课程标签：</label><input type="text" id="labDesc" value="${searchAndResult.labDesc}">
                 </li>
                 <li>
-                    <label>价格：</label><input type="text" value="${searchAndResult.originalPrice}">
+                    <label>价格：</label><input type="text" id="appPrice" value="${searchAndResult.originalPrice}">
                 </li>
                 <li>
-                    <label>实际价格：</label><input type="text" value="${searchAndResult.realPrice}">
+                    <label>实际价格：</label><input type="text" id="salePrice" value="${searchAndResult.realPrice}">
                 </li>
                 <c:if test="${searchAndResult.liveFlag == '1'}">
                     <li>
@@ -198,24 +197,15 @@
 
     </form>
 
-<script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/informationEditing.js"></script>
-<script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
-<script type="text/javascript" src="<%=rootPath %>/javascripts/plus/jquery.cookie.js"></script>
-<script type="text/javascript" src="<%=rootPath%>/javascripts/popupwin.js"></script>
-<script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="<%=rootPath %>/plugins/select2/select2.js"></script>
-<script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery-ui.js"></script>
-<script type="text/javascript" src="<%=rootPath %>/javascripts/common/DateUtils.js"></script>
-<script type="text/javascript" src="<%=rootPath%>/javascripts/ajaxfileupload.js"></script>
-
-<link rel="stylesheet" href="<%=rootPath %>/stylesheets/jedate.css">
-<script src="<%=rootPath %>/javascripts/plus/jquery.jedate.min.js"></script>
 <script>
     $.jeDate("#shelvesTime",{
         format:"YYYY-MM-DD hh:mm:ss",
         isTime:true,
         minDate:"2014-09-19 00:00:00"
     })
+
+
+
 </script>
 
 </body>

@@ -129,6 +129,15 @@ function toShelves(flag){
 	var appId = $("#appId").val();
 	var shelvesTime = $("#shelvesTime").val();
 	var labDesc = $("#labDesc").val();
+	var appPrice = $("#appPrice").val();
+	var salePrice = $("#salePrice").val();
+	var reg = new RegExp("/^(0|([1-9]\d{0,9}(\.\d{1,2})?))$/");
+	if(!reg.test(appPrice)){
+		alert("请输入正确的价格");
+	}
+	if(!reg.test(salePrice)){
+		alert("请输入正确的实际价格");
+	}
 	if("0"==flag && ""== $.trim(shelvesTime) ){
 		alert("预约上架时间不能为空");
 		return;
@@ -137,7 +146,8 @@ function toShelves(flag){
 	$.ajax({
 		url : rootPath +"/simpleClasses/insertShelvesInfo",
 		type : "post",
-		data : {"id":id,"appId":appId,"courseCaId":courseCaId,"gradeId":gradeId,"subjectId":subjectId,"kwonProId":kwonProId,"knowId":knowId,"stageId":stageId,"typeId":typeId,"shelvesFlag":flag,"shelvesTime":shelvesTime,"labDesc":labDesc},
+		data : {"id":id,"appId":appId,"courseCaId":courseCaId,"gradeId":gradeId,"subjectId":subjectId,"kwonProId":kwonProId,
+			"appPrice":appPrice,"salePrice":salePrice,"knowId":knowId,"stageId":stageId,"typeId":typeId,"shelvesFlag":flag,"shelvesTime":shelvesTime,"labDesc":labDesc},
 		success : function(result) {
 			if("1"==result){
 				alert("成功")
@@ -152,4 +162,21 @@ function toShelves(flag){
 	});			
 }
 
-
+function savePic(){
+	$.ajaxFileUpload({
+		url: rootPath + "/appNewClasses/savePic;",
+		secureuri : false,// 安全协议
+		async : false,
+		fileElementId : 'imgData',
+		dataType:'json',
+		type : "POST",
+		success : function(data) {
+			$("#pic").attr("src",data.url);
+		},
+		error:function(arg1,arg2,arg3){
+			//console.log(arg1);
+		},
+		loadingEle: '#target',
+		fileName: 'imgData'
+	});
+}
