@@ -9,7 +9,7 @@ function toOnsaleEdit(ids,zhiboFlag){
             $(".loading-bg").show();
         },
 		success : function(result) {
-			$("#bbbbbbbb").html(result);
+			$("#shelvesdetils").html(result);
 		},
 		 complete:function(XMLHttpRequest,textStatus){
 				$(".loading").hide();
