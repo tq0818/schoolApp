@@ -153,8 +153,7 @@ function toShelves(flag){
 				alert("成功")
 				$('.popupContainer').hide();
 				$('.popupOpacity').hide();
-				Form.queryAllCommdityByItemNew(1);
-
+				location.reload(0);
 			}else{
 				alert("失败")
 			}

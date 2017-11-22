@@ -20,10 +20,7 @@
 <div class="u-wrap classes">
     <div class="informationEditHeader">
         <div class="informationEditImg">
-            <img src="/images/1.jpg" alt="">
-            <div class="informationEditChoose">
-                <a href="##" ><input type="file">选择图片</a>
-            </div>
+            <img src="${commodityPicUrl }${searchAndResult.cover}" alt="">
         </div>
         <div class="informationEditDetail">
             <ul>
@@ -148,8 +145,8 @@ function saveRecommond(){
         var reg = new RegExp("^[0-9]*$");
         if(!reg.test(sort)){
             alert("请输入数字!");
+            return;
         }
-        return;
     }
     $.ajax({
         url : rootPath +"/appNewClasses/insertRcommondInfo",

@@ -694,6 +694,8 @@
 			},
 			showAllShelvesClssType : function(id,typeStr){
 				var datas = {};
+				datas.typeStr=typeStr;
+				datas.typeId=id;
 				var categoryid = '',
 				gradeid = ''
 				subjectid = '',
@@ -703,20 +705,46 @@
 				typeCode = '';
 				datas.knowledgeid=knowledgeid;
 				var allHtml = '<a href="javascript:Form.showAllShelvesClssType(\'all\',\'allToAll\');" data-code="all" class="btn btn-mini btn-default btn-success">全部</a>';
-				if("gradeId"==typeStr  && 'all'==id){
+				if("courseCaId"==typeStr  && 'all'==id){
+					$("#gradeId").html(allHtml.replace("allToAll","gradeId"));
 					$("#subjectId").html(allHtml.replace("allToAll","subjectId"));
 					$("#kwonProId").html(allHtml.replace("allToAll","kwonProId"));
 					$("#knowId").html(allHtml.replace("allToAll","kwonId"));
 					//查询课程信息
+					queryClassTypesShelves(datas);
+					return;
+				}else if("gradeId"==typeStr  && 'all'==id){
+					$("#subjectId").html(allHtml.replace("allToAll","subjectId"));
+					$("#kwonProId").html(allHtml.replace("allToAll","kwonProId"));
+					$("#knowId").html(allHtml.replace("allToAll","kwonId"));
+					//查询课程信息
+					fillCategory(datas);
+					fillStage(datas);
+					fillType(datas);
+					queryClassTypesShelves(datas);
 					return;
 				}else if("subjectId"==typeStr  && 'all'==id){
 					$("#kwonProId").html(allHtml.replace("allToAll","kwonProId"));
 					$("#knowId").html(allHtml.replace("allToAll","kwonId"));
 					//查询课程信息
+					fillGrade(datas);
+					fillStage(datas);
+					fillType(datas);
+					queryClassTypesShelves(datas);
 					return;
 				}else if("kwonProId"==typeStr  && 'all'==id){
 					$("#knowId").html(allHtml.replace("allToAll","knowId"));
 					//查询课程信息
+					fillSubject(datas);
+					fillStage(datas);
+					fillType(datas);
+					queryClassTypesShelves(datas);
+					return;
+				}else if("knowId"==typeStr  && 'all'==id){
+					fillKnowPro(datas);
+					fillStage(datas);
+					fillType(datas);
+					queryClassTypesShelves(datas);
 					return;
 				}
 				$.ajax({
@@ -738,7 +766,6 @@
 							$("#subjectId").html(allHtml.replace("allToAll","subjectId"));
 							$("#kwonProId").html(allHtml.replace("allToAll","kwonProId"));
 							$("#kwonId").html(allHtml.replace("allToAll","kwonId"));
-
 							//更新阶段和类型
 							html='';
 							html +=allHtml.replace("allToAll","stageId");
@@ -757,9 +784,8 @@
 									categoryid=$(this).attr("data-code");
 								}
 							});
-							if(categoryid!='all'){
-			                    datas.categoryid=categoryid;
-							}
+							fillCategory(datas);
+							queryClassTypesShelves(datas);
 						}else if("gradeId"==typeStr){
 							//跟新科目
 							html +=allHtml.replace("allToAll","subjectId");
@@ -769,38 +795,11 @@
 							$("#subjectId").html(html);
 							$("#kwonProId").html(allHtml.replace("allToAll","kwonProId"));
 							$("#kwonId").html(allHtml.replace("allToAll","kwonId"));
-							$("#courseCaId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									categoryid=$(this).attr("data-code");
-								}
-							});
-							if(categoryid!='all'){
-			                    datas.categoryid=categoryid;
-							}
-							$("#gradeId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									gradeid=$(this).attr("data-code");
-								}
-							});
-							if(gradeid!='all'){
-			                    datas.gradeid=gradeid;
-							}
-							$("#stageId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									stageid=$(this).attr("data-code");
-								}
-							});
-							if(stageid!='all'){
-								datas.stageid=stageid;
-							}
-							$("#typeId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									typeCode=$(this).attr("data-code");
-								}
-							});
-							if(typeCode!='all'){
-								datas.typeCode=typeCode;
-							}
+							//查询课程信息
+							fillGrade(datas);
+							fillStage(datas);
+							fillType(datas);
+							queryClassTypesShelves(datas);
 						}else if("subjectId"==typeStr){
 							//更新知识点专题
 							html +=allHtml.replace("allToAll","kwonProId");
@@ -809,46 +808,11 @@
 							}
 							$("#kwonProId").html(html);
 							$("#kwonId").html(allHtml.replace("allToAll","kwonId"));
-							$("#courseCaId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									categoryid=$(this).attr("data-code");
-								}
-							});
-							if(categoryid!='all'){
-			                    datas.categoryid=categoryid;
-							}
-							$("#gradeId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									gradeid=$(this).attr("data-code");
-								}
-							});
-							if(gradeid!='all'){
-			                    datas.gradeid=gradeid;
-							}
-							$("#subjectId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									subjectid=$(this).attr("data-code");
-								}
-							});
-							if(subjectid!='all'){
-			                    datas.subjectid=subjectid;
-							}
-							$("#stageId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									stageid=$(this).attr("data-code");
-								}
-							});
-							if(stageid!='all'){
-								datas.stageid=stageid;
-							}
-							$("#typeId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									typeCode=$(this).attr("data-code");
-								}
-							});
-							if(typeCode!='all'){
-								datas.typeCode=typeCode;
-							}
+							//查询课程信息
+							fillSubject(datas);
+							fillStage(datas);
+							fillType(datas);
+							queryClassTypesShelves(datas);
 						}else if("kwonProId"==typeStr){
 							//更新知识点
 							html +=allHtml.replace("allToAll","knowId");
@@ -856,245 +820,40 @@
 								html +='<a href="javascript:Form.showAllShelvesClssType(\''+data[i].id+'\',\'knowId\');" data-code=\''+data[i].id+'\' class="btn btn-mini btn-default">'+data[i].name+'</a>';
 							}
 							$("#knowId").html(html);
-							$("#courseCaId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									categoryid=$(this).attr("data-code");
-								}
-							});
-							if(categoryid!='all'){
-			                    datas.categoryid=categoryid;
-							}
-							$("#gradeId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									gradeid=$(this).attr("data-code");
-								}
-							});
-							if(gradeid!='all'){
-			                    datas.gradeid=gradeid;
-							}
-							$("#subjectId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									subjectid=$(this).attr("data-code");
-								}
-							});
-							if(subjectid!='all'){
-			                    datas.subjectid=subjectid;
-							}
-							$("#kwonProId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									knowledgeProid=$(this).attr("data-code");
-								}
-							});
-							if(knowledgeProid!='all'){
-			                    datas.knowledgeProid=knowledgeProid;
-							}
-							$("#stageId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									stageid=$(this).attr("data-code");
-								}
-							});
-							if(stageid!='all'){
-								datas.stageid=stageid;
-							}
-							$("#typeId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									typeCode=$(this).attr("data-code");
-								}
-							});
-							if(typeCode!='all'){
-								datas.typeCode=typeCode;
-							}
+							//查询课程信息
+							fillKnowPro(datas);
+							fillStage(datas);
+							fillType(datas);
+							queryClassTypesShelves(datas);
 						}else if("knowId"==typeStr){
-							$("#courseCaId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									categoryid=$(this).attr("data-code");
-								}
-							});
-							if(categoryid!='all'){
-			                    datas.categoryid=categoryid;
-							}
-							$("#gradeId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									gradeid=$(this).attr("data-code");
-								}
-							});
-							if(gradeid!='all'){
-			                    datas.gradeid=gradeid;
-							}
-							$("#subjectId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									subjectid=$(this).attr("data-code");
-								}
-							});
-							if(subjectid!='all'){
-			                    datas.subjectid=subjectid;
-							}
-							$("#kwonProId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									knowledgeProid=$(this).attr("data-code");
-								}
-							});
-							if(knowledgeProid!='all'){
-			                    datas.knowledgeProid=knowledgeProid;
-							}
-							$("#knowId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									knowledgeid=$(this).attr("data-code");
-								}
-							});
-							if(knowledgeid!='all'){
-			                    datas.knowledgeid=knowledgeid;
-							}
-							$("#stageId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									stageid=$(this).attr("data-code");
-								}
-							});
-							if(stageid!='all'){
-								datas.stageid=stageid;
-							}
-							$("#typeId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									typeCode=$(this).attr("data-code");
-								}
-							});
-							if(typeCode!='all'){
-								datas.typeCode=typeCode;
-							}
+							//查询课程信息
+							fillKnow(datas);
+							fillStage(datas);
+							fillType(datas);
+							queryClassTypesShelves(datas);
 						}
 						else if("#stageId"==typeStr){
-							$("#courseCaId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									categoryid=$(this).attr("data-code");
-								}
-							});
-							if(categoryid!='all'){
-			                    datas.categoryid=categoryid;
-							}
-							$("#gradeId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									gradeid=$(this).attr("data-code");
-								}
-							});
-							if(gradeid!='all'){
-			                    datas.gradeid=gradeid;
-							}
-							$("#subjectId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									subjectid=$(this).attr("data-code");
-								}
-							});
-							if(subjectid!='all'){
-			                    datas.subjectid=subjectid;
-							}
-							$("#kwonProId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									knowledgeProid=$(this).attr("data-code");
-								}
-							});
-							if(knowledgeProid!='all'){
-			                    datas.knowledgeProid=knowledgeProid;
-							}
-							$("#knowId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									knowledgeid=$(this).attr("data-code");
-								}
-							});
-							if(knowledgeid!='all'){
-			                    datas.knowledgeid=knowledgeid;
-							}
-							$("#stageId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									stageid=$(this).attr("data-code");
-								}
-							});
-							if(stageid!='all'){
-								datas.stageid=stageid;
-							}
-							$("#typeId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									typeCode=$(this).attr("data-code");
-								}
-							});
-							if(typeCode!='all'){
-								datas.typeCode=typeCode;
-							}
-						else if("#typeId"==typeStr){
-							$("#courseCaId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									categoryid=$(this).attr("data-code");
-								}
-							});
-							if(categoryid!='all'){
-			                    datas.categoryid=categoryid;
-							}
-							$("#gradeId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									gradeid=$(this).attr("data-code");
-								}
-							});
-							if(gradeid!='all'){
-			                    datas.gradeid=gradeid;
-							}
-							$("#subjectId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									subjectid=$(this).attr("data-code");
-								}
-							});
-							if(subjectid!='all'){
-			                    datas.subjectid=subjectid;
-							}
-							$("#kwonProId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									knowledgeProid=$(this).attr("data-code");
-								}
-							});
-							if(knowledgeProid!='all'){
-			                    datas.knowledgeProid=knowledgeProid;
-							}
-							$("#knowId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									knowledgeid=$(this).attr("data-code");
-								}
-							});
-							if(knowledgeid!='all'){
-			                    datas.knowledgeid=knowledgeid;
-							}
-							$("#stageId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									stageid=$(this).attr("data-code");
-								}
-							});
-							if(stageid!='all'){
-								datas.stageid=stageid;
-							}
-							$("#typeId").find("a").each(function(i){
-								if($(this).hasClass('btn-success')){
-									typeCode=$(this).attr("data-code");
-								}
-							});
-							if(typeCode!='all'){
-								datas.typeCode=typeCode;
-							}
+							//查询课程信息
+							fillCategory(datas);
+							fillGrade(datas);
+							fillSubject(datas);
+							fillKnowPro(datas);
+							fillKnow(datas);
+							fillStage(datas);
+							fillType(datas);
+							queryClassTypesShelves(datas);
 						}
-					}
-						//查询课程信息
-						$.ajax({
-							url : rootPath + "/shelvesCourse/findShelvesCourseByapge",
-							type : "post",
-							data:datas,
-							beforeSend:function(XMLHttpRequest){
-								$(".loading").show();
-								$(".loading-bg").show();
-							},
-							success : function(result) {
-								$("#ShelvesCourseDetailList").html(result);
-							},
-							complete:function(XMLHttpRequest,textStatus){
-								$(".loading").hide();
-								$(".loading-bg").hide();
-							}
-						});
+						else if("#typeId"==typeStr){
+							//查询课程信息
+							fillCategory(datas);
+							fillGrade(datas);
+							fillSubject(datas);
+							fillKnowPro(datas);
+							fillKnow(datas);
+							fillStage(datas);
+							fillType(datas);
+							queryClassTypesShelves(datas);
+						}
 					}
 				});
 			},
@@ -1105,5 +864,103 @@
 	})
 	window.Form=Form;
 })(jQuery)
+
+//根据条件查询已经上架课程信息
+function queryClassTypesShelves(datas){
+	//查询课程信息
+	$.ajax({
+		url : rootPath + "/shelvesCourse/findShelvesCourseByapge",
+		type : "post",
+		data:datas,
+		beforeSend:function(XMLHttpRequest){
+			$(".loading").show();
+			$(".loading-bg").show();
+		},
+		success : function(result) {
+			$("#ShelvesCourseDetailList").html(result);
+		},
+		complete:function(XMLHttpRequest,textStatus){
+			$(".loading").hide();
+			$(".loading-bg").hide();
+		}
+	});
+}
+
+function fillCategory(datas){
+	$("#courseCaId").find("a").each(function(i){
+		if($(this).hasClass('btn-success')){
+			categoryid=$(this).attr("data-code");
+		}
+	});
+	if(categoryid!='all'){
+		datas.categoryid=categoryid;
+	}
+}
+
+function fillGrade(datas){
+	$("#gradeId").find("a").each(function(i){
+		if($(this).hasClass('btn-success')){
+			gradeid=$(this).attr("data-code");
+		}
+	});
+	if(gradeid!='all'){
+		datas.gradeid=gradeid;
+	}
+}
+
+function fillSubject(datas){
+	$("#subjectId").find("a").each(function(i){
+		if($(this).hasClass('btn-success')){
+			subjectid=$(this).attr("data-code");
+		}
+	});
+	if(subjectid!='all'){
+		datas.subjectid=subjectid;
+	}
+}
+
+function fillKnowPro(datas){
+	$("#kwonProId").find("a").each(function(i){
+		if($(this).hasClass('btn-success')){
+			knowledgeProid=$(this).attr("data-code");
+		}
+	});
+	if(knowledgeProid!='all'){
+		datas.knowledgeProid=knowledgeProid;
+	}
+}
+
+function fillKnow(datas){
+	$("#knowId").find("a").each(function(i){
+		if($(this).hasClass('btn-success')){
+			knowId=$(this).attr("data-code");
+		}
+	});
+	if(knowId!='all'){
+		datas.knowId=knowId;
+	}
+}
+
+function fillStage(datas){
+	$("#stageId").find("a").each(function(i){
+		if($(this).hasClass('btn-success')){
+			stageid=$(this).attr("data-code");
+		}
+	});
+	if(stageid!='all'){
+		datas.stageid=stageid;
+	}
+}
+
+function fillType(datas){
+	$("#typeId").find("a").each(function(i){
+		if($(this).hasClass('btn-success')){
+			typeCode=$(this).attr("data-code");
+		}
+	});
+	if(typeCode!='all'){
+		datas.typeCode=typeCode;
+	}
+}
 
 

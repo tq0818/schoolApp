@@ -44,11 +44,11 @@
             <tr>
                 <td><input type="checkbox" class="signUpMany" uname="sdsdsd" value="" data-id="${course.appId }"></td>
                 <c:choose>
-                	<c:when test="${course.imgUrl eq ''}">  
-                		<td><img src="${course.imgUrl}" alt="" class="shelvesIcon"></td>
+                	<c:when test="${course.imgUrl != ''}">
+                		<td><img src="${commodityPicUrl}${course.imgUrl}" alt="" class="shelvesIcon"></td>
                  	</c:when>
                  	<c:otherwise> 
-                		<td><img src="${course.cover}" alt="" class="shelvesIcon"></td>
+                		<td><img src="${commodityPicUrl}${course.cover}" alt="" class="shelvesIcon"></td>
                 	</c:otherwise>
 				</c:choose>
                 <td>${course.lessonName}</td>
@@ -80,7 +80,7 @@
                 <td>
                     <a href="javascript:stopClassOnsale(${course.appId });" class="btn btn-primary btn-sm">下架</a>
                     <span><a href="javascript: toRcommon('${course.courseCaId}','${course.liveFlag}','${course.id}');" class="btn btn-primary btn-sm recommendCourse">推荐</a></span>
-                    <span><a href="javascript:toOnsaleEdit('${course.appId}_${course.id}','${course.liveFlag}');" class="btn btn-primary btn-sm editCourse">编辑</a></span>
+                    <span><a href="javascript:toOnsaleEdit('${course.appId}_${course.id}','${course.liveFlag}');" class="btn btn-primary btn-sm editCourse">编辑上架</a></span>
                 </td>
             </tr>
 
@@ -91,7 +91,7 @@
         <div class="pages">
             <ul class="pagination"></ul>
         </div>
-    </div><input type="hidden" id="rowCount" value="68266"><input type="hidden" id="pageNo" value="1"><input type="hidden" id="maxCount" value="999999999">
+    </div>
 <%--弹出框--%>
 <div class="popupContainer">
     <span class="closePopupContainer">x</span>
@@ -112,6 +112,8 @@
         </div>
     </div>
 </div>
+<input id="typeIds" type="hidden" value="${typeId}"/>
+<input id="typeStr" type="hidden" value="${typeStr}"/>
 <script>
     $('.editCourse').click(function(){
         $('.popupContainerEdit').show();
@@ -196,13 +198,13 @@
 
 
     $(document).ready(function(){
-        $(".pagination").pagination('${pageFinder.rowCount}', {
+        $(".pagination").pagination('${courseList.rowCount}', {
             next_text : "下一页",
             prev_text : "上一页",
-            current_page :'${pageFinder.pageNo-1}',
+            current_page :'${courseList.pageNo-1}',
             link_to : "javascript:void(0)",
             num_display_entries : 8,
-            items_per_page : '${pageFinder.pageSize}',
+            items_per_page : '${courseList.pageSize}',
             num_edge_entries : 1,
             callback:function(page,jq){
                 var pageNo = page + 1;
