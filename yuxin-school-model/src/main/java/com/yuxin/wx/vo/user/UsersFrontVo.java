@@ -93,7 +93,27 @@ public class UsersFrontVo extends BaseEntity {
     private Integer isStu; //是否学生,1是。0不是
     private String wxOpenId;
     private Integer teacherFlag;
-    public Integer getIsStu() {
+    
+    private Integer totalScore;//我的积分
+    private Integer loginDay;//坚持学习天数
+    private Integer studyCount;//已学完课程
+    public Integer getLoginDay() {
+		return loginDay;
+	}
+
+	public void setLoginDay(Integer loginDay) {
+		this.loginDay = loginDay;
+	}
+
+	public Integer getTotalScore() {
+		return totalScore;
+	}
+
+	public void setTotalScore(Integer totalScore) {
+		this.totalScore = totalScore;
+	}
+
+	public Integer getIsStu() {
         return isStu;
     }
 
@@ -767,4 +787,12 @@ public class UsersFrontVo extends BaseEntity {
         this.vipIsOverdue = vipIsOverdue;
     }
 
+	public Integer getStudyCount() {
+		return studyCount;
+	}
+
+	public void setStudyCount(Integer studyCount) {
+		this.studyCount = studyCount;
+	}
+    
 }
