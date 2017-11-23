@@ -51,7 +51,16 @@
                 		<td><img src="${commodityPicUrl}${course.cover}" alt="" class="shelvesIcon"></td>
                 	</c:otherwise>
 				</c:choose>
-                <td>${course.actualNum}</td>
+                <%--<td>${course.lessonName}</td>--%>
+                <%--<td>${course.itemSecondName}</td>--%>
+                <%--<td>${course.itemThirdName}</td>--%>
+                <%--<td>${course.itemFourthName}</td>--%>
+                <%--<td>${course.itemTag}</td>--%>
+                <%--<td>${course.tagName}</td>--%>
+                <%--<td>${course.typeCode}</td>--%>
+                <%--<td>${course.shelvesTime}</td>--%>
+				<%--<td>${course.lessonDate}${course.lessonTimeStart}</td>--%>
+                <%--<td>${course.actualNum}</td>--%>
                 <td class="overflowHide" title="${course.lessonName}">${course.lessonName}</td>
                 <td class="overflowHide" title="${course.itemSecondName}">${course.itemSecondName}</td>
                 <td class="overflowHide" title="${course.itemThirdName}">${course.itemThirdName}</td>
