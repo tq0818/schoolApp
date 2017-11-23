@@ -59,7 +59,16 @@
                 <td>${course.tagName}</td>
                 <td>${course.typeCode}</td>
                 <td>${course.shelvesTime}</td>
-				<td>${course.lessonDate}${course.lessonTimeStart}</td>
+                <c:choose>
+                    <c:when test="${course.lessonDate==''}">
+                        <td>--</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>${course.lessonDate}${course.lessonTimeStart}</td>
+                    </c:otherwise>
+                </c:choose>
+
+				<%--<td>${course.lessonDate}${course.lessonTimeStart}</td>--%>
                 <td>${course.actualNum}</td>
                 <c:choose>
                 	<c:when test="${course.appPrice eq ''}">  

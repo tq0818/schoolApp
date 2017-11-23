@@ -41,7 +41,7 @@ public class ShelvesCourseController {
 			String pageNum = request.getParameter("pageNum");
 			String pageSize = request.getParameter("pageSize");
 			ClassTypeVo ctv = new ClassTypeVo();
-			ctv.setPageSize(8);
+			ctv.setPageSize(4);
 
 			if(null!=pageNum && !"".equals(pageNum)){
 				ctv.setPage(Integer.parseInt(pageNum));
