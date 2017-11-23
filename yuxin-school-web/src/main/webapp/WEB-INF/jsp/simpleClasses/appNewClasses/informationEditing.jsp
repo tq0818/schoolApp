@@ -84,7 +84,7 @@
                 <li>
                     <label>课程分类</label>
 
-                           <select id="courseCaId" onchange="chooseSlibMenu($(this));">
+                           <select id="courseCaIdList" onchange="chooseSlibMenu($(this));">
                                <c:forEach var="menu" items="${firstMenus}">
                                    <option value="${menu.id}">${menu.name}</option>
                                </c:forEach>
@@ -94,7 +94,7 @@
                 <li>
                     <label>学段</label>
 
-                        <select id="gradeId" onchange="chooseSlibMenu($(this));">
+                        <select id="gradeIdList" onchange="chooseSlibMenu($(this));">
                             <c:forEach var="menu" items="${secondeMenus}" varStatus="status">
                                 <option value="${menu.id}">${menu.name}</option>
                             </c:forEach>
@@ -104,7 +104,7 @@
                 <li>
                     <label>学科</label>
 
-                            <select id="subjectId" onchange="chooseSlibMenu($(this));">
+                            <select id="subjectIdList" onchange="chooseSlibMenu($(this));">
                                 <c:forEach var="menu" items="${thirdMenus}">
                                     <option value="${menu.id}">${menu.name}</option>
                                 </c:forEach>
@@ -114,7 +114,7 @@
                 <li>
                     <label>知识点专题</label>
 
-                            <select id="kwonProId" onchange="chooseSlibMenu($(this));">
+                            <select id="kwonProIdList" onchange="chooseSlibMenu($(this));">
                                 <c:forEach var="menu" items="${forthMenus}">
                                     <option value="${menu.id}">${menu.name}</option>
                                 </c:forEach>
@@ -124,7 +124,7 @@
                 <li>
                     <label>知识点</label>
 
-                            <select id="knowId" onchange="chooseSlibMenu($(this));">
+                            <select id="knowIdList" onchange="chooseSlibMenu($(this));">
                                 <c:forEach var="menu" items="${fifthMenus}">
                                     <option value="${menu.id}">${menu.name}</option>
                                 </c:forEach>
@@ -134,7 +134,7 @@
                 <li>
                     <label>阶段</label>
 
-                            <select id="stageId">
+                            <select id="stageIdList">
                                 <c:forEach var="menu" items="${jieduanMenus}">
                                     <option value="${menu.id}">${menu.name}</option>
                                 </c:forEach>
@@ -144,7 +144,7 @@
                 <li>
                     <label>类型</label>
 
-                            <select id="typeId">
+                            <select id="typeIdList">
                                 <c:forEach var="menu" items="${leixingMenus}">
                                     <option value="${menu.id}">${menu.name}</option>
                                 </c:forEach>
@@ -172,8 +172,8 @@
             </ul>
         </div>
         <div class="submitCourse">
-            <button class="btn btn-success" onclick="toShelves('1');">立即上架</button>
-            <button class="btn btn-warning" onclick="toShelves('0');">预约上架</button>
+            <button class="btn btn-success" onclick="toShelves('1','${editFlag}');">立即上架</button>
+            <button class="btn btn-warning" onclick="toShelves('0','${editFlag}');">预约上架</button>
             <input type="text" placeholder="指定上架时间" id="shelvesTime" value="${searchAndResult.reserveTime}" readonly>
         </div>
     </div>

@@ -80,7 +80,7 @@
                 <td>
                     <a href="javascript:stopClassOnsale(${course.appId });" class="btn btn-primary btn-sm">下架</a>
                     <span><a href="javascript: toRcommon('${course.courseCaId}','${course.liveFlag}','${course.id}');" class="btn btn-primary btn-sm recommendCourse">推荐</a></span>
-                    <span><a href="javascript:toOnsaleEdit('${course.appId}_${course.id}','${course.liveFlag}');" class="btn btn-primary btn-sm editCourse">编辑上架</a></span>
+                    <span><a href="javascript:toOnsaleEdit('${course.appId}_${course.id}','${course.liveFlag}','1');" class="btn btn-primary btn-sm editCourse">编辑上架</a></span>
                 </td>
             </tr>
 
@@ -126,6 +126,7 @@
 
     $('.closePopupContainer').click(function(){
         $('.popupContainerEdit').hide();
+        reloadCurrunt();
     });
     function toRcommon(categerorId,zhiboFlag,commodityId){
 
@@ -146,6 +147,21 @@
             }
         });
     }
+
+
+    function reloadCurrunt(){
+        var datas = {};
+        fillCategory(datas);
+        fillGrade(datas);
+        fillSubject(datas);
+        fillKnowPro(datas);
+        fillKnow(datas);
+        fillStage(datas);
+        fillType(datas);
+        queryClassTypesShelves(datas);
+    }
+
+
 </script>
 
 <script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/shelvesCoursesAjax.js"></script>

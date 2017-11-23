@@ -646,6 +646,9 @@
 				$("#myForm").attr("action",rootPath+"/simpleClasses/showClassTypeDetail").submit();
 			},
 			editClassType : function(id){
+				var ids = id.split("_");
+				id=ids[0];
+
 				var itemOneId="";
 				var lab="";
 				$("#itemOneList").find("a").each(function(i){
@@ -664,6 +667,7 @@
 				// }
 				$("#classTypeId").val(id);
 				$("#lab").val(lab);
+				$("#appId").val(ids[1]);
 				$("#myForm").attr("action",rootPath+"/editSimpleCourse/editClassTypeMessage").submit();
 			},
 			show : function(){

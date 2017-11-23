@@ -255,6 +255,7 @@ public class SimpleclassTypeController {
 			}
 			return "1";
 		}catch (Exception e){
+			e.printStackTrace();
 			return "0";
 		}
 	}
@@ -263,6 +264,7 @@ public class SimpleclassTypeController {
 	public String showAppShelvesEdit(HttpServletRequest request,Model model){
 		String ids = request.getParameter("ids");
 		String zhiboFlag = request.getParameter("zhiboFlag");
+		String editFlag = request.getParameter("editFlag");
 
 		if(null!=ids && ids.split("_").length>0){
 			List<SysDictApp> firstMenus = null;
@@ -392,6 +394,7 @@ public class SimpleclassTypeController {
 			model.addAttribute("jieduanMenus",jieduanMenus);
 			model.addAttribute("leixingMenus",leixingMenus);
 			model.addAttribute("searchAndResult",searchAndResult);
+			model.addAttribute("editFlag",editFlag);
 
 		}
 		return "simpleClasses/appNewClasses/informationEditing";

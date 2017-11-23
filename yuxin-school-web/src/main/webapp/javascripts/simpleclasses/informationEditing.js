@@ -18,7 +18,7 @@ function toOnsaleEdit(ids,zhiboFlag){
 	});
 }
 function chooseSlibMenu(obj){
-	var id = obj.attr("id");
+	var id = obj.attr("id").replace("List","");
 	var parentId = obj.val();
 
 	$.ajax({
@@ -32,7 +32,7 @@ function chooseSlibMenu(obj){
 			var types = result.types;
 
 			if("courseCaId"==id){
-				$("#gradeId").html("");
+				$("#gradeIdList").html("");
 				var html='';
 				for(var i=0;i<data.length;i++){
 					if(i==0){
@@ -41,11 +41,11 @@ function chooseSlibMenu(obj){
 						html+=' <option value="'+data[i].id+'">'+data[i].name+'</option>';
 					}
 				}
-				$("#gradeId").html(html);
+				$("#gradeIdList").html(html);
 				chooseSlibMenu($("#gradeId"));
 
 				//阶段
-				$("#stageId").html("");
+				$("#stageIdList").html("");
 				var html='';
 				for(var i=0;i<stages.length;i++){
 					if(i==0){
@@ -54,10 +54,10 @@ function chooseSlibMenu(obj){
 						html+=' <option value="'+stages[i].id+'">'+stages[i].name+'</option>';
 					}
 				}
-				$("#stageId").html(html);
+				$("#stageIdList").html(html);
 
 				//类型
-				$("#typeId").html("");
+				$("#typeIdList").html("");
 				var html='';
 				for(var i=0;i<types.length;i++){
 					if(i==0){
@@ -66,10 +66,10 @@ function chooseSlibMenu(obj){
 						html+=' <option value="'+types[i].id+'">'+types[i].name+'</option>';
 					}
 				}
-				$("#typeId").html(html);
+				$("#typeIdList").html(html);
 
 
-			}else if("gradeId"==id){
+			}else if("gradeIdList"==id){
 				$("#subjectId").html("");
 				var html='';
 				for(var i=0;i<data.length;i++){
@@ -79,7 +79,7 @@ function chooseSlibMenu(obj){
 						html+=' <option value="'+data[i].id+'">'+data[i].name+'</option>';
 					}
 				}
-				$("#subjectId").html(html);
+				$("#subjectIdList").html(html);
 				chooseSlibMenu($("#subjectId"));
 			}else if("subjectId"==id){
 				$("#kwonProId").html("");
@@ -91,10 +91,10 @@ function chooseSlibMenu(obj){
 						html+=' <option value="'+data[i].id+'">'+data[i].name+'</option>';
 					}
 				}
-				$("#kwonProId").html(html);
+				$("#kwonProIdList").html(html);
 				chooseSlibMenu($("#kwonProId"));
 			}else if("kwonProId"==id){
-				$("#knowId").html("");
+				$("#knowIdList").html("");
 				var html='';
 				for(var i=0;i<data.length;i++){
 					if(i==0){
@@ -103,7 +103,7 @@ function chooseSlibMenu(obj){
 						html+=' <option value="'+data[i].id+'">'+data[i].name+'</option>';
 					}
 				}
-				$("#knowId").html(html);
+				$("#knowIdList").html(html);
 			}
 		}
 	});
@@ -117,26 +117,28 @@ function queryClassDetails(id){
 }
 
 
-function toShelves(flag){
-	var courseCaId = $("#courseCaId").val();
-	var gradeId = $("#gradeId").val();
-	var subjectId = $("#subjectId").val();
-	var kwonProId = $("#kwonProId").val();
-	var knowId = $("#knowId").val();
-	var stageId = $("#stageId").val();
-	var typeId = $("#typeId").val();
+function toShelves(flag,editFlag){
+	var courseCaId = $("#courseCaIdList").val();
+	var gradeId = $("#gradeIdList").val();
+	var subjectId = $("#subjectIdList").val();
+	var kwonProId = $("#kwonProIdList").val();
+	var knowId = $("#knowIdList").val();
+	var stageId = $("#stageIdList").val();
+	var typeId = $("#typeIdList").val();
 	var id = $("#commodityId").val();
 	var appId = $("#appId").val();
 	var shelvesTime = $("#shelvesTime").val();
 	var labDesc = $("#labDesc").val();
 	var appPrice = $("#appPrice").val();
 	var salePrice = $("#salePrice").val();
-	var reg = new RegExp("/^(0|([1-9]\d{0,9}(\.\d{1,2})?))$/");
+	var reg = new RegExp("^(0|([1-9]\d{0,9}(\.\d{1,2})?))$");
 	if(!reg.test(appPrice)){
 		alert("请输入正确的价格");
+		return;
 	}
 	if(!reg.test(salePrice)){
 		alert("请输入正确的实际价格");
+		return;
 	}
 	if("0"==flag && ""== $.trim(shelvesTime) ){
 		alert("预约上架时间不能为空");
@@ -153,7 +155,9 @@ function toShelves(flag){
 				alert("成功")
 				$('.popupContainer').hide();
 				$('.popupOpacity').hide();
-				location.reload(0);
+				if('1'==editFlag){
+					reloadCurrunt();
+				}
 			}else{
 				alert("失败")
 			}

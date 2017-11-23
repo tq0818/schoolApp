@@ -1,18 +1,19 @@
-function toOnsaleEdit(ids,zhiboFlag){
+function toOnsaleEdit(ids,zhiboFlag,flag){
 	$.ajax({
 		url : rootPath + "/simpleClasses/showAppShelvesEdit",
 		type : "post",
-		data:{"ids":ids,"zhiboFlag":zhiboFlag},
+		data:{"ids":ids,"zhiboFlag":zhiboFlag,"editFlag":flag},
 		beforeSend:function(XMLHttpRequest){
-            $(".loading").show();
-            $(".loading-bg").show();
+           /* $(".loading").show();
+            $(".loading-bg").show();*/
         },
 		success : function(result) {
+			$("#shelvesList").html("");
 			$("#shelvesList").html(result);
 		},
 		 complete:function(XMLHttpRequest,textStatus){
-				$(".loading").hide();
-	            $(".loading-bg").hide();
+		/*		$(".loading").hide();
+	            $(".loading-bg").hide();*/
 	     }
 	});
 }
@@ -174,3 +175,98 @@ function stopClassOnsale(id){
 	});
 }
 
+function reLoadAppClass(){
+	var datas = {};
+	fillKnowPro(datas);
+	fillGrade(datas);
+	fillSubject(datas);
+	fillKnowPro(datas);
+	fillKnow(datas);
+	fillStage(datas);
+	fillType(datas);
+	queryClassTypesShelves(datas);
+}
+
+function fillCategory(datas){
+	var categoryid = '';
+	$("#courseCaId").find("a").each(function(i){
+		if($(this).hasClass('btn-success')){
+			categoryid=$(this).attr("data-code");
+		}
+	});
+	if(categoryid!='all'){
+		datas.categoryid=categoryid;
+	}
+}
+
+function fillGrade(datas){
+	var gradeid = '';
+	$("#gradeId").find("a").each(function(i){
+		if($(this).hasClass('btn-success')){
+			gradeid=$(this).attr("data-code");
+		}
+	});
+	if(gradeid!='all'){
+		datas.gradeid=gradeid;
+	}
+}
+
+function fillSubject(datas){
+	var subjectid = '';
+	$("#subjectId").find("a").each(function(i){
+		if($(this).hasClass('btn-success')){
+			subjectid=$(this).attr("data-code");
+		}
+	});
+	if(subjectid!='all'){
+		datas.subjectid=subjectid;
+	}
+}
+
+function fillKnowPro(datas){
+	var knowledgeProid = '';
+	$("#kwonProId").find("a").each(function(i){
+		if($(this).hasClass('btn-success')){
+			knowledgeProid=$(this).attr("data-code");
+		}
+	});
+	if(knowledgeProid!='all'){
+		datas.knowledgeProid=knowledgeProid;
+	}
+}
+
+function fillKnow(datas){
+	var knowledgeid = '';
+	$("#knowId").find("a").each(function(i){
+		if($(this).hasClass('btn-success')){
+			knowledgeid=$(this).attr("data-code");
+		}
+	});
+	if(knowledgeid!='all'){
+		datas.knowledgeid=knowledgeid;
+	}
+}
+
+function fillStage(datas){
+	var stageid = '';
+	$("#stageId").find("a").each(function(i){
+		if($(this).hasClass('btn-success')){
+			stageid=$(this).attr("data-code");
+		}
+	});
+	if(stageid!='all'){
+		datas.stageid=stageid;
+	}
+}
+
+function fillType(datas){
+	var typeCode = '';
+	$("#typeId").find("a").each(function(i){
+		if($(this).hasClass('btn-success')){
+			typeCode=$(this).attr("data-code");
+		}
+	});
+	if(typeCode!='all'){
+		datas.typeCode=typeCode;
+	}
+}

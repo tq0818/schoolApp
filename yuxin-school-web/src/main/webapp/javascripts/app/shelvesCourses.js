@@ -842,7 +842,7 @@
 							fillType(datas);
 							queryClassTypesShelves(datas);
 						}
-						else if("#stageId"==typeStr){
+						else if("stageId"==typeStr){
 							//查询课程信息
 							fillCategory(datas);
 							fillGrade(datas);
@@ -853,7 +853,7 @@
 							fillType(datas);
 							queryClassTypesShelves(datas);
 						}
-						else if("#typeId"==typeStr){
+						else if("typeId"==typeStr){
 							//查询课程信息
 							fillCategory(datas);
 							fillGrade(datas);
