@@ -24,14 +24,17 @@ public class ShelvesCourseServiceImpl implements IShelvesCourseService{
 	private ShelvesCourseMapper shelvesCourseMapper;
 
 	@Override
-	public List<ClassTypeVo> queryShelvesCoursesByPage(
+	public PageFinder<ClassTypeVo> queryShelvesCoursesByPage(
 			String categoryid,
 			String gradeid,
 			String subjectid,
 			String knowledgeid,
 			String knowledgeProid,
 			String stageid,
-			String typeCode
+			String typeCode,
+			Integer pageNum,
+			Integer pageSize,
+			Integer firstIndex
 			) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("categoryid", categoryid);
@@ -41,9 +44,17 @@ public class ShelvesCourseServiceImpl implements IShelvesCourseService{
 		map.put("knowledgeProid", knowledgeProid);
 		map.put("stageid", stageid);
 		map.put("typeCode", typeCode);
+		map.put("pageNum", pageNum);
+		map.put("pageSize", pageSize);
+		map.put("firstIndex", firstIndex);
+
 		
 		List<ClassTypeVo> list = shelvesCourseMapper.queryShelvesCoursesByPage(map);
-		return list;
+
+		int rowCount = shelvesCourseMapper.queryShelvesCoursesCount(map);
+
+		PageFinder<ClassTypeVo> pageFinder=new PageFinder<ClassTypeVo>(pageNum, pageSize, rowCount, list);
+		return pageFinder;
 	}
 
 	@Override

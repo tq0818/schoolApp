@@ -59,7 +59,7 @@
 		join sys_dict_app sys5 on sys5.id=app.`knowledge_id`
 		join sys_dict_app sys6 on sys6.id=app.`stage_id`
 		join sys_dict_app sys7 on sys7.id=app.`type_id`
-		where  ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1
+		where  ct.del_flag=0 and c.type='COMMODITY_CLASS' <![CDATA[and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`))]]>
 		
 		<if test="categoryid != null and categoryid != ''">and app.category_id = #{categoryid}</if>
 		<if test="gradeid != null and gradeid != ''">and app.grade_id = #{gradeid}</if>
@@ -125,7 +125,7 @@
 		join sys_dict_app sys5 on sys5.id=app.`knowledge_id`
 		join sys_dict_app sys6 on sys6.id=app.`stage_id`
 		join sys_dict_app sys7 on sys7.id=app.`type_id`
-		where  ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1
+		where  ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 <![CDATA[and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`))]]>
 		<if test="categoryid != null and categoryid != ''">and app.category_id = #{categoryid}</if>
 		<if test="gradeid != null and gradeid != ''">and app.grade_id = #{gradeid}</if>
 		<if test="subjectid != null and subjectid != ''">and app.subject_id = #{subjectid}</if>
@@ -176,7 +176,193 @@
 		join sys_dict_app sys5 on sys5.id=app.`knowledge_id`
 		join sys_dict_app sys6 on sys6.id=app.`stage_id`
 		join sys_dict_app sys7 on sys7.id=app.`type_id`
-		where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 
+		where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 <![CDATA[and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`))]]>
+		<if test="categoryid != null and categoryid != ''">and app.category_id = #{categoryid}</if>
+		<if test="gradeid != null and gradeid != ''">and app.grade_id = #{gradeid}</if>
+		<if test="subjectid != null and subjectid != ''">and app.subject_id = #{subjectid}</if>
+		<if test="knowledgeProid != null and knowledgeProid != ''">and app.knowledge_pro_id = #{knowledgeProid}</if>
+		<if test="knowledgeid != null and knowledgeid != ''">and app.knowledge_id = #{knowledgeid}</if>
+		<if test="stageid != null and stageid != ''">and app.stage_id = #{stageid}</if>
+		<if test="typeCode != null and typeCode != ''">and app.type_id = #{typeCode}</if>
+		)temp limit #{firstIndex},#{pageSize}
+	</select>
+
+	<select id="queryShelvesCoursesCount"  parameterType="map" resultType="int">
+		select count(1) from(
+		select
+		ct.name as lessonName,
+		ct.original_price as originalPrice,
+		ct.real_price as realPrice,
+		cml.lesson_date as lessonDate,
+		cml.lesson_time_start as lessonTimeStart,
+		sct.NAME teacher_name,
+		sct.school_short_name,
+		c.buy_num as actualNum,
+		app.img_url as imgUrl,
+		case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
+		app.shelves_time as shelvesTime,
+		ct.cover as cover,
+		app.reserve_time,
+		app.id as appId,
+		app.lab_desc,
+		app.`price` as appPrice,
+		app.`sale_price` as salePrice,
+		sys1.name as itemOneName,
+		sys2.name as itemSecondName,
+		sys3.name as itemThirdName,
+		sys4.name as itemFourthName,
+		sys5.name as itemTag,
+		sys6.name as tagName,
+		sys7.name as typeCode,
+		c.live_flag as liveFlag,
+		c.id,
+		app.category_id as courseCaId
+		FROM (
+		SELECT
+		ml.module_no_id,
+		ml.lesson_date,
+		ml.lesson_time_start,
+		ml.lesson_time_end,
+		ml.lesson_name
+		FROM
+		class_module_lesson ml
+		WHERE
+		ml.lesson_date >= now()
+		ORDER BY
+		ml.lesson_date ASC
+		) cml
+		JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id`
+		JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id`
+		JOIN class_type ct ON ct.id = ctmr.`class_type_id`
+		join commodity_product_realtion pr on ct.id = pr.product_id
+		join commodity c on c.id = pr.com_id
+		JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
+		join `app_shelves` app on app.`comdity_id`=c.id
+		join sys_dict_app sys1 on sys1.id=app.`category_id`
+		join sys_dict_app sys2 on sys2.id=app.`grade_id`
+		join sys_dict_app sys3 on sys3.id=app.`subject_id`
+		join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id`
+		join sys_dict_app sys5 on sys5.id=app.`knowledge_id`
+		join sys_dict_app sys6 on sys6.id=app.`stage_id`
+		join sys_dict_app sys7 on sys7.id=app.`type_id`
+		where  ct.del_flag=0 and c.type='COMMODITY_CLASS' <![CDATA[and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`))]]>
+
+		<if test="categoryid != null and categoryid != ''">and app.category_id = #{categoryid}</if>
+		<if test="gradeid != null and gradeid != ''">and app.grade_id = #{gradeid}</if>
+		<if test="subjectid != null and subjectid != ''">and app.subject_id = #{subjectid}</if>
+		<if test="knowledgeProid != null and knowledgeProid != ''">and app.knowledge_pro_id = #{knowledgeProid}</if>
+		<if test="knowledgeid != null and knowledgeid != ''">and app.knowledge_id = #{knowledgeid}</if>
+		<if test="stageid != null and stageid != ''">and app.stage_id = #{stageid}</if>
+		<if test="typeCode != null and typeCode != ''">and app.type_id = #{typeCode}</if>
+
+		GROUP BY c.id
+		UNION
+		select
+		ct.name as lessonName,
+		ct.original_price as originalPrice,
+		ct.real_price as realPrice,
+		cml.lesson_date,
+		cml.lesson_time_start,
+		sct.NAME teacher_name,
+		sct.school_short_name,
+		c.buy_num as actualNum,
+		app.img_url as imgUrl,
+		case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
+		app.shelves_time as shelvesTime,
+		ct.cover as cover,
+		app.reserve_time,
+		app.id as appId,
+		app.lab_desc,
+		app.`price` as appPrice,
+		app.`sale_price` as salePrice,
+		sys1.name as itemOneName,
+		sys2.name as itemSecondName,
+		sys3.name as itemThirdName,
+		sys4.name as itemFourthName,
+		sys5.name as itemTag,
+		sys6.name as tagName,
+		sys7.name as typeCode,
+		c.live_flag as liveFlag,
+		c.id,
+		app.category_id as courseCaId
+		FROM (
+		SELECT
+		ml.module_no_id,
+		ml.`lesson_date`,
+		ml.lesson_time_start,
+		ml.lesson_time_end,
+		ml.lesson_name
+		FROM
+		class_module_lesson ml
+		ORDER BY
+		ml.lesson_date ASC
+		) cml
+		JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id`
+		JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id`
+		JOIN class_type ct ON ct.id = ctmr.`class_type_id`
+		join commodity_product_realtion pr on ct.id = pr.product_id
+		join commodity c on c.id = pr.com_id
+		JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
+		join `app_shelves` app on app.`comdity_id`=c.id
+		join sys_dict_app sys1 on sys1.id=app.`category_id`
+		join sys_dict_app sys2 on sys2.id=app.`grade_id`
+		join sys_dict_app sys3 on sys3.id=app.`subject_id`
+		join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id`
+		join sys_dict_app sys5 on sys5.id=app.`knowledge_id`
+		join sys_dict_app sys6 on sys6.id=app.`stage_id`
+		join sys_dict_app sys7 on sys7.id=app.`type_id`
+		where  ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 <![CDATA[and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`))]]>
+		<if test="categoryid != null and categoryid != ''">and app.category_id = #{categoryid}</if>
+		<if test="gradeid != null and gradeid != ''">and app.grade_id = #{gradeid}</if>
+		<if test="subjectid != null and subjectid != ''">and app.subject_id = #{subjectid}</if>
+		<if test="knowledgeProid != null and knowledgeProid != ''">and app.knowledge_pro_id = #{knowledgeProid}</if>
+		<if test="knowledgeid != null and knowledgeid != ''">and app.knowledge_id = #{knowledgeid}</if>
+		<if test="stageid != null and stageid != ''">and app.stage_id = #{stageid}</if>
+		<if test="typeCode != null and typeCode != ''">and app.type_id = #{typeCode}</if>
+		GROUP BY c.id
+		<![CDATA[HAVING MAX(cml.lesson_date) < NOW() ]]>
+		UNION
+		select
+		ct.name as lessonName,
+		ct.original_price as originalPrice,
+		ct.real_price as realPrice,
+		'' as lesson_date,
+		'' as lesson_time_start,
+		sct.NAME teacher_name,
+		sct.school_short_name,
+		c.buy_num as actualNum,
+		app.img_url as imgUrl,
+		case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
+		app.shelves_time as shelvesTime,
+		ct.cover as cover,
+		app.reserve_time,
+		app.id as appId,
+		app.lab_desc,
+		app.`price` as appPrice,
+		app.`sale_price` as salePrice,
+		sys1.name as itemOneName,
+		sys2.name as itemSecondName,
+		sys3.name as itemThirdName,
+		sys4.name as itemFourthName,
+		sys5.name as itemTag,
+		sys6.name as tagName,
+		sys7.name as typeCode,
+		c.live_flag as liveFlag,
+		c.id,
+		app.category_id as courseCaId
+		from commodity c
+		join commodity_product_realtion cpr on cpr.com_id=c.id
+		join class_type ct on ct.id=cpr.product_id
+		join sys_config_teacher sct ON ct.teacher_id = sct.id
+		join app_shelves app on app.comdity_id=c.id
+		join sys_dict_app sys1 on sys1.id=app.`category_id`
+		join sys_dict_app sys2 on sys2.id=app.`grade_id`
+		join sys_dict_app sys3 on sys3.id=app.`subject_id`
+		join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id`
+		join sys_dict_app sys5 on sys5.id=app.`knowledge_id`
+		join sys_dict_app sys6 on sys6.id=app.`stage_id`
+		join sys_dict_app sys7 on sys7.id=app.`type_id`
+		where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 <![CDATA[and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`))]]>
 		<if test="categoryid != null and categoryid != ''">and app.category_id = #{categoryid}</if>
 		<if test="gradeid != null and gradeid != ''">and app.grade_id = #{gradeid}</if>
 		<if test="subjectid != null and subjectid != ''">and app.subject_id = #{subjectid}</if>

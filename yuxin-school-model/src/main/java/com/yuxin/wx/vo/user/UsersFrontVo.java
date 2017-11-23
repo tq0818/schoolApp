@@ -27,7 +27,7 @@ public class UsersFrontVo extends BaseEntity {
     private Date registTime; /* 注册时间 */
     private String interests; /* 兴趣标签，存储项目代码 */
     private Integer vipFlag; /* vip标记，默认为0，购买课程后修改为1 */
-    private Integer registType; /* 注册类型，默认为1网页注册 */
+    private Integer registType; /* 注册类型，默认为1网页注册 ,4为app*/
     private String promoteSource; /* 用户来源地址，从哪个网站过来的 */
     private String promoteKeyword; /* 推广的关键字 */
     private String userSign; /* 用户签名 */

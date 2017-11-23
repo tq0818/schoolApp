@@ -382,6 +382,8 @@ public class SimpleclassTypeController {
 					leixingMenus.addAll(leixings);
 				}
 			}
+			String commodityPicUrl="http://"+propertiesUtil.getProjectImageUrl()+"/";
+			model.addAttribute("commodityPicUrl", commodityPicUrl);
 			model.addAttribute("commodityId",commodityId);
 			model.addAttribute("appId",appId);
 			model.addAttribute("firstMenus",firstMenus);

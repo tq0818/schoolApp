@@ -40,15 +40,15 @@
                 <th width="5%">实际价格</th>
                 <th width="20%">操作</th>
             </tr>
-            <c:forEach items="${courseList}" var="course" varStatus="status"> 
+            <c:forEach items="${courseList.data}" var="course" varStatus="status">
             <tr>
                 <td><input type="checkbox" class="signUpMany" uname="sdsdsd" value="" data-id="${course.appId }"></td>
                 <c:choose>
-                	<c:when test="${course.imgUrl eq ''}">  
-                		<td><img src="${course.imgUrl}" alt="" class="shelvesIcon"></td>
+                	<c:when test="${course.imgUrl != ''}">
+                		<td><img src="${commodityPicUrl}${course.imgUrl}" alt="" class="shelvesIcon"></td>
                  	</c:when>
                  	<c:otherwise> 
-                		<td><img src="${course.cover}" alt="" class="shelvesIcon"></td>
+                		<td><img src="${commodityPicUrl}${course.cover}" alt="" class="shelvesIcon"></td>
                 	</c:otherwise>
 				</c:choose>
                 <td>${course.lessonName}</td>
@@ -80,7 +80,7 @@
                 <td>
                     <a href="javascript:stopClassOnsale(${course.appId });" class="btn btn-primary btn-sm">下架</a>
                     <span><a href="javascript: toRcommon('${course.courseCaId}','${course.liveFlag}','${course.id}');" class="btn btn-primary btn-sm recommendCourse">推荐</a></span>
-                    <span><a href="javascript:toOnsaleEdit('${course.appId}_${course.id}','${course.liveFlag}');" class="btn btn-primary btn-sm editCourse">编辑</a></span>
+                    <span><a href="javascript:toOnsaleEdit('${course.appId}_${course.id}','${course.liveFlag}');" class="btn btn-primary btn-sm editCourse">编辑上架</a></span>
                 </td>
             </tr>
 
@@ -88,8 +88,10 @@
             </tbody>
         </table>
 
-        <div class="pages pagination"></div>
-    </div><input type="hidden" id="rowCount" value="68266"><input type="hidden" id="pageNo" value="1"><input type="hidden" id="maxCount" value="999999999">
+        <div class="pages">
+            <ul class="pagination"></ul>
+        </div>
+    </div>
 <%--弹出框--%>
 <div class="popupContainer">
     <span class="closePopupContainer">x</span>
@@ -110,6 +112,8 @@
         </div>
     </div>
 </div>
+<input id="typeIds" type="hidden" value="${typeId}"/>
+<input id="typeStr" type="hidden" value="${typeStr}"/>
 <script>
     $('.editCourse').click(function(){
         $('.popupContainerEdit').show();
@@ -123,9 +127,6 @@
     $('.closePopupContainer').click(function(){
         $('.popupContainerEdit').hide();
     });
-
-
-
     function toRcommon(categerorId,zhiboFlag,commodityId){
 
         $.ajax({
@@ -145,12 +146,9 @@
             }
         });
     }
-
 </script>
 
-
 <script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/shelvesCoursesAjax.js"></script>
-
 <script>
     //批量下架調用接口
     $('#batchRelease').click(function(){
@@ -169,24 +167,50 @@
         }
 
         if(batchReleaseArray.length>0){
-            $.ajax({
-                type : 'post',
-                url : '/simpleClasses/stopClassOnsaleAll',
-                data : {
-                    batchReleaseArray : batchReleaseArray
-                },
-                success : function(data){
-                    if(data){
-                        alert("成功");
-                    }else {
-                        alert("失败");
-                    }
+            $.confirm("确认下架所选课程？",function(s){
+                if(s==true){
+                    $.ajax({
+                        type : 'post',
+
+                        url : rootPath + '/simpleClasses/stopClassOnsaleAll',
+                        data : {
+                            "batchReleaseArray" : batchReleaseArray
+                        },
+                        dataType : 'json',
+                        traditional: true,
+                        success : function(data){
+                            if(data=='1'){
+                                alert('下架课程成功！')
+                            }else {
+                                alert("下架课程失败!");
+                            }
+                        }
+                    });
                 }
             });
         }else {
-            alert("请勾选要删除的课程");
+            alert("请勾选要下架的课程！");
         }
 
+    });
+    $(document).ready(function(){
+        $(".pagination").pagination('${courseList.rowCount}', {
+            next_text : "下一页",
+            prev_text : "上一页",
+            current_page :'${courseList.pageNo-1}',
+            link_to : "javascript:void(0)",
+            num_display_entries : 8,
+            items_per_page : '${courseList.pageSize}',
+            num_edge_entries : 1,
+            callback:function(page,jq){
+                var pageNo = page + 1;
+                if($("#searchName").val()){
+                    Form.queryCommodityByName(pageNo);
+                }else{
+                    Form.queryAllCommdityByItemNew(pageNo);
+                }
+            }
+        });
     });
 </script>
 </html>

@@ -31,7 +31,7 @@
     <div class="u-wrap classes">
         <div class="informationEditHeader">
             <div class="informationEditImg">
-                <img src="${commodityPicUrl }${allCommdotity.cover}" id="pic" alt="">
+                <img src="${commodityPicUrl }${searchAndResult.cover}" id="pic" alt="">
                 <div class="informationEditChoose">
                     <a href="##" ><input type="file" name="imgData" id="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic();">选择图片</a>
                 </div>

@@ -64,7 +64,6 @@ public class shelvesCourses {
     @RequestMapping(value = "/shelvesCourses", method = RequestMethod.GET)
     public String gotoShelvesCourses(Model model, HttpServletRequest request) {
         //获取一级菜单
-        Map<String, List<SysDictApp>> linked = new LinkedHashMap<String, List<SysDictApp>>();
         SysDictApp search = new SysDictApp();
         List<SysDictApp> slibMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
         model.addAttribute("firstMenus", slibMenus);

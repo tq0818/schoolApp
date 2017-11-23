@@ -48,6 +48,7 @@ public class VideoCourseComment extends BaseEntity {
 	private String lecIds;
 	private Integer classTypeId;
 	private Integer limit;
+	private Integer originType;
 	// Constructor
 	public VideoCourseComment() {
 	}
@@ -310,6 +311,13 @@ public class VideoCourseComment extends BaseEntity {
 	public void setLimit(Integer limit) {
 		this.limit = limit;
 	}
-	
+
+	public Integer getOriginType() {
+		return originType;
+	}
+
+	public void setOriginType(Integer originType) {
+		this.originType = originType;
+	}
 	
 }

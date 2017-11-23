@@ -72,7 +72,7 @@ public class Student extends BaseEntity {
 	private String eduSchool;
 	private String eduStep;
 	private String eduYear;
-
+	private Integer isInSchool;//是否是本校 0 非 ，1 是
 	public Integer getTeacherFlag() {
 		return teacherFlag;
 	}
@@ -636,4 +636,12 @@ public class Student extends BaseEntity {
 		this.nickName = nickName;
 	}
 
+	public Integer getIsInSchool() {
+		return isInSchool;
+	}
+
+	public void setIsInSchool(Integer isInSchool) {
+		this.isInSchool = isInSchool;
+	}
+	
 }

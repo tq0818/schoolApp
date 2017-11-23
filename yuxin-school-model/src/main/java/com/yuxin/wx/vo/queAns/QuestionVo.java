@@ -42,6 +42,7 @@ public class QuestionVo extends BaseEntity {
 	private Integer	delFlag;		 /* 是否删除( 0： 已删除  1：未删除) */ 
 	private Integer companyId;		/*公司id*/
 	private Integer schoolId;		/*分校id*/
+	private Integer questionscore; /*问题分数*/
 	
 	private String tiwenTime;		/*几分钟，秒，小时，天，时间之前*/
 	private String lastAnsTime;		/*最后回答是几分钟，秒，小时，天，时间之前*/
@@ -67,7 +68,7 @@ public class QuestionVo extends BaseEntity {
 	/**
 	 * full Constructor
 	 */
-	public QuestionVo(Integer id, Integer answerId, String questionTitle, String questionDesc, Integer itemOneId, Integer itemSecondId, Integer classifyId, Integer userId, Integer courseFlag, Integer courseId, String courseName, Integer courseLectureId, String courseLectureName, Integer answerCount, Integer scanCount, Integer adoptFlag, Integer adoptAnswerId, Integer topFlag, Integer essenceFlag, Date createTime, Date updateTime, Integer delFlag,
+	public QuestionVo(Integer id,Integer questionscore, Integer answerId, String questionTitle, String questionDesc, Integer itemOneId, Integer itemSecondId, Integer classifyId, Integer userId, Integer courseFlag, Integer courseId, String courseName, Integer courseLectureId, String courseLectureName, Integer answerCount, Integer scanCount, Integer adoptFlag, Integer adoptAnswerId, Integer topFlag, Integer essenceFlag, Date createTime, Date updateTime, Integer delFlag,
 			Integer readFlag) {
 		setId(id);
 		this.questionTitle = questionTitle;
@@ -92,6 +93,7 @@ public class QuestionVo extends BaseEntity {
 		this.delFlag = delFlag;
 		this.answerId = answerId;
 		this.readFlag = readFlag;
+		this.questionscore= questionscore;
 	}
 
 	// getter && setter
@@ -436,4 +438,13 @@ public class QuestionVo extends BaseEntity {
 	public void setSchoolId(Integer schoolId) {
 		this.schoolId = schoolId;
 	}
+
+	public Integer getQuestionscore() {
+		return questionscore;
+	}
+
+	public void setQuestionscore(Integer questionscore) {
+		this.questionscore = questionscore;
+	}
+	
 }

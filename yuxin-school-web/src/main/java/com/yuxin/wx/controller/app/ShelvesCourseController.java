@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yuxin.wx.common.PageFinder;
+import com.yuxin.wx.utils.PropertiesUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,12 +28,25 @@ public class ShelvesCourseController {
 	private Log log=LogFactory.getLog("log");
 	@Autowired
 	private IShelvesCourseService shelvesCourseService;
+	@Autowired
+	private PropertiesUtil propertiesUtil;
 	
 	@RequestMapping("/findShelvesCourseByapge")
 	public String findShelvesCourseByapge(HttpServletRequest request,HttpServletResponse response,Model model){
 		try{
+
+			String commodityPicUrl="http://"+propertiesUtil.getProjectImageUrl()+"/";
+			model.addAttribute("commodityPicUrl", commodityPicUrl);
+
 			String pageNum = request.getParameter("pageNum");
 			String pageSize = request.getParameter("pageSize");
+			ClassTypeVo ctv = new ClassTypeVo();
+			ctv.setPageSize(8);
+
+			if(null!=pageNum && !"".equals(pageNum)){
+				ctv.setPage(Integer.parseInt(pageNum));
+				ctv.setPageSize(Integer.parseInt(pageSize));
+			}
 			//课程分类
 			String categoryid = request.getParameter("categoryid");
 			//学段
@@ -46,20 +61,21 @@ public class ShelvesCourseController {
 			String stageid = request.getParameter("stageid");
 			//类型
 			String typeCode = request.getParameter("typeCode");
-			List<ClassTypeVo> courseList = shelvesCourseService.queryShelvesCoursesByPage(
+			PageFinder<ClassTypeVo> courseList = shelvesCourseService.queryShelvesCoursesByPage(
 					categoryid,
 					gradeid,
 					subjectid,
 					knowledgeid,
 					knowledgeProid,
 					stageid,
-					typeCode
+					typeCode,
+					ctv.getPage(),
+					ctv.getPageSize(),
+					ctv.getFirstIndex()
 					);
-			
-//			int count = commoditySpecialServiceImpl.findSpecialByPageCount();
 			model.addAttribute("courseList", courseList);
-//			model.addAttribute("count", count);
-			model.addAttribute("pageNum", pageNum);
+			model.addAttribute("typeId", request.getParameter("typeId"));
+			model.addAttribute("typeStr", request.getParameter("typeStr"));
 		}catch(Exception e){
 			log.error("queryShelvesCoursesByPage is error", e);
 		}
