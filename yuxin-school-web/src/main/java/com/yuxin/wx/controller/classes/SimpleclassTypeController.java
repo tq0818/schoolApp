@@ -191,7 +191,9 @@ public class SimpleclassTypeController {
 	public Map<String,List<SysDictApp>> querySlibMenu(HttpServletRequest request,String parentId,String typeId){
 		Map<String,List<SysDictApp>> linked = new LinkedHashMap<String,List<SysDictApp>>();
 		SysDictApp search = new SysDictApp();
-		search.setParentId(Integer.parseInt(parentId));
+		if(parentId!=null&&parentId!="")
+			search.setParentId(Integer.parseInt(parentId));
+		
 		List<SysDictApp> slibMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
 		if("courseCaId".equals(typeId)){
 			if(null!=slibMenus && slibMenus.size()>0){

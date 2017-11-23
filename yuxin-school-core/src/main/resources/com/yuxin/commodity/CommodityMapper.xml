@@ -59,7 +59,7 @@
 		<result property="videoFlag" column="video_flag"/>
 		<result property="remoteFlag" column="remote_flag"/>
 		<result property="baseNum" column="base_num"/>
-		<result property="classTypeId" column="classTypeId"/>
+		<result property="classTypeId" column="id"/>
 		<result property="actualNum" column="actualNum"/>
 		<result property="lableType" column="lable_type" />
 		<result property="itemTag" column="item_tag"/>
@@ -78,6 +78,24 @@
 		<result property="lessonTimeStart" column="lesson_time_start" />
 		<result property="lessonTimeEnd" column="lesson_time_end" />
 		<result property="lessonName" column="lesson_name" />
+	</resultMap>
+	<resultMap type="com.yuxin.wx.vo.commodity.CommodityDto" id="commodityVo1ResultMap">
+		<result property="classTypeId" column="id" />
+		<result property="name" column="name" />
+		<result property="shelves_id" column="shelves_id" />
+		<result property="coverUrl" column="imgUrl" />
+		<result property="categoryName" column="categoryName" />
+		<result property="gradeName" column="gradeName" />
+		<result property="subjectName" column="subjectName" />
+		<result property="knowProName" column="knowProName" />
+		<result property="knowName" column="knowName" />
+		<result property="stageName" column="stageName" />
+		<result property="typeName" column="typeName" />
+		<result property="shelvesTime" column="shelves_time" />
+		<result property="lessonTime" column="lesson_time" />
+		<result property="actualNum" column="actualNum" />
+		<result property="realPrice" column="realPrice" />
+		<result property="salePrice" column="salePrice" />
 	</resultMap>
 	<sql id="table_columns">
 		id,
@@ -439,21 +457,21 @@
 
 
 	<!--查询推荐专题列表-->
-	<select id="getModelListByIds" parameterType="map" resultMap="commodityVoResultMap">
+	<select id="getModelListByIds" parameterType="map" resultMap="commodityVo1ResultMap">
 		select
-		ct.*,
-		cml.lesson_date as lesson_date,
-		cml.lesson_time_start as lesson_time_start,
+		ct.*,app.id shelves_id,
+		CONCAT(date_format(cml.lesson_date,'%Y-%c-%d'),' ',cml.lesson_time_start) lesson_time,
 		sct.NAME teacher_name,
 		sct.school_short_name,
 		c.buy_num as actualNum,
-		app.img_url as imgUrl,
+		case when app.img_url is null then ct.cover else app.img_url end as imgUrl,
+		app.shelves_time,
 		case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
 		app.reserve_time,
 		app.id as appId,
 		app.lab_desc,
-		app.`price` as appPrice,
-		app.`sale_price`,
+		case when app.price is null then ct.real_price else app.price end as realPrice,
+		case when app.sale_price is null then ct.original_price else app.sale_price end as salePrice,
 		sys1.name as categoryName,
 		sys2.name as gradeName,
 		sys3.name as subjectName,
@@ -492,29 +510,27 @@
 		where  ct.del_flag=0 and c.type='COMMODITY_CLASS'
 		and c.status = 1 and app.is_shelves = 1 and app.reserve_time is null
 		<if test="categoryid !=null and categoryid!=''">and app.category_id = #{categoryid}</if>
-		<if test="gradeId !=null and gradeId!='' ">and app.grade_id= #{gradeId}</if>
-		<if test="subjectid !=null and subjectid!=''">and app.subject_id = #{subjectid}</if>
-		<if test="knowId !=null and knowId!='' ">and app.knowledge_id= #{knowId}</if>
+		<if test="studySectionId !=null and studySectionId!='' ">and app.grade_id= #{studySectionId}</if>
+		<if test="subjectId !=null and subjectId!=''">and app.subject_id = #{subjectId}</if>
+		<if test="topicsId !=null and topicsId!='' ">and app.knowledge_id= #{topicsId}</if>
 		<if test="typeId !=null and typeId!=''">and app.type_id = #{typeId}</if>
-		<if test="knowledgeid !=null and knowledgeid!='' ">and app.knowledge_pro_id= #{knowledgeid}</if>
-		<if test="stageid !=null and stageid!='' ">and app.stage_id= #{stageid}</if>
+		<if test="itemId !=null and itemId!='' ">and app.knowledge_pro_id= #{itemId}</if>
+		<if test="stageId !=null and stageId!='' ">and app.stage_id= #{stageId}</if>
 	</select>
 
 	<select id="getModelListByIdsCount" parameterType="map" resultType="int">
-		select count(*)
+		select count(1)
 		from (
-		SELECT
-		ml.module_no_id,
-		ml.lesson_date,
-		ml.lesson_time_start,
-		ml.lesson_time_end,
-		ml.lesson_name
-		FROM
-		class_module_lesson ml
-		WHERE
-		ml.lesson_date >= now()
-		ORDER BY
-		ml.lesson_date ASC
+			SELECT
+			ml.module_no_id,
+			ml.lesson_date,
+			ml.lesson_time_start,
+			ml.lesson_time_end,
+			ml.lesson_name
+			FROM
+			class_module_lesson ml
+			WHERE
+			ml.lesson_date >= now()
 		) cml
 		JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id`
 		JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id`
@@ -532,13 +548,13 @@
 		join sys_dict_app sys7 on sys7.id=app.`type_id`
 		where  ct.del_flag=0 and c.type='COMMODITY_CLASS'
 		and c.status = 1
-		<if test="categoryid != null and categoryid != ''">and app.category_id = #{categoryid}</if>
-		<if test="gradeid != null and gradeid != ''">and app.grade_id = #{gradeid}</if>
-		<if test="subjectid != null and subjectid != ''">and app.subject_id = #{subjectid}</if>
-		<if test="knowledgeProid != null and knowledgeProid != ''">and app.knowledge_pro_id = #{knowledgeProid}</if>
-		<if test="knowledgeid != null and knowledgeid != ''">and app.knowledge_id = #{knowledgeid}</if>
-		<if test="stageid != null and stageid != ''">and app.stage_id = #{stageid}</if>
-		<if test="typeCode != null and typeCode != ''">and app.type_id = #{typeCode}</if>
+		<if test="categoryid !=null and categoryid!=''">and app.category_id = #{categoryid}</if>
+		<if test="studySectionId !=null and studySectionId!='' ">and app.grade_id= #{studySectionId}</if>
+		<if test="subjectId !=null and subjectId!=''">and app.subject_id = #{subjectId}</if>
+		<if test="topicsId !=null and topicsId!='' ">and app.knowledge_id= #{topicsId}</if>
+		<if test="typeId !=null and typeId!=''">and app.type_id = #{typeId}</if>
+		<if test="itemId !=null and itemId!='' ">and app.knowledge_pro_id= #{itemId}</if>
+		<if test="stageId !=null and stageId!='' ">and app.stage_id= #{stageId}</if>
 	</select>
 
 </mapper>
