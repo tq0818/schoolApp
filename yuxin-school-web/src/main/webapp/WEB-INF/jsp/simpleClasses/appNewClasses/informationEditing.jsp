@@ -32,7 +32,7 @@
         <div class="informationEditHeader">
             <div class="informationEditImg">
                 <c:choose>
-                    <c:when test="${commodityPicUrl }${searchAndResult.cover}">
+                    <c:when test="${searchAndResult.cover != ''}">
                         <img src="${commodityPicUrl }${searchAndResult.cover}" id="pic" alt="">
                     </c:when>
                     <c:otherwise>

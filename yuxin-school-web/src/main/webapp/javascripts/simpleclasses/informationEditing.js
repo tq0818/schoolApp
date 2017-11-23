@@ -20,7 +20,6 @@ function toOnsaleEdit(ids,zhiboFlag){
 function chooseSlibMenu(obj){
 	var id = obj.attr("id").replace("List","");
 	var parentId = obj.val();
-
 	$.ajax({
 		url : rootPath +"/simpleClasses/querySlibMenu",
 		type : "post",
@@ -70,7 +69,7 @@ function chooseSlibMenu(obj){
 
 
 			}else if("gradeIdList"==id){
-				$("#subjectId").html("");
+				$("#subjectIdList").html("");
 				var html='';
 				for(var i=0;i<data.length;i++){
 					if(i==0){
@@ -82,7 +81,7 @@ function chooseSlibMenu(obj){
 				$("#subjectIdList").html(html);
 				chooseSlibMenu($("#subjectId"));
 			}else if("subjectId"==id){
-				$("#kwonProId").html("");
+				$("#kwonProIdList").html("");
 				var html='';
 				for(var i=0;i<data.length;i++){
 					if(i==0){
