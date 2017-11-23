@@ -59,7 +59,16 @@
                 <td>${course.tagName}</td>
                 <td>${course.typeCode}</td>
                 <td>${course.shelvesTime}</td>
-				<td>${course.lessonDate}${course.lessonTimeStart}</td>
+                <c:choose>
+                    <c:when test="${course.lessonDate==''}">
+                        <td>--</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>${course.lessonDate}${course.lessonTimeStart}</td>
+                    </c:otherwise>
+                </c:choose>
+
+				<%--<td>${course.lessonDate}${course.lessonTimeStart}</td>--%>
                 <td>${course.actualNum}</td>
                 <c:choose>
                 	<c:when test="${course.appPrice eq ''}">  
@@ -80,7 +89,7 @@
                 <td>
                     <a href="javascript:stopClassOnsale(${course.appId });" class="btn btn-primary btn-sm">下架</a>
                     <span><a href="javascript: toRcommon('${course.courseCaId}','${course.liveFlag}','${course.id}');" class="btn btn-primary btn-sm recommendCourse">推荐</a></span>
-                    <span><a href="javascript:toOnsaleEdit('${course.appId}_${course.id}','${course.liveFlag}');" class="btn btn-primary btn-sm editCourse">编辑上架</a></span>
+                    <span><a href="javascript:toOnsaleEdit('${course.appId}_${course.id}','${course.liveFlag}','1');" class="btn btn-primary btn-sm editCourse">编辑上架</a></span>
                 </td>
             </tr>
 
@@ -126,6 +135,7 @@
 
     $('.closePopupContainer').click(function(){
         $('.popupContainerEdit').hide();
+        reloadCurrunt();
     });
     function toRcommon(categerorId,zhiboFlag,commodityId){
 
@@ -146,6 +156,21 @@
             }
         });
     }
+
+
+    function reloadCurrunt(){
+        var datas = {};
+        fillCategory(datas);
+        fillGrade(datas);
+        fillSubject(datas);
+        fillKnowPro(datas);
+        fillKnow(datas);
+        fillStage(datas);
+        fillType(datas);
+        queryClassTypesShelves(datas);
+    }
+
+
 </script>
 
 <script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/shelvesCoursesAjax.js"></script>
@@ -167,27 +192,27 @@
         }
 
         if(batchReleaseArray.length>0){
-            $.confirm("确认下架所选课程？",function(s){
-                if(s==true){
-                    $.ajax({
-                        type : 'post',
+            var s = window.confirm("确认下架所选课程");
+            if(s==true){
+                $.ajax({
+                    type : 'post',
 
-                        url : rootPath + '/simpleClasses/stopClassOnsaleAll',
-                        data : {
-                            "batchReleaseArray" : batchReleaseArray
-                        },
-                        dataType : 'json',
-                        traditional: true,
-                        success : function(data){
-                            if(data=='1'){
-                                alert('下架课程成功！')
-                            }else {
-                                alert("下架课程失败!");
-                            }
+                    url : rootPath + '/simpleClasses/stopClassOnsaleAll',
+                    data : {
+                        "batchReleaseArray" : batchReleaseArray
+                    },
+                    dataType : 'json',
+                    traditional: true,
+                    success : function(data){
+                        if(data=='1'){
+                            alert('下架课程成功！')
+                            reloadCurrunt();
+                        }else {
+                            alert("下架课程失败!");
                         }
-                    });
-                }
-            });
+                    }
+                });
+            }
         }else {
             alert("请勾选要下架的课程！");
         }

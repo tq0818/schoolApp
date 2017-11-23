@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.yuxin.wx.common.PageFinder;
+import com.yuxin.wx.common.PageFinder2;
 import com.yuxin.wx.model.commodity.Commodity;
+import com.yuxin.wx.vo.commodity.CommodityDto;
 import com.yuxin.wx.vo.commodity.CommodityVo;
 
 /**
@@ -244,7 +246,7 @@ public interface ICommodityService {
 
 	List<CommodityVo> getStudySectionById(Integer modelId);
 
-	List<CommodityVo> getModelListByIds(Map<String, Object> param);
+	PageFinder2<CommodityDto> getModelListByIds(Map<String, Object> param);
 
 	int getModelListByIdsCount(Map<String, Object> param);
 

@@ -1,23 +1,26 @@
 package com.yuxin.wx.commodity.impl;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import com.yuxin.wx.util.JedisUtil;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.yuxin.wx.common.BaseServiceImpl;
+
 import com.yuxin.wx.api.commodity.ICommodityService;
 import com.yuxin.wx.commodity.mapper.CommodityMapper;
+import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.common.PageFinder;
+import com.yuxin.wx.common.PageFinder2;
 import com.yuxin.wx.company.mapper.CompanyFunctionSetMapper;
 import com.yuxin.wx.model.commodity.Commodity;
 import com.yuxin.wx.model.company.CompanyFunctionSet;
 import com.yuxin.wx.model.system.SysConfigService;
 import com.yuxin.wx.system.mapper.SysConfigServiceMapper;
+import com.yuxin.wx.vo.commodity.CommodityDto;
 import com.yuxin.wx.vo.commodity.CommodityVo;
 
 /**
@@ -260,8 +263,10 @@ public class CommodityServiceImpl extends BaseServiceImpl implements ICommodityS
     }
 
     @Override
-    public List<CommodityVo> getModelListByIds(Map<String, Object> param) {
-        return commodityMapper.getModelListByIds( param) ;
+    public PageFinder2<CommodityDto> getModelListByIds(Map<String, Object> param) {
+    	List<CommodityDto> datas=commodityMapper.getModelListByIds(param);
+    	Integer count=commodityMapper.getModelListByIdsCount(param);
+        return new PageFinder2<CommodityDto>((Integer)param.get("page"),(Integer)param.get("pageSize"),count,datas);
     }
 
     @Override
