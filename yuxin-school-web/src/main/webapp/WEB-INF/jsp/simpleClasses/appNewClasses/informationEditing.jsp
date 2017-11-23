@@ -198,8 +198,8 @@
             <input id="lab" name="lab" value="remote" type="hidden"/>
         </c:if>
         <div id="shelvesInfo">
-            <input name="id" type="hidden" id="commodityId" value="${searchAndResult.id}"/>
-            <input name="appId" type="hidden" id="appId" value="${searchAndResult.appId}"/>
+            <input name="id" type="hidden" id="commodityId" value="${commodityId}"/>
+            <input name="appId" type="hidden" id="appId" value="${appId}"/>
         </div>
     <form method="post" id="myForm">
 

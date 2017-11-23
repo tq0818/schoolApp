@@ -154,6 +154,7 @@
     $('.closePopupContainer').click(function () {
         $('.popupContainer').hide();
         $('.popupOpacity').hide();
+		Form.queryAllCommdityByItemNew(1);
     });
     //点击上架打开弹窗
     $('.eidtShelvesCourses').click(function () {
