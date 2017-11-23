@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.yuxin.wx.common.BaseMapper;
 import com.yuxin.wx.model.commodity.Commodity;
+import com.yuxin.wx.vo.commodity.CommodityDto;
 import com.yuxin.wx.vo.commodity.CommodityVo;
 /**
  * Service Interface:ClassModule
@@ -77,7 +78,7 @@ public interface CommodityMapper extends BaseMapper<Commodity> {
 
 	List<CommodityVo> getStudySectionById(Integer modelId);
 
-	List<CommodityVo> getModelListByIds(Map<String, Object> param);
+	List<CommodityDto> getModelListByIds(Map<String, Object> param);
 
-	int getModelListByIdsCount(Map<String, Object> param);
+	Integer getModelListByIdsCount(Map<String, Object> param);
 }

@@ -1,12 +1,14 @@
 package com.yuxin.wx.controller.classes.appNewClasses;
 
 
-import com.yuxin.wx.api.app.ISysDictAppService;
-import com.yuxin.wx.api.commodity.ICommodityService;
-import com.yuxin.wx.common.PageFinder;
-import com.yuxin.wx.model.app.SysDictApp;
-import com.yuxin.wx.vo.classes.ClassVo;
-import com.yuxin.wx.vo.commodity.CommodityVo;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,15 +16,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import com.yuxin.wx.api.app.ISysDictAppService;
+import com.yuxin.wx.api.commodity.ICommodityService;
+import com.yuxin.wx.common.PageFinder2;
+import com.yuxin.wx.model.app.SysDictApp;
+import com.yuxin.wx.vo.commodity.CommodityDto;
+import com.yuxin.wx.vo.commodity.CommoditySearchDto;
+import com.yuxin.wx.vo.commodity.CommodityVo;
 
 @Controller
 @RequestMapping("/specialModel")
 public class SpecialModelController {
 
     @Autowired
-    private ICommodityService iCommodityService;
+    private ICommodityService commodityServiceImpl;
     @Autowired
     private ISysDictAppService iSysDictAppService;
 
@@ -35,7 +42,7 @@ public class SpecialModelController {
      */
     @RequestMapping(value = "/getModelList")
     public String getModelList(Model model) {
-        List<CommodityVo> list = iCommodityService.getModelList();
+        List<CommodityVo> list = commodityServiceImpl.getModelList();
         List<CommodityVo> specialList = new ArrayList<>();
         int a = 1;
         for (CommodityVo c : list) {
@@ -62,39 +69,42 @@ public class SpecialModelController {
      * @param stageid        阶段ID
      * @return
      */
-    @RequestMapping(value = "/getModelListByIds",method = RequestMethod.POST)
-    public String getModelListByIds(Model model,Integer categoryid, Integer gradeid,
-                                    Integer subjectid, Integer knowledgeProid, Integer knowledgeid, Integer typeCode, Integer stageid,Integer page,Integer pageSize) {
+    @ResponseBody
+    @RequestMapping(value = "/getModelListByIds")
+    public PageFinder2<CommodityDto> getModelListByIds(Model model,CommoditySearchDto search) {
         //根据传入的各个ID查询课程list
         Map<String, Object> param = new HashMap<>();
-        if (categoryid != null && categoryid.toString() != "") {
-            param.put("categoryid", categoryid);
+        if (search.getCategoryid()!= null && search.getCategoryid()!= "") {
+            param.put("categoryid", search.getCategoryid());
         }
-        if (gradeid != null && gradeid.toString() != "") {
-            param.put("studySectionId", gradeid);
+        if (search.getGradeid() != null && search.getGradeid() != "") {
+            param.put("studySectionId", search.getGradeid());
         }
-        if (subjectid != null && subjectid.toString() != "") {
-            param.put("subjectId", subjectid);
+        if (search.getSubjectid() != null && search.getSubjectid()!= "") {
+            param.put("subjectId",search.getSubjectid());
         }
-        if (knowledgeProid != null && knowledgeProid.toString() != "") {
-            param.put("itemId", knowledgeProid);
+        if (search.getKnowledgeProid() != null && search.getKnowledgeProid() != "") {
+            param.put("itemId", search.getKnowledgeProid());
         }
-        if (knowledgeid != null && knowledgeid.toString() != "") {
-            param.put("topicsId", knowledgeid);
+        if (search.getKnowledgeid() != null && search.getKnowledgeid() != "") {
+            param.put("topicsId", search.getKnowledgeid());
         }
-        if (typeCode != null && typeCode.toString() != "") {
-            param.put("typeId", typeCode);
+        if (search.getTypeCode() != null && search.getTypeCode() != "") {
+            param.put("typeId", search.getTypeCode());
         }
-        if (stageid != null && stageid.toString() != "") {
-            param.put("stageId", stageid);
+        if (search.getStageid() != null && search.getStageid()!= "") {
+            param.put("stageId", search.getStageid());
         }
-        List<CommodityVo> commList = iCommodityService.getModelListByIds(param);
-//        int count = iCommodityService.getModelListByIdsCount(param);
-//        PageFinder<CommodityVo> classVoPage = new PageFinder<>(page,pageSize,count,commList);
-        model.addAttribute("commList",commList);
-        return "simpleClasses/appNewClasses/classListAjax";
+        param.put("page",search.getPage());
+        param.put("pageSize",search.getPageSize());
+        PageFinder2<CommodityDto> commList = commodityServiceImpl.getModelListByIds(param);
+        return commList;
     }
-
+    @ResponseBody
+    @RequestMapping(value = "/insertOrupdateTuiJian")
+    public boolean insertOrupdateTuiJian(Model model){
+    	return false;
+    }
     @ResponseBody
     @RequestMapping(value = "/queryMenu", method = RequestMethod.POST)
     public Map<String, List<SysDictApp>> querySlibMenu(HttpServletRequest request, String parentId, String typeId) {

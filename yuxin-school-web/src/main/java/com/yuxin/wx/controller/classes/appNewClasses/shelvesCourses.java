@@ -2,17 +2,13 @@ package com.yuxin.wx.controller.classes.appNewClasses;
 
 
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.yuxin.wx.api.classes.IClassTypeService;
-import com.yuxin.wx.api.commodity.ICommodityService;
-import com.yuxin.wx.utils.FileUtil;
-import com.yuxin.wx.utils.PropertiesUtil;
-import com.yuxin.wx.utils.WebUtils;
-import com.yuxin.wx.vo.classes.ClassTypeVo;
-import com.yuxin.wx.vo.classes.FirstRecommend;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +16,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.yuxin.wx.api.app.ISysDictAppService;
-import com.yuxin.wx.model.app.SysDictApp;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
+
+import com.yuxin.wx.api.app.ISysDictAppService;
+import com.yuxin.wx.api.classes.IClassTypeService;
+import com.yuxin.wx.api.commodity.ICommodityService;
+import com.yuxin.wx.api.system.ISysConfigItemRelationService;
+import com.yuxin.wx.api.system.ISysConfigItemService;
+import com.yuxin.wx.model.app.SysDictApp;
+import com.yuxin.wx.model.system.SysConfigItem;
+import com.yuxin.wx.model.system.SysConfigItemRelation;
+import com.yuxin.wx.utils.FileUtil;
+import com.yuxin.wx.utils.PropertiesUtil;
+import com.yuxin.wx.utils.WebUtils;
+import com.yuxin.wx.vo.classes.ClassTypeVo;
+import com.yuxin.wx.vo.classes.FirstRecommend;
 
 
 /**
@@ -43,7 +50,11 @@ public class shelvesCourses {
     private IClassTypeService classTypeServiceImpl;
     @Autowired
     private PropertiesUtil propertiesUtil;
-
+    @Autowired
+	private ISysConfigItemRelationService sysConfigItemRelationServiceImpl;
+    
+    @Autowired
+	private ISysConfigItemService sysConfigItemServiceImpl;
     private Log log= LogFactory.getLog("log");
     /**
      * 跳转到已上架课程页面
@@ -80,7 +91,7 @@ public class shelvesCourses {
      * 跳转到批量首页推荐
      */
     @RequestMapping(value = "/pageRecommendation", method = RequestMethod.GET)
-    public String gotopageRecommendation(Model model, Integer modelId, Integer parentId) throws UnsupportedEncodingException {
+    public String gotopageRecommendation(Model model, Integer modelId, Integer parentId, HttpServletRequest request) throws UnsupportedEncodingException {
         //获取二级菜单
         List<SysDictApp> menusList = sysDictAppServiceImpl.getStudySectionById(modelId);
 
@@ -105,7 +116,32 @@ public class shelvesCourses {
         model.addAttribute("modelName", mokelName);
         model.addAttribute("modelId",modelId);
 
-        //查询课程列表
+        List<SysConfigItemRelation> relations = sysConfigItemRelationServiceImpl.findAllItemFront();
+        SysConfigItem item = new SysConfigItem();
+
+        item.setCompanyId(WebUtils.getCurrentCompanyId());
+
+        item.setSchoolId( WebUtils.getCurrentUserSchoolId(request));
+
+        item.setItemType("2");
+
+        List<SysConfigItem> names = sysConfigItemServiceImpl.findByParentCode(item);
+
+
+        List<SysConfigItemRelation> secondItem = new ArrayList<SysConfigItemRelation>();
+
+        for(SysConfigItemRelation re : relations){
+	        if(re.getLevel()==1){
+	        	secondItem.add(re);
+	        }
+        for(SysConfigItem name :names){
+        	if(re.getItemCode().equals(name.getItemCode())){
+        		re.setItemName(name.getItemName());
+        		break;
+        	}	
+        }
+        }
+        model.addAttribute("secondItem", secondItem);
 
         return "simpleClasses/appNewClasses/pageRecommendation";
     }
