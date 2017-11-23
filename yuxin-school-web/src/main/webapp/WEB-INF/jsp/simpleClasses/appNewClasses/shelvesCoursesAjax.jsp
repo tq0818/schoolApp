@@ -27,17 +27,17 @@
                 <th width="1%"><input type="checkbox" class="checkboxAll"></th>
                 <th width="6%">课程图片</th>
                 <th width="5%">课程名称</th>
-                <th width="5%">学段</th>
-                <th width="5%">学科</th>
+                <th width="4%">学段</th>
+                <th width="4%">学科</th>
                 <th width="10%">知识点专题</th>
                 <th width="10%">知识点</th>
                 <th width="5%">阶段</th>
-                <th width="6%">类型</th>
-                <th width="8%">上架时间</th>
-                <th width="8%">直播时间</th>
-                <th width="5%">学习人数</th>
-                <th width="5%">价格</th>
-                <th width="5%">实际价格</th>
+                <th width="5%">类型</th>
+                <th width="6%">上架时间</th>
+                <th width="6%">直播时间</th>
+                <th width="3%">学习人数</th>
+                <th width="3%">价格</th>
+                <th width="4%">实际价格</th>
                 <th width="20%">操作</th>
             </tr>
             <c:forEach items="${courseList.data}" var="course" varStatus="status">
@@ -51,30 +51,30 @@
                 		<td><img src="${commodityPicUrl}${course.cover}" alt="" class="shelvesIcon"></td>
                 	</c:otherwise>
 				</c:choose>
-                <td>${course.lessonName}</td>
-                <td>${course.itemSecondName}</td>
-                <td>${course.itemThirdName}</td>
-                <td>${course.itemFourthName}</td>
-                <td>${course.itemTag}</td>
-                <td>${course.tagName}</td>
-                <td>${course.typeCode}</td>
-                <td>${course.shelvesTime}</td>
-				<td>${course.lessonDate}${course.lessonTimeStart}</td>
-                <td>${course.actualNum}</td>
+                <td class="overflowHide" title="${course.lessonName}">${course.lessonName}</td>
+                <td class="overflowHide" title="${course.itemSecondName}">${course.itemSecondName}</td>
+                <td class="overflowHide" title="${course.itemThirdName}">${course.itemThirdName}</td>
+                <td class="overflowHide" title="${course.itemFourthName}">${course.itemFourthName}</td>
+                <td class="overflowHide" title="${course.itemTag}">${course.itemTag}</td>
+                <td class="overflowHide" title="${course.tagName}">${course.tagName}</td>
+                <td class="overflowHide" title="${course.typeCode}">${course.typeCode}</td>
+                <td class="overflowHide" title="${course.shelvesTime}">${course.shelvesTime}</td>
+				<td class="overflowHide" title="${course.lessonDate}${course.lessonTimeStart}">${course.lessonDate}${course.lessonTimeStart}</td>
+                <td class="overflowHide" title="${course.actualNum}">${course.actualNum}</td>
                 <c:choose>
                 	<c:when test="${course.appPrice eq ''}">  
-                		<td>${course.appPrice}</td>
+                		<td class="overflowHide" title="${course.appPrice}">${course.appPrice}</td>
                  	</c:when>
                  	<c:otherwise> 
-                		<td>${course.originalPrice}</td>
+                		<td class="overflowHide" title="${course.originalPrice}">${course.originalPrice}</td>
                 	</c:otherwise>
 				</c:choose>
 				<c:choose>
                 	<c:when test="${course.appPrice eq ''}">  
-                		<td>${course.salePrice}</td>
+                		<td class="overflowHide" title="${course.salePrice}">${course.salePrice}</td>
                  	</c:when>
                  	<c:otherwise> 
-                		<td>${course.realPrice}</td>
+                		<td class="overflowHide" title="${course.realPrice}">${course.realPrice}</td>
                 	</c:otherwise>
 				</c:choose>
                 <td>
