@@ -348,10 +348,20 @@
 		}
 	$(document).ready(function(){		
 		Form.init();
-		Form.queryshelvesCoursesApp();
+		var datas = {};
+		fillCategory(datas);
+		fillGrade(datas);
+		fillSubject(datas);
+		fillKnowPro(datas);
+		fillKnow(datas);
+		fillStage(datas);
+		fillType(datas);
+		queryClassTypesShelves(datas);
 	})
 	window.Form=Form;
 })(jQuery)
+
+
 
 //根据条件查询已经上架课程信息
 function queryClassTypesShelves(datas){

@@ -230,8 +230,8 @@ public class SimpleclassTypeController {
 	public String insertShelvesInfo(HttpServletRequest request,ClassTypeVo cto){
 
 		try {
-
 			Object imgUrlObj = request.getSession().getAttribute("imgUrl");
+
 			if(null!=imgUrlObj){
 				cto.setImgUrl((String) imgUrlObj);
 			}
@@ -255,8 +255,10 @@ public class SimpleclassTypeController {
 				shelvesCourseServiceImpl.update(cto);
 
 			}
+			request.getSession().removeAttribute("imgUrl");
 			return "1";
 		}catch (Exception e){
+			request.getSession().removeAttribute("imgUrl");
 			e.printStackTrace();
 			return "0";
 		}

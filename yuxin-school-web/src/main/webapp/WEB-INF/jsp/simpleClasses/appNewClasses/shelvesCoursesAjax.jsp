@@ -183,27 +183,27 @@
         }
 
         if(batchReleaseArray.length>0){
-            $.confirm("确认下架所选课程？",function(s){
-                if(s==true){
-                    $.ajax({
-                        type : 'post',
+            var s = window.confirm("确认下架所选课程");
+            if(s==true){
+                $.ajax({
+                    type : 'post',
 
-                        url : rootPath + '/simpleClasses/stopClassOnsaleAll',
-                        data : {
-                            "batchReleaseArray" : batchReleaseArray
-                        },
-                        dataType : 'json',
-                        traditional: true,
-                        success : function(data){
-                            if(data=='1'){
-                                alert('下架课程成功！')
-                            }else {
-                                alert("下架课程失败!");
-                            }
+                    url : rootPath + '/simpleClasses/stopClassOnsaleAll',
+                    data : {
+                        "batchReleaseArray" : batchReleaseArray
+                    },
+                    dataType : 'json',
+                    traditional: true,
+                    success : function(data){
+                        if(data=='1'){
+                            alert('下架课程成功！')
+                            reloadCurrunt();
+                        }else {
+                            alert("下架课程失败!");
                         }
-                    });
-                }
-            });
+                    }
+                });
+            }
         }else {
             alert("请勾选要下架的课程！");
         }

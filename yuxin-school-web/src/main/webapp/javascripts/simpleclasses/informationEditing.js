@@ -131,15 +131,6 @@ function toShelves(flag,editFlag){
 	var labDesc = $("#labDesc").val();
 	var appPrice = $("#appPrice").val();
 	var salePrice = $("#salePrice").val();
-	var reg = new RegExp("^(0|([1-9]\d{0,9}(\.\d{1,2})?))$");
-	if(!reg.test(appPrice)){
-		alert("请输入正确的价格");
-		return;
-	}
-	if(!reg.test(salePrice)){
-		alert("请输入正确的实际价格");
-		return;
-	}
 	if("0"==flag && ""== $.trim(shelvesTime) ){
 		alert("预约上架时间不能为空");
 		return;

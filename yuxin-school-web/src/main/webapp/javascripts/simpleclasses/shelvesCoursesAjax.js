@@ -161,7 +161,7 @@ function stopClassOnsale(id){
 				success : function(result) {
 					if("1"==result){
                         $.confirm("成功",function () {
-                            location.reload();
+							reloadCurrunt();
                         });
 						// Form.showAllShelvesClssType('all','courseCaId');
 					}else{
