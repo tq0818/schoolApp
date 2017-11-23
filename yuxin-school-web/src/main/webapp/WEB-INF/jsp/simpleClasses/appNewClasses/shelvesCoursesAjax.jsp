@@ -51,6 +51,7 @@
                 		<td><img src="${commodityPicUrl}${course.cover}" alt="" class="shelvesIcon"></td>
                 	</c:otherwise>
 				</c:choose>
+                <td>${course.actualNum}</td>
                 <td class="overflowHide" title="${course.lessonName}">${course.lessonName}</td>
                 <td class="overflowHide" title="${course.itemSecondName}">${course.itemSecondName}</td>
                 <td class="overflowHide" title="${course.itemThirdName}">${course.itemThirdName}</td>
@@ -59,24 +60,18 @@
                 <td class="overflowHide" title="${course.tagName}">${course.tagName}</td>
                 <td class="overflowHide" title="${course.typeCode}">${course.typeCode}</td>
                 <td class="overflowHide" title="${course.shelvesTime}">${course.shelvesTime}</td>
-				<td class="overflowHide" title="${course.lessonDate}${course.lessonTimeStart}">${course.lessonDate}${course.lessonTimeStart}</td>
+                <td class="overflowHide" title="${course.lessonDate}${course.lessonTimeStart}">${course.lessonDate}${course.lessonTimeStart}</td>
                 <td class="overflowHide" title="${course.actualNum}">${course.actualNum}</td>
                 <c:choose>
-                	<c:when test="${course.appPrice eq ''}">  
-                		<td class="overflowHide" title="${course.appPrice}">${course.appPrice}</td>
-                 	</c:when>
-                 	<c:otherwise> 
-                		<td class="overflowHide" title="${course.originalPrice}">${course.originalPrice}</td>
-                	</c:otherwise>
-				</c:choose>
-				<c:choose>
-                	<c:when test="${course.appPrice eq ''}">  
-                		<td class="overflowHide" title="${course.salePrice}">${course.salePrice}</td>
-                 	</c:when>
-                 	<c:otherwise> 
-                		<td class="overflowHide" title="${course.realPrice}">${course.realPrice}</td>
-                	</c:otherwise>
-				</c:choose>
+                    <c:when test="${course.lessonDate==''}">
+                        <td>--</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td class="overflowHide" title="${course.lessonDate}${course.lessonTimeStart}">${course.lessonDate}${course.lessonTimeStart}</td>
+                    </c:otherwise>
+                </c:choose>
+
+				<%--<td>${course.lessonDate}${course.lessonTimeStart}</td>--%>
                 <td>
                     <a href="javascript:stopClassOnsale(${course.appId });" class="btn btn-primary btn-sm">下架</a>
                     <span><a href="javascript: toRcommon('${course.courseCaId}','${course.liveFlag}','${course.id}');" class="btn btn-primary btn-sm recommendCourse">推荐</a></span>
