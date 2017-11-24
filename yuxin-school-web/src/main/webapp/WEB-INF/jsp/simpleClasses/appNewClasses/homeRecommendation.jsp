@@ -130,7 +130,7 @@
 function saveRecommond(){
     var ids = "";
     var appId="1";
-    $("#gradeList").find("a").each(function(){
+    $("#gradeList").find("a:not(:first-child)").each(function(){
         if($(this).hasClass("active")){
             ids+=$(this).attr("id")+",";
         }
