@@ -167,7 +167,7 @@ public class SimpleclassTypeController {
 	private IClassModuleLessonService classModuleLessonServiceImpl;
 	@Autowired
 	private ISysConfigItemTagService sysConfigItemTagServiceImpl;
-	@Autowired!
+	@Autowired
 	private ICompanyFunctionSetService companyFunctionSetServiceImpl;
 	@Autowired
 	private ICompanyService companyServiceImpl;
