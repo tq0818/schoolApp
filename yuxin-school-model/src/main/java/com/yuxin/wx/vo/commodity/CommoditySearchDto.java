@@ -10,6 +10,20 @@ public class CommoditySearchDto extends BaseEntity {
     private String typeCode;
     private String stageid;
     private String categoryid;
+    private String modelCode;
+    private String modelId;
+	public String getModelId() {
+		return modelId;
+	}
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
+	}
+	public String getModelCode() {
+		return modelCode;
+	}
+	public void setModelCode(String modelCode) {
+		this.modelCode = modelCode;
+	}
 	public String getCategoryid() {
 		return categoryid;
 	}

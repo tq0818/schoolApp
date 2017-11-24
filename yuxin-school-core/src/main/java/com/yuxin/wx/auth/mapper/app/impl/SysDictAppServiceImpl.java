@@ -1,9 +1,11 @@
 package com.yuxin.wx.auth.mapper.app.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.yuxin.wx.model.classes.ClassType;
+
 import org.aspectj.lang.annotation.Around;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,12 +38,10 @@ public class SysDictAppServiceImpl extends BaseServiceImpl implements ISysDictAp
 		return sysDictAppMapper.getModelById(modelId);
 	}
 
-
-/*	@Override
-	public List<SysDictApp> findSysDictAppFirst() {
-		List<SysDictApp> list = sysDictAppMapper.findSysDictAppFirst();
-		return list;
-	}*/
-
-
+	@Override
+	public List<SysDictApp> findSysDictAppByCode(String code) {
+		Map<String,Object> params=new HashMap<String,Object>();
+		params.put("code",code);
+		return sysDictAppMapper.findSysDictAppByCode(params);
+	}
 }

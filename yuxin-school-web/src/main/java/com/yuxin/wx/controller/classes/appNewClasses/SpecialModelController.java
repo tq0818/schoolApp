@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +34,7 @@ public class SpecialModelController {
     private ICommodityService commodityServiceImpl;
     @Autowired
     private ISysDictAppService iSysDictAppService;
-
+    private static Log log_specialmodel = LogFactory.getLog("specialModel");
 
     /**
      * 去专题模块的模块列表
@@ -95,6 +97,8 @@ public class SpecialModelController {
         if (search.getStageid() != null && search.getStageid()!= "") {
             param.put("stageId", search.getStageid());
         }
+        param.put("modelCode",search.getModelCode());
+        param.put("categoryid",search.getModelId());
         param.put("page",search.getPage());
         param.put("pageSize",search.getPageSize());
         PageFinder2<CommodityDto> commList = commodityServiceImpl.getModelListByIds(param);
@@ -102,8 +106,25 @@ public class SpecialModelController {
     }
     @ResponseBody
     @RequestMapping(value = "/insertOrupdateTuiJian")
-    public boolean insertOrupdateTuiJian(Model model){
-    	return false;
+    public boolean insertOrupdateTuiJian(Model model,String gradeIds,String appShelvesIds){
+    	if(gradeIds==null||gradeIds=="") return true;
+    	try{
+    		return commodityServiceImpl.insertOrUpdate(gradeIds,appShelvesIds);
+    	}catch(Exception e){
+    		log_specialmodel.error("insertOrupdateTuiJian(Model,String,String)",e);
+    		return false;
+    	}
+    }
+    @ResponseBody
+    @RequestMapping(value = "/updateFirstRecommendationNum")
+    public boolean updateFirstRecommendationNum(String appShelvesId,String sort){
+    	if(appShelvesId==null||appShelvesId=="") return true;
+    	try{
+    		return commodityServiceImpl.updateFirstRecommend(appShelvesId, sort);
+    	}catch(Exception e){
+    		log_specialmodel.error("updateFirstRecommendationNum(String,String)",e);
+    		return false;
+    	}
     }
     @ResponseBody
     @RequestMapping(value = "/queryMenu", method = RequestMethod.POST)

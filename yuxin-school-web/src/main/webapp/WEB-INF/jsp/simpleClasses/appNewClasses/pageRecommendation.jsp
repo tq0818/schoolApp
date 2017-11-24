@@ -118,11 +118,11 @@
                 <div id="gradeList">
                     <a href="javascript:void(0)" id="all" class="btn btn-default">全部</a>
                     <c:forEach items="${secondItem }" var="second" varStatus="status">
-                           <a href="javascript:void(0);" id="${second.itemCode}" class="btn btn-default">${second.itemName }</a>
+                           <a href="javascript:void(0);" id="${second.code}" class="btn btn-default">${second.name }</a>
                    </c:forEach>
                 </div>
                 <div class="sureBatchRecommendation">
-                    <button class="btn btn-success ">确定</button>
+                    <button class="btn btn-success" onclick="Form.submitBatchClassApp()">确定</button>
                 </div>
             </div>
         </div>
@@ -132,6 +132,8 @@
 
 </div>
 <input type="hidden" id="selectCounts" value="10">
+<input type="hidden" id="modelCode" name="modelCode" value="${modelCode}">
+<input type="hidden" id="modelId" name="modelId" value="${modelId}">
 <script type="text/javascript">
     $(document).ready(function(){
         $.ajax({
@@ -202,11 +204,6 @@
     });
     $('.closePopupContainer').click(function () {
         $('.popupContainerRecommendation').hide();
-    });
-    //点击确定推荐学段，隐藏弹窗
-    $('.sureBatchRecommendation').children('button').click(function () {
-        $('.popupContainerRecommendation').hide();
-        $('.popupOpacity').hide();
     });
     //    推荐学段复选
     $('#gradeList').children('a').click(function(){
