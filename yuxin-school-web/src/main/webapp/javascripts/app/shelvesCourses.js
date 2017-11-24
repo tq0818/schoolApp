@@ -452,6 +452,7 @@
 				});
 			},
 		}
+
 	$(document).ready(function(){		
 		Form.init();
 		var datas = {};

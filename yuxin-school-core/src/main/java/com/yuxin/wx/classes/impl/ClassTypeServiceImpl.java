@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.yuxin.wx.commodity.mapper.CommodityMapper;
 import com.yuxin.wx.vo.classes.FirstRecommend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,6 +74,8 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 	private ClassTypeModuleRelationMapper relatiomMapper;
 	@Autowired
 	private SysConfigTeacherMapper teacherMapper;
+	@Autowired
+	private CommodityMapper  commodityMapper;
 
 	/**
 	 * 
@@ -551,6 +554,22 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 	}
 
 	@Override
+	public void insertAndUpdateFirstRecommond(List<FirstRecommend> frs,String sort,String appId) {
+		//删除first_recommend数据根据appid
+		commodityMapper.deleteFirstRecommendByIds(appId);
+		//插入数据
+		classTypeMapper.insertFirstRecommond(frs);
+		//根据appid更新app_shelves里的sort
+		Map<String,Object> params=new HashMap<>();
+		params.put("appShelvesId",appId);
+		params.put("sort",sort);
+		commodityMapper.updateAppShelvesSort(params);
+	}
+
+
+
+
+	@Override
 	public ClassTypeVo querySingleLiveClassTypeInfo(ClassTypeVo search) {
 		Map<Object,Object>map = new HashMap<Object,Object>();
 		map.put("classType",search);
@@ -598,6 +617,12 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+
+	@Override
+	public List<ClassTypeVo> getGardeIdList(ClassTypeVo search) {
+		return classTypeMapper.getGardeIdList(search);
 	}
 }
 

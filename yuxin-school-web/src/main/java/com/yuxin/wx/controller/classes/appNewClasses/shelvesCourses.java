@@ -161,6 +161,7 @@ public class shelvesCourses {
             }
         }
         ClassTypeVo searchAndResult = new ClassTypeVo();
+        List<ClassTypeVo> gardeIdList = new ArrayList<>();
         if("1".equals(zhiboFlag)){
             //查询直播课程信息
             searchAndResult.setId(Integer.parseInt(commodityId));
@@ -169,8 +170,12 @@ public class shelvesCourses {
             //查询录播信息
             searchAndResult.setId(Integer.parseInt(commodityId));
             searchAndResult = classTypeServiceImpl.querySingOtherClassTypeInfo(searchAndResult);
+
         }
+        gardeIdList = classTypeServiceImpl.getGardeIdList(searchAndResult);
+
         model.addAttribute("searchAndResult",searchAndResult);
+        model.addAttribute("gardeIdList",gardeIdList);
         String commodityPicUrl="http://"+propertiesUtil.getProjectImageUrl()+"/";
         model.addAttribute("commodityPicUrl", commodityPicUrl);
 
@@ -198,6 +203,8 @@ public class shelvesCourses {
                     frs.add(fr);
                 }
                 classTypeServiceImpl.insertFirstRecommond(frs);
+                classTypeServiceImpl.insertAndUpdateFirstRecommond(frs,sort,appId);
+
             }
             return "1";
         }catch (Exception e){

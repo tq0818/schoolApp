@@ -470,4 +470,14 @@ public interface IClassTypeService  {
 	 * @param frs
      */
 	void insertFirstRecommond(List<FirstRecommend> frs);
+
+	/**
+	 * 插入并且修改首页推荐信息
+	 * @param frs
+	 */
+	void insertAndUpdateFirstRecommond(List<FirstRecommend> frs,String appId,String sort);
+
+
+	List<ClassTypeVo> getGardeIdList(ClassTypeVo search);
+
 }

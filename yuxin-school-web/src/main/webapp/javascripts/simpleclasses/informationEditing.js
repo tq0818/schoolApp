@@ -1,5 +1,4 @@
 function toOnsaleEdit(ids,zhiboFlag){
-
 	$.ajax({
 		url : rootPath + "/simpleClasses/showAppShelvesEdit",
 		type : "post",

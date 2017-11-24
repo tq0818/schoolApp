@@ -269,6 +269,7 @@
 			            $(".loading-bg").show();
 			        },
 					success : function(result) {
+						console.log(result);
 						$("#commodityDetailList").html(result);
 					},
 					 complete:function(XMLHttpRequest,textStatus){

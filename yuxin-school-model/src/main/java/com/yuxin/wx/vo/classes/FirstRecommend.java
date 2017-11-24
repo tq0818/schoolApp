@@ -2,6 +2,8 @@ package com.yuxin.wx.vo.classes;
 
 import com.yuxin.wx.common.BaseEntity;
 
+import java.util.List;
+
 /**
  * Created by lym_gxm on 17/11/21.
  */
@@ -37,4 +39,6 @@ public class FirstRecommend extends BaseEntity {
     public void setSort(String sort) {
         this.sort = sort;
     }
+
+
 }
