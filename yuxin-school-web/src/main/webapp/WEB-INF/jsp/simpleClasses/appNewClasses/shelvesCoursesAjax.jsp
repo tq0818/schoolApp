@@ -100,6 +100,7 @@
     <div class="pages">
         <ul class="pagination"></ul>
     </div>
+    <input type="hidden" id="pageId" value="${courseList.pageNo-1}"/>
 </div>
 <%--弹出框--%>
 <div class="popupContainer">
@@ -158,8 +159,13 @@
     }
 
 
-    function reloadCurrunt(){
+    function reloadCurrunt(page){
         var datas = {};
+        if(page){
+            datas.page=page;
+        }else{
+            datas.page=$("#pageId").val();
+        }
         fillCategory(datas);
         fillGrade(datas);
         fillSubject(datas);
@@ -229,11 +235,7 @@
             num_edge_entries : 1,
             callback:function(page,jq){
                 var pageNo = page + 1;
-                if($("#searchName").val()){
-                    Form.queryCommodityByName(pageNo);
-                }else{
-                    Form.queryAllCommdityByItemNew(pageNo);
-                }
+                reloadCurrunt(pageNo);
             }
         });
     });

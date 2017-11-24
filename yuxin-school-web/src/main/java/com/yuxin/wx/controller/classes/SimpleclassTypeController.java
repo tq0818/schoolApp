@@ -167,7 +167,7 @@ public class SimpleclassTypeController {
 	private IClassModuleLessonService classModuleLessonServiceImpl;
 	@Autowired
 	private ISysConfigItemTagService sysConfigItemTagServiceImpl;
-	@Autowired
+	@Autowired!
 	private ICompanyFunctionSetService companyFunctionSetServiceImpl;
 	@Autowired
 	private ICompanyService companyServiceImpl;
@@ -246,6 +246,13 @@ public class SimpleclassTypeController {
 			if(null==cto.getShelvesTime()||"".equals(cto.getShelvesTime())){
 				cto.setShelvesTime(null);
 			}
+
+			if(null==cto.getStageId()||"".equals(cto.getStageId())){
+				cto.setStageId(null);
+			}
+			if(null==cto.getTypeId()||"".equals(cto.getTypeId())){
+				cto.setTypeId(null);
+			}
 			if (null == appId || "".equals(appId)) {
 				//插入数据入库
 				classTypeServiceImpl.insertAppShelvesInfo(cto);
@@ -258,8 +265,8 @@ public class SimpleclassTypeController {
 			request.getSession().removeAttribute("imgUrl");
 			return "1";
 		}catch (Exception e){
-			request.getSession().removeAttribute("imgUrl");
 			e.printStackTrace();
+			request.getSession().removeAttribute("imgUrl");
 			return "0";
 		}
 	}
