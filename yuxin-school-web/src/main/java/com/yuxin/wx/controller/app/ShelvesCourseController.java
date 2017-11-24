@@ -38,14 +38,14 @@ public class ShelvesCourseController {
 			String commodityPicUrl="http://"+propertiesUtil.getProjectImageUrl()+"/";
 			model.addAttribute("commodityPicUrl", commodityPicUrl);
 
-			String pageNum = request.getParameter("pageNum");
-			String pageSize = request.getParameter("pageSize");
+			String pageNum = request.getParameter("page");
+//			String pageSize = request.getParameter("pageSize");
 			ClassTypeVo ctv = new ClassTypeVo();
 			ctv.setPageSize(8);
 
 			if(null!=pageNum && !"".equals(pageNum)){
 				ctv.setPage(Integer.parseInt(pageNum));
-				ctv.setPageSize(Integer.parseInt(pageSize));
+				ctv.setPageSize(8);
 			}
 			//课程分类
 			String categoryid = request.getParameter("categoryid");

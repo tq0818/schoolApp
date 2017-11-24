@@ -227,8 +227,8 @@ public class SimpleclassTypeController {
 	public String insertShelvesInfo(HttpServletRequest request,ClassTypeVo cto){
 
 		try {
-
 			Object imgUrlObj = request.getSession().getAttribute("imgUrl");
+
 			if(null!=imgUrlObj){
 				cto.setImgUrl((String) imgUrlObj);
 			}
@@ -243,6 +243,13 @@ public class SimpleclassTypeController {
 			if(null==cto.getShelvesTime()||"".equals(cto.getShelvesTime())){
 				cto.setShelvesTime(null);
 			}
+
+			if(null==cto.getStageId()||"".equals(cto.getStageId())){
+				cto.setStageId(null);
+			}
+			if(null==cto.getTypeId()||"".equals(cto.getTypeId())){
+				cto.setTypeId(null);
+			}
 			if (null == appId || "".equals(appId)) {
 				//插入数据入库
 				classTypeServiceImpl.insertAppShelvesInfo(cto);
@@ -252,8 +259,11 @@ public class SimpleclassTypeController {
 				shelvesCourseServiceImpl.update(cto);
 
 			}
+			request.getSession().removeAttribute("imgUrl");
 			return "1";
 		}catch (Exception e){
+			e.printStackTrace();
+			request.getSession().removeAttribute("imgUrl");
 			return "0";
 		}
 	}
@@ -262,6 +272,7 @@ public class SimpleclassTypeController {
 	public String showAppShelvesEdit(HttpServletRequest request,Model model){
 		String ids = request.getParameter("ids");
 		String zhiboFlag = request.getParameter("zhiboFlag");
+		String editFlag = request.getParameter("editFlag");
 
 		if(null!=ids && ids.split("_").length>0){
 			List<SysDictApp> firstMenus = null;
@@ -391,6 +402,7 @@ public class SimpleclassTypeController {
 			model.addAttribute("jieduanMenus",jieduanMenus);
 			model.addAttribute("leixingMenus",leixingMenus);
 			model.addAttribute("searchAndResult",searchAndResult);
+			model.addAttribute("editFlag",editFlag);
 
 		}
 		return "simpleClasses/appNewClasses/informationEditing";

@@ -238,7 +238,7 @@
                     					'<button class="btn btn-danger btn-sm" id="'+stu.shelves_id+'" onclick="Form.updateFirstRecommend(this,\'delete\')">取消</button>'+
                                     '</td>'+
                                 '</tr>');
-                                    
+
                             });
 	                	 $("#rowCount").remove();
 	                     $("#pageNo").remove();
@@ -426,7 +426,7 @@
 							fillType(datas);
 							queryClassTypesShelves(datas);
 						}
-						else if("#stageId"==typeStr){
+						else if("stageId"==typeStr){
 							//查询课程信息
 							fillCategory(datas);
 							fillGrade(datas);
@@ -437,17 +437,37 @@
 							fillType(datas);
 							queryClassTypesShelves(datas);
 						}
-						Form.queryshelvesCoursesApp(1);
+						else if("typeId"==typeStr){
+							//查询课程信息
+							fillCategory(datas);
+							fillGrade(datas);
+							fillSubject(datas);
+							fillKnowPro(datas);
+							fillKnow(datas);
+							fillStage(datas);
+							fillType(datas);
+							queryClassTypesShelves(datas);
+						}
 					}
 				});
 			},
 		}
 	$(document).ready(function(){		
 		Form.init();
-		Form.queryshelvesCoursesApp(1);
+		var datas = {};
+		fillCategory(datas);
+		fillGrade(datas);
+		fillSubject(datas);
+		fillKnowPro(datas);
+		fillKnow(datas);
+		fillStage(datas);
+		fillType(datas);
+		queryClassTypesShelves(datas);
 	})
 	window.Form=Form;
 })(jQuery)
+
+
 
 //根据条件查询已经上架课程信息
 function queryClassTypesShelves(datas){
