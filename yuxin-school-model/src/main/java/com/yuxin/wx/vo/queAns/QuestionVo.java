@@ -60,7 +60,7 @@ public class QuestionVo extends BaseEntity {
 	private Integer readFlag;       /*当前question中是否 */
 	private List<QuestionClassifyRelation> relList;/*问题所含标签*/
 	private List<QuestionAnswer> answerList;
-	
+	private Integer collectCount;//收藏数
 	// Constructor
 	public QuestionVo() {
 	}
@@ -445,6 +445,14 @@ public class QuestionVo extends BaseEntity {
 
 	public void setQuestionscore(Integer questionscore) {
 		this.questionscore = questionscore;
+	}
+
+	public Integer getCollectCount() {
+		return collectCount;
+	}
+
+	public void setCollectCount(Integer collectCount) {
+		this.collectCount = collectCount;
 	}
 	
 }

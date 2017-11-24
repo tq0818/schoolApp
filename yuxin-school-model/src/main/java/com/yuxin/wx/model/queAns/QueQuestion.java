@@ -44,7 +44,7 @@ public class QueQuestion extends BaseEntity {
 	private Integer biaoSecItemId; /* 右侧标签的id */
 	private List<Integer> questionIds;/* 根据右侧标签查出的问题id集合 */
 
-	private String username; /* 用户名 */
+	private String userName; /* 用户名 */
 	private String headimg; /* 用户头像 */
 	private String queTime; /* 提问时间 */
 	private String ansTime; /* 最后回答 */
@@ -58,7 +58,7 @@ public class QueQuestion extends BaseEntity {
 	private Integer questionscore; /* 问题积分 */
 	
 	private String labelContent;
-
+	private Integer collectCount;//收藏数
 	// Constructor
 	public QueQuestion() {
 	}
@@ -309,13 +309,14 @@ public class QueQuestion extends BaseEntity {
 	public void setQuestionType(String questionType) {
 		this.questionType = questionType;
 	}
+	
 
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getHeadimg() {
@@ -414,7 +415,13 @@ public class QueQuestion extends BaseEntity {
 		this.labelContent = labelContent;
 	}
 
-	
+	public Integer getCollectCount() {
+		return collectCount;
+	}
+
+	public void setCollectCount(Integer collectCount) {
+		this.collectCount = collectCount;
+	}
 
 	
 }
