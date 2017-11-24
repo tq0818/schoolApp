@@ -94,7 +94,7 @@ public class CommodityVo extends BaseEntity {
     private String lessonName;
     private String  paperDescription;
     private Integer userId;
-
+    private Integer categoryId;//分类Id
     public Integer getSout() {
         return sout;
     }
@@ -812,5 +812,12 @@ public class CommodityVo extends BaseEntity {
 		this.specialOrder = specialOrder;
 	}
 
+	public Integer getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
+	}
 
 }
