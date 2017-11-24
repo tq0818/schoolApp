@@ -567,8 +567,7 @@
 		app.reserve_time as reserveTime,app.shelves_time as shelvesTime,app.price as appPrice,app.sale_price as salePrice,
 		app.id as appId,
 		app.lab_desc,
-		app.sort,
-		app.grade_id
+		app.sort
 		FROM (
 				SELECT
 					ml.module_no_id,
@@ -588,7 +587,6 @@
 		join commodity c on c.id = pr.com_id
 		JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
 		left join `app_shelves` app on app.`comdity_id`=c.id
-		join `app_shelves` app on app.`comdity_id`=c.id
 		where c.id = #{classType.id} and ct.del_flag=0 and c.type='COMMODITY_CLASS'
 		HAVING MAX(cml.lesson_date) <![CDATA[<=]]> NOW()
 		UNION
@@ -601,8 +599,7 @@
 		app.reserve_time as reserveTime,app.shelves_time as shelvesTime,app.price as appPrice,app.sale_price as salePrice,
 		app.id as appId,
 		app.lab_desc,
-		app.sort,
-		app.grade_id
+		app.sort
 		FROM (
 			SELECT
 				ml.module_no_id,
@@ -623,7 +620,6 @@
 		join commodity_product_realtion pr on ct.id = pr.product_id
 		join commodity c on c.id = pr.com_id
 		JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
-		join `app_shelves` app on app.`comdity_id`=c.id
 		left join `app_shelves` app on app.`comdity_id`=c.id
 		where c.id = #{classType.id} and ct.del_flag=0 and c.type='COMMODITY_CLASS'
 		GROUP BY c.id
