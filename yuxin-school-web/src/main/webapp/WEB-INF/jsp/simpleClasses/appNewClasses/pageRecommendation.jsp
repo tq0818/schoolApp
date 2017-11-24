@@ -72,7 +72,7 @@
     </div>
 </div>
 <%--已上架课程列表--%>
-<div id="modelList">
+<div id="modelList" class="pageRecommendtionBg">
 <div class="mainbackground nopadding">
     <div class="heading">
         <h2 class="h5" style="display: inline-block;">已上架课程</h2>
@@ -87,19 +87,19 @@
             <tr>
                 <th width="1%"><input type="checkbox" class="checkboxAll"></th>
                 <th width="5%">课程图片</th>
-                <th width="5%">课程名称</th>
-                <th width="10%">学段</th>
+                <th width="7%">课程名称</th>
+                <th width="5%">学段</th>
                 <th width="5%">学科</th>
-                <th width="10%">知识点专题</th>
-                <th width="10%">知识点</th>
-                <th width="5%">阶段</th>
+                <th width="11%">知识点专题</th>
+                <th width="11%">知识点</th>
+                <th width="6%">阶段</th>
                 <th width="6%">类型</th>
                 <th width="7%">上架时间</th>
-                <th width="8%">直播时间</th>
-                <th width="3%">学习人数</th>
-                <th width="3%">价格</th>
-                <th width="3%">实际价格</th>
-                <th width="20%">操作</th>
+                <th width="7%">直播时间</th>
+                <th width="5%">学习人数</th>
+                <th width="5%">价格</th>
+                <th width="5%">实际价格</th>
+                <th width="18%">操作</th>
             </tr>
         </table>
 

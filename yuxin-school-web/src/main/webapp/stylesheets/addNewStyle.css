@@ -23,7 +23,7 @@ body{font-family: 'Microsoft Yahei', STHeiti, sans-serif;}
 .submitCourse{margin: 5px;text-align: center;}
 .submitCourse button{margin: 10px;}
 /*鎵归噺棣栭〉鎺ㄨ崘*/
-.recommendationNum{width: 20px;height: 18px;}
+.recommendationNum{width: 15px;height: 12px;}
 /*寮瑰嚭妗*/
 .popupContainer,.popupContainerEdit,.popupContainerRecommendation{box-shadow: 0 10px 10px 5px;padding: 10px 20px;border-radius: 3px;display: none;z-index: 100;position: fixed;
     left: 50%;top: 10%;width: 800px;margin-left: -400px;background: #fff;height: 530px;}
@@ -47,3 +47,4 @@ input[disabled]{cursor: not-allowed;}
     border-radius: 10px;text-align: center;line-height: 20px;color: #fff;margin-left: 5px;}
 .btn-ico.btn-cha{background: #e45200;}
 i{font-style: normal}
+.pageRecommendtionBg{background: #f6f6f6;}
