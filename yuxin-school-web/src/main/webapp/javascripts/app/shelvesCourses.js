@@ -221,6 +221,18 @@
                         }
 	                	$.each(jsonData.data,function (i, stu) {
 	                		if(stu.sort==null) stu.sort='';
+	                		if(stu.name==null) stu.name="";
+	                		if(stu.gradeName==null) stu.gradeName="";
+	                		if(stu.subjectName==null) stu.subjectName="";
+	                		if(stu.knowProName==null) stu.knowProName="";
+	                		if(stu.knowName==null) stu.knowName="";
+	                		if(stu.stageName==null) stu.stageName="";
+	                		if(stu.typeName==null) stu.typeName="";
+	                		if(stu.shelvesTime==null) stu.shelvesTime="";
+	                		if(stu.lessonTime==null) stu.lessonTime="";
+	                		if(stu.actualNum==null) stu.actualNum="";
+	                		if(stu.realPrice==null) stu.realPrice="";
+	                		if(stu.salePrice==null) stu.salePrice="";
                             $(".user-list").find("table").append('<tr>'+
                                     '<td><input type="checkbox" class="signUpMany" value="'+stu.shelves_id+'"></td>'+
                                     '<td><img src="'+stu.coverUrl+'" alt="" class="shelvesIcon"></td>'+
