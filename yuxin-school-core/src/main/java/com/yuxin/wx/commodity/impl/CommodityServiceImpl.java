@@ -28,7 +28,7 @@ import com.yuxin.wx.vo.commodity.CommodityVo;
 
 /**
  * Service Implementation:Commodity
- * 
+ *
  * @author wang.zx
  * @date 2015-3-14
  */
@@ -153,12 +153,11 @@ public class CommodityServiceImpl extends BaseServiceImpl implements ICommodityS
     }
 
     /**
-     *
-     * @Title: queryCommodityByPage
-     * @Description:分页条件查询
      * @param id
      * @return PageFinder<Commodity> 返回类型
      * @throws @exception
+     * @Title: queryCommodityByPage
+     * @Description:分页条件查询
      * @date 2015-4-8
      * @user by chopin
      */
@@ -223,29 +222,29 @@ public class CommodityServiceImpl extends BaseServiceImpl implements ICommodityS
         return commodityMapper.findCommodityName(id);
     }
 
-	@Override
-	public List<CommodityVo> queryCourseByTeacherIds(Map<String, Object> map) {
-		List<CommodityVo> list = commodityMapper.queryCourseByTeacherIds(map);
-		return list;
-	}
+    @Override
+    public List<CommodityVo> queryCourseByTeacherIds(Map<String, Object> map) {
+        List<CommodityVo> list = commodityMapper.queryCourseByTeacherIds(map);
+        return list;
+    }
 
-	@Override
-	public int updateSpecialOrder(CommodityVo commodity) {
-		int row = commodityMapper.updateSpecialOrder(commodity);
-		return row;
-	}
+    @Override
+    public int updateSpecialOrder(CommodityVo commodity) {
+        int row = commodityMapper.updateSpecialOrder(commodity);
+        return row;
+    }
 
 
     @Override
     public List<CommodityVo> queryClassScheduleList(CommodityVo search) {
-        Map<String,Object> map = new HashMap<>();
-        map.put("com",search);
+        Map<String, Object> map = new HashMap<>();
+        map.put("com", search);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar ca  = Calendar.getInstance();
-        ca.add(Calendar.DAY_OF_YEAR,1);
+        Calendar ca = Calendar.getInstance();
+        ca.add(Calendar.DAY_OF_YEAR, 1);
         String tomorry = sdf.format(ca.getTime());
-        map.put("today",tomorry);
-        map.put("tomorry",tomorry);
+        map.put("today", tomorry);
+        map.put("tomorry", tomorry);
 
         List<CommodityVo> data = this.commodityMapper.queryClassScheduleList(map);
         return data;
@@ -269,59 +268,59 @@ public class CommodityServiceImpl extends BaseServiceImpl implements ICommodityS
 
     @Override
     public PageFinder2<CommodityDto> getModelListByIds(Map<String, Object> param) {
-    	List<CommodityDto> datas=new ArrayList<CommodityDto>();
-    	Integer count=0;
-    	String modelCode=(String)param.get("modelCode");
-    	if(("ZHIBO").equals(modelCode)){
-    		datas=commodityMapper.getZhiBoModelListByIds(param);
-    		count=commodityMapper.getZhiBoModelListByIdsCount(param);
-    	}else if(modelCode!=null&&modelCode!=""){
-    		datas=commodityMapper.getModelListByIds(param);
-        	count=commodityMapper.getModelListByIdsCount(param);
-    	}
-        return new PageFinder2<CommodityDto>((Integer)param.get("page"),(Integer)param.get("pageSize"),count,datas);
+        List<CommodityDto> datas = new ArrayList<CommodityDto>();
+        Integer count = 0;
+        String modelCode = (String) param.get("modelCode");
+        if (("ZHIBO").equals(modelCode)) {
+            datas = commodityMapper.getZhiBoModelListByIds(param);
+            count = commodityMapper.getZhiBoModelListByIdsCount(param);
+        } else if (modelCode != null && modelCode != "") {
+            datas = commodityMapper.getModelListByIds(param);
+            count = commodityMapper.getModelListByIdsCount(param);
+        }
+        return new PageFinder2<CommodityDto>((Integer) param.get("page"), (Integer) param.get("pageSize"), count, datas);
     }
 
     @Override
     public int getModelListByIdsCount(Map<String, Object> param) {
-        return commodityMapper.getModelListByIdsCount( param) ;
+        return commodityMapper.getModelListByIdsCount(param);
     }
 
-	@Override
-	public Boolean insertOrUpdate(String gradeIds, String appShelvesIds) {
-		//任何一个为空时，都不插入数据
-		if(gradeIds==null||gradeIds==""||appShelvesIds==""||appShelvesIds==null) return true;
-		
-		String[]gradeIdArray=gradeIds.split(",");
-		String[]appShelvesIdArray=appShelvesIds.split(",");
-			
-		//通过appShelvesIds先删除先有的记录
-		commodityMapper.deleteFirstRecommendByIds(appShelvesIds);
-		//插入对应的数据
-		List<FirstRecommend> firstRecommends=new ArrayList<FirstRecommend>();
-			
-		for(String appShelvesId:appShelvesIdArray){
-			if(appShelvesId==""||appShelvesId==null||appShelvesId=="undefined")continue;
-			for(String gradeId:gradeIdArray){
-				if(gradeId==""||gradeId==null||gradeId=="undefined")continue;
-				FirstRecommend firstRecommend=new FirstRecommend();
-				firstRecommend.setAppShelvesId(appShelvesId);
-				firstRecommend.setGradeNo(gradeId);
-				firstRecommends.add(firstRecommend);
-			}
-		}
-		classTypeServiceImpl.insertFirstRecommond(firstRecommends);
-		return true;
-	}
+    @Override
+    public Boolean insertOrUpdate(String gradeIds, String appShelvesIds) {
+        //任何一个为空时，都不插入数据
+        if (gradeIds == null || gradeIds == "" || appShelvesIds == "" || appShelvesIds == null) return true;
 
-	@Override
-	public Boolean updateFirstRecommend(String appShelvesId, String sort) {
-		if(appShelvesId==null||appShelvesId=="") return true;
-		Map<String,Object> params=new HashMap<String,Object>();
-		params.put("appShelvesId",appShelvesId);
-		params.put("sort",sort);
-		commodityMapper.updateAppShelvesSort(params);
-		return true;
-	}
-	
+        String[] gradeIdArray = gradeIds.split(",");
+        String[] appShelvesIdArray = appShelvesIds.split(",");
+
+        //通过appShelvesIds先删除先有的记录
+        commodityMapper.deleteFirstRecommendByIds(appShelvesIds);
+        //插入对应的数据
+        List<FirstRecommend> firstRecommends = new ArrayList<FirstRecommend>();
+
+        for (String appShelvesId : appShelvesIdArray) {
+            if (appShelvesId == "" || appShelvesId == null || appShelvesId == "undefined") continue;
+            for (String gradeId : gradeIdArray) {
+                if (gradeId == "" || gradeId == null || gradeId == "undefined") continue;
+                FirstRecommend firstRecommend = new FirstRecommend();
+                firstRecommend.setAppShelvesId(appShelvesId);
+                firstRecommend.setGradeNo(gradeId);
+                firstRecommends.add(firstRecommend);
+            }
+        }
+        classTypeServiceImpl.insertFirstRecommond(firstRecommends);
+        return true;
+    }
+
+    @Override
+    public Boolean updateFirstRecommend(String appShelvesId, String sort) {
+        if (appShelvesId == null || appShelvesId == "") return true;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("appShelvesId", appShelvesId);
+        params.put("sort", sort);
+        commodityMapper.updateAppShelvesSort(params);
+        return true;
+    }
+
 }

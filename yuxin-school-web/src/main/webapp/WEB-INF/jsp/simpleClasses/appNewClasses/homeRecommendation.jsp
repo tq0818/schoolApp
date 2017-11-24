@@ -90,16 +90,42 @@
         </div>
         <div>
             <label for="">推荐顺序</label>
-            <input type="text" id="sort" value="" class="orderRecommend">
+            <input type="text" id="sort" value="${searchAndResult.sort}" class="orderRecommend">
         </div>
         <div class="uploadRecommend">
             <button class="btn btn-success" onclick="saveRecommond();">提交推荐</button>
         </div>
     </div>
-
 </div>
+
+<c:forEach items="${gardeIdList}" var="garde">
+    <input type="hidden" class="gradeId" value="${garde.gradeId}"/>
+</c:forEach>
+
 <script type="text/javascript" src="<%=rootPath %>/javascripts/classes.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
+<script>
+//        复写数据到页面
+        var gradeIdArray = [];
+        var grade = $(".gradeId");
+        var allChildren = $('#gradeList').children('a');
+        if(grade.length>0){
+            if(grade.length==12){
+                //如果全部有active则删除全部的选中，否则全部选中
+                for(var i=0; i<allChildren.length;i++){
+                    allChildren.eq(i).addClass('active');
+                }
+            }else {
+                for(var i = 1;i<=grade.length;i++){
+                    allChildren.eq(i).addClass('active');
+                }
+            }
+        }
+
+
+
+
+</script>
 <script>
 //    推荐学段复选
     $('#gradeList').children('a').click(function(){
@@ -130,7 +156,7 @@
 function saveRecommond(){
     var ids = "";
     var appId="1";
-    $("#gradeList").find("a:not(:first-child)").each(function(){
+    $("gradeList").find("a:not(:first-child)").each(function(){
         if($(this).hasClass("active")){
             ids+=$(this).attr("id")+",";
         }
