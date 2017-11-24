@@ -13,13 +13,13 @@
 
 
 
-    <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/fatstyle.css"/>
+    <%--<link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/fatstyle.css"/>--%>
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/manage.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/company.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/classes.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/splitscreen.css"/>
-    <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/classedit.css"/>
-    <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/popupwin.css">
+    <%--<link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/classedit.css"/>--%>
+    <%--<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/popupwin.css">--%>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/plus/jquery.min.js"></script>
     <script type="text/javascript" src="<%=rootPath%>/javascripts/ajaxfileupload.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/informationEditing.js"></script>
