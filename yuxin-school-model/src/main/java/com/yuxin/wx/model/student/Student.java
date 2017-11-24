@@ -67,7 +67,7 @@ public class Student extends BaseEntity {
 	private String nickName;
 	private Integer proxyOrgId;//代理机构id
 
-	private Integer eduIdentity;
+	private Integer eduIdentity;//是否为学生，0是学生，1是普通用户
 	private String eduArea;
 	private String eduSchool;
 	private String eduStep;
