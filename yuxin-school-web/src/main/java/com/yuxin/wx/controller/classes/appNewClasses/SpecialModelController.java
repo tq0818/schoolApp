@@ -101,6 +101,8 @@ public class SpecialModelController {
         param.put("categoryid",search.getModelId());
         param.put("page",search.getPage());
         param.put("pageSize",search.getPageSize());
+        //limit #{firstIndex},#{pageSize}
+        param.put("firstIndex", search.getFirstIndex());
         PageFinder2<CommodityDto> commList = commodityServiceImpl.getModelListByIds(param);
         return commList;
     }

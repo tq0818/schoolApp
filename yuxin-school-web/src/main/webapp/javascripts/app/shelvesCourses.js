@@ -128,9 +128,13 @@
 	                }
 	            });
 			},
+			searchCount: function(){
+	        	$("#selectCounts").val($("#selectCount").val());
+	        	Form.queryshelvesCoursesApp();
+	        },
 			queryshelvesCoursesApp : function(page){
 
-	            var datas = {"page": page};
+	            var datas = {};
 	            var categoryName = '',
 	                gradeName = '',
 	                subjectName = '',
@@ -234,11 +238,10 @@
                                     '<td>'+stu.salePrice+'</td>'+
                                     '<td>'+
                                         '<input type="text" class="recommendationNum" id="recommendationNum_'+stu.shelves_id+'" value="'+stu.sort+'">'+
-                    					'<button class="btn btn-success btn-sm" id="'+stu.shelves_id+'" onclick="Form.updateFirstRecommend(this,\'update\')">确定</button>'+
-                    					'<button class="btn btn-danger btn-sm" id="'+stu.shelves_id+'" onclick="Form.updateFirstRecommend(this,\'delete\')">取消</button>'+
+                    					'<i class="btn-ico btn-gou" id="'+stu.shelves_id+'" onclick="Form.updateFirstRecommend(this,\'update\')">√</i>'+
+                    					'<i class="btn-ico btn-cha" id="'+stu.shelves_id+'" onclick="Form.updateFirstRecommend(this,\'delete\')">X</i>'+
                                     '</td>'+
                                 '</tr>');
-
                             });
 	                	 $("#rowCount").remove();
 	                     $("#pageNo").remove();
@@ -254,17 +257,17 @@
 	                                    num_edge_entries: 1,
 	                                    callback: function (page, jq) {
 	                                        var pageNo = page + 1;
-	                                        $this.queryshelvesCoursesApp(pageNo);
+	                                        Form.queryshelvesCoursesApp(pageNo);
 	                                    }
 	                                });
 	                            $(".pagination").find("li:first").css("background-color","#fff").css("border","1px solid #999").css('cursor','default');
-	                            $(".pagination").find("li:first").before('每页：<select id="selectCount"  onchange="javascript:student.searchCount()">'+
-	                					' <option value="10">10</option>'+
-	                					' <option value="20">20</option>'+
-	                					' <option value="30">30</option>'+
-	                					' <option value="50">50</option>'+
-	                					' <option value="100">100</option>'+
-	                					' </select> 条   ');
+//	                            $(".pagination").find("li:first").before('每页：<select id="selectCount"  onchange="javascript:Form.searchCount()">'+
+//	                					' <option value="10">10</option>'+
+//	                					' <option value="20">20</option>'+
+//	                					' <option value="30">30</option>'+
+//	                					' <option value="50">50</option>'+
+//	                					' <option value="100">100</option>'+
+//	                					' </select> 条   ');
 	                            $("#selectCount").val($("#selectCounts").val());
 	                        } else {
 	                            $(".pagination").html('');
@@ -295,7 +298,7 @@
 					$("#kwonProId").html(allHtml.replace("allToAll","kwonProId"));
 					$("#knowId").html(allHtml.replace("allToAll","kwonId"));
 					//查询课程信息
-					queryClassTypesShelves(datas);
+					Form.queryshelvesCoursesApp(1);
 					return;
 				}else if("gradeId"==typeStr  && 'all'==id){
 					$("#subjectId").html(allHtml.replace("allToAll","subjectId"));
@@ -305,7 +308,7 @@
 					fillCategory(datas);
 					fillStage(datas);
 					fillType(datas);
-					queryClassTypesShelves(datas);
+					Form.queryshelvesCoursesApp(1);
 					return;
 				}else if("subjectId"==typeStr  && 'all'==id){
 					$("#kwonProId").html(allHtml.replace("allToAll","kwonProId"));
@@ -314,7 +317,7 @@
 					fillGrade(datas);
 					fillStage(datas);
 					fillType(datas);
-					queryClassTypesShelves(datas);
+					Form.queryshelvesCoursesApp(1);
 					return;
 				}else if("kwonProId"==typeStr  && 'all'==id){
 					$("#knowId").html(allHtml.replace("allToAll","knowId"));
@@ -322,13 +325,13 @@
 					fillSubject(datas);
 					fillStage(datas);
 					fillType(datas);
-					queryClassTypesShelves(datas);
+					Form.queryshelvesCoursesApp(1);
 					return;
 				}else if("knowId"==typeStr  && 'all'==id){
 					fillKnowPro(datas);
 					fillStage(datas);
 					fillType(datas);
-					queryClassTypesShelves(datas);
+					Form.queryshelvesCoursesApp(1);
 					return;
 				}else if("stageId"==typeStr || "typeId"==typeStr){
 					fillKnowPro(datas);
@@ -338,7 +341,7 @@
 					fillKnow(datas);
 					fillStage(datas);
 					fillType(datas);
-					queryClassTypesShelves(datas);
+					Form.queryshelvesCoursesApp(1);
 					return;
 				}
 				$.ajax({
@@ -379,7 +382,6 @@
 								}
 							});
 							fillCategory(datas);
-							queryClassTypesShelves(datas);
 						}else if("gradeId"==typeStr){
 							//跟新科目
 							html +=allHtml.replace("allToAll","subjectId");
@@ -393,7 +395,6 @@
 							fillGrade(datas);
 							fillStage(datas);
 							fillType(datas);
-							queryClassTypesShelves(datas);
 						}else if("subjectId"==typeStr){
 							//更新知识点专题
 							html +=allHtml.replace("allToAll","kwonProId");
@@ -406,7 +407,6 @@
 							fillSubject(datas);
 							fillStage(datas);
 							fillType(datas);
-							queryClassTypesShelves(datas);
 						}else if("kwonProId"==typeStr){
 							//更新知识点
 							html +=allHtml.replace("allToAll","knowId");
@@ -418,13 +418,11 @@
 							fillKnowPro(datas);
 							fillStage(datas);
 							fillType(datas);
-							queryClassTypesShelves(datas);
 						}else if("knowId"==typeStr){
 							//查询课程信息
 							fillKnow(datas);
 							fillStage(datas);
 							fillType(datas);
-							queryClassTypesShelves(datas);
 						}
 						else if("stageId"==typeStr){
 							//查询课程信息
@@ -435,7 +433,6 @@
 							fillKnow(datas);
 							fillStage(datas);
 							fillType(datas);
-							queryClassTypesShelves(datas);
 						}
 						else if("typeId"==typeStr){
 							//查询课程信息
@@ -446,8 +443,8 @@
 							fillKnow(datas);
 							fillStage(datas);
 							fillType(datas);
-							queryClassTypesShelves(datas);
 						}
+						Form.queryshelvesCoursesApp(1);
 					}
 				});
 			},
@@ -462,33 +459,11 @@
 		fillKnow(datas);
 		fillStage(datas);
 		fillType(datas);
-		queryClassTypesShelves(datas);
+		Form.queryshelvesCoursesApp(1);
 	})
 	window.Form=Form;
 })(jQuery)
 
-
-
-//根据条件查询已经上架课程信息
-function queryClassTypesShelves(datas){
-	//查询课程信息
-	$.ajax({
-		url : rootPath + "/shelvesCourse/findShelvesCourseByapge",
-		type : "post",
-		data:datas,
-		beforeSend:function(XMLHttpRequest){
-			$(".loading").show();
-			$(".loading-bg").show();
-		},
-		success : function(result) {
-			$("#ShelvesCourseDetailList").html(result);
-		},
-		complete:function(XMLHttpRequest,textStatus){
-			$(".loading").hide();
-			$(".loading-bg").hide();
-		}
-	});
-}
 
 function fillCategory(datas){
 	var categoryid = '';

@@ -237,7 +237,8 @@ public class SimpleclassTypeController {
 			if(!"1".equals(cto.getShelvesFlag())){
 				cto.setReserveTime(cto.getShelvesTime());
 			}else{
-				cto.setShelvesTime(new Date().toLocaleString());
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				cto.setShelvesTime(sdf.format(new Date()));
 			}
 			cto.setIsShelves("1");
 			if(null==cto.getShelvesTime()||"".equals(cto.getShelvesTime())){

@@ -131,7 +131,7 @@
 <div class="popupOpacity"></div>
 
 </div>
-<input type="hidden" id="selectCounts" value="10">
+<input type="hidden" id="selectCounts" value="8">
 <input type="hidden" id="modelCode" name="modelCode" value="${modelCode}">
 <input type="hidden" id="modelId" name="modelId" value="${modelId}">
 <script type="text/javascript">

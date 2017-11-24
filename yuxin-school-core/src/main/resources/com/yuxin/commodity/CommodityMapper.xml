@@ -472,9 +472,9 @@
 		join sys_dict_app sys3 on sys3.id=app.`subject_id` 
 		join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id` 
 		join sys_dict_app sys5 on sys5.id=app.`knowledge_id` 
-		join sys_dict_app sys6 on sys6.id=app.`stage_id` 
-		join sys_dict_app sys7 on sys7.id=app.`type_id` 
-		where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`)) 
+		left join sys_dict_app sys6 on sys6.id=app.`stage_id` 
+		left join sys_dict_app sys7 on sys7.id=app.`type_id` 
+		where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()<![CDATA[>=]]>app.`reserve_time`)) 
 		<if test="categoryid !=null and categoryid!=''">and app.category_id = #{categoryid}</if>
 		<if test="studySectionId !=null and studySectionId!='' ">and app.grade_id= #{studySectionId}</if>
 		<if test="subjectId !=null and subjectId!=''">and app.subject_id = #{subjectId}</if>
@@ -482,6 +482,8 @@
 		<if test="typeId !=null and typeId!=''">and app.type_id = #{typeId}</if>
 		<if test="itemId !=null and itemId!='' ">and app.knowledge_pro_id= #{itemId}</if>
 		<if test="stageId !=null and stageId!='' ">and app.stage_id= #{stageId}</if>
+		GROUP BY c.id 
+		limit #{firstIndex},#{pageSize}
 	</select>
 
 	<select id="getModelListByIdsCount" parameterType="map" resultType="int">
@@ -495,9 +497,9 @@
 		join sys_dict_app sys3 on sys3.id=app.`subject_id` 
 		join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id` 
 		join sys_dict_app sys5 on sys5.id=app.`knowledge_id` 
-		join sys_dict_app sys6 on sys6.id=app.`stage_id` 
-		join sys_dict_app sys7 on sys7.id=app.`type_id` 
-		where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`)) 
+		left join sys_dict_app sys6 on sys6.id=app.`stage_id` 
+		left join sys_dict_app sys7 on sys7.id=app.`type_id` 
+		where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()<![CDATA[>=]]>app.`reserve_time`)) 
 		<if test="categoryid !=null and categoryid!=''">and app.category_id = #{categoryid}</if>
 		<if test="studySectionId !=null and studySectionId!='' ">and app.grade_id= #{studySectionId}</if>
 		<if test="subjectId !=null and subjectId!=''">and app.subject_id = #{subjectId}</if>
@@ -509,16 +511,16 @@
 
 	<!--查询直播-->
 	<select id="getZhiBoModelListByIds" parameterType="map" resultMap="commodityVo1ResultMap">
-			select app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as realPrice,CONCAT(date_format(cml.lesson_date,"%Y-%m-%d"),' ',cml.lesson_time_start) as lessonDate,sct.NAME teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl, case when app.is_shelves is null then '0' else app.is_shelves end as isShelves, app.shelves_time as shelvesTime, ct.cover as cover, app.reserve_time, app.id as appId, app.lab_desc,app.sort sort, app.`price` as appPrice, app.`sale_price` as salePrice, sys1.name as itemOneName, sys2.name as itemSecondName, sys3.name as itemThirdName, sys4.name as itemFourthName, sys5.name as itemTag, sys6.name as tagName, sys7.name as typeCode, c.live_flag as liveFlag, c.id, app.category_id as courseCaId FROM ( 
+			select app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as realPrice,CONCAT(date_format(cml.lesson_date,"%Y-%m-%d"),' ',cml.lesson_time_start) as lesson_date,sct.NAME teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl, case when app.is_shelves is null then '0' else app.is_shelves end as isShelves, app.shelves_time as shelvesTime, ct.cover as cover, app.reserve_time, app.id as appId, app.lab_desc,app.sort sort, app.`price` as appPrice, app.`sale_price` as salePrice, sys1.name as itemOneName, sys2.name as itemSecondName, sys3.name as itemThirdName, sys4.name as itemFourthName, sys5.name as itemTag, sys6.name as tagName, sys7.name as typeCode, c.live_flag as liveFlag, c.id, app.category_id as courseCaId FROM ( 
 				SELECT ml.module_no_id, ml.lesson_date, ml.lesson_time_start, ml.lesson_time_end, ml.lesson_name FROM class_module_lesson ml WHERE ml.lesson_date <![CDATA[>=]]>now()
 			) cml JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id` JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id` JOIN class_type ct ON ct.id = ctmr.`class_type_id` join commodity_product_realtion pr on ct.id = pr.product_id join commodity c on c.id = pr.com_id JOIN sys_config_teacher sct ON ct.teacher_id = sct.id join `app_shelves` app on app.`comdity_id`=c.id join sys_dict_app sys1 on sys1.id=app.`category_id` join sys_dict_app sys2 on sys2.id=app.`grade_id` join sys_dict_app sys3 on sys3.id=app.`subject_id` join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id` join sys_dict_app sys5 on sys5.id=app.`knowledge_id` join sys_dict_app sys6 on sys6.id=app.`stage_id` join sys_dict_app sys7 on sys7.id=app.`type_id` where ct.del_flag=0 and c.type='COMMODITY_CLASS' and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`)) and app.category_id =#{categoryid} 
 			GROUP BY c.id 
 			UNION 
-			select ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as realPrice, cml.lesson_date, cml.lesson_time_start, 
+			select app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as realPrice,CONCAT(date_format(cml.lesson_date,"%Y-%m-%d"),' ',cml.lesson_time_start) as lesson_date,
 			sct.NAME teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl, 
 			case when app.is_shelves is null then '0' else app.is_shelves end as isShelves, 
 			app.shelves_time as shelvesTime, ct.cover as cover, app.reserve_time, app.id as appId, 
-			app.lab_desc, app.`price` as appPrice, app.`sale_price` as salePrice, 
+			app.lab_desc,app.sort sort, app.`price` as appPrice, app.`sale_price` as salePrice, 
 			sys1.name as itemOneName, sys2.name as itemSecondName, sys3.name as itemThirdName,
 			sys4.name as itemFourthName, sys5.name as itemTag, sys6.name as tagName, 
 			sys7.name as typeCode, c.live_flag as liveFlag, c.id, app.category_id as courseCaId 
@@ -537,9 +539,9 @@
 			join sys_dict_app sys3 on sys3.id=app.`subject_id` 
 			join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id` 
 			join sys_dict_app sys5 on sys5.id=app.`knowledge_id` 
-			join sys_dict_app sys6 on sys6.id=app.`stage_id` 
-			join sys_dict_app sys7 on sys7.id=app.`type_id` 
-			where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`)) 
+			left join sys_dict_app sys6 on sys6.id=app.`stage_id` 
+			left join sys_dict_app sys7 on sys7.id=app.`type_id` 
+			where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()<![CDATA[>=]]>app.`reserve_time`)) 
 			and app.category_id =#{categoryid}
 		<if test="studySectionId !=null and studySectionId!='' ">and app.grade_id= #{studySectionId}</if>
 		<if test="subjectId !=null and subjectId!=''">and app.subject_id = #{subjectId}</if>
@@ -548,6 +550,7 @@
 		<if test="itemId !=null and itemId!='' ">and app.knowledge_pro_id= #{itemId}</if>
 		<if test="stageId !=null and stageId!='' ">and app.stage_id= #{stageId}</if>
 		GROUP BY c.id HAVING MAX(cml.lesson_date) <![CDATA[<]]> NOW()
+		limit #{firstIndex},#{pageSize}
 	</select>
 
 	<select id="getZhiBoModelListByIdsCount" parameterType="map" resultType="int">
@@ -580,8 +583,8 @@
 				join sys_dict_app sys3 on sys3.id=app.`subject_id` 
 				join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id` 
 				join sys_dict_app sys5 on sys5.id=app.`knowledge_id` 
-				join sys_dict_app sys6 on sys6.id=app.`stage_id` 
-				join sys_dict_app sys7 on sys7.id=app.`type_id` 
+				left join sys_dict_app sys6 on sys6.id=app.`stage_id` 
+				left join sys_dict_app sys7 on sys7.id=app.`type_id` 
 				where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()<![CDATA[>=]]>app.`reserve_time`)) 
 				and app.category_id =#{categoryid}
 			<if test="studySectionId !=null and studySectionId!='' ">and app.grade_id= #{studySectionId}</if>
@@ -590,7 +593,8 @@
 			<if test="typeId !=null and typeId!=''">and app.type_id = #{typeId}</if>
 			<if test="itemId !=null and itemId!='' ">and app.knowledge_pro_id= #{itemId}</if>
 			<if test="stageId !=null and stageId!='' ">and app.stage_id= #{stageId}</if>
-		)
+			GROUP BY c.id 
+		) A
 	</select>
 	<delete id="deleteFirstRecommendByIds">
 		delete from first_recommend
