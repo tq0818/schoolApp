@@ -129,6 +129,12 @@
 <div class="popupOpacity"></div>
 
 </div>
+<!-- ajax加载中div开始 -->
+<div class="loading lp-units-loading" style="display:none">
+    <p><i></i>加载中,请稍后...</p>
+</div>
+<div class="loading-bg lp-units-loading-bg" style="display:none"></div>
+<!--  ajax加载中div结束 -->
 <input type="hidden" id="selectCounts" value="8">
 <input type="hidden" id="modelCode" name="modelCode" value="${modelCode}">
 <input type="hidden" id="modelId" name="modelId" value="${modelId}">
