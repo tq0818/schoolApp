@@ -121,10 +121,6 @@
                 }
             }
         }
-
-
-
-
 </script>
 <script>
 //    推荐学段复选
@@ -156,12 +152,13 @@
 function saveRecommond(){
     var ids = "";
     var appId="1";
-    $("gradeList").find("a:not(:first-child)").each(function(){
+    $("#gradeList").find("a:not(:first-child)").each(function(){
         if($(this).hasClass("active")){
             ids+=$(this).attr("id")+",";
         }
     });
-    if(""==ids){
+    console.log(ids);
+    if(ids==""){
         alert("请选择推荐学段");
         return;
     }
