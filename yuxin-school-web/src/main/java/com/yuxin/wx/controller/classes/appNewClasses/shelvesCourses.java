@@ -2,17 +2,13 @@ package com.yuxin.wx.controller.classes.appNewClasses;
 
 
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.yuxin.wx.api.classes.IClassTypeService;
-import com.yuxin.wx.api.commodity.ICommodityService;
-import com.yuxin.wx.utils.FileUtil;
-import com.yuxin.wx.utils.PropertiesUtil;
-import com.yuxin.wx.utils.WebUtils;
-import com.yuxin.wx.vo.classes.ClassTypeVo;
-import com.yuxin.wx.vo.classes.FirstRecommend;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +16,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.yuxin.wx.api.app.ISysDictAppService;
-import com.yuxin.wx.model.app.SysDictApp;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
+
+import com.yuxin.wx.api.app.ISysDictAppService;
+import com.yuxin.wx.api.classes.IClassTypeService;
+import com.yuxin.wx.api.commodity.ICommodityService;
+import com.yuxin.wx.api.system.ISysConfigItemRelationService;
+import com.yuxin.wx.api.system.ISysConfigItemService;
+import com.yuxin.wx.model.app.SysDictApp;
+import com.yuxin.wx.model.system.SysConfigItem;
+import com.yuxin.wx.model.system.SysConfigItemRelation;
+import com.yuxin.wx.utils.FileUtil;
+import com.yuxin.wx.utils.PropertiesUtil;
+import com.yuxin.wx.utils.WebUtils;
+import com.yuxin.wx.vo.classes.ClassTypeVo;
+import com.yuxin.wx.vo.classes.FirstRecommend;
 
 
 /**
@@ -43,7 +50,11 @@ public class shelvesCourses {
     private IClassTypeService classTypeServiceImpl;
     @Autowired
     private PropertiesUtil propertiesUtil;
-
+    @Autowired
+	private ISysConfigItemRelationService sysConfigItemRelationServiceImpl;
+    
+    @Autowired
+	private ISysConfigItemService sysConfigItemServiceImpl;
     private Log log= LogFactory.getLog("log");
     /**
      * 跳转到已上架课程页面
@@ -79,9 +90,15 @@ public class shelvesCourses {
      * 跳转到批量首页推荐
      */
     @RequestMapping(value = "/pageRecommendation", method = RequestMethod.GET)
-    public String gotopageRecommendation(Model model, Integer modelId, Integer parentId) throws UnsupportedEncodingException {
+    public String gotopageRecommendation(Model model, String modelId, Integer parentId, HttpServletRequest request) throws UnsupportedEncodingException {
+    	Integer modelIds=null;
+    	String modelCode=null;
+    	if(modelId!=null&&modelId!=""){
+    		modelIds=Integer.valueOf(modelId.split("_")[0]);
+    		modelCode=modelId.split("_")[1];
+    	}
         //获取二级菜单
-        List<SysDictApp> menusList = sysDictAppServiceImpl.getStudySectionById(modelId);
+        List<SysDictApp> menusList = sysDictAppServiceImpl.getStudySectionById(modelIds);
 
         //获取课程分类名称
         List<SysDictApp>grades = new ArrayList<SysDictApp>();
@@ -100,11 +117,17 @@ public class shelvesCourses {
         model.addAttribute("stages", stages);
         model.addAttribute("types", types);
 
-        String  mokelName =  sysDictAppServiceImpl.getModelById(modelId);
+        String  mokelName =  sysDictAppServiceImpl.getModelById(modelIds);
         model.addAttribute("modelName", mokelName);
-        model.addAttribute("modelId",modelId);
+        model.addAttribute("modelId",modelIds);
+        model.addAttribute("modelCode",modelCode);
+        
+        List<SysConfigItemRelation> relations = sysConfigItemRelationServiceImpl.findAllItemFront();
 
-        //查询课程列表
+        List<SysDictApp> sysDictApps = sysDictAppServiceImpl.findSysDictAppByCode("GRADE_CODE");
+
+
+        model.addAttribute("secondItem", sysDictApps);
 
         return "simpleClasses/appNewClasses/pageRecommendation";
     }

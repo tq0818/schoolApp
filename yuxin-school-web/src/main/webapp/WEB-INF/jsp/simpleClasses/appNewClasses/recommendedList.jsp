@@ -51,7 +51,7 @@
                         <td>${special.sout }</td>
                         <td>${special.name}</td>
                         <td>
-                            <a href="<%=rootPath %>/appNewClasses/pageRecommendation?modelId=${special.id}" class="btn btn-mini btn-primary eidtRecommondList">编辑</a>
+                            <a href="<%=rootPath %>/appNewClasses/pageRecommendation?modelId=${special.id}_${special.itemOneCode}" class="btn btn-mini btn-primary eidtRecommondList">编辑</a>
                         </td>
                     </tr>
                     <%-- </c:if>--%>

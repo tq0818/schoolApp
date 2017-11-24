@@ -6,20 +6,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import javax.imageio.ImageIO;
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.yuxin.wx.api.app.IShelvesCourseService;
-import com.yuxin.wx.api.app.ISysDictAppService;
-import com.yuxin.wx.api.course.ICourseExerciseService;
-import com.yuxin.wx.api.system.*;
-import com.yuxin.wx.model.app.SysDictApp;
-import com.yuxin.wx.model.system.*;
-import org.apache.commons.collections.map.LinkedMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,24 +40,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.util.IOUtils;
+import com.yuxin.wx.api.app.IShelvesCourseService;
+import com.yuxin.wx.api.app.ISysDictAppService;
 import com.yuxin.wx.api.classes.IClassModuleLessonService;
 import com.yuxin.wx.api.classes.IClassModuleNoService;
 import com.yuxin.wx.api.classes.IClassModuleService;
@@ -73,13 +57,21 @@ import com.yuxin.wx.api.company.ICompanyLiveConfigService;
 import com.yuxin.wx.api.company.ICompanyPicsService;
 import com.yuxin.wx.api.company.ICompanyService;
 import com.yuxin.wx.api.company.ICompanyServiceStaticService;
+import com.yuxin.wx.api.course.ICourseExerciseService;
 import com.yuxin.wx.api.course.ICoursePotocolBindHistoryService;
 import com.yuxin.wx.api.course.ICourseRemoteService;
 import com.yuxin.wx.api.course.ICourseVideoChapterService;
+import com.yuxin.wx.api.system.ISysConfigCampusService;
+import com.yuxin.wx.api.system.ISysConfigItemRelationService;
+import com.yuxin.wx.api.system.ISysConfigItemService;
+import com.yuxin.wx.api.system.ISysConfigItemTagService;
+import com.yuxin.wx.api.system.ISysConfigSchoolService;
+import com.yuxin.wx.api.system.ISysConfigTeacherService;
 import com.yuxin.wx.common.CCLiveInterface;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.common.SysConfigConstant;
 import com.yuxin.wx.course.mapper.CourseVideoLectureMapper;
+import com.yuxin.wx.model.app.SysDictApp;
 import com.yuxin.wx.model.classes.ClassModule;
 import com.yuxin.wx.model.classes.ClassModuleLesson;
 import com.yuxin.wx.model.classes.ClassModuleNo;
@@ -96,12 +88,17 @@ import com.yuxin.wx.model.course.CoursePotocolBindHistory;
 import com.yuxin.wx.model.course.CourseRemote;
 import com.yuxin.wx.model.course.CourseVideoChapter;
 import com.yuxin.wx.model.course.CourseVideoLecture;
+import com.yuxin.wx.model.system.SysConfigCampus;
+import com.yuxin.wx.model.system.SysConfigItem;
+import com.yuxin.wx.model.system.SysConfigItemRelation;
+import com.yuxin.wx.model.system.SysConfigItemTag;
+import com.yuxin.wx.model.system.SysConfigSchool;
+import com.yuxin.wx.model.system.SysConfigTeacher;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.util.APIServiceFunction;
 import com.yuxin.wx.util.HttpPostRequest;
 import com.yuxin.wx.util.ImageUtils;
 import com.yuxin.wx.util.TalkfunUtils;
-import com.yuxin.wx.utils.DateUtil;
 import com.yuxin.wx.utils.EntityUtil;
 import com.yuxin.wx.utils.FileUtil;
 //import com.yuxin.wx.utils.FileUtil;
@@ -191,7 +188,9 @@ public class SimpleclassTypeController {
 	public Map<String,List<SysDictApp>> querySlibMenu(HttpServletRequest request,String parentId,String typeId){
 		Map<String,List<SysDictApp>> linked = new LinkedHashMap<String,List<SysDictApp>>();
 		SysDictApp search = new SysDictApp();
-		search.setParentId(Integer.parseInt(parentId));
+		if(parentId!=null&&parentId!="")
+			search.setParentId(Integer.parseInt(parentId));
+		
 		List<SysDictApp> slibMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
 		if("courseCaId".equals(typeId)){
 			if(null!=slibMenus && slibMenus.size()>0){
@@ -228,12 +227,12 @@ public class SimpleclassTypeController {
 	public String insertShelvesInfo(HttpServletRequest request,ClassTypeVo cto){
 
 		try {
-
 			Object imgUrlObj = request.getSession().getAttribute("imgUrl");
+
 			if(null!=imgUrlObj){
 				cto.setImgUrl((String) imgUrlObj);
 			}
-
+			
 			String appId = cto.getAppId();
 			if(!"1".equals(cto.getShelvesFlag())){
 				cto.setReserveTime(cto.getShelvesTime());
@@ -244,6 +243,13 @@ public class SimpleclassTypeController {
 			if(null==cto.getShelvesTime()||"".equals(cto.getShelvesTime())){
 				cto.setShelvesTime(null);
 			}
+
+			if(null==cto.getStageId()||"".equals(cto.getStageId())){
+				cto.setStageId(null);
+			}
+			if(null==cto.getTypeId()||"".equals(cto.getTypeId())){
+				cto.setTypeId(null);
+			}
 			if (null == appId || "".equals(appId)) {
 				//插入数据入库
 				classTypeServiceImpl.insertAppShelvesInfo(cto);
@@ -253,8 +259,11 @@ public class SimpleclassTypeController {
 				shelvesCourseServiceImpl.update(cto);
 
 			}
+			request.getSession().removeAttribute("imgUrl");
 			return "1";
 		}catch (Exception e){
+			e.printStackTrace();
+			request.getSession().removeAttribute("imgUrl");
 			return "0";
 		}
 	}
@@ -263,6 +272,7 @@ public class SimpleclassTypeController {
 	public String showAppShelvesEdit(HttpServletRequest request,Model model){
 		String ids = request.getParameter("ids");
 		String zhiboFlag = request.getParameter("zhiboFlag");
+		String editFlag = request.getParameter("editFlag");
 
 		if(null!=ids && ids.split("_").length>0){
 			List<SysDictApp> firstMenus = null;
@@ -380,6 +390,8 @@ public class SimpleclassTypeController {
 					leixingMenus.addAll(leixings);
 				}
 			}
+			String commodityPicUrl="http://"+propertiesUtil.getProjectImageUrl()+"/";
+			model.addAttribute("commodityPicUrl", commodityPicUrl);
 			model.addAttribute("commodityId",commodityId);
 			model.addAttribute("appId",appId);
 			model.addAttribute("firstMenus",firstMenus);
@@ -390,6 +402,7 @@ public class SimpleclassTypeController {
 			model.addAttribute("jieduanMenus",jieduanMenus);
 			model.addAttribute("leixingMenus",leixingMenus);
 			model.addAttribute("searchAndResult",searchAndResult);
+			model.addAttribute("editFlag",editFlag);
 
 		}
 		return "simpleClasses/appNewClasses/informationEditing";

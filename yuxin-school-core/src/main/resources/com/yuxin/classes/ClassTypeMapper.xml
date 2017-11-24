@@ -413,11 +413,9 @@
 			<if test="itemSecondCode != null  and itemSecondCode != ''">item_second_code = #{itemSecondCode},</if>
 			<if test="itemThirdCode != null  and itemThirdCode != ''">item_third_code = #{itemThirdCode},</if>
 			<if test="itemFourthCode != null  and itemFourthCode != ''">item_fourth_code = #{itemFourthCode},</if>
-		    <if test="publishStatus == 'CLASS_STOP_SALE' or delFlag ==1">subject_class_order = null</if>
-		    <if test="isMicroClass != null">is_micro_class = #{isMicroClass}</if>
+		    <if test="publishStatus == 'CLASS_STOP_SALE' or delFlag ==1">subject_class_order = null,</if>
+		    <if test="isMicroClass != null">is_micro_class = #{isMicroClass},</if>
 		    <if test="paperDescription != null and paperDescription!=''">paper_description = #{paperDescription}</if>
-		    <if test="originType != null and originType''">origin_type = #{originType}</if>
-
 		 </trim>
 		<where>id = #{id}</where>
 	</update>

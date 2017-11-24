@@ -38,4 +38,8 @@ input[disabled]{cursor: not-allowed;}
 .popupContainerRecommendation{height: 300px;top: 25%;}
 .sureBatchRecommendation{text-align: center;margin-top: 50px;}
 .recommendBatchRecommendation{margin-top: 30px;}
+.informationEditImg{width: 200px;height: 200px;}
+.overflowHide{overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.fromIconPc{display: inline-block;width: 30px;height: 30px;background: url("/images/fromPc.png") no-repeat center;position: absolute;right: 5px;top: 5px;z-index: 1000;background-size:100%;}
+.fromIconPhone{display: inline-block;width: 30px;height: 30px;background: url("/images/fromPhone.png") no-repeat center;position: absolute;right: 5px;top: 5px;z-index: 1000;background-size:60%;}
 

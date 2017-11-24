@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.yuxin.wx.common.BaseMapper;
 import com.yuxin.wx.model.commodity.Commodity;
+import com.yuxin.wx.vo.commodity.CommodityDto;
 import com.yuxin.wx.vo.commodity.CommodityVo;
 /**
  * Service Interface:ClassModule
@@ -77,7 +78,32 @@ public interface CommodityMapper extends BaseMapper<Commodity> {
 
 	List<CommodityVo> getStudySectionById(Integer modelId);
 
-	List<CommodityVo> getModelListByIds(Map<String, Object> param);
+	List<CommodityDto> getModelListByIds(Map<String, Object> param);
 
-	int getModelListByIdsCount(Map<String, Object> param);
+	Integer getModelListByIdsCount(Map<String, Object> param);
+	/**
+	 * 获取直播模块数
+	 * @param param
+	 * @return
+	 */
+	List<CommodityDto> getZhiBoModelListByIds(Map<String, Object> param);
+	/**
+	 * 获取直播数
+	 * @param param
+	 * @return
+	 */
+	Integer getZhiBoModelListByIdsCount(Map<String, Object> param);
+	
+	void deleteFirstRecommendByIds(String appShelvesIds);
+	/**
+	 * 更新推荐表顺序字段
+	 * @param appShelvesId
+	 * @param sort
+	 */
+	void updateFirstRecommendSort(Map<String, Object> param);
+	/**
+	 * 更新app_shelves表的sort字段
+	 * @param param
+	 */
+	void updateAppShelvesSort(Map<String, Object> param);
 }

@@ -66,6 +66,10 @@
 	<select id="getStudySectionById" parameterType="Integer" resultMap="sysDictAppResultMap" >
 		select * from sys_dict_app where parent_id = #{modelId}
 	</select>
+	
+	<select id="findSysDictAppByCode" parameterType="map" resultMap="sysDictAppResultMap" >
+		select * from sys_dict_app where type=#{code}
+	</select>
 
 	<select id="getModelById" parameterType="Integer" resultType="String" >
 		select name from sys_dict_app where  id = #{modelId}

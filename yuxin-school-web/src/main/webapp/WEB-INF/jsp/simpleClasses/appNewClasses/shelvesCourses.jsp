@@ -54,7 +54,7 @@
             <p class="c">
                 <span class="t-title">阶段</span>
                 <span class="t-content" id="stageId">
-                	<a href="Form.showAllShelvesClssType('all','stageId');" ids="all" class="btn btn-mini btn-default btn-success">全部</a>
+                	<a href="javascript:Form.showAllShelvesClssType('all','stageId');" ids="all" class="btn btn-mini btn-default btn-success">全部</a>
                 </span>
             </p>
             <p class="c">
@@ -73,6 +73,12 @@
 			</div>
         </div>
     </div>
+    <!-- ajax加载中div开始 -->
+    <div class="loading lp-units-loading" style="display:none">
+        <p><i></i>加载中,请稍后...</p>
+    </div>
+    <div class="loading-bg lp-units-loading-bg" style="display:none"></div>
+    <!--  ajax加载中div结束 -->
 
     <script type="text/javascript" src="<%=rootPath %>/javascripts/app/shelvesCourses.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/classes.js"></script>

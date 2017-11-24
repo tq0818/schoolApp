@@ -20,6 +20,6 @@ public interface ISysDictAppService {
 
 	String  getModelById(Integer modelId);
 
-	
+	List<SysDictApp> findSysDictAppByCode(String code);
 	
 }

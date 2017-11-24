@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.yuxin.wx.common.PageFinder;
+import com.yuxin.wx.common.PageFinder2;
 import com.yuxin.wx.model.commodity.Commodity;
+import com.yuxin.wx.vo.commodity.CommodityDto;
 import com.yuxin.wx.vo.commodity.CommodityVo;
 
 /**
@@ -244,8 +246,22 @@ public interface ICommodityService {
 
 	List<CommodityVo> getStudySectionById(Integer modelId);
 
-	List<CommodityVo> getModelListByIds(Map<String, Object> param);
+	PageFinder2<CommodityDto> getModelListByIds(Map<String, Object> param);
 
 	int getModelListByIdsCount(Map<String, Object> param);
+	/**
+	 * 更新或插入first_recommend表
+	 * @param gradeIds
+	 * @param appShelvesIds
+	 * @return
+	 */
+	public Boolean insertOrUpdate(String gradeIds, String appShelvesIds);
+	/**
+	 * 更新表first_recommend的sort字段
+	 * @param appShelvesId
+	 * @param sort 推荐顺序
+	 * @return
+	 */
+	public Boolean updateFirstRecommend(String appShelvesId,String sort);
 
 }
