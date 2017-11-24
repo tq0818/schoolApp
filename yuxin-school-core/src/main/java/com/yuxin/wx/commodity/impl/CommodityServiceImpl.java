@@ -1,6 +1,7 @@
 package com.yuxin.wx.commodity.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yuxin.wx.api.classes.IClassTypeService;
 import com.yuxin.wx.api.commodity.ICommodityService;
 import com.yuxin.wx.commodity.mapper.CommodityMapper;
 import com.yuxin.wx.common.BaseServiceImpl;
@@ -20,6 +22,7 @@ import com.yuxin.wx.model.commodity.Commodity;
 import com.yuxin.wx.model.company.CompanyFunctionSet;
 import com.yuxin.wx.model.system.SysConfigService;
 import com.yuxin.wx.system.mapper.SysConfigServiceMapper;
+import com.yuxin.wx.vo.classes.FirstRecommend;
 import com.yuxin.wx.vo.commodity.CommodityDto;
 import com.yuxin.wx.vo.commodity.CommodityVo;
 
@@ -39,6 +42,8 @@ public class CommodityServiceImpl extends BaseServiceImpl implements ICommodityS
     private SysConfigServiceMapper sysConfigServiceMapper;
     @Autowired
     private CompanyFunctionSetMapper companyFunctionSetMapper;
+    @Autowired
+    private IClassTypeService classTypeServiceImpl;
 
     @Override
     public void insert(Commodity entity) {
@@ -264,8 +269,16 @@ public class CommodityServiceImpl extends BaseServiceImpl implements ICommodityS
 
     @Override
     public PageFinder2<CommodityDto> getModelListByIds(Map<String, Object> param) {
-    	List<CommodityDto> datas=commodityMapper.getModelListByIds(param);
-    	Integer count=commodityMapper.getModelListByIdsCount(param);
+    	List<CommodityDto> datas=new ArrayList<CommodityDto>();
+    	Integer count=0;
+    	String modelCode=(String)param.get("modelCode");
+    	if(("ZHIBO").equals(modelCode)){
+    		datas=commodityMapper.getZhiBoModelListByIds(param);
+    		count=commodityMapper.getZhiBoModelListByIdsCount(param);
+    	}else if(modelCode!=null&&modelCode!=""){
+    		datas=commodityMapper.getModelListByIds(param);
+        	count=commodityMapper.getModelListByIdsCount(param);
+    	}
         return new PageFinder2<CommodityDto>((Integer)param.get("page"),(Integer)param.get("pageSize"),count,datas);
     }
 
@@ -274,4 +287,41 @@ public class CommodityServiceImpl extends BaseServiceImpl implements ICommodityS
         return commodityMapper.getModelListByIdsCount( param) ;
     }
 
+	@Override
+	public Boolean insertOrUpdate(String gradeIds, String appShelvesIds) {
+		//任何一个为空时，都不插入数据
+		if(gradeIds==null||gradeIds==""||appShelvesIds==""||appShelvesIds==null) return true;
+		
+		String[]gradeIdArray=gradeIds.split(",");
+		String[]appShelvesIdArray=appShelvesIds.split(",");
+			
+		//通过appShelvesIds先删除先有的记录
+		commodityMapper.deleteFirstRecommendByIds(appShelvesIds);
+		//插入对应的数据
+		List<FirstRecommend> firstRecommends=new ArrayList<FirstRecommend>();
+			
+		for(String appShelvesId:appShelvesIdArray){
+			if(appShelvesId==""||appShelvesId==null||appShelvesId=="undefined")continue;
+			for(String gradeId:gradeIdArray){
+				if(gradeId==""||gradeId==null||gradeId=="undefined")continue;
+				FirstRecommend firstRecommend=new FirstRecommend();
+				firstRecommend.setAppShelvesId(appShelvesId);
+				firstRecommend.setGradeNo(gradeId);
+				firstRecommends.add(firstRecommend);
+			}
+		}
+		classTypeServiceImpl.insertFirstRecommond(firstRecommends);
+		return true;
+	}
+
+	@Override
+	public Boolean updateFirstRecommend(String appShelvesId, String sort) {
+		if(appShelvesId==null||appShelvesId=="") return true;
+		Map<String,Object> params=new HashMap<String,Object>();
+		params.put("appShelvesId",appShelvesId);
+		params.put("sort",sort);
+		commodityMapper.updateAppShelvesSort(params);
+		return true;
+	}
+	
 }

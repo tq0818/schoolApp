@@ -8,7 +8,6 @@
 	var Form={
 			init : function(){
 				var $this=this;
-				$selectMenu("course_class_type");
 				//$(".footer").addClass("footer-fixed");
 				$(".t-content").on('click','a.btn',function(){
 					var _this=$(this),status= _this.hasClass('btn-success');
@@ -22,6 +21,110 @@
 	                    $("#tableList").find(".signUpMany").prop("checked", true);
 	                } else {
 	                    $("#tableList").find(".signUpMany").prop("checked", false);
+	                }
+	            });
+			},
+			submitBatchClassApp:function(){
+				var data={};
+				var grade_ids='';
+				$("#gradeList").find("a").each(function (i) {
+	                if ($(this).hasClass('active')) {
+	                	if(grade_ids==''){
+	                		if($(this).attr("id")=='all'||$(this).attr("id")==undefined||$(this).attr("id")=='') return;
+	                		grade_ids= $(this).attr("id");
+	                	}else{
+	                		grade_ids+=','+$(this).attr("id");
+	                	}
+	                }
+	            });
+				
+				var classids='';
+				$("#tableList").find(".signUpMany").each(function(i){
+					if($(this).prop("checked")){
+						if(classids==''){
+							if($(this).val()=='all'||$(this).val()==undefined||$(this).val()=='') return;
+							classids=$(this).val();
+						}else
+							classids+=','+$(this).val();
+					}
+				});
+				if(grade_ids==''){
+					$.msg('未选择年级');
+					return;
+				}
+				
+				data.gradeIds=grade_ids;
+				data.appShelvesIds=classids;
+				$.ajax({
+	                url: rootPath + "/specialModel/insertOrupdateTuiJian",
+	                type: "post",
+	                data: data,
+	                beforeSend: function (XMLHttpRequest) {
+	                    $(".loading").show();
+	                    $(".loading-bg").show();
+	                },
+	                success: function (jsonData) {
+	                	if(jsonData){
+	                		$.msg('保存成功');
+	                		$("#gradeList").find("a").each(function (i){
+	                			$(this).removeClass('active');
+	        	            });
+	                		$('.popupContainerRecommendation').hide();
+	                        $('.popupOpacity').hide();
+	                	}else{
+	                		$.msg('保存失败');
+	                		$('.popupContainerRecommendation').show();
+	                        $('.popupOpacity').show();
+	                	}
+	                },
+	                complete: function (XMLHttpRequest, textStatus) {
+	                    $(".loading").hide();
+	                    $(".loading-bg").hide();
+	                }
+	            });
+			},
+			updateFirstRecommend:function(obj,str){
+				var app_shelves_id=$(obj).attr('id');
+				var textId="recommendationNum_"+app_shelves_id;
+				var sort=$("#"+textId).val();
+				if(app_shelves_id=='all'||app_shelves_id==undefined||app_shelves_id==''){
+					return;
+				}
+				if(str=="update"){
+					var r = /^\+?[1-9][0-9]*$/;
+					var flag=r.test(sort); 
+					if(!flag){
+						$.msg('输入数字必须为整数');
+						return;
+					}
+				}
+				if(str=="delete"){
+					sort=""
+				}
+				var data={};
+				data.appShelvesId=app_shelves_id;
+				data.sort=sort;
+				$.ajax({
+	                url: rootPath + "/specialModel/updateFirstRecommendationNum",
+	                type: "post",
+	                data: data,
+	                beforeSend: function (XMLHttpRequest) {
+	                    $(".loading").show();
+	                    $(".loading-bg").show();
+	                },
+	                success: function (jsonData) {
+	                	if(jsonData){
+	                		$.msg('保存成功');
+	                		if(str=="delete"){
+	                			$("#"+textId).val("");
+	                		}
+	                	}else{
+	                		$.msg('保存失败');
+	                	}
+	                },
+	                complete: function (XMLHttpRequest, textStatus) {
+	                    $(".loading").hide();
+	                    $(".loading-bg").hide();
 	                }
 	            });
 			},
@@ -94,6 +197,8 @@
 	            }
 	            datas.page = page ? page : 1;
 	            datas.pageSize=$("#selectCounts").val() || 10;
+	            datas.modelCode=$("#modelCode").val();
+	            datas.modelId=$("#modelId").val();
 	            $(".user-list").find("table").find("tr:gt(0)").remove();
 	            $.ajax({
 	                url: rootPath + "/specialModel/getModelListByIds",
@@ -111,6 +216,7 @@
 	                                '<tr><td colspan="14">没有查找到数据</td></tr>');
                         }
 	                	$.each(jsonData.data,function (i, stu) {
+	                		if(stu.sort==null) stu.sort='';
                             $(".user-list").find("table").append('<tr>'+
                                     '<td><input type="checkbox" class="signUpMany" value="'+stu.shelves_id+'"></td>'+
                                     '<td><img src="'+stu.coverUrl+'" alt="" class="shelvesIcon"></td>'+
@@ -127,9 +233,9 @@
                                     '<td>'+stu.realPrice+'</td>'+
                                     '<td>'+stu.salePrice+'</td>'+
                                     '<td>'+
-                                        '<input type="text" class="'+stu.shelves_id+'" name="recommendationNum">'+
-                    					'<button class="btn btn-success btn-sm">确定</button>'+
-                    					'<button class="btn btn-danger btn-sm">取消</button>'+
+                                        '<input type="text" class="recommendationNum" id="recommendationNum_'+stu.shelves_id+'" value="'+stu.sort+'">'+
+                    					'<button class="btn btn-success btn-sm" id="'+stu.shelves_id+'" onclick="Form.updateFirstRecommend(this,\'update\')">确定</button>'+
+                    					'<button class="btn btn-danger btn-sm" id="'+stu.shelves_id+'" onclick="Form.updateFirstRecommend(this,\'delete\')">取消</button>'+
                                     '</td>'+
                                 '</tr>');
 

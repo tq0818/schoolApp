@@ -90,9 +90,15 @@ public class shelvesCourses {
      * 跳转到批量首页推荐
      */
     @RequestMapping(value = "/pageRecommendation", method = RequestMethod.GET)
-    public String gotopageRecommendation(Model model, Integer modelId, Integer parentId, HttpServletRequest request) throws UnsupportedEncodingException {
+    public String gotopageRecommendation(Model model, String modelId, Integer parentId, HttpServletRequest request) throws UnsupportedEncodingException {
+    	Integer modelIds=null;
+    	String modelCode=null;
+    	if(modelId!=null&&modelId!=""){
+    		modelIds=Integer.valueOf(modelId.split("_")[0]);
+    		modelCode=modelId.split("_")[1];
+    	}
         //获取二级菜单
-        List<SysDictApp> menusList = sysDictAppServiceImpl.getStudySectionById(modelId);
+        List<SysDictApp> menusList = sysDictAppServiceImpl.getStudySectionById(modelIds);
 
         //获取课程分类名称
         List<SysDictApp>grades = new ArrayList<SysDictApp>();
@@ -111,36 +117,17 @@ public class shelvesCourses {
         model.addAttribute("stages", stages);
         model.addAttribute("types", types);
 
-        String  mokelName =  sysDictAppServiceImpl.getModelById(modelId);
+        String  mokelName =  sysDictAppServiceImpl.getModelById(modelIds);
         model.addAttribute("modelName", mokelName);
-        model.addAttribute("modelId",modelId);
-
+        model.addAttribute("modelId",modelIds);
+        model.addAttribute("modelCode",modelCode);
+        
         List<SysConfigItemRelation> relations = sysConfigItemRelationServiceImpl.findAllItemFront();
-        SysConfigItem item = new SysConfigItem();
 
-        item.setCompanyId(WebUtils.getCurrentCompanyId());
-
-        item.setSchoolId( WebUtils.getCurrentUserSchoolId(request));
-
-        item.setItemType("2");
-
-        List<SysConfigItem> names = sysConfigItemServiceImpl.findByParentCode(item);
+        List<SysDictApp> sysDictApps = sysDictAppServiceImpl.findSysDictAppByCode("GRADE_CODE");
 
 
-        List<SysConfigItemRelation> secondItem = new ArrayList<SysConfigItemRelation>();
-
-        for(SysConfigItemRelation re : relations){
-	        if(re.getLevel()==1){
-	        	secondItem.add(re);
-	        }
-        for(SysConfigItem name :names){
-        	if(re.getItemCode().equals(name.getItemCode())){
-        		re.setItemName(name.getItemName());
-        		break;
-        	}	
-        }
-        }
-        model.addAttribute("secondItem", secondItem);
+        model.addAttribute("secondItem", sysDictApps);
 
         return "simpleClasses/appNewClasses/pageRecommendation";
     }

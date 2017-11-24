@@ -6,20 +6,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import javax.imageio.ImageIO;
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.yuxin.wx.api.app.IShelvesCourseService;
-import com.yuxin.wx.api.app.ISysDictAppService;
-import com.yuxin.wx.api.course.ICourseExerciseService;
-import com.yuxin.wx.api.system.*;
-import com.yuxin.wx.model.app.SysDictApp;
-import com.yuxin.wx.model.system.*;
-import org.apache.commons.collections.map.LinkedMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,24 +40,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.util.IOUtils;
+import com.yuxin.wx.api.app.IShelvesCourseService;
+import com.yuxin.wx.api.app.ISysDictAppService;
 import com.yuxin.wx.api.classes.IClassModuleLessonService;
 import com.yuxin.wx.api.classes.IClassModuleNoService;
 import com.yuxin.wx.api.classes.IClassModuleService;
@@ -73,13 +57,21 @@ import com.yuxin.wx.api.company.ICompanyLiveConfigService;
 import com.yuxin.wx.api.company.ICompanyPicsService;
 import com.yuxin.wx.api.company.ICompanyService;
 import com.yuxin.wx.api.company.ICompanyServiceStaticService;
+import com.yuxin.wx.api.course.ICourseExerciseService;
 import com.yuxin.wx.api.course.ICoursePotocolBindHistoryService;
 import com.yuxin.wx.api.course.ICourseRemoteService;
 import com.yuxin.wx.api.course.ICourseVideoChapterService;
+import com.yuxin.wx.api.system.ISysConfigCampusService;
+import com.yuxin.wx.api.system.ISysConfigItemRelationService;
+import com.yuxin.wx.api.system.ISysConfigItemService;
+import com.yuxin.wx.api.system.ISysConfigItemTagService;
+import com.yuxin.wx.api.system.ISysConfigSchoolService;
+import com.yuxin.wx.api.system.ISysConfigTeacherService;
 import com.yuxin.wx.common.CCLiveInterface;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.common.SysConfigConstant;
 import com.yuxin.wx.course.mapper.CourseVideoLectureMapper;
+import com.yuxin.wx.model.app.SysDictApp;
 import com.yuxin.wx.model.classes.ClassModule;
 import com.yuxin.wx.model.classes.ClassModuleLesson;
 import com.yuxin.wx.model.classes.ClassModuleNo;
@@ -96,12 +88,17 @@ import com.yuxin.wx.model.course.CoursePotocolBindHistory;
 import com.yuxin.wx.model.course.CourseRemote;
 import com.yuxin.wx.model.course.CourseVideoChapter;
 import com.yuxin.wx.model.course.CourseVideoLecture;
+import com.yuxin.wx.model.system.SysConfigCampus;
+import com.yuxin.wx.model.system.SysConfigItem;
+import com.yuxin.wx.model.system.SysConfigItemRelation;
+import com.yuxin.wx.model.system.SysConfigItemTag;
+import com.yuxin.wx.model.system.SysConfigSchool;
+import com.yuxin.wx.model.system.SysConfigTeacher;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.util.APIServiceFunction;
 import com.yuxin.wx.util.HttpPostRequest;
 import com.yuxin.wx.util.ImageUtils;
 import com.yuxin.wx.util.TalkfunUtils;
-import com.yuxin.wx.utils.DateUtil;
 import com.yuxin.wx.utils.EntityUtil;
 import com.yuxin.wx.utils.FileUtil;
 //import com.yuxin.wx.utils.FileUtil;
@@ -235,7 +232,7 @@ public class SimpleclassTypeController {
 			if(null!=imgUrlObj){
 				cto.setImgUrl((String) imgUrlObj);
 			}
-
+			
 			String appId = cto.getAppId();
 			if(!"1".equals(cto.getShelvesFlag())){
 				cto.setReserveTime(cto.getShelvesTime());
