@@ -11,7 +11,7 @@
 <html lang="en">
 <head>
     <%@include file="/decorators/import.jsp" %>
-
+    <script type="text/javascript" src="<%=rootPath %>/javascripts/plus/jquery.pagination.js"></script>
 </head>
 <div class="heading">
     <h2 class="h5" style="display: inline-block;">已上架课程</h2>
@@ -178,7 +178,6 @@
 
 
 </script>
-
 <script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/shelvesCoursesAjax.js"></script>
 <script>
     //批量下架調用接口
