@@ -21,6 +21,14 @@
 		<c:forEach items="${pageFinder.data }" var="allCommdotity" varStatus="status">
 			<li id="commodityLi${allCommdotity.id }" onmouseover="Form.showSave(${allCommdotity.id})" onmouseout="Form.closeSave(${allCommdotity.id})" publishStatus="${allCommdotity.publishStatus}">
 				<c:choose>
+					<c:when test="${allCommdotity.originType eq 1}">
+						<span class="fromIconPhone"></span>
+					</c:when>
+					<c:otherwise>
+						<span class="fromIconPc"></span>
+					</c:otherwise>
+				</c:choose>
+				<c:choose>
 					<c:when test="${allCommdotity.publishStatus=='CLASS_STOP_SALE' }">
 						<i class="tips tips_type" style="background-color: rgba(231,31,26,0.8);color: white;">
 							<c:choose>
@@ -154,6 +162,7 @@
     $('.closePopupContainer').click(function () {
         $('.popupContainer').hide();
         $('.popupOpacity').hide();
+		Form.queryAllCommdityByItemNew(1);
     });
     //点击上架打开弹窗
     $('.eidtShelvesCourses').click(function () {
@@ -161,7 +170,6 @@
         $('.popupOpacity').show();
     });
 </script>
-
 <script type="text/javascript">
 	var orderCount = ${orderCount};
 	function resizeLayout(){

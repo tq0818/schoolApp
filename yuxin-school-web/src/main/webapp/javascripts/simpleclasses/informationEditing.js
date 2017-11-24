@@ -130,16 +130,19 @@ function toShelves(flag,editFlag){
 	var labDesc = $("#labDesc").val();
 	var appPrice = $("#appPrice").val();
 	var salePrice = $("#salePrice").val();
-
-	var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
-	if (!reg.test(appPrice)) {
-		alert("请输入正确的价格");
+	if(appPrice){
+		var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+		if (!reg.test(appPrice)) {
+			alert("请输入正确的价格");
+			return;
+		}
 	}
-	if (!reg.test(salePrice)) {
-		alert("请输入正确的销售价格");
+	if(salePrice){
+		if (!reg.test(salePrice)) {
+			alert("请输入正确的销售价格");
+			return;
+		}
 	}
-
-
 	if("0"==flag && ""== $.trim(shelvesTime) ){
 		alert("预约上架时间不能为空");
 		return;
@@ -157,6 +160,8 @@ function toShelves(flag,editFlag){
 				$('.popupOpacity').hide();
 				if('1'==editFlag){
 					reloadCurrunt();
+				}else{
+					Form.queryAllCommdityByItemNew(1);
 				}
 			}else{
 				alert("失败")

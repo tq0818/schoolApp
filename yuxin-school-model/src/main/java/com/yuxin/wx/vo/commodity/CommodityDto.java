@@ -62,7 +62,17 @@ public class CommodityDto extends BaseEntity {
 	private String salePrice;
 	
 	private String shelves_id;
+	/**
+	 * 排序
+	 */
+	private String sort;
 	
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
 	public String getShelves_id() {
 		return shelves_id;
 	}
