@@ -13,6 +13,7 @@ public class UserCollectQuestVO implements Serializable {
 	private Integer userId;//用户ID
 	private Integer questionId;//问题ID
 	private Integer isCollect;//
+	private String questionTitle;//问答题目
 	public Integer getId() {
 		return id;
 	}
@@ -37,5 +38,11 @@ public class UserCollectQuestVO implements Serializable {
 	public void setIsCollect(Integer isCollect) {
 		this.isCollect = isCollect;
 	}
-
+	public String getQuestionTitle() {
+		return questionTitle;
+	}
+	public void setQuestionTitle(String questionTitle) {
+		this.questionTitle = questionTitle;
+	}
+	
 }

@@ -12,13 +12,14 @@ public class SysDictConfigVO implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String id; //编码
+	private String itemCode; //编码
 	private String name;//编码名称
-	public String getId() {
-		return id;
+	
+	public String getItemCode() {
+		return itemCode;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
 	}
 	public String getName() {
 		return name;
