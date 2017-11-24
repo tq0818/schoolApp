@@ -63,11 +63,11 @@ public class SpecialModelController {
      *
      * @param model
      * @param categoryid        模块ID
-     * @param gradeId 学段ID
+     * @param gradeid 学段ID
      * @param subjectid      科目ID
-     * @param knowId         知识点ID
-     * @param knowledgeid       知识点专题ID
-     * @param typeId         类型ID
+     * @param knowledgeid         知识点ID
+     * @param knowledgeProid       知识点专题ID
+     * @param typeCode         类型ID
      * @param stageid        阶段ID
      * @return
      */

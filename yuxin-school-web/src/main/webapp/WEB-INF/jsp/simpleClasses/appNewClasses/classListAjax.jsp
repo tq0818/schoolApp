@@ -8,7 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--已上架课程列表--%>
-<html lang="eeee">
+<html lang="en">
 <head>
  <%@include file="/decorators/import.jsp" %>
  

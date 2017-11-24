@@ -362,7 +362,7 @@
 							$("#gradeId").html(html);
 							$("#subjectId").html(allHtml.replace("allToAll","subjectId"));
 							$("#kwonProId").html(allHtml.replace("allToAll","kwonProId"));
-							$("#kwonId").html(allHtml.replace("allToAll","kwonId"));
+							$("#knowId").html(allHtml.replace("allToAll","knowId"));
 							//更新阶段和类型
 							html='';
 							html +=allHtml.replace("allToAll","stageId");
@@ -390,7 +390,7 @@
 							}
 							$("#subjectId").html(html);
 							$("#kwonProId").html(allHtml.replace("allToAll","kwonProId"));
-							$("#kwonId").html(allHtml.replace("allToAll","kwonId"));
+							$("#knowId").html(allHtml.replace("allToAll","knowId"));
 							//查询课程信息
 							fillGrade(datas);
 							fillStage(datas);
@@ -402,7 +402,7 @@
 								html +='<a href="javascript:Form.showAllShelvesClssType(\''+data[i].id+'\',\'kwonProId\');" data-code=\''+data[i].id+'\' class="btn btn-mini btn-default">'+data[i].name+'</a>';
 							}
 							$("#kwonProId").html(html);
-							$("#kwonId").html(allHtml.replace("allToAll","kwonId"));
+							$("#knowId").html(allHtml.replace("allToAll","knowId"));
 							//查询课程信息
 							fillSubject(datas);
 							fillStage(datas);
@@ -449,6 +449,7 @@
 				});
 			},
 		}
+
 	$(document).ready(function(){		
 		Form.init();
 		var datas = {};

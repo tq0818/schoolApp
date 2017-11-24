@@ -56,6 +56,8 @@ public class QueQuestion extends BaseEntity {
 
 	private String searchKey;// 搜索条件
 	private Integer questionscore; /* 问题积分 */
+	
+	private String labelContent;
 
 	// Constructor
 	public QueQuestion() {
@@ -403,5 +405,16 @@ public class QueQuestion extends BaseEntity {
 	public void setQuestionscore(Integer questionscore) {
 		this.questionscore = questionscore;
 	}
+
+	public String getLabelContent() {
+		return labelContent;
+	}
+
+	public void setLabelContent(String labelContent) {
+		this.labelContent = labelContent;
+	}
+
+	
+
 	
 }

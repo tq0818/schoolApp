@@ -40,6 +40,8 @@ input[disabled]{cursor: not-allowed;}
 .recommendBatchRecommendation{margin-top: 30px;}
 .informationEditImg{width: 200px;height: 200px;}
 .overflowHide{overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
-.fromIconPc{display: inline-block;width: 30px;height: 30px;background: url("/images/fromPc.png") no-repeat center;position: absolute;right: 5px;top: 5px;z-index: 1000;background-size:100%;}
-.fromIconPhone{display: inline-block;width: 30px;height: 30px;background: url("/images/fromPhone.png") no-repeat center;position: absolute;right: 5px;top: 5px;z-index: 1000;background-size:60%;}
-
+.fromIconPc{display: inline-block;width: 30px;height: 30px;background: url("/images/fromPc.png") no-repeat center;position: absolute;right: 5px;top: 5px;z-index: 50;background-size:100%;}
+.fromIconPhone{display: inline-block;width: 30px;height: 30px;background: url("/images/fromPhone.png") no-repeat center;position: absolute;right: 5px;top: 5px;z-index: 50;background-size:60%;}
+.btn-ico {width: 20px;height: 20px;cursor: pointer;background: #16d874;display: inline-block;
+    border-radius: 10px;text-align: center;line-height: 20px;color: #fff;margin-left: 5px;}
+.btn-ico.btn-cha{background: #e45200;}

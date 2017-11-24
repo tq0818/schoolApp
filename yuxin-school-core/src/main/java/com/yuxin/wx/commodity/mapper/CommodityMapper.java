@@ -3,6 +3,7 @@ package com.yuxin.wx.commodity.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.yuxin.wx.vo.classes.ClassTypeVo;
 import org.apache.ibatis.annotations.Param;
 
 import com.yuxin.wx.common.BaseMapper;

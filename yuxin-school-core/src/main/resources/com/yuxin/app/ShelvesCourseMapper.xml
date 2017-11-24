@@ -57,8 +57,8 @@
 		join sys_dict_app sys3 on sys3.id=app.`subject_id`
 		join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id`
 		join sys_dict_app sys5 on sys5.id=app.`knowledge_id`
-		join sys_dict_app sys6 on sys6.id=app.`stage_id`
-		join sys_dict_app sys7 on sys7.id=app.`type_id`
+		left join sys_dict_app sys6 on sys6.id=app.`stage_id`
+		left join sys_dict_app sys7 on sys7.id=app.`type_id`
 		where  ct.del_flag=0 and c.type='COMMODITY_CLASS' <![CDATA[and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`))]]>
 		
 		<if test="categoryid != null and categoryid != ''">and app.category_id = #{categoryid}</if>
@@ -123,8 +123,8 @@
 		join sys_dict_app sys3 on sys3.id=app.`subject_id`
 		join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id`
 		join sys_dict_app sys5 on sys5.id=app.`knowledge_id`
-		join sys_dict_app sys6 on sys6.id=app.`stage_id`
-		join sys_dict_app sys7 on sys7.id=app.`type_id`
+		left join sys_dict_app sys6 on sys6.id=app.`stage_id`
+		left join sys_dict_app sys7 on sys7.id=app.`type_id`
 		where  ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 <![CDATA[and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`))]]>
 		<if test="categoryid != null and categoryid != ''">and app.category_id = #{categoryid}</if>
 		<if test="gradeid != null and gradeid != ''">and app.grade_id = #{gradeid}</if>
@@ -174,8 +174,8 @@
 		join sys_dict_app sys3 on sys3.id=app.`subject_id`
 		join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id`
 		join sys_dict_app sys5 on sys5.id=app.`knowledge_id`
-		join sys_dict_app sys6 on sys6.id=app.`stage_id`
-		join sys_dict_app sys7 on sys7.id=app.`type_id`
+		left join sys_dict_app sys6 on sys6.id=app.`stage_id`
+		left join sys_dict_app sys7 on sys7.id=app.`type_id`
 		where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 <![CDATA[and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`))]]>
 		<if test="categoryid != null and categoryid != ''">and app.category_id = #{categoryid}</if>
 		<if test="gradeid != null and gradeid != ''">and app.grade_id = #{gradeid}</if>
@@ -243,8 +243,8 @@
 		join sys_dict_app sys3 on sys3.id=app.`subject_id`
 		join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id`
 		join sys_dict_app sys5 on sys5.id=app.`knowledge_id`
-		join sys_dict_app sys6 on sys6.id=app.`stage_id`
-		join sys_dict_app sys7 on sys7.id=app.`type_id`
+		left join sys_dict_app sys6 on sys6.id=app.`stage_id`
+		left join sys_dict_app sys7 on sys7.id=app.`type_id`
 		where  ct.del_flag=0 and c.type='COMMODITY_CLASS' <![CDATA[and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`))]]>
 
 		<if test="categoryid != null and categoryid != ''">and app.category_id = #{categoryid}</if>
@@ -309,8 +309,8 @@
 		join sys_dict_app sys3 on sys3.id=app.`subject_id`
 		join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id`
 		join sys_dict_app sys5 on sys5.id=app.`knowledge_id`
-		join sys_dict_app sys6 on sys6.id=app.`stage_id`
-		join sys_dict_app sys7 on sys7.id=app.`type_id`
+		left join sys_dict_app sys6 on sys6.id=app.`stage_id`
+		left join sys_dict_app sys7 on sys7.id=app.`type_id`
 		where  ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 <![CDATA[and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`))]]>
 		<if test="categoryid != null and categoryid != ''">and app.category_id = #{categoryid}</if>
 		<if test="gradeid != null and gradeid != ''">and app.grade_id = #{gradeid}</if>
@@ -360,8 +360,8 @@
 		join sys_dict_app sys3 on sys3.id=app.`subject_id`
 		join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id`
 		join sys_dict_app sys5 on sys5.id=app.`knowledge_id`
-		join sys_dict_app sys6 on sys6.id=app.`stage_id`
-		join sys_dict_app sys7 on sys7.id=app.`type_id`
+		left join sys_dict_app sys6 on sys6.id=app.`stage_id`
+		left join sys_dict_app sys7 on sys7.id=app.`type_id`
 		where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 <![CDATA[and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`))]]>
 		<if test="categoryid != null and categoryid != ''">and app.category_id = #{categoryid}</if>
 		<if test="gradeid != null and gradeid != ''">and app.grade_id = #{gradeid}</if>

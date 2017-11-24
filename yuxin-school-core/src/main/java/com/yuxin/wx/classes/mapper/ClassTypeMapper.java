@@ -137,4 +137,19 @@ public interface ClassTypeMapper extends BaseMapper<ClassType> {
 	 * @param frs
      */
 	void insertFirstRecommond(List<FirstRecommend> frs);
+
+	/**
+	 * 批量并且修改插入首页推荐数据
+	 * @param frs
+	 */
+	void insertAndUpdateFirstRecommond(List<FirstRecommend> frs,String appId,String sort);
+
+	/**
+	 *根据appid 删除first_recommend对应记录
+	 * @param appId
+	 */
+	void delFirstRecommend(String appId);
+
+	List<ClassTypeVo> getGardeIdList(ClassTypeVo search);
+
 }
