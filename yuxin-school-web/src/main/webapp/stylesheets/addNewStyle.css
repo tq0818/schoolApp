@@ -1,3 +1,4 @@
+body{font-family: 'Microsoft Yahei', STHeiti, sans-serif;}
 /*宸蹭笂鏋惰绋*/
 .shelvesIcon{width: 20px;height: 20px;}
 /*缂栬緫涓婃灦璇剧▼*/
@@ -45,3 +46,4 @@ input[disabled]{cursor: not-allowed;}
 .btn-ico {width: 20px;height: 20px;cursor: pointer;background: #16d874;display: inline-block;
     border-radius: 10px;text-align: center;line-height: 20px;color: #fff;margin-left: 5px;}
 .btn-ico.btn-cha{background: #e45200;}
+i{font-style: normal}
