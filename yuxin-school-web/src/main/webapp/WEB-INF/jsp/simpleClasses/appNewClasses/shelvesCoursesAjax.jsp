@@ -87,7 +87,7 @@
                     </c:otherwise>
                 </c:choose>
                 <td>
-                    <a href="javascript:stopClassOnsale(${course.appId });" class="btn btn-primary btn-sm">下架</a>
+                    <a href="javascript:stopClassOnsale('${course.appId }');" class="btn btn-primary btn-sm">下架</a>
                     <span><a href="javascript: toRcommon('${course.courseCaId}','${course.liveFlag}','${course.id}');" class="btn btn-primary btn-sm recommendCourse">推荐</a></span>
                     <span><a href="javascript:toOnsaleEdit('${course.appId}_${course.id}','${course.liveFlag}','1');" class="btn btn-primary btn-sm editCourse">编辑上架</a></span>
                 </td>
