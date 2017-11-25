@@ -80,7 +80,7 @@
     <div class="loading-bg lp-units-loading-bg" style="display:none"></div>
     <!--  ajax加载中div结束 -->
 
-    <script type="text/javascript" src="<%=rootPath %>/javascripts/app/shelvesCourses.js"></script>
+    <script type="text/javascript" src="<%=rootPath %>/javascripts/app/shelvesCourseView.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/classes.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 </body>
