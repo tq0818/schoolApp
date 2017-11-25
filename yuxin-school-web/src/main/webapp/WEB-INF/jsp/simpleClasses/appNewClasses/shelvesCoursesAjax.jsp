@@ -51,7 +51,7 @@
                         <td><img src="${commodityPicUrl}${course.cover}" alt="" class="shelvesIcon"></td>
                     </c:otherwise>
                 </c:choose>
-                <td class="overflowHide" title="${course.lessonName}"><a href="">${course.lessonName}</a></td>
+                <td class="overflowHide" title="${course.lessonName}"><a href="##" onclick="proQueryClassDetails('${course.id}','${course.liveFlag}','${course.videoFlag}','${course.faceFlag}');">${course.lessonName}</a></td>
                 <td class="overflowHide" title="${course.itemSecondName}">${course.itemSecondName}</td>
                 <td class="overflowHide" title="${course.itemThirdName}">${course.itemThirdName}</td>
                 <td class="overflowHide" title="${course.itemFourthName}">${course.itemFourthName}</td>
@@ -124,7 +124,26 @@
 </div>
 <input id="typeIds" type="hidden" value="${typeId}"/>
 <input id="typeStr" type="hidden" value="${typeStr}"/>
+<form method="post" id="myForms">
+
+</form>
 <script>
+    function proQueryClassDetails(id,liveFlag,videoFlag,faceFlag){
+        $("#myForms").html("");
+        var liveType="";
+        if(liveFlag=="1") {
+            liveType = "live";
+        }else if(videoFlag=="1") {
+            liveType = "video";
+        }else if(faceFlag=="1") {
+            liveType = "face";
+        }else {
+            liveType = "remote";
+        }
+        var input="<input type='hidden' value='"+id+"' name='id'/><input type='hidden' value='"+liveType+"' name='lable'/>";
+        $("#myForms").html(input);
+        $("#myForms").attr("action","/editSimpleCourse/editClassTypeMessage").submit();
+    }
     $('.editCourse').click(function(){
         $('.popupContainerEdit').show();
         $('.popupOpacity').show();
