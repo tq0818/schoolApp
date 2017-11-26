@@ -192,6 +192,8 @@
 		<!-- 学员通知 -->
 		<mapper resource="com/yuxin/company/CompanyStudentMessageMapper.xml"/>
 		<mapper resource="com/yuxin/company/CompanyLiveStaticDayDetailMapper.xml"/>
+		<!--通知模版-->
+		<mapper resource="com/yuxin/company/NoticeTemplatMapper.xml"/>
 
 		<!-- 题库 -->
 		<mapper resource="com/yuxin/tiku/TikuCategoryMapper.xml"/>
