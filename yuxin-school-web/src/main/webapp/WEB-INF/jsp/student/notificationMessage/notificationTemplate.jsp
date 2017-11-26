@@ -28,26 +28,25 @@
                     <th width="40%" >模板内容</th>
                     <th width="20%" >状态操作</th>
                 </tr>
-                <tr>
-                    <td>M001</td>
-                    <td>课程报名自动通知</td>
-                    <td>2017/11/01 18:39</td>
-                    <td>xxxxxxx</td>
-                    <td>
-                        <button class="btn btn-warning forbidBtn">禁用</button>
-                        <button class="btn btn-primary editNoticeBtn">编辑</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>M001</td>
-                    <td>课程报名自动通知</td>
-                    <td>2017/11/01 18:39</td>
-                    <td>xxxxxxx</td>
-                    <td>
-                        <button class="btn btn-success forbidBtn">启用</button>
-                        <button class="btn btn-primary editNoticeBtn">编辑</button>
-                    </td>
-                </tr>
+                <c:forEach items="${ntvList}" var="ntv">
+                    <tr>
+                        <td>${ntv.noticeCode}</td>
+                        <td>${ntv.noticeTopic}</td>
+                        <td>${ntv.publishTime}</td>
+                        <td>${ntv.noticeContent}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${ntv.noticeStatus eq 1}">
+                                    <button updateId="${ntv.id}" class="btn btn-warning forbidBtn">禁用</button>
+                                </c:when>
+                                <c:otherwise>
+                                    <button updateId="${ntv.id}" class="btn btn-warning forbidBtn">启用</button>
+                                </c:otherwise>
+                            </c:choose>
+                            <button class="btn btn-primary editNoticeBtn">编辑</button>
+                        </td>
+                    </tr>
+                </c:forEach>
             </table>
             <div class="pages ">
                 <ul class="pagination">
