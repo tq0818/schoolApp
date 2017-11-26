@@ -205,6 +205,7 @@
 
     </form>
 
+
 <form method="post" id="myForm">
 
 </form>
@@ -216,7 +217,6 @@
     })
 
     function queryClassDetailsa(id){
-        alert(id);
         $("#myForma").html("");
         var input="<input type='hidden' value='"+id+"' name='id'/><input type='hidden' value='"+$("#labe").val()+"' name='lable'/>";
         $("#myForma").html(input);
