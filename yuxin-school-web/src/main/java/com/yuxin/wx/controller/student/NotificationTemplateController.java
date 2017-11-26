@@ -14,4 +14,11 @@ public class NotificationTemplateController {
 
         return "student/notificationMessage/notificationTemplate";
     }
+
+    @RequestMapping(value = "/subscribeArticles")
+    public String subscribeArticles(){
+
+
+        return "student/notificationMessage/subscribeArticles";
+    }
 }
