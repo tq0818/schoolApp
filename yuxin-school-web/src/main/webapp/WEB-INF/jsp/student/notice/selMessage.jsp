@@ -6,7 +6,7 @@
 <title>通知结果</title>
     <%@include file="/decorators/import.jsp" %>
      <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/student.css"/>
-    <script type="text/javascript" src="<%=rootPath %>/javascripts/plus/jquery.pagination.js"></script>
+	 <script type="text/javascript" src="<%=rootPath %>/javascripts/plus/jquery.pagination.js"></script>
      <script type="text/javascript" src="<%=rootPath%>/javascripts/student.js"></script>
      <script type="text/javascript" src="<%=rootPath%>/javascripts/student/notice/selMessage.js"></script>
 	<style type="text/css">
@@ -197,6 +197,43 @@
                             </span>
                         </p>
                   		</c:if>
+						<div>
+							<span class="c-title">订阅统计：</span>
+							<button class="btn btn-primary checkOutData">导出名单</button>
+							<div class="">
+								<table class="table table-center">
+									<tr>
+										<th width="15%" >序号</th>
+										<th width="15%" >手机号</th>
+										<th width="15%" >用户名称</th>
+										<th width="15%" >报名</th>
+										<th width="15%" >同意</th>
+										<th width="15%" >反对</th>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>xxxxxxx</td>
+										<td>xxxxxxx</td>
+										<td>xxxxxxx</td>
+										<td>1</td>
+										<td>0</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>xxxxxxx</td>
+										<td>xxxxxxx</td>
+										<td>xxxxxxx</td>
+										<td>1</td>
+										<td>0</td>
+									</tr>
+
+								</table>
+								<div class="pages ">
+									<ul class="pagination">
+									</ul>
+								</div>
+							</div>
+						</div>
                     </div>
                 </div>
             </div>
@@ -231,5 +268,20 @@
     </div>
     <div class="loading-bg lp-units-loading-bg" style="display:none"></div>
 <!--  ajax加载中div结束 -->
+<script>
+    //    分页
+    $(".pagination").pagination($("#rowCount").val(), {
+        next_text : "下一页",
+        prev_text : "上一页",
+        current_page : ($("#pageNo").val() - 1),
+        link_to : "javascript:;",
+        num_display_entries : 5,
+        items_per_page : $("#pageSize").val(),
+        num_edge_entries : 1,
+        callback : function(page, jq) {
+            var pageNo = page + 1;
+        }
+    });
+</script>
 </body>
 </html>
