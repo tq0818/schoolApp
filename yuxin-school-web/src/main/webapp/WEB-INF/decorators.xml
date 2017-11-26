@@ -544,6 +544,11 @@
         <pattern>/student/notificationTemplate</pattern>
         <!--发布订阅文章-->
         <pattern>/student/subscribeArticles</pattern>
+        <!--标签管理-->
+        <pattern>/student/labelManagement</pattern>
+        <!--积分修改-->
+        <pattern>/student/integralModification</pattern>
+
 
     </decorator>
 
