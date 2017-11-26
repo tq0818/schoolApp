@@ -84,7 +84,7 @@
                         <span>${searchAndResult.actualNum}人学习</span>
                     </li>
                 </ul>
-                <a href="##" class="courseDetail btn btn-default" onclick="queryClassDetails(${searchAndResult.id});">课程详情</a>
+                <a href="##" class="courseDetail btn btn-default" onclick="queryClassDetailsa(${searchAndResult.id});">课程详情</a>
             </div>
         </div>
         <div>
@@ -186,25 +186,29 @@
         </div>
     </div>
         <c:if test="${searchAndResult.liveFlag==1 }">
-            <input id="lab" name="lab" value="live" type="hidden"/>
+            <input id="labe" name="lab" value="live" type="hidden"/>
         </c:if>
         <c:if test="${searchAndResult.videoFlag==1 }">
-            <input id="lab" name="lab" value="video" type="hidden"/>
+            <input id="labe" name="lab" value="video" type="hidden"/>
         </c:if>
         <c:if test="${searchAndResult.faceFlag==1 }">
-            <input id="lab" name="lab" value="face" type="hidden"/>
+            <input id="labe" name="lab" value="face" type="hidden"/>
         </c:if>
         <c:if test="${searchAndResult.liveFlag==0&&searchAndResult.videoFlag==0&&allCommdotity.faceFlag==0 }">
-            <input id="lab" name="lab" value="remote" type="hidden"/>
+            <input id="labe" name="lab" value="remote" type="hidden"/>
         </c:if>
         <div id="shelvesInfo">
             <input name="id" type="hidden" id="commodityId" value="${commodityId}"/>
             <input name="appId" type="hidden" id="appId" value="${appId}"/>
         </div>
-    <form method="post" id="myForm">
+    <form method="post" id="myForma">
 
     </form>
 
+
+<form method="post" id="myForm">
+
+</form>
 <script>
     $.jeDate("#shelvesTime",{
         format:"YYYY-MM-DD hh:mm:ss",
@@ -212,6 +216,12 @@
         minDate:"2014-09-19 00:00:00"
     })
 
+    function queryClassDetailsa(id){
+        $("#myForma").html("");
+        var input="<input type='hidden' value='"+id+"' name='id'/><input type='hidden' value='"+$("#labe").val()+"' name='lable'/>";
+        $("#myForma").html(input);
+        $("#myForma").attr("action","/editSimpleCourse/editClassTypeMessage").submit();
+    }
 
 
 </script>

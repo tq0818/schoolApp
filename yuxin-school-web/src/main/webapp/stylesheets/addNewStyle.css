@@ -48,3 +48,13 @@ input[disabled]{cursor: not-allowed;}
 .btn-ico.btn-cha{background: #e45200;}
 i{font-style: normal}
 .pageRecommendtionBg{background: #f6f6f6;}
+.noticePopup h5{height: 80px;line-height: 80px;}
+.noticeArea{width: 98%;height: 230px;margin-bottom: 20px;}
+.noticePopup li{display: inline-block;margin-right: 10px;margin-bottom: 20px;}
+.noticePopupBtn {text-align: center;}
+.noticePopupBtn button{margin: 40px 30px;}
+.checkOutData{float: right;}
+.createNoticeBtn li{display: inline-block;}
+.numPerson{margin-left: 20px;}
+.btn-send{margin: 20px;}
+.chooseBtn button{margin-right: 50px;}

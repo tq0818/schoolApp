@@ -25,11 +25,11 @@
         <tbody>
         <tr>
             <th width="1%"><input type="checkbox" class="checkboxAll"></th>
-            <th width="6%">课程图片</th>
-            <th width="5%">课程名称</th>
-            <th width="3%">学段</th>
-            <th width="3%">学科</th>
-            <th width="9%">知识点专题</th>
+            <th width="5%">课程图片</th>
+            <th width="4%">课程名称</th>
+            <th width="2%">学段</th>
+            <th width="1%">学科</th>
+            <th width="8%">知识点专题</th>
             <th width="10%">知识点</th>
             <th width="5%">阶段</th>
             <th width="5%">类型</th>
@@ -38,7 +38,7 @@
             <th width="3%">学习人数</th>
             <th width="4%">价格</th>
             <th width="4%">实际价格</th>
-            <th width="20%">操作</th>
+            <th width="25%">操作</th>
         </tr>
         <c:forEach items="${courseList.data}" var="course" varStatus="status">
             <tr>
@@ -51,7 +51,7 @@
                         <td><img src="${commodityPicUrl}${course.cover}" alt="" class="shelvesIcon"></td>
                     </c:otherwise>
                 </c:choose>
-                <td class="overflowHide" title="${course.lessonName}"><a href="">${course.lessonName}</a></td>
+                <td class="overflowHide" title="${course.lessonName}"><a href="##" onclick="proQueryClassDetails('${course.id}','${course.liveFlag}','${course.videoFlag}','${course.faceFlag}');">${course.lessonName}</a></td>
                 <td class="overflowHide" title="${course.itemSecondName}">${course.itemSecondName}</td>
                 <td class="overflowHide" title="${course.itemThirdName}">${course.itemThirdName}</td>
                 <td class="overflowHide" title="${course.itemFourthName}">${course.itemFourthName}</td>
@@ -87,7 +87,7 @@
                     </c:otherwise>
                 </c:choose>
                 <td>
-                    <a href="javascript:stopClassOnsale(${course.appId });" class="btn btn-primary btn-sm">下架</a>
+                    <a href="javascript:stopClassOnsale('${course.appId }');" class="btn btn-primary btn-sm">下架</a>
                     <span><a href="javascript: toRcommon('${course.courseCaId}','${course.liveFlag}','${course.id}');" class="btn btn-primary btn-sm recommendCourse">推荐</a></span>
                     <span><a href="javascript:toOnsaleEdit('${course.appId}_${course.id}','${course.liveFlag}','1');" class="btn btn-primary btn-sm editCourse">编辑上架</a></span>
                 </td>
@@ -124,7 +124,26 @@
 </div>
 <input id="typeIds" type="hidden" value="${typeId}"/>
 <input id="typeStr" type="hidden" value="${typeStr}"/>
+<form method="post" id="myForms">
+
+</form>
 <script>
+    function proQueryClassDetails(id,liveFlag,videoFlag,faceFlag){
+        $("#myForms").html("");
+        var liveType="";
+        if(liveFlag=="1") {
+            liveType = "live";
+        }else if(videoFlag=="1") {
+            liveType = "video";
+        }else if(faceFlag=="1") {
+            liveType = "face";
+        }else {
+            liveType = "remote";
+        }
+        var input="<input type='hidden' value='"+id+"' name='id'/><input type='hidden' value='"+liveType+"' name='lable'/>";
+        $("#myForms").html(input);
+        $("#myForms").attr("action","/editSimpleCourse/editClassTypeMessage").submit();
+    }
     $('.editCourse').click(function(){
         $('.popupContainerEdit').show();
         $('.popupOpacity').show();

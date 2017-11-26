@@ -51,11 +51,12 @@ public class shelvesCourses {
     @Autowired
     private PropertiesUtil propertiesUtil;
     @Autowired
-	private ISysConfigItemRelationService sysConfigItemRelationServiceImpl;
-    
+    private ISysConfigItemRelationService sysConfigItemRelationServiceImpl;
+
     @Autowired
-	private ISysConfigItemService sysConfigItemServiceImpl;
-    private Log log= LogFactory.getLog("log");
+    private ISysConfigItemService sysConfigItemServiceImpl;
+    private Log log = LogFactory.getLog("log");
+
     /**
      * 跳转到已上架课程页面
      *
@@ -91,37 +92,37 @@ public class shelvesCourses {
      */
     @RequestMapping(value = "/pageRecommendation", method = RequestMethod.GET)
     public String gotopageRecommendation(Model model, String modelId, Integer parentId, HttpServletRequest request) throws UnsupportedEncodingException {
-    	Integer modelIds=null;
-    	String modelCode=null;
-    	if(modelId!=null&&modelId!=""){
-    		modelIds=Integer.valueOf(modelId.split("_")[0]);
-    		modelCode=modelId.split("_")[1];
-    	}
+        Integer modelIds = null;
+        String modelCode = null;
+        if (modelId != null && modelId != "") {
+            modelIds = Integer.valueOf(modelId.split("_")[0]);
+            modelCode = modelId.split("_")[1];
+        }
         //获取二级菜单
         List<SysDictApp> menusList = sysDictAppServiceImpl.getStudySectionById(modelIds);
 
         //获取课程分类名称
-        List<SysDictApp>grades = new ArrayList<SysDictApp>();
-        List<SysDictApp>stages = new ArrayList<SysDictApp>();
-        List<SysDictApp>types = new ArrayList<SysDictApp>();
-        for(SysDictApp s  : menusList){
-           if(s.getType().equals("STAGE")){
-               stages.add(s);
-           }else if(s.getType().equals("TYPE")){
-               types.add(s);
-           }else{
-               grades.add(s);
-           }
+        List<SysDictApp> grades = new ArrayList<SysDictApp>();
+        List<SysDictApp> stages = new ArrayList<SysDictApp>();
+        List<SysDictApp> types = new ArrayList<SysDictApp>();
+        for (SysDictApp s : menusList) {
+            if (s.getType().equals("STAGE")) {
+                stages.add(s);
+            } else if (s.getType().equals("TYPE")) {
+                types.add(s);
+            } else {
+                grades.add(s);
+            }
         }
         model.addAttribute("grades", grades);
         model.addAttribute("stages", stages);
         model.addAttribute("types", types);
 
-        String  mokelName =  sysDictAppServiceImpl.getModelById(modelIds);
+        String mokelName = sysDictAppServiceImpl.getModelById(modelIds);
         model.addAttribute("modelName", mokelName);
-        model.addAttribute("modelId",modelIds);
-        model.addAttribute("modelCode",modelCode);
-        
+        model.addAttribute("modelId", modelIds);
+        model.addAttribute("modelCode", modelCode);
+
         List<SysConfigItemRelation> relations = sysConfigItemRelationServiceImpl.findAllItemFront();
 
         List<SysDictApp> sysDictApps = sysDictAppServiceImpl.findSysDictAppByCode("GRADE_CODE");
@@ -144,94 +145,97 @@ public class shelvesCourses {
     /**
      * 跳转到首页推荐
      */
-    @RequestMapping(value = "/homeRecommendation",method=RequestMethod.POST)
-    public String gotohomeRecommendation(HttpServletRequest request,Model model) {
+    @RequestMapping(value = "/homeRecommendation", method = RequestMethod.POST)
+    public String gotohomeRecommendation(HttpServletRequest request, Model model) {
         String categerorId = request.getParameter("categerorId");
         String zhiboFlag = request.getParameter("zhiboFlag");
         String commodityId = request.getParameter("commodityId");
 
         SysDictApp search = new SysDictApp();
         List<SysDictApp> slibMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
-        if(null!=slibMenus && slibMenus.size()>0){
-            for(SysDictApp sda : slibMenus){
-                if(String.valueOf(sda.getId()).equals(categerorId)){
-                    model.addAttribute("firstMenu",sda);
+        if (null != slibMenus && slibMenus.size() > 0) {
+            for (SysDictApp sda : slibMenus) {
+                if (String.valueOf(sda.getId()).equals(categerorId)) {
+                    model.addAttribute("firstMenu", sda);
                     break;
                 }
             }
         }
         ClassTypeVo searchAndResult = new ClassTypeVo();
         List<ClassTypeVo> gardeIdList = new ArrayList<>();
-        if("1".equals(zhiboFlag)){
+        if ("1".equals(zhiboFlag)) {
             //查询直播课程信息
             searchAndResult.setId(Integer.parseInt(commodityId));
             searchAndResult = classTypeServiceImpl.querySingleLiveClassTypeInfo(searchAndResult);
-        }else{
+        } else {
             //查询录播信息
             searchAndResult.setId(Integer.parseInt(commodityId));
             searchAndResult = classTypeServiceImpl.querySingOtherClassTypeInfo(searchAndResult);
 
         }
+
+        //获取学段列表，列表回显
         gardeIdList = classTypeServiceImpl.getGardeIdList(searchAndResult);
 
-        model.addAttribute("searchAndResult",searchAndResult);
-        model.addAttribute("gardeIdList",gardeIdList);
-        String commodityPicUrl="http://"+propertiesUtil.getProjectImageUrl()+"/";
+        model.addAttribute("searchAndResult", searchAndResult);
+        model.addAttribute("gardeIdList", gardeIdList);
+        String commodityPicUrl = "http://" + propertiesUtil.getProjectImageUrl() + "/";
         model.addAttribute("commodityPicUrl", commodityPicUrl);
 
         return "simpleClasses/appNewClasses/homeRecommendation";
     }
 
     @ResponseBody
-    @RequestMapping(value="/insertRcommondInfo",method=RequestMethod.POST)
-    public String insertRcommondInfo(HttpServletRequest request,String ids,String sort,String appId){
+    @RequestMapping(value = "/insertRcommondInfo", method = RequestMethod.POST)
+    public String insertRcommondInfo(HttpServletRequest request, String ids, String sort, String appId) {
 
         try {
-            List<FirstRecommend> frs = new ArrayList<FirstRecommend>();
-            if(null!=ids && !"".equals(ids)){
-                String[]idStrs = ids.split(",");
-                for(String idStr : idStrs){
+            List<FirstRecommend> frs = new ArrayList<>();
+            if (null != ids && !"".equals(ids)) {
+                String[] idStrs = ids.split(",");
+                for (String idStr : idStrs) {
                     FirstRecommend fr = new FirstRecommend();
                     fr.setAppShelvesId(appId);
                     fr.setGradeNo(idStr);
 
-                    if("".equals(sort) || null==sort){
+                    if ("".equals(sort) || null == sort) {
                         fr.setSort(null);
-                    }else{
+                    } else {
                         fr.setSort(sort);
                     }
                     frs.add(fr);
                 }
-                classTypeServiceImpl.insertFirstRecommond(frs);
-                classTypeServiceImpl.insertAndUpdateFirstRecommond(frs,sort,appId);
+//                classTypeServiceImpl.insertFirstRecommond(frs);
+                classTypeServiceImpl.insertAndUpdateFirstRecommond(frs, sort, appId);
 
             }
             return "1";
-        }catch (Exception e){
+        } catch (Exception e) {
             return "0";
         }
     }
 
     /**
      * 保存图片
+     *
      * @param multiPartRquest
      * @param req
      * @return
      */
     @ResponseBody
-    @RequestMapping(value="/savePic",method=RequestMethod.POST)
-    public String queryPic(MultipartRequest multiPartRquest, HttpServletRequest req){
+    @RequestMapping(value = "/savePic", method = RequestMethod.POST)
+    public String queryPic(MultipartRequest multiPartRquest, HttpServletRequest req) {
         MultipartFile multipartFile = multiPartRquest.getFile("imgData");
-        String realPath=null;
+        String realPath = null;
         try {
-            realPath = FileUtil.upload(multipartFile, "/img", WebUtils.getCurrentCompanyId()+"");
+            realPath = FileUtil.upload(multipartFile, "/img", WebUtils.getCurrentCompanyId() + "");
         } catch (Exception e) {
-            log.error("文件上传失败!",e);
+            log.error("文件上传失败!", e);
             e.printStackTrace();
         }
         req.getSession().setAttribute("imgUrl", realPath);
-        String url="http://"+propertiesUtil.getProjectImageUrl()+"/"+realPath;
-        return "{\"url\":\""+url+"\"}";
+        String url = "http://" + propertiesUtil.getProjectImageUrl() + "/" + realPath;
+        return "{\"url\":\"" + url + "\"}";
     }
 
 }

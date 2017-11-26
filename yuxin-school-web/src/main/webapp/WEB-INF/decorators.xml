@@ -540,6 +540,10 @@
         <!--批量首页推荐-->
         <pattern>/appNewClasses/pageRecommendation</pattern>
 
+        <!--通知模板管理-->
+        <pattern>/student/notificationTemplate</pattern>
+        <!--发布订阅文章-->
+        <pattern>/student/subscribeArticles</pattern>
 
     </decorator>
 

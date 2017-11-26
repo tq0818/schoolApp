@@ -22,6 +22,18 @@
         <div class="informationEditImg">
             <img src="${commodityPicUrl }${searchAndResult.cover}" alt="">
         </div>
+        <c:if test="${searchAndResult.liveFlag==1 }">
+            <input id="lab" name="lab" value="live" type="hidden"/>
+        </c:if>
+        <c:if test="${searchAndResult.videoFlag==1 }">
+            <input id="lab" name="lab" value="video" type="hidden"/>
+        </c:if>
+        <c:if test="${searchAndResult.faceFlag==1 }">
+            <input id="lab" name="lab" value="face" type="hidden"/>
+        </c:if>
+        <c:if test="${searchAndResult.liveFlag==0&&searchAndResult.videoFlag==0&&allCommdotity.faceFlag==0 }">
+            <input id="lab" name="lab" value="remote" type="hidden"/>
+        </c:if>
         <div class="informationEditDetail">
             <ul>
                 <li>
@@ -97,7 +109,9 @@
         </div>
     </div>
 </div>
+<form method="post" id="myForm">
 
+</form>
 <c:forEach items="${gardeIdList}" var="garde">
     <input type="hidden" class="gradeId" value="${garde.gradeId}"/>
 </c:forEach>
@@ -122,6 +136,7 @@
             }
         }
 </script>
+<script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/shelvesCoursesAjax.js"></script>
 <script>
 //    推荐学段复选
     $('#gradeList').children('a').click(function(){
