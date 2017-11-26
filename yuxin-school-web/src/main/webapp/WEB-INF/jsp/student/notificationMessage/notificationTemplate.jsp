@@ -44,7 +44,7 @@
                     <td>2017/11/01 18:39</td>
                     <td>xxxxxxx</td>
                     <td>
-                        <button class="btn btn-warning forbidBtn">禁用</button>
+                        <button class="btn btn-success forbidBtn">启用</button>
                         <button class="btn btn-primary editNoticeBtn">编辑</button>
                     </td>
                 </tr>
@@ -110,8 +110,12 @@ $(".pagination").pagination($("#rowCount").val(), {
 //禁用和启用
 $('.forbidBtn').click(function(){
         if($(this).html()=='禁用'){
+            $(this).removeClass('btn-warning');
+            $(this).addClass('btn-success');
             $(this).html('启用');
         }else{
+            $(this).removeClass('btn-success');
+            $(this).addClass('btn-warning');
             $(this).html('禁用');
         }
     });
