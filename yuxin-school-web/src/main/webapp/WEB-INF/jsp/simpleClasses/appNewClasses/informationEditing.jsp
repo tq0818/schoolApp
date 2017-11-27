@@ -182,7 +182,7 @@
         <div class="submitCourse">
             <button class="btn btn-success" onclick="toShelves('1','${editFlag}');">立即上架</button>
             <button class="btn btn-warning" onclick="toShelves('0','${editFlag}');">预约上架</button>
-            <input type="text" placeholder="指定上架时间" id="shelvesTime" value="${searchAndResult.reserveTime}" readonly>
+            <input type="text" placeholder="指定上架时间" id="shelvesTime"  readonly>
         </div>
     </div>
         <c:if test="${searchAndResult.liveFlag==1 }">

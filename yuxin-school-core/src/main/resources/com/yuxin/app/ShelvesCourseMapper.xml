@@ -313,6 +313,7 @@
 		left join sys_dict_app sys6 on sys6.id=app.`stage_id`
 		left join sys_dict_app sys7 on sys7.id=app.`type_id`
 		where  ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 <![CDATA[and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`))]]>
+
 		<if test="categoryid != null and categoryid != ''">and app.category_id = #{categoryid}</if>
 		<if test="gradeid != null and gradeid != ''">and app.grade_id = #{gradeid}</if>
 		<if test="subjectid != null and subjectid != ''">and app.subject_id = #{subjectid}</if>
@@ -364,6 +365,7 @@
 		left join sys_dict_app sys6 on sys6.id=app.`stage_id`
 		left join sys_dict_app sys7 on sys7.id=app.`type_id`
 		where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 <![CDATA[and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`))]]>
+		and  c.live_flag != 1
 		<if test="categoryid != null and categoryid != ''">and app.category_id = #{categoryid}</if>
 		<if test="gradeid != null and gradeid != ''">and app.grade_id = #{gradeid}</if>
 		<if test="subjectid != null and subjectid != ''">and app.subject_id = #{subjectid}</if>
