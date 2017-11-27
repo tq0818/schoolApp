@@ -22,6 +22,7 @@ body{font-family: 'Microsoft Yahei', STHeiti, sans-serif;}
 .screeningConditions input{border: 1px solid #ebebeb;}
 .submitCourse{margin: 5px;text-align: center;}
 .submitCourse button{margin: 10px;}
+.classification label{display: inline-block;}
 /*鎵归噺棣栭〉鎺ㄨ崘*/
 .recommendationNum{width: 15px;height: 12px;}
 /*寮瑰嚭妗*/
@@ -77,3 +78,6 @@ i{font-style: normal}
 .articlesList button{margin-bottom: 10px; }
 .articleNew{display: none;}
 #email_ckecktor{padding-left: 100px;margin-bottom: 20px;}
+.tableRule input{text-align: center;border-color: #f6f6f6;background: #f6f6f6;}
+.tableRule input.active{border-color: #c4c4c4;background: #fff;}
+.btnscon .clear{display: none;}
