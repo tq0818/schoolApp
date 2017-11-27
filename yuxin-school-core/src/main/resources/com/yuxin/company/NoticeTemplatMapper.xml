@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuxin.wx.company.mapper.NoticeTemplatMapper">
+	<resultMap type="com.yuxin.wx.model.company.NoticeTemplatVo" id="noticeTemplateResultMap">
+		<result property="id" column="id" />
+		<result property="noticeCode" column="notice_code" />
+		<result property="noticeTopic" column="notice_topic" />
+		<result property="publishTime" column="publish_time" />
+		<result property="noticeContent" column="notice_content" />
+		<result property="noticeStatus" column="notice_status" />
+		<result property="noticeUrl" column="notice_url" />
+	</resultMap>
+
+	<sql id="table_colum">
+		id,
+		notice_code,
+		notice_topic,
+		publish_time,
+		notice_content,
+		notice_status,
+		notice_url
+	</sql>
+
+	<select id="queryAllNoticeTemplateList" parameterType="map" resultMap="noticeTemplateResultMap">
+		select
+		<include refid="table_colum"/>
+		from sys_notice_template_app
+		where 1=1
+		<if test="ntv.noticeUrl != null and ntv.noticeUrl != ''">and notice_url = #{ntv.noticeUrl}</if>
+		limit #{ntv.firstIndex},#{ntv.pageSize}
+	</select>
+
+	<select id="queryAllNoticeTemplateCount" parameterType="map" resultType="int">
+		select count(1) from sys_notice_template_app
+		<if test="ntv.noticeUrl != null and ntv.noticeUrl != ''">and notice_url = #{ntv.noticeUrl}</if>
+	</select>
+
+	<update id="updateTemplatStatus" parameterType="com.yuxin.wx.model.company.NoticeTemplatVo">
+		update sys_notice_template_app
+		<trim prefix="set" suffixOverrides=",">
+			publish_time = now(),
+			<if test="noticeContent != null and noticeContent != ''">notice_content = #{noticeContent},</if>
+			<if test="noticeStatus != null and noticeStatus != ''">notice_status = #{noticeStatus},</if>
+		</trim>
+		<where>id = #{id}</where>
+	</update>
+</mapper>

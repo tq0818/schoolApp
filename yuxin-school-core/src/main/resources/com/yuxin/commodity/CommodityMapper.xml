@@ -1,103 +1,103 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yuxin.wx.commodity.mapper.CommodityMapper">
-	<resultMap type="com.yuxin.wx.model.commodity.Commodity" id="commodityResultMap">
-		<result property="id" column="id" />
-		<result property="name" column="name" />
-		<result property="coverUrl" column="cover_url" />
-		<result property="overview" column="overview" />
-		<result property="originalPrice" column="original_price" />
-		<result property="realPrice" column="real_price" />
-		<result property="type" column="type" />
-		<result property="itemOneId" column="item_one_id" />
-		<result property="itemSecondId" column="item_second_id" />
-		<result property="schoolId" column="school_id" />
-		<result property="companyId" column="company_id" />
-		<result property="creator" column="creator" />
-		<result property="cerateTime" column="cerate_time" />
-		<result property="updator" column="updator" />
-		<result property="updateTime" column="update_time" />
-		<result property="status" column="status" />
-		<result property="lableType" column="lable_type" />
-		<result property="baseNum" column="base_num" />
-		<result property="faceFlag" column="face_flag" />
-		<result property="liveFlag" column="live_flag" />
-		<result property="videoFlag" column="video_flag" />
-		<result property="remoteFlag" column="remote_flag" />
-		<result property="recommendFlag" column="recommend_flag" />
-		<result property="buyNum" column="buy_num" />
-		<result property="itemTag" column="item_tag"/>
-		<result property="integralFlag" column="integral_flag"/>
-		<result property="memberFlag" column="member_flag"/>
-		<result property="itemOneCode" column="item_one_code" />
-		<result property="itemSecondCode" column="item_second_code" />
-		<result property="itemThirdCode" column="item_third_code" />
-		<result property="itemFourthCode" column="item_fourth_code" />
-		<result property="isMicroClass" column="is_micro_class" />
-	</resultMap>
+    <resultMap type="com.yuxin.wx.model.commodity.Commodity" id="commodityResultMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="coverUrl" column="cover_url"/>
+        <result property="overview" column="overview"/>
+        <result property="originalPrice" column="original_price"/>
+        <result property="realPrice" column="real_price"/>
+        <result property="type" column="type"/>
+        <result property="itemOneId" column="item_one_id"/>
+        <result property="itemSecondId" column="item_second_id"/>
+        <result property="schoolId" column="school_id"/>
+        <result property="companyId" column="company_id"/>
+        <result property="creator" column="creator"/>
+        <result property="cerateTime" column="cerate_time"/>
+        <result property="updator" column="updator"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="status" column="status"/>
+        <result property="lableType" column="lable_type"/>
+        <result property="baseNum" column="base_num"/>
+        <result property="faceFlag" column="face_flag"/>
+        <result property="liveFlag" column="live_flag"/>
+        <result property="videoFlag" column="video_flag"/>
+        <result property="remoteFlag" column="remote_flag"/>
+        <result property="recommendFlag" column="recommend_flag"/>
+        <result property="buyNum" column="buy_num"/>
+        <result property="itemTag" column="item_tag"/>
+        <result property="integralFlag" column="integral_flag"/>
+        <result property="memberFlag" column="member_flag"/>
+        <result property="itemOneCode" column="item_one_code"/>
+        <result property="itemSecondCode" column="item_second_code"/>
+        <result property="itemThirdCode" column="item_third_code"/>
+        <result property="itemFourthCode" column="item_fourth_code"/>
+        <result property="isMicroClass" column="is_micro_class"/>
+    </resultMap>
 
-	<resultMap type="com.yuxin.wx.vo.commodity.CommodityVo" id="commodityVoResultMap">
-		<result property="id" column="id" />
-		<result property="name" column="name" />
-		<result property="coverUrl" column="cover_url" />
-		<result property="overview" column="overview" />
-		<result property="originalPrice" column="original_price" />
-		<result property="realPrice" column="real_price" />
-		<result property="type" column="type" />
-		<result property="itemOneId" column="item_one_id" />
-		<result property="itemSecondId" column="item_second_id" />
-		<result property="schoolId" column="school_id" />
-		<result property="companyId" column="company_id" />
-		<result property="creator" column="creator" />
-		<result property="cerateTime" column="cerate_time" />
-		<result property="updator" column="updator" />
-		<result property="updateTime" column="update_time" />
-		<result property="status" column="status" />
-		<result property="lableType" column="lable_type" />
-		<result property="faceFlag" column="face_flag"/>
-		<result property="liveFlag" column="live_flag"/>
-		<result property="videoFlag" column="video_flag"/>
-		<result property="remoteFlag" column="remote_flag"/>
-		<result property="baseNum" column="base_num"/>
-		<result property="classTypeId" column="id"/>
-		<result property="actualNum" column="actualNum"/>
-		<result property="lableType" column="lable_type" />
-		<result property="itemTag" column="item_tag"/>
-		<result property="integralFlag" column="integral_flag"/>
-		<result property="memberFlag" column="member_flag"/>
-		<result property="teacherName" column="teacher_name"/>
-		<result property="schoolShortName" column="school_short_name"/>
-		<result property="teacherId" column="teacher_id"/>
-		<result property="specialOrder" column="special_order"/>
+    <resultMap type="com.yuxin.wx.vo.commodity.CommodityVo" id="commodityVoResultMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="coverUrl" column="cover_url"/>
+        <result property="overview" column="overview"/>
+        <result property="originalPrice" column="original_price"/>
+        <result property="realPrice" column="real_price"/>
+        <result property="type" column="type"/>
+        <result property="itemOneId" column="item_one_id"/>
+        <result property="itemSecondId" column="item_second_id"/>
+        <result property="schoolId" column="school_id"/>
+        <result property="companyId" column="company_id"/>
+        <result property="creator" column="creator"/>
+        <result property="cerateTime" column="cerate_time"/>
+        <result property="updator" column="updator"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="status" column="status"/>
+        <result property="lableType" column="lable_type"/>
+        <result property="faceFlag" column="face_flag"/>
+        <result property="liveFlag" column="live_flag"/>
+        <result property="videoFlag" column="video_flag"/>
+        <result property="remoteFlag" column="remote_flag"/>
+        <result property="baseNum" column="base_num"/>
+        <result property="classTypeId" column="id"/>
+        <result property="actualNum" column="actualNum"/>
+        <result property="lableType" column="lable_type"/>
+        <result property="itemTag" column="item_tag"/>
+        <result property="integralFlag" column="integral_flag"/>
+        <result property="memberFlag" column="member_flag"/>
+        <result property="teacherName" column="teacher_name"/>
+        <result property="schoolShortName" column="school_short_name"/>
+        <result property="teacherId" column="teacher_id"/>
+        <result property="specialOrder" column="special_order"/>
 
-		<result property="itemOneCode" column="item_one_code" />
-		<result property="itemSecondCode" column="item_second_code" />
-		<result property="itemThirdCode" column="item_third_code" />
-		<result property="itemFourthCode" column="item_fourth_code" />
-		<result property="lessonDate" column="lesson_date" />
-		<result property="lessonTimeStart" column="lesson_time_start" />
-		<result property="lessonTimeEnd" column="lesson_time_end" />
-		<result property="lessonName" column="lesson_name" />
-	</resultMap>
-	<resultMap type="com.yuxin.wx.vo.commodity.CommodityDto" id="commodityVo1ResultMap">
-		<result property="classTypeId" column="id" />
-		<result property="name" column="lessonName" />
-		<result property="shelves_id" column="shelves_id" />
-		<result property="coverUrl" column="imgUrl" />
-		<result property="categoryName" column="itemOneName" />
-		<result property="gradeName" column="itemSecondName" />
-		<result property="subjectName" column="itemThirdName" />
-		<result property="knowProName" column="itemFourthName" />
-		<result property="knowName" column="itemTag" />
-		<result property="stageName" column="tagName" />
-		<result property="typeName" column="typeCode" />
-		<result property="shelvesTime" column="shelvesTime" />
-		<result property="lessonTime" column="lesson_date" />
-		<result property="actualNum" column="actualNum" />
-		<result property="realPrice" column="realPrice" />
-		<result property="salePrice" column="originalPrice" />
-	</resultMap>
-	<sql id="table_columns">
+        <result property="itemOneCode" column="item_one_code"/>
+        <result property="itemSecondCode" column="item_second_code"/>
+        <result property="itemThirdCode" column="item_third_code"/>
+        <result property="itemFourthCode" column="item_fourth_code"/>
+        <result property="lessonDate" column="lesson_date"/>
+        <result property="lessonTimeStart" column="lesson_time_start"/>
+        <result property="lessonTimeEnd" column="lesson_time_end"/>
+        <result property="lessonName" column="lesson_name"/>
+    </resultMap>
+    <resultMap type="com.yuxin.wx.vo.commodity.CommodityDto" id="commodityVo1ResultMap">
+        <result property="classTypeId" column="id"/>
+        <result property="name" column="lessonName"/>
+        <result property="shelves_id" column="shelves_id"/>
+        <result property="coverUrl" column="imgUrl"/>
+        <result property="categoryName" column="itemOneName"/>
+        <result property="gradeName" column="itemSecondName"/>
+        <result property="subjectName" column="itemThirdName"/>
+        <result property="knowProName" column="itemFourthName"/>
+        <result property="knowName" column="itemTag"/>
+        <result property="stageName" column="tagName"/>
+        <result property="typeName" column="typeCode"/>
+        <result property="shelvesTime" column="shelvesTime"/>
+        <result property="lessonTime" column="lesson_date"/>
+        <result property="actualNum" column="actualNum"/>
+        <result property="realPrice" column="realPrice"/>
+        <result property="salePrice" column="originalPrice"/>
+    </resultMap>
+    <sql id="table_columns">
 		id,
 		name,
 		cover_url,
@@ -132,7 +132,7 @@
 		is_micro_class,
 		origin_type
   </sql>
-	<sql id="entity_properties">
+    <sql id="entity_properties">
 		#{id},
 		#{name},
 		#{coverUrl},
@@ -168,173 +168,185 @@
 		#{originType}
 	</sql>
 
-	<!-- 适用于主键自增类型 -->
-	<insert id="insert" parameterType="com.yuxin.wx.model.commodity.Commodity" useGeneratedKeys="true" keyProperty="id">
-		insert into commodity( <include refid="table_columns" /> )
-		values ( <include refid="entity_properties" /> )
-	</insert>
+    <!-- 适用于主键自增类型 -->
+    <insert id="insert" parameterType="com.yuxin.wx.model.commodity.Commodity" useGeneratedKeys="true" keyProperty="id">
+        insert into commodity(
+        <include refid="table_columns"/>
+        )
+        values (
+        <include refid="entity_properties"/>
+        )
+    </insert>
 
-	<!-- 批量添加 适用于主键自增类型  不支持返回主键-->
-	<insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
-		insert into commodity( <include refid="table_columns" /> )
-		values
-		<foreach item="item" collection="list" separator="," >
-			( <include refid="entity_properties" /> )
-		</foreach>
-	</insert>
+    <!-- 批量添加 适用于主键自增类型  不支持返回主键-->
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
+        insert into commodity(
+        <include refid="table_columns"/>
+        )
+        values
+        <foreach item="item" collection="list" separator=",">
+            (
+            <include refid="entity_properties"/>
+            )
+        </foreach>
+    </insert>
 
-	<!--根据主键删除 -->
-	<delete id="deleteById">
+    <!--根据主键删除 -->
+    <delete id="deleteById">
 		delete from tbl_users
 		where id = #{id}
 	</delete>
 
-	<!-- 根据ID批量删除 -->
-	<delete id="deleteByIds">
-		delete from commodity
-		where id in
-		<foreach item="item" collection="array" open="(" separator="," close=")">
-			#{item}
-		</foreach>
-	</delete>
+    <!-- 根据ID批量删除 -->
+    <delete id="deleteByIds">
+        delete from commodity
+        where id in
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 
-	<update id="update" parameterType="com.yuxin.wx.model.commodity.Commodity">
-		update commodity
-		<trim prefix="set" suffixOverrides=",">
-			<if test="name != null and name != ''">name = #{name},</if>
-			<if test="coverUrl != null and coverUrl != ''">cover_url = #{coverUrl},</if>
-			<if test="overview != null and overview != ''">overview = #{overview},</if>
-			<if test="originalPrice != null">original_price = #{originalPrice},</if>
-			<if test="realPrice != null">real_price = #{realPrice},</if>
-			<if test="type != null and type != ''">type = #{type},</if>
-			<if test="itemOneId != null and itemOneId != ''">item_one_id = #{itemOneId},</if>
-			<if test="itemSecondId != null and itemSecondId != ''">item_second_id = #{itemSecondId},</if>
-			<if test="schoolId != null and schoolId != ''">school_id = #{schoolId},</if>
-			<if test="companyId != null and companyId != ''">company_id = #{companyId},</if>
-			<if test="creator != null and creator != ''">creator = #{creator},</if>
-			<if test="cerateTime != null and cerateTime != ''">cerate_time = #{cerateTime},</if>
-			<if test="updator != null and updator != ''">updator = #{updator},</if>
-			<if test="updateTime != null and updateTime != ''">update_time = #{updateTime},</if>
-			<if test="status != null">status = #{status},</if>
-			<if test="lableType != null and lableType != ''">lable_type = #{lableType},</if>
-			<if test="baseNum != null">base_num = #{baseNum},</if>
-			<if test="faceFlag != null">face_flag = #{faceFlag},</if>
-			<if test="liveFlag != null">live_flag = #{liveFlag},</if>
-			<if test="videoFlag != null">video_flag = #{videoFlag},</if>
-			<if test="remoteFlag != null">remote_flag = #{remoteFlag},</if>
-			<if test="recommendFlag != null">recommend_flag = #{recommendFlag},</if>
-			<if test="buyNum != null">buy_num = #{buyNum},</if>
-			<if test="itemTag != null and itemTag != ''">item_tag = #{itemTag},</if>
-			<if test="integralFlag != null">integral_flag = #{integralFlag},</if>
-			<if test="memberFlag != null">member_flag = #{memberFlag},</if>
-			<if test="itemOneCode != null and itemOneCode != ''">item_one_code = #{itemOneCode},</if>
-			<if test="itemSecondCode != null and itemSecondCode != ''">item_second_code = #{itemSecondCode},</if>
-			<if test="itemThirdCode != null and itemThirdCode != ''">item_third_code = #{itemThirdCode},</if>
-			<if test="itemFourthCode != null and itemFourthCode != ''">item_fourth_code = #{itemFourthCode},</if>
-			<if test="isMicroClass != null">is_micro_class = #{isMicroClass},</if>
-		</trim>
-		<where>id = #{id}</where>
-	</update>
+    <update id="update" parameterType="com.yuxin.wx.model.commodity.Commodity">
+        update commodity
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="coverUrl != null and coverUrl != ''">cover_url = #{coverUrl},</if>
+            <if test="overview != null and overview != ''">overview = #{overview},</if>
+            <if test="originalPrice != null">original_price = #{originalPrice},</if>
+            <if test="realPrice != null">real_price = #{realPrice},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="itemOneId != null and itemOneId != ''">item_one_id = #{itemOneId},</if>
+            <if test="itemSecondId != null and itemSecondId != ''">item_second_id = #{itemSecondId},</if>
+            <if test="schoolId != null and schoolId != ''">school_id = #{schoolId},</if>
+            <if test="companyId != null and companyId != ''">company_id = #{companyId},</if>
+            <if test="creator != null and creator != ''">creator = #{creator},</if>
+            <if test="cerateTime != null and cerateTime != ''">cerate_time = #{cerateTime},</if>
+            <if test="updator != null and updator != ''">updator = #{updator},</if>
+            <if test="updateTime != null and updateTime != ''">update_time = #{updateTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="lableType != null and lableType != ''">lable_type = #{lableType},</if>
+            <if test="baseNum != null">base_num = #{baseNum},</if>
+            <if test="faceFlag != null">face_flag = #{faceFlag},</if>
+            <if test="liveFlag != null">live_flag = #{liveFlag},</if>
+            <if test="videoFlag != null">video_flag = #{videoFlag},</if>
+            <if test="remoteFlag != null">remote_flag = #{remoteFlag},</if>
+            <if test="recommendFlag != null">recommend_flag = #{recommendFlag},</if>
+            <if test="buyNum != null">buy_num = #{buyNum},</if>
+            <if test="itemTag != null and itemTag != ''">item_tag = #{itemTag},</if>
+            <if test="integralFlag != null">integral_flag = #{integralFlag},</if>
+            <if test="memberFlag != null">member_flag = #{memberFlag},</if>
+            <if test="itemOneCode != null and itemOneCode != ''">item_one_code = #{itemOneCode},</if>
+            <if test="itemSecondCode != null and itemSecondCode != ''">item_second_code = #{itemSecondCode},</if>
+            <if test="itemThirdCode != null and itemThirdCode != ''">item_third_code = #{itemThirdCode},</if>
+            <if test="itemFourthCode != null and itemFourthCode != ''">item_fourth_code = #{itemFourthCode},</if>
+            <if test="isMicroClass != null">is_micro_class = #{isMicroClass},</if>
+        </trim>
+        <where>id = #{id}</where>
+    </update>
 
-	<select id="findById" resultMap="commodityResultMap" parameterType="String" >
-		select <include refid="table_columns" />
-		from commodity
-		where id = #{id}
-	</select>
+    <select id="findById" resultMap="commodityResultMap" parameterType="String">
+        select
+        <include refid="table_columns"/>
+        from commodity
+        where id = #{id}
+    </select>
 
-	<select id="queryAll" resultMap="commodityResultMap">
-		select <include refid="table_columns" />
-		from commodity
-	</select>
+    <select id="queryAll" resultMap="commodityResultMap">
+        select
+        <include refid="table_columns"/>
+        from commodity
+    </select>
 
-	<!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
-	<sql id="page_where">
-		<trim prefix="where" prefixOverrides="and | or ">
-			<if test="name != null and name != ''">and name = #{name}</if>
-			<if test="coverUrl != null and coverUrl != ''">and cover_url = #{coverUrl}</if>
-			<if test="overview != null and overview != ''">and overview = #{overview}</if>
-			<if test="originalPrice != null and originalPrice != ''">and original_price = #{originalPrice}</if>
-			<if test="realPrice != null and realPrice != ''">and real_price = #{realPrice}</if>
-			<if test="type != null and type != ''">and type = #{type}</if>
-			<if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
-			<if test="itemSecondId != null and itemSecondId != ''">and item_second_id = #{itemSecondId}</if>
-			<if test="schoolId != null and schoolId != ''">and school_id = #{schoolId}</if>
-			<if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
-			<if test="creator != null and creator != ''">and creator = #{creator}</if>
-			<if test="cerateTime != null and cerateTime != ''">and cerate_time = #{cerateTime}</if>
-			<if test="updator != null and updator != ''">and updator = #{updator}</if>
-			<if test="updateTime != null and updateTime != ''">and update_time = #{updateTime}</if>
-			<if test="status != null and status != ''">and status = #{status}</if>
-			<if test="lableType != null and lableType != ''">and lable_type = #{lableType}</if>
-			<if test="baseNum != null and baseNum != ''">and base_num = #{baseNum}</if>
-			<if test="faceFlag != null and faceFlag != ''">and face_flag = #{faceFlag}</if>
-			<if test="liveFlag != null and liveFlag != ''">and live_flag = #{liveFlag}</if>
-			<if test="videoFlag != null and videoFlag != ''">and video_flag = #{videoFlag}</if>
-			<if test="remoteFlag != null and remoteFlag != ''">and remote_flag = #{remoteFlag}</if>
-		</trim>
-	</sql>
+    <!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="name != null and name != ''">and name = #{name}</if>
+            <if test="coverUrl != null and coverUrl != ''">and cover_url = #{coverUrl}</if>
+            <if test="overview != null and overview != ''">and overview = #{overview}</if>
+            <if test="originalPrice != null and originalPrice != ''">and original_price = #{originalPrice}</if>
+            <if test="realPrice != null and realPrice != ''">and real_price = #{realPrice}</if>
+            <if test="type != null and type != ''">and type = #{type}</if>
+            <if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
+            <if test="itemSecondId != null and itemSecondId != ''">and item_second_id = #{itemSecondId}</if>
+            <if test="schoolId != null and schoolId != ''">and school_id = #{schoolId}</if>
+            <if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
+            <if test="creator != null and creator != ''">and creator = #{creator}</if>
+            <if test="cerateTime != null and cerateTime != ''">and cerate_time = #{cerateTime}</if>
+            <if test="updator != null and updator != ''">and updator = #{updator}</if>
+            <if test="updateTime != null and updateTime != ''">and update_time = #{updateTime}</if>
+            <if test="status != null and status != ''">and status = #{status}</if>
+            <if test="lableType != null and lableType != ''">and lable_type = #{lableType}</if>
+            <if test="baseNum != null and baseNum != ''">and base_num = #{baseNum}</if>
+            <if test="faceFlag != null and faceFlag != ''">and face_flag = #{faceFlag}</if>
+            <if test="liveFlag != null and liveFlag != ''">and live_flag = #{liveFlag}</if>
+            <if test="videoFlag != null and videoFlag != ''">and video_flag = #{videoFlag}</if>
+            <if test="remoteFlag != null and remoteFlag != ''">and remote_flag = #{remoteFlag}</if>
+        </trim>
+    </sql>
 
-	<select id="page" resultMap="commodityResultMap" parameterType="com.yuxin.wx.model.commodity.Commodity">
-		select <include refid="table_columns" />
-		from commodity
-		<include refid="page_where" />
-		limit #{firstIndex},#{pageSize}
-	</select>
+    <select id="page" resultMap="commodityResultMap" parameterType="com.yuxin.wx.model.commodity.Commodity">
+        select
+        <include refid="table_columns"/>
+        from commodity
+        <include refid="page_where"/>
+        limit #{firstIndex},#{pageSize}
+    </select>
 
-	<select id="pageCount" resultType="int" parameterType="com.yuxin.wx.model.commodity.Commodity">
-		select count(id) from commodity
-		<include refid="page_where" />
-	</select>
+    <select id="pageCount" resultType="int" parameterType="com.yuxin.wx.model.commodity.Commodity">
+        select count(id) from commodity
+        <include refid="page_where"/>
+    </select>
 
-	<select id="queryProduct"  resultMap="commodityVoResultMap" parameterType="com.yuxin.wx.vo.commodity.CommodityVo">
-		select c.*,pr.product_id as classTypeId,(c.base_num + c.buy_num) as actualNum from commodity c left join commodity_product_realtion pr on c.id=pr.com_id
-		<where>
-			<if test="schoolId != null and schoolId != ''"> and c.school_id=#{schoolId}</if>
-			<if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
-			<if test="itemSecondId != null and itemSecondId != ''">and item_second_id = #{itemSecondId}</if>
-			<if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
-			<if test="lableType != null and lableType != ''">and lable_type = #{lableType}</if>
-			<if test="status != null and status != ''">and status = #{status}</if>
-		</where>
-		limit #{firstIndex},#{pageSize}
-	</select>
+    <select id="queryProduct" resultMap="commodityVoResultMap" parameterType="com.yuxin.wx.vo.commodity.CommodityVo">
+        select c.*,pr.product_id as classTypeId,(c.base_num + c.buy_num) as actualNum from commodity c left join
+        commodity_product_realtion pr on c.id=pr.com_id
+        <where>
+            <if test="schoolId != null and schoolId != ''">and c.school_id=#{schoolId}</if>
+            <if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
+            <if test="itemSecondId != null and itemSecondId != ''">and item_second_id = #{itemSecondId}</if>
+            <if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
+            <if test="lableType != null and lableType != ''">and lable_type = #{lableType}</if>
+            <if test="status != null and status != ''">and status = #{status}</if>
+        </where>
+        limit #{firstIndex},#{pageSize}
+    </select>
 
-	<select id="queryProductCount"  resultType="int" parameterType="com.yuxin.wx.vo.commodity.CommodityVo">
-		select count(c.id) from commodity c left join commodity_product_realtion pr on c.id=pr.com_id
-		<where>
-			<if test="schoolId != null and schoolId != ''"> and c.school_id=#{schoolId}</if>
-			<if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
-			<if test="itemSecondId != null and itemSecondId != ''">and item_second_id = #{itemSecondId}</if>
-			<if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
-			<if test="status != null and status != ''">and status = #{status}</if>
-		</where>
-	</select>
-	<!-- 其他自定义SQL -->
-	<select id="findProduct" resultMap="commodityVoResultMap"
-			parameterType="com.yuxin.wx.vo.commodity.CommodityVo">
-		select c.*,pr.product_id as classTypeId,(c.base_num + c.buy_num) as
-		actualNum from commodity c left join commodity_product_realtion pr on
-		c.id=pr.com_id
-		INNER JOIN class_type ct ON pr.product_id = ct.id
-		where c.status=1 and c.company_id = #{companyId} and c.type='COMMODITY_CLASS' and ct.del_flag = 0
-		<if test="schoolId != null and schoolId != ''"> and c.school_id=#{schoolId}</if>
-		<if test="itemOneIds != null and itemOneIds != ''">
-			and c.item_one_id in
-			<foreach item="item" collection="itemOneIds" open="(" separator=","
-					 close=")">
-				#{item}
-			</foreach>
-		</if>
-		<if test="itemSecondId != null and itemSecondId != ''">and c.item_second_id = #{itemSecondId}</if>
-		<if test="lableType != null and lableType != ''">and c.lable_type = #{lableType}</if>
-		<if test="faceFlag != null and faceFlag != ''">and c.face_flag = #{faceFlag}</if>
-		<if test="liveFlag != null and liveFlag != ''">and c.live_flag = #{liveFlag}</if>
-		<if test="videoFlag != null and videoFlag != ''">and c.video_flag = #{videoFlag}</if>
-		<if test="cusorder !=null and cusorder !=''"> order by ${cusorder} </if>
-		<if test="cuslimit !=null and cuslimit !=''"> limit ${cuslimit} </if>
-	</select>
+    <select id="queryProductCount" resultType="int" parameterType="com.yuxin.wx.vo.commodity.CommodityVo">
+        select count(c.id) from commodity c left join commodity_product_realtion pr on c.id=pr.com_id
+        <where>
+            <if test="schoolId != null and schoolId != ''">and c.school_id=#{schoolId}</if>
+            <if test="itemOneId != null and itemOneId != ''">and item_one_id = #{itemOneId}</if>
+            <if test="itemSecondId != null and itemSecondId != ''">and item_second_id = #{itemSecondId}</if>
+            <if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
+            <if test="status != null and status != ''">and status = #{status}</if>
+        </where>
+    </select>
+    <!-- 其他自定义SQL -->
+    <select id="findProduct" resultMap="commodityVoResultMap"
+            parameterType="com.yuxin.wx.vo.commodity.CommodityVo">
+        select c.*,pr.product_id as classTypeId,(c.base_num + c.buy_num) as
+        actualNum from commodity c left join commodity_product_realtion pr on
+        c.id=pr.com_id
+        INNER JOIN class_type ct ON pr.product_id = ct.id
+        where c.status=1 and c.company_id = #{companyId} and c.type='COMMODITY_CLASS' and ct.del_flag = 0
+        <if test="schoolId != null and schoolId != ''">and c.school_id=#{schoolId}</if>
+        <if test="itemOneIds != null and itemOneIds != ''">
+            and c.item_one_id in
+            <foreach item="item" collection="itemOneIds" open="(" separator=","
+                     close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="itemSecondId != null and itemSecondId != ''">and c.item_second_id = #{itemSecondId}</if>
+        <if test="lableType != null and lableType != ''">and c.lable_type = #{lableType}</if>
+        <if test="faceFlag != null and faceFlag != ''">and c.face_flag = #{faceFlag}</if>
+        <if test="liveFlag != null and liveFlag != ''">and c.live_flag = #{liveFlag}</if>
+        <if test="videoFlag != null and videoFlag != ''">and c.video_flag = #{videoFlag}</if>
+        <if test="cusorder !=null and cusorder !=''">order by ${cusorder}</if>
+        <if test="cuslimit !=null and cuslimit !=''">limit ${cuslimit}</if>
+    </select>
 
-	<select id="findCommodityIdByClassTypeId" parameterType="Integer" resultType="Integer">
+    <select id="findCommodityIdByClassTypeId" parameterType="Integer" resultType="Integer">
 		select b.com_id
 		from class_type a,commodity_product_realtion b
 		where
@@ -343,28 +355,29 @@
 		a.id = #{classTypeId}
 		limit 1
 	</select>
-	<select id="findCommodityByClassTypeId" parameterType="map" resultMap="commodityVoResultMap">
-		select c.*,pr.product_id as classTypeId,(c.base_num + c.buy_num) as actualNum
-		from commodity c , commodity_product_realtion pr
-		where  c.status=1
-		and c.id=pr.com_id
-		and c.company_id = #{companyId}
-		<if test="classTypeOne !=null and classTypeOne!=''">and (pr.product_id = #{classTypeOne}</if>
-		<if test="classTypeTwo !=null and classTypeTwo!='' ">  or pr.product_id= #{classTypeTwo}</if>
-		<if test="classTypeOne !=null and classTypeOne!=''">)</if>
-	</select>
+    <select id="findCommodityByClassTypeId" parameterType="map" resultMap="commodityVoResultMap">
+        select c.*,pr.product_id as classTypeId,(c.base_num + c.buy_num) as actualNum
+        from commodity c , commodity_product_realtion pr
+        where c.status=1
+        and c.id=pr.com_id
+        and c.company_id = #{companyId}
+        <if test="classTypeOne !=null and classTypeOne!=''">and (pr.product_id = #{classTypeOne}</if>
+        <if test="classTypeTwo !=null and classTypeTwo!='' ">or pr.product_id= #{classTypeTwo}</if>
+        <if test="classTypeOne !=null and classTypeOne!=''">)</if>
+    </select>
 
-	<update id="updateBuyNumById" parameterType="Integer">
+    <update id="updateBuyNumById" parameterType="Integer">
 		update commodity set buy_num=buy_num+1
 		where id = #{id}
 	</update>
 
-	<select id="querycommByCompanyId" parameterType="Integer" resultMap="commodityResultMap">
-		select <include refid="table_columns" />
-		from commodity where company_id=#{companyId}
-	</select>
+    <select id="querycommByCompanyId" parameterType="Integer" resultMap="commodityResultMap">
+        select
+        <include refid="table_columns"/>
+        from commodity where company_id=#{companyId}
+    </select>
 
-	<select id="findComId" parameterType="com.yuxin.wx.model.commodity.Commodity" resultType="Integer">
+    <select id="findComId" parameterType="com.yuxin.wx.model.commodity.Commodity" resultType="Integer">
 		select id from commodity
 		where company_id = #{companyId} and
 		school_id = #{schoolId} and
@@ -372,240 +385,290 @@
 		item_second_id = #{itemSecondId} and
 		status = #{status}
 	</select>
-	<update id="updateStatus" parameterType="map">
-		update commodity set
-		status = #{status}
-		where id in
-		<foreach collection="comId" item="item" open="(" separator="," close=")">
-			#{item}
-		</foreach>
-	</update>
+    <update id="updateStatus" parameterType="map">
+        update commodity set
+        status = #{status}
+        where id in
+        <foreach collection="comId" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
 
-	<select id="findCommodityName" parameterType="Integer" resultType="String">
+    <select id="findCommodityName" parameterType="Integer" resultType="String">
 		select name from commodity where id = #{id}
 	</select>
 
 
-	<select id="queryCourseByTeacherIds" parameterType="map" resultMap="commodityVoResultMap">
-		select temp.*,sct.school_short_name,sct.name teacher_name from (select com.*,(com.base_num + com.buy_num) as actualNum, ct.teacher_id
-		from commodity com
-		inner join commodity_product_realtion pr on com.id=pr.com_id
-		inner JOIN class_type ct on ct.id=pr.product_id
-		where com.status=1 and ct.is_sale = 1 and ct.teacher_id  in
-		<foreach collection="teacherIds" item="item" open="(" separator="," close=")">
-			#{item}
-		</foreach>
-		and com.company_id=#{companyId} and com.school_id=#{schoolId}
-		ORDER BY com.id DESC)temp LEFT JOIN sys_config_teacher sct ON sct.id = temp.teacher_id
-	</select>
+    <select id="queryCourseByTeacherIds" parameterType="map" resultMap="commodityVoResultMap">
+        select temp.*,sct.school_short_name,sct.name teacher_name from (select com.*,(com.base_num + com.buy_num) as
+        actualNum, ct.teacher_id
+        from commodity com
+        inner join commodity_product_realtion pr on com.id=pr.com_id
+        inner JOIN class_type ct on ct.id=pr.product_id
+        where com.status=1 and ct.is_sale = 1 and ct.teacher_id in
+        <foreach collection="teacherIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and com.company_id=#{companyId} and com.school_id=#{schoolId}
+        ORDER BY com.id DESC)temp LEFT JOIN sys_config_teacher sct ON sct.id = temp.teacher_id
+    </select>
 
-	<update id="updateSpecialOrder" parameterType="com.yuxin.wx.vo.commodity.CommodityVo">
+    <update id="updateSpecialOrder" parameterType="com.yuxin.wx.vo.commodity.CommodityVo">
 		update commodity set special_order = #{specialOrder} where id = #{id}
 	</update>
 
-	<!-- 课程搜索 lym -->
-	<select id="queryClassScheduleList" resultMap="commodityVoResultMap" parameterType="map">
-		select
-		c.id,
-		c.name,
-		c.live_flag,
-		c.company_id,
-		c.school_id,
-		ct.id as classTypeId,
-		c.item_one_code,
-		c.item_second_code,
-		c.item_third_code,
-		cml.lesson_date,
-		cml.lesson_time_start,
-		cml.lesson_time_end,
-		cml.lesson_name
-		from class_module_lesson cml
-		join class_module_no cmn on cmn.id=cml.module_no_id
-		join class_type_module_relation ctmr on ctmr.module_id=cmn.module_id
-		join class_type ct on ct.id = ctmr.class_type_id
-		JOIN commodity_product_realtion pr ON ct.id = pr.product_id
-		JOIN commodity c ON c.id = pr.com_id
-		JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
-		JOIN sys_config_item sci on sci.parent_code='SUBJECT' and sci.item_code=c.item_third_code
-		where c.status=1
-		<if test="com.companyId != null and com.companyId != ''">
-			and c.company_id=#{com.companyId}
-		</if>
-		and c.type='COMMODITY_CLASS' and ct.del_flag = 0 and ct.live_flag = 1 and ct.publish_status = 'CLASS_ON_SALE'
-		and c.item_third_code is not null
-		and cml.lesson_date BETWEEN #{today} and #{tomorry}
-		<if test="com.itemSecondCode != null and com.itemSecondCode != ''">and c.item_second_code = #{com.itemSecondCode}</if>
-		<if test="com.schoolId != null and com.schoolId != ''">and c.school_id =(${com.schoolId})</if>
-		<if test="com.teacherId != null and com.teacherId != ''">and ct.teacher_id = #{com.teacherId}</if>
-		<if test="com.itemSecondCode != null and com.itemSecondCode != ''">and c.item_second_code = #{com.itemSecondCode}</if>
-		<if test="com.itemThirdCode != null and com.itemThirdCode != ''">and c.item_third_code = #{com.itemThirdCode}</if>
-		group by c.id
-	</select>
-	<select id="findCommodityByItems" parameterType="com.yuxin.wx.vo.commodity.CommodityVo" resultMap="commodityVoResultMap">
-		select id,name from commodity where live_flag = 1 and company_id = #{companyId} and school_id = #{schoolId} and type = 'COMMODITY_CLASS'
-		<if test="itemOneCode != null and itemOneCode != ''">and item_one_code =#{itemOneCode}</if>
-		<if test="itemSecondCode != null and itemSecondCode != ''">and item_second_code =#{itemSecondCode}</if>
-		<if test="itemThirdCode != null and itemThirdCode != ''">and item_third_code =#{itemThirdCode}</if>
-		<if test="itemFourthCode != null and itemFourthCode != ''">and item_fourth_code =#{itemFourthCode}</if>
-		ORDER  BY cerate_time
-	</select>
+    <!-- 课程搜索 lym -->
+    <select id="queryClassScheduleList" resultMap="commodityVoResultMap" parameterType="map">
+        select
+        c.id,
+        c.name,
+        c.live_flag,
+        c.company_id,
+        c.school_id,
+        ct.id as classTypeId,
+        c.item_one_code,
+        c.item_second_code,
+        c.item_third_code,
+        cml.lesson_date,
+        cml.lesson_time_start,
+        cml.lesson_time_end,
+        cml.lesson_name
+        from class_module_lesson cml
+        join class_module_no cmn on cmn.id=cml.module_no_id
+        join class_type_module_relation ctmr on ctmr.module_id=cmn.module_id
+        join class_type ct on ct.id = ctmr.class_type_id
+        JOIN commodity_product_realtion pr ON ct.id = pr.product_id
+        JOIN commodity c ON c.id = pr.com_id
+        JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
+        JOIN sys_config_item sci on sci.parent_code='SUBJECT' and sci.item_code=c.item_third_code
+        where c.status=1
+        <if test="com.companyId != null and com.companyId != ''">
+            and c.company_id=#{com.companyId}
+        </if>
+        and c.type='COMMODITY_CLASS' and ct.del_flag = 0 and ct.live_flag = 1 and ct.publish_status = 'CLASS_ON_SALE'
+        and c.item_third_code is not null
+        and cml.lesson_date BETWEEN #{today} and #{tomorry}
+        <if test="com.itemSecondCode != null and com.itemSecondCode != ''">and c.item_second_code =
+            #{com.itemSecondCode}
+        </if>
+        <if test="com.schoolId != null and com.schoolId != ''">and c.school_id =(${com.schoolId})</if>
+        <if test="com.teacherId != null and com.teacherId != ''">and ct.teacher_id = #{com.teacherId}</if>
+        <if test="com.itemSecondCode != null and com.itemSecondCode != ''">and c.item_second_code =
+            #{com.itemSecondCode}
+        </if>
+        <if test="com.itemThirdCode != null and com.itemThirdCode != ''">and c.item_third_code = #{com.itemThirdCode}
+        </if>
+        group by c.id
+    </select>
+    <select id="findCommodityByItems" parameterType="com.yuxin.wx.vo.commodity.CommodityVo"
+            resultMap="commodityVoResultMap">
+        select id,name from commodity where live_flag = 1 and company_id = #{companyId} and school_id = #{schoolId} and
+        type = 'COMMODITY_CLASS'
+        <if test="itemOneCode != null and itemOneCode != ''">and item_one_code =#{itemOneCode}</if>
+        <if test="itemSecondCode != null and itemSecondCode != ''">and item_second_code =#{itemSecondCode}</if>
+        <if test="itemThirdCode != null and itemThirdCode != ''">and item_third_code =#{itemThirdCode}</if>
+        <if test="itemFourthCode != null and itemFourthCode != ''">and item_fourth_code =#{itemFourthCode}</if>
+        ORDER BY cerate_time
+    </select>
 
-	<select id="getModelList" resultMap="commodityVoResultMap">
+    <select id="getModelList" resultMap="commodityVoResultMap">
 		select id,name,code as item_one_code from sys_dict_app WHERE type = 'CATEGORY'
 	</select>
 
 
+    <!--查询推荐专题列表-->
+    <select id="getModelListByIds" parameterType="map" resultMap="commodityVo1ResultMap">
+        select app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as realPrice,
+        '--' as lesson_date, '--' as lesson_time_start, sct.NAME teacher_name, sct.school_short_name, c.buy_num as
+        actualNum, app.img_url as imgUrl,
+        case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
+        app.shelves_time as shelvesTime,app.sort sort,
+        ct.cover as cover, app.reserve_time,
+        app.id as appId, app.lab_desc, app.`price` as appPrice, app.`sale_price` as salePrice, sys1.name as itemOneName,
+        sys2.name as itemSecondName, sys3.name as itemThirdName, sys4.name as itemFourthName, sys5.name as itemTag,
+        sys6.name as tagName, sys7.name as typeCode, c.live_flag as liveFlag, c.id, app.category_id as courseCaId
+        from commodity c
+        join commodity_product_realtion cpr on cpr.com_id=c.id
+        join class_type ct on ct.id=cpr.product_id
+        join sys_config_teacher sct ON ct.teacher_id = sct.id join app_shelves app on app.comdity_id=c.id
+        join sys_dict_app sys1 on sys1.id=app.`category_id`
+        join sys_dict_app sys2 on sys2.id=app.`grade_id`
+        join sys_dict_app sys3 on sys3.id=app.`subject_id`
+        join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id`
+        join sys_dict_app sys5 on sys5.id=app.`knowledge_id`
+        left join sys_dict_app sys6 on sys6.id=app.`stage_id`
+        left join sys_dict_app sys7 on sys7.id=app.`type_id`
+        where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 and((app.`is_shelves`=1 and
+        app.`reserve_time` is null) or (app.`is_shelves`=1 and now()<![CDATA[>=]]>app.`reserve_time`))
+        <if test="categoryid !=null and categoryid!=''">and app.category_id = #{categoryid}</if>
+        <if test="studySectionId !=null and studySectionId!='' ">and app.grade_id= #{studySectionId}</if>
+        <if test="subjectId !=null and subjectId!=''">and app.subject_id = #{subjectId}</if>
+        <if test="topicsId !=null and topicsId!='' ">and app.knowledge_id= #{topicsId}</if>
+        <if test="typeId !=null and typeId!=''">and app.type_id = #{typeId}</if>
+        <if test="itemId !=null and itemId!='' ">and app.knowledge_pro_id= #{itemId}</if>
+        <if test="stageId !=null and stageId!='' ">and app.stage_id= #{stageId}</if>
+        GROUP BY c.id
+        limit #{firstIndex},#{pageSize}
+    </select>
 
-	<!--查询推荐专题列表-->
-	<select id="getModelListByIds" parameterType="map" resultMap="commodityVo1ResultMap">
-		select app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as realPrice, '--' as lesson_date, '--' as lesson_time_start, sct.NAME teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl, 
-		case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
-		app.shelves_time as shelvesTime,app.sort sort,
-		ct.cover as cover, app.reserve_time,
-		app.id as appId, app.lab_desc, app.`price` as appPrice, app.`sale_price` as salePrice, sys1.name as itemOneName, sys2.name as itemSecondName, sys3.name as itemThirdName, sys4.name as itemFourthName, sys5.name as itemTag, sys6.name as tagName, sys7.name as typeCode, c.live_flag as liveFlag, c.id, app.category_id as courseCaId 
-		from commodity c 
-		join commodity_product_realtion cpr on cpr.com_id=c.id 
-		join class_type ct on ct.id=cpr.product_id 
-		join sys_config_teacher sct ON ct.teacher_id = sct.id join app_shelves app on app.comdity_id=c.id 
-		join sys_dict_app sys1 on sys1.id=app.`category_id` 
-		join sys_dict_app sys2 on sys2.id=app.`grade_id` 
-		join sys_dict_app sys3 on sys3.id=app.`subject_id` 
-		join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id` 
-		join sys_dict_app sys5 on sys5.id=app.`knowledge_id` 
-		left join sys_dict_app sys6 on sys6.id=app.`stage_id` 
-		left join sys_dict_app sys7 on sys7.id=app.`type_id` 
-		where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()<![CDATA[>=]]>app.`reserve_time`)) 
-		<if test="categoryid !=null and categoryid!=''">and app.category_id = #{categoryid}</if>
-		<if test="studySectionId !=null and studySectionId!='' ">and app.grade_id= #{studySectionId}</if>
-		<if test="subjectId !=null and subjectId!=''">and app.subject_id = #{subjectId}</if>
-		<if test="topicsId !=null and topicsId!='' ">and app.knowledge_id= #{topicsId}</if>
-		<if test="typeId !=null and typeId!=''">and app.type_id = #{typeId}</if>
-		<if test="itemId !=null and itemId!='' ">and app.knowledge_pro_id= #{itemId}</if>
-		<if test="stageId !=null and stageId!='' ">and app.stage_id= #{stageId}</if>
-		GROUP BY c.id 
-		limit #{firstIndex},#{pageSize}
-	</select>
+    <select id="getModelListByIdsCount" parameterType="map" resultType="int">
+        select count(1)
+        from commodity c
+        join commodity_product_realtion cpr on cpr.com_id=c.id
+        join class_type ct on ct.id=cpr.product_id
+        join sys_config_teacher sct ON ct.teacher_id = sct.id join app_shelves app on app.comdity_id=c.id
+        join sys_dict_app sys1 on sys1.id=app.`category_id`
+        join sys_dict_app sys2 on sys2.id=app.`grade_id`
+        join sys_dict_app sys3 on sys3.id=app.`subject_id`
+        join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id`
+        join sys_dict_app sys5 on sys5.id=app.`knowledge_id`
+        left join sys_dict_app sys6 on sys6.id=app.`stage_id`
+        left join sys_dict_app sys7 on sys7.id=app.`type_id`
+        where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 and((app.`is_shelves`=1 and
+        app.`reserve_time` is null) or (app.`is_shelves`=1 and now()<![CDATA[>=]]>app.`reserve_time`))
+        <if test="categoryid !=null and categoryid!=''">and app.category_id = #{categoryid}</if>
+        <if test="studySectionId !=null and studySectionId!='' ">and app.grade_id= #{studySectionId}</if>
+        <if test="subjectId !=null and subjectId!=''">and app.subject_id = #{subjectId}</if>
+        <if test="topicsId !=null and topicsId!='' ">and app.knowledge_id= #{topicsId}</if>
+        <if test="typeId !=null and typeId!=''">and app.type_id = #{typeId}</if>
+        <if test="itemId !=null and itemId!='' ">and app.knowledge_pro_id= #{itemId}</if>
+        <if test="stageId !=null and stageId!='' ">and app.stage_id= #{stageId}</if>
+    </select>
 
-	<select id="getModelListByIdsCount" parameterType="map" resultType="int">
-		select count(1)
-		from commodity c 
-		join commodity_product_realtion cpr on cpr.com_id=c.id 
-		join class_type ct on ct.id=cpr.product_id 
-		join sys_config_teacher sct ON ct.teacher_id = sct.id join app_shelves app on app.comdity_id=c.id 
-		join sys_dict_app sys1 on sys1.id=app.`category_id` 
-		join sys_dict_app sys2 on sys2.id=app.`grade_id` 
-		join sys_dict_app sys3 on sys3.id=app.`subject_id` 
-		join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id` 
-		join sys_dict_app sys5 on sys5.id=app.`knowledge_id` 
-		left join sys_dict_app sys6 on sys6.id=app.`stage_id` 
-		left join sys_dict_app sys7 on sys7.id=app.`type_id` 
-		where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()<![CDATA[>=]]>app.`reserve_time`)) 
-		<if test="categoryid !=null and categoryid!=''">and app.category_id = #{categoryid}</if>
-		<if test="studySectionId !=null and studySectionId!='' ">and app.grade_id= #{studySectionId}</if>
-		<if test="subjectId !=null and subjectId!=''">and app.subject_id = #{subjectId}</if>
-		<if test="topicsId !=null and topicsId!='' ">and app.knowledge_id= #{topicsId}</if>
-		<if test="typeId !=null and typeId!=''">and app.type_id = #{typeId}</if>
-		<if test="itemId !=null and itemId!='' ">and app.knowledge_pro_id= #{itemId}</if>
-		<if test="stageId !=null and stageId!='' ">and app.stage_id= #{stageId}</if>
-	</select>
+    <!--查询直播-->
+    <select id="getZhiBoModelListByIds" parameterType="map" resultMap="commodityVo1ResultMap">
+        select app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as
+        realPrice,CONCAT(date_format(cml.lesson_date,"%Y-%m-%d"),' ',cml.lesson_time_start) as lesson_date,sct.NAME
+        teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl, case when app.is_shelves is
+        null then '0' else app.is_shelves end as isShelves, app.shelves_time as shelvesTime, ct.cover as cover,
+        app.reserve_time, app.id as appId, app.lab_desc,app.sort sort, app.`price` as appPrice, app.`sale_price` as
+        salePrice, sys1.name as itemOneName, sys2.name as itemSecondName, sys3.name as itemThirdName, sys4.name as
+        itemFourthName, sys5.name as itemTag, sys6.name as tagName, sys7.name as typeCode, c.live_flag as liveFlag,
+        c.id, app.category_id as courseCaId FROM (
+        SELECT ml.module_no_id, ml.lesson_date, ml.lesson_time_start, ml.lesson_time_end, ml.lesson_name FROM
+        class_module_lesson ml WHERE ml.lesson_date <![CDATA[>=]]>now()
+        ) cml JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id` JOIN `class_type_module_relation` ctmr ON
+        ctmr.`module_id` = cmn.`module_id` JOIN class_type ct ON ct.id = ctmr.`class_type_id` join
+        commodity_product_realtion pr on ct.id = pr.product_id join commodity c on c.id = pr.com_id JOIN
+        sys_config_teacher sct ON ct.teacher_id = sct.id join `app_shelves` app on app.`comdity_id`=c.id join
+        sys_dict_app sys1 on sys1.id=app.`category_id` join sys_dict_app sys2 on sys2.id=app.`grade_id` join
+        sys_dict_app sys3 on sys3.id=app.`subject_id` join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id` join
+        sys_dict_app sys5 on sys5.id=app.`knowledge_id` join sys_dict_app sys6 on sys6.id=app.`stage_id` join
+        sys_dict_app sys7 on sys7.id=app.`type_id` where ct.del_flag=0 and c.type='COMMODITY_CLASS'
+        and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`))
+        and app.category_id =#{categoryid}
+        GROUP BY c.id
+        UNION
+        select app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as
+        realPrice,CONCAT(date_format(cml.lesson_date,"%Y-%m-%d"),' ',cml.lesson_time_start) as lesson_date,
+        sct.NAME teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl,
+        case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
+        app.shelves_time as shelvesTime, ct.cover as cover, app.reserve_time, app.id as appId,
+        app.lab_desc,app.sort sort, app.`price` as appPrice, app.`sale_price` as salePrice,
+        sys1.name as itemOneName, sys2.name as itemSecondName, sys3.name as itemThirdName,
+        sys4.name as itemFourthName, sys5.name as itemTag, sys6.name as tagName,
+        sys7.name as typeCode, c.live_flag as liveFlag, c.id, app.category_id as courseCaId
+        FROM ( SELECT ml.module_no_id, ml.`lesson_date`, ml.lesson_time_start, ml.lesson_time_end, ml.lesson_name
+        FROM class_module_lesson ml
+        ) cml
+        JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id`
+        JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id`
+        JOIN class_type ct ON ct.id = ctmr.`class_type_id`
+        join commodity_product_realtion pr on ct.id = pr.product_id
+        join commodity c on c.id = pr.com_id
+        JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
+        join `app_shelves` app on app.`comdity_id`=c.id
+        join sys_dict_app sys1 on sys1.id=app.`category_id`
+        join sys_dict_app sys2 on sys2.id=app.`grade_id`
+        join sys_dict_app sys3 on sys3.id=app.`subject_id`
+        join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id`
+        join sys_dict_app sys5 on sys5.id=app.`knowledge_id`
+        left join sys_dict_app sys6 on sys6.id=app.`stage_id`
+        left join sys_dict_app sys7 on sys7.id=app.`type_id`
+        where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 and((app.`is_shelves`=1 and
+        app.`reserve_time` is null) or (app.`is_shelves`=1 and now()<![CDATA[>=]]>app.`reserve_time`))
+        and app.category_id =#{categoryid}
+        <if test="studySectionId !=null and studySectionId!='' ">and app.grade_id= #{studySectionId}</if>
+        <if test="subjectId !=null and subjectId!=''">and app.subject_id = #{subjectId}</if>
+        <if test="topicsId !=null and topicsId!='' ">and app.knowledge_id= #{topicsId}</if>
+        <if test="typeId !=null and typeId!=''">and app.type_id = #{typeId}</if>
+        <if test="itemId !=null and itemId!='' ">and app.knowledge_pro_id= #{itemId}</if>
+        <if test="stageId !=null and stageId!='' ">and app.stage_id= #{stageId}</if>
+        GROUP BY c.id HAVING MAX(cml.lesson_date) <![CDATA[<]]> NOW()
+        limit #{firstIndex},#{pageSize}
+    </select>
 
-	<!--查询直播-->
-	<select id="getZhiBoModelListByIds" parameterType="map" resultMap="commodityVo1ResultMap">
-			select app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as realPrice,CONCAT(date_format(cml.lesson_date,"%Y-%m-%d"),' ',cml.lesson_time_start) as lesson_date,sct.NAME teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl, case when app.is_shelves is null then '0' else app.is_shelves end as isShelves, app.shelves_time as shelvesTime, ct.cover as cover, app.reserve_time, app.id as appId, app.lab_desc,app.sort sort, app.`price` as appPrice, app.`sale_price` as salePrice, sys1.name as itemOneName, sys2.name as itemSecondName, sys3.name as itemThirdName, sys4.name as itemFourthName, sys5.name as itemTag, sys6.name as tagName, sys7.name as typeCode, c.live_flag as liveFlag, c.id, app.category_id as courseCaId FROM ( 
-				SELECT ml.module_no_id, ml.lesson_date, ml.lesson_time_start, ml.lesson_time_end, ml.lesson_name FROM class_module_lesson ml WHERE ml.lesson_date <![CDATA[>=]]>now()
-			) cml JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id` JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id` JOIN class_type ct ON ct.id = ctmr.`class_type_id` join commodity_product_realtion pr on ct.id = pr.product_id join commodity c on c.id = pr.com_id JOIN sys_config_teacher sct ON ct.teacher_id = sct.id join `app_shelves` app on app.`comdity_id`=c.id join sys_dict_app sys1 on sys1.id=app.`category_id` join sys_dict_app sys2 on sys2.id=app.`grade_id` join sys_dict_app sys3 on sys3.id=app.`subject_id` join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id` join sys_dict_app sys5 on sys5.id=app.`knowledge_id` join sys_dict_app sys6 on sys6.id=app.`stage_id` join sys_dict_app sys7 on sys7.id=app.`type_id` where ct.del_flag=0 and c.type='COMMODITY_CLASS' and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`)) and app.category_id =#{categoryid} 
-			GROUP BY c.id 
-			UNION 
-			select app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as realPrice,CONCAT(date_format(cml.lesson_date,"%Y-%m-%d"),' ',cml.lesson_time_start) as lesson_date,
-			sct.NAME teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl, 
-			case when app.is_shelves is null then '0' else app.is_shelves end as isShelves, 
-			app.shelves_time as shelvesTime, ct.cover as cover, app.reserve_time, app.id as appId, 
-			app.lab_desc,app.sort sort, app.`price` as appPrice, app.`sale_price` as salePrice, 
-			sys1.name as itemOneName, sys2.name as itemSecondName, sys3.name as itemThirdName,
-			sys4.name as itemFourthName, sys5.name as itemTag, sys6.name as tagName, 
-			sys7.name as typeCode, c.live_flag as liveFlag, c.id, app.category_id as courseCaId 
-			FROM ( SELECT ml.module_no_id, ml.`lesson_date`, ml.lesson_time_start, ml.lesson_time_end, ml.lesson_name 
-					FROM class_module_lesson ml
-				) cml 
-			JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id` 
-			JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id` 
-			JOIN class_type ct ON ct.id = ctmr.`class_type_id` 
-			join commodity_product_realtion pr on ct.id = pr.product_id 
-			join commodity c on c.id = pr.com_id 
-			JOIN sys_config_teacher sct ON ct.teacher_id = sct.id 
-			join `app_shelves` app on app.`comdity_id`=c.id 
-			join sys_dict_app sys1 on sys1.id=app.`category_id` 
-			join sys_dict_app sys2 on sys2.id=app.`grade_id` 
-			join sys_dict_app sys3 on sys3.id=app.`subject_id` 
-			join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id` 
-			join sys_dict_app sys5 on sys5.id=app.`knowledge_id` 
-			left join sys_dict_app sys6 on sys6.id=app.`stage_id` 
-			left join sys_dict_app sys7 on sys7.id=app.`type_id` 
-			where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()<![CDATA[>=]]>app.`reserve_time`)) 
-			and app.category_id =#{categoryid}
-		<if test="studySectionId !=null and studySectionId!='' ">and app.grade_id= #{studySectionId}</if>
-		<if test="subjectId !=null and subjectId!=''">and app.subject_id = #{subjectId}</if>
-		<if test="topicsId !=null and topicsId!='' ">and app.knowledge_id= #{topicsId}</if>
-		<if test="typeId !=null and typeId!=''">and app.type_id = #{typeId}</if>
-		<if test="itemId !=null and itemId!='' ">and app.knowledge_pro_id= #{itemId}</if>
-		<if test="stageId !=null and stageId!='' ">and app.stage_id= #{stageId}</if>
-		GROUP BY c.id HAVING MAX(cml.lesson_date) <![CDATA[<]]> NOW()
-		limit #{firstIndex},#{pageSize}
-	</select>
-
-	<select id="getZhiBoModelListByIdsCount" parameterType="map" resultType="int">
-		 	select count(1) from (
-			 	select ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as realPrice, cml.lesson_date as lessonDate, cml.lesson_time_start as lessonTimeStart, sct.NAME teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl, case when app.is_shelves is null then '0' else app.is_shelves end as isShelves, app.shelves_time as shelvesTime, ct.cover as cover, app.reserve_time, app.id as appId, app.lab_desc, app.`price` as appPrice, app.`sale_price` as salePrice, sys1.name as itemOneName, sys2.name as itemSecondName, sys3.name as itemThirdName, sys4.name as itemFourthName, sys5.name as itemTag, sys6.name as tagName, sys7.name as typeCode, c.live_flag as liveFlag, c.id, app.category_id as courseCaId FROM ( 
-					SELECT ml.module_no_id, ml.lesson_date, ml.lesson_time_start, ml.lesson_time_end, ml.lesson_name FROM class_module_lesson ml WHERE ml.lesson_date <![CDATA[>=]]>now()
-				) cml JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id` JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id` JOIN class_type ct ON ct.id = ctmr.`class_type_id` join commodity_product_realtion pr on ct.id = pr.product_id join commodity c on c.id = pr.com_id JOIN sys_config_teacher sct ON ct.teacher_id = sct.id join `app_shelves` app on app.`comdity_id`=c.id join sys_dict_app sys1 on sys1.id=app.`category_id` join sys_dict_app sys2 on sys2.id=app.`grade_id` join sys_dict_app sys3 on sys3.id=app.`subject_id` join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id` join sys_dict_app sys5 on sys5.id=app.`knowledge_id` join sys_dict_app sys6 on sys6.id=app.`stage_id` join sys_dict_app sys7 on sys7.id=app.`type_id` where ct.del_flag=0 and c.type='COMMODITY_CLASS' and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`)) and app.category_id =#{categoryid} 
-				GROUP BY c.id 
-				UNION 
-				select ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as realPrice, cml.lesson_date, cml.lesson_time_start, 
-				sct.NAME teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl, 
-				case when app.is_shelves is null then '0' else app.is_shelves end as isShelves, 
-				app.shelves_time as shelvesTime, ct.cover as cover, app.reserve_time, app.id as appId, 
-				app.lab_desc, app.`price` as appPrice, app.`sale_price` as salePrice, 
-				sys1.name as itemOneName, sys2.name as itemSecondName, sys3.name as itemThirdName,
-				sys4.name as itemFourthName, sys5.name as itemTag, sys6.name as tagName, 
-				sys7.name as typeCode, c.live_flag as liveFlag, c.id, app.category_id as courseCaId 
-				FROM ( SELECT ml.module_no_id, ml.`lesson_date`, ml.lesson_time_start, ml.lesson_time_end, ml.lesson_name 
-						FROM class_module_lesson ml
-					) cml 
-				JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id` 
-				JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id` 
-				JOIN class_type ct ON ct.id = ctmr.`class_type_id` 
-				join commodity_product_realtion pr on ct.id = pr.product_id 
-				join commodity c on c.id = pr.com_id 
-				JOIN sys_config_teacher sct ON ct.teacher_id = sct.id 
-				join `app_shelves` app on app.`comdity_id`=c.id 
-				join sys_dict_app sys1 on sys1.id=app.`category_id` 
-				join sys_dict_app sys2 on sys2.id=app.`grade_id` 
-				join sys_dict_app sys3 on sys3.id=app.`subject_id` 
-				join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id` 
-				join sys_dict_app sys5 on sys5.id=app.`knowledge_id` 
-				left join sys_dict_app sys6 on sys6.id=app.`stage_id` 
-				left join sys_dict_app sys7 on sys7.id=app.`type_id` 
-				where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()<![CDATA[>=]]>app.`reserve_time`)) 
-				and app.category_id =#{categoryid}
-			<if test="studySectionId !=null and studySectionId!='' ">and app.grade_id= #{studySectionId}</if>
-			<if test="subjectId !=null and subjectId!=''">and app.subject_id = #{subjectId}</if>
-			<if test="topicsId !=null and topicsId!='' ">and app.knowledge_id= #{topicsId}</if>
-			<if test="typeId !=null and typeId!=''">and app.type_id = #{typeId}</if>
-			<if test="itemId !=null and itemId!='' ">and app.knowledge_pro_id= #{itemId}</if>
-			<if test="stageId !=null and stageId!='' ">and app.stage_id= #{stageId}</if>
-			GROUP BY c.id 
-		) A
-	</select>
-	<delete id="deleteFirstRecommendByIds">
+    <select id="getZhiBoModelListByIdsCount" parameterType="map" resultType="int">
+        select count(1) from (
+        select ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as realPrice, cml.lesson_date as
+        lessonDate, cml.lesson_time_start as lessonTimeStart, sct.NAME teacher_name, sct.school_short_name, c.buy_num as
+        actualNum, app.img_url as imgUrl, case when app.is_shelves is null then '0' else app.is_shelves end as
+        isShelves, app.shelves_time as shelvesTime, ct.cover as cover, app.reserve_time, app.id as appId, app.lab_desc,
+        app.`price` as appPrice, app.`sale_price` as salePrice, sys1.name as itemOneName, sys2.name as itemSecondName,
+        sys3.name as itemThirdName, sys4.name as itemFourthName, sys5.name as itemTag, sys6.name as tagName, sys7.name
+        as typeCode, c.live_flag as liveFlag, c.id, app.category_id as courseCaId FROM (
+        SELECT ml.module_no_id, ml.lesson_date, ml.lesson_time_start, ml.lesson_time_end, ml.lesson_name FROM
+        class_module_lesson ml WHERE ml.lesson_date <![CDATA[>=]]>now()
+        ) cml JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id` JOIN `class_type_module_relation` ctmr ON
+        ctmr.`module_id` = cmn.`module_id` JOIN class_type ct ON ct.id = ctmr.`class_type_id` join
+        commodity_product_realtion pr on ct.id = pr.product_id join commodity c on c.id = pr.com_id JOIN
+        sys_config_teacher sct ON ct.teacher_id = sct.id join `app_shelves` app on app.`comdity_id`=c.id join
+        sys_dict_app sys1 on sys1.id=app.`category_id` join sys_dict_app sys2 on sys2.id=app.`grade_id` join
+        sys_dict_app sys3 on sys3.id=app.`subject_id` join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id` join
+        sys_dict_app sys5 on sys5.id=app.`knowledge_id` join sys_dict_app sys6 on sys6.id=app.`stage_id` join
+        sys_dict_app sys7 on sys7.id=app.`type_id` where ct.del_flag=0 and c.type='COMMODITY_CLASS'
+        and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`))
+        and app.category_id =#{categoryid}
+        GROUP BY c.id
+        UNION
+        select ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as realPrice, cml.lesson_date,
+        cml.lesson_time_start,
+        sct.NAME teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl,
+        case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
+        app.shelves_time as shelvesTime, ct.cover as cover, app.reserve_time, app.id as appId,
+        app.lab_desc, app.`price` as appPrice, app.`sale_price` as salePrice,
+        sys1.name as itemOneName, sys2.name as itemSecondName, sys3.name as itemThirdName,
+        sys4.name as itemFourthName, sys5.name as itemTag, sys6.name as tagName,
+        sys7.name as typeCode, c.live_flag as liveFlag, c.id, app.category_id as courseCaId
+        FROM ( SELECT ml.module_no_id, ml.`lesson_date`, ml.lesson_time_start, ml.lesson_time_end, ml.lesson_name
+        FROM class_module_lesson ml
+        ) cml
+        JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id`
+        JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id`
+        JOIN class_type ct ON ct.id = ctmr.`class_type_id`
+        join commodity_product_realtion pr on ct.id = pr.product_id
+        join commodity c on c.id = pr.com_id
+        JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
+        join `app_shelves` app on app.`comdity_id`=c.id
+        join sys_dict_app sys1 on sys1.id=app.`category_id`
+        join sys_dict_app sys2 on sys2.id=app.`grade_id`
+        join sys_dict_app sys3 on sys3.id=app.`subject_id`
+        join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id`
+        join sys_dict_app sys5 on sys5.id=app.`knowledge_id`
+        left join sys_dict_app sys6 on sys6.id=app.`stage_id`
+        left join sys_dict_app sys7 on sys7.id=app.`type_id`
+        where ct.del_flag=0 and c.type='COMMODITY_CLASS' and app.is_shelves = 1 and((app.`is_shelves`=1 and
+        app.`reserve_time` is null) or (app.`is_shelves`=1 and now()<![CDATA[>=]]>app.`reserve_time`))
+        and app.category_id =#{categoryid}
+        <if test="studySectionId !=null and studySectionId!='' ">and app.grade_id= #{studySectionId}</if>
+        <if test="subjectId !=null and subjectId!=''">and app.subject_id = #{subjectId}</if>
+        <if test="topicsId !=null and topicsId!='' ">and app.knowledge_id= #{topicsId}</if>
+        <if test="typeId !=null and typeId!=''">and app.type_id = #{typeId}</if>
+        <if test="itemId !=null and itemId!='' ">and app.knowledge_pro_id= #{itemId}</if>
+        <if test="stageId !=null and stageId!='' ">and app.stage_id= #{stageId}</if>
+        GROUP BY c.id
+        ) A
+    </select>
+    <delete id="deleteFirstRecommendByIds">
 		delete from first_recommend
 		where app_shelves_id in(#{appShelvesIds})
 	</delete>
-	<update id="updateAppShelvesSort" parameterType="map">
-	<if test="sort!=null and sort!=''">
-		update app_shelves set sort = #{sort} where id = #{appShelvesId}
-	</if>
-	<if test="sort==null or sort==''">
-		update app_shelves set sort=null where id = #{appShelvesId}
-	</if>
-	</update>
+    <update id="updateAppShelvesSort" parameterType="map">
+        <if test="sort!=null and sort!=''">
+            update app_shelves set sort = #{sort} where id = #{appShelvesId}
+        </if>
+        <if test="sort==null or sort==''">
+            update app_shelves set sort=null where id = #{appShelvesId}
+        </if>
+    </update>
 </mapper>

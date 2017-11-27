@@ -59,6 +59,7 @@
 		<!-- (父)数据源定义,使用Apache DBCP 连接池 -->
 	<bean id="parentDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver"/>
+		<property name="maxStatements" value="0"/>
 		<property name="minPoolSize" value="10" />
 		<property name="maxPoolSize" value="200" />
 		<property name="maxIdleTime" value="30" />

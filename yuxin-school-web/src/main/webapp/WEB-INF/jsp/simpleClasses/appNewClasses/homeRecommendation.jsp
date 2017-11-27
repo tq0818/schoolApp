@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 <html>
 <head>
     <%@include file="/decorators/import.jsp" %>
     <title>首页推荐</title>
-    <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/manage.css">
-    <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/classes.css">
-    <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/operate.css" />
+    <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/manage.css">
+    <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/classes.css">
+    <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/operate.css"/>
 
     <link href="<%=rootPath%>/stylesheets/jquery.datetimepicker.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.datetimepicker.js"></script>
@@ -38,7 +38,7 @@
             <ul>
                 <li>
                     <label>课程名称:</label>
-                        <span>
+                    <span>
                              <c:choose>
                                  <c:when test="${fn:length(searchAndResult.name)>15}">
                                      ${fn:substring(searchAndResult.name, 0, 15)}...
@@ -74,7 +74,8 @@
                     <span>${searchAndResult.actualNum}人学习</span>
                 </li>
             </ul>
-            <a href="##" class="courseDetail btn btn-default" onclick="queryClassDetails(${searchAndResult.id});">课程详情</a>
+            <a href="##" class="courseDetail btn btn-default"
+               onclick="queryClassDetails(${searchAndResult.id});">课程详情</a>
         </div>
     </div>
     <div>
@@ -105,7 +106,7 @@
             <input type="text" id="sort" value="${searchAndResult.sort}" class="orderRecommend">
         </div>
         <div class="uploadRecommend">
-            <button class="btn btn-success" onclick="saveRecommond();">提交推荐</button>
+            <button class="btn btn-success" onclick="saveRecommond('${searchAndResult.appId}');">提交推荐</button>
         </div>
     </div>
 </div>
@@ -119,88 +120,88 @@
 <script type="text/javascript" src="<%=rootPath %>/javascripts/classes.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 <script>
-//        复写数据到页面
-        var gradeIdArray = [];
-        var grade = $(".gradeId");
-        var allChildren = $('#gradeList').children('a');
-        if(grade.length>0){
-            if(grade.length==12){
-                //如果全部有active则删除全部的选中，否则全部选中
-                for(var i=0; i<allChildren.length;i++){
-                    allChildren.eq(i).addClass('active');
-                }
-            }else {
-                for(var i = 1;i<=grade.length;i++){
-                    allChildren.eq(i).addClass('active');
-                }
+    //        复写数据到页面
+    var gradeIdArray = [];
+    var grade = $(".gradeId");
+    var allChildren = $('#gradeList').children('a');
+    if (grade.length > 0) {
+        if (grade.length == 12) {
+            //如果全部有active则删除全部的选中，否则全部选中
+            for (var i = 0; i < allChildren.length; i++) {
+                allChildren.eq(i).addClass('active');
+            }
+        } else {
+            for (var i = 1; i <= grade.length; i++) {
+                allChildren.eq(i).addClass('active');
             }
         }
+    }
 </script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/shelvesCoursesAjax.js"></script>
 <script>
-//    推荐学段复选
-    $('#gradeList').children('a').click(function(){
-        if($(this).hasClass('active')){
+    //    推荐学段复选
+    $('#gradeList').children('a').click(function () {
+        if ($(this).hasClass('active')) {
             $(this).removeClass('active');
             $('#gradeList').children('a').eq(0).removeClass('active');
-        }else {
+        } else {
             $(this).addClass('active');
         }
     });
-//    点击全部，则全部选中
-    $('#gradeList').children('a').eq(0).click(function(){
+    //    点击全部，则全部选中
+    $('#gradeList').children('a').eq(0).click(function () {
 
         var allChildren = $('#gradeList').children('a');
 
         //如果全部有active则删除全部的选中，否则全部选中
-        if($(this).hasClass('active')){
-            for(var i=1; i<allChildren.length;i++){
+        if ($(this).hasClass('active')) {
+            for (var i = 1; i < allChildren.length; i++) {
                 allChildren.eq(i).addClass('active');
             }
-        }else{
-            for(var i=1; i<allChildren.length;i++){
+        } else {
+            for (var i = 1; i < allChildren.length; i++) {
                 allChildren.eq(i).removeClass('active');
             }
         }
     });
 
-function saveRecommond(){
-    var ids = "";
-    var appId="1";
-    $("#gradeList").find("a:not(:first-child)").each(function(){
-        if($(this).hasClass("active")){
-            ids+=$(this).attr("id")+",";
-        }
-    });
-    console.log(ids);
-    if(ids==""){
-        alert("请选择推荐学段");
-        return;
-    }
-    var sort=$("#sort").val();
-    if(sort){
-        //判断是否填写数字
-        var reg = new RegExp("^[0-9]*$");
-        if(!reg.test(sort)){
-            alert("请输入数字!");
+    function saveRecommond(appId) {
+        var ids = "";
+        var appId = appId;
+        $("#gradeList").find("a:not(:first-child)").each(function () {
+            if ($(this).hasClass("active")) {
+                ids += $(this).attr("id") + ",";
+            }
+        });
+        console.log(ids);
+        if (ids == "") {
+            alert("请选择推荐学段");
             return;
         }
-    }
-    $.ajax({
-        url : rootPath +"/appNewClasses/insertRcommondInfo",
-        type : "post",
-        data : {"ids":ids,"sort":sort,"appId":appId},
-        success : function(result) {
-            if("1"==result){
-                alert("推荐成功")
-                $('.popupContainer').hide();
-                $('.popupOpacity').hide();
-            }else{
-                alert("推荐失败")
+        var sort = $("#sort").val();
+        if (sort) {
+            //判断是否填写数字
+            var reg = new RegExp("^[0-9]*$");
+            if (!reg.test(sort)) {
+                alert("请输入数字!");
+                return;
             }
         }
-    });
-}
+        $.ajax({
+            url: rootPath + "/appNewClasses/insertRcommondInfo",
+            type: "post",
+            data: {"ids": ids, "sort": sort, "appId": appId},
+            success: function (result) {
+                if ("1" == result) {
+                    alert("推荐成功")
+                    $('.popupContainer').hide();
+                    $('.popupOpacity').hide();
+                } else {
+                    alert("推荐失败")
+                }
+            }
+        });
+    }
 
 
 </script>
