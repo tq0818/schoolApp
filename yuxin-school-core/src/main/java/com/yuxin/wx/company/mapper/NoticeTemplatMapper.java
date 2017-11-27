@@ -16,4 +16,18 @@ public interface NoticeTemplatMapper extends BaseMapper<NoticeTemplatVo> {
      * @return
      */
    public List<NoticeTemplatVo> queryAllNoticeTemplateList(Map<String,Object> map);
+
+    /**
+     * 获取通知模版总数
+     * @param map
+     * @return
+     */
+    public int queryAllNoticeTemplateCount(Map<String, Object> map);
+
+    /**
+     * 更新通知模版状态
+     * @param ntv
+     * @return
+     */
+    public int updateTemplatStatus(NoticeTemplatVo ntv);
 }
