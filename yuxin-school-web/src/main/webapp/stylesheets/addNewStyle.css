@@ -72,3 +72,8 @@ i{font-style: normal}
 .changeIntegral{margin: 30px 0;}
 .changeIntegral input{width: 60px;margin-right: 20px;}
 .changeIntegral select{margin-right: 20px;}
+.articlesList{padding-left: 100px;}
+.articlesList span{margin-left: -100px;}
+.articlesList button{margin-bottom: 10px; }
+.articleNew{display: none;}
+#email_ckecktor{padding-left: 100px;margin-bottom: 20px;}

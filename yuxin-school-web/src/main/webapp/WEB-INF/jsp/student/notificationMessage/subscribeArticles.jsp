@@ -52,13 +52,14 @@
                     <span style="color:red;">* 最多15个字</span>
                 </p>
                 <p class="c">
-                    <span class="c-title">通知方式：</span> <span class="c-content font-style">
+                    <span class="c-title">通知方式：</span>
+                    <span class="c-content font-style">
 							<a href="javascript:;"
-                               class="btn btn-mini btn-method btn-primary"
+                               class="btn btn-mini btn-method btn-primary "
                                data-type="STUDENT_MESSAGE_MOBILE">短信通知</a> <a
                         href="javascript:;" class="btn btn-mini btn-method btn-default"
                         data-type="STUDENT_MESSAGE_WEB">站内信通知</a><a
-                        href="javascript:;" class="btn btn-mini btn-method btn-default"
+                        href="javascript:;" class="btn btn-mini btn-method btn-default subscribeArticlesBtn"
                 <%--data-type="STUDENT_MESSAGE_EMAIL">邮件通知</a>--%>
                         data-type="STUDENT_MESSAGE_EMAIL">订阅文章</a>
 						</span>
@@ -66,13 +67,25 @@
 
 
                 <%--新添加begin--%>
-                <p class="c">
+                <p class="c articlesList articleNew">
                     <span class="c-title">学段：</span>
                     <button class="btn btn-default">全部</button>
                     <button class="btn btn-default">一年级</button>
                     <button class="btn btn-default">二年级</button>
+                    <button class="btn btn-default">一年级</button>
+                    <button class="btn btn-default">二年级</button>
+                    <button class="btn btn-default">一年级</button>
+                    <button class="btn btn-default">二年级</button>
+                    <button class="btn btn-default">一年级</button>
+                    <button class="btn btn-default">二年级</button>
+                    <button class="btn btn-default">一年级</button>
+                    <button class="btn btn-default">二年级</button>
+                    <button class="btn btn-default">一年级</button>
+                    <button class="btn btn-default">二年级</button>
+
+
                 </p>
-                <p class="c">
+                <p class="c articleNew">
                     <span class="c-title">发送学员：</span>
                     <span>910</span>人
                 </p>
@@ -175,14 +188,17 @@
                     <span class="c-title">邮件标题：</span> <input id="email_title" type="text"/>
                 </p>
                 <!-- 发送内容 -->
-                <p class="c ">
-                <div class="con-fsnr">
-                    <span class="c-title">发送内容：</span><br> <span
-                        class="c-content l-content" id="messageContent"> <textarea
-                        id="msgcount" class="msg-content" onkeydown="valida();"
-                        onkeyup="valida();" onkeypress="valida();" maxlength="140"></textarea>
-							</span>
-                </div>
+
+                <p class="c con-fsnr">
+                    <span class="c-title">发送内容：</span><br>
+                    <span class="c-content l-content" id="messageContent">
+                        <textarea
+                        id="" class="msg-content" onkeydown="valida();"
+                        onkeyup="valida();" onkeypress="valida();" maxlength="140">
+
+                        </textarea>
+					<span>
+                </p>
 
                 <!-- 站内信 -->
                 <div id="ckecktor">
@@ -192,7 +208,7 @@
                 <div id="email_ckecktor" style="display:none;">
                     <textarea id="email_newsContents" class="msg-content"></textarea>
                 </div>
-                </p>
+
                 <!-- 发送条数 -->
                 <p class="c zhan">
                     <span class="c-title">消耗短信：</span> <span class="c-content"><span
@@ -212,20 +228,20 @@
                 </p>
 
                 <%--新添加begin--%>
-                <p class="c">
+                <p class="c articleNew">
                     <span class="c-title">请选择：</span>
                     <input type="radio" name="one" value="1">
                     <button class="btn btn-primary">我要报名</button>
                     <a href="##" class="numPerson">人数限制</a>
                     <input type="text">
                 </p>
-                <p class="c chooseBtn">
+                <p class="c chooseBtn articleNew">
                     <span class="c-title"></span>
                     <input type="radio" name="one" value="0">
                     <button class="btn btn-primary">赞成</button>
                     <button class="btn btn-default">反对</button>
                 </p>
-                <p class="text-center">
+                <p class="text-center articleNew" >
                     <a href="javascript:;" class="btn btn-mb btn-warning btn-send">发布</a>
                     <input type="checkbox">是否推送
                 </p>
@@ -305,5 +321,40 @@
     });
 </script>
 
+<script>
+//    推荐学段复选
+$('.articlesList').children('button').click(function () {
+    if ($(this).hasClass('btn-primary')) {
+        $(this).removeClass('btn-primary');
+        $('.articlesList').children('button').eq(0).removeClass('btn-primary');
+    } else {
+        $(this).addClass('btn-primary');
+    }
+});
+//    点击全部，则全部选中
+$('.articlesList').children('button').eq(0).click(function () {
+
+    var allChildren = $('.articlesList').children('button');
+
+    //如果全部有active则删除全部的选中，否则全部选中
+    if ($(this).hasClass('btn-primary')) {
+        for (var i = 1; i < allChildren.length; i++) {
+            allChildren.eq(i).addClass('btn-primary');
+        }
+    } else {
+        for (var i = 1; i < allChildren.length; i++) {
+            allChildren.eq(i).removeClass('btn-primary');
+        }
+    }
+});
+//点击订阅文章，显示新添加内容
+    $('.c-content').children('a').click(function(){
+        if($(this).index()==2){
+            $('.articleNew').show();
+        }else {
+            $('.articleNew').hide();
+        }
+    });
+</script>
 </body>
 </html>
