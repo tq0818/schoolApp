@@ -940,7 +940,7 @@
 	     select count(id) from class_type  where  item_one_code = #{itemOneCode}  and del_flag = 0  and publish_status = 'CLASS_ON_SALE' and  subject_class_order > 0
 	</select>
 
-	<select id="getGardeIdList" parameterType="com.yuxin.wx.model.classes.ClassType"  resultMap="classTypeVoResultMap">
+	<select id="getGardeIdList" parameterType="com.yuxin.wx.vo.classes.ClassTypeVo"  resultMap="classTypeVoResultMap">
 		select grade_id  from first_recommend  where app_shelves_id = #{appId};
 	</select>
 </mapper>

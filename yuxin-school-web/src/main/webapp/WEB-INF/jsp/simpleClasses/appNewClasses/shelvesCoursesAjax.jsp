@@ -24,11 +24,11 @@
     <table class="table table-center" id="batchReleaseList">
         <tbody>
         <tr>
-            <th width="1%"><input type="checkbox" class="checkboxAll"></th>
-            <th width="5%">课程图片</th>
-            <th width="4%">课程名称</th>
-            <th width="2%">学段</th>
-            <th width="1%">学科</th>
+            <th width="2%"><input type="checkbox" class="checkboxAll"></th>
+            <th width="6%">课程图片</th>
+            <th width="5%">课程名称</th>
+            <th width="3%">学段</th>
+            <th width="2%">学科</th>
             <th width="8%">知识点专题</th>
             <th width="10%">知识点</th>
             <th width="5%">阶段</th>
@@ -38,7 +38,7 @@
             <th width="3%">学习人数</th>
             <th width="4%">价格</th>
             <th width="4%">实际价格</th>
-            <th width="25%">操作</th>
+            <th width="20%">操作</th>
         </tr>
         <c:forEach items="${courseList.data}" var="course" varStatus="status">
             <tr>
