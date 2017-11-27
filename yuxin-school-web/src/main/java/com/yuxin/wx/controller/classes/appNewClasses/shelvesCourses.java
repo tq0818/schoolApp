@@ -167,15 +167,16 @@ public class shelvesCourses {
             //查询直播课程信息
             searchAndResult.setId(Integer.parseInt(commodityId));
             searchAndResult = classTypeServiceImpl.querySingleLiveClassTypeInfo(searchAndResult);
+            //获取学段列表，列表回显
+            gardeIdList = classTypeServiceImpl.getGardeIdList(searchAndResult);
         } else {
             //查询录播信息
             searchAndResult.setId(Integer.parseInt(commodityId));
             searchAndResult = classTypeServiceImpl.querySingOtherClassTypeInfo(searchAndResult);
-
+            //获取学段列表，列表回显
+            gardeIdList = classTypeServiceImpl.getGardeIdList(searchAndResult);
         }
 
-        //获取学段列表，列表回显
-        gardeIdList = classTypeServiceImpl.getGardeIdList(searchAndResult);
 
         model.addAttribute("searchAndResult", searchAndResult);
         model.addAttribute("gardeIdList", gardeIdList);
@@ -205,9 +206,7 @@ public class shelvesCourses {
                     }
                     frs.add(fr);
                 }
-//                classTypeServiceImpl.insertFirstRecommond(frs);
                 classTypeServiceImpl.insertAndUpdateFirstRecommond(frs, sort, appId);
-
             }
             return "1";
         } catch (Exception e) {
