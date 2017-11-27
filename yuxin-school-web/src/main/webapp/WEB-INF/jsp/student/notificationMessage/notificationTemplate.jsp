@@ -23,8 +23,8 @@
             <table class="table table-center">
                 <tr data-buy="true">
                     <th width="10%" >模板ID</th>
-                    <th width="20%" >模板标题</th>
-                    <th width="10%" >发布时间</th>
+                    <th width="10%" >模板标题</th>
+                    <th width="20%" >发布时间</th>
                     <th width="40%" >模板内容</th>
                     <th width="20%" >状态操作</th>
                 </tr>

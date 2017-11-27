@@ -548,6 +548,10 @@
         <pattern>/student/labelManagement</pattern>
         <!--积分修改-->
         <pattern>/student/integralModification</pattern>
+        <!--配置积分规则-->
+        <pattern>/student/integralRule</pattern>
+        <!--提问-->
+        <pattern>/student/putQuestions</pattern>
 
 
     </decorator>
