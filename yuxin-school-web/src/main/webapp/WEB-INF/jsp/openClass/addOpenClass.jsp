@@ -158,7 +158,7 @@
                                         <span class="c-content">
     									<select id="teacherList" name="teacherId" style="width: 170px;"></select>
                                         <input type="hidden" value="${course.teacherId}" id="teacherId" />
-                                        <a href="javascript:void(0)" class="box-select" style="color: #03f;cursor: pointer;">点击添加老师</a>
+                                        <a href="javascript:void(0)" class="box-select" style="color: #03f;cursor: pointer;display: inline-block;width: 200px;">点击添加老师</a>
 								    </span>
                                     </p>
                                 </li>
