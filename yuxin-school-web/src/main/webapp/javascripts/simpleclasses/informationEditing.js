@@ -136,6 +136,10 @@ function toShelves(flag,editFlag){
 			return;
 		}
 	}
+	if("0"==flag && new Date() > new Date(shelvesTime)){
+        alert("预约时间不能小于当前时间");
+        return;
+	}
 	if(salePrice){
 		if (!reg.test(salePrice)) {
 			alert("请输入正确的销售价格");

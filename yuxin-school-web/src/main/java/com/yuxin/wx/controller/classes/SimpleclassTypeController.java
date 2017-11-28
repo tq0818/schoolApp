@@ -255,6 +255,9 @@ public class SimpleclassTypeController {
 				//插入数据入库
 				classTypeServiceImpl.insertAppShelvesInfo(cto);
 			} else {
+				if(cto.getShelvesFlag().equals("1")){
+					cto.setReserveTime(null);
+				}
 				//更新数据入库
 				cto.setId(Integer.parseInt(appId));
 				shelvesCourseServiceImpl.update(cto);

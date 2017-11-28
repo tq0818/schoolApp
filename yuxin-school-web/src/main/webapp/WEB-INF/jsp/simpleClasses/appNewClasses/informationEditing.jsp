@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
     <%@include file="/decorators/import.jsp" %>
@@ -182,8 +183,14 @@
         <div class="submitCourse">
             <button class="btn btn-success" onclick="toShelves('1','${editFlag}');">立即上架</button>
             <button class="btn btn-warning" onclick="toShelves('0','${editFlag}');">预约上架</button>
-            <input type="text" placeholder="指定上架时间" id="shelvesTime"  readonly>
+            <input type="hidden" id="shelvesTimes" value="${searchAndResult.reserveTime}"  />
+            <input type="text" placeholder="指定上架时间" id="shelvesTime"  readonly/>
         </div>
+        <script>
+            var  time = $("#shelvesTimes").val();
+            time = time.replace(".0","")
+            $("#shelvesTime").val(time);
+        </script>
     </div>
         <c:if test="${searchAndResult.liveFlag==1 }">
             <input id="labe" name="lab" value="live" type="hidden"/>

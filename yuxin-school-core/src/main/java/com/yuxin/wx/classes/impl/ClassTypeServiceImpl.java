@@ -49,13 +49,13 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 
 	@Autowired
 	private ClassTypeMapper classTypeMapper;
-	
+
 	@Autowired
 	private CourseVideoMapper courseVideoMapper;
-	
+
 	@Autowired
 	private CourseRemoteMapper courseRemoteMapper;
-	
+
 	@Autowired
 	private ClassModuleMapper classModuleMapper;
 	@Autowired
@@ -78,12 +78,12 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 	private CommodityMapper  commodityMapper;
 
 	/**
-	 * 
+	 *
 	* @Title: saveClassType
 	* @Description: 新增ClassType
-	* @return void    返回类型 
-	* @throws 
-	* @exception 
+	* @return void    返回类型
+	* @throws
+	* @exception
 	* @date 2014-12-5
 	* @user by wangzx
 	 */
@@ -91,14 +91,14 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 	public void insert(ClassType classType){
 		classTypeMapper.insert(classType);
 	}
-	
+
 	/**
-	 * 
-	* @Title: batchSaveClassType 
+	 *
+	* @Title: batchSaveClassType
 	* @Description: 批量新增ClassType
-	* @return void    返回类型 
-	* @throws 
-	* @exception 
+	* @return void    返回类型
+	* @throws
+	* @exception
 	* @date 2014-12-5
 	* @user by wangzx
 	 */
@@ -108,14 +108,14 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 			classTypeMapper.batchInsert(classTypes);
 		}
 	}
-	
+
 	/**
-	 * 
-	* @Title: updateClassType 
+	 *
+	* @Title: updateClassType
 	* @Description: 编辑ClassType
-	* @return void    返回类型 
-	* @throws 
-	* @exception 
+	* @return void    返回类型
+	* @throws
+	* @exception
 	* @date 2014-12-5
 	* @user by wangzx
 	 */
@@ -123,15 +123,15 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 	public void update(ClassType classType){
 		classTypeMapper.update(classType);
 	}
-	
+
 	/**
-	 * 
-	* @Title: deleteClassTypeById 
+	 *
+	* @Title: deleteClassTypeById
 	* @Description: 根据id删除ClassType
 	* @param id
-	* @return void    返回类型 
-	* @throws 
-	* @exception 
+	* @return void    返回类型
+	* @throws
+	* @exception
 	* @date 2014-12-5
 	* @user by wangzx
 	 */
@@ -139,15 +139,15 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 	public void deleteClassTypeById(Integer id){
 		classTypeMapper.deleteById(id);
 	}
-	
+
 	/**
-	 * 
-	* @Title: deleteClassTypeByIds 
+	 *
+	* @Title: deleteClassTypeByIds
 	* @Description: 根据id批量删除ClassType
 	* @param ids
-	* @return void    返回类型 
-	* @throws 
-	* @exception 
+	* @return void    返回类型
+	* @throws
+	* @exception
 	* @date 2014-12-5
 	* @user by wangzx
 	 */
@@ -155,15 +155,15 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 	public void deleteClassTypeByIds(Integer[] ids){
 		classTypeMapper.deleteByIds(ids);
 	}
-	
+
 	/**
-	 * 
-	* @Title: findClassTypeById 
+	 *
+	* @Title: findClassTypeById
 	* @Description: 根据id查询
 	* @param id
-	* @return void    返回类型 
-	* @throws 
-	* @exception 
+	* @return void    返回类型
+	* @throws
+	* @exception
 	* @date 2014-12-5
 	* @user by wangzx
 	 */
@@ -173,47 +173,47 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 	}
 
 	/**
-	 * 
-	* @Title: findClassTypeById 
+	 *
+	* @Title: findClassTypeById
 	* @Description: 查询班型列表
 	* @param id
-	* @return void    返回类型 
-	* @throws 
-	* @exception 
+	* @return void    返回类型
+	* @throws
+	* @exception
 	* @date 2014-12-5
 	* @user by Chopin
 	 */
 	@Override
 	public List<ClassType> findClassTypeList(ClassType classType) {
-		
+
 		return classTypeMapper.findListByItem(classType);
 	}
-	
+
 	/**
-	 * 
-	* @Title: findClassTypeById 
+	 *
+	* @Title: findClassTypeById
 	* @Description: 查询班型列表
 	* @param id
-	* @return void    返回类型 
-	* @throws 
-	* @exception 
+	* @return void    返回类型
+	* @throws
+	* @exception
 	* @date 2014-12-5
 	* @user by Chopin
 	 */
 	@Override
 	public List<ClassType> findClassTypeList2(ClassType classType) {
-		
+
 		return classTypeMapper.findListByItem2(classType);
 	}
-	
+
 	/**
-	 * 
-	* @Title: findClassTypeByPage 
+	 *
+	* @Title: findClassTypeByPage
 	* @Description: 分页查询
 	* @return
-	* @return List<ClassType>    返回类型 
-	* @throws 
-	* @exception 
+	* @return List<ClassType>    返回类型
+	* @throws
+	* @exception
 	* @date 2014-12-5
 	* @user by zhangbo
 	 */
@@ -224,15 +224,15 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 		PageFinder<ClassTypeVo> pageFinder=new PageFinder<ClassTypeVo>(search.getPage(), search.getPageSize(), rowCount, data);
 		return pageFinder;
 	}
-	
+
 	/**
-	 * 
-	* @Title: findClassTypeDetail 
+	 *
+	* @Title: findClassTypeDetail
 	* @Description: 根据id查询班级详细信息
 	* @return
-	* @return ClassTypeVo 返回类型 
-	* @throws 
-	* @exception 
+	* @return ClassTypeVo 返回类型
+	* @throws
+	* @exception
 	* @date 2014-12-5
 	* @user by chopin
 	 */
@@ -246,7 +246,7 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 				totalClass+=classModule.getTotalClassHour();
 			}
 		}
-		
+
 		classvo.setModules(classModules);
 		classvo.setVideos(chapters);
 		Integer id=map.get("classId")!=null?Integer.parseInt(map.get("classId")):null;
@@ -255,7 +255,7 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 		classvo.setTotalClass(totalClass);
 		return classvo;
 	};
-	
+
 	@Override
 	public void updateClassTypeRalation(ClassType classType,String ralationsIdVal){
 		String type=classType.getTypeCode();
@@ -328,10 +328,9 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 		map.put("classType",search);
 		map.put("codes",codes);
 		data=classTypeMapper.queryClassTypesByPage(map);
-		
-	
-			for(ClassTypeVo comm:data)
-			{
+
+
+			for(ClassTypeVo comm:data){
 				Integer videoFlag=comm.getVideoFlag();
 				Integer liveFlag=comm.getLiveFlag();
 				Integer faceFlag=comm.getFaceFlag();
@@ -361,17 +360,17 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 				}
 				if("1".equals(comm.getIsShelves()) && null!=comm.getReserveTime()){
 					if(new Date().getTime()>this.getDate(comm.getReserveTime()).getTime()){
-						comm.setIsShelves("1");
-					}else{
-						comm.setIsShelves("0");
+                            comm.setIsShelves("1");
+						}else{
+						    comm.setIsShelves("0");
 					}
 				}
 		}
 		int rowCount=classTypeMapper.queryCounts(map);
 		PageFinder<ClassTypeVo> pageFinder=new PageFinder<ClassTypeVo>(search.getPage(), search.getPageSize(), rowCount, data);
 		return pageFinder;
-		
-		
+
+
 	}
 
 	@Override
@@ -389,13 +388,13 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 	}
 
 
-	
+
 	@Override
 	public List<String> findNameById(Map<String, Object> param) {
 		// TODO Auto-generated method stub
 		return classTypeMapper.findNameById(param);
 	}
-	
+
 	@Override
 	public List<ClassType> findClassTypeList3(Integer companyId) {
 		return classTypeMapper.findClassTypeList3(companyId);
@@ -504,7 +503,7 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 	public List<ClassType> queryCourseByOneAndTwoItem(ClassType search) {
 		return classTypeMapper.queryClassTypeByOneAndTwoItem(search);
 	}
-	
+
 	@Override
 	public ClassTypeVo findClassTypeVoByClassTypeId(Integer classTypeId){
 		return classTypeMapper.findClassTypeVoByClassTypeId(classTypeId);
@@ -610,7 +609,7 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 	 * @return
      */
 	public Date getDate(String dateStr){
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:MM:SS");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		try {
 			return sdf.parse(dateStr);
 		} catch (ParseException e) {
