@@ -235,14 +235,14 @@
 	                		if(stu.salePrice==null) stu.salePrice="";
                             $(".user-list").find("table").append('<tr>'+
                                     '<td><input type="checkbox" class="signUpMany" value="'+stu.shelves_id+'"></td>'+
-                                    '<td><img src="'+stu.coverUrl+'" alt="" class="shelvesIcon"></td>'+
+                                    /*'<td><img src="'+stu.coverUrl+'" alt="" class="shelvesIcon"></td>'+*/
                                     '<td>'+stu.name+'</td>'+
                                     '<td>'+stu.gradeName+'</td>'+
                                     '<td>'+stu.subjectName+'</td>'+
                                     '<td>'+stu.knowProName+'</td>'+
                                     '<td>'+stu.knowName+'</td>'+
-                                    '<td>'+stu.stageName+'</td>'+
-                                    '<td>'+stu.typeName+'</td>'+
+                                    /*'<td>'+stu.stageName+'</td>'+
+                                    '<td>'+stu.typeName+'</td>'+*/
                                     '<td>'+stu.shelvesTime+'</td>'+
                                     '<td>'+stu.lessonTime+'</td>'+
                                     '<td>'+stu.actualNum+'</td>'+
