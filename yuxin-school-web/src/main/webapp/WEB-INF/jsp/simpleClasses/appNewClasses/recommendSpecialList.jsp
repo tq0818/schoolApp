@@ -134,7 +134,6 @@
 <div class="pages">
     <ul class="pagination pagenations"></ul>
 </div>
-
 </body>
 </html>
 
