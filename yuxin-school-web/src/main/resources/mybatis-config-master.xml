@@ -18,6 +18,8 @@
 		</plugin>
 	</plugins>
    	<mappers>
+   		<!-- 积分 -->
+		<mapper resource="com/yuxin/integral/TotalScoreMapper.xml" />
    		<!-- user -->
 		<mapper resource="com/yuxin/users/UsersMapper.xml" />
 		<mapper resource="com/yuxin/users/UsersFrontMapper.xml" />

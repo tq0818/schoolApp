@@ -9,17 +9,21 @@ import java.util.List;
 import java.util.Map;
 
 import com.yuxin.wx.common.PageFinder2;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;import com.yuxin.wx.common.BaseServiceImpl;
-
+import org.springframework.transaction.annotation.Transactional;
+import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.api.student.IStudentService;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.company.mapper.CompanyRegisterConfigMapper;
 import com.yuxin.wx.model.company.CompanyRegisterConfig;
 import com.yuxin.wx.model.company.CompanyStudentMessage;
+import com.yuxin.wx.model.integral.ScoreDetailsAppVo;
+import com.yuxin.wx.model.integral.ScoreRulsAppVo;
+import com.yuxin.wx.model.integral.TotalScoreVo;
 import com.yuxin.wx.model.student.Student;
 import com.yuxin.wx.model.student.StudentPayMaster;
 import com.yuxin.wx.model.system.SysConfigSchool;
@@ -1778,5 +1782,6 @@ public class StudentServiceImpl extends BaseServiceImpl implements IStudentServi
 		}
 		return data;
 	}
+	
 	
 }
