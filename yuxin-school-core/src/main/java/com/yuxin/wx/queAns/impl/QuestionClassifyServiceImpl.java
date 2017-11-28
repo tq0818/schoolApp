@@ -141,6 +141,12 @@ public class QuestionClassifyServiceImpl extends BaseServiceImpl implements IQue
 	}
 
 	@Override
+	public List<QuestionClassify> findSystemTag(
+			QuestionClassify search) {
+		// TODO Auto-generated method stub
+		return QuestionClassifyMapper.findSystemTag(search);
+	}
+	@Override
 	public List<QuestionClassify> findQuestionClassifyKc(QuestionClassify search) {
 		// TODO Auto-generated method stub
 		return QuestionClassifyMapper.findQuestionClassifyKc(search);

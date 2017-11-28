@@ -28,4 +28,34 @@ public interface QuestionClassifyMapper extends BaseMapper<QuestionClassify> {
 	 * @return
 	 */
 	List<QuestionClassify> findClassifyByCompany(Map<String, Object> param);
+	/**
+	 * 
+	 * @author jishangyang 2017年11月26日 下午7:59:51
+	 * @Method: findSystemTag 
+	 * @Description: 不分页查询系统标签
+	 * @param param
+	 * @return 
+	 * @throws
+	 */
+	List<QuestionClassify> findSystemTag(QuestionClassify search);
+	/**
+	 * 
+	 * @author jishangyang 2017年11月28日 下午3:06:19
+	 * @Method: insertLab 
+	 * @Description: 添加标签
+	 * @param questionClassify
+	 * @return 
+	 * @throws
+	 */
+	Integer  insertLab(QuestionClassify questionClassify);
+	/**
+	 * 
+	 * @author jishangyang 2017年11月28日 下午3:59:18
+	 * @Method: deletLab 
+	 * @Description: 删除标签
+	 * @param questionClassify
+	 * @return 
+	 * @throws
+	 */
+	Integer  deletLab(QuestionClassify questionClassify);
 }

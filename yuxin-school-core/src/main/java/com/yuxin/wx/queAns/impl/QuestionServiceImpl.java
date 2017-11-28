@@ -12,8 +12,10 @@ import org.springframework.transaction.annotation.Transactional;import com.yuxin
 import com.yuxin.wx.api.queAns.IQuestionService;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.queAns.QueQuestion;
+import com.yuxin.wx.model.queAns.QuestionClassify;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.model.user.UsersFront;
+import com.yuxin.wx.queAns.mapper.QuestionClassifyMapper;
 import com.yuxin.wx.queAns.mapper.QuestionMapper;
 import com.yuxin.wx.user.mapper.UsersFrontMapper;
 import com.yuxin.wx.user.mapper.UsersMapper;
@@ -37,6 +39,9 @@ public class QuestionServiceImpl extends BaseServiceImpl implements IQuestionSer
 	
 	@Autowired
 	private UsersMapper usersMapper;
+	
+	@Autowired
+	private QuestionClassifyMapper questionClassifyMapper;
 	
 	/**
 	 * 
@@ -176,9 +181,12 @@ public class QuestionServiceImpl extends BaseServiceImpl implements IQuestionSer
 				qv.setUserName(tiMana.getRealName() != null ? tiMana.getRealName() : ("*******" + tiMana.getMobile().substring(7)));
 				qv.setHeadPic(tiUserPic);
 			}
-			long create = qv.getCreateTime().getTime();
-			String diffTime = secToTime(create);
-			qv.setTiwenTime(diffTime);
+			if(null!=qv.getCreateTime() && !"".equals(qv.getCreateTime())){
+				long create = qv.getCreateTime().getTime();
+				String diffTime = secToTime(create);
+				qv.setTiwenTime(diffTime);	
+			}
+			
 		}
 		Integer count = questionMapper.pageCount(search);
 		PageFinder<QuestionVo> pageFinder=new PageFinder<QuestionVo>(search.getPage(), search.getPageSize(), count, list);
@@ -252,5 +260,23 @@ public class QuestionServiceImpl extends BaseServiceImpl implements IQuestionSer
         	return t;
         }
     }
-	
+
+	@Override
+	public boolean insert(QuestionClassify questionClassify) {
+		
+		if(questionClassifyMapper.insertLab(questionClassify)>0){
+			 return true;
+		}else{
+			return false;
+		}
+	}
+	@Override
+	public boolean delet(QuestionClassify questionClassify) {
+		
+		if(questionClassifyMapper.deletLab(questionClassify)>0){
+			 return true;
+		}else{
+			return false;
+		}
+	}
 }

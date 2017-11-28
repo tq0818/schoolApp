@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
@@ -19,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +45,7 @@ import com.yuxin.wx.api.system.ISysServiceDredgeConfigService;
 import com.yuxin.wx.api.user.IUsersService;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.common.SysConfigConstant;
+import com.yuxin.wx.model.commodity.CommoditySpecial;
 import com.yuxin.wx.model.company.Company;
 import com.yuxin.wx.model.company.CompanyFunctionSet;
 import com.yuxin.wx.model.company.CompanyMemberService;
@@ -55,6 +59,7 @@ import com.yuxin.wx.model.system.SysConfigTeacher;
 import com.yuxin.wx.model.system.SysSchoolItemRelation;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.utils.DateUtil;
+import com.yuxin.wx.utils.FileUtil;
 import com.yuxin.wx.utils.PropertiesUtil;
 import com.yuxin.wx.utils.WebUtils;
 import com.yuxin.wx.vo.queAns.QuestionVo;
@@ -211,83 +216,29 @@ public class QuestionController {
         search.setCompanyId(companyId);
         search.setFunctionCode("COURSE_QUESTION_FUNCTION");
         search.setStatus("1");
-        // 判断选择的是课程分类还是自定义分类
-        CompanyFunctionSet companyFunctionSet = companyFunctionSetServiceImpl.findCompanyUseCourse(search);
-        if (companyFunctionSet != null) {
-            model.addAttribute("courseQuestionFunctionSet", 1);
-        }
-        search = new CompanyFunctionSet();
-        search.setCompanyId(companyId);
-        search.setFunctionCode("QUESTION_CLASSIFY_TYPE");
-        // 判断选择的是课程分类还是自定义分类
-        CompanyFunctionSet classOrPer = companyFunctionSetServiceImpl.findCompanyUseCourse(search);
-        String isCorP = "";
-        if (classOrPer == null) {
-            CompanyFunctionSet newClass = new CompanyFunctionSet();
-            newClass.setCompanyId(companyId);
-            newClass.setFunctionCode("QUESTION_CLASSIFY_TYPE");
-            newClass.setContent("0：自定义分类。1：课程分类");
-            newClass.setStatus("0");
-            newClass.setFunctionName("问答分类");
-            companyFunctionSetServiceImpl.insert(newClass);
-            isCorP = "0";
-        } else {
-            isCorP = classOrPer.getStatus();
-        }
-
-        if (isCorP.equals(1)) {
-            // 选择的是课程分类
-
-        } else {
-            // 选择的是自定义分类，判断是否开启课程标签
-            search.setFunctionCode("QUESTION_LABEL_STATE");
-            CompanyFunctionSet classOpen = companyFunctionSetServiceImpl.findCompanyUseCourse(search);
-            String isC = "";
-            if (classOpen == null) {
-                CompanyFunctionSet newOpen = new CompanyFunctionSet();
-                newOpen.setCompanyId(companyId);
-                newOpen.setFunctionCode("QUESTION_LABEL_STATE");
-                newOpen.setContent("0：关闭。1：开启");
-                newOpen.setStatus("0");
-                newOpen.setFunctionName("自定义问答课程标签是否开启");
-                companyFunctionSetServiceImpl.insert(newOpen);
-                isC = "0";
-            } else {
-                isC = classOpen.getStatus();
-            }
-
-            model.addAttribute("isC", isC);
-        }
-        model.addAttribute("isCorP", isCorP);
-
+        
         QuestionClassify questionClassify = new QuestionClassify();
-        questionClassify.setCompanyId(companyId);
-        questionClassify.setSchoolId(WebUtils.getCurrentSchoolId());
-        // questionClassify.setDelFlag(1);//显示全部问题
-        List<QuestionClassify> classify = questionClassifyServiceImpl.findQuestionClassify(questionClassify);
-        List<QuestionClassify> perClassify = new ArrayList<QuestionClassify>();
-        List<QuestionClassify> itemClassify = new ArrayList<QuestionClassify>();
-        Integer classType = 0;
-        Integer itemSecId = 0;
-        for (QuestionClassify qc : classify) {
-            classType = qc.getClassType();
-            if (classType.equals(1)) {
-                perClassify.add(qc);
-            } else {
-                itemSecId = Integer.parseInt(qc.getItemId());
-                SysSchoolItemRelation searchLation = new SysSchoolItemRelation();
-                searchLation.setItemId(itemSecId);
-                searchLation.setSchoolId(WebUtils.getCurrentSchoolId());
-                SysSchoolItemRelation relation = sysSchoolItemRelationServiceImpl.findSysSchoolItemRelationByItemId(searchLation);
-                Integer delflag = relation.getDelFlag();
-                if (delflag != null && delflag.equals(0)) {
-                    itemClassify.add(qc);
-                }
-            }
+//        questionClassify.setCompanyId(companyId);
+//        questionClassify.setSchoolId(WebUtils.getCurrentSchoolId());
+        List<QuestionClassify>  allTagList= questionClassifyServiceImpl.findSystemTag(questionClassify);
+        List<QuestionClassify> systemTag = new ArrayList<QuestionClassify>();
+        List<QuestionClassify> userDefinedTag = new ArrayList<QuestionClassify>();
+        if(null!=allTagList && allTagList.size()>0){
+        	for(QuestionClassify mo : allTagList){
+        		if(mo.getLabType()==0){
+        			systemTag.add(mo);
+        		}else{
+        			userDefinedTag.add(mo);
+        		}
+        	}
         }
+       
+//        Integer classType = 0;
+//        Integer itemSecId = 0;
+        
 
-        model.addAttribute("perClassify", perClassify);
-        model.addAttribute("itemClassify", itemClassify);
+        model.addAttribute("systemTag", systemTag);
+        model.addAttribute("userDefinedTag", userDefinedTag);
 
         return "queAns/comQuestionIndex";
     }
@@ -795,5 +746,138 @@ public class QuestionController {
         result.put("questions", pageFinder.getData());
 
         return result;
+    }
+    /**
+     * 
+     * @author jishangyang 2017年11月27日 下午3:59:58
+     * @Method: toAddQuestione 
+     * @Description: 提问
+     * @param request
+     * @param response
+     * @param model
+     * @return 
+     * @throws
+     */
+    @RequestMapping(value = "/toAddQuestione")
+	public String toAddQuestione(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		SysConfigItem search = new SysConfigItem();
+		List<SysConfigItem> subjectList = null;
+		try{
+			QuestionClassify questionClassify = new QuestionClassify();
+			List<QuestionClassify>  allTagList= questionClassifyServiceImpl.findSystemTag(questionClassify);
+	        List<QuestionClassify> systemTag = new ArrayList<QuestionClassify>();
+	        List<QuestionClassify> userDefinedTag = new ArrayList<QuestionClassify>();
+	        if(null!=allTagList && allTagList.size()>0){
+	        	for(QuestionClassify mo : allTagList){
+	        		if(mo.getLabType()==0){
+	        			systemTag.add(mo);
+	        		}else{
+	        			userDefinedTag.add(mo);
+	        		}
+	        	}
+	        }
+	       
+	        model.addAttribute("systemTag", systemTag);
+	        model.addAttribute("userDefinedTag", userDefinedTag);
+		}catch(Exception e){
+			log.error("toAddSpecialPage is error :", e);
+		}
+		model.addAttribute("subjectList", subjectList);
+		return "/queAns/questionAnswering/putQuestions";
+	}
+    
+    /**
+     * 
+     * @author jishangyang 2017年11月28日 上午10:22:03
+     * @Method: addQuestione 
+     * @Description: 保存提问
+     * @param request
+     * @param response
+     * @param model
+     * @return 
+     * @throws
+     */
+    @RequestMapping(value = "/addQuestione")
+   	public String addQuestione(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+    	String result = "redirect:/Question/comQuestionIndex";
+    	SysConfigItem search = new SysConfigItem();
+   		List<SysConfigItem> subjectList = null;
+   		try{
+   			
+   		}catch(Exception e){
+   			log.error("toAddSpecialPage is error :", e);
+   		}
+   		
+   		return result;
+   	}
+    /**
+     * 
+     * @author jishangyang 2017年11月28日 上午10:21:50
+     * @Method: labelManagement 
+     * @Description: 标签管理
+     * @param request
+     * @param response
+     * @param model
+     * @return 
+     * @throws
+     */
+    @RequestMapping(value = "/labelManagement")
+    public String labelManagement(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+    	SysConfigItem search = new SysConfigItem();
+    	List<SysConfigItem> subjectList = null;
+    	try{
+    		QuestionClassify questionClassify = new QuestionClassify();
+			List<QuestionClassify>  allTagList= questionClassifyServiceImpl.findSystemTag(questionClassify);
+	        List<QuestionClassify> systemTag = new ArrayList<QuestionClassify>();
+	        List<QuestionClassify> userDefinedTag = new ArrayList<QuestionClassify>();
+	        if(null!=allTagList && allTagList.size()>0){
+	        	for(QuestionClassify mo : allTagList){
+	        		if(mo.getLabType()==0){
+	        			systemTag.add(mo);
+	        		}else{
+	        			userDefinedTag.add(mo);
+	        		}
+	        	}
+	        }
+	       
+	        model.addAttribute("systemTag", systemTag);
+	        model.addAttribute("userDefinedTag", userDefinedTag);
+    	}catch(Exception e){
+    		log.error("toAddSpecialPage is error :", e);
+    	}
+    	model.addAttribute("subjectList", subjectList);
+    	return "/queAns/questionAnswering/labelManagement";
+    }
+    /**
+     * 
+     * @author jishangyang 2017年11月28日 下午3:15:45
+     * @Method: addLab 
+     * @Description: 添加删除标签
+     * @param request
+     * @param response
+     * @param model
+     * @return 
+     * @throws
+     */
+    @ResponseBody
+    @RequestMapping(value = "/addLab")
+    public String addLab(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+    	try{
+    		String biaoshi=request.getParameter("biaoshi");
+    		boolean flag=false;
+    		QuestionClassify questionClassify = new QuestionClassify();
+    		if("1".equals(biaoshi)){
+    			String systemLab=request.getParameter("systemLab");
+    			questionClassify.setLabName(systemLab);
+    			flag=questionServiceImpl.insert(questionClassify);
+    		}else{
+    			String LabId=request.getParameter("LabId");
+    			questionClassify.setId(Integer.valueOf(LabId));
+    			flag=questionServiceImpl.delet(questionClassify);
+    		}
+    	}catch(Exception e){
+    		log.error("toAddSpecialPage is error :", e);
+    	}
+    	return "success";
     }
 }

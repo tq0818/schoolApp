@@ -59,6 +59,13 @@ public class QueQuestion extends BaseEntity {
 	
 	private String labelContent;
 	private Integer collectCount;//收藏数
+	
+	private Integer systemTagId; //系统标签
+	
+	private Integer userDefuledId;//用户自定义标签
+	
+	
+	
 	// Constructor
 	public QueQuestion() {
 	}
@@ -66,10 +73,24 @@ public class QueQuestion extends BaseEntity {
 	/**
 	 * full Constructor
 	 */
-	public QueQuestion(Integer id, String questionTitle, String questionDesc, Integer itemOneId, Integer itemSecondId, Integer classifyId, Integer userId,
-	        Integer courseFlag, Integer courseId, String courseName, Integer courseLectureId, String courseLectureName, Integer answerCount, Integer scanCount,
-	        Integer adoptFlag, Integer adoptAnswerId, Integer topFlag, Integer essenceFlag, Date createTime, Date updateTime, Integer delFlag) {
-		setId(id);
+	
+
+	// getter && setter
+	// 在setter方法最后加上"return this;"并把返回参数改为QueQuestion可以实现连缀设置属性
+
+	public String getQuestionTitle() {
+		return questionTitle;
+	}
+
+	public QueQuestion(String questionTitle, String questionDesc, Integer itemOneId, Integer itemSecondId, Integer classifyId,
+	        Integer userId, Integer courseFlag, Integer courseId, String courseName, Integer courseLectureId,
+	        String courseLectureName, Integer answerCount, Integer scanCount, Integer adoptFlag, Integer adoptAnswerId,
+	        Integer topFlag, Integer essenceFlag, Date createTime, Date updateTime, Integer delFlag, String questionType,
+	        Integer companyId, Integer schoolId, Integer biaoSecItemId, List<Integer> questionIds, String userName,
+	        String headimg, String queTime, String ansTime, String classIsOpen, List<Integer> commodityIds,
+	        List<Integer> questionId3s, List<Integer> questionNotins, String searchKey, Integer questionscore,
+	        String labelContent, Integer collectCount, Integer systemTagId, Integer userDefuledId) {
+		super();
 		this.questionTitle = questionTitle;
 		this.questionDesc = questionDesc;
 		this.itemOneId = itemOneId;
@@ -90,13 +111,25 @@ public class QueQuestion extends BaseEntity {
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 		this.delFlag = delFlag;
-	}
-
-	// getter && setter
-	// 在setter方法最后加上"return this;"并把返回参数改为QueQuestion可以实现连缀设置属性
-
-	public String getQuestionTitle() {
-		return questionTitle;
+		this.questionType = questionType;
+		this.companyId = companyId;
+		this.schoolId = schoolId;
+		this.biaoSecItemId = biaoSecItemId;
+		this.questionIds = questionIds;
+		this.userName = userName;
+		this.headimg = headimg;
+		this.queTime = queTime;
+		this.ansTime = ansTime;
+		this.classIsOpen = classIsOpen;
+		this.commodityIds = commodityIds;
+		this.questionId3s = questionId3s;
+		this.questionNotins = questionNotins;
+		this.searchKey = searchKey;
+		this.questionscore = questionscore;
+		this.labelContent = labelContent;
+		this.collectCount = collectCount;
+		this.systemTagId = systemTagId;
+		this.userDefuledId = userDefuledId;
 	}
 
 	public QueQuestion setQuestionTitle(String questionTitle) {
@@ -277,13 +310,28 @@ public class QueQuestion extends BaseEntity {
 		return this;
 	}
 
+	/**
+	 * @author jishangyang 2017年11月27日 下午12:22:37
+	 * @Method: toString 
+	 * @Description: TODO
+	 * @return 
+	 * @see java.lang.Object#toString() 
+	 */
+	
 	@Override
 	public String toString() {
-		return "QueQuestionVo [" + "id=" + getId() + ", questionTitle=" + questionTitle + ", questionDesc=" + questionDesc + ", itemOneId=" + itemOneId
-		        + ", itemSecondId=" + itemSecondId + ", classifyId=" + classifyId + ", userId=" + userId + ", courseFlag=" + courseFlag + ", courseId="
-		        + courseId + ", courseName=" + courseName + ", courseLectureId=" + courseLectureId + ", courseLectureName=" + courseLectureName
-		        + ", answerCount=" + answerCount + ", scanCount=" + scanCount + ", adoptFlag=" + adoptFlag + ", adoptAnswerId=" + adoptAnswerId + ", topFlag="
-		        + topFlag + ", essenceFlag=" + essenceFlag + ", createTime=" + createTime + ", updateTime=" + updateTime + ", delFlag=" + delFlag + "]";
+		return "QueQuestion [questionTitle=" + questionTitle + ", questionDesc=" + questionDesc + ", itemOneId=" + itemOneId
+		        + ", itemSecondId=" + itemSecondId + ", classifyId=" + classifyId + ", userId=" + userId + ", courseFlag="
+		        + courseFlag + ", courseId=" + courseId + ", courseName=" + courseName + ", courseLectureId=" + courseLectureId
+		        + ", courseLectureName=" + courseLectureName + ", answerCount=" + answerCount + ", scanCount=" + scanCount
+		        + ", adoptFlag=" + adoptFlag + ", adoptAnswerId=" + adoptAnswerId + ", topFlag=" + topFlag + ", essenceFlag="
+		        + essenceFlag + ", createTime=" + createTime + ", updateTime=" + updateTime + ", delFlag=" + delFlag
+		        + ", questionType=" + questionType + ", companyId=" + companyId + ", schoolId=" + schoolId + ", biaoSecItemId="
+		        + biaoSecItemId + ", questionIds=" + questionIds + ", userName=" + userName + ", headimg=" + headimg
+		        + ", queTime=" + queTime + ", ansTime=" + ansTime + ", classIsOpen=" + classIsOpen + ", commodityIds="
+		        + commodityIds + ", questionId3s=" + questionId3s + ", questionNotins=" + questionNotins + ", searchKey="
+		        + searchKey + ", questionscore=" + questionscore + ", labelContent=" + labelContent + ", collectCount="
+		        + collectCount + ", systemTagId=" + systemTagId + ", userDefuledId=" + userDefuledId + "]";
 	}
 
 	public Integer getBiaoSecItemId() {
@@ -421,6 +469,26 @@ public class QueQuestion extends BaseEntity {
 
 	public void setCollectCount(Integer collectCount) {
 		this.collectCount = collectCount;
+	}
+
+	
+	public Integer getSystemTagId() {
+		return systemTagId;
+	}
+
+	
+	public void setSystemTagId(Integer systemTagId) {
+		this.systemTagId = systemTagId;
+	}
+
+	
+	public Integer getUserDefuledId() {
+		return userDefuledId;
+	}
+
+	
+	public void setUserDefuledId(Integer userDefuledId) {
+		this.userDefuledId = userDefuledId;
 	}
 
 	

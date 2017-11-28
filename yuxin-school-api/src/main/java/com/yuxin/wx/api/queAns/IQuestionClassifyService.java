@@ -134,4 +134,14 @@ public interface IQuestionClassifyService  {
 	 * @return
 	 */
 	List<QuestionClassify> findClassifyByCompany(Map<String, Object> param);
+	/**
+	 * 
+	 * @author jishangyang 2017年11月26日 下午7:58:21
+	 * @Method: findSystemTag 
+	 * @Description: 不分页查询系统标签
+	 * @param search
+	 * @return 
+	 * @throws
+	 */
+	List<QuestionClassify> findSystemTag(QuestionClassify search);
 }
