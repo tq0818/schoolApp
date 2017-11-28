@@ -213,5 +213,11 @@
 <%--<script type="text/javascript" src="<%=rootPath %>/javascripts/class/classIndex.js"></script>--%>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/classes.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
+<script>
+    //        二级菜单加active
+    $(function () {
+        $selectSubMenu('getModelList');
+    });
+</script>
 </body>
 </html>
