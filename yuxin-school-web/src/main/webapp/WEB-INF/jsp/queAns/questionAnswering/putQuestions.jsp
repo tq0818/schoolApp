@@ -18,7 +18,7 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/menu/menu_operate.jsp"></jsp:include>
 <div class="u-wrap set-system">
-    <div class="mainbackground nopadding putQuestionLeft">
+    <div class="mainbackground nopadding ">
         <div class="heading">
             <h2 class="h5">发布问题</h2>
             <span class="line"></span>
@@ -40,14 +40,16 @@
                 <c:forEach items="${userDefinedTag }" var="udt" varStatus="status">
                 	<button class="btn btn-default" ids="${udt.id }">${udt.labName }</button>
                 </c:forEach>
-                 <li class="labelInputContent">
+                <ul class="putQuestionContent">
+                    <li class="labelInputContent">
                         <input type="text" class="customTag" id="systemLab" name="systemLab">
                         <button class="btn btn-success labelInputContentSave">保存</button>
-                      <button class="btn btn-warning labelInputContentCancel">取消</button>
-                  </li>
-                  <li class="labelAddContent">
-                      <button class="btn btn-success labelAdd">+</button>
-                  </li>
+                        <button class="btn btn-warning labelInputContentCancel">取消</button>
+                    </li>
+                    <li class="labelAddContent">
+                        <button class="btn btn-success labelAdd">+</button>
+                    </li>
+                </ul>
             </div>
             <div class="contentBox">
                 <span>内容:</span>
