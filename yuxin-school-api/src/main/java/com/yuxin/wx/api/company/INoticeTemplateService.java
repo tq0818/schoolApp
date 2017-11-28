@@ -1,8 +1,8 @@
 package com.yuxin.wx.api.company;
 
+import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.company.NoticeTemplatVo;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,6 +13,12 @@ public interface INoticeTemplateService {
      * 根据条件查询通知模版
      * @return
      */
-    public List<NoticeTemplatVo> queryAllNoticeTemplateByCondition(Map<String,Object> map);
+    public PageFinder<NoticeTemplatVo> queryAllNoticeTemplateByCondition(Map<String,Object> map);
 
+    /**
+     * 更新通知模版状态
+     * @param ntv
+     * @return
+     */
+    public int updateTemplateStatus(NoticeTemplatVo ntv);
 }

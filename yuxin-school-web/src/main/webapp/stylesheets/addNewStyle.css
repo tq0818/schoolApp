@@ -81,3 +81,24 @@ i{font-style: normal}
 .tableRule input{text-align: center;border-color: #f6f6f6;background: #f6f6f6;}
 .tableRule input.active{border-color: #c4c4c4;background: #fff;}
 .btnscon .clear{display: none;}
+.putQuestionLeft,.putQuestionRight{display: inline-block;background: none !important;}
+.putQuestionLeft{width: 60%;float: left;}
+.putQuestionRight{width: 20%;float: left;margin-left: 50px;}
+.questionList li{border-bottom: 1px solid #c4c4c4;}
+.findQuestion{padding-left: 100px;}
+.findQuestion span{font-size: 16px;margin-right: 10px;}
+.findQuestion .inputQuestion{width: 85%;font-size: 14px;color: #666;}
+.findQuestion>div{margin: 20px;}
+.putQuestion{text-align: center;}
+.putQuestion button{margin: 50px;}
+.PointsReward{width: 80%;font-size: 14px;color: #666;}
+.questionList li{height: 40px;line-height: 40px;padding-left: 20px;}
+.questionList li a{font-size: 14px;color: #666;}
+.forbidQuestion h4{height: 60px;line-height: 60px;}
+.forbidQuestion li{height: 50px;font-size: 12px;color: #96958e;}
+.customTag{width: 60px;height: 20px;color: #666;}
+.checkBoxBtn button{margin-bottom: 10px;}
+#editor{width: 80%;height: 400px;position: absolute;right: 60px;top: 0;}
+#edit{margin: 0 !important;}
+.froala-element{height: 300px;}
+.contentBox{position: relative;height: 400px;}
