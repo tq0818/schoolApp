@@ -11,6 +11,8 @@
 		<result property="delFlag" column="del_flag" />
 		<result property="createTime" column="create_time" />
 		<result property="itemName" column="item_name" />
+		<result property="labName" column="lab_name" />
+		<result property="labType" column="lab_type" />
 	</resultMap>
 	
 	<sql id="table_columns">
@@ -22,6 +24,11 @@
 		class_type,
 		del_flag,
 		create_time
+    </sql>
+	<sql id="table_lab_app">
+		id,
+		lab_name,
+		lab_type
     </sql>
 	<sql id="entity_properties">
 		#{id},
@@ -125,6 +132,11 @@
 		<include refid="page_where" />
 	</select>
 	
+	<select id="findSystemTag" resultMap="queQuestionClassifyResultMap" parameterType="com.yuxin.wx.model.queAns.QuestionClassify">
+		select <include refid="table_lab_app" />
+		from question_lab_app where label_status=1
+	</select>
+	
 	<select id="pageCount" resultType="int" parameterType="com.yuxin.wx.model.queAns.QuestionClassify">
 		select count(id) from question_classify
 		<include refid="page_where" />
@@ -156,4 +168,14 @@
 			and del_flag = 1
 		order by id
 	</select>
+	
+	<!-- 适用于主键自增类型 -->
+	<insert id="insertLab" parameterType="com.yuxin.wx.model.queAns.QuestionClassify" useGeneratedKeys="true" keyProperty="id">
+		insert into question_lab_app (lab_name,lab_type,label_status,creat_time)
+		values ( #{labName},0,1, NOW())
+	</insert>
+	<!-- 适用于主键自增类型 -->
+	<insert id="deletLab" parameterType="com.yuxin.wx.model.queAns.QuestionClassify" useGeneratedKeys="true" keyProperty="id">
+		update  question_lab_app set label_status=0 where id=#{id}
+	</insert>
 </mapper>

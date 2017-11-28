@@ -92,6 +92,12 @@
 </script>--%>
 
 
+<script>
+    //        二级菜单加active
+    $(function () {
+        $selectSubMenu('getModelList');
+    });
+</script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/system/newsManage.js"></script>
 </body>
 </html>

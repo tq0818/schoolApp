@@ -45,7 +45,7 @@ $(function(){
            <%-- <li code="company_member_vip"><a href="<%=rootPath %>/companyMemberConfig/companyMemberVip" >会员管理</a></li>--%>
            </shiro:hasPermission>
             <%--<shiro:hasPermission name="">--%>
-                 <li code="##"><a href="<%=rootPath %>/student/notificationTemplate" >通知模板</a></li>
+                 <li code="notificationTemplate"><a href="<%=rootPath %>/student/notificationTemplate" >通知模板</a></li>
             <%--</shiro:hasPermission>--%>
         </ul>
     </div>

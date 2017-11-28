@@ -25,14 +25,13 @@
         <tbody>
         <tr>
             <th width="2%"><input type="checkbox" class="checkboxAll"></th>
-            <th width="6%">课程图片</th>
             <th width="5%">课程名称</th>
             <th width="3%">学段</th>
             <th width="2%">学科</th>
             <th width="8%">知识点专题</th>
             <th width="10%">知识点</th>
-            <th width="5%">阶段</th>
-            <th width="5%">类型</th>
+           <%-- <th width="5%">阶段</th>
+            <th width="5%">类型</th>--%>
             <th width="8%">上架时间</th>
             <th width="8%">直播时间</th>
             <th width="3%">学习人数</th>
@@ -43,21 +42,13 @@
         <c:forEach items="${courseList.data}" var="course" varStatus="status">
             <tr>
                 <td><input type="checkbox" class="signUpMany" uname="sdsdsd" value="" data-id="${course.appId }"></td>
-                <c:choose>
-                    <c:when test="${course.imgUrl != ''}">
-                        <td><img src="${commodityPicUrl}${course.imgUrl}" alt="" class="shelvesIcon"></td>
-                    </c:when>
-                    <c:otherwise>
-                        <td><img src="${commodityPicUrl}${course.cover}" alt="" class="shelvesIcon"></td>
-                    </c:otherwise>
-                </c:choose>
                 <td class="overflowHide" title="${course.lessonName}"><a href="##" onclick="proQueryClassDetails('${course.id}','${course.liveFlag}','${course.videoFlag}','${course.faceFlag}');">${course.lessonName}</a></td>
                 <td class="overflowHide" title="${course.itemSecondName}">${course.itemSecondName}</td>
                 <td class="overflowHide" title="${course.itemThirdName}">${course.itemThirdName}</td>
                 <td class="overflowHide" title="${course.itemFourthName}">${course.itemFourthName}</td>
                 <td class="overflowHide" title="${course.itemTag}">${course.itemTag}</td>
-                <td class="overflowHide" title="${course.tagName}">${course.tagName}</td>
-                <td class="overflowHide" title="${course.typeCode}">${course.typeCode}</td>
+                <%--<td class="overflowHide" title="${course.tagName}">${course.tagName}</td>
+                <td class="overflowHide" title="${course.typeCode}">${course.typeCode}</td>--%>
                 <td class="overflowHide" title="${course.shelvesTime}">${course.shelvesTime}</td>
                 <c:choose>
                     <c:when test="${course.lessonDate==''}">

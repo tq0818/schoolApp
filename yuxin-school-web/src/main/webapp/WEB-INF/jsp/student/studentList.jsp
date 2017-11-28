@@ -133,7 +133,9 @@
 				
 				
 		</table>
-			<div class="pages pagination"></div>
+			<div class="pages pagination">
+
+			</div>
         </div>
     </div>
 </div>

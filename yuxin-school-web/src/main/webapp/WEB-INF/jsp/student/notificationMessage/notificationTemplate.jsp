@@ -239,5 +239,11 @@ function fillContent(obj){
 
 }
 </script>
+<script>
+    //        二级菜单加active
+    $(function () {
+        $selectSubMenu('notificationTemplate');
+    });
+</script>
 </body>
 </html>

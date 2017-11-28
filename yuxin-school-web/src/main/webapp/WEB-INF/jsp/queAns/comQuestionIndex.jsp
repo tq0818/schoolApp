@@ -66,36 +66,27 @@ i.close {
     <div class="mainbackground nopadding">
         <div class="classes-type">
         	<p class="c clear">
-                <span class="t-title fl">类型：</span>
+                <span class="t-title fl">系统标签：</span>
                 <span class="t-content fr" id="itemOneList">
-					<a href="<%=rootPath %>/Question/comQuestionIndex" class="btn btn-mini btn-default btn-success">社区问答</a>
-                	<c:if test="${!empty courseQuestionFunctionSet}">
-                		<a href="<%=rootPath %>/Question/questionIndex" class="btn btn-mini btn-default">课程问答</a>
-                	</c:if>
+                	<a href="javascript:void(0);" class="btn zdy btn-mini btn-default btn-success" ids="">全部</a>
+                	<c:forEach items="${systemTag }" var="stag" varStatus="status">
+		                   	<a href="javascript:void(0);" ids="${stag.id }" class="btn zdy btn-mini btn-default">${stag.labName }</a>
+                   	</c:forEach>
+                </span>
+               	<a href="<%=rootPath %>/Question/toAddQuestione"><em class="iconfont">&#xe606;</em>提问</a>
+               	<a href="<%=rootPath %>/Question/labelManagement"><em class="iconfont">&#xe606;</em>标签管理</a>
+                
+            </p>
+           
+            <p class="c itemSec clear">
+                <span class="t-title fl">用户自定义标签：</span>
+                <span class="t-content fr" style="display: initial;">
+                	<a href="javascript:void(0);" class="btn clas btn-mini btn-default btn-success" ids="">全部</a>
+                	<c:forEach items="${userDefinedTag }" var="udt" varStatus="status">
+	                   	<a href="javascript:void(0);" ids="${udt.id }" class="btn clas btn-mini btn-default">${udt.labName }</a>
+                   </c:forEach>
                 </span>
             </p>
-        	<c:if test="${isCorP == 0 }">
-	        	<p class="c clear">
-	                <span class="t-title fl">自定义分类：</span>
-	                <span class="t-content fr">
-	                   <a href="javascript:void(0);" class="btn zdy btn-mini btn-default btn-success" ids="">全部</a>
-	                   <c:forEach items="${perClassify }" var="per" varStatus="status">
-		                   	<a href="javascript:void(0);" ids="${per.id }" class="btn zdy btn-mini btn-default">${per.classifyName }</a>
-	                   </c:forEach>
-	                </span>
-	            </p>
-        	</c:if>
-            <c:if test="${isC == 1 || isCorP == 1}">
-	            <p class="c itemSec clear">
-	                <span class="t-title fl">课程分类：</span>
-	                <span class="t-content fr" style="display: initial;">
-	                	<a href="javascript:void(0);" class="btn clas btn-mini btn-default btn-success" ids="">全部</a>
-	                	<c:forEach items="${itemClassify }" var="cla" varStatus="status">
-		                   	<a href="javascript:void(0);" ids="${cla.itemId }" class="btn clas btn-mini btn-default">${cla.classifyName }</a>
-	                   </c:forEach>
-	                </span>
-	            </p>
-            </c:if>
             
             <p class="c clear">
                 <span class="t-title fl">状态：</span>
