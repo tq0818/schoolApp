@@ -95,7 +95,7 @@ function giveupRule(objt){
 	$(objt).parent().find('.btn-default').attr('style','display:inline-block');
 	var rowInput = $(objt).parent().siblings('td').find('input');
     rowInput.removeClass('active');
-    rowInput.attr('disabled', true);
+    //rowInput.attr('disabled', true);
 }
 function saveRule(objt){
 	var rulesId=$(objt).attr('name');
@@ -194,13 +194,16 @@ function editRule(objt){
                             	}
                             }
                              $.each(jsonData.data,function (i, stu) {
+                            	 	var oprator="";
+                            	 	if(stu.oprator!=null)
+                            	 		oprator=stu.oprator;
                                     var htmlStr='<tr>'+
 			            	                    '<td>'+(i+1)+'</td>'+
 			            	                    '<td>'+stu.scoreTopic+'</td>'+
 			            	                    '<td><input type="text" value="'+stu.score+'" disabled="disabled"></td>'+
 			            	                    '<td><input type="text" value="'+stu.validTime+'" readonly class="dateRuleStart'+(i+1)+'"></td>'+
 			            	                    '<td><input type="text" value="'+stu.invalidTime+'" readonly class="dateRuleEnd'+(i+1)+'"></td>'+
-			            	                    '<td>'+stu.oprator+'</td>'+
+			            	                    '<td>'+oprator+'</td>'+
 			            	                    '<td>';
 			            	                    
 			            	        var validStr="";
