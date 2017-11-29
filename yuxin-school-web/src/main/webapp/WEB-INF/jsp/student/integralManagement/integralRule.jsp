@@ -129,14 +129,18 @@
         };
 
         var editIndex = $(this).parent().parent().index();
-        console.log('.dateRuleStart'+editIndex);
-        console.log('.dateRuleEnd'+editIndex);
 
         $.jeDate('.dateRuleStart'+editIndex, start);
         $.jeDate('.dateRuleEnd'+editIndex, end);
 
     });
+</script>
 
+<script>
+    //        二级菜单加active
+    $(function () {
+        $selectSubMenu('integralRule');
+    });
 </script>
 </body>
 </html>
