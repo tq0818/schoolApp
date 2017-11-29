@@ -57,7 +57,7 @@ public interface QuestionAnswerMapper extends BaseMapper<QuestionAnswer> {
 	 * @param answerId
 	 * @return
 	 */
-	List<QuestionAnswer> findEntityTwoAns(Integer answerId);
+	List<QuestionAnswer> findEntityTwoAns(QuestionAnswer one);
 	/**
 	 * 
 	 * Class Name: IQuestionAnswerService.java

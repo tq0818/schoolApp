@@ -55,11 +55,9 @@
             </div>
             <div class="contentBox">
                 <span>内容:</span>
-                <section id="editor" name="questionDesc">
-                    <div id='edit' style="margin-top: 30px;">
-
-                    </div>
-                </section>
+                <div id="ckecktor"> 
+					<textarea id="newsContents" class="msg-content"></textarea>
+				</div> 
             </div>
             <div>
                 <span>积分打赏:</span>
@@ -175,7 +173,10 @@
     		 alert("积分打赏不能为空");
     		 return;
     	 }
-    	 var questionDesc=$("#edit").innerText;
+    	 CKupdate();
+    	 
+    	 var questionDescTP=editor.document.getBody().getHtml(); //取得纯文本
+    	 var questionDesc=editor.document.getBody().getText(); //取得纯文本
     	 var systemId=new Array();
     	 var userDefued=new Array();
     	 var count=0;
@@ -207,7 +208,7 @@
     	  $.ajax({
  			url: rootPath + "/Question/addQuestione",
  			type:"post",
- 			data:{"questionTitle":questionTitle,"questionDesc" : questionDesc,"questionscore":questionScore,"systemTagIds":systemId,"userDefuledNames":userDefued},
+ 			data:{"questionTitle":questionTitle,"questionDesc" : questionDesc,"questionscore":questionScore,"systemTagIds":systemId,"userDefuledNames":userDefued,"questionDescTP":questionDescTP},
  			dataType:"json",
  			success:function(data){
  				if(data == 'success'){
@@ -221,11 +222,38 @@
     } 
 
 </script>
+<script type="text/javascript" src="<%=rootPath%>/plugins/ckeditor/ckeditor.js"></script>
 <script>
 //    编辑器
     $(function(){
         $('#edit').editable({inlineMode: false, alwaysBlank: true})
     });
+    
+    //处理CKEDITOR的值
+	function CKupdate() {
+		for (instance in CKEDITOR.instances) {
+			CKEDITOR.instances[instance].updateElement();
+		}
+	}
+    
+   
+    var editor = CKEDITOR.replace('newsContents');
+	/* editor.config.width="atuo"; */
+	editor.config.toolbar = [
+			[ 'mode', 'document', 'doctools' ],
+			[ 'Source', '-', 'NewPage' ],
+			[ 'basicstyles', 'cleanup' ],
+			[ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript',
+					'Superscript' ],
+			[ 'list', 'indent', 'blocks', 'align', 'bidi' ],
+			[ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent',
+					'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+					'JustifyBlock' ], [ 'Link', 'Unlink' ],
+			[ 'Image', 'Table' ],
+			[ 'Styles', 'Format', 'Font', 'FontSize' ],
+			[ 'TextColor', 'BGColor' ], [ 'Maximize' ], [ '-' ]];
+	editor.config.baseFloatZIndex = 10100;
+	editor.config.customConfig = 'config.js';
 </script>
 </body>
 </html>

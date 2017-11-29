@@ -141,8 +141,8 @@ public class QuestionAnswerServiceImpl extends BaseServiceImpl implements IQuest
     }
 
     @Override
-    public List<QuestionAnswer> findEntityTwoAns(Integer answerId) {
-        return QuestionAnswerMapper.findEntityTwoAns(answerId);
+    public List<QuestionAnswer> findEntityTwoAns(QuestionAnswer one) {
+        return QuestionAnswerMapper.findEntityTwoAns(one);
     }
 
     @Override

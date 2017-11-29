@@ -60,6 +60,9 @@ import com.yuxin.wx.utils.WebUtils;
 import com.yuxin.wx.vo.queAns.QuestionVo;
 import com.yuxin.wx.vo.system.SysServiceDredgeVo;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 /**
  * Controller of Question
  * 
@@ -301,6 +304,28 @@ public class QuestionController {
         model.addAttribute("imgUrl", imgUrl);
 
         PageFinder<QuestionVo> pageFinder = questionServiceImpl.findVoByPage(question);
+        List<QuestionVo> questionList=new ArrayList<QuestionVo>();
+        if(pageFinder.getRowCount()>0){
+        	 questionList=pageFinder.getData();
+        	for(QuestionVo vo :questionList){
+        		String answerDesc=vo.getQuestionDesc();
+            	JSONArray array = JSONArray.fromObject(answerDesc);
+        		String img="";
+        		for(int i=0 ;i<array.size();i++){
+        			JSONObject job = array.getJSONObject(i); 
+        			if("0".equals(job.get("type").toString())){
+        				 img+="<span style='text-align: center;'>"+job.get("content");
+        			}else{
+        				img+=" <img alt=\'\' src=\'"+job.get("content")+"\' style=\'border-style:solid; border-width:2px; height:120px; width:120px \' /></span>";
+        			}
+        			
+        		}
+        		vo.setQuestionDesc(img);
+        	}
+        }
+        
+        
+		pageFinder.setData(questionList);
         model.addAttribute("pageFinder", pageFinder);
 
         return "queAns/questionIndexAjaxList";
@@ -793,14 +818,53 @@ public class QuestionController {
    	public String addQuestione(HttpServletRequest request,QueQuestion queQuestion){
     	String [] arrTagId=request.getParameterValues("systemTagIds[]");
     	String [] arrTagName=request.getParameterValues("userDefuledNames[]");
-    	 Integer companyId = WebUtils.getCurrentCompanyId();
-         Integer schoolId = WebUtils.getCurrentSchoolId();
-         Integer userId = WebUtils.getCurrentUserId(request);
-         queQuestion.setCompanyId(companyId);
-         queQuestion.setSchoolId(schoolId);
-         queQuestion.setUserId(userId);
-         queQuestion.setDelFlag(1);
-         queQuestion.setQuestionType("QUESTION_STUDENT");
+    	String questionDescTP=request.getParameter("questionDescTP");
+		questionDescTP=questionDescTP.substring(3, questionDescTP.lastIndexOf("<"));
+		String [] b=questionDescTP.split(";;");
+	    String a="[" ;
+		if(null!=b){
+			for(int i=0 ; i<b.length ;i++){
+				JSONObject jsonObject = new JSONObject();
+				String c =b[i].substring(0, 1);
+				if("<".equals(c)){
+					String e=b[i].substring(b[i].indexOf("http"), b[i].indexOf("\" src="));
+					jsonObject.put("content", e);
+					jsonObject.put("type", 1);
+					a+=jsonObject.toString();
+					a+=",";
+				}else{
+					if(b[i].indexOf("<img") == -1) {
+						jsonObject.put("content", b[i]);
+						jsonObject.put("type", 0);
+						a+=jsonObject.toString();
+						a+=",";	
+					}else{
+						String d= b[i].substring(0, b[i].indexOf("<"));
+						jsonObject.put("content", d);
+						jsonObject.put("type", 0);
+						a+=jsonObject.toString();
+						a+=",";
+						String e=b[i].substring(b[i].indexOf("http"), b[i].indexOf("\" src="));
+						jsonObject.put("content", e);
+						jsonObject.put("type", 1);
+						a+=jsonObject.toString();
+						a+=",";	
+					}
+					
+				}
+			}
+		}
+		a=a.substring(0, a.lastIndexOf(","));
+		a+="]";
+    	Integer companyId = WebUtils.getCurrentCompanyId();
+    	Integer schoolId = WebUtils.getCurrentSchoolId();
+    	Integer userId = WebUtils.getCurrentUserId(request);
+    	queQuestion.setQuestionDesc(a);
+    	queQuestion.setCompanyId(companyId);
+    	queQuestion.setSchoolId(schoolId);
+    	queQuestion.setUserId(userId);
+    	queQuestion.setDelFlag(1);
+    	queQuestion.setQuestionType("QUESTION_STUDENT");
          
    		try{
 			questionServiceImpl.insertLabReturnId(arrTagName,arrTagId,queQuestion);

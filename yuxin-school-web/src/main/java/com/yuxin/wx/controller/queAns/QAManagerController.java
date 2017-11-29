@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONObject;
 import com.yuxin.wx.api.queAns.IQuestionAnswerService;
 import com.yuxin.wx.api.queAns.IQuestionService;
 import com.yuxin.wx.api.system.ISysConfigTeacherService;
@@ -30,6 +29,8 @@ import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.model.user.UsersFront;
 import com.yuxin.wx.utils.PropertiesUtil;
 import com.yuxin.wx.utils.WebUtils;
+
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/questionanswermanager")
@@ -63,8 +64,10 @@ public class QAManagerController {
         	ans.setUserId(userId);
             List<QuestionAnswer> anlist = questionAnswerServiceImpl.findAnsByQueId(ans);
             // 查询头像
+            
             for (QuestionAnswer a : anlist) {
                 log.info("qa：一级回复：" + a);
+                
                 if (a.getAnswerType().equals("QUESTION_ANSWER_STUDENT")) {
                     UsersFront user = usersFrontServiceImpl.findUsersFrontById(a.getUserId());
                     if (user.getNickName() != null) {
@@ -331,7 +334,12 @@ public class QAManagerController {
     public String selTwoAns(Model model, HttpServletRequest request, Integer id, String types) {
         log.info("qa：查询二级回复,根据一级回复id：" + id);
         try {
-            List<QuestionAnswer> alist = questionAnswerServiceImpl.findEntityTwoAns(id);
+        	Integer userId = WebUtils.getCurrentUserId(request);
+        	QuestionAnswer one = new QuestionAnswer();
+        	one.setAnswerId(id);
+        	one.setUserId(userId);
+        	
+            List<QuestionAnswer> alist = questionAnswerServiceImpl.findEntityTwoAns(one);
             for (QuestionAnswer a : alist) {
                 log.info("qa：查询出的二级回复:" + a);
                 if (a.getAnswerType().equals("QUESTION_ANSWER_STUDENT")) {

@@ -1,7 +1,7 @@
 body{font-family: 'Microsoft Yahei', STHeiti, sans-serif;}
-/*宸蹭笂鏋惰绋*/
+/*瀹歌弓绗傞弸鎯邦嚦缁�*/
 .shelvesIcon{width: 20px;height: 20px;}
-/*缂栬緫涓婃灦璇剧▼*/
+/*缂傛牞绶稉濠冪仸鐠囧墽鈻�*/
 .informationEditHeader{width: 100%;height: 210px;}
 .informationEditImg{position: relative;}
 .informationEditImg,.informationEditDetail{display: inline-block;float: left;}
@@ -23,9 +23,9 @@ body{font-family: 'Microsoft Yahei', STHeiti, sans-serif;}
 .submitCourse{margin: 5px;text-align: center;}
 .submitCourse button{margin: 10px;}
 .classification label{display: inline-block;}
-/*鎵归噺棣栭〉鎺ㄨ崘*/
+/*閹靛綊鍣烘＃鏍�夐幒銊ㄥ礃*/
 .recommendationNum{width: 15px;height: 12px;}
-/*寮瑰嚭妗*/
+/*瀵懓鍤*/
 .popupContainer,.popupContainerEdit,.popupContainerRecommendation{box-shadow: 0 10px 10px 5px;padding: 10px 20px;border-radius: 3px;display: none;z-index: 100;position: fixed;
     left: 50%;top: 10%;width: 800px;margin-left: -400px;background: #fff;height: 530px;}
 .popupOpacity{display: none;position: fixed;left: 0;top: 0;height: 100%;width: 100%;background: rgba(0,0,0,.6);}
