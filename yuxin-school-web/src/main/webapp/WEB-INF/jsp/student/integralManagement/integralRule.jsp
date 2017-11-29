@@ -92,10 +92,10 @@
 function giveupRule(objt){
 	$(objt).attr('style','display:none');
 	$(objt).parent().find('.btn-success').attr('style','display:none');
-	$(objt).parent().find('.btn-default').attr('style','display:block');
+	$(objt).parent().find('.btn-default').attr('style','display:inline-block');
 	var rowInput = $(objt).parent().siblings('td').find('input');
     rowInput.removeClass('active');
-    rowInput.eq(0).attr('disabled', true);
+    rowInput.attr('disabled', true);
 }
 function saveRule(objt){
 	var rulesId=$(objt).attr('name');
@@ -114,6 +114,8 @@ function saveRule(objt){
          success: function (jsonData) {
          	if(jsonData){
          		$.msg('保存成功');
+                giveupRule(objt);
+                $(objt).parent().find('.btn-warning').attr('style','display:none');
          	}else{
          		$.msg('保存失败');
          	}
@@ -148,8 +150,8 @@ function editRule(objt){
         $.jeDate('.dateRuleStart'+editIndex, start);
         $.jeDate('.dateRuleEnd'+editIndex, end);
 		$(objt).attr('style','display:none');
-		$(objt).parent().find('.btn-success').attr('style','display:block');
-		$(objt).parent().find('.btn-warning').attr('style','display:block');
+		$(objt).parent().find('.btn-success').css('display','inline-block');
+		$(objt).parent().find('.btn-warning').css('display','inline-block');
     };
     (function ($) {
         var ScoreRuls = {
