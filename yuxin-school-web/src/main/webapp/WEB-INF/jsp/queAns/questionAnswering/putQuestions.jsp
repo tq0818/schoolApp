@@ -27,27 +27,29 @@
         <div class="findQuestion">
             <div>
                 <span>标题:</span>
-                <input type="text" placeholder="请输入问题标题" name="questionTitle" class="inputQuestion">
+                <input type="text" placeholder="请输入问题标题" id="questionTitle" name="questionTitle" class="inputQuestion">
             </div>
             <div class="checkBoxBtn">
                 <span>系统标签:</span>
                 <c:forEach items="${systemTag }" var="stag" varStatus="status">
-                    <button class="btn btn-default" ids="${stag.id }">${stag.labName }</button>
+                    <button type="button" class="btn btn-default" name="panduan" labtype="0" ids="${stag.id }">${stag.labName }</button>
                	</c:forEach>
             </div>
             <div class="checkBoxBtn">
                 <span>自定义标签:</span>
-                <c:forEach items="${userDefinedTag }" var="udt" varStatus="status">
-                	<button class="btn btn-default" ids="${udt.id }">${udt.labName }</button>
-                </c:forEach>
+                <div id="zdyBtn">
+	                <c:forEach items="${userDefinedTag }" var="udt" varStatus="status">
+	                	<button type="button" class="btn btn-default" name="panduan" labtype="0" ids="${udt.id }">${udt.labName }</button>
+	                </c:forEach>
+               </div>
                 <ul class="putQuestionContent">
                     <li class="labelInputContent">
                         <input type="text" class="customTag" id="systemLab" name="systemLab">
-                        <button class="btn btn-success labelInputContentSave">保存</button>
-                        <button class="btn btn-warning labelInputContentCancel">取消</button>
+                        <button type="button" class="btn btn-success labelInputContentSave">确定</button>
+                        <a href="javascript:void(0);" class="btn btn-warning labelInputContentCancel">取消</a>
                     </li>
                     <li class="labelAddContent">
-                        <button class="btn btn-success labelAdd">+</button>
+                        <button type="button" class="btn btn-success labelAdd">+</button>
                     </li>
                 </ul>
             </div>
@@ -61,83 +63,162 @@
             </div>
             <div>
                 <span>积分打赏:</span>
-                <input type="text" name="questionScore" class="PointsReward" placeholder="积分打赏必填，不能超过系统预设积分值">
+                <input type="text" name="questionScore" id="questionScore" class="PointsReward" placeholder="积分打赏必填，不能超过系统预设积分值" onkeyup="this.value=this.value.replace(/[^\d]/g,'') " onafterpaste="this.value=this.value.replace(/[^\d]/g,'') ">
             </div>
             <div class="putQuestion">
-                <button class="btn btn-success" onclick="formSubmit()">提问</button>
+                <button  type="button" class="btn btn-success" onclick="addQuestion()" >提问</button>
             </div>
         </div>
+        </form>
     </div>
 </div>
 
 <script>
 //点击增加增加一个输入框
 		$('.labelAdd').click(function () {
-		    $('.labelInputContent').css('display','inline-block');
-		    $('.labelAddContent').hide();
+			var btns = $("button[name='panduan']");  
+			var checked_counts = 0; 
+		    for(var i=0;i<btns.length;i++){  
+		        if(btns.eq(i).hasClass("btn-primary")){
+		        	checked_counts++;  
+		        }  
+		    }  
+			
+			if(checked_counts>=5){
+				alert("已选择5个标签不能在添加");
+				return
+			}else{
+			    $('.labelInputContent').css('display','inline-block');
+			    $('.labelAddContent').hide();
+			}
 		});
 		//点击确定，点击取消隐藏输入框显示增加按钮
 		$('.labelInputContentSave').click(function () {
-			$('.labelInputContent').css('display','none');
-			$('.labelAddContent').show();
-		    $.ajax({
-				url: rootPath + "/Question/addLab",
-				type:"post",
-				data:{"systemLab":$('#systemLab').val(),"biaoshi" : 1},
-				dataType:"json",
-				success:function(data){
-					if(data == 'success'){
-						alert("保存成功");
-						location.reload();
-						
-						window.location.href = "labelManagement";
-					}
-				}
-			});
-		//  此处可发起ajax请求
-		    
+			var btns = $("button[name='panduan']");  
+			var checked_counts = 0; 
+		    for(var i=0;i<btns.length;i++){  
+		        if(btns.eq(i).hasClass("btn-primary")){
+		        	checked_counts++;  
+		        }  
+		    }  
+			
+			if(checked_counts>=5){
+				alert("已选择5个标签不能在添加");
+				return
+			}else{
+		    var a=$('#systemLab').val();
+		    if(null==$('#systemLab').val() || ''==$('#systemLab').val().replace(/(^\s*)|(\s*$)/g, "")){
+	    		alert("标签不能为空");
+	    		return;
+	    	}else{
+	    		$.ajax({
+					url: rootPath + "/Question/checkName",
+					type:"post",
+					data:{"systemLab":$('#systemLab').val(),"biaoshi":2},
+					dataType:"json",
+					success:function(data){
+						if(data == 'success'){
+							$('.labelInputContent').css('display','none');
+							$('.labelAddContent').show();
+							var html="<button type='button' class='btn btn-default' name='panduan' labtype='2' ids="+a+" >"+a+"</button>";
+						//  此处可发起ajax请求
+							$("#zdyBtn").append(html);
+							$("#systemLab").val('');
+					    	
+						}else{
+							alert("标签名称不能重复");
+							 $("#systemLab").val('');
+							}
+						}
+					});
+	    		}
+			}
 		});
 		$('.labelInputContentCancel').click(function () {
 		    $('.labelInputContent').css('display','none');
 		    $('.labelAddContent').show();
+		    $("#systemLab").val('');
 		});
 
 //    标签选择
-    $('.checkBoxBtn').find('button').click(function () {
+    $('.checkBoxBtn ').delegate('button','click',function () {
+    	
         if($(this).hasClass('btn-primary')){
             $(this).addClass('btn-default');
             $(this).removeClass('btn-primary');
         }else{
+        	var btns = $("button[name='panduan']");  
+    		var checked_counts = 0; 
+    	    for(var i=0;i<btns.length;i++){  
+    	        if(btns.eq(i).hasClass("btn-primary")){
+    	        	checked_counts++;  
+    	        }  
+    	    }  
+    		if(checked_counts>=5){
+    			alert("已选择5个标签不能在添加");
+    			return
+    		}else{
             $(this).addClass('btn-primary');
             $(this).removeClass('btn-default');
         }
+		}
     });
 
-    function formSubmit(){
-    	var teacherlis = $(".choose-item").children("li");
-    	var commoditylis = $("#courseList").children("li");
-    	var teacherIds = "";
-    	var commodityIds = "";
-  
-    
-    	commoditylis.each(function(i,v){
-    		if($(v).find("input[type='checkbox']:checked").length > 0){
-    			var id = $(v).attr("commondityId");
-        		commodityIds = commodityIds + id +","
-    		}
-    	
-        });
-    	
-    	
-    	if($('#title').val().length <=0){
-    		$.msg("专题标题不能为空");
-    		return;
-    	}
-    	
-    	$('#commodityIds').attr("value",commodityIds);
-    	$('#teacherIds').attr("value",teacherIds);
-        $('#addQuestion').submit();
-    }
+     function addQuestion(){
+    	 var questionTitle=$("#questionTitle").val();
+    	 if(null==questionTitle  || ''==questionTitle.replace(/(^\s*)|(\s*$)/g, "")){
+    		 alert("标题不能为空");
+    		 return;
+    	 }
+    	 var questionScore=$("#questionScore").val();
+    	 if(null==questionScore || ''==questionScore){
+    		 alert("积分打赏不能为空");
+    		 return;
+    	 }
+    	 var questionDesc=$("#edit").text();
+    	 var systemId=new Array();
+    	 var userDefued=new Array();
+    	 var count=0;
+    	 var count1=0;
+    	 var count2=0;
+    	 var re = /^[0-9]+.?[0-9]*$/; 
+    	 var btns = $("button[name='panduan']");  
+		    for(var i=0;i<btns.length;i++){  
+		        if(btns.eq(i).hasClass("btn-primary")){
+		        	if(re.test(btns.eq(i).attr("ids"))){
+		        		if(btns.eq(i).attr("labtype")==0){
+			        		systemId[count] = btns.eq(i).attr("ids");
+				        	count++;
+		        		}else{
+		        			userDefued[count1] = btns.eq(i).attr("ids");
+				        	count1++;
+		        		}
+		        	}else{
+		        		userDefued[count1] = btns.eq(i).attr("ids");
+			        	count1++;
+		        	}
+		        	count2++;
+		        }  
+		    } 
+    	  if(count2==0){
+    		  alert("必须选择一个标签");
+    		  return;
+    	  }
+    	  $.ajax({
+ 			url: rootPath + "/Question/addQuestione",
+ 			type:"post",
+ 			data:{"questionTitle":questionTitle,"questionDesc" : questionDesc,"questionscore":questionScore,"systemTagIds":systemId,"userDefuledNames":userDefued},
+ 			dataType:"json",
+ 			success:function(data){
+ 				if(data == 'success'){
+ 					alert("保存成功");
+ 					window.location.href = "comQuestionIndex";
+ 				}
+ 			}
+ 		});
+    	 
+       
+    } 
 
 </script>
 <script>

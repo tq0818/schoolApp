@@ -144,6 +144,7 @@ function editRule(objt){
             }
         };
         var editIndex = $(objt).parent().parent().index();
+
         $.jeDate('.dateRuleStart'+editIndex, start);
         $.jeDate('.dateRuleEnd'+editIndex, end);
 		$(objt).attr('style','display:none');
@@ -247,6 +248,17 @@ function editRule(objt){
         })
         window.ScoreRuls =ScoreRuls;
     })(jQuery)
+=======
+
+    });
+</script>
+
+<script>
+    //        二级菜单加active
+    $(function () {
+        $selectSubMenu('integralRule');
+    });
+>>>>>>> branch 'feature_app' of http://git.winshare-edu.com:80/winshare/winshare-yuxin-school.git
 </script>
 </body>
 </html>

@@ -9,14 +9,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>直播情况</title>
-<link rel="stylesheet" type="text/css"
-	href="<%=rootPath%>/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" />
 <link href="<%=rootPath%>/stylesheets/query.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/splitscreen.css"/>
 <link rel="stylesheet" href="<%=rootPath %>/stylesheets/query/statistics.css">
-	<style type="text/css">
+<style type="text/css">
 		.pages li.disabled{padding:0px;}
 	</style>
+<link rel="stylesheet" href="<%=rootPath %>/stylesheets/jedate.css">
+<script src="<%=rootPath %>/javascripts/plus/jquery.jedate.min.js"></script>
+
 </head>
 <body>
 		<input type="hidden" id="schoolId" value='${schoolId}'/>
@@ -83,9 +84,7 @@
 		<script type="text/javascript" src="<%=rootPath %>/javascripts/common/DateUtils.js"></script>
 		<script type="text/javascript" src="<%=rootPath %>/javascripts/home-page.js"></script>
 		<script type="text/javascript" src="<%=rootPath %>/javascripts/query/statistical_watchInfo.js"></script>
-		<script type="text/javascript" src="<%=rootPath %>/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-		<script type="text/javascript" src="<%=rootPath %>/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
-		<script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
+		<%--<script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>--%>
 		<script type="text/javascript">
 
             $selectThirdMenu('watchInfoList');
@@ -113,5 +112,30 @@
 
             queryChartData();
 		</script>
+
+
+		<script>
+            //调用日历插件
+            var start = {
+                format:'YYYY-MM-DD',
+                maxDate: '2099-06-16 23:59:59', //最大日期
+                okfun: function (obj) {
+                    end.minDate = obj.val; //开始日选好后，重置结束日的最小日期
+                }
+            };
+            var end = {
+                format:'YYYY-MM-DD',
+                minDate: $.nowDate({DD: 0}), //设定最小日期为当前日期
+                maxDate: '2099-06-16 23:59:59', //最大日期
+                okfun: function (obj) {
+                    start.maxDate = obj.val; //将结束日的初始值设定为开始日的最大日期
+                }
+            };
+
+            $.jeDate('#startDate', start);
+            $.jeDate('#endDate', end);
+
+		</script>
+
 </body>
 </html>
