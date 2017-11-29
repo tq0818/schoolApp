@@ -89,6 +89,9 @@
 	                       		<c:if test="${m.messageMethod == 'STUDENT_MESSAGE_MOBILE_WEIXIN' }">
 	                       			微信指定通知
 	                       		</c:if>
+	                       		<c:if test="${m.messageMethod == 'STUDENT_MESSAGE_DINGYUE' }">
+	                       			订阅文章
+	                       		</c:if>
 	                       </span>
 	                   </td>
 	                   <td>
@@ -98,7 +101,7 @@
 	                   <td>
 	                       <span class="t-title">发送时间：</span>
 	                       <span class="t-content">
-	                       	<fmt:formatDate value="${m.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
+	                       <fmt:formatDate value="${m.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
 	                       </span>
 	                   </td>
 	               </tr>

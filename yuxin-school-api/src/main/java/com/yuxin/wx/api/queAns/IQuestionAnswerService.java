@@ -155,4 +155,15 @@ public interface IQuestionAnswerService  {
 	 * @return
 	 */
 	Integer findAnsCountByQueId(QuestionAnswer ans);
+	
+	/**
+	 * 
+	 * @author jishangyang 2017年11月29日 下午4:16:41
+	 * @Method: updatethumbs 
+	 * @Description: 顶赞操作
+	 * @param ans
+	 * @return 
+	 * @throws
+	 */
+	boolean updatethumbs(QuestionAnswer ans);
 }

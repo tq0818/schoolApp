@@ -14,8 +14,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;import com.yuxin.wx.common.BaseServiceImpl;
-
+import org.springframework.transaction.annotation.Transactional;
+import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.api.classes.IClassModuleLessonService;
 import com.yuxin.wx.api.classes.IClassModuleNoService;
 import com.yuxin.wx.api.homework.IHomeworkService;
@@ -1663,7 +1663,18 @@ public class StudentPayMasterServiceImpl extends BaseServiceImpl implements IStu
         // TODO Auto-generated method stub
         return this.studentPayMasterMapper.findByResourceid(param);
     }
-
+    
+    @Override
+    public Integer findByGradeCodes(Map<String, Object> param) {
+        // TODO Auto-generated method stub
+        return this.studentPayMasterMapper.findByGradeCodes(param);
+    }
+    
+    @Override
+    public  List<Student> queryStudentByGradeCodes(Map<String,Object> param) {
+        // TODO Auto-generated method stub
+        return this.studentMapper.queryStudentByGradeCodes(param);
+    }
     @Override
     public List<StudentPayMaster> findByStuMbilestu(Integer stuId, Integer companyId, Integer schoolId) {
         Map<String, Object> map = new HashMap<String, Object>();
