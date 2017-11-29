@@ -175,7 +175,7 @@
     		 alert("积分打赏不能为空");
     		 return;
     	 }
-    	 var questionDesc=$("#edit").text();
+    	 var questionDesc=$("#edit").innerText;
     	 var systemId=new Array();
     	 var userDefued=new Array();
     	 var count=0;

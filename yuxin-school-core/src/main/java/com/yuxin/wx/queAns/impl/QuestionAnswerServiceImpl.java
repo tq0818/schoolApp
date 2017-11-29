@@ -149,5 +149,33 @@ public class QuestionAnswerServiceImpl extends BaseServiceImpl implements IQuest
     public Integer findAnsCountByQueId(QuestionAnswer ans) {
         // TODO Auto-generated method stub
         return QuestionAnswerMapper.findAnsCountByQueId(ans);
-    };
+    }
+
+	@Override
+	public boolean updatethumbs(QuestionAnswer ans) {
+		 
+		if(ans.getIsThumbs()==1){
+			//更新点赞数量+1
+			QuestionAnswerMapper.updatQuestionAnswer(ans);
+			if(ans.getThumbsFlag()==1){
+				//插入点赞状态
+				QuestionAnswerMapper.insertThumbs(ans);	
+			}else{
+				//更新点赞状态
+				QuestionAnswerMapper.updatethumbs(ans);
+			}
+			
+		}else{
+			//更新点赞数量-1
+			QuestionAnswerMapper.updatQuestionAnswer1(ans);
+			if(ans.getThumbsFlag()==1){
+				//插入点赞状态
+				QuestionAnswerMapper.insertThumbs(ans);	
+			}else{
+				//更新点赞状态
+				QuestionAnswerMapper.updatethumbs(ans);
+			}
+		}
+		return true;
+	};
 }
