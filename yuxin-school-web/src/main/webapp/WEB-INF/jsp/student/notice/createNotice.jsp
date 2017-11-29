@@ -6,6 +6,8 @@
 <title>通知内容</title>
     <%@include file="/decorators/import.jsp" %>
      <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/student.css"/>
+    <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/classes.css">
+    <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/plugins/jcrop/css/jquery.Jcrop.css"/>
 	<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/select2.min.css" />
 	<script type="text/javascript" src="<%=rootPath%>/javascripts/student.js"></script>
 	<script type="text/javascript" src="<%=rootPath%>/javascripts/select2.full.js"></script>
@@ -33,6 +35,76 @@
     	}
     	.main-content .lj-tops{display: inline-block;color:#999;}
     </style>
+     <style type="text/css">
+.p1 {
+	display: block;
+	position: absolute;
+	z-index: 2000;
+	top: 10px;
+	right: -280px;
+/*	padding: 6px;
+ 	border: 1px rgba(0, 0, 0, .4) solid;
+	background-color: white;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+	box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2); */
+}
+
+.p2 {
+	display: block;
+	position: absolute;
+	z-index: 2000;
+	top: 10px;
+	right: -280px;
+/*	padding: 6px;
+ 	border: 1px rgba(0, 0, 0, .4) solid;
+	background-color: white;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+	box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2); */
+}
+
+.p3 {
+	display: block;
+	position: absolute;
+	z-index: 2000;
+	top: 10px;
+	right: -280px;
+/* 	padding: 6px;
+	border: 1px rgba(0, 0, 0, .4) solid;
+	background-color: white;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+	box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2); */
+}
+
+.p1 .preview-container {
+	width: 446px;
+	height: 241px;
+	overflow: hidden;
+}
+
+.p2 .preview-container {
+	width: 255px;
+	height: 138px;
+	overflow: hidden;
+}
+
+.p3 .preview-container {
+	width: 181px;
+	height: 96px;
+	overflow: hidden;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/jsp/menu/menu_student.jsp" />
@@ -50,6 +122,15 @@
 							<input type="text" id="title" maxlength="15">
 						</span>
 						<span style="color:red;">* 最多15个字</span>
+					</p>
+					<p class="c con-coverimg">
+						<span class="c-title">订阅文章封面：</span>
+						<span class="c-content"> 
+							<span class="view">
+	                            <img id="commdotityPic" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" realPath="" alt="订阅图片">
+	                        </span>
+	                        <span class="btns"><a href="javascript:;" class="btn btn-default btn-upload">选择封面</a></span>
+                        </span>
 					</p>
 					<p class="c">
 						<span class="c-title">通知方式：</span> <span class="c-content font-style">
@@ -231,14 +312,64 @@
 		</div>
 	</div>
 
+<!--  -->
+
+<div class="upload-layer none" id="chooseDiv" style="width:1080px;height: 550px;">
+    <div class="upload-title">
+        <h2 class="h5">上传封面</h2>
+        <i class="iconfont close">&#xe610;</i>
+    </div>
+    <div class="pic-upload">
+        <p class="tips">
+        	 <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic()" value="重新选择文件"/>
+          	<!--<a href="javascript:;" class="btn btn-mini btn-primary">重新选择文件</a>--> 
+          	<div style="margin-top: 5px;">建议上传的图片尺寸为：516*282px </div> 
+        </p>
+        <div class="upload-content" style="padding:10px;">
+        <div class="attributes none">
+        	 <input type="hidden" id="x" name="x" value="0"/>
+            <input type="hidden" id="y" name="y" value="0"/>
+            <input type="hidden" id="w" name="w" value="0"/>
+            <input type="hidden" id="h" name="h" value="0"/>
+            <input type="hidden" id="x2" name="x2" value="0"/>
+            <input type="hidden" id="y2" name="y2" value="0"/>
+        </div>
+        	<div class="pic" style="width:516px;height:282px;background-color:#f2f2f2;">
+        		 <img id="target" src="" />
+            </div>
+            <div class="upload-big p1" style="width:456px;">
+            	<div class="preview-container" style="margin:0 auto;">
+                <img src="">
+                </div>
+            </div>
+            <div class="upload-sm p2">
+            	<div class="preview-container">
+                <img src="">
+                </div>
+            </div>
+            <div class="upload-mini p3">
+           		<div class="preview-container">
+                <img src="">
+                </div>
+            </div>
+        </div>
+        <p class="text-center">
+            <a href="javascript:classTypePic();" class="btn btn-primary">确定</a>
+            <a href="javascript:;" class="btn btn-default close">取消</a>
+        </p>
+    </div>
+</div>
+<div class="add-layer-bg none" id="stopDiv"></div>
 <!-- ajax加载中div开始 -->
 	<div class="loading lp-units-loading" style="display:none">
         <p><i></i>加载中,请稍后...</p>
     </div>
     <div class="loading-bg lp-units-loading-bg" style="display:none"></div>
 <!--  ajax加载中div结束 -->
-	<script type="text/javascript"
-		src="<%=rootPath%>/plugins/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="<%=rootPath%>/plugins/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="<%=rootPath %>/javascripts/ajaxfileupload.js"></script>
+     <script type="text/javascript" src="<%=rootPath %>/plugins/jcrop/js/jquery.Jcrop.js"></script>
+    <script type="text/javascript" src="<%=rootPath %>/javascripts/class/addClassTypeOnsale.js"></script>
 	<script type="text/javascript">
 		var classMoreStatus = '${classMoreStatus}';//多班号是否开启
 	
@@ -305,6 +436,78 @@
 				_checkbox.attr('checked',false);
 			}
 		});
+		
+		//上传截取后的图片
+		function classTypePic() {
+			$.ajax({
+						url : rootPath + "/student/saveCutPic",
+						data : {
+							path : $("#target").attr("src"),
+							x : $("#x").val(),
+							y : $("#y").val(),
+							w : $("#w").val(),
+							h : $("#h").val(),
+							itemOneid : $("#itemOneid").val()
+						},
+						type : "post",
+						dataType : "json",
+						success : function(data) {
+							chooseOnePic(data.picOriginalUrl,
+									data.realPath);
+						}
+					})
+			$("#chooseDiv").css("display", "none");
+			$("#stopDiv").css("display", "none");
+			return;
+		}
+		//选择封面
+		function chooseOnePic(url,path){
+			$("#chooseDiv").css("display","none");
+			$("#stopDiv").css("display","none");
+			$("#commdotityPic").attr({"src":url,"realPath":path});
+		}
+		
+		$(".pic").on("change","#target", function() {
+			var theImage = new Image();
+			console.log($(this).attr("src"));
+			theImage.src = $(this).attr("src");
+			 if (theImage.complete) {
+				 	sourceHeight = theImage.height;
+					sourceWidth = theImage.width;
+					$.init(sourceWidth, sourceHeight);
+ 			    } else {
+ 			    	theImage.onload = function () {
+ 			        	sourceHeight = theImage.height;
+						sourceWidth = theImage.width;
+						$.init(sourceWidth, sourceHeight);
+ 			        };
+ 			    };
+			
+		});
+		//选择图片
+		function savePic(){
+				$.ajaxFileUpload({
+				url : rootPath+"/simpleClasses/savePic;"+ window["sessionName"] + "=" + window["sessionId"],
+				secureuri : false,// 安全协议
+				async : false,
+				fileElementId : 'imgData',
+				dataType:'json',
+				type : "POST",
+				success : function(data) {
+				  $("#sourcePic").attr("src",data.url);
+				  $("#target").parent().html('<img id="target" src="'+data.url+'" style="width:516px;height:282px;"/>');
+			      $("#target").trigger("change");
+			      $(".p1 img").attr("src",data.url);
+			      $(".p2 img").attr("src",data.url);
+			      $(".p3 img").attr("src",data.url);
+				},
+				error:function(arg1,arg2,arg3){
+					//console.log(arg1);
+				},
+				loadingEle: '#target',
+				fileName: 'imgData'
+			});
+		}
 	</script>
 </body>
 </html>

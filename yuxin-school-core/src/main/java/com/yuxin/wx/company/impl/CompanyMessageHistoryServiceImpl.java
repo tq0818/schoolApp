@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.api.company.ICompanyMessageHistoryService;
 import com.yuxin.wx.company.mapper.CompanyMessageHistoryMapper;
@@ -153,5 +154,10 @@ public class CompanyMessageHistoryServiceImpl extends BaseServiceImpl implements
 	@Override
 	public List<CompanyMessageHistoryLog> queryAllMessageHistoryLog(){
 		return companyMessageHistoryMapper.queryAllMessageHistoryLog();
+	}
+	@Override
+	public void updateMessageHistoryLogByIds(Integer id) {
+		// TODO Auto-generated method stub
+	    companyMessageHistoryMapper.updateMessageHistoryLogByIds(id);
 	}
 }

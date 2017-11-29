@@ -98,6 +98,13 @@ public class FileUtil {
 		 * 课程资料
 		 */
 		String COURSEFILE="coursefile";
+		
+
+		/**
+		 * 订阅文章
+		 */
+		String DINGYUE="dingyue";
+		
 		/**
 		 * 编辑器
 		 */
@@ -150,6 +157,7 @@ public class FileUtil {
 					||Module.TEACHER.equals(module)
 					||Module.SCORM.equals(module)
 					||Module.SPECIAL.equals(module)
+					||Module.DINGYUE.equals(module)
 					){
 				folder=module;
 			}

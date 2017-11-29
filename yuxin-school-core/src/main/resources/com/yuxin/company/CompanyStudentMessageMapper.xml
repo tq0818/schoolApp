@@ -31,6 +31,8 @@
 		
 		<result property="maxNum" column="max_num" />
 		<result property="signupVote" column="signup_vote" />
+		<result property="coverImg" column="cover_img" />
+		<result property="contentText" column="content_text" />
 		
 		<association property="creatorName" column="creator"
 					 javaType="String" select="findCreatorName"></association>
@@ -168,7 +170,9 @@
 		item_second_code,
 		item_third_code,
 		max_num,
-		signup_vote
+		signup_vote,
+		cover_img,
+		content_text
 	</sql>
 	<sql id="app_entity_properties">
 		#{id},
@@ -196,7 +200,9 @@
 		#{itemSecondCode},
 		#{itemThirdCode},
 		#{maxNum},
-		#{signupVote}
+		#{signupVote},
+		#{coverImg},
+		#{contentText}
 	</sql>
 	<!-- 适用于主键自增类型 -->
 <!-- 	<insert id="insert" parameterType="com.yuxin.wx.model.company.CompanyStudentMessage"

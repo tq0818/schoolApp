@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.yuxin.wx.api.company.ICompanyMessageHistoryService;
 import com.yuxin.wx.api.system.ISysConfigTableService;
 import com.yuxin.wx.model.system.SysConfigTable;
-import com.yuxin.wx.util.ThreadSendMobileMessageTrigger;
+import com.yuxin.wx.utils.ThreadSendMobileMessageTrigger;
 import com.yuxin.wx.vo.system.ConfigTableVo;
 
 /**

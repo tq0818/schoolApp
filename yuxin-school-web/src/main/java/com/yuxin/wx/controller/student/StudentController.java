@@ -1,5 +1,6 @@
 package com.yuxin.wx.controller.student;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -15,9 +16,11 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,6 +29,7 @@ import com.yuxin.wx.api.system.*;
 import com.yuxin.wx.common.*;
 import com.yuxin.wx.controller.user.RegisterController;
 import com.yuxin.wx.model.system.*;
+import com.yuxin.wx.util.ImageUtils;
 import com.yuxin.wx.utils.*;
 import com.yuxin.wx.vo.user.UsersAreaRelation;
 
@@ -40,6 +44,9 @@ import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -79,6 +86,7 @@ import com.yuxin.wx.model.classes.ClassType;
 import com.yuxin.wx.model.company.Company;
 import com.yuxin.wx.model.company.CompanyFunctionSet;
 import com.yuxin.wx.model.company.CompanyMemberService;
+import com.yuxin.wx.model.company.CompanyPics;
 import com.yuxin.wx.model.company.CompanyRegisterConfig;
 import com.yuxin.wx.model.company.CompanyServiceStatic;
 import com.yuxin.wx.model.company.CompanyStudentMessage;
@@ -90,6 +98,7 @@ import com.yuxin.wx.model.student.StudentPayMaster;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.model.user.UsersFront;
 import com.yuxin.wx.vo.company.CompanyOrgMessageVo;
+import com.yuxin.wx.vo.company.CompanyPicsVo;
 import com.yuxin.wx.vo.student.SelectStudentOrUsersfrontVo;
 import com.yuxin.wx.vo.student.StuVo;
 import com.yuxin.wx.vo.student.StudentListDataVo;
@@ -2543,6 +2552,83 @@ public class StudentController {
         
     }
 
+    @ResponseBody
+	@RequestMapping(value="/saveCutPic")
+	public CompanyPicsVo saveCutPic(HttpServletRequest request,Integer itemOneid, String path,double x,double y,double w,double h){
+		log.info("初始化截图开始：");
+		Resource resource = new ClassPathResource("config.properties");
+		Properties props=null;
+		try{
+			props=PropertiesLoaderUtils.loadProperties(resource);
+		}catch(Exception e){
+			log.error(e,e);
+			e.printStackTrace();
+		}
+		String fileName=path.substring(path.lastIndexOf("/")+1);
+		String tempPath=props.getProperty("server.imageupload.tempPath")+"/source/"+fileName;
+		String target=props.getProperty("server.imageupload.tempPath")+"/target/"+fileName;
+		String header="http://"+props.getProperty("yunduoketang.oss.imagedomain")+"/";
+		
+		path=path.replace(header, "");
+		System.out.println("oss临时文件路径["+path+"]=====本地磁盘临时文件路径["+tempPath+"]======切图后临时文件路径["+target+"]");
+		FileUtil.download("temp", path,tempPath);
+		//选中尺寸
+		BufferedImage img =null;
+		try{
+			 img = ImageIO.read(new File(tempPath));
+		}catch(Exception e){
+			log.error("读取图片失败:"+e,e);
+			e.printStackTrace();
+		}
+		//原图尺寸
+		double realW=img.getWidth();
+		double realH=img.getHeight();
+		//示例图尺寸
+		double slW=0;
+		double slH=0;
+		if(realW/realH>516.00/282.00){
+			//过宽
+			slH=516 * realH/realW;
+			slW=516;
+		}else{
+			//过高
+			slH=282;
+			slW=282 * realW/realH;
+		}
+		//原图所选中位置和区域
+		
+		int xx=(new   Double(x*realW/slW)).intValue();	
+		int yy=(new   Double(y*realH/slH)).intValue();
+		int ww=(new   Double(w*realW/slW)).intValue();
+		int hh=(new   Double(h*realH/slH)).intValue();
+		System.out.println("选中区域:["+x+","+y+","+w+","+h+"]----原图选中区域:["+xx+","+yy+","+ww+","+hh+"]");
+		//在原图中切图
+		String cutImgPath=ImageUtils.cutImage(tempPath,target,xx,yy,ww,hh);
+		//切好的图缩放到规定比例
+//		ImageUtils.scale2(target,target,241,446,true);
+		ImageUtils.resize(target, target, 446);
+		log.info("截图完成");
+		log.info("上传图片开始：");
+		String realPath=null;
+		try {
+			realPath=FileUtil.upload(cutImgPath,"dingyue", WebUtils.getCurrentCompanyId()+"");
+		} catch (Exception e) {
+			log.error("上传文件失败",e);
+			e.printStackTrace();
+		}
+		log.info("上传图片后路径："+realPath);
+		FileUtil.deleteFile(target);
+		FileUtil.deleteFile(cutImgPath);
+		
+		String picUrl="http://"+propertiesUtil.getProjectImageUrl()+"/"+realPath;
+		log.info("图片回显路径："+picUrl);
+		CompanyPicsVo pics=new CompanyPicsVo();
+		pics.setPicOriginalUrl(picUrl);
+		pics.setRealPath(realPath);
+		
+		return pics;
+	}
+    
     @RequestMapping("/createWeixin")
     public String createWeixin(Model model, HttpServletRequest request) {
         List<SysConfigItemRelation> relations = sysConfigItemRelationServiceImpl.findItemFront(new SysConfigItemRelation());

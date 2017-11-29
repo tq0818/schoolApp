@@ -20,7 +20,6 @@ import com.yuxin.wx.classes.impl.GenseeLiveRoomServiceImpl;
 import com.yuxin.wx.common.*;
 import com.yuxin.wx.company.mapper.CompanyServiceStaticDayMapper;
 import com.yuxin.wx.company.mapper.CompanyServiceStaticMapper;
-import com.yuxin.wx.controller.student.StudentPayMasterController;
 import com.yuxin.wx.course.mapper.VideoMapper;
 import com.yuxin.wx.model.classes.*;
 import com.yuxin.wx.model.classes.liveroom.ZsReturnInfo;
@@ -2716,6 +2715,7 @@ public class ClassModuleController {
 			json.put(JsonMsg.RESULT, JsonMsg.SUCCESS);
 		}else{//站内信
 			// 查询 用户id
+			List<String> userIdList=new ArrayList<String>();
 			if(companyStudentMessage.getMessageType().equals("STUDENT_MESSAGE_CLASSTYPE")){
 				stuList = studentServiceImpl.findByPayMaster(companyStudentMessage);
 				if(stuList.size() == 0){
@@ -2730,6 +2730,7 @@ public class ClassModuleController {
 					um.setMessageId(companyStudentMessage.getId());
 					um.setReadFlag(0);
 					umList.add(um);
+					userIdList.add(String.valueOf(s.getUserId()));
 //					companyStudentMessageServiceImpl.insertUserMessage(um);
 				}
 				companyStudentMessageServiceImpl.batchInsertUserMessage(umList);
@@ -2770,6 +2771,14 @@ public class ClassModuleController {
 			companyStudentMessage.setSendNum(stuList.size());
 			companyStudentMessage.setMessageStatus("STUDENT_MESSAGE_FINISH");
 			companyStudentMessageServiceImpl.update(companyStudentMessage);
+			String[] userIds = new String[userIdList.size()];
+			userIds=userIdList.toArray(userIds);
+			Map<String, String> params=new HashMap<String, String>();
+			params.put("message_method", companyStudentMessage.getMessageMethod());
+			params.put("message_id", String.valueOf(companyStudentMessage.getId()));
+			params.put("signup_vote", String.valueOf(companyStudentMessage.getSignupVote()));
+			//params.put("max_num", String.valueOf(companyStudentMessage.getMaxNum()));
+			String josnResult=JiGuangPushUtil.push(userIds , content, companyStudentMessage.getTitle(),params);
 			json.put(JsonMsg.RESULT, JsonMsg.SUCCESS);
 		}
 
@@ -2811,12 +2820,14 @@ public class ClassModuleController {
 		}
 		companyStudentMessageServiceImpl.insert(companyStudentMessage);
 		List<UserMessage> umList=new ArrayList<UserMessage>();
+		List<String> userIdList=new ArrayList<String>();
 		for (Student s : stuList) {
 			UserMessage um = new UserMessage();
 			um.setUserId(s.getUserId());
 			um.setMessageId(companyStudentMessage.getId());
 			um.setReadFlag(0);
 			umList.add(um);
+			userIdList.add(String.valueOf(s.getUserId()));
 //			companyStudentMessageServiceImpl.insertUserMessage(um);
 		}
 		companyStudentMessageServiceImpl.batchInsertUserMessage(umList);
@@ -2826,11 +2837,19 @@ public class ClassModuleController {
 		//是否推送
 		String isSend=request.getParameter("isSend");
 		if(StringUtils.isNotEmpty(isSend)&&"1".equals(isSend)){
-			
+			String[] userIds = new String[userIdList.size()];
+			userIds=userIdList.toArray(userIds);
+			Map<String, String> params=new HashMap<String, String>();
+			params.put("message_method", companyStudentMessage.getMessageMethod());
+			params.put("message_id", String.valueOf(companyStudentMessage.getId()));
+			params.put("signup_vote", String.valueOf(companyStudentMessage.getSignupVote()));
+			//params.put("max_num", String.valueOf(companyStudentMessage.getMaxNum()));
+			String result=JiGuangPushUtil.push(userIds , content, companyStudentMessage.getTitle(),params);
 		}
 		json.put(JsonMsg.RESULT, JsonMsg.SUCCESS);
 		return json;
 	}
+	
 	/**
 	 * 学员通知发送邮件
 	 * @author licong

@@ -25,6 +25,7 @@
 		<result property="companyId" column="company_id"/>
 		<result property="schoolId" column="school_id"/>
 		<result property="messageId" column="message_id"/>
+		<result property="status" column="status"/>
 	</resultMap>
 	
 	<sql id="table_columns">
@@ -192,7 +193,11 @@
 	</select>
 	
 	<select id="queryAllMessageHistoryLog" resultMap="companyMessageHistoryLogResultMap">
-		SELECT * from company_message_history_log ORDER BY id ASC
+		SELECT * from company_message_history_log where status is null or status=0 ORDER BY id ASC
 	</select>
+	<!-- 根据ID批量删除 -->
+	<update id="updateMessageHistoryLogByIds">
+		update company_message_history_log set status=1 where id =#{id}
+	</update>
 	
 </mapper>

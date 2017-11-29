@@ -251,4 +251,6 @@ public interface ICompanyStudentMessageService  {
 	List<StuMessageVo> findStudentMsgByGroup(StuMessageVo stuMessageVo);
 
 	Integer findStudentMsgByGroupCount(StuMessageVo stuMessageVo);
+	
+	
 }

@@ -4,7 +4,7 @@ var msgCount;
 		$(".phoneHint").hide();
 		$("#ckecktor").hide();
 		//订阅文章
-		$(".sendGrade,.dingyueChooseBtn,.dingyueSendBtn").hide();
+		$(".sendGrade,.dingyueChooseBtn,.dingyueSendBtn,.con-coverimg").hide();
 		$("#dingyue_ckecktor").hide();
 		
  		$selectSubMenu('student_message');
@@ -41,6 +41,30 @@ var msgCount;
 			$(".notice-main").css({'margin':'100px auto 100px'});
 		}
  		
+ 		$(".btn-upload").on('click',function(){
+			$("#chooseDiv").css("display", "block");
+			$("#stopDiv").css("display", "block");
+		});
+ 		// 弹层处理
+ 	      $('.upload-layer')
+ 	          .on('click','i.close',function(){
+ 	              $('.upload-layer').fadeOut(200,function(){
+ 	                  $('.add-layer-bg').fadeOut(200);
+ 	              });
+ 	          })
+ 	          // 取消
+ 	          .on('click','.btn-cancel',function(){
+ 	              $(this).parents('.pic-upload').fadeOut(200,function(){
+ 	                 // alert('这个仅作示例，为了展示列表')
+ 	            	  $('.upload-layer').css({'height':'481px'});
+ 	              })
+ 	          })
+ 	          .on('click','li.add',function(){
+ 	              $('.pic-upload').fadeIn(200,function(){
+ 	                  //alert('仅作示例，具体根据实际情况自行修改！')
+ 	            	  $('.upload-layer').css({'height':'540px'});
+ 	              })
+ 	          });
  		
  		$(".btn-method").on('click',function(){
  			$(".con-tzbt,.con-fsnr,.tips-txt").show();
@@ -55,7 +79,7 @@ var msgCount;
 			//短信通知
 			if(type == 'STUDENT_MESSAGE_MOBILE'){
 				//	$(".btn-type").last().prev().show();//指定通知
-				$(".phoneHint,.emailHint,.sendGrade,.dingyueChooseBtn,.dingyueSendBtn,.emailTitle,#ckecktor,#email_ckecktor,#dingyue_ckecktor,.use_email,.stuGroup,.lj-tops").hide();
+				$(".phoneHint,.emailHint,.sendGrade,.con-coverimg,.dingyueChooseBtn,.dingyueSendBtn,.emailTitle,#ckecktor,#email_ckecktor,#dingyue_ckecktor,.use_email,.stuGroup,.lj-tops").hide();
 				$(".sendMsgType,.sendStuMsg,.zhan,#messageContent,.sendBtn").show();
 				if($(".btn-type.btn-primary").attr("data-type")=='STUDENT_MESSAGE_CLASSTYPE'){
 					$(".lj-tops").show();
@@ -66,21 +90,21 @@ var msgCount;
 			//站内信通知
 			if(type == "STUDENT_MESSAGE_WEB"){
 				//$(".btn-type").last().prev().hide();//指定通知
-				$("#messageContent,.zhan,.sendGrade,.dingyueChooseBtn,.dingyueSendBtn,.phoneHint,.emailHint,.emailTitle,#email_ckecktor,#dingyue_ckecktor,#use_email,.stuGroup,.use_email,.lj-tops").hide();
+				$("#messageContent,.zhan,.sendGrade,.con-coverimg,.dingyueChooseBtn,.dingyueSendBtn,.phoneHint,.emailHint,.emailTitle,#email_ckecktor,#dingyue_ckecktor,#use_email,.stuGroup,.use_email,.lj-tops").hide();
 				$(".sendMsgType,#ckecktor,.sendStuMsg,.sendBtn").show();
  				
 			}
 			//邮件通知
 			if(type == 'STUDENT_MESSAGE_EMAIL'){
 				//$(".btn-type").last().prev().show();//指定通知
-				$(".phoneHint,.emailHint,.sendGrade,.dingyueChooseBtn,.dingyueSendBtn,#ckecktor,#dingyue_ckecktor,#messageContent,.zhan,.lj-tops").hide();
+				$(".phoneHint,.emailHint,.sendGrade,.con-coverimg,.dingyueChooseBtn,.dingyueSendBtn,#ckecktor,#dingyue_ckecktor,#messageContent,.zhan,.lj-tops").hide();
 				$(".sendMsgType,.sendStuMsg,.emailTitle,#email_ckecktor,.use_email,.sendBtn").show();
 			}
 			//订阅文章
 			if(type == 'STUDENT_MESSAGE_DINGYUE'){
 				//$(".btn-type").last().prev().show();
 				$(".phoneHint,.sendMsgType,.emailHint,#ckecktor,.sendStuMsg,.sendBtn,#messageContent,.zhan,.lj-tops,.emailTitle,#email_ckecktor,.use_email").hide();
-				$(".sendGrade,.sendStuNum,#dingyue_ckecktor,.dingyueChooseBtn,.dingyueSendBtn").show();
+				$(".sendGrade,.con-coverimg,.sendStuNum,#dingyue_ckecktor,.dingyueChooseBtn,.dingyueSendBtn").show();
 				selPersonOfDingyue();
 			}
 			
@@ -336,6 +360,7 @@ var msgCount;
 			var title = $.trim($("#title").val());
 			var method = $.trim($(".btn-method.btn-primary").attr("data-type"));
 			var msgcount = "";
+			var msgcounttext = "";
 			var signup_vote=$("input[name='signup_vote']:checked").val();
 			var limitStuNum=$.trim($("#limitStuNum").val());
 			var isSend=null;
@@ -343,6 +368,13 @@ var msgCount;
 				$("#title").focus();
 				$("#title").select();
 				return false;
+			}
+			var picUrl = $("#commdotityPic").attr("realPath");
+			if (picUrl.length < 0 || picUrl == "") {
+				 $('<div class="c-fa">'+ "请上传封面图片!" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+					$(this).remove();}
+				);
+				return;
 			}
 			 var gradeCodes=new Array();
 	    	 var allChildren = $('.articlesList').children('button');
@@ -354,14 +386,15 @@ var msgCount;
 		        }
 	    	 }
 	    	 if(null==gradeCodes||gradeCodes.length<1){
-	    		 $('<div class="c-fa">'+ "学段必须选择!" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
-						$(this).remove();}
-					);
-					return;
+	    		 $('<div class="c-fa">'+ "请选择学段!" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+					$(this).remove();}
+				);
+				return;
 	    	 }
 	    	if(method == "STUDENT_MESSAGE_DINGYUE"){
 				CKupdate();
 				msgcount = $("#dingyue_newsContents").val();
+				msgcounttext=dingyue_ckecktor.document.getBody().getText();
 				msgcount = msgcount.replace(/<p>/g, "<span>");
 				msgcount = msgcount.replace(/<p /g, "<span ");
 				msgcount = msgcount.replace(/<\/p>/g, "</span><br>");
@@ -402,7 +435,8 @@ var msgCount;
 			$.ajax({
 				url:rootPath + "/classModule/sendMsgOfDingyue",
 				type:"post",
-				data:{"title":title,"content":msgcount,"messageMethod":method,"signupVote":signup_vote,"maxNum":limitStuNum,"gradeCodes":gradeCodes,"isSend":isSend},
+				data:{"title":title,"content":msgcount,"messageMethod":method,"signupVote":signup_vote,
+					"maxNum":limitStuNum,"gradeCodes":gradeCodes,"isSend":isSend,"coverImg":picUrl,"contentText":msgcounttext},
 				dataType:"json",
 				beforeSend:function(XMLHttpRequest){
 	              $(".loading").show();

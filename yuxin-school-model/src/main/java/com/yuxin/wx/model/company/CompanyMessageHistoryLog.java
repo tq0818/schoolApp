@@ -17,7 +17,7 @@ public class CompanyMessageHistoryLog extends BaseEntity {
 	private	Integer	companyId;			/* 公司id*/
 	private	Integer	schoolId;			/* 学校id*/
 	private Integer	messageId;			/* 学院通知id*/
-	
+	private Integer status;	
 
 	// Constructor
 	public CompanyMessageHistoryLog() {
@@ -26,7 +26,7 @@ public class CompanyMessageHistoryLog extends BaseEntity {
 
 	public CompanyMessageHistoryLog(String userId, String mobile,
 			Date sendTime, String content, Integer companyId, Integer schoolId,
-			Integer messageId) {
+			Integer messageId,Integer status) {
 		setId(id);
 		this.userId = userId;
 		this.mobile = mobile;
@@ -35,6 +35,7 @@ public class CompanyMessageHistoryLog extends BaseEntity {
 		this.companyId = companyId;
 		this.schoolId = schoolId;
 		this.messageId = messageId;
+		this.status=status;
 	}
 
 
@@ -106,7 +107,15 @@ public class CompanyMessageHistoryLog extends BaseEntity {
 	public void setMessageId(Integer messageId) {
 		this.messageId = messageId;
 	}
-	
+
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 	
 	 
 }

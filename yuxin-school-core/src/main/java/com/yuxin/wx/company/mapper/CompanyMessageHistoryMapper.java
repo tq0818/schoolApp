@@ -50,4 +50,6 @@ public interface CompanyMessageHistoryMapper extends BaseMapper<CompanyMessageHi
 	Integer findByUserCount(CompanyMessageHistory companyMessageHistory);
 	
 	List<CompanyMessageHistoryLog> queryAllMessageHistoryLog();
+	
+	void updateMessageHistoryLogByIds(Integer id);
 }

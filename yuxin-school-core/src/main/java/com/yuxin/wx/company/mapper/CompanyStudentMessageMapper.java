@@ -160,4 +160,5 @@ public interface CompanyStudentMessageMapper extends BaseMapper<CompanyStudentMe
 	List<StuMessageVo> findStudentMsgByGroup(StuMessageVo stuMessageVo);
 
 	Integer findStudentMsgByGroupCount(StuMessageVo stuMessageVo);
+
 }

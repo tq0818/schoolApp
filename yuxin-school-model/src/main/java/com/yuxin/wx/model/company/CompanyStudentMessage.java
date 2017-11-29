@@ -55,6 +55,8 @@ public class CompanyStudentMessage extends BaseEntity {
 
 	private Integer maxNum;
 	private Integer signupVote;
+	private String coverImg;
+	private String contentText;
 	// Constructor
 	public CompanyStudentMessage() {
 	}
@@ -397,6 +399,22 @@ public class CompanyStudentMessage extends BaseEntity {
 
 	public void setSignupVote(Integer signupVote) {
 		this.signupVote = signupVote;
+	}
+
+	public String getCoverImg() {
+		return coverImg;
+	}
+
+	public void setCoverImg(String coverImg) {
+		this.coverImg = coverImg;
+	}
+
+	public String getContentText() {
+		return contentText;
+	}
+
+	public void setContentText(String contentText) {
+		this.contentText = contentText;
 	}
 	
 }

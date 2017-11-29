@@ -136,4 +136,6 @@ public interface ICompanyMessageHistoryService  {
 	
 	List<CompanyMessageHistoryLog> queryAllMessageHistoryLog();
 	
+	void updateMessageHistoryLogByIds(Integer id);
+	
 }

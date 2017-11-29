@@ -1,6 +1,8 @@
-package com.yuxin.wx.util;
+package com.yuxin.wx.utils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,12 +23,20 @@ public class ThreadSendMobileMessageTrigger implements Runnable {
 	public void run() {
 		try {
 			while (true) {
-				log.info("短信通知触发站内通知--执行开始--");
+				//log.info("短信通知触发站内通知--执行开始--");
 				List<CompanyMessageHistoryLog> logList=companyMessageHistoryService.queryAllMessageHistoryLog();
 				if(null!=logList&&logList.size()>0){
-					
+					for(CompanyMessageHistoryLog cmhlog:logList){
+						Map<String, String> params=new HashMap<String, String>();
+						params.put("message_id", String.valueOf(cmhlog.getMessageId()));
+						String[] userIds={String.valueOf(cmhlog.getUserId())};
+						String josnResult=JiGuangPushUtil.push(userIds, cmhlog.getContent(), "",params);
+						if("推送成功".equals(josnResult)){
+							companyMessageHistoryService.updateMessageHistoryLogByIds(cmhlog.getId());
+						}
+					}
 				}
-				log.info("短信通知触发站内通知--执行结束--");
+				//log.info("短信通知触发站内通知--执行结束--");
 				Thread.sleep(2000);
 			}
 		} catch (Exception e) {

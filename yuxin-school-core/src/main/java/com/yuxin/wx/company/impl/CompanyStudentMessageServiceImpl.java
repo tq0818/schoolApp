@@ -229,4 +229,5 @@ public class CompanyStudentMessageServiceImpl extends BaseServiceImpl implements
 	public Integer findStudentMsgByGroupCount(StuMessageVo stuMessageVo) {
 		return companyStudentMessageMapper.findStudentMsgByGroupCount(stuMessageVo);
 	}
+
 }
