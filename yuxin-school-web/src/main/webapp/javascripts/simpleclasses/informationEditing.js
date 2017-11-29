@@ -136,6 +136,10 @@ function toShelves(flag,editFlag){
 			return;
 		}
 	}
+	if("0"==flag && new Date() > new Date(shelvesTime)){
+        alert("预约时间不能小于当前时间");
+        return;
+	}
 	if(salePrice){
 		if (!reg.test(salePrice)) {
 			alert("请输入正确的销售价格");
@@ -166,7 +170,7 @@ function toShelves(flag,editFlag){
 				alert("失败")
 			}
 		}
-	});			
+	});
 }
 
 function savePic(){
@@ -178,7 +182,8 @@ function savePic(){
 		dataType:'json',
 		type : "POST",
 		success : function(data) {
-			$("#pic").attr("src",data.url);
+			// $("#pic").attr("src",data.url);
+			console.log("上传成功！");
 		},
 		error:function(arg1,arg2,arg3){
 			//console.log(arg1);

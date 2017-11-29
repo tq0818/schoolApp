@@ -83,5 +83,11 @@
     <script type="text/javascript" src="<%=rootPath %>/javascripts/app/shelvesCourseView.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/classes.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
+    <script>
+//        二级菜单加active
+        $(function () {
+            $selectSubMenu('shelvesCourses');
+        });
+    </script>
 </body>
 </html>

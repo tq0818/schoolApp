@@ -59,11 +59,11 @@
 		item_second_id,
 		classify_id,
 		user_id,
-		course_flag,
+		<!-- course_flag,
 		course_id,
 		course_name,
 		course_lecture_id,
-		course_lecture_name,
+		course_lecture_name, -->
 		answer_count,
 		scan_count,
 		adopt_flag,
@@ -74,6 +74,32 @@
 		update_time,
 		del_flag,
 		question_type
+		
+    </sql>
+    <sql id="table_columns_app">
+		t1.id,
+		t1.question_title,
+		t1.question_desc,
+		t1.item_one_id,
+		t1.item_second_id,
+		t1.classify_id,
+		t1.user_id,
+		<!-- t1.course_flag,
+		t1.course_id,
+		t1.course_name,
+		t1.course_lecture_id,
+		t1.course_lecture_name, -->
+		t1.answer_count,
+		t1.scan_count,
+		t1.adopt_flag,
+		t1.adopt_answer_id,
+		t1.top_flag,
+		t1.essence_flag,
+		t1.create_time,
+		t1.update_time,
+		t1.del_flag,
+		t1.question_type
+		
     </sql>
 	<sql id="entity_properties">
 		#{id},
@@ -126,13 +152,13 @@
 	
 	<!-- 适用于主键自增类型 -->
 	<insert id="insert" parameterType="com.yuxin.wx.model.queAns.QueQuestion" useGeneratedKeys="true" keyProperty="id">
-		insert into question( <include refid="table_columns" /> ) 
+		insert into question_app( <include refid="table_columns" /> ) 
 		values ( <include refid="entity_properties" /> )
 	</insert>
 	
 	<!-- 批量添加 适用于主键自增类型  不支持返回主键-->
 	<insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
-		insert into question( <include refid="table_columns" /> ) 
+		insert into question_app( <include refid="table_columns" /> ) 
 		values 
 		<foreach item="item" collection="list" separator="," >
 			( <include refid="entity_properties" /> )
@@ -141,13 +167,13 @@
 	
 	<!--根据主键删除 -->
 	<delete id="deleteById">
-		delete from question
+		delete from question_app
 		where id = #{id}
 	</delete>
 	
 	<!-- 根据ID批量删除 -->
 	<delete id="deleteByIds">
-		delete from question
+		delete from question_app
 		where id in
 		<foreach item="item" collection="array" open="(" separator="," close=")">
 			#{item}
@@ -155,7 +181,7 @@
 	</delete>
 	
 	<update id="update" parameterType="com.yuxin.wx.model.queAns.QueQuestion">
-		update question 
+		update question_app 
 		<trim prefix="set" suffixOverrides=",">
 			<if test="questionTitle != null and questionTitle != ''">question_title = #{questionTitle},</if>
 			<if test="questionDesc != null and questionDesc != ''">question_desc = #{questionDesc},</if>
@@ -184,13 +210,13 @@
 	
 	<select id="findById" resultMap="QuestionResultMap" parameterType="String" >
 		select <include refid="table_columns" />
-		from question
+		from question_app
 		where id = #{id}
 	</select>
 	
 	<select id="queryAll" resultMap="QuestionResultMap">
 		select <include refid="table_columns" /> 
-		from question
+		from question_app
 	</select>
 	
 	<!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
@@ -220,27 +246,55 @@
 			<if test="updateTime != null and updateTime != ''">and update_time = #{updateTime}</if>
 			<if test="delFlag != null">and del_flag = #{delFlag}</if>
 			<if test="questionType != null">and question_type = #{questionType}</if>
+			<if test="systemTagId != null">and question_type = #{systemTagId}</if>
+			<if test="userDefuledId != null">and question_type = #{userDefuledId}</if>
 		</trim>
 	</sql>
-	
 	<select id="page" resultMap="QuestionResultMap" parameterType="com.yuxin.wx.model.queAns.QueQuestion">
 		select <include refid="table_columns" />
-		from question
+		from question_app
 		<include refid="page_where" />
 		limit #{firstIndex},#{pageSize}
 	</select>
 	
 	<select id="findQuestionVoByPage" resultMap="QuestionVoResultMap" parameterType="com.yuxin.wx.model.queAns.QueQuestion">
-		select <include refid="table_columns" />
-		from question
-		<include refid="page_where" />
-		order by create_time desc
+		select <include refid="table_columns_app" />
+		from question_app t1
+		<if test="systemTagId != null">
+		INNER JOIN question_lab_relations t2 ON t2.question_id=t1.id
+		JOIN question_lab_app t3 ON t3.id=t2.label_id and t3.lab_type=0 and t3.id = #{systemTagId}
+		</if>
+		<if test="userDefuledId != null">
+		INNER JOIN question_lab_relations t4 ON t4.question_id=t1.id
+		JOIN question_lab_app t5 ON t5.id=t4.label_id and t5.lab_type=2 and t5.id = #{userDefuledId}
+		</if> 
+		where 1=1 
+		<if test="systemTagId != null">and t3.id = #{systemTagId}</if>
+		<if test="userDefuledId != null">and t5.id = #{userDefuledId}</if> 
+		<if test="topFlag != null and topFlag != ''">and t1.top_flag = #{topFlag}</if>
+		<if test="essenceFlag != null and essenceFlag != ''">and t1.essence_flag = #{essenceFlag}</if>
+		order by t1.create_time desc
 		limit #{firstIndex},#{pageSize}
 	</select>
 	
 	<select id="pageCount" resultType="int" parameterType="com.yuxin.wx.model.queAns.QueQuestion">
-		select count(id) from question
-		<include refid="page_where" />
+		select count(*) from  (
+		select <include refid="table_columns_app" />
+		from question_app t1
+		<if test="systemTagId != null">
+		INNER JOIN question_lab_relations t2 ON t2.question_id=t1.id
+		JOIN question_lab_app t3 ON t3.id=t2.label_id and t3.lab_type=0 and t3.id = #{systemTagId}
+		</if>
+		<if test="userDefuledId != null">
+		INNER JOIN question_lab_relations t4 ON t4.question_id=t1.id
+		JOIN question_lab_app t5 ON t5.id=t4.label_id and t5.lab_type=2 and t5.id = #{userDefuledId}
+		</if> 
+		where 1=1 
+		<if test="systemTagId != null">and t3.id = #{systemTagId}</if>
+		<if test="userDefuledId != null">and t5.id = #{userDefuledId}</if> 
+		<if test="topFlag != null and topFlag != ''">and t1.top_flag = #{topFlag}</if>
+		<if test="essenceFlag != null and essenceFlag != ''">and t1.essence_flag = #{essenceFlag}</if>) t
+		
 	</select>
 	
 	<!-- 其他自定义SQL -->

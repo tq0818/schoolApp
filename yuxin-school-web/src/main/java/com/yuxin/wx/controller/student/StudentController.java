@@ -21,19 +21,10 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.qiniu.util.Json;
-import com.yuxin.wx.api.system.*;
-import com.yuxin.wx.common.*;
-import com.yuxin.wx.controller.user.RegisterController;
-import com.yuxin.wx.model.system.*;
-import com.yuxin.wx.utils.*;
-import com.yuxin.wx.vo.user.UsersAreaRelation;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
-import org.apache.log4j.spi.LoggerFactory;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -48,10 +39,13 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
+
+import sun.misc.BASE64Encoder;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yuxin.wx.api.classes.IClassModuleNoService;
@@ -63,13 +57,27 @@ import com.yuxin.wx.api.company.ICompanyMemberServiceService;
 import com.yuxin.wx.api.company.ICompanyRegisterConfigService;
 import com.yuxin.wx.api.company.ICompanyService;
 import com.yuxin.wx.api.company.ICompanyServiceStaticService;
+import com.yuxin.wx.api.integral.IIntegralManageService;
 import com.yuxin.wx.api.student.IStudentFeeRefundService;
 import com.yuxin.wx.api.student.IStudentFeeStageService;
 import com.yuxin.wx.api.student.IStudentGroupService;
 import com.yuxin.wx.api.student.IStudentPayMasterService;
 import com.yuxin.wx.api.student.IStudentPaySlaveService;
 import com.yuxin.wx.api.student.IStudentService;
+import com.yuxin.wx.api.system.ILongitudinalTableColDefineService;
+import com.yuxin.wx.api.system.ILongitudinalTableDataService;
+import com.yuxin.wx.api.system.ISysConfigDictService;
+import com.yuxin.wx.api.system.ISysConfigItemRelationService;
+import com.yuxin.wx.api.system.ISysConfigItemService;
+import com.yuxin.wx.api.system.ISysConfigSchoolService;
+import com.yuxin.wx.api.system.ISysConfigTeacherService;
 import com.yuxin.wx.api.user.IUsersFrontService;
+import com.yuxin.wx.common.ExcelSheetEntity;
+import com.yuxin.wx.common.JsonMsg;
+import com.yuxin.wx.common.PageFinder;
+import com.yuxin.wx.common.PageFinder2;
+import com.yuxin.wx.common.SysLoader;
+import com.yuxin.wx.common.ViewFiles;
 import com.yuxin.wx.model.classes.ClassModule;
 import com.yuxin.wx.model.classes.ClassModuleNo;
 import com.yuxin.wx.model.classes.ClassPackageCategory;
@@ -79,14 +87,29 @@ import com.yuxin.wx.model.company.CompanyFunctionSet;
 import com.yuxin.wx.model.company.CompanyMemberService;
 import com.yuxin.wx.model.company.CompanyRegisterConfig;
 import com.yuxin.wx.model.company.CompanyServiceStatic;
-import com.yuxin.wx.model.company.CompanyStudentMessage;
+import com.yuxin.wx.model.integral.ScoreRulsAppVo;
+import com.yuxin.wx.model.integral.TotalScoreVo;
 import com.yuxin.wx.model.student.Student;
 import com.yuxin.wx.model.student.StudentFeeRefund;
 import com.yuxin.wx.model.student.StudentFeeStage;
 import com.yuxin.wx.model.student.StudentGroup;
 import com.yuxin.wx.model.student.StudentPayMaster;
+import com.yuxin.wx.model.system.LongitudinalTableColDefine;
+import com.yuxin.wx.model.system.LongitudinalTableData;
+import com.yuxin.wx.model.system.SysConfigDict;
+import com.yuxin.wx.model.system.SysConfigItem;
+import com.yuxin.wx.model.system.SysConfigItemRelation;
+import com.yuxin.wx.model.system.SysConfigSchool;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.model.user.UsersFront;
+import com.yuxin.wx.utils.DateUtil;
+import com.yuxin.wx.utils.EntityUtil;
+import com.yuxin.wx.utils.ExcelUtil;
+import com.yuxin.wx.utils.FileUploadUtil;
+import com.yuxin.wx.utils.ImportExcl;
+import com.yuxin.wx.utils.ParameterUtil;
+import com.yuxin.wx.utils.PropertiesUtil;
+import com.yuxin.wx.utils.WebUtils;
 import com.yuxin.wx.vo.company.CompanyOrgMessageVo;
 import com.yuxin.wx.vo.student.SelectStudentOrUsersfrontVo;
 import com.yuxin.wx.vo.student.StuVo;
@@ -95,8 +118,6 @@ import com.yuxin.wx.vo.student.StudentListVo;
 import com.yuxin.wx.vo.student.StudentPayMaster4ClassPackageVo;
 import com.yuxin.wx.vo.student.StudentPaySlaveVo;
 import com.yuxin.wx.vo.student.StudentVo;
-
-import sun.misc.BASE64Encoder;
 
 /**
  * Controller of Student
@@ -162,6 +183,9 @@ public class StudentController {
     private ISysConfigTeacherService sysConfigTeacherServiceImpl;
     @Autowired
     private ISysConfigItemRelationService sysConfigItemRelationServiceImpl;
+    
+    @Autowired
+    private IIntegralManageService integralManageServiceImpl;
 
     private static Logger log = Logger.getLogger(StudentController.class);
     
@@ -4219,5 +4243,38 @@ public class StudentController {
         areaDict.setDictCode("EDU_SCHOOL");
         List<SysConfigDict> areas = sysConfigDictServiceImpl.querySchoolListByStepCode(areaDict);
         return areas;
+    }
+    /**
+     * 积分修改
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/integralModification")
+    public String integralModification(HttpServletRequest request,String stuId,Model model){
+    	List<ScoreRulsAppVo> scoreRulsAppVos=integralManageServiceImpl.queryScoreRulsAppVos();
+    	TotalScoreVo totalScoreVo=integralManageServiceImpl.queryTotalScoreVoByUserFrontId(stuId);
+    	Users user = WebUtils.getCurrentUser(request);
+    	model.addAttribute("scoreRulsAppVos", scoreRulsAppVos);
+    	model.addAttribute("totalScoreVo", totalScoreVo);
+    	model.addAttribute("user",user);
+    	return "student/integralManagement/integralModification";
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getTime")
+    public String getTime(HttpServletRequest request) {
+    	SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(new Date());
+    }
+    @ResponseBody
+    @RequestMapping(value = "/saveOrUpdateTotalScore")
+    public Boolean saveOrUpdateTotalScore(HttpServletRequest request){
+    	try{
+	    	String[] strValue=request.getParameterValues("strValue");
+	    	String userFrontId=request.getParameter("userFrontId");
+	    	return integralManageServiceImpl.saveOrUpdateTotalScore(strValue,userFrontId);
+    	}catch(Exception e){
+    		log.error("saveOrUpdateTotalScore(HttpServletRequest)",e);
+    		return false;
+    	}
     }
 }

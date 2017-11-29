@@ -75,7 +75,7 @@ a:hover {
 	background-color: #D6D6D6;
 }
 </style>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/stylesheets/classes.css" />
+<link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/classes.css" />
 <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/resource.css" />
 <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/common/message.js"></script>

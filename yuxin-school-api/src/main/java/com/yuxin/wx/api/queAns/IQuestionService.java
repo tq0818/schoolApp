@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.queAns.QueQuestion;
+import com.yuxin.wx.model.queAns.QuestionClassify;
 import com.yuxin.wx.vo.queAns.QuestionVo;
 /**
  * Service Interface:Question
@@ -113,4 +114,24 @@ public interface IQuestionService  {
 	PageFinder<QuestionVo> findVoByPage(QueQuestion search);
 
 	List<QuestionVo> findTeacherQuestion(Map<String, Object> search);
+	/**
+	 * 
+	 * @author jishangyang 2017年11月28日 下午2:58:06
+	 * @Method: insert 
+	 * @Description: 添加标签
+	 * @param questionClassify
+	 * @return 
+	 * @throws
+	 */
+	boolean  insert(QuestionClassify questionClassify);
+	/**
+	 * 
+	 * @author jishangyang 2017年11月28日 下午3:58:09
+	 * @Method: delet 
+	 * @Description: 删除标签
+	 * @param questionClassify
+	 * @return 
+	 * @throws
+	 */
+	boolean  delet(QuestionClassify questionClassify);
 }

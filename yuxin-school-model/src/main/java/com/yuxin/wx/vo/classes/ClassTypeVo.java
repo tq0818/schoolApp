@@ -1,13 +1,12 @@
 package com.yuxin.wx.vo.classes;
 
-import java.util.Date;
-import java.util.List;
-
 import com.yuxin.wx.common.BaseEntity;
 import com.yuxin.wx.model.classes.ClassModule;
 import com.yuxin.wx.model.course.CourseRemote;
-import com.yuxin.wx.model.course.CourseVideo;
 import com.yuxin.wx.model.course.CourseVideoChapter;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * POJO:ClassTypeVo
@@ -120,6 +119,17 @@ public class ClassTypeVo extends BaseEntity {
 	}
 
 	private String courseCaId;
+
+
+
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
+	}
+	private String categoryId;
 
 	private String gradeId;
 

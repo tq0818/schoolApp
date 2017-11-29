@@ -123,7 +123,15 @@
 		<result property="schoolName" column="school_short_name"/>
 		<result property="labDesc" column="lab_desc"/>
 		<result property="sort" column="sort"/>
+
+
+		<result property="categoryId" column="category_id"/>
 		<result property="gradeId" column="grade_id"/>
+		<result property="subjectId" column="subject_id"/>
+		<result property="kwonProId" column="knowledge_pro_id"/>
+		<result property="knowId" column="knowledge_id"/>
+		<result property="stageId" column="stage_id"/>
+		<result property="typeId" column="type_id"/>
 	</resultMap>
 
 	<sql id="table_columns_first">
@@ -541,7 +549,8 @@
 	<select id="querySingleOtherClassTypeInfo" resultMap="classTypeVoResultMap" parameterType="map">
 		select ct.*,c.buy_num as actualNum,app.img_url as imgUrl,app.sort,app.grade_id,sct.NAME teacher_name,sct.school_short_name,
 		case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
-		app.reserve_time as reserveTime,app.shelves_time as shelvesTime,app.price as appPrice,app.sale_price as salePrice,
+		date_format(app.reserve_time,'%Y-%m-%d %T') as reserveTime,date_format(app.shelves_time,'%Y-%m-%d %T') as shelvesTime,
+		app.price as appPrice,app.sale_price as salePrice,
 		v.video_time as lesson_date,app.id as appId,app.lab_desc
 		 from commodity c
 		join commodity_product_realtion cpr on cpr.com_id=c.id
@@ -564,9 +573,17 @@
 		cml.lesson_time_end,
 		cml.lesson_name,sct.NAME teacher_name,sct.school_short_name,
 		c.buy_num as actualNum,app.img_url as imgUrl,case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
-		app.reserve_time as reserveTime,app.shelves_time as shelvesTime,app.price as appPrice,app.sale_price as salePrice,
+		date_format(app.reserve_time,'%Y-%m-%d %T') as reserveTime,date_format(app.shelves_time,'%Y-%m-%d %T') as shelvesTime,
+		app.price as appPrice,app.sale_price as salePrice,
 		app.id as appId,
 		app.lab_desc,
+		app.category_id as categoryId,
+		app.grade_id as gradeId,
+		app.subject_id as subjectId,
+		app.knowledge_pro_id as kwonProId ,
+		app.knowledge_id as knowId,
+		app.stage_id as stageId ,
+		app.type_id as typeId,
 		app.sort
 		FROM (
 				SELECT
@@ -599,6 +616,13 @@
 		app.reserve_time as reserveTime,app.shelves_time as shelvesTime,app.price as appPrice,app.sale_price as salePrice,
 		app.id as appId,
 		app.lab_desc,
+		app.category_id as categoryId,
+		app.grade_id as gradeId,
+		app.subject_id as subjectId,
+		app.knowledge_pro_id as kwonProId ,
+		app.knowledge_id as knowId,
+		app.stage_id as stageId ,
+		app.type_id as typeId,
 		app.sort
 		FROM (
 			SELECT
@@ -627,7 +651,7 @@
 
 	<!-- 查询班型并分页 -->
 	<select id="queryClassTypesByPage" resultMap="classTypeVoResultMap" parameterType="map">
-		SELECT a.*, c.buy_num as actualNum,app.img_url as imgUrl,case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,app.reserve_time as reserveTime,app.shelves_time as shelvesTime,app.price as appPrice,app.sale_price as salePrice,app.id as appId
+		SELECT a.*, c.buy_num as actualNum,app.img_url as imgUrl,case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,date_format(app.reserve_time,'%Y-%m-%d %T') as reserveTime,date_format(app.shelves_time,'%Y-%m-%d %T') as shelvesTime,app.price as appPrice,app.sale_price as salePrice,app.id as appId
 		FROM class_type a
 		inner join commodity_product_realtion pr on pr.product_id = a.id
 		INNER JOIN commodity c ON c.id = pr.com_id

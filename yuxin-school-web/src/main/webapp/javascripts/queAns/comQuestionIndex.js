@@ -211,13 +211,13 @@ $(function(){
 				Form.findQuestion(1,oneId,twoId,jz);
 			},
 			findQuestion : function(pageNo,oneId,twoId,jz,questionName){
-				console.log("pageNo="+pageNo+",oneId="+oneId+",twoId="+twoId+",jz="+jz,"questionName="+questionName);
+				console.log("pageNo="+pageNo+",systemTagId="+oneId+",userDefuledId="+twoId+",jz="+jz,"questionName="+questionName);
 				var param = "";
 				if(oneId){
-					param+="&classifyId="+oneId;
+					param+="&systemTagId="+oneId;
 				}
 				if(twoId){
-					param+="&itemSecondId="+twoId;
+					param+="&userDefuledId="+twoId;
 				}
 				if(jz==1){
 					param+="&topFlag=1";

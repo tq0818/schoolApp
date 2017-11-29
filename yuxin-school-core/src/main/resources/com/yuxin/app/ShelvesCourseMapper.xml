@@ -411,7 +411,7 @@
 			<if test="appPrice != null and appPrice != ''">price = #{appPrice},</if>
 			<if test="salePrice != null and salePrice != ''">sale_price = #{salePrice},</if>
 			<if test="shelvesTime != null and shelvesTime != ''">shelves_time = #{shelvesTime},</if>
-			<if test="reserveTime != null and reserveTime != ''">reserve_time = #{reserveTime},</if>
+			reserve_time = #{reserveTime},
 			<if test="courseCaId != null and courseCaId != ''">category_id = #{courseCaId},</if>
 			<if test="gradeId != null and gradeId != ''">grade_id = #{gradeId},</if>
 			<if test="subjectId != null and subjectId != ''">subject_id = #{subjectId},</if>
