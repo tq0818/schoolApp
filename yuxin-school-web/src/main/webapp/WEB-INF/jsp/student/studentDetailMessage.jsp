@@ -470,6 +470,7 @@
         </div>
         <form action="" method="post" id="studentMessage">
     	<input type="hidden" name="id" value="${student.id }"/>
+
         <div class="mark-more none"  id="editMessage">
             <div class="main-content">
                 <div class="m-title">
