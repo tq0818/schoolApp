@@ -57,17 +57,19 @@
 							class="btn btn-mini btn-method btn-primary"
 							data-type="STUDENT_MESSAGE_MOBILE">短信通知</a> <a
 							href="javascript:;" class="btn btn-mini btn-method btn-default"
-							data-type="STUDENT_MESSAGE_WEB">站内信通知</a><a
-							href="javascript:;" class="btn btn-mini btn-method btn-default"
-							data-type="STUDENT_MESSAGE_EMAIL">邮件通知</a>
+							data-type="STUDENT_MESSAGE_WEB">站内信通知</a>
+							<!-- <a href="javascript:;" class="btn btn-mini btn-method btn-default"
+							data-type="STUDENT_MESSAGE_EMAIL">邮件通知</a>  -->
+							<a	href="javascript:;" class="btn btn-mini btn-method btn-default"
+							data-type="STUDENT_MESSAGE_DINGYUE">订阅文章</a>
 						</span>
 					</p>
-					<p class="c">
+					<p class="c sendMsgType">
 						<span class="c-title">通知类型：</span> <span class="c-content font-style">
 							<a href="javascript:;" class="btn btn-mini btn-type btn-primary"
 							data-type="STUDENT_MESSAGE_CLASSTYPE">课程通知</a> 
 							
-	                        <c:if test="${classMoreStatus == 1 }">
+	                        <%-- <c:if test="${classMoreStatus == 1 }">
 								<a
 								href="javascript:;" class="btn btn-mini btn-type btn-default"
 								data-type="STUDENT_MESSAGE_MODULENO">班号通知</a>
@@ -77,8 +79,16 @@
 							data-type="STUDENT_MESSAGE_SPECIAL">指定通知</a>
 							<a
 							href="javascript:;" class="btn btn-mini btn-type btn-default"
-							data-type="STUDENT_MESSAGE_GROUP">学员分组通知</a>
+							data-type="STUDENT_MESSAGE_GROUP">学员分组通知</a> --%>
 						</span>
+					</p>
+					<!--年级  -->
+					<p class="c sendGrade articlesList articleNew" style="display: block;">
+						<span class="c-title">学段：</span> 
+						<button class="btn btn-mini btn-grade btn-default"	data-type="ALL_GRADE">全部</button>
+						<c:forEach items="${gradeCodeItems }" var="grade">
+							<button class="btn btn-mini btn-grade btn-default"	data-type="${grade.code }">${grade.name }</button>
+						</c:forEach>
 					</p>
 					
 					<!-- 课程或者班号 -->
@@ -111,7 +121,7 @@
 						<span class="c-title">学员数量：</span> <span class="c-content btn-view">
 						</span>
 					</p>
-					<p class="c sendStuMsg">
+					<p class="c sendStuMsg sendStuNum">
 						<span class="c-title">发送学员：</span> <span class="c-content"
 							id="sendStu"></span>人
 					</p>
@@ -155,24 +165,25 @@
 						<span class="c-title">邮件标题：</span> <input id="email_title" type="text"/>
 					</p>
 					<!-- 发送内容 -->
-					<p class="c ">
-						<div class="con-fsnr">
-							<span class="c-title">发送内容：</span><br> <span
-							class="c-content l-content" id="messageContent"> <textarea
-								id="msgcount" class="msg-content" onkeydown="valida();"
-								onkeyup="valida();" onkeypress="valida();" maxlength="140"></textarea>
-							</span>
-						</div>
-						
-						<!-- 站内信 --> 
-						<div id="ckecktor"> 
-							<textarea id="newsContents" class="msg-content"></textarea>
-						</div>
-						<!-- 邮件 -->
-						<div id="email_ckecktor" style="display:none;"> 
-							<textarea id="email_newsContents" class="msg-content"></textarea>
-						</div>
-					</p>
+					<p class="c con-fsnr">
+						<span class="c-title">发送内容：</span><br> <span
+						class="c-content l-content" id="messageContent"> <textarea
+							id="msgcount" class="msg-content" onkeydown="valida();"
+							onkeyup="valida();" onkeypress="valida();" maxlength="140"></textarea>
+						</span>
+					</p>	
+					<!-- 站内信 --> 
+					<div id="ckecktor" style="padding-left: 100px;margin-bottom: 20px;"> 
+						<textarea id="newsContents" class="msg-content"></textarea>
+					</div>
+					<!-- 邮件 -->
+					 <div id="email_ckecktor" style="display:none;padding-left: 100px;margin-bottom: 20px;"> 
+						<textarea id="email_newsContents" class="msg-content"></textarea>
+					</div> 
+					<!--订阅文章 -->
+					<div id="dingyue_ckecktor" style="display:none;padding-left: 100px;margin-bottom: 20px;"> 
+						<textarea id="dingyue_newsContents" class="msg-content"></textarea>
+					</div>
 					<!-- 发送条数 -->
 					<p class="c zhan">
 						<span class="c-title">消耗短信：</span> <span class="c-content"><span
@@ -190,8 +201,30 @@
 						<span class="c-title">消耗邮件：</span> <span class="c-content"><span
 							id="useEmailMsg"></span> <em style="font-size: inherit;color: #999;padding-right:20px;padding-left:20px;">剩余邮件：<span id="hasEmail">${emailCount }</span></em>
 					</p>
+					
+				    <%--新添订阅文章 start--%>
+	                <p class="c dingyueChooseBtn">
+	                    <span class="c-title">请选择：</span>
+	                    <input type="radio" name="signup_vote" value="0">
+	                    <button class="btn btn-primary">我要报名</button>
+	                    <a href="##" class="numPerson">人数限制</a>
+	                    <input type="text" id="limitStuNum">
+	                </p>
+	                <p class="c dingyueChooseBtn">
+	                    <span class="c-title"></span>
+	                    <input type="radio" name="signup_vote" value="1">
+	                    <button class="btn btn-primary">赞成</button>
+	                    <button class="btn btn-default">反对</button>
+	                </p>
+					<!--  -->
 					<p class="text-center">
-						<a href="javascript:;" class="btn btn-sm btn-primary btn-send">发送通知</a>
+						<span class="sendBtn">
+							<a href="javascript:;" class="btn btn-sm btn-primary btn-send">发送通知</a>
+						</span>
+						<span class="dingyueSendBtn">
+							<a href="javascript:;" class="btn btn-sm btn-warning btn-publish">发布</a>
+	                     	<input type="checkbox" id="isNeedSend">是否推送
+	                    </span>
 					</p>
 				</div>
 			</div>
@@ -247,6 +280,23 @@
 		email_editor.config.baseFloatZIndex = 10100;
 		email_editor.config.customConfig = 'config.js';
 		
+		var dingyue_ckecktor = CKEDITOR.replace('dingyue_newsContents');
+		dingyue_ckecktor.config.width="570px";
+		dingyue_ckecktor.config.toolbar = [
+				[ 'mode', 'document', 'doctools' ],
+				[ 'Source', '-', 'NewPage' ],
+				[ 'basicstyles', 'cleanup' ],
+				[ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript',
+						'Superscript' ],
+				[ 'list', 'indent', 'blocks', 'align', 'bidi' ],
+				[ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent',
+						'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+						'JustifyBlock' ], [ 'Link', 'Unlink' ],
+				[ 'Image', 'Table' ],
+				[ 'Styles', 'Format', 'Font', 'FontSize' ],
+				[ 'TextColor', 'BGColor' ], [ 'Maximize' ], [ '-' ]];
+		dingyue_ckecktor.config.baseFloatZIndex = 10100;
+		dingyue_ckecktor.config.customConfig = 'config.js';
 		
 		$(".lj-tops").bind("click",function(){
 			
@@ -256,6 +306,5 @@
 			}
 		});
 	</script>
-
 </body>
 </html>

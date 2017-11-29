@@ -28,6 +28,10 @@
 		<result property="itemOneCode" column="item_one_code" />
 		<result property="itemSecondCode" column="item_second_code" />
 		<result property="itemThirdCode" column="item_third_code" />
+		
+		<result property="maxNum" column="max_num" />
+		<result property="signupVote" column="signup_vote" />
+		
 		<association property="creatorName" column="creator"
 					 javaType="String" select="findCreatorName"></association>
 		<association property="mobile" column="creator"
@@ -39,6 +43,7 @@
 		<association property="groupTwoName" column="group_two_id"
 					 javaType="String" select="findGroupname"></association>
 	</resultMap>
+	
 	<resultMap type="com.yuxin.wx.vo.student.StuMessageVo" id="stuMessageVoResultMap">
 		<result property="id" column="id"/>
 		<result property="name" column="name"/>
@@ -46,6 +51,17 @@
 		<result property="email" column="email"/>
 		<result property="applyTime" column="apply_time"/>
 		<result property="companyId" column="company_id"/>
+	</resultMap>
+	
+	<resultMap type="com.yuxin.wx.model.company.OrderWordNameApp" id="orderWordNameAppMap">
+		<result property="id" column="id"/>
+		<result property="telNum" column="tel_num"/>
+		<result property="userName" column="userName"/>
+		<result property="isSignUp" column="is_signUp"/>
+		<result property="isAgree" column="is_agree"/>
+		<result property="createTime" column="create_time"/>
+		<result property="stuMsgId" column="stu_msg_id"/>
+		<result property="studentId" column="student_id"/>
 	</resultMap>
 
 	<sql id="table_columns">
@@ -126,15 +142,81 @@
 		#{item.groupOneId},
 		#{item.emailTitle}
 	</sql>
-
+	<sql id="app_table_columns">
+		id,
+		title,
+		content,
+		message_type,
+		message_method,
+		item_one_id,
+		item_second_id,
+		class_type_id,
+		class_type_name,
+		module_no_id,
+		module_no_name,
+		creator,
+		create_time,
+		message_cost,
+		send_num,
+		fail_num,
+		message_status,
+		school_id,
+		group_one_id,
+		group_two_id,
+		email_title,
+		item_one_code,
+		item_second_code,
+		item_third_code,
+		max_num,
+		signup_vote
+	</sql>
+	<sql id="app_entity_properties">
+		#{id},
+		#{title},
+		#{content},
+		#{messageType},
+		#{messageMethod},
+		#{itemOneId},
+		#{itemSecondId},
+		#{classTypeId},
+		#{classTypeName},
+		#{moduleNoId},
+		#{moduleNoName},
+		#{creator},
+		#{createTime},
+		#{messageCost},
+		#{sendNum},
+		#{failNum},
+		#{messageStatus},
+		#{schoolId},
+		#{groupOneId},
+		#{groupTwoId},
+		#{emailTitle},
+		#{itemOneCode},
+		#{itemSecondCode},
+		#{itemThirdCode},
+		#{maxNum},
+		#{signupVote}
+	</sql>
 	<!-- 适用于主键自增类型 -->
-	<insert id="insert" parameterType="com.yuxin.wx.model.company.CompanyStudentMessage"
+<!-- 	<insert id="insert" parameterType="com.yuxin.wx.model.company.CompanyStudentMessage"
 			useGeneratedKeys="true" keyProperty="id">
 		insert into company_student_message(
 		<include refid="table_columns" />
 		)
 		values (
 		<include refid="entity_properties" />
+		)
+	</insert> -->
+	
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="com.yuxin.wx.model.company.CompanyStudentMessage"
+			useGeneratedKeys="true" keyProperty="id">
+		insert into company_student_message_app(
+		<include refid="app_table_columns" />
+		)
+		values (
+		<include refid="app_entity_properties" />
 		)
 	</insert>
 
@@ -169,7 +251,7 @@
 	</delete>
 
 	<update id="update" parameterType="com.yuxin.wx.model.company.CompanyStudentMessage">
-		update company_student_message
+		update company_student_message_app
 		<trim prefix="set" suffixOverrides=",">
 			<if test="title != null and title != ''">title = #{title},</if>
 			<if test="content != null and content != ''">content = #{content},</if>
@@ -188,10 +270,12 @@
 			<if test="failNum != null">fail_num = #{failNum},</if>
 			<if test="messageStatus != null and messageStatus != ''">message_status = #{messageStatus},</if>
 			<if test="schoolId != null">school_id = #{schoolId},</if>
-			<if test="companyId != null">company_id = #{companyId},</if>
+			<!-- <if test="companyId != null">company_id = #{companyId},</if> -->
 			<if test="groupOneId != null">group_one_id = #{groupOneId},</if>
 			<if test="groupTwoId != null">group_two_id = #{groupTwoId},</if>
 			<if test="emailTitle != null">email_title = #{emailTitle},</if>
+			<if test="maxNum != null">max_num = #{maxNum},</if>
+			<if test="signupVote != null">signup_vote = #{signupVote},</if>
 		</trim>
 		<where>id = #{id}</where>
 	</update>
@@ -199,8 +283,8 @@
 	<select id="findById" resultMap="companyStudentMessageResultMap"
 			parameterType="Integer">
 		select
-		<include refid="table_columns" />
-		from company_student_message
+		<include refid="app_table_columns" />
+		from company_student_message_app
 		where id = #{id}
 	</select>
 
@@ -275,16 +359,29 @@
 		from student_group
 		where id = #{id}
 	</select>
+	
+	<!-- 订阅文章订阅统计 -->
+	<select id="selMsgOfDingYueDetailByCond" resultMap="orderWordNameAppMap" parameterType="com.yuxin.wx.model.company.OrderWordNameApp">
+		select id,tel_num,userName,is_signUp,is_agree,create_time,stu_msg_id,student_id
+		from order_word_name_app
+		where (is_signUp is null or is_signUp=1) and stu_msg_id=#{stuMsgId}
+		order by create_time desc,id desc
+		limit #{firstIndex},#{pageSize}
+	</select>
+	<select id="selMsgOfDingYueDetailCount" resultType="Integer" parameterType="Integer">
+		select count(id) 
+		from order_word_name_app 
+		where (is_signUp is null or is_signUp=1) and stu_msg_id=#{id}
+	</select>
+		
 	<select id="selMsgByCond" resultMap="companyStudentMessageResultMap"
-
 			parameterType="com.yuxin.wx.model.company.CompanyStudentMessage">
 		select
-		<include refid="table_columns" />
-		from company_student_message
-		where company_id = #{companyId}
-		and
-		school_id = #{schoolId} and
-		message_type != 'STUDENT_MESSAGE_OTHER'
+		<include refid="app_table_columns" />
+		from company_student_message_app
+		where school_id = #{schoolId} and
+		<!--  company_id = #{companyId}	and message_type != 'STUDENT_MESSAGE_OTHER'-->
+		(message_type != 'STUDENT_MESSAGE_OTHER' or (message_type is null and message_method='STUDENT_MESSAGE_DINGYUE'))
 		<if test="itemOneCode != null and itemOneCode != ''">
 			and item_one_code = #{itemOneCode}
 		</if>
@@ -292,29 +389,24 @@
 			and item_second_code = #{itemSecondCode}
 		</if>
 		<if test="itemThirdCode != null and  itemThirdCode !=''">
-			and item_second_code = #{itemThirdCode}
+			and item_third_code = #{itemThirdCode}
 		</if>
 		<if test="messageType != null and messageType != '' and messageType != 'all'">
 			and message_type = #{messageType}
 		</if>
-		<if
-				test="messageMethod != null and messageMethod != '' and
-
-messageMethod != 'all'">
+		<if test="messageMethod != null and messageMethod != '' and messageMethod != 'all'">
 			and message_method = #{messageMethod}
 		</if>
 		order by create_time desc
 		limit #{firstIndex},#{pageSize}
 	</select>
 	<select id="selMsgCount" resultType="Integer"
-
 			parameterType="com.yuxin.wx.model.company.CompanyStudentMessage">
 		select count(id)
-		from company_student_message
-		where company_id =
-		#{companyId}
-		and school_id = #{schoolId} and
-		message_type != 'STUDENT_MESSAGE_OTHER'
+		from company_student_message_app
+		where  school_id = #{schoolId} and
+		<!-- company_id =#{companyId} and message_type != 'STUDENT_MESSAGE_OTHER' -->
+		(message_type != 'STUDENT_MESSAGE_OTHER' or (message_type is null and message_method='STUDENT_MESSAGE_DINGYUE'))
 		<if test="itemOneCode != null and itemOneCode != ''">
 			and item_one_code = #{itemOneCode}
 		</if>
@@ -322,7 +414,7 @@ messageMethod != 'all'">
 			and item_second_code = #{itemSecondCode}
 		</if>
 		<if test="itemThirdCode != null and  itemThirdCode !=''">
-			and item_second_code = #{itemThirdCode}
+			and item_third_code = #{itemThirdCode}
 		</if>
 		<if test="itemSecondId != null">
 			and item_second_id = #{itemSecondId}
@@ -339,7 +431,7 @@ messageMethod != 'all'">
 	</select>
 
 	<!-- 学员通知情况 -->
-	<select id="findStudentMsgByClassId" resultMap="stuMessageVoResultMap"
+	<!-- <select id="findStudentMsgByClassId" resultMap="stuMessageVoResultMap"
 
 			parameterType="com.yuxin.wx.vo.student.StuMessageVo">
 		select aa.id,
@@ -365,15 +457,36 @@ messageMethod != 'all'">
 		m.school_id = #{schoolId} and
 		m.item_one_id = #{itemOneId} and
 		m.item_second_id = #{itemSecondId} and
-		m.company_id = #{companyId}
-		and	m.delete_flag = 0 and (m.pay_status_code='ORDER_PAID' or m.pay_status_code='ORDER_PART_PAY' or m.pay_status_code='ORDER_FINISHED' or m.pay_status_code='ORDER_PAID_NO_COURSE')
+		m.company_id = #{companyId} and
+		m.delete_flag = 0 and (m.pay_status_code='ORDER_PAID' or m.pay_status_code='ORDER_PART_PAY' or m.pay_status_code='ORDER_FINISHED' or m.pay_status_code='ORDER_PAID_NO_COURSE')
 		group by h.id
+		) aa
+		order by aa.id
+		limit #{firstIndex},#{pageSize}
+	</select> -->
+	<!-- 短信通知 -->
+	<select id="findStudentMsgByClassId" resultMap="stuMessageVoResultMap"
+			parameterType="com.yuxin.wx.vo.student.StuMessageVo">
+		select aa.id,
+		aa.name,
+		aa.mobile,
+		aa.email,
+		aa.apply_time
+		from(
+		select h.id,
+		s.name,
+		s.mobile,
+		s.email,
+		h.send_time as apply_time
+		from student s
+		inner join company_message_history_app h on s.id = h.receiver_user_id 
+		and h.message_id = #{messageId} and	h.send_status = #{status}
 		) aa
 		order by aa.id
 		limit #{firstIndex},#{pageSize}
 	</select>
 
-	<select id="findStudentMsgCountByClassId" resultType="Integer"
+	<!-- <select id="findStudentMsgCountByClassId" resultType="Integer"
 
 			parameterType="com.yuxin.wx.vo.student.StuMessageVo">
 		select count(aa.id) from
@@ -389,10 +502,20 @@ messageMethod != 'all'">
 		and m.commodity_id = #{classTypeId} and
 		m.school_id = #{schoolId} and
 		m.item_one_id = #{itemOneId} and
-		m.item_second_id = #{itemSecondId} and
-		m.company_id = #{companyId}
-		and	m.delete_flag = 0 and (m.pay_status_code='ORDER_PAID' or m.pay_status_code='ORDER_PART_PAY' or m.pay_status_code='ORDER_FINISHED' or m.pay_status_code='ORDER_PAID_NO_COURSE')
+		m.item_second_id = #{itemSecondId} and 
+		m.company_id = #{companyId} and
+		m.delete_flag = 0 and (m.pay_status_code='ORDER_PAID' or m.pay_status_code='ORDER_PART_PAY' or m.pay_status_code='ORDER_FINISHED' or m.pay_status_code='ORDER_PAID_NO_COURSE')
 		group by h.id ) aa
+	</select> -->
+	
+	<select id="findStudentMsgCountByClassId" resultType="Integer"
+			parameterType="com.yuxin.wx.vo.student.StuMessageVo">
+		select count(aa.id) from
+		(select h.id
+		from student s
+		inner join company_message_history_app h on s.id = h.receiver_user_id
+			and h.message_id = #{messageId} and	h.send_status = #{status}	
+		) aa
 	</select>
 
 	<!-- 学员通知情况 根据moduleId  查询 -->
@@ -489,8 +612,18 @@ messageMethod != 'all'">
 	</select>
 
 	<insert id="insertUserMessage" parameterType="com.yuxin.wx.model.user.UserMessage" useGeneratedKeys="true" keyProperty="id">
-		insert into user_message (id,user_id,message_id,read_flag)
+		insert into user_message_app (id,user_id,message_id,read_flag)
 		values (null,#{userId},#{messageId},#{readFlag})
+	</insert>
+	
+	<insert id="batchInsertUserMessage" parameterType="java.util.List" useGeneratedKeys="true">
+		insert into user_message_app(id,user_id,message_id,read_flag)
+		values
+		<foreach item="item" collection="list" separator=",">
+			(
+				null,#{item.userId},#{item.messageId},#{item.readFlag}
+			)
+		</foreach>
 	</insert>
 
 	<select id="findNoticeList" resultMap="stuMessageVoResultMap" parameterType="com.yuxin.wx.vo.student.StuMessageVo">

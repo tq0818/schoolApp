@@ -54,6 +54,7 @@ import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yuxin.wx.api.app.ISysDictAppService;
 import com.yuxin.wx.api.classes.IClassModuleNoService;
 import com.yuxin.wx.api.classes.IClassModuleService;
 import com.yuxin.wx.api.classes.IClassPackageCategoryService;
@@ -70,6 +71,7 @@ import com.yuxin.wx.api.student.IStudentPayMasterService;
 import com.yuxin.wx.api.student.IStudentPaySlaveService;
 import com.yuxin.wx.api.student.IStudentService;
 import com.yuxin.wx.api.user.IUsersFrontService;
+import com.yuxin.wx.model.app.SysDictApp;
 import com.yuxin.wx.model.classes.ClassModule;
 import com.yuxin.wx.model.classes.ClassModuleNo;
 import com.yuxin.wx.model.classes.ClassPackageCategory;
@@ -115,6 +117,9 @@ public class StudentController {
 
     @Autowired
     private ICompanyServiceStaticService companyServiceStaticServiceImpl;
+
+	@Autowired
+	private ISysDictAppService sysDictAppServiceImpl;
 
     @Autowired
     private ICompanyService companyServiceImpl;
@@ -2530,6 +2535,9 @@ public class StudentController {
             }
         	return "student/notice/addAffiche";// 学员公告添加页面
         }else{
+        	//订阅文章查询所有学段字典
+        	List<SysDictApp> gradeCodeItems= sysDictAppServiceImpl.findSysDictAppByCode("GRADE_CODE");
+            model.addAttribute("gradeCodeItems", gradeCodeItems);
         	return "student/notice/createNotice";
         }
         

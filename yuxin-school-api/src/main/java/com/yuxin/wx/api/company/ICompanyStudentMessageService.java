@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.yuxin.wx.model.company.CompanyStudentMessage;
+import com.yuxin.wx.model.company.OrderWordNameApp;
 import com.yuxin.wx.model.user.UserMessage;
 import com.yuxin.wx.vo.student.StuMessageVo;
 /**
@@ -135,6 +136,23 @@ public interface ICompanyStudentMessageService  {
 	 * @return
 	 */
 	Integer selMsgCount(CompanyStudentMessage companyStudentMessage);
+	
+	/**
+	 * 订阅文章订阅统计信息	
+	 * @author cxl
+	 * @param companyStudentMessage
+	 * @return
+	 */
+	List<OrderWordNameApp> selMsgOfDingYueDetailByCond(OrderWordNameApp orderWordNameApp);
+	
+	/**
+	 * @Description: 总数
+	 * @author cxl
+	 * @param companyStudentMessage
+	 * @return
+	 */
+	Integer selMsgOfDingYueDetailCount(Integer msgId);
+	
 	/**
 	 * 
 	 * Class Name: ICompanyStudentMessageService.java
@@ -193,6 +211,8 @@ public interface ICompanyStudentMessageService  {
 	 * @param um
 	 */
 	void insertUserMessage(UserMessage um);
+
+	void batchInsertUserMessage(List<UserMessage> umList);
 	
 	/**
 	 * 

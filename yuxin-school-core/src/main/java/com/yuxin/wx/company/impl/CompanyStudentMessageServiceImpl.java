@@ -5,11 +5,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;import com.yuxin.wx.common.BaseServiceImpl;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.api.company.ICompanyStudentMessageService;
 import com.yuxin.wx.company.mapper.CompanyStudentMessageMapper;
 import com.yuxin.wx.model.company.CompanyStudentMessage;
+import com.yuxin.wx.model.company.OrderWordNameApp;
 import com.yuxin.wx.model.user.UserMessage;
 import com.yuxin.wx.vo.student.StuMessageVo;
 
@@ -141,8 +143,19 @@ public class CompanyStudentMessageServiceImpl extends BaseServiceImpl implements
 	}
 
 	@Override
-	public List<CompanyStudentMessage> selMsgByCond(
-			CompanyStudentMessage companyStudentMessage) {
+	public List<OrderWordNameApp> selMsgOfDingYueDetailByCond(OrderWordNameApp orderWordNameApp) {
+		// TODO Auto-generated method stub
+		return companyStudentMessageMapper.selMsgOfDingYueDetailByCond(orderWordNameApp);
+	}
+
+	@Override
+	public Integer selMsgOfDingYueDetailCount(Integer msgId) {
+		// TODO Auto-generated method stub
+		return companyStudentMessageMapper.selMsgOfDingYueDetailCount(msgId);
+	}
+	
+	@Override
+	public List<CompanyStudentMessage> selMsgByCond(CompanyStudentMessage companyStudentMessage) {
 		// TODO Auto-generated method stub
 		return companyStudentMessageMapper.selMsgByCond(companyStudentMessage);
 	}
@@ -181,6 +194,12 @@ public class CompanyStudentMessageServiceImpl extends BaseServiceImpl implements
 	public void insertUserMessage(UserMessage um) {
 		// TODO Auto-generated method stub
 		companyStudentMessageMapper.insertUserMessage(um);
+	}
+	
+	@Override
+	public void batchInsertUserMessage(List<UserMessage> umlist) {
+		// TODO Auto-generated method stub
+		companyStudentMessageMapper.batchInsertUserMessage(umlist);
 	}
 
 	@Override

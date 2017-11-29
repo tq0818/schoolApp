@@ -1,7 +1,9 @@
 package com.yuxin.wx.api.company;
 
 import java.util.List;
+
 import com.yuxin.wx.model.company.CompanyMessageHistory;
+import com.yuxin.wx.model.company.CompanyMessageHistoryLog;
 /**
  * Service Interface:CompanyMessageHistory
  * @author chopin
@@ -131,4 +133,7 @@ public interface ICompanyMessageHistoryService  {
 	 * @return
 	 */
 	Integer findByUserCount(CompanyMessageHistory companyMessageHistory);
+	
+	List<CompanyMessageHistoryLog> queryAllMessageHistoryLog();
+	
 }

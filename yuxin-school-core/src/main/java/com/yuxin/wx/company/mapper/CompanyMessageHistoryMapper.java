@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.yuxin.wx.common.BaseMapper;
 import com.yuxin.wx.model.company.CompanyMessageHistory;
+import com.yuxin.wx.model.company.CompanyMessageHistoryLog;
 
 /**
  * Service Interface:Users
@@ -47,4 +48,6 @@ public interface CompanyMessageHistoryMapper extends BaseMapper<CompanyMessageHi
 	 * @return
 	 */
 	Integer findByUserCount(CompanyMessageHistory companyMessageHistory);
+	
+	List<CompanyMessageHistoryLog> queryAllMessageHistoryLog();
 }

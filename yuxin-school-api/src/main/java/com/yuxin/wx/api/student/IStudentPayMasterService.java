@@ -379,6 +379,21 @@ PageFinder<StudentPayMaster> findList(StudentPayMaster payMaster);
    /**
     * 
     * Class Name: IStudentPayMasterService.java
+    * @Description: 根据年级查询人数
+    * @author cxl
+    */
+   Integer findByGradeCodes(Map<String,Object> param);
+   /**
+    * 
+    * Class Name: IStudentPayMasterService.java
+    * @Description: 根据年级查询人数
+    * @author cxl
+    */
+   List<Student> queryStudentByGradeCodes(Map<String,Object> param);
+   
+   /**
+    * 
+    * Class Name: IStudentPayMasterService.java
     * @Description: 报考材料根据手机号查询订单
     * @author zhang.zx
     * @date 2015年6月8日 下午10:56:44

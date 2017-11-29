@@ -1974,6 +1974,52 @@ public class ClassModuleController {
 		json.put("lessons", lessonArray);
 		return json;
 	}
+	
+	/**
+	 * Class Name: ClassModuleController.java
+	 * @Description: 查询 学生总数(学生通知:订阅文章)
+	 * @author cxl 
+	 * @version 1.0
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/selPersonOfDingyue")
+	public JSONObject selPersonOfDingyue(HttpServletRequest request){
+		Map<String,Object> param = new HashMap<String, Object>();
+		param.put("companyId", WebUtils.getCurrentCompanyId());
+		param.put("schoolId", WebUtils.getCurrentUserSchoolId(request));
+		String[] gradeCodes=request.getParameterValues("gradeCodes[]"); 
+		param.put("gradecodes", Arrays.asList(gradeCodes));
+		param.put("curr_year",Calendar.getInstance().get(Calendar.YEAR));
+		param.put("curr_month", Calendar.getInstance().get(Calendar.MONTH)+1); 
+		Integer count = studentPayMasterServiceImpl.findByGradeCodes(param);
+		JSONObject json = new JSONObject();
+		json.put("count", count);
+		return json;
+	}
+	
+	/**
+	 * Class Name: ClassModuleController.java
+	 * @Description: 查询 学生总数(学生通知:订阅文章)
+	 * @author cxl 
+	 * @version 1.0
+	 * @return
+	 */
+	/*@ResponseBody
+	@RequestMapping("/signup")
+	public JSONObject selPersonOfDingyue(HttpServletRequest request){
+		Map<String,Object> param = new HashMap<String, Object>();
+		param.put("companyId", WebUtils.getCurrentCompanyId());
+		param.put("schoolId", WebUtils.getCurrentUserSchoolId(request));
+		String[] gradeCodes=request.getParameterValues("gradeCodes[]"); 
+		param.put("gradecodes", Arrays.asList(gradeCodes));
+		param.put("curr_year",Calendar.getInstance().get(Calendar.YEAR));
+		param.put("curr_month", Calendar.getInstance().get(Calendar.MONTH)+1); 
+		Integer count = studentPayMasterServiceImpl.findByGradeCodes(param);
+		JSONObject json = new JSONObject();
+		json.put("count", count);
+		return json;
+	}*/
 
 	/**
 	 *
@@ -1999,6 +2045,8 @@ public class ClassModuleController {
 		json.put("count", count);
 		return json;
 	}
+	
+	
 
 	/**
 	 *
@@ -2675,13 +2723,16 @@ public class ClassModuleController {
 					return json;
 				}
 				companyStudentMessageServiceImpl.insert(companyStudentMessage);
+				List<UserMessage> umList=new ArrayList<UserMessage>();
 				for (Student s : stuList) {
 					UserMessage um = new UserMessage();
 					um.setUserId(s.getUserId());
 					um.setMessageId(companyStudentMessage.getId());
 					um.setReadFlag(0);
-					companyStudentMessageServiceImpl.insertUserMessage(um);
+					umList.add(um);
+//					companyStudentMessageServiceImpl.insertUserMessage(um);
 				}
+				companyStudentMessageServiceImpl.batchInsertUserMessage(umList);
 			}else if(companyStudentMessage.getMessageType().equals("STUDENT_MESSAGE_MODULENO")){
 				stuList = studentServiceImpl.findByPaySlave(companyStudentMessage);
 				if(stuList.size() == 0){
@@ -2722,6 +2773,62 @@ public class ClassModuleController {
 			json.put(JsonMsg.RESULT, JsonMsg.SUCCESS);
 		}
 
+		return json;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping("/sendMsgOfDingyue")
+	public JSONObject sendMsgOfDingyue(HttpServletRequest request,CompanyStudentMessage companyStudentMessage){
+		String content = replaceBlank(companyStudentMessage.getContent());
+		companyStudentMessage.setContent(content);
+
+		Integer companyId = WebUtils.getCurrentCompanyId();
+		Integer schoolId = WebUtils.getCurrentUserSchoolId(request);
+		companyStudentMessage.setCompanyId(companyId);
+		companyStudentMessage.setSchoolId(schoolId);
+		Users user = WebUtils.getCurrentUser();
+		companyStudentMessage.setCreator(user.getId());
+		companyStudentMessage.setMessageType("STUDENT_MESSAGE_DINGYUE");
+		companyStudentMessage.setCreatorName(user.getRealName() != null ? user.getRealName() : user.getUsername());
+		companyStudentMessage.setCreateTime(new Date());
+		companyStudentMessage.setMessageStatus("STUDENT_MESSAGE_COMMIT");
+		if(null!=companyStudentMessage.getSignupVote()&&1==companyStudentMessage.getSignupVote()){
+			companyStudentMessage.setMaxNum(null);
+		}
+		JSONObject json = new JSONObject();
+		//学生信息
+		List<Student> stuList = new ArrayList<Student>();
+		String[] gradeCodes=request.getParameterValues("gradeCodes[]"); 
+		Map<String, Object> param=new HashMap<String, Object>();
+		param.put("gradecodes", Arrays.asList(gradeCodes));
+		param.put("curr_year",Calendar.getInstance().get(Calendar.YEAR));
+		param.put("curr_month", Calendar.getInstance().get(Calendar.MONTH)+1); 
+		stuList = studentPayMasterServiceImpl.queryStudentByGradeCodes(param);
+		if(null==stuList||stuList.size()<1){
+			json.put(JsonMsg.RESULT, "stuno");
+			return json;
+		}
+		companyStudentMessageServiceImpl.insert(companyStudentMessage);
+		List<UserMessage> umList=new ArrayList<UserMessage>();
+		for (Student s : stuList) {
+			UserMessage um = new UserMessage();
+			um.setUserId(s.getUserId());
+			um.setMessageId(companyStudentMessage.getId());
+			um.setReadFlag(0);
+			umList.add(um);
+//			companyStudentMessageServiceImpl.insertUserMessage(um);
+		}
+		companyStudentMessageServiceImpl.batchInsertUserMessage(umList);
+		companyStudentMessage.setSendNum(stuList.size());
+		companyStudentMessage.setMessageStatus("STUDENT_MESSAGE_FINISH");
+		companyStudentMessageServiceImpl.update(companyStudentMessage);
+		//是否推送
+		String isSend=request.getParameter("isSend");
+		if(StringUtils.isNotEmpty(isSend)&&"1".equals(isSend)){
+			
+		}
+		json.put(JsonMsg.RESULT, JsonMsg.SUCCESS);
 		return json;
 	}
 	/**
@@ -2907,7 +3014,6 @@ public class ClassModuleController {
 				
 				result = SMSUtil.sendLessonNotic(request, num, className, date);
 				
-				
 //				result = SmsClientSend.sendSmsTwo(request
 //						,s.getMobile().trim(), content + "【在线网校】"
 //						,user.getId(),"stu-notice");
@@ -2918,6 +3024,7 @@ public class ClassModuleController {
 //				if(message.equals("ok")){
 //					message = "发送成功";
 //				}
+				List<CompanyMessageHistory> cmhList=new ArrayList<CompanyMessageHistory>();
 				for(Student s : ssList){
 					if(null!=s && null!=s.getMobile() && !"".equals(s.getMobile())){//2016/7/7  手机为空则不发短信
 						CompanyMessageHistory cmh = new CompanyMessageHistory();
@@ -2936,10 +3043,13 @@ public class ClassModuleController {
 						cmh.setSchoolId(schoolId);
 						cmh.setCostNum(messageCost);
 						cmh.setMessageId(companyStudentMessage.getId());
-						companyMessageHistoryServiceImpl.insert(cmh);
+//						companyMessageHistoryServiceImpl.insert(cmh);
+						cmhList.add(cmh);
 						sendcounts++;
 					}
 				}
+				companyMessageHistoryServiceImpl.batchInsert(cmhList);
+				
 		}
 		return sendcounts;
 	}
