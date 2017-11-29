@@ -172,10 +172,31 @@
 	<!-- 适用于主键自增类型 -->
 	<insert id="insertLab" parameterType="com.yuxin.wx.model.queAns.QuestionClassify" useGeneratedKeys="true" keyProperty="id">
 		insert into question_lab_app (lab_name,lab_type,label_status,creat_time)
-		values ( #{labName},0,1, NOW())
+		values ( #{labName},#{labType},1, NOW())
 	</insert>
 	<!-- 适用于主键自增类型 -->
 	<insert id="deletLab" parameterType="com.yuxin.wx.model.queAns.QuestionClassify" useGeneratedKeys="true" keyProperty="id">
 		update  question_lab_app set label_status=0 where id=#{id}
 	</insert>
+   	<!-- 插入并返回主键值 -->
+	<insert id="insertLabReturnId" parameterType="com.yuxin.wx.model.queAns.QuestionClassify" useGeneratedKeys="true" keyProperty="id">
+		<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+			SELECT @@IDENTITY
+		</selectKey>
+		insert into question_lab_app (lab_name,lab_type,label_status,creat_time)
+		values ( #{labName},#{labType},1, NOW())
+	</insert>
+	<!-- 批量添加 适用于主键自增类型  不支持返回主键-->
+	<insert id="insertQAT" parameterType="java.util.List" useGeneratedKeys="true">
+		insert into question_lab_relations (question_id,label_id) 
+		values 
+		<foreach item="item" collection="list" separator="," >
+			( #{item.id} ,#{item.systemTagId})
+		</foreach>
+	</insert>
+	<!-- 检验标签是否重复 -->
+	<select id="check" resultType="int" parameterType="com.yuxin.wx.model.queAns.QuestionClassify">
+		select count(id) from question_lab_app where lab_name=#{labName} and lab_type=#{labType}
+		<include refid="page_where" />
+	</select>
 </mapper>

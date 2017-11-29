@@ -1,6 +1,8 @@
 package com.yuxin.wx.queAns.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -278,5 +280,41 @@ public class QuestionServiceImpl extends BaseServiceImpl implements IQuestionSer
 		}else{
 			return false;
 		}
+	}
+	@Override
+	public boolean check(QuestionClassify questionClassify) {
+		
+		if(questionClassifyMapper.check(questionClassify)==0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	@Override
+	public boolean insertLabReturnId(String[] arrTagName, String[] arrTagId, QueQuestion queQuestion) {
+		QuestionClassify questionClassify = new QuestionClassify();
+		if(null!=arrTagName){
+			for(int i=0 ;i<arrTagName.length ;i++){
+				questionClassify.setLabName(arrTagName[i]);
+				questionClassify.setLabType(2);
+				questionClassifyMapper.insertLabReturnId(questionClassify);
+				arrTagId=Arrays.copyOf(arrTagId, arrTagId.length+1);
+				arrTagId[arrTagId.length-1]=String.valueOf(questionClassify.getId());
+			}
+		}
+		questionMapper.insertQuestion(queQuestion);
+		List<QueQuestion> list=new ArrayList<QueQuestion>();
+		if(null!=arrTagId){
+			for(int i=0;i<arrTagId.length;i++){
+				QueQuestion a= new QueQuestion();
+				a.setId(queQuestion.getId());
+				a.setSystemTagId(arrTagId[i]);
+			list.add(a);
+		}
+			questionClassifyMapper.insertQAT(list);
+			return true;
+		}
+		return false;
 	}
 }

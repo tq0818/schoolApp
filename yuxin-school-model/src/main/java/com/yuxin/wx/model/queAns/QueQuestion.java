@@ -16,7 +16,7 @@ import com.yuxin.wx.util.ShortDateSerializer;
  */
 @SuppressWarnings("serial")
 public class QueQuestion extends BaseEntity {
-
+	private Integer id;
 	private String questionTitle; /* 提问标题 */
 	private String questionDesc; /* 问题描述 */
 	private Integer itemOneId; /* 学科ID */
@@ -60,9 +60,11 @@ public class QueQuestion extends BaseEntity {
 	private String labelContent;
 	private Integer collectCount;//收藏数
 	
-	private Integer systemTagId; //系统标签
+	private String systemTagId; //系统标签
 	
 	private Integer userDefuledId;//用户自定义标签
+	
+	private String userDefuledName;//用户自定义标签名称
 	
 	
 	
@@ -82,15 +84,16 @@ public class QueQuestion extends BaseEntity {
 		return questionTitle;
 	}
 
-	public QueQuestion(String questionTitle, String questionDesc, Integer itemOneId, Integer itemSecondId, Integer classifyId,
+	public QueQuestion(Integer id,String questionTitle, String questionDesc, Integer itemOneId, Integer itemSecondId, Integer classifyId,
 	        Integer userId, Integer courseFlag, Integer courseId, String courseName, Integer courseLectureId,
 	        String courseLectureName, Integer answerCount, Integer scanCount, Integer adoptFlag, Integer adoptAnswerId,
 	        Integer topFlag, Integer essenceFlag, Date createTime, Date updateTime, Integer delFlag, String questionType,
 	        Integer companyId, Integer schoolId, Integer biaoSecItemId, List<Integer> questionIds, String userName,
 	        String headimg, String queTime, String ansTime, String classIsOpen, List<Integer> commodityIds,
 	        List<Integer> questionId3s, List<Integer> questionNotins, String searchKey, Integer questionscore,
-	        String labelContent, Integer collectCount, Integer systemTagId, Integer userDefuledId) {
+	        String labelContent, Integer collectCount, String systemTagId, Integer userDefuledId,String userDefuledName) {
 		super();
+		this.id= id;
 		this.questionTitle = questionTitle;
 		this.questionDesc = questionDesc;
 		this.itemOneId = itemOneId;
@@ -130,6 +133,7 @@ public class QueQuestion extends BaseEntity {
 		this.collectCount = collectCount;
 		this.systemTagId = systemTagId;
 		this.userDefuledId = userDefuledId;
+		this.userDefuledName = userDefuledName;
 	}
 
 	public QueQuestion setQuestionTitle(String questionTitle) {
@@ -320,7 +324,7 @@ public class QueQuestion extends BaseEntity {
 	
 	@Override
 	public String toString() {
-		return "QueQuestion [questionTitle=" + questionTitle + ", questionDesc=" + questionDesc + ", itemOneId=" + itemOneId
+		return "QueQuestion [id="+id+",questionTitle=" + questionTitle + ", questionDesc=" + questionDesc + ", itemOneId=" + itemOneId
 		        + ", itemSecondId=" + itemSecondId + ", classifyId=" + classifyId + ", userId=" + userId + ", courseFlag="
 		        + courseFlag + ", courseId=" + courseId + ", courseName=" + courseName + ", courseLectureId=" + courseLectureId
 		        + ", courseLectureName=" + courseLectureName + ", answerCount=" + answerCount + ", scanCount=" + scanCount
@@ -331,7 +335,7 @@ public class QueQuestion extends BaseEntity {
 		        + ", queTime=" + queTime + ", ansTime=" + ansTime + ", classIsOpen=" + classIsOpen + ", commodityIds="
 		        + commodityIds + ", questionId3s=" + questionId3s + ", questionNotins=" + questionNotins + ", searchKey="
 		        + searchKey + ", questionscore=" + questionscore + ", labelContent=" + labelContent + ", collectCount="
-		        + collectCount + ", systemTagId=" + systemTagId + ", userDefuledId=" + userDefuledId + "]";
+		        + collectCount + ", systemTagId=" + systemTagId + ", userDefuledId=" + userDefuledId + ", userDefuledName=" + userDefuledName +"]";
 	}
 
 	public Integer getBiaoSecItemId() {
@@ -472,12 +476,12 @@ public class QueQuestion extends BaseEntity {
 	}
 
 	
-	public Integer getSystemTagId() {
+	public String getSystemTagId() {
 		return systemTagId;
 	}
 
 	
-	public void setSystemTagId(Integer systemTagId) {
+	public void setSystemTagId(String systemTagId) {
 		this.systemTagId = systemTagId;
 	}
 
@@ -489,6 +493,27 @@ public class QueQuestion extends BaseEntity {
 	
 	public void setUserDefuledId(Integer userDefuledId) {
 		this.userDefuledId = userDefuledId;
+	}
+
+	
+	public String getUserDefuledName() {
+		return userDefuledName;
+	}
+	
+
+	
+	
+	public Integer getId() {
+		return id;
+	}
+
+	
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setUserDefuledName(String userDefuledName) {
+		this.userDefuledName = userDefuledName;
 	}
 
 	

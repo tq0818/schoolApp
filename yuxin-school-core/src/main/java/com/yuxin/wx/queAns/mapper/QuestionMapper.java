@@ -17,4 +17,15 @@ public interface QuestionMapper extends BaseMapper<QueQuestion> {
 
 	List<QuestionVo> findTeacherQuestion(Map<String, Object> search);
 	
+	/**
+	 * 
+	 * @author jishangyang 2017年11月29日 上午10:33:49
+	 * @Method: insertQuestion 
+	 * @Description: 保存问题
+	 * @param queQuestion
+	 * @return 
+	 * @throws
+	 */
+	Integer  insertQuestion(QueQuestion queQuestion);
+	
 }

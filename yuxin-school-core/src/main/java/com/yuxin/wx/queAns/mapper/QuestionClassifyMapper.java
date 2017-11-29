@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.yuxin.wx.common.BaseMapper;
+import com.yuxin.wx.model.queAns.QueQuestion;
 import com.yuxin.wx.model.queAns.QuestionAnswer;
 import com.yuxin.wx.model.queAns.QuestionClassify;
 
@@ -58,4 +59,35 @@ public interface QuestionClassifyMapper extends BaseMapper<QuestionClassify> {
 	 * @throws
 	 */
 	Integer  deletLab(QuestionClassify questionClassify);
+	/**
+	 * 
+	 * @author jishangyang 2017年11月28日 下午3:59:18
+	 * @Method: deletLab 
+	 * @Description: 检验标签是否重复
+	 * @param questionClassify
+	 * @return 
+	 * @throws
+	 */
+	Integer  check(QuestionClassify questionClassify);
+	/**
+	 * 
+	 * @author jishangyang 2017年11月29日 上午10:24:06
+	 * @Method: insertLabReturnId 
+	 * @Description: 保存自定义标签返回主键
+	 * @param questionClassify
+	 * @return 
+	 * @throws
+	 */
+	Integer  insertLabReturnId(QuestionClassify questionClassify);
+	
+	/**
+	 * 
+	 * @author jishangyang 2017年11月29日 上午10:37:49
+	 * @Method: insertQAT 
+	 * @Description: 保存标签和问题关系
+	 * @param list
+	 * @return 
+	 * @throws
+	 */
+	Integer  insertQAT(List<QueQuestion> list);
 }
