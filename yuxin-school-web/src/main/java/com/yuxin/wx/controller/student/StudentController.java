@@ -4277,4 +4277,42 @@ public class StudentController {
     		return false;
     	}
     }
+    /**
+     * 配置积分规则
+     */
+    @RequestMapping(value = "/integralRule")
+    public String integralRule(){
+        return "student/integralManagement/integralRule";
+    }
+    @ResponseBody
+    @RequestMapping(value = "/integralRuleAjax")
+    public PageFinder<ScoreRulsAppVo> queryScoreRulsAppVoList(HttpServletRequest request,ScoreRulsAppVo scoreRulsAppVo){
+    	return integralManageServiceImpl.queryPageScoreRulsAppVos(scoreRulsAppVo);
+    }
+    /**
+     * 更新积分规则状态
+     * @param request
+     * @param rulesId 规则标识号
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateScoreRulsAppStatus")
+    public Boolean updateScoreRulsAppStatus(HttpServletRequest request,String rulesId,String status){
+    	try{
+    		return integralManageServiceImpl.updateScoreRulsAppStatus(rulesId, status);
+    	}catch(Exception e){
+    		log.error("updateScoreRulsAppStatus(HttpServletRequest,String,String)",e);
+    		return false;
+    	}
+    }
+    @ResponseBody
+    @RequestMapping(value = "/updateScoreRuleById")
+    public Boolean updateScoreRuleById(HttpServletRequest request,ScoreRulsAppVo scoreRulsAppVo){
+    	try{
+    		return integralManageServiceImpl.updateScoreRuleById(scoreRulsAppVo);
+    	}catch(Exception e){
+    		log.error("updateScoreRuleById(HttpServletRequest,ScoreRulsAppVo)",e);
+    		return false;
+    	}
+    }
 }
