@@ -16,10 +16,13 @@ import com.yuxin.wx.api.watchInfo.IWatchInfoService;
 import com.yuxin.wx.controller.task.TestTask;
 import com.yuxin.wx.model.watchInfo.WatchInfo;
 import com.yuxin.wx.vo.classes.*;
+
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -30,6 +33,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.yuxin.wx.api.classes.IClassModuleLessonService;
@@ -55,6 +59,7 @@ import com.yuxin.wx.common.LiveRoomConstant;
 import com.yuxin.wx.common.JsonMsg;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.common.SysConfigConstant;
+import com.yuxin.wx.common.ViewFiles;
 import com.yuxin.wx.model.classes.ClassModuleLesson;
 import com.yuxin.wx.model.classes.ClassModuleNo;
 import com.yuxin.wx.model.classes.ClassTypeResourceType;
@@ -63,6 +68,8 @@ import com.yuxin.wx.model.company.CompanyFunctionSet;
 import com.yuxin.wx.model.company.CompanyLiveConfig;
 import com.yuxin.wx.model.company.CompanyMemberService;
 import com.yuxin.wx.model.company.CompanyStudentMessage;
+import com.yuxin.wx.model.company.OrderWordNameApp;
+import com.yuxin.wx.model.system.LongitudinalTableColDefine;
 import com.yuxin.wx.model.system.SysConfigDict;
 import com.yuxin.wx.model.system.SysConfigItem;
 import com.yuxin.wx.model.system.SysConfigTeacher;
@@ -71,9 +78,12 @@ import com.yuxin.wx.util.HttpPostRequest;
 import com.yuxin.wx.util.MD5;
 import com.yuxin.wx.util.TalkfunUtils;
 import com.yuxin.wx.utils.DateUtil;
+import com.yuxin.wx.utils.EntityUtil;
+import com.yuxin.wx.utils.ExcelUtil;
 import com.yuxin.wx.utils.PropertiesUtil;
 import com.yuxin.wx.utils.WebUtils;
 import com.yuxin.wx.vo.student.StuMessageVo;
+import com.yuxin.wx.vo.student.StudentListVo;
 import com.yuxin.wx.vo.system.TeacherVo;
 
 /**
@@ -905,12 +915,59 @@ public class ClassModuleLessonController {
 	 * @return
 	 */
 	@RequestMapping("/selMessage")
-	public String selMessage(Model model,HttpServletRequest request,Integer msgId){
+	public String selMessage(Model model,HttpServletRequest request,Integer msgId,OrderWordNameApp orderWordNameApp){
 		CompanyStudentMessage msg = companyStudentMessageServiceImpl.findCompanyStudentMessageById(msgId);
-		
 		model.addAttribute(JsonMsg.MSG, msg);
 		return "student/notice/selMessage";
 	}
+	/**
+	 * @Description: 订阅文章显示订阅统计
+	 * @author cxl
+	 */
+	@RequestMapping("/dingyueDetail")
+	public String dingyueDetail(Model model,HttpServletRequest request,OrderWordNameApp orderWordNameApp){
+		List<OrderWordNameApp> oList = companyStudentMessageServiceImpl.selMsgOfDingYueDetailByCond(orderWordNameApp);
+		Integer count = companyStudentMessageServiceImpl.selMsgOfDingYueDetailCount(orderWordNameApp.getStuMsgId());
+		PageFinder<OrderWordNameApp> msgPage = new PageFinder<OrderWordNameApp>(orderWordNameApp.getPage(), orderWordNameApp.getPageSize(), count, oList);
+		model.addAttribute("msgPage", msgPage);
+		return "student/notice/dingyueDetail";
+	}
+	
+	 @RequestMapping(value = "/exportDingyueDetailExcle")
+	    public ModelAndView exportDingyueDetailExcle(Model model,HttpServletRequest request) {
+	        List<OrderWordNameApp> al = new ArrayList<OrderWordNameApp>();
+	        String rowCount=request.getParameter("rowCount");
+	        String msgId=request.getParameter("msgId");
+	        OrderWordNameApp orderWordNameApp=new OrderWordNameApp();
+        	orderWordNameApp.setPageSize(Integer.parseInt(rowCount));
+        	orderWordNameApp.setStuMsgId(Integer.parseInt(msgId));
+            al = companyStudentMessageServiceImpl.selMsgOfDingYueDetailByCond(orderWordNameApp);
+	        List<Map<String, Object>> lists = new ArrayList<Map<String, Object>>();
+	        for(int i=0;i<al.size();i++){
+	        	OrderWordNameApp dto=al.get(i);
+	        	Map<String, Object> map = new HashMap<String, Object>();
+	        	 map.put("index", i+1);
+	        	 map.put("telNum", dto.getTelNum());
+	        	 map.put("userName", dto.getUserName());
+	        	 map.put("isSignUp", dto.getIsSignUp());
+	        	 map.put("isAgree", null!=dto.getIsAgree()&&1==dto.getIsAgree()?"1":"");
+	        	 map.put("isNotAgree",null!=dto.getIsAgree()&&0==dto.getIsAgree()?"1":"");
+	        	 lists.add(map);
+	        }
+	        StringBuffer title = new StringBuffer(
+	                "序号:index,手机号:telNum,用户名称:userName,报名:isSignUp,同意:isAgree,反对:isNotAgree");
+	        ViewFiles excel = new ViewFiles();
+	        HSSFWorkbook wb = new HSSFWorkbook();
+	        try {
+	            wb = ExcelUtil.newWorkbook(lists, "sheet1", title.toString());
+	        } catch (Exception ex) {
+
+	        }
+	        Map map = new HashMap();
+	        map.put("workbook", wb);
+	        map.put("fileName", "订阅统计名单.xls");
+	        return new ModelAndView(excel, map);
+	    }
 	
 	/**
 	 * 

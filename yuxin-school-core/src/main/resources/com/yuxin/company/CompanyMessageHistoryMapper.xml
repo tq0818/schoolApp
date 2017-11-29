@@ -16,6 +16,18 @@
 		<result property="messageId" column="message_id"/>
 	</resultMap>
 	
+	<resultMap type="com.yuxin.wx.model.company.CompanyMessageHistoryLog" id="companyMessageHistoryLogResultMap">
+		<result property="id" column="id"/>
+		<result property="userId" column="user_id"/>
+		<result property="mobile" column="mobile"/>
+		<result property="sendTime" column="send_time"/>
+		<result property="content" column="content"/>
+		<result property="companyId" column="company_id"/>
+		<result property="schoolId" column="school_id"/>
+		<result property="messageId" column="message_id"/>
+		<result property="status" column="status"/>
+	</resultMap>
+	
 	<sql id="table_columns">
 		id,
 		receiver_user_id,
@@ -61,16 +73,16 @@
 	
 	<!-- 适用于主键自增类型 -->
 	<insert id="insert" parameterType="com.yuxin.wx.model.company.CompanyMessageHistory" useGeneratedKeys="true" keyProperty="id">
-		insert into company_message_history( <include refid="table_columns" /> ) 
+		insert into company_message_history_app( <include refid="table_columns" /> ) 
 		values ( <include refid="entity_properties" /> )
 	</insert>
 	
 	<!-- 批量添加 适用于主键自增类型  不支持返回主键-->
 	<insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
-		insert into company_message_history( <include refid="table_columns" /> ) 
+		insert into company_message_history_app( <include refid="table_columns" /> ) 
 		values 
 		<foreach item="item" collection="list" separator="," >
-			( <include refid="entity_properties" /> )
+			( <include refid="batch_entity_properties" /> )
 		</foreach>
 	</insert>
 	
@@ -170,7 +182,7 @@
 	
 	<select id="findByUserCount" resultType="Integer" parameterType="com.yuxin.wx.model.company.CompanyMessageHistory">
 		select count(id)
-		from company_message_history
+		from company_message_history_app
 		where company_id = #{companyId} and 
 			school_id = #{schoolId} and 
 			message_id = #{messageId} and 
@@ -179,4 +191,13 @@
 			 and send_status = #{sendStatus} 
 			</if>
 	</select>
+	
+	<select id="queryAllMessageHistoryLog" resultMap="companyMessageHistoryLogResultMap">
+		SELECT * from company_message_history_log where status is null or status=0 ORDER BY id ASC
+	</select>
+	<!-- 根据ID批量删除 -->
+	<update id="updateMessageHistoryLogByIds">
+		update company_message_history_log set status=1 where id =#{id}
+	</update>
+	
 </mapper>

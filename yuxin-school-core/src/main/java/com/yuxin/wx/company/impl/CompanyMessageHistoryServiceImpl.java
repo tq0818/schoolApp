@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;import com.yuxin.wx.common.BaseServiceImpl;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.api.company.ICompanyMessageHistoryService;
 import com.yuxin.wx.company.mapper.CompanyMessageHistoryMapper;
 import com.yuxin.wx.model.company.CompanyMessageHistory;
+import com.yuxin.wx.model.company.CompanyMessageHistoryLog;
 
 /**
  * Service Implementation:CompanyMessageHistory
@@ -149,4 +151,13 @@ public class CompanyMessageHistoryServiceImpl extends BaseServiceImpl implements
 		// TODO Auto-generated method stub
 		return companyMessageHistoryMapper.findByUserCount(companyMessageHistory);
 	};
+	@Override
+	public List<CompanyMessageHistoryLog> queryAllMessageHistoryLog(){
+		return companyMessageHistoryMapper.queryAllMessageHistoryLog();
+	}
+	@Override
+	public void updateMessageHistoryLogByIds(Integer id) {
+		// TODO Auto-generated method stub
+	    companyMessageHistoryMapper.updateMessageHistoryLogByIds(id);
+	}
 }

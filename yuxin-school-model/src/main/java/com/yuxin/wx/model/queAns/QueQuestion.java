@@ -65,6 +65,7 @@ public class QueQuestion extends BaseEntity {
 	private Integer userDefuledId;//用户自定义标签
 	
 	private String userDefuledName;//用户自定义标签名称
+	private String nickName;//昵称
 	
 	
 	
@@ -514,6 +515,14 @@ public class QueQuestion extends BaseEntity {
 
 	public void setUserDefuledName(String userDefuledName) {
 		this.userDefuledName = userDefuledName;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	
