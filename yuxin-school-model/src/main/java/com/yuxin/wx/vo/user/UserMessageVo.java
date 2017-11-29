@@ -17,6 +17,24 @@ public class UserMessageVo extends BaseEntity {
 	private String h5Url;
 	private String contentText;/*通知纯文本*/
 	private String erroInfo;
+	private String signupVote;/*报名或者投票 0报名 1投票*/
+	private String signupVoteUrl;/*报名或者投票连接*/
+
+	public String getSignupVoteUrl() {
+		return signupVoteUrl;
+	}
+
+	public void setSignupVoteUrl(String signupVoteUrl) {
+		this.signupVoteUrl = signupVoteUrl;
+	}
+
+	public String getSignupVote() {
+		return signupVote;
+	}
+
+	public void setSignupVote(String signupVote) {
+		this.signupVote = signupVote;
+	}
 
 	public String getErroInfo() {
 		return erroInfo;
