@@ -248,9 +248,6 @@ function editRule(objt){
         })
         window.ScoreRuls =ScoreRuls;
     })(jQuery)
-=======
-
-    });
 </script>
 
 <script>
@@ -258,7 +255,6 @@ function editRule(objt){
     $(function () {
         $selectSubMenu('integralRule');
     });
->>>>>>> branch 'feature_app' of http://git.winshare-edu.com:80/winshare/winshare-yuxin-school.git
 </script>
 </body>
 </html>
