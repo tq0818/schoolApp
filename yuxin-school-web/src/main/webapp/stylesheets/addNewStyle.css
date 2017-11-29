@@ -104,3 +104,5 @@ i{font-style: normal}
 .putQuestionContent{display: inline-block;}
 .labelInputContent{display: none;}
 .PointsReward{height: 28px;line-height: 28px;}
+.comQuestionPut{position: absolute;right: 130px;}
+.comQuestionLabel{position: absolute;right: 10px;}
