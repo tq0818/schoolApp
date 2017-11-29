@@ -3671,7 +3671,9 @@
 		<result property="id" column="id" />
 		<result property="scoreTopic" column="score_topic" />
 		<result property="score" column="score" />
-		<result property="validTime" column="validTime"/>
+		<result property="validTime" column="valid_time"/>
+		<result property="invalidTime" column="invalid_time"/>
+		<result property="ststus" column="ststus"/>
 		<result property="oprator" column="oprator"/>
 	</resultMap>
 	<select id="queryTotalScoreVoByUserFrontId" resultMap="totalScoreVoResult" parameterType="map">
@@ -3699,8 +3701,15 @@
 		where total_score_id=#{totalScoreId}
 	</select>
 	<select id="queryScoreRulsAppVos" resultMap="scoreRulsAppVos">
-		select id,score_topic,score,valid_time,oprator from score_ruls_app
+		select id,score_topic,score,date_format(valid_time,'%Y-%c-%d %H:%i:%s') valid_time,oprator from score_ruls_app
 		where ststus=1
+	</select>
+	<select id="queryPageScoreRulsAppVos" resultMap="scoreRulsAppVos" parameterType="com.yuxin.wx.model.integral.ScoreRulsAppVo">
+		select id,score_topic,score,date_format(valid_time,'%Y-%c-%d %H:%i:%s') valid_time,date_format(invalid_time,'%Y-%c-%d %H:%i:%s') invalid_time,oprator,ststus from score_ruls_app
+		limit #{firstIndex},#{pageSize}
+	</select>
+	<select id="queryPageScoreRulsAppVosCount" resultType="int">
+		select count(1) from score_ruls_app
 	</select>
 	<select id="queryTotalScoreVoByUserId" resultMap="totalScoreVoResult" parameterType="map">
 		select ts.id,ts.total_score 
@@ -3726,4 +3735,16 @@
 		insert into total_score(user_id,total_score)
 		values (#{userId},#{totalScore})
 	</insert>
+	<update id="updateScoreRulsAppStatus" parameterType="com.yuxin.wx.model.integral.ScoreRulsAppVo">
+		update score_ruls_app 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="ststus != null and ststus != ''">ststus = #{bsstus},</if>
+			<if test="score != null and score != ''">score = #{score},</if>
+			<if test="validTime != null and validTime != ''">valid_time = #{validTime},</if>
+			<if test="invalidTime != null and invalidTime != ''">invalid_time = #{invalidTime},</if>
+		</trim>
+		<where>
+			id=#{id}
+		</where>
+	</update>
 </mapper>

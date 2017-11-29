@@ -31,35 +31,7 @@
                     <th width="10%" >操作人</th>
                     <th width="20%" >状态操作</th>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>回答问题</td>
-                    <td><input type="text" value="+2" disabled="disabled"></td>
-                    <td><input type="text" value="2017/11/01 18:39" readonly class="dateRuleStart1"></td>
-                    <td><input type="text" value="2017/11/01 18:39" readonly class="dateRuleEnd1"></td>
-                    <td>系统</td>
-                    <td>
-                        <button class="btn btn-primary forbidBtn">禁用</button>
-                        <button class="btn btn-default editRuleBtn">编辑</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>回答问题</td>
-                    <td><input type="text" value="+2" disabled="disabled"></td>
-                    <td><input type="text" value="2017/11/01 18:39" readonly class="dateRuleStart2"></td>
-                    <td><input type="text" value="2017/11/01 18:39" readonly class="dateRuleEnd2"></td>
-                    <td>系统</td>
-                    <td>
-                        <button class="btn btn-primary forbidBtn">禁用</button>
-                        <button class="btn btn-default editRuleBtn">编辑</button>
-                    </td>
-                </tr>
             </table>
-            <div class="integraBtn">
-                <button class="btn btn-success">保存</button>
-                <button class="btn btn-warning">取消</button>
-            </div>
         </div>
         <div class="pages ">
             <ul class="pagination">
@@ -68,7 +40,7 @@
         </div>
     </div>
 </div>
-
+<input type="hidden" id="selectCounts" value="10">
 <!-- ajax加载中div开始 -->
 <div class="loading lp-units-loading" style="display:none">
     <p><i></i>加载中,请稍后...</p>
@@ -76,37 +48,81 @@
 <div class="loading-bg lp-units-loading-bg" style="display:none"></div>
 <!--  ajax加载中div结束 -->
 <script>
-    //    分页
-    $(".pagination").pagination($("#rowCount").val(), {
-        next_text : "下一页",
-        prev_text : "上一页",
-        current_page : ($("#pageNo").val() - 1),
-        link_to : "javascript:;",
-        num_display_entries : 5,
-        items_per_page : $("#pageSize").val(),
-        num_edge_entries : 1,
-        callback : function(page, jq) {
-            var pageNo = page + 1;
-        }
-    });
-
-</script>
-<script>
 //    禁用和启用的切换
-    $('.forbidBtn').click(function(){
-        if($(this).html()=='禁用'){
-            $(this).html('启用');
-            $(this).removeClass('btn-primary');
-            $(this).addClass('btn-default');
+    function updateScoreRulsAppStatus(obj){
+    	var rulesId=$(obj).attr('name');
+    	var data={};
+    	data.rulesId=rulesId;
+        if($(obj).html()=='禁用'){
+            data.status="0";
+            $.ajax({
+                url: rootPath + "/student/updateScoreRulsAppStatus",
+                data: data,
+                type: 'post',
+                success: function (jsonData) {
+                	if(jsonData){
+                		$.msg('保存成功');
+                		$(obj).html('启用');
+                        $(obj).removeClass('btn-primary');
+                        $(obj).addClass('btn-default');
+                	}else{
+                		$.msg('保存失败');
+                	}
+                }
+            });
         }else{
-            $(this).html('禁用');
-            $(this).addClass('btn-primary');
-            $(this).removeClass('btn-default');
+        	data.status="1";
+            $.ajax({
+                url: rootPath + "/student/updateScoreRulsAppStatus",
+                data: data,
+                type: 'post',
+                success: function (jsonData) {
+                	if(jsonData){
+                		$.msg('保存成功');
+                		$(obj).html('禁用');
+                        $(obj).addClass('btn-primary');
+                        $(obj).removeClass('btn-default');
+                	}else{
+                		$.msg('保存失败');
+                	}
+                }
+            });
         }
-    });
+}
+function giveupRule(objt){
+	$(objt).attr('style','display:none');
+	$(objt).parent().find('.btn-success').attr('style','display:none');
+	$(objt).parent().find('.btn-default').attr('style','display:block');
+	var rowInput = $(objt).parent().siblings('td').find('input');
+    rowInput.removeClass('active');
+    rowInput.eq(0).attr('disabled', true);
+}
+function saveRule(objt){
+	var rulesId=$(objt).attr('name');
+	var data={};
+	data.id=rulesId;
+	var score=$(objt).parent().siblings('td').find('input').eq(0).val();
+	var validTime=$(objt).parent().siblings('td').find('input').eq(1).val();
+	var invalidTime=$(objt).parent().siblings('td').find('input').eq(2).val();
+	data.score=score;
+	data.validTime=validTime;
+	data.invalidTime=invalidTime;
+	 $.ajax({
+         url: rootPath + "/student/updateScoreRuleById",
+         data: data,
+         type: 'post',
+         success: function (jsonData) {
+         	if(jsonData){
+         		$.msg('保存成功');
+         	}else{
+         		$.msg('保存失败');
+         	}
+         }
+     });
+}
 //点击编辑，该行变为可编辑状态
-    $('.editRuleBtn').click(function() {
-        var rowInput = $(this).parent().siblings('td').find('input');
+function editRule(objt){
+        var rowInput = $(objt).parent().siblings('td').find('input');
         rowInput.addClass('active');
         rowInput.eq(0).attr('disabled', false);
 
@@ -127,13 +143,111 @@
                 start.maxDate = obj.val; //将结束日的初始值设定为开始日的最大日期
             }
         };
-
-        var editIndex = $(this).parent().parent().index();
+        var editIndex = $(objt).parent().parent().index();
 
         $.jeDate('.dateRuleStart'+editIndex, start);
         $.jeDate('.dateRuleEnd'+editIndex, end);
-
-    });
+		$(objt).attr('style','display:none');
+		$(objt).parent().find('.btn-success').attr('style','display:block');
+		$(objt).parent().find('.btn-warning').attr('style','display:block');
+    };
+    (function ($) {
+        var ScoreRuls = {
+            init: function () {
+                var $this = this;
+                // 初始化数据
+                $this.search(1);
+            },
+            searchCount: function(){
+            	$("#selectCounts").val($("#selectCount").val());
+            	$this.search(1);
+            },
+            search: function (page) {
+                var $this = this;
+                var data = {};
+                data.page = page ? page : 1;
+                data.pageSize=$("#selectCounts").val() || 10;
+                $(".user-list").find("table").find("tr:gt(0)").remove();
+                //查询积分规则
+                $.ajax({
+                        url: rootPath + "/student/integralRuleAjax",
+                        data: data,
+                        type: 'post',
+                        beforeSend: function (XMLHttpRequest) {
+                            $(".loading").show();
+                            $(".loading-bg").show();
+                        },
+                        success: function (jsonData) {
+                        	if (jsonData.data.length == 0) {
+                            	if(userorg_roleopenflag == 1 && proxyOrgRole == 1){
+    	                            $(".user-list")
+    	                                .find("table")
+    	                                .append(
+    	                                '<tr><td colspan="7">没有查找到数据</td></tr>');
+                            	}else{
+                            		  $(".user-list")
+    	                                .find("table")
+    	                                .append(
+    	                                '<tr><td colspan="7">没有查找到数据</td></tr>');
+                            	}
+                            }
+                             $.each(jsonData.data,function (i, stu) {
+                                    var htmlStr='<tr>'+
+			            	                    '<td>'+(i+1)+'</td>'+
+			            	                    '<td>'+stu.scoreTopic+'</td>'+
+			            	                    '<td><input type="text" value="'+stu.score+'" disabled="disabled"></td>'+
+			            	                    '<td><input type="text" value="'+stu.validTime+'" readonly class="dateRuleStart'+(i+1)+'"></td>'+
+			            	                    '<td><input type="text" value="'+stu.invalidTime+'" readonly class="dateRuleEnd'+(i+1)+'"></td>'+
+			            	                    '<td>'+stu.oprator+'</td>'+
+			            	                    '<td>';
+			            	                    
+			            	        var validStr="";
+			            	        if(stu.ststus=="1"){
+			            	        	validStr='<button class="btn btn-primary forbidBtn" name="'+stu.id+'" onclick="updateScoreRulsAppStatus(this)">禁用</button>';
+			            	        }else{
+			            	        	validStr='<button class="btn btn-default forbidBtn" name="'+stu.id+'" onclick="updateScoreRulsAppStatus(this)">启用</button>';
+			            	        }
+			            	        var lastStr='<button class="btn btn-default editRuleBtn" name="'+stu.id+'" onclick="editRule(this)">编辑</button>'+
+			            	        			'<button class="btn btn-success" style="display:none" name="'+stu.id+'" onclick="saveRule(this)">保存</button>'+
+			               		 				'<button class="btn btn-warning" style="display:none" name="'+stu.id+'" onclick="giveupRule(this)">取消</button>'+
+			            	                    '</td>'+
+			            	                '</tr>';
+                                	$(".user-list").find('table').append(htmlStr+validStr+lastStr);
+                                });
+                            $("#pageNo").remove();
+                            $(".user-list").after('<input type="hidden" id="pageNo" value="'+jsonData.pageNo+'"/>');
+                            if (jsonData.rowCount >$("#selectCounts").val()) {
+                                $(".pagination").pagination(jsonData.rowCount,
+                                    {
+                                        next_text: "下一页",
+                                        prev_text: "上一页",
+                                        current_page: jsonData.pageNo - 1,
+                                        link_to: "javascript:void(0)",
+                                        num_display_entries: 8,
+                                        items_per_page: jsonData.pageSize,
+                                        num_edge_entries: 1,
+                                        callback: function (page, jq) {
+                                            var pageNo = page + 1;
+                                            $this.search(pageNo);
+                                        }
+                                    });
+                            } else {
+                                $(".pagination").html('');
+                            }
+                        },
+                        complete:function (XMLHttpRequest, textStatus) {
+                            $(".loading").hide();
+                            $(".loading-bg").hide();
+                        }
+                    });
+                $("#maxCount").remove();
+            }
+        }
+        $(document).ready(function () {
+        	ScoreRuls.init();
+        })
+        window.ScoreRuls =ScoreRuls;
+    })(jQuery)
 </script>
 
 <script>

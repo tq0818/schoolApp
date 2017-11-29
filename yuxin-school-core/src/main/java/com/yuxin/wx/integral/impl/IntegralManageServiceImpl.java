@@ -5,16 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yuxin.wx.api.integral.IIntegralManageService;
 import com.yuxin.wx.common.BaseServiceImpl;
+import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.integral.ScoreDetailsAppVo;
 import com.yuxin.wx.model.integral.ScoreRulsAppVo;
 import com.yuxin.wx.model.integral.TotalScoreVo;
+import com.yuxin.wx.model.student.Student;
+import com.yuxin.wx.model.system.SysConfigSchool;
 import com.yuxin.wx.student.mapper.StudentMapper;
+import com.yuxin.wx.vo.student.StuPayMasterVo;
 /**
  * Service Implementation:IIntegralManageService
  * 
@@ -26,7 +31,7 @@ import com.yuxin.wx.student.mapper.StudentMapper;
 public class IntegralManageServiceImpl extends BaseServiceImpl implements IIntegralManageService {
 	@Autowired
 	private StudentMapper studentMapper;
-	
+	private static Logger log = Logger.getLogger(IntegralManageServiceImpl.class);
 	@Override
 	public TotalScoreVo queryTotalScoreVoByUserFrontId(String studentId) {
 		Map<String,Object> params=new HashMap<String,Object>();
@@ -118,5 +123,29 @@ public class IntegralManageServiceImpl extends BaseServiceImpl implements IInteg
 		}
 		return true;
 	}
+	@Override
+	public PageFinder<ScoreRulsAppVo> queryPageScoreRulsAppVos(
+			ScoreRulsAppVo scoreRulsAppVo) {
+		List<ScoreRulsAppVo> data = studentMapper.queryPageScoreRulsAppVos(scoreRulsAppVo);
+        int count = studentMapper.queryPageScoreRulsAppVosCount();
+        PageFinder<ScoreRulsAppVo> pageFinder = new PageFinder<ScoreRulsAppVo>(scoreRulsAppVo.getPage(), scoreRulsAppVo.getPageSize(), count, data);
+        return pageFinder;
+	}
+	@Override
+	public Boolean updateScoreRulsAppStatus(String rulesId, String status) {
+			if(rulesId==null||rulesId=="")return true;
+			ScoreRulsAppVo scoreRulsAppVo=new ScoreRulsAppVo();
+			scoreRulsAppVo.setId(Integer.valueOf(rulesId));
+			scoreRulsAppVo.setStstus(status);
+			scoreRulsAppVo.setBsstus(Integer.valueOf(status));
+			studentMapper.updateScoreRulsAppStatus(scoreRulsAppVo);
+			return true;
+	}
+	@Override
+	public Boolean updateScoreRuleById(ScoreRulsAppVo scoreRulsAppVo) {
+		studentMapper.updateScoreRulsAppStatus(scoreRulsAppVo);
+		return true;
+	}
+	
 
 }
