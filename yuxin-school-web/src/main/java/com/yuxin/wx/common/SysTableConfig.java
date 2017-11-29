@@ -9,8 +9,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.yuxin.wx.api.company.ICompanyMessageHistoryService;
 import com.yuxin.wx.api.system.ISysConfigTableService;
 import com.yuxin.wx.model.system.SysConfigTable;
+import com.yuxin.wx.utils.ThreadSendMobileMessageTrigger;
 import com.yuxin.wx.vo.system.ConfigTableVo;
 
 /**
@@ -26,6 +28,10 @@ public class SysTableConfig {
 	
 	@Autowired
 	private ISysConfigTableService sysConfigTableServiceImpl;
+
+	@Autowired
+	private ICompanyMessageHistoryService companyMessageHistoryService;
+	
 	public static Map<String,Map<Integer,Integer>> map = new HashMap<String, Map<Integer,Integer>>();
 	
 	/**
@@ -36,7 +42,6 @@ public class SysTableConfig {
 	 */
 	public void init(){
 		List<SysConfigTable> tableList = sysConfigTableServiceImpl.queryAll();
-		
 		try {
 			if(tableList != null && tableList.size() > 0){
 				for(SysConfigTable config : tableList){
@@ -47,6 +52,13 @@ public class SysTableConfig {
 			}
 		} catch (Exception e) {
 			log.error("初始化表结构必填字段失败",e);
+			e.printStackTrace();
+		}
+		try {
+			log.info("短信通知触发站内通知--线程启动--");
+			new Thread(new ThreadSendMobileMessageTrigger(companyMessageHistoryService)).start();
+		} catch (Exception e) {
+			log.error("短信通知触发站内通知--线程异常--",e);
 			e.printStackTrace();
 		}
 	}

@@ -16,8 +16,8 @@
     <col width="15%">
     <col width="15%">
     <col width="20%">
-    <col width="15%">
-    <col width="35%">
+    <col width="25%">
+    <col width="25%">
     <tr>
         <th>学员姓名</th>
         <th>手机号&邮箱</th>

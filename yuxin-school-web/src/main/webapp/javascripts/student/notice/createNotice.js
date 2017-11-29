@@ -3,6 +3,10 @@ var msgCount;
 		$(".sendStuMsg").show();
 		$(".phoneHint").hide();
 		$("#ckecktor").hide();
+		//订阅文章
+		$(".sendGrade,.dingyueChooseBtn,.dingyueSendBtn,.con-coverimg").hide();
+		$("#dingyue_ckecktor").hide();
+		
  		$selectSubMenu('student_message');
  		selectGroup1('_edit');
  		selItem();
@@ -31,41 +35,108 @@ var msgCount;
              }
              selClassOrModule(url,oneItem,twoItem,$("#three option:selected").attr("data-code"));
          });
+         // 通知标题,发送内容,短信字数       
  		if($(".btn-type.btn-primary").attr("data-type")=='STUDENT_MESSAGE_CLASSTYPE' && $(".btn-method.btn-primary").attr("data-type")=='STUDENT_MESSAGE_MOBILE'){
 			$(".con-tzbt,.con-fsnr,.tips-txt").hide();
 			$(".notice-main").css({'margin':'100px auto 100px'});
 		}
  		
+ 		$(".btn-upload").on('click',function(){
+			$("#chooseDiv").css("display", "block");
+			$("#stopDiv").css("display", "block");
+		});
+ 		// 弹层处理
+ 	      $('.upload-layer')
+ 	          .on('click','i.close',function(){
+ 	              $('.upload-layer').fadeOut(200,function(){
+ 	                  $('.add-layer-bg').fadeOut(200);
+ 	              });
+ 	          })
+ 	          // 取消
+ 	          .on('click','.btn-cancel',function(){
+ 	              $(this).parents('.pic-upload').fadeOut(200,function(){
+ 	                 // alert('这个仅作示例，为了展示列表')
+ 	            	  $('.upload-layer').css({'height':'481px'});
+ 	              })
+ 	          })
+ 	          .on('click','li.add',function(){
+ 	              $('.pic-upload').fadeIn(200,function(){
+ 	                  //alert('仅作示例，具体根据实际情况自行修改！')
+ 	            	  $('.upload-layer').css({'height':'540px'});
+ 	              })
+ 	          });
  		
  		$(".btn-method").on('click',function(){
  			$(".con-tzbt,.con-fsnr,.tips-txt").show();
  			$(".notice-main").css({'margin':'0 auto'});
  			var type = $(this).data("type");
+ 			//通知方式 选中
 			$(this).addClass('btn-primary').removeClass('btn-default').siblings().removeClass('btn-primary').addClass('btn-default');//选中第一行
+			//通知类型 默认选中第一个
 			$(".btn-type:first").addClass('btn-primary').removeClass('btn-default').siblings().removeClass('btn-primary').addClass('btn-default');//第二行默认选中第一个
 			selItem();
+			
+			//短信通知
 			if(type == 'STUDENT_MESSAGE_MOBILE'){
-				$(".btn-type").last().prev().show();
-				$(".phoneHint,.emailHint,.emailTitle,#ckecktor,#email_ckecktor,.use_email,.stuGroup,.lj-tops").hide();
-				$(".sendStuMsg,.zhan,#messageContent").show();
+				//	$(".btn-type").last().prev().show();//指定通知
+				$(".phoneHint,.emailHint,.sendGrade,.con-coverimg,.dingyueChooseBtn,.dingyueSendBtn,.emailTitle,#ckecktor,#email_ckecktor,#dingyue_ckecktor,.use_email,.stuGroup,.lj-tops").hide();
+				$(".sendMsgType,.sendStuMsg,.zhan,#messageContent,.sendBtn").show();
 				if($(".btn-type.btn-primary").attr("data-type")=='STUDENT_MESSAGE_CLASSTYPE'){
 					$(".lj-tops").show();
 					$(".con-tzbt,.con-fsnr,.tips-txt").hide();
 					$(".notice-main").css({'margin':'100px auto 100px'});
 				}
 			}
+			//站内信通知
 			if(type == "STUDENT_MESSAGE_WEB"){
-				$(".btn-type").last().prev().hide();
-				$("#messageContent,.zhan,.phoneHint,.emailHint,.emailTitle,#email_ckecktor,#use_email,.stuGroup,.use_email,.lj-tops").hide();
-				$("#ckecktor,.sendStuMsg").show();
+				//$(".btn-type").last().prev().hide();//指定通知
+				$("#messageContent,.zhan,.sendGrade,.con-coverimg,.dingyueChooseBtn,.dingyueSendBtn,.phoneHint,.emailHint,.emailTitle,#email_ckecktor,#dingyue_ckecktor,#use_email,.stuGroup,.use_email,.lj-tops").hide();
+				$(".sendMsgType,#ckecktor,.sendStuMsg,.sendBtn").show();
  				
 			}
+			//邮件通知
 			if(type == 'STUDENT_MESSAGE_EMAIL'){
-				$(".btn-type").last().prev().show();
-				$(".phoneHint,.emailHint,#ckecktor,#messageContent,.zhan,.lj-tops").hide();
-				$(".sendStuMsg,.emailTitle,#email_ckecktor,.use_email").show();
+				//$(".btn-type").last().prev().show();//指定通知
+				$(".phoneHint,.emailHint,.sendGrade,.con-coverimg,.dingyueChooseBtn,.dingyueSendBtn,#ckecktor,#dingyue_ckecktor,#messageContent,.zhan,.lj-tops").hide();
+				$(".sendMsgType,.sendStuMsg,.emailTitle,#email_ckecktor,.use_email,.sendBtn").show();
 			}
+			//订阅文章
+			if(type == 'STUDENT_MESSAGE_DINGYUE'){
+				//$(".btn-type").last().prev().show();
+				$(".phoneHint,.sendMsgType,.emailHint,#ckecktor,.sendStuMsg,.sendBtn,#messageContent,.zhan,.lj-tops,.emailTitle,#email_ckecktor,.use_email").hide();
+				$(".sendGrade,.con-coverimg,.sendStuNum,#dingyue_ckecktor,.dingyueChooseBtn,.dingyueSendBtn").show();
+				selPersonOfDingyue();
+			}
+			
  		});
+ 		
+ 		// 	    推荐学段复选
+ 		$('.articlesList').children('button').click(function () {
+ 		    if ($(this).hasClass('btn-primary')) {
+ 		        $(this).removeClass('btn-primary');
+ 		        $('.articlesList').children('button').eq(0).removeClass('btn-primary');
+ 		    } else {
+ 		        $(this).addClass('btn-primary');
+ 		    }
+ 		   selPersonOfDingyue();
+ 		});
+// 		    点击全部，则全部选中
+ 		$('.articlesList').children('button').eq(0).click(function () {
+
+ 		    var allChildren = $('.articlesList').children('button');
+ 		    //如果全部有active则删除全部的选中，否则全部选中
+ 		    if ($(this).hasClass('btn-primary')) {
+ 		        for (var i = 1; i < allChildren.length; i++) {
+ 		            allChildren.eq(i).addClass('btn-primary');
+ 		        }
+ 		    } else {
+ 		        for (var i = 1; i < allChildren.length; i++) {
+ 		            allChildren.eq(i).removeClass('btn-primary');
+ 		        }
+ 		    }
+ 		    selPersonOfDingyue();
+ 		});
+ 		
  		$('.btn-type').on('click',function(){
  			$(".con-tzbt,.con-fsnr,.tips-txt").show();
  			$(".notice-main").css({'margin':'0 auto'});
@@ -118,13 +189,15 @@ var msgCount;
  			var classId = null;
  			var groupOneId = null;
  			var groupTwoId = null;
+ 			var oneItemCode = null;
+ 			var twoItemCode = null;
+ 			var threeItemCode =null;
  			var phone = null;
  			var email = null;
- 			if($(".btn-type.btn-primary").attr("data-type")!='STUDENT_MESSAGE_CLASSTYPE' && $(".btn-method.btn-primary").attr("data-type")!='STUDENT_MESSAGE_MOBILE'){
+ 			if($(".btn-type.btn-primary").attr("data-type")=='STUDENT_MESSAGE_CLASSTYPE' && $(".btn-method.btn-primary").attr("data-type")!='STUDENT_MESSAGE_MOBILE'){
  				if(title == ""){
  					$("#title").focus();
  					$("#title").select();
- 					
  					return false;
  				}
  			}
@@ -201,9 +274,9 @@ var msgCount;
  			if(types == 'STUDENT_MESSAGE_CLASSTYPE' || types == 'STUDENT_MESSAGE_MODULENO'){
  				oneItemId = $.trim($("#one").val());
  				twoItemId = $.trim($("#two").val());
-                oneItemCode = $("#one option:selected").attr("data-code");
-                twoItemCode = $("#two option:selected").attr("data-code");
-                threeItemCode = $("#three option:selected").attr("data-code");
+                oneItemCode = $("#one").find("option:selected") .attr("data-code");
+                twoItemCode = $("#two").find("option:selected").attr("data-code");
+                threeItemCode = $("#three").find("option:selected").attr("data-code");
  				classId = $.trim($("#class").val());
  			}
  			if(types == 'STUDENT_MESSAGE_GROUP'){
@@ -226,7 +299,7 @@ var msgCount;
  			}else{
  				msgcount = $("#msgcount").val();
  			}
- 			if($(".btn-type.btn-primary").attr("data-type")!='STUDENT_MESSAGE_CLASSTYPE' && $(".btn-method.btn-primary").attr("data-type")!='STUDENT_MESSAGE_MOBILE'){
+ 			if($(".btn-type.btn-primary").attr("data-type")=='STUDENT_MESSAGE_CLASSTYPE' && $(".btn-method.btn-primary").attr("data-type")!='STUDENT_MESSAGE_MOBILE'){
 	 			if(!msgcount){
 	// 				if(!reg.test($.trim(arr[i]))){
 						$('<div class="c-fa">'+ "发送内容不能为空！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
@@ -282,6 +355,118 @@ var msgCount;
  				}
  			});
  		});
+ 		//订阅文章
+ 		$(".btn-publish").click(function(){
+			var title = $.trim($("#title").val());
+			var method = $.trim($(".btn-method.btn-primary").attr("data-type"));
+			var msgcount = "";
+			var msgcounttext = "";
+			var signup_vote=$("input[name='signup_vote']:checked").val();
+			var limitStuNum=$.trim($("#limitStuNum").val());
+			var isSend=null;
+			if(title == ""){
+				$("#title").focus();
+				$("#title").select();
+				return false;
+			}
+			var picUrl = $("#commdotityPic").attr("realPath");
+			if (picUrl.length < 0 || picUrl == "") {
+				 $('<div class="c-fa">'+ "请上传封面图片!" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+					$(this).remove();}
+				);
+				return;
+			}
+			 var gradeCodes=new Array();
+	    	 var allChildren = $('.articlesList').children('button');
+	    	 if(null!=allChildren&&allChildren.length>1){
+	    		 for (var i = 1; i < allChildren.length; i++) {
+		            if(allChildren.eq(i).hasClass('btn-primary')){
+		            	gradeCodes[i-1]=allChildren.eq(i).attr("data-type");
+		            }
+		        }
+	    	 }
+	    	 if(null==gradeCodes||gradeCodes.length<1){
+	    		 $('<div class="c-fa">'+ "请选择学段!" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+					$(this).remove();}
+				);
+				return;
+	    	 }
+	    	if(method == "STUDENT_MESSAGE_DINGYUE"){
+				CKupdate();
+				msgcount = $("#dingyue_newsContents").val();
+				msgcounttext=dingyue_ckecktor.document.getBody().getText();
+				msgcount = msgcount.replace(/<p>/g, "<span>");
+				msgcount = msgcount.replace(/<p /g, "<span ");
+				msgcount = msgcount.replace(/<\/p>/g, "</span><br>");
+			}
+ 			if(!msgcount){
+// 				if(!reg.test($.trim(arr[i]))){
+					$('<div class="c-fa">'+ "发送内容不能为空！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+ 						$(this).remove();}
+ 					);
+ 					return false;
+//				}
+ 			}
+ 			if(!signup_vote){
+ 				$('<div class="c-fa">'+ "请选择报名或投票！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+					$(this).remove();}
+				);
+				return false;
+ 			}else if(signup_vote=='0'){
+ 				var reg = /^[1-9]\d*$/;
+ 				if(!limitStuNum){
+ 					$("#limitStuNum").focus();
+ 					$('<div class="c-fa">'+ "报名人数限制不能为空！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+ 						$(this).remove();}
+ 					);
+ 					return false;
+ 				}else if(!reg.test($.trim(limitStuNum))){
+ 					$("#limitStuNum").focus();
+ 					$('<div class="c-fa">'+ "报名人数限制格式不正确！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+ 						$(this).remove();}
+ 					);
+ 					return false;
+ 				}
+ 			} 			
+ 			if($("#isNeedSend").is(":checked")){
+ 				isSend="1";
+ 			}
+			console.log('send');
+			$.ajax({
+				url:rootPath + "/classModule/sendMsgOfDingyue",
+				type:"post",
+				data:{"title":title,"content":msgcount,"messageMethod":method,"signupVote":signup_vote,
+					"maxNum":limitStuNum,"gradeCodes":gradeCodes,"isSend":isSend,"coverImg":picUrl,"contentText":msgcounttext},
+				dataType:"json",
+				beforeSend:function(XMLHttpRequest){
+	              $(".loading").show();
+	              $(".loading-bg").show();
+	        	},
+				success:function(data){
+					if(data.result == "success"){
+						$(".loading").hide();
+			        	$('<div class="c-fa">'+ "消息已发送！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+				        	$(this).remove();
+		 					location.href = rootPath + "/student/notice";
+		 					$(".loading").show();
+				        });
+					}else{
+			            $(".loading").hide();
+			            $(".loading-bg").hide();
+			            if(data.result == "stuno"){
+					        $('<div class="c-fa">'+ "当前没有学员！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+					        	$(this).remove();
+					        });
+			            }else{
+					        $('<div class="c-fa">'+ "消息发送失败！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+					        	$(this).remove();
+					        });
+			            }
+					}
+				}
+			});
+		});
+	
      });
      function selItem(){
     	 var messageType = $(".btn-type.btn-primary").attr("data-type");
@@ -406,6 +591,46 @@ var msgCount;
              $(".btn-view").html(0 + "人");
              $("#sendStu,#useEmailMsg").html(0);
              $("#useMsg").html(0+"条");
+             $(".loading").hide();
+             $(".loading-bg").hide();
+		 }
+
+     }
+     
+     /**
+      * 查询订阅文章学生数
+      */
+     function selPersonOfDingyue(){
+    	 var gradeCodes=new Array();
+    	 var allChildren = $('.articlesList').children('button');
+    	 if(null!=allChildren&&allChildren.length>1){
+    		 for (var i = 1; i < allChildren.length; i++) {
+	            if(allChildren.eq(i).hasClass('btn-primary')){
+	            	gradeCodes[i-1]=allChildren.eq(i).attr("data-type");
+	            }
+	        }
+    	 }
+    	 if(gradeCodes !=null  && gradeCodes.length > 0){
+             $.ajax({
+                 url:rootPath + "/classModule/selPersonOfDingyue",
+                 type:"post",
+                 data:{"gradeCodes":gradeCodes},
+                 dataType:"json",
+                 beforeSend:function(XMLHttpRequest){
+                     $(".loading").show();
+                     $(".loading-bg").show();
+                     $("#sendStu").empty();
+                 },
+                 success:function(data){
+                     $("#sendStu").html(data.count);
+                 },
+                 complete:function(XMLHttpRequest,textStatus){
+                     $(".loading").hide();
+                     $(".loading-bg").hide();
+                 }
+             });
+		 }else{
+             $("#sendStu").html(0);
              $(".loading").hide();
              $(".loading-bg").hide();
 		 }

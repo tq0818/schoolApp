@@ -93,6 +93,13 @@ public interface StudentMapper extends BaseMapper<Student> {
 	 */
 	List<Student> findByPayMaster(CompanyStudentMessage companyStudentMessage);
 	
+   /**
+    * Class Name: IStudentPayMasterService.java
+    * @Description: 根据年级查询学生(学生通知:订阅文章)
+    * @author cxl
+    */
+	List<Student> queryStudentByGradeCodes(Map<String,Object> param);
+	
 	/**
 	 * 
 	 * Class Name: IStudentService.java

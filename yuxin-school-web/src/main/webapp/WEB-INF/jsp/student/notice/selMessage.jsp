@@ -36,21 +36,13 @@
 	                   <td>
 	                       <span class="t-title">通知类型：</span>
 	                       <span class="t-content">
-	                       		<c:if test="${msg.messageType == 'STUDENT_MESSAGE_CLASSTYPE' }">
-	                       			课程通知
-	                       		</c:if>
-	                       		<c:if test="${msg.messageType == 'STUDENT_MESSAGE_MODULENO' }">
-	                       			班号通知
-	                       		</c:if>
-	                       		<c:if test="${msg.messageType == 'STUDENT_MESSAGE_SPECIAL' }">
-	                       			指定通知
-	                       		</c:if>
-	                       		<c:if test="${msg.messageType == 'STUDENT_MESSAGE_GROUP' }">
-	                       			分组通知
-	                       		</c:if>
-	                       		<c:if test="${msg.messageType == 'STUDENT_MESSAGE_WEIXIN' }">
-	                       			微信通知
-	                       		</c:if>
+	                       		<c:choose>
+	                       			<c:when test="${msg.messageType == 'STUDENT_MESSAGE_CLASSTYPE' }">课程通知</c:when>
+	                       			<c:when test="${msg.messageType == 'STUDENT_MESSAGE_MODULENO' }">班号通知</c:when>
+	                       			<c:when test="${msg.messageType == 'STUDENT_MESSAGE_SPECIAL' }">指定通知</c:when>
+	                       			<c:when test="${msg.messageType == 'STUDENT_MESSAGE_GROUP' }">分组通知</c:when>
+	                       			<c:when test="${msg.messageType == 'STUDENT_MESSAGE_WEIXIN' }">微信通知</c:when>
+	                       		</c:choose>
 	                       </span>
 	                   </td>
 	                   <td>
@@ -74,15 +66,11 @@
 	                   <td>
 	                       <span class="t-title">操作人：</span>
 	                       <span class="t-content">
-							<c:if test="${!empty msg.creatorName}">
-								${msg.creatorName }
-							</c:if>
-							<c:if test="${empty msg.creatorName && !empty msg.username}">
-								${msg.username }
-							</c:if>
-							<c:if test="${empty msg.creatorName && empty msg.username}">
-								${msg.mobile }
-							</c:if>
+		                       <c:choose>
+		                       	<c:when test="${!empty msg.creatorName}">${msg.creatorName }</c:when>
+		                       	<c:when test="${!empty msg.username}">${msg.username }</c:when>
+		                       	<c:otherwise>${msg.mobile }</c:otherwise>
+		                       </c:choose>
 	                      </span>
 	                   </td>
 	                   <td rowspan="2">
@@ -93,18 +81,13 @@
 	                   <td>
 	                       <span class="t-title">通知方式：</span>
 	                       <span class="t-content">
-	                       		<c:if test="${msg.messageMethod == 'STUDENT_MESSAGE_MOBILE' }">
-	                       			短信通知
-	                       		</c:if>
-	                       		<c:if test="${msg.messageMethod == 'STUDENT_MESSAGE_WEB' }">
-	                       			站内信
-	                       		</c:if>
-	                       		<c:if test="${msg.messageMethod == 'STUDENT_MESSAGE_EMAIL' }">
-	                       			邮件通知
-	                       		</c:if>
-	                       		<c:if test="${msg.messageMethod == 'STUDENT_MESSAGE_MOBILE_WEIXIN' }">
-	                       			微信指定通知
-	                       		</c:if>
+		                       <c:choose>
+			                       	<c:when test="${msg.messageMethod == 'STUDENT_MESSAGE_MOBILE'}">短信通知</c:when>
+			                       	<c:when test="${msg.messageMethod == 'STUDENT_MESSAGE_WEB'}">站内信</c:when>
+			                       	<c:when test="${msg.messageMethod == 'STUDENT_MESSAGE_DINGYUE'}">订阅文章</c:when>
+			                       	<c:when test="${msg.messageMethod == 'STUDENT_MESSAGE_EMAIL'}">邮件通知</c:when>
+			                       	<c:when test="${msg.messageMethod == 'STUDENT_MESSAGE_MOBILE_WEIXIN'}">微信指定通知</c:when>
+		                       </c:choose>
 	                       </span>
 	                   </td>
 	                   <td>
@@ -135,26 +118,18 @@
                         <h2 class="h6">
                         	<span>发送时间：<span class="send-time"><fmt:formatDate value="${msg.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></span></span> 
                         	<span class="t-name">发送人：
-								<c:if test="${!empty msg.creatorName}">
-									${msg.creatorName }
-								</c:if>
-								<c:if test="${empty msg.creatorName && !empty msg.username}">
-									${msg.username }
-								</c:if>
-								<c:if test="${empty msg.creatorName && empty msg.username}">
-									${msg.mobile }
-								</c:if>
+		                       <c:choose>
+			                       	<c:when test="${!empty msg.creatorName}">${msg.creatorName }</c:when>
+			                       	<c:when test="${!empty msg.username}">${msg.username }</c:when>
+			                       	<c:otherwise>${msg.mobile }</c:otherwise>
+		                       </c:choose>
                         	</span>
                         	<span class="t-name">通知状态：
-                        		<c:if test="${msg.messageStatus == 'STUDENT_MESSAGE_CREATE' }">
-                        			未提交发送
-                        		</c:if>
-                        		<c:if test="${msg.messageStatus == 'STUDENT_MESSAGE_COMMIT' }">
-                        			已提交发送
-                        		</c:if>
-                        		<c:if test="${msg.messageStatus == 'STUDENT_MESSAGE_FINISH' }">
-                        			已执行
-                        		</c:if>
+                        		<c:choose>
+                        			<c:when test="${msg.messageStatus == 'STUDENT_MESSAGE_CREATE' }">未提交发送</c:when>
+                        			<c:when test="${msg.messageStatus == 'STUDENT_MESSAGE_COMMIT' }">已提交发送</c:when>
+                        			<c:when test="${msg.messageStatus == 'STUDENT_MESSAGE_FINISH' }">已执行</c:when>
+                        		</c:choose>
                         	</span>
                         </h2>
                     </div>
@@ -167,7 +142,7 @@
                                 </span>
                             </span>
                         </div>
-                  		<c:if test="${msg.messageMethod != 'STUDENT_MESSAGE_WEB' }">
+                  		<c:if test="${msg.messageMethod != 'STUDENT_MESSAGE_WEB' and msg.messageMethod != 'STUDENT_MESSAGE_DINGYUE'}">
                         <p class="c">
                             <span class="c-title">成功发送：</span>
                             <span class="c-content">
@@ -197,43 +172,26 @@
                             </span>
                         </p>
                   		</c:if>
-						<div>
-							<span class="c-title">订阅统计：</span>
-							<button class="btn btn-primary checkOutData">导出名单</button>
-							<div class="">
-								<table class="table table-center">
-									<tr>
-										<th width="15%" >序号</th>
-										<th width="15%" >手机号</th>
-										<th width="15%" >用户名称</th>
-										<th width="15%" >报名</th>
-										<th width="15%" >同意</th>
-										<th width="15%" >反对</th>
-									</tr>
-									<tr>
-										<td>1</td>
-										<td>xxxxxxx</td>
-										<td>xxxxxxx</td>
-										<td>xxxxxxx</td>
-										<td>1</td>
-										<td>0</td>
-									</tr>
-									<tr>
-										<td>1</td>
-										<td>xxxxxxx</td>
-										<td>xxxxxxx</td>
-										<td>xxxxxxx</td>
-										<td>1</td>
-										<td>0</td>
-									</tr>
-
-								</table>
-								<div class="pages ">
-									<ul class="pagination">
-									</ul>
+                  		<c:if test="${msg.messageMethod eq 'STUDENT_MESSAGE_DINGYUE'}">
+                  		   <form method="post" id="exportDingyueForm">
+		                  		<div>
+									<span class="c-title">订阅统计：</span>
+									<button class="btn btn-primary checkOutData">导出名单</button>
+									<input type="hidden" value="${msg.id }" name="msgId" id="msgId"/>
+									<input type="hidden" value="5" name="pageSize"  id="pageSize"/>
+									<input type="hidden" value="${msg.messageMethod }" id="messageMethod"/>
+									<div class="" style="margin-top: 25px;">
+										<div class="dingyue_detaillist">
+	                
+	          							</div>
+										<div class="pages ">
+											<ul class="pagination">
+											</ul>
+										</div>
+									</div>
 								</div>
-							</div>
-						</div>
+							</form>
+                  		</c:if>
                     </div>
                 </div>
             </div>
@@ -268,20 +226,9 @@
     </div>
     <div class="loading-bg lp-units-loading-bg" style="display:none"></div>
 <!--  ajax加载中div结束 -->
-<script>
-    //    分页
-    $(".pagination").pagination($("#rowCount").val(), {
-        next_text : "下一页",
-        prev_text : "上一页",
-        current_page : ($("#pageNo").val() - 1),
-        link_to : "javascript:;",
-        num_display_entries : 5,
-        items_per_page : $("#pageSize").val(),
-        num_edge_entries : 1,
-        callback : function(page, jq) {
-            var pageNo = page + 1;
-        }
-    });
+<script type="text/javascript">
+
+
 </script>
 </body>
 </html>
