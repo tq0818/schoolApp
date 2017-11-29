@@ -12,16 +12,19 @@
 <body>
 <jsp:include page="/WEB-INF/jsp/menu/menu_student.jsp"/>
 <div class="u-wrap set-system">
+<input type="hidden" id="userid" name="userid" value="${user.id }"></input>
+<input type="hidden" id="username" name="username" value="${user.username}"></input>
+<input type="hidden" name="total_score_id" id="total_score_id" value="${totalScoreVo.totalScoreId}"></input>
     <div class="mainbackground nopadding">
         <div class="heading integralHeading">
             <h2 class="h5 integralH5">学生积分修改</h2>
             <span class="">
                 <a href="##">姓名:</a>
-                <span>张三</span>
+                <span>${totalScoreVo.stuName}</span>
             </span>
             <span>
                 <a href="##">现有积分:</a>
-                <span>999</span>
+                <span id="integral">${totalScoreVo.totalScore}</span>
             </span>
             <span class="line"></span>
         </div>
@@ -34,25 +37,22 @@
                     <th width="20%" >积分变更时间</th>
                     <th width="20%" >操作人</th>
                 </tr>
+                <c:forEach items="${totalScoreVo.scoreDetailsAppVos}" var="scoreDetailsAppVo" varStatus="status">
                 <tr>
-                    <td>1</td>
-                    <td>课程报名自动通知</td>
-                    <td>2</td>
-                    <td>2017/11/01 18:39</td>
-                    <td>系统</td>
+	                    <td>${status.count+1}</td>
+	                    <td>${scoreDetailsAppVo.origin}</td>
+	                    <td>${scoreDetailsAppVo.itemScore}</td>
+	                    <td>${scoreDetailsAppVo.createTime}</td>
+	                    <td>${scoreDetailsAppVo.fixedPerson}</td>
                 </tr>
+                </c:forEach>
             </table>
-            <%--<div class="pages ">--%>
-                <%--<ul class="pagination">--%>
-
-                <%--</ul>--%>
-            <%--</div>--%>
             <div class="changeIntegral">
                 <input type="text" class="integralInput">
-                <select class="integralselect">
-                    <option value="1">选择积分调整理由</option>
-                    <option value="2">选择积分调整理由</option>
-                    <option value="3">选择积分调整理由</option>
+                <select class="integralselect" id="integral" name="integral">
+                    <c:forEach items="${scoreRulsAppVos}" var="scoreRulsAppVo">
+						<option value="${scoreRulsAppVo.id}">${scoreRulsAppVo.scoreTopic}</option>
+					</c:forEach>
                 </select>
                 <button class="btn btn-primary adjusting">调整积分</button>
             </div>
@@ -63,7 +63,11 @@
         </div>
     </div>
 </div>
-
+<div>
+<form id="saveData">
+<input type="hidden" id="userFrontId" name="userFrontId" value="${totalScoreVo.userId}"></input>
+</form>
+</div>
 <!-- ajax加载中div开始 -->
 <div class="loading lp-units-loading" style="display:none">
     <p><i></i>加载中,请稍后...</p>
@@ -84,22 +88,57 @@
 //            var pageNo = page + 1;
 //        }
 //    });
-
+$('.btn-success').click(function(){
+	
+	$.ajax({
+    	url: rootPath+"/student/saveOrUpdateTotalScore",
+    	dataType: "json",
+    	type: "post",
+    	data:$('#saveData').serialize(),
+    	success: function(jsonData){
+    		if(jsonData)
+    			$.msg('保存成功');
+    		else 
+    			$.msg('保存失败');
+    	}
+    })
+});
 //点击积分调整，增加一条
-
 $('.adjusting').click(function () {
     var integralInput = $('.integralInput').val();
+    if(integralInput==""||integralInput==undefined){
+    	$.msg("积分值不能为空！");
+    	return;
+    }
+    var integralTotalScore=$.trim($('#integral').text());
+    if(integralInput.indexOf('-')>-1){
+    	integralTotalScore=parseInt(integralTotalScore)-parseInt(integralInput.substring(1));
+    }else if(integralInput.indexOf('+')>-1){
+    	integralTotalScore=parseInt(integralTotalScore)+parseInt(integralInput.substring(1));
+    }else{
+    	integralTotalScore=parseInt(integralTotalScore)+parseInt(integralInput);
+    }
+    $('#integral').text(integralTotalScore);
+    var userid=$('#userid').val();
+    var username=$('#username').val();
     var integralselect = $('.integralselect').children('option:selected ').html();
-    var index = $('.table-center').find('tr').length;
-    var integralDate = new Date();
-    var _html =   `<tr>
-                    <td>`+index+`</td>
-                    <td>`+integralselect+`</td>
-                    <td>`+integralInput+`</td>
-                    <td>`+integralDate+`</td>
-                    <td>系统</td>
-                    </tr>`;
-    $('table').append(_html);
+    var index = $('.table-center').find('tr').length-1;
+    $.ajax({
+    	url: rootPath+"/student/getTime",
+    	dataType: "json",
+    	success: function(time){
+    		var _html ="<tr><td>"+index+"</td>"+
+            "<td>"+integralselect+"</td>"+
+            "<td>"+integralInput+"</td>"+
+            "<td>"+time+"</td>"+
+            "<td>"+username+"</td>"+
+            "</tr>";
+			$('table').append(_html);
+			var value=integralselect+"_"+integralInput+"_"+time+"_"+userid;
+			var html='<input type="hidden" name="strValue" value="'+value+'"/>';
+			$('#saveData').append(html);
+    	}
+    })
 });
 </script>
 </body>

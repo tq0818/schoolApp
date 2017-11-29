@@ -52,7 +52,7 @@
 					</i>
 				</c:if>
 				<c:if test="${allCommdotity.originType eq 1}">
-					<i class="add-com" id="com${allCommdotity.id}" marks="${allCommdotity.recommendFlag}" style="display: none;" onclick="Form.collectShop(${allCommdotity.id})">${allCommdotity.recommendFlag==1?'取消推荐':'加入推荐' }</i>
+					<i class="add-com" id="com${allCommdotity.id}" marks="${allCommdotity.recommendFlag}" style="display: none;margin-right: 27px" onclick="Form.collectShop(${allCommdotity.id})">${allCommdotity.recommendFlag==1?'取消推荐':'加入推荐' }</i>
 				</c:if>
 				<div class="infos-pic">
 					<a href="javascript:Form.showClassTypeDetail(${allCommdotity.id },'${allCommdotity.typeCode }');">

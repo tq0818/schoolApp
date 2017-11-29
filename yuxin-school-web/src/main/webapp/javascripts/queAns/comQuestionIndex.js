@@ -51,6 +51,44 @@ $(function(){
 
 		selTwoAns(parent.attr("data-id"),parent);
 	})
+	.on("click",".cn",function(){
+		//采纳
+		var parent = $(this).parents(".oneanswer");
+		if(req != null){
+			req.abort();
+		}
+		req = $.ajax({
+			url : rootPath + "/questionanswermanager/adoptAns",
+			type:"post",
+			data:{"id":$(this).attr("data-id")},
+			dataType:"json",
+			success:function(data){
+				if(data.msg == "success"){
+					alert("采纳成功");
+					selOneAns(1);
+				}
+			}
+		});
+	})
+	.on("click",".dz",function(){
+		//点赞
+		var parent = $(this).parents(".oneanswer");
+		if(req != null){
+			req.abort();
+		}
+		req = $.ajax({
+			url : rootPath + "/questionanswermanager/thumbs",
+			type:"post",
+			data:{"id":$(this).attr("data-id"),"types":$(this).attr("data-types")},
+			dataType:"json",
+			success:function(data){
+				if(data.msg == "success"){
+					alert("点赞成功");
+					selOneAns(1);
+				}
+			}
+		});
+	})
 	.on("click",".del",function(){
 		var parent = $(this).parents(".oneanswer");
 		//删除回答

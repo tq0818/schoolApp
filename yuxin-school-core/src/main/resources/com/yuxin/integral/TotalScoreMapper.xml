@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuxin.wx.integral.mapper.TotalScoreMapper">
+	<resultMap type="com.yuxin.wx.model.integral.TotalScoreVo" id="totalScoreVoResult">
+		<result property="totalScoreId" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="totalScore" column="total_score" />
+		<result property="stuName" column="name" />
+	</resultMap>
+	<resultMap type="com.yuxin.wx.model.integral.ScoreDetailsAppVo" id="scoreDetailsAppVo">
+		<result property="id" column="id" />
+		<result property="itemScore" column="item_score" />
+		<result property="origin" column="origin" />
+		<result property="createTime" column="createTime"/>
+		<result property="fixedPerson" column="fixed_person"/>
+	</resultMap>
+	<resultMap type="com.yuxin.wx.model.integral.ScoreRulsAppVo" id="scoreRulsAppVos">
+		<result property="id" column="id" />
+		<result property="scoreTopic" column="score_topic" />
+		<result property="score" column="score" />
+		<result property="validTime" column="validTime"/>
+		<result property="oprator" column="oprator"/>
+	</resultMap>
+	<select id="queryTotalScoreVoByUserFrontId" resultMap="totalScoreVoResult" parameterType="String">
+		select ts.id,stu.name,stu.id,
+		case ts.total_score 
+		when not null then ts.total_score
+		else 0
+		end as total_score
+		from users_front uf
+		inner join student stu on stu.user_id=uf.id
+		left join total_score ts on ts.`user_id`=uf.id
+		where stu.id=${studentId}
+	</select>
+	<select id="queryscoreDetailsAppByScoreDetailsApp" resultMap="scoreDetailsAppVo" parameterType="String">
+		select id,item_score,origin,create_time,fixed_person from score_details_app
+		where total_score_id=${totalScoreId}
+	</select>
+	<select id="queryScoreRulsAppVos" resultMap="scoreRulsAppVos">
+		select id,score_topic,score,valid_time,oprator from score_ruls_app
+		where ststus=1
+	</select>
+</mapper>

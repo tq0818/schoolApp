@@ -3672,4 +3672,97 @@
 		</foreach>
 		order by s.id DESC
 	</select>
+	<resultMap type="com.yuxin.wx.model.integral.TotalScoreVo" id="totalScoreVoResult">
+		<result property="totalScoreId" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="totalScore" column="total_score" />
+		<result property="stuName" column="name" />
+	</resultMap>
+	<resultMap type="com.yuxin.wx.model.integral.ScoreDetailsAppVo" id="scoreDetailsAppVo">
+		<result property="id" column="id" />
+		<result property="itemScore" column="item_score" />
+		<result property="origin" column="origin" />
+		<result property="createTime" column="create_time"/>
+		<result property="fixedPerson" column="fixed_person"/>
+	</resultMap>
+	<resultMap type="com.yuxin.wx.model.integral.ScoreRulsAppVo" id="scoreRulsAppVos">
+		<result property="id" column="id" />
+		<result property="scoreTopic" column="score_topic" />
+		<result property="score" column="score" />
+		<result property="validTime" column="valid_time"/>
+		<result property="invalidTime" column="invalid_time"/>
+		<result property="ststus" column="ststus"/>
+		<result property="oprator" column="oprator"/>
+	</resultMap>
+	<select id="queryTotalScoreVoByUserFrontId" resultMap="totalScoreVoResult" parameterType="map">
+		select ts.id,stu.name,stu.user_id,
+		case when ts.total_score is not null then ts.total_score
+		else 0
+		end as total_score
+		from users_front uf
+		inner join student stu on stu.user_id=uf.id
+		left join total_score ts on ts.user_id=uf.id
+		where 1=1
+		<if test="studentId!=null and studentId!=''">and stu.id=#{studentId}</if>
+		<if test="userFrontId!=null and userFrontId!=''">and stu.user_id=#{userFrontId}</if>
+	</select>
+	<select id="queryscoreDetailsAppByScoreDetailsApp" resultMap="scoreDetailsAppVo" parameterType="map">
+		select sd.id,
+		case 
+		reduce_add_flag
+		when 0 then CONCAT('-',item_score)
+		else CONCAT('+',item_score)
+		end as item_score,
+		origin,sd.create_time,u.username fixed_person
+		from score_details_app sd
+		left join users u on u.id=sd.fixed_person
+		where total_score_id=#{totalScoreId}
+	</select>
+	<select id="queryScoreRulsAppVos" resultMap="scoreRulsAppVos">
+		select id,score_topic,score,date_format(valid_time,'%Y-%c-%d %H:%i:%s') valid_time,oprator from score_ruls_app
+		where ststus=1
+	</select>
+	<select id="queryPageScoreRulsAppVos" resultMap="scoreRulsAppVos" parameterType="com.yuxin.wx.model.integral.ScoreRulsAppVo">
+		select id,score_topic,score,date_format(valid_time,'%Y-%c-%d %H:%i:%s') valid_time,date_format(invalid_time,'%Y-%c-%d %H:%i:%s') invalid_time,oprator,ststus from score_ruls_app
+		limit #{firstIndex},#{pageSize}
+	</select>
+	<select id="queryPageScoreRulsAppVosCount" resultType="int">
+		select count(1) from score_ruls_app
+	</select>
+	<select id="queryTotalScoreVoByUserId" resultMap="totalScoreVoResult" parameterType="map">
+		select ts.id,ts.total_score 
+		from total_score ts
+		where ts.user_id=#{userFrontId}
+	</select>
+	<update id="updateTotalScore" parameterType="com.yuxin.wx.model.integral.TotalScoreVo">
+		update total_score set total_score = #{totalScore}
+		<where>
+			id=#{totalScoreId}
+		</where>
+	</update>
+	<!-- 批量添加 适用于主键自增类型  不支持返回主键-->
+	<insert id="insertScoreDetailsApp" parameterType="java.util.List" useGeneratedKeys="true">
+		insert into score_details_app(item_score,origin,fixed_person,total_score_id,reduce_add_flag)
+		values
+		<foreach item="item" collection="list" separator="," >
+			(#{item.itemScore},#{item.origin},#{item.fixedPerson},#{item.totalScoreId},#{item.reduceAddFlag})
+		</foreach>
+	</insert>
+	<!-- 适用于主键自增类型 -->
+	<insert id="insertTotalScore" parameterType="com.yuxin.wx.model.integral.TotalScoreVo" useGeneratedKeys="true" keyProperty="id">
+		insert into total_score(user_id,total_score)
+		values (#{userId},#{totalScore})
+	</insert>
+	<update id="updateScoreRulsAppStatus" parameterType="com.yuxin.wx.model.integral.ScoreRulsAppVo">
+		update score_ruls_app 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="ststus != null and ststus != ''">ststus = #{bsstus},</if>
+			<if test="score != null and score != ''">score = #{score},</if>
+			<if test="validTime != null and validTime != ''">valid_time = #{validTime},</if>
+			<if test="invalidTime != null and invalidTime != ''">invalid_time = #{invalidTime},</if>
+		</trim>
+		<where>
+			id=#{id}
+		</where>
+	</update>
 </mapper>

@@ -47,6 +47,9 @@ $(function(){
             <%--<shiro:hasPermission name="">--%>
                  <li code="notificationTemplate"><a href="<%=rootPath %>/student/notificationTemplate" >通知模板</a></li>
             <%--</shiro:hasPermission>--%>
+            <%--<shiro:hasPermission name="">--%>
+            <li code="integralRule"><a href="<%=rootPath %>/integralRule" >配置积分规则</a></li>
+            <%--</shiro:hasPermission>--%>
         </ul>
     </div>
 </div>

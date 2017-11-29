@@ -93,6 +93,11 @@
 				<c:if test="${types == 3 }">
 					<span class="del" style="margin-left:10px;cursor: pointer;" data-id="${a.id }" data-types="1"><i class="iconfont">&#xe626;</i><span class="xzi">删除</span></span>
 				</c:if>
+				<c:if test="${a.isAdopt != 1}">
+					<span class="cn" style="margin-left:10px;cursor: pointer;"  data-id="${a.id }" ><i class="iconfont">&#xe605;</i><span class="xzi">采纳</span></span>
+				</c:if>
+				<span class="dz" style="margin-left:10px;cursor: pointer;"  data-id="${a.id }" data-types="${a.isThumbs}"><i class="iconfont">&#xe64e;</i><span class="xzi">点赞</span><span>${a.likeanswer}</span></span>
+				<!-- <span class="del" style="margin-left:10px;cursor: pointer;"  ><i class="iconfont">&#xe621;</i><span class="xzi">审核</span></span> -->
 			</div>
 		</td>
 	</tr>

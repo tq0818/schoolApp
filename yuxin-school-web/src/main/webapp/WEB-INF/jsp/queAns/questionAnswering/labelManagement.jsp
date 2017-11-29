@@ -69,22 +69,37 @@
     		alert("标签不能为空");
     		return;
     	}else{
-    	$('.labelInputContent').css('display','none');
-    	$('.labelAddContent').show();
-        $.ajax({
-			url: rootPath + "/Question/addLab",
-			type:"post",
-			data:{"systemLab":$('#systemLab').val(),"biaoshi" : 1},
-			dataType:"json",
-			success:function(data){
-				if(data == 'success'){
-					alert("保存成功");
-					location.reload();
-					
-					window.location.href = "labelManagement";
+    		$.ajax({
+				url: rootPath + "/Question/checkName",
+				type:"post",
+				data:{"systemLab":$('#systemLab').val(),"biaoshi":1},
+				dataType:"json",
+				success:function(data){
+					if(data == 'success'){
+						$('.labelInputContent').css('display','none');
+				    	$('.labelAddContent').show();
+				        $.ajax({
+							url: rootPath + "/Question/addLab",
+							type:"post",
+							data:{"systemLab":$('#systemLab').val(),"biaoshi" : 1},
+							dataType:"json",
+							success:function(data){
+								if(data == 'success'){
+									alert("保存成功");
+									location.reload();
+									
+									window.location.href = "labelManagement";
+								}
+							}
+						});
+					}else{
+						alert("标签名称不能重复");
+						 $("#systemLab").val('');
+					}
 				}
-			}
-		});
+			});
+		
+    	
 //      此处可发起ajax请求
     	}
     });

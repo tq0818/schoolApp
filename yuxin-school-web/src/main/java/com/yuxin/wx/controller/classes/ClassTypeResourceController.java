@@ -203,7 +203,12 @@ public class ClassTypeResourceController {
         String filename = UUID.randomUUID().toString();
         String officepath = propertiesUtil.getFileStoragePath() + filename
                 + suffix;
+
         File f = new File(officepath);
+        File file = new File(propertiesUtil.getFileStoragePath());
+        if(!file.exists()){
+            file.mkdir();
+        }
         boolean ism = true;
         try {
             // 判断是否为图像

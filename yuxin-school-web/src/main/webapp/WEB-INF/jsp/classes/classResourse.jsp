@@ -12,7 +12,6 @@
 	<script type="text/javascript" src="<%=rootPath %>/javascripts/operate.js"></script>
 	<script type="text/javascript" src="<%=rootPath %>/javascripts/plus/jquery.pagination.js"></script>
 	<script type="text/javascript" src="<%=rootPath %>/javascripts/company/jquery.cityselect.js"></script>
-	<script type="text/javascript" src="<%=rootPath%>/javascripts/ajaxfileupload.js"></script>
 	<script type="text/javascript" src="<%=rootPath%>/javascripts/class/res/classres.js"></script>
 	<style type="text/css">
 		.btn-upload{float: right;margin-top:-15px}

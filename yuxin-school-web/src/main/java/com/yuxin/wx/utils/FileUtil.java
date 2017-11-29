@@ -576,7 +576,6 @@ public class FileUtil {
 		try {
 			InputStream in = new FileInputStream(file);
 			FileUtils.copyInputStreamToFile(in, new File(realPath));
-			System.out.println(realPath);
 			in.close();
 			json.put(JsonMsg.MSG, JsonMsg.SUCCESS);
 			json.put("filePath", path);

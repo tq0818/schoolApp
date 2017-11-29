@@ -170,7 +170,7 @@ function toShelves(flag,editFlag){
 				alert("失败")
 			}
 		}
-	});			
+	});
 }
 
 function savePic(){
@@ -182,7 +182,8 @@ function savePic(){
 		dataType:'json',
 		type : "POST",
 		success : function(data) {
-			$("#pic").attr("src",data.url);
+			// $("#pic").attr("src",data.url);
+			console.log("上传成功！");
 		},
 		error:function(arg1,arg2,arg3){
 			//console.log(arg1);

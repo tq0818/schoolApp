@@ -126,6 +126,18 @@ public interface IQuestionService  {
 	boolean  insert(QuestionClassify questionClassify);
 	/**
 	 * 
+	 * @author jishangyang 2017年11月29日 上午10:21:38
+	 * @Method: insertLabReturnId 
+	 * @Description: 点击发布按钮 保存自定义标签 保存发布问题
+	 * @param arrTagName
+	 * @param arrTagId
+	 * @param queQuestion
+	 * @return 
+	 * @throws
+	 */
+	boolean  insertLabReturnId(String [] arrTagName,String [] arrTagId,QueQuestion queQuestion);
+	/**
+	 * 
 	 * @author jishangyang 2017年11月28日 下午3:58:09
 	 * @Method: delet 
 	 * @Description: 删除标签
@@ -134,4 +146,14 @@ public interface IQuestionService  {
 	 * @throws
 	 */
 	boolean  delet(QuestionClassify questionClassify);
+	/**
+	 * 
+	 * @author jishangyang 2017年11月29日 下午1:14:04
+	 * @Method: check 
+	 * @Description: 检验标签是否重名
+	 * @param questionClassify
+	 * @return 
+	 * @throws
+	 */
+	boolean  check(QuestionClassify questionClassify);
 }

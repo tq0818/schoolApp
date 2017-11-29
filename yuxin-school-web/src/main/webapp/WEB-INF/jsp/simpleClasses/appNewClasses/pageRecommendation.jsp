@@ -86,14 +86,14 @@
             <tbody>
             <tr>
                 <th width="1%"><input type="checkbox" class="checkboxAll"></th>
-                <th width="5%">课程图片</th>
+                <%--<th width="5%">课程图片</th>--%>
                 <th width="7%">课程名称</th>
                 <th width="5%">学段</th>
                 <th width="5%">学科</th>
                 <th width="11%">知识点专题</th>
                 <th width="11%">知识点</th>
-                <th width="6%">阶段</th>
-                <th width="6%">类型</th>
+               <%-- <th width="6%">阶段</th>
+                <th width="6%">类型</th>--%>
                 <th width="7%">上架时间</th>
                 <th width="7%">直播时间</th>
                 <th width="5%">学习人数</th>

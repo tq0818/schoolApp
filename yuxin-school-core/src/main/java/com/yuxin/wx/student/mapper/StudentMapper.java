@@ -7,6 +7,9 @@ import com.yuxin.wx.common.BaseMapper;
 import com.yuxin.wx.model.classes.ClassModuleNo;
 import com.yuxin.wx.model.classes.ClassType;
 import com.yuxin.wx.model.company.CompanyStudentMessage;
+import com.yuxin.wx.model.integral.ScoreDetailsAppVo;
+import com.yuxin.wx.model.integral.ScoreRulsAppVo;
+import com.yuxin.wx.model.integral.TotalScoreVo;
 import com.yuxin.wx.model.student.Student;
 import com.yuxin.wx.vo.student.SelectStudentOrUsersfrontVo;
 import com.yuxin.wx.vo.student.StuVo;
@@ -302,4 +305,63 @@ public interface StudentMapper extends BaseMapper<Student> {
 	Student findStudentOnlyByUserId(Integer id);
 	
 	List<StudentListVo> queryStudentsListByIds(Integer[] ids);
+	
+	/**
+	 * 通过学生标识号返回集合
+	 * @param studentId 学生标识号
+	 * @return 返回对象值
+	 */
+	List<TotalScoreVo> queryTotalScoreVoByUserFrontId(Map<String,Object> params);
+	
+	/**
+	 * 返回积分详情集合
+	 * @param totalScoreId 积分标识号
+	 * @return 返回积分集合
+	 */
+	List<ScoreDetailsAppVo> queryscoreDetailsAppByScoreDetailsApp(Map<String,Object> params);
+	/**
+	 * 查询所有积分规则
+	 * @return 返回积分规则集合
+	 */
+	List<ScoreRulsAppVo> queryScoreRulsAppVos();
+	/**
+	 * 通过用户仅返回用户的积分信息
+	 * @param params
+	 * @return
+	 */
+	List<TotalScoreVo> queryTotalScoreVoByUserId(Map<String,Object> params);
+	/**
+	 * 更新总积分表
+	 * @param totalScoreVo
+	 */
+	void updateTotalScore(TotalScoreVo totalScoreVo);
+	/**
+	 * 插入积分详细表
+	 * @param scoreDetailsAppVo
+	 */
+	void insertScoreDetailsApp(List<ScoreDetailsAppVo> scoreDetailsAppVos);
+	/**
+	 * 插入总积分表
+	 * @param totalScoreVo
+	 */
+	void insertTotalScore(TotalScoreVo totalScoreVo);
+	
+	/**
+	 * 查询积分规则总数
+	 * @return
+	 */
+	int queryPageScoreRulsAppVosCount();
+	
+	/**
+	 * 查询积分规则数据
+	 * @return
+	 */
+	List<ScoreRulsAppVo> queryPageScoreRulsAppVos(ScoreRulsAppVo scoreRulsAppVo);
+	/**
+	 * 更新积分状态
+	 * @param params
+	 * @return
+	 */
+	Integer updateScoreRulsAppStatus(ScoreRulsAppVo scoreRulsAppVo);
+	
 }
