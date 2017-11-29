@@ -61,6 +61,7 @@ public class QuestionVo extends BaseEntity {
 	private List<QuestionClassifyRelation> relList;/*问题所含标签*/
 	private List<QuestionAnswer> answerList;
 	private Integer collectCount;//收藏数
+	private String nickName;//昵称
 	// Constructor
 	public QuestionVo() {
 	}
@@ -453,6 +454,14 @@ public class QuestionVo extends BaseEntity {
 
 	public void setCollectCount(Integer collectCount) {
 		this.collectCount = collectCount;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 	
 }

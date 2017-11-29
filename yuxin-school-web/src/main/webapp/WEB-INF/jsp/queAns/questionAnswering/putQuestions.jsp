@@ -37,11 +37,11 @@
             </div>
             <div class="checkBoxBtn">
                 <span>自定义标签:</span>
-                <span id="zdyBtn">
+                <div id="zdyBtn">
 	                <c:forEach items="${userDefinedTag }" var="udt" varStatus="status">
 	                	<button type="button" class="btn btn-default" name="panduan" labtype="0" ids="${udt.id }">${udt.labName }</button>
 	                </c:forEach>
-               </span>
+               </div>
                 <ul class="putQuestionContent">
                     <li class="labelInputContent">
                         <input type="text" class="customTag" id="systemLab" name="systemLab">
@@ -175,7 +175,7 @@
     		 alert("积分打赏不能为空");
     		 return;
     	 }
-    	 var questionDesc=$("#edit").text();
+    	 var questionDesc=$("#edit").innerText;
     	 var systemId=new Array();
     	 var userDefued=new Array();
     	 var count=0;

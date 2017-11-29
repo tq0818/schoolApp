@@ -338,4 +338,23 @@ public interface StudentMapper extends BaseMapper<Student> {
 	 * @param totalScoreVo
 	 */
 	void insertTotalScore(TotalScoreVo totalScoreVo);
+	
+	/**
+	 * 查询积分规则总数
+	 * @return
+	 */
+	int queryPageScoreRulsAppVosCount();
+	
+	/**
+	 * 查询积分规则数据
+	 * @return
+	 */
+	List<ScoreRulsAppVo> queryPageScoreRulsAppVos(ScoreRulsAppVo scoreRulsAppVo);
+	/**
+	 * 更新积分状态
+	 * @param params
+	 * @return
+	 */
+	Integer updateScoreRulsAppStatus(ScoreRulsAppVo scoreRulsAppVo);
+	
 }

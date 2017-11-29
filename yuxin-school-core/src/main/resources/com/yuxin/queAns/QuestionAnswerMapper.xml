@@ -17,6 +17,9 @@
 		<result property="replyUserName" column="reply_user_name" />
 		<result property="readFlag" column="read_flag" />
 		<result property="replyUserType" column="reply_user_type" />
+		<result property="likeanswer" column="like_anwser" />
+		<result property="isAdopt" column="is_accept" />
+		<result property="isThumbs" column="is_thumbs" />
 	</resultMap>
 	
 	<sql id="table_columns">
@@ -34,7 +37,28 @@
 		reply_user_id,
 		reply_user_name,
 		read_flag,
-		reply_user_type
+		reply_user_type,
+		is_accept,
+		like_anwser
+    </sql>
+	<sql id="table_columns_app">
+		t1.id as id,
+		t1.answer_desc as answer_desc,
+		t1.answer_id as answer_id,
+		t1.question_id as question_id,
+		t1.user_id as user_id,
+		t1.answer_type as answer_type,
+		t1.answer_level as answer_level,
+		t1.comment_count as comment_count,
+		t1.create_time as create_time,
+		t1.del_flag as del_flag,
+		t1.parent_id as parent_id,
+		t1.reply_user_id as reply_user_id,
+		t1.reply_user_name as reply_user_name,
+		t1.read_flag AS read_flag,
+		t1.reply_user_type as reply_user_type,
+		t1.is_accept as is_accept,
+		t1.like_anwser as like_anwser
     </sql>
 	<sql id="entity_properties">
 		#{id},
@@ -52,6 +76,8 @@
 		#{replyUserName},
 		#{readFlag},
 		#{replyUserType}
+		#{isAdopt}
+		#{likeanswer}
 	</sql>
 	<sql id="batch_entity_properties">
 		#{item.id},
@@ -68,7 +94,9 @@
 		#{item.replyUserId},
 		#{item.replyUserName},
 		#{item.readFlag},
-		#{item.replyUserType}
+		#{item.replyUserType},
+		#{item.isAdopt},
+		#{item.likeanswer}
 	</sql>
 	
 	<!-- 适用于主键自增类型 -->
@@ -118,6 +146,8 @@
 			<if test="replyUserName != null and replyUserName != ''">reply_user_name = #{replyUserName},</if>
 			<if test="readFlag != null">read_flag = #{readFlag},</if>
 			<if test="replyUserType != null and replyUserType != ''">reply_user_type = #{replyUserType},</if>
+			<if test="isAdopt != null and isAdopt != ''">is_accept = #{isAdopt},</if>
+			<if test="isThumbs != null and isThumbs != ''">like_anwser = #{isThumbs},</if>
 		</trim>
 		<where>id = #{id}</where>
 	</update>
@@ -165,11 +195,13 @@
 		<include refid="page_where" />
 	</select>
 	
+	
 	<!-- 其他自定义SQL -->
 	<!-- 根据问题id和分级下旬回复 -->
 	<select id="findAnsByQueId" parameterType="Integer" resultMap="questionAnswerResultMap">
-		select <include refid="table_columns"/>
-		from question_answer_app
+		select t2.is_thumbs,<include refid="table_columns_app"/>
+		from question_answer_app  t1
+		left join thumbs_up t2 on t1.id = t2.answer_id and t2.user_id=#{userId}
 		where question_id = #{questionId}
             and  answer_level = 1
             and del_flag = 1
@@ -205,4 +237,20 @@
 				#{item}
 			</foreach>
 	</update>
+	<!--点赞操作-->
+	<update id="updatQuestionAnswer" parameterType="com.yuxin.wx.model.queAns.QuestionAnswer">
+		update question_answer_app set like_anwser=like_anwser+1 where id=#{id}
+	</update>
+	
+	<update id="updatQuestionAnswer1" parameterType="com.yuxin.wx.model.queAns.QuestionAnswer">
+		update question_answer_app set like_anwser=like_anwser-1 where id=#{id}
+	</update>
+	<insert id="insertThumbs" parameterType="com.yuxin.wx.model.queAns.QuestionAnswer" useGeneratedKeys="true" keyProperty="id">
+		insert into thumbs_up (answer_id,user_id,is_thumbs) 
+		values ( #{id} ,#{userId} ,1 )
+	</insert>
+	<update id="updatethumbs" parameterType="com.yuxin.wx.model.queAns.QuestionAnswer">
+		update thumbs_up set is_thumbs=#{isThumbs} where answer_id=#{id} and user_id=#{userId}
+	</update>
+	
 </mapper>

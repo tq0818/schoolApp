@@ -33,11 +33,21 @@ public class ScoreRulsAppVo extends BaseEntity{
 	 * 状态
 	 */
 	private String ststus;
+	
+	private Integer bsstus;
 	/**
 	 * 更新时间
 	 */
 	private String updateTime;
 	
+	
+	
+	public Integer getBsstus() {
+		return bsstus;
+	}
+	public void setBsstus(Integer bsstus) {
+		this.bsstus = bsstus;
+	}
 	public String getScoreTopic() {
 		return scoreTopic;
 	}

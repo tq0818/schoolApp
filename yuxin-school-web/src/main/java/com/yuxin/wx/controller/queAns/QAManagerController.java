@@ -59,6 +59,8 @@ public class QAManagerController {
     public String selAnswer(Model model, HttpServletRequest request, QuestionAnswer ans, String types) {
         log.info("qa：查询qid:" + ans.getQuestionId() + "，下的回答");
         try {
+        	Integer userId = WebUtils.getCurrentUserId(request);
+        	ans.setUserId(userId);
             List<QuestionAnswer> anlist = questionAnswerServiceImpl.findAnsByQueId(ans);
             // 查询头像
             for (QuestionAnswer a : anlist) {
@@ -186,7 +188,83 @@ public class QAManagerController {
             return json;
         }
     }
+/**
+ * 
+ * @author jishangyang 2017年11月29日 下午3:31:22
+ * @Method: adoptAns 
+ * @Description:采纳
+ * @param request
+ * @param id
+ * @return 
+ * @throws
+ */
+    @ResponseBody
+    @RequestMapping("/adoptAns")
+    public JSONObject adoptAns(HttpServletRequest request, Integer id) {
+        JSONObject json = new JSONObject();
+        log.info("qa：采纳:");
+        try {
+            QuestionAnswer one = new QuestionAnswer();
+            one.setId(id);
+            one.setIsAdopt(1);
+            questionAnswerServiceImpl.update(one);
 
+            json.put(JsonMsg.MSG, JsonMsg.SUCCESS);
+            return json;
+            
+        } catch (Exception e) {
+            log.error("qa：采纳异常:" + e.getMessage(), e);
+            e.printStackTrace();
+            json.put(JsonMsg.MSG, JsonMsg.INFORMATION);
+            return json;
+        }
+    }
+    /**
+     * 
+     * @author jishangyang 2017年11月29日 下午4:20:56
+     * @Method: thumbs 
+     * @Description:点赞操作
+     * @param request
+     * @param id
+     * @param types
+     * @return 
+     * @throws
+     */
+    @ResponseBody
+    @RequestMapping("/thumbs")
+    public JSONObject thumbs(HttpServletRequest request, Integer id, String types) {
+    	JSONObject json = new JSONObject();
+    	Integer userId = WebUtils.getCurrentUserId(request);
+    	log.info("qa：点赞:");
+    	try {
+    		QuestionAnswer one = new QuestionAnswer();
+    		one.setId(id);
+    		one.setUserId(userId);
+    		if("1".equals(types)){
+    			one.setIsThumbs(0);
+    			one.setThumbsFlag(2);//2更新点赞状态
+    			questionAnswerServiceImpl.updatethumbs(one);
+    		}else if("".equals(types) || null==types){
+    			one.setIsThumbs(1);
+    			one.setThumbsFlag(1);//1插入点赞状态
+    			questionAnswerServiceImpl.updatethumbs(one);
+    		}else{
+    			one.setIsThumbs(1);
+    			one.setThumbsFlag(2);//2更新点赞状态
+    			questionAnswerServiceImpl.updatethumbs(one);
+    		}
+    		
+    		
+    		json.put(JsonMsg.MSG, JsonMsg.SUCCESS);
+    		return json;
+    		
+    	} catch (Exception e) {
+    		log.error("qa：点赞:" + e.getMessage(), e);
+    		e.printStackTrace();
+    		json.put(JsonMsg.MSG, JsonMsg.INFORMATION);
+    		return json;
+    	}
+    }
     /**
      * 
      * Class Name: QAController.java
@@ -208,6 +286,7 @@ public class QAManagerController {
         ans.setAnswerLevel(2);
         ans.setDelFlag(1);
         ans.setReadFlag(0);
+        ans.setLikeanswer(0);
         ans.setCreateTime(new Date());
         if (ans.getAnswerType().equals("3")) {
             ans.setAnswerType("QUESTION_ANSWER_MANAGE");

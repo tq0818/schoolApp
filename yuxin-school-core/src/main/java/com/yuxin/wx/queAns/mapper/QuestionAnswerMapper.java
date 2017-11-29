@@ -69,4 +69,17 @@ public interface QuestionAnswerMapper extends BaseMapper<QuestionAnswer> {
 	 * @return
 	 */
 	Integer findAnsCountByQueId(QuestionAnswer ans);
+	/**
+	 * 
+	 * @author jishangyang 2017年11月29日 下午4:18:06
+	 * @Method: updatethumbs 
+	 * @Description:点赞操作
+	 * @param ans
+	 * @return 
+	 * @throws
+	 */
+	Integer updatQuestionAnswer(QuestionAnswer ans);
+	Integer updatQuestionAnswer1(QuestionAnswer ans);
+	Integer insertThumbs(QuestionAnswer ans);
+	Integer updatethumbs(QuestionAnswer ans);
 }
