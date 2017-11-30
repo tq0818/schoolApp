@@ -45,7 +45,7 @@ public class ThreadSendMobileMessageTrigger implements Runnable {
 			return;
 		}
 
-		try {
+		/*try {
 			while (true) {
 				//log.info("短信通知触发站内通知--执行开始--");
 				List<CompanyMessageHistoryLog> logList=companyMessageHistoryService.queryAllMessageHistoryLog();
@@ -66,7 +66,7 @@ public class ThreadSendMobileMessageTrigger implements Runnable {
 		} catch (Exception e) {
 			new Thread(new ThreadSendMobileMessageTrigger(companyMessageHistoryService)).start();
 			return;
-		}
+		}*/
 	}
 
 }

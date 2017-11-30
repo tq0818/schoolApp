@@ -96,7 +96,7 @@ public class BaseWebController {
     public ModelAndView index(HttpServletRequest request, Model model) {
         ModelAndView mv = new ModelAndView();
         Subject subject = SecurityUtils.getSubject();
-        if(subject.hasRole("教科院")){
+       /* if(subject.hasRole("教科院")){
             mv.setViewName("redirect:/query/statistics/index");
         }else if(subject.hasRole("区县负责人")){
             mv.setViewName("redirect:/query/areastatistics/index");
@@ -104,7 +104,8 @@ public class BaseWebController {
             mv.setViewName("redirect:/query/orgstatistics/index");
         }else{
             mv.setViewName("index/index");
-        }
+        }*/
+        mv.setViewName("redirect:/simpleClasses/showClassTypePage");
         Session session = subject.getSession(true);
         Company currtCompany = companyServiceImpl.findCompanyById(WebUtils.getCurrentCompanyId());
         if (currtCompany != null) {

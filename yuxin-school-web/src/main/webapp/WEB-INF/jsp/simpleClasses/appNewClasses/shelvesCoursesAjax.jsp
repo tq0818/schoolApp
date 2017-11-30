@@ -133,7 +133,7 @@
         }
         var input="<input type='hidden' value='"+id+"' name='id'/><input type='hidden' value='"+liveType+"' name='lable'/>";
         $("#myForms").html(input);
-        $("#myForms").attr("action","/editSimpleCourse/editClassTypeMessage").submit();
+        $("#myForms").attr("action","<%=rootPath %>/editSimpleCourse/editClassTypeMessage").submit();
     }
     $('.editCourse').click(function(){
         $('.popupContainerEdit').show();
@@ -151,7 +151,7 @@
     function toRcommon(categerorId,zhiboFlag,commodityId){
 
         $.ajax({
-            url :"/appNewClasses/homeRecommendation",
+            url :"<%=rootPath %>/appNewClasses/homeRecommendation",
             type : "post",
             data:{"categerorId":categerorId,"zhiboFlag":zhiboFlag,"commodityId":commodityId},
             beforeSend:function(XMLHttpRequest){

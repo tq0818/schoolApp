@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +37,8 @@ public class NotificationTemplateController {
 
     @ResponseBody
     @RequestMapping(value="/updateNoticeTemplatStatus",method= RequestMethod.POST)
-    public String updateNoticeTemplatStatus(HttpServletRequest request, NoticeTemplatVo ntv){
+    public Map<String,String> updateNoticeTemplatStatus(HttpServletRequest request, NoticeTemplatVo ntv){
+        Map<String,String> resaltMap = new HashMap<String,String>();
         String result="0";
         String ststus = ntv.getNoticeStatus();
         //启用状态  需要禁用
@@ -52,7 +55,11 @@ public class NotificationTemplateController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return result;
+        resaltMap.put("status",result);
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        resaltMap.put("nowDate",sdf.format(date));
+        return resaltMap;
     }
 
     @ResponseBody

@@ -121,6 +121,7 @@ function  init() {
             var subject = $(this).find(":selected").attr("value");
             if(subject==""){
                 $("#class").html('<option value="">请选择课程模块</option>');
+                $("#lesson").html('<option value="">请选择课程模块</option>');
                 return;
             }
             $.ajax({
@@ -129,6 +130,7 @@ function  init() {
                 data: {'itemThirdCode': subject},
                 success: function (data) {
                     $("#class").html('<option value="">请选择课程模块</option>');
+                    $("#lesson").html('<option value="">请选择课程模块</option>');
                     var options = '';
                     $.each(data, function (i, j) {
                         options += '<option value="' + j.id + '">' + j.name + '</option>';
@@ -175,6 +177,7 @@ function  init() {
 
             });
     }
+
         function search(page,sort){
             var $this = this;
             var data = {};
@@ -198,6 +201,7 @@ function  init() {
             data.schoolType=$("#schoolType").val();
             data.page = page ? page : 1;
             data.userNameOrMobile=$("#userOrMobile").val();
+
             $.ajax({
                 url: rootPath + "/query/statistics/queryStudentsWatchInfoList",
                 data: data,
