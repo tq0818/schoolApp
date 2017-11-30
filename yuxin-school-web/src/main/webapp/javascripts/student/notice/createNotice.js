@@ -74,7 +74,9 @@ var msgCount;
 			$(this).addClass('btn-primary').removeClass('btn-default').siblings().removeClass('btn-primary').addClass('btn-default');//选中第一行
 			//通知类型 默认选中第一个
 			$(".btn-type:first").addClass('btn-primary').removeClass('btn-default').siblings().removeClass('btn-primary').addClass('btn-default');//第二行默认选中第一个
-			selItem();
+			if(type != 'STUDENT_MESSAGE_DINGYUE'){
+				selItem();
+			}
 			
 			//短信通知
 			if(type == 'STUDENT_MESSAGE_MOBILE'){
@@ -111,7 +113,7 @@ var msgCount;
  		});
  		
  		// 	    推荐学段复选
- 		$('.articlesList').children('button').click(function () {
+ 		$('.articlesList').children('button:not(:first)').click(function () {
  		    if ($(this).hasClass('btn-primary')) {
  		        $(this).removeClass('btn-primary');
  		        $('.articlesList').children('button').eq(0).removeClass('btn-primary');
@@ -122,7 +124,12 @@ var msgCount;
  		});
 // 		    点击全部，则全部选中
  		$('.articlesList').children('button').eq(0).click(function () {
-
+ 			if ($(this).hasClass('btn-primary')) {
+ 		        $(this).removeClass('btn-primary');
+ 		        $('.articlesList').children('button').eq(0).removeClass('btn-primary');
+ 		    } else {
+ 		        $(this).addClass('btn-primary');
+ 		    }
  		    var allChildren = $('.articlesList').children('button');
  		    //如果全部有active则删除全部的选中，否则全部选中
  		    if ($(this).hasClass('btn-primary')) {
@@ -183,6 +190,7 @@ var msgCount;
  			var method = $.trim($(".btn-method.btn-primary").attr("data-type"));
  			var types = $.trim($(".btn-type.btn-primary").attr("data-type"));
  			var msgcount = "";
+ 			var msgcounttext = "";			
  			var emailTitle = '';
  			var oneItemId = null;
  			var twoItemId = null;
@@ -287,6 +295,7 @@ var msgCount;
  			if(method == "STUDENT_MESSAGE_WEB"){
  				CKupdate();
  				msgcount = $("#newsContents").val();
+ 				msgcounttext=editor.document.getBody().getText();
  				msgcount = msgcount.replace(/<p>/g, "<span>");
  				msgcount = msgcount.replace(/<p /g, "<span ");
  				msgcount = msgcount.replace(/<\/p>/g, "</span><br>");
@@ -321,7 +330,11 @@ var msgCount;
  			$.ajax({
  				url:rootPath + "/classModule/sendMsg",
  				type:"post",
- 				data:{"title":title,"content":msgcount,"messageType":types,"messageMethod":method,"itemOneCode":oneItemCode,"itemSecondCode":twoItemCode,"itemThirdCode":threeItemCode,"classTypeId":classId,'groupOneId':groupOneId,'groupTwoId':groupTwoId,'email':email,'emailTitle':emailTitle,"phone":phone,"moduleNoId":classId,"isHurry":isHurry,"lessonId":lessonId},
+ 				data:{"title":title,"content":msgcount,"messageType":types,"messageMethod":method,
+ 					"itemOneCode":oneItemCode,"itemSecondCode":twoItemCode,"itemThirdCode":threeItemCode,
+ 					"classTypeId":classId,'groupOneId':groupOneId,'groupTwoId':groupTwoId,'email':email,
+ 					'emailTitle':emailTitle,"phone":phone,"moduleNoId":classId,"isHurry":isHurry,"lessonId":lessonId,
+ 	 				"contentText":msgcounttext},
  				dataType:"json",
 				beforeSend:function(XMLHttpRequest){
 		              $(".loading").show();
@@ -378,10 +391,11 @@ var msgCount;
 			}
 			 var gradeCodes=new Array();
 	    	 var allChildren = $('.articlesList').children('button');
+	    	 var k=0;
 	    	 if(null!=allChildren&&allChildren.length>1){
 	    		 for (var i = 1; i < allChildren.length; i++) {
 		            if(allChildren.eq(i).hasClass('btn-primary')){
-		            	gradeCodes[i-1]=allChildren.eq(i).attr("data-type");
+		            	gradeCodes[k++]=allChildren.eq(i).attr("data-type");
 		            }
 		        }
 	    	 }
@@ -603,10 +617,11 @@ var msgCount;
      function selPersonOfDingyue(){
     	 var gradeCodes=new Array();
     	 var allChildren = $('.articlesList').children('button');
+    	 var k=0;
     	 if(null!=allChildren&&allChildren.length>1){
     		 for (var i = 1; i < allChildren.length; i++) {
 	            if(allChildren.eq(i).hasClass('btn-primary')){
-	            	gradeCodes[i-1]=allChildren.eq(i).attr("data-type");
+	            	gradeCodes[k++]=allChildren.eq(i).attr("data-type");
 	            }
 	        }
     	 }
@@ -620,6 +635,7 @@ var msgCount;
                      $(".loading").show();
                      $(".loading-bg").show();
                      $("#sendStu").empty();
+                     $(".btn-view").empty();
                  },
                  success:function(data){
                      $("#sendStu").html(data.count);
