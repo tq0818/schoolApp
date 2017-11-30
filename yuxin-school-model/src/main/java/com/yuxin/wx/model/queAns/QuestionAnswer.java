@@ -40,6 +40,7 @@ public class QuestionAnswer extends BaseEntity {
 	private Integer thumbsFlag;//0未点赞，1为点赞
 	private Integer isAdopt;//该用户的回答是否被采纳
 	private Integer adoptFlag; //记录采纳数量
+	private Integer isAccept;//该回答是否被采纳（question-answer-app中的字段）
 	// Constructor
 	public QuestionAnswer() {
 	}
