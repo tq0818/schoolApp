@@ -525,7 +525,7 @@ public class SimpleclassTypeController {
 		int orderCount = classTypeServiceImpl.countSubjectClassOrder(search.getItemOneCode());
 		model.addAttribute("orderCount", orderCount);
 		return "simpleClasses/classIndexAjaxList";
-	} 
+	}
 	
 	/**
 	 * 

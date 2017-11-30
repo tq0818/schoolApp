@@ -250,7 +250,11 @@ function loadVideoInfo(nearOneItemId, itemSecondId, beginTime, endTime, videoSta
             success: function (data) {
                 $(".table-center>tbody").empty().append(data);
                 if ($(".table-center>tbody").children("tr").length <= 0) {
-                    $(".table-center>tbody").append("<tr><th colspan=8>没有数据</th></tr>");
+                    if(data.pageFinder.data.length < 1){
+                        $(".table-center>tbody").append("<tr><th colspan=8>没有数据</th></tr>");
+                    }
+
+
                 }
                 var oneId = $("#itemOneId").val();
                 var secId = $(".secItem.active").attr("itemid");
