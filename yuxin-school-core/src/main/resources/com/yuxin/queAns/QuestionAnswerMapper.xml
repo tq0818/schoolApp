@@ -21,7 +21,9 @@
 		<result property="isAdopt" column="is_accept" />
 		<result property="isThumbs" column="is_thumbs" />
 		<result property="adoptFlag" column="adopt_flag" />
+		<result property="questionscore" column="question_score" />
 	</resultMap>
+
 	
 	<sql id="table_columns">
 		id,
@@ -201,7 +203,7 @@
 	<!-- 其他自定义SQL -->
 	<!-- 根据问题id和分级下旬回复 -->
 	<select id="findAnsByQueId" parameterType="Integer" resultMap="questionAnswerResultMap">
-		select t2.is_thumbs as is_thumbs,<include refid="table_columns_app"/>
+		select t3.question_score as question_score,t2.is_thumbs as is_thumbs,<include refid="table_columns_app"/>
 		from question_answer_app  t1
 		left join thumbs_up t2 on t1.id = t2.answer_id and t2.user_id=#{userId}
 			LEFT JOIN question_app t3 ON t3.id=t1.question_id
@@ -219,13 +221,19 @@
 			del_flag = 1
 	</select>
 	
+	<select id="searchTotalScore"  parameterType="com.yuxin.wx.model.integral.TotalScoreVo" resultType="String">
+		select id
+		from total_score
+		where user_id = #{userId} 
+	</select>
+	
 	<select id="findTwoAns" parameterType="Integer" resultType="Integer">
 		select id from question_answer_app
 		where answer_id = #{answerId} and del_flag = 1
 	</select>
 	
 	<select id="findEntityTwoAns" parameterType="Integer" resultMap="questionAnswerResultMap">
-		select t2.is_thumbs as is_thumbs,<include refid="table_columns_app"/> 
+		select t3.question_score as question_score,t2.is_thumbs as is_thumbs,<include refid="table_columns_app"/> 
 		from question_answer_app t1
 		left join thumbs_up t2 on t1.id = t2.answer_id and t2.user_id= #{userId}
 		LEFT JOIN question_app t3 ON t3.id=t1.question_id
@@ -254,8 +262,25 @@
 		insert into thumbs_up (answer_id,user_id,is_thumbs) 
 		values ( #{id} ,#{userId} ,1 )
 	</insert>
+	
+	<!-- 适用于主键自增类型 -->
+	<insert id="insertScoreDetailsApp" parameterType="com.yuxin.wx.model.integral.ScoreDetailsAppVo" useGeneratedKeys="true" keyProperty="id">
+		insert into score_details_app (item_score,origin,create_time,total_score_id,reduce_add_flag) 
+		values ( #{itemScore} ,#{origin} ,now(), #{totalScoreId}, #{reduceAddFlag})
+	</insert>
+	<!-- 适用于主键自增类型 -->
+	<insert id="inserTotalScore" parameterType="com.yuxin.wx.model.integral.TotalScoreVo" useGeneratedKeys="true" keyProperty="id">
+		<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+			SELECT @@IDENTITY
+		</selectKey>
+		insert into total_score (user_id,create_time,total_score) 
+		values ( #{userId} ,now(),#{totalScore})
+	</insert>
 	<update id="updatethumbs" parameterType="com.yuxin.wx.model.queAns.QuestionAnswer">
 		update thumbs_up set is_thumbs=#{isThumbs} where answer_id=#{id} and user_id=#{userId}
+	</update>
+	<update id="updateTotalScore" parameterType="com.yuxin.wx.model.integral.TotalScoreVo">
+		update total_score set total_score=(CASE when total_score is null then #{totalScore} else total_score+#{totalScore} end),update_time=now() where  user_id=#{userId}
 	</update>
 	<update id="updateQuestionAdoptFlag" parameterType="com.yuxin.wx.model.queAns.QueQuestion">
 		update question_app  set adopt_flag=(CASE when adopt_flag is null then 1 else adopt_flag+1 end) where id=#{id} 

@@ -95,7 +95,7 @@
 					<span class="del" style="margin-left:10px;cursor: pointer;" data-id="${a.id }" data-types="1"><i class="iconfont">&#xe626;</i><span class="xzi">删除</span></span>
 				</c:if>
 				<c:if test="${(a.isAdopt == 0 || null == a.isAdopt)}">
-					<span class="cn" style="margin-left:10px;cursor: pointer;"  data-id="${a.id }" data-ids="${a.questionId}" data-adopcount="${a.adoptFlag}"><i class="iconfont">&#xe605;</i><span class="xzi">采纳</span></span>
+					<span class="cn" style="margin-left:10px;cursor: pointer;"  data-id="${a.id }" data-ids="${a.questionId}" data-userId="${a.userId}" data-adopcount="${a.adoptFlag}" data-questionscore="${a.questionscore}"><i class="iconfont">&#xe605;</i><span class="xzi">采纳</span></span>
 				</c:if>
 				<c:if test="${a.isAdopt == 1 }">
 					<span class="" style="margin-left:10px;cursor: pointer;"  data-id="${a.id }" data-ids="${a.questionId}"><i class="iconfont">&#xe605;</i><span class="xzi">已采纳</span></span>
