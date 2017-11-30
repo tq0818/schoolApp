@@ -13,6 +13,10 @@ public class TotalScoreVo extends BaseEntity {
 	 */
 	private String totalScore;
 	/**
+	 * 用户总积分（冗余）
+	 */
+	private String totalScoreAll;
+	/**
 	 * 积分创建时间
 	 */
 	private String createTime;
@@ -33,6 +37,14 @@ public class TotalScoreVo extends BaseEntity {
 	 */
 	private String stuId;
 	
+	
+	
+	public String getTotalScoreAll() {
+		return totalScoreAll;
+	}
+	public void setTotalScoreAll(String totalScoreAll) {
+		this.totalScoreAll = totalScoreAll;
+	}
 	public String getStuId() {
 		return stuId;
 	}
