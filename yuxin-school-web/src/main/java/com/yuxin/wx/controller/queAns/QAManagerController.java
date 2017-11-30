@@ -203,14 +203,16 @@ public class QAManagerController {
  */
     @ResponseBody
     @RequestMapping("/adoptAns")
-    public JSONObject adoptAns(HttpServletRequest request, Integer id) {
+    public JSONObject adoptAns(HttpServletRequest request, Integer id,Integer ids) {
         JSONObject json = new JSONObject();
         log.info("qa：采纳:");
         try {
             QuestionAnswer one = new QuestionAnswer();
+            QueQuestion que=new QueQuestion();
             one.setId(id);
             one.setIsAdopt(1);
-            questionAnswerServiceImpl.update(one);
+            que.setId(ids);
+            questionAnswerServiceImpl.updateQAndA(one,que);
 
             json.put(JsonMsg.MSG, JsonMsg.SUCCESS);
             return json;

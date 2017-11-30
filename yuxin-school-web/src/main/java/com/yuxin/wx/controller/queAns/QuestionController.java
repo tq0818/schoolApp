@@ -819,6 +819,7 @@ public class QuestionController {
     	String [] arrTagId=request.getParameterValues("systemTagIds[]");
     	String [] arrTagName=request.getParameterValues("userDefuledNames[]");
     	String questionDescTP=request.getParameter("questionDescTP");
+    	
 		questionDescTP=questionDescTP.substring(3, questionDescTP.lastIndexOf("<"));
 		String [] b=questionDescTP.split(";;");
 	    String a="[" ;
@@ -859,6 +860,7 @@ public class QuestionController {
     	Integer companyId = WebUtils.getCurrentCompanyId();
     	Integer schoolId = WebUtils.getCurrentSchoolId();
     	Integer userId = WebUtils.getCurrentUserId(request);
+    	queQuestion.setCreateTime(new Date());
     	queQuestion.setQuestionDesc(a);
     	queQuestion.setCompanyId(companyId);
     	queQuestion.setSchoolId(schoolId);
