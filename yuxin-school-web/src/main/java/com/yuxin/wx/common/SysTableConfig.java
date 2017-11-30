@@ -54,13 +54,13 @@ public class SysTableConfig {
 			log.error("初始化表结构必填字段失败",e);
 			e.printStackTrace();
 		}
-		try {
+		/*try {
 			log.info("短信通知触发站内通知--线程启动--");
 			new Thread(new ThreadSendMobileMessageTrigger(companyMessageHistoryService)).start();
 		} catch (Exception e) {
 			log.error("短信通知触发站内通知--线程异常--",e);
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	/**

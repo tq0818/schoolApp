@@ -37,7 +37,7 @@ public class ThreadSendMobileMessageTrigger implements Runnable {
 					}
 				}
 				//log.info("短信通知触发站内通知--执行结束--");
-				Thread.sleep(2000);
+				Thread.sleep(1000*60);
 			}
 		} catch (Exception e) {
 			new Thread(new ThreadSendMobileMessageTrigger(companyMessageHistoryService)).start();
