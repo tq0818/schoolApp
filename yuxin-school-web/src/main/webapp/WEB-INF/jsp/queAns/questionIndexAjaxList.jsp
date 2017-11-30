@@ -99,6 +99,7 @@
                             <span class="showAllCon${que.id } none">${que.questionDesc}</span>
                         </div>
                         <div class="ans">
+                        	<span class="pr50">浏览量：<c:if test="${que.scanCount == null}">0</c:if><c:if test="${que.scanCount != null}">${que.scanCount}</c:if></span>
                             <span class="pr50">提问时间：${que.tiwenTime}</span>
                                      <span class="pr50">
 										<i class="iconfont" style="font-size: 12px;cursor: default;" ids="${que.id}">&#xe669;</i>
