@@ -6,6 +6,8 @@
 <title>通知内容</title>
     <%@include file="/decorators/import.jsp" %>
      <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/student.css"/>
+    <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/classes.css">
+    <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/plugins/jcrop/css/jquery.Jcrop.css"/>
 	<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/select2.min.css" />
 	<script type="text/javascript" src="<%=rootPath%>/javascripts/student.js"></script>
 	<script type="text/javascript" src="<%=rootPath%>/javascripts/select2.full.js"></script>
@@ -33,6 +35,76 @@
     	}
     	.main-content .lj-tops{display: inline-block;color:#999;}
     </style>
+     <style type="text/css">
+.p1 {
+	display: block;
+	position: absolute;
+	z-index: 2000;
+	top: 10px;
+	right: -280px;
+/*	padding: 6px;
+ 	border: 1px rgba(0, 0, 0, .4) solid;
+	background-color: white;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+	box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2); */
+}
+
+.p2 {
+	display: block;
+	position: absolute;
+	z-index: 2000;
+	top: 10px;
+	right: -280px;
+/*	padding: 6px;
+ 	border: 1px rgba(0, 0, 0, .4) solid;
+	background-color: white;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+	box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2); */
+}
+
+.p3 {
+	display: block;
+	position: absolute;
+	z-index: 2000;
+	top: 10px;
+	right: -280px;
+/* 	padding: 6px;
+	border: 1px rgba(0, 0, 0, .4) solid;
+	background-color: white;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+	box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2); */
+}
+
+.p1 .preview-container {
+	width: 446px;
+	height: 241px;
+	overflow: hidden;
+}
+
+.p2 .preview-container {
+	width: 255px;
+	height: 138px;
+	overflow: hidden;
+}
+
+.p3 .preview-container {
+	width: 181px;
+	height: 96px;
+	overflow: hidden;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/jsp/menu/menu_student.jsp" />
@@ -51,23 +123,34 @@
 						</span>
 						<span style="color:red;">* 最多15个字</span>
 					</p>
+					<p class="c con-coverimg">
+						<span class="c-title">订阅文章封面：</span>
+						<span class="c-content"> 
+							<span class="view">
+	                            <img id="commdotityPic" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" realPath="" alt="订阅图片">
+	                        </span>
+	                        <span class="btns"><a href="javascript:;" class="btn btn-default btn-upload">选择封面</a></span>
+                        </span>
+					</p>
 					<p class="c">
 						<span class="c-title">通知方式：</span> <span class="c-content font-style">
 							<a href="javascript:;"
 							class="btn btn-mini btn-method btn-primary"
 							data-type="STUDENT_MESSAGE_MOBILE">短信通知</a> <a
 							href="javascript:;" class="btn btn-mini btn-method btn-default"
-							data-type="STUDENT_MESSAGE_WEB">站内信通知</a><a
-							href="javascript:;" class="btn btn-mini btn-method btn-default"
-							data-type="STUDENT_MESSAGE_EMAIL">邮件通知</a>
+							data-type="STUDENT_MESSAGE_WEB">站内信通知</a>
+							<!-- <a href="javascript:;" class="btn btn-mini btn-method btn-default"
+							data-type="STUDENT_MESSAGE_EMAIL">邮件通知</a>  -->
+							<a	href="javascript:;" class="btn btn-mini btn-method btn-default"
+							data-type="STUDENT_MESSAGE_DINGYUE">订阅文章</a>
 						</span>
 					</p>
-					<p class="c">
+					<p class="c sendMsgType">
 						<span class="c-title">通知类型：</span> <span class="c-content font-style">
 							<a href="javascript:;" class="btn btn-mini btn-type btn-primary"
 							data-type="STUDENT_MESSAGE_CLASSTYPE">课程通知</a> 
 							
-	                        <c:if test="${classMoreStatus == 1 }">
+	                        <%-- <c:if test="${classMoreStatus == 1 }">
 								<a
 								href="javascript:;" class="btn btn-mini btn-type btn-default"
 								data-type="STUDENT_MESSAGE_MODULENO">班号通知</a>
@@ -77,8 +160,16 @@
 							data-type="STUDENT_MESSAGE_SPECIAL">指定通知</a>
 							<a
 							href="javascript:;" class="btn btn-mini btn-type btn-default"
-							data-type="STUDENT_MESSAGE_GROUP">学员分组通知</a>
+							data-type="STUDENT_MESSAGE_GROUP">学员分组通知</a> --%>
 						</span>
+					</p>
+					<!--年级  -->
+					<p class="c sendGrade articlesList articleNew" style="display: block;">
+						<span class="c-title">学段：</span> 
+						<button class="btn btn-mini btn-grade btn-default"	data-type="ALL_GRADE">全部</button>
+						<c:forEach items="${gradeCodeItems }" var="grade">
+							<button class="btn btn-mini btn-grade btn-default"	data-type="${grade.code }">${grade.name }</button>
+						</c:forEach>
 					</p>
 					
 					<!-- 课程或者班号 -->
@@ -111,7 +202,7 @@
 						<span class="c-title">学员数量：</span> <span class="c-content btn-view">
 						</span>
 					</p>
-					<p class="c sendStuMsg">
+					<p class="c sendStuMsg sendStuNum">
 						<span class="c-title">发送学员：</span> <span class="c-content"
 							id="sendStu"></span>人
 					</p>
@@ -155,24 +246,25 @@
 						<span class="c-title">邮件标题：</span> <input id="email_title" type="text"/>
 					</p>
 					<!-- 发送内容 -->
-					<p class="c ">
-						<div class="con-fsnr">
-							<span class="c-title">发送内容：</span><br> <span
-							class="c-content l-content" id="messageContent"> <textarea
-								id="msgcount" class="msg-content" onkeydown="valida();"
-								onkeyup="valida();" onkeypress="valida();" maxlength="140"></textarea>
-							</span>
-						</div>
-						
-						<!-- 站内信 --> 
-						<div id="ckecktor"> 
-							<textarea id="newsContents" class="msg-content"></textarea>
-						</div>
-						<!-- 邮件 -->
-						<div id="email_ckecktor" style="display:none;"> 
-							<textarea id="email_newsContents" class="msg-content"></textarea>
-						</div>
-					</p>
+					<p class="c con-fsnr">
+						<span class="c-title">发送内容：</span><br> <span
+						class="c-content l-content" id="messageContent"> <textarea
+							id="msgcount" class="msg-content" onkeydown="valida();"
+							onkeyup="valida();" onkeypress="valida();" maxlength="140"></textarea>
+						</span>
+					</p>	
+					<!-- 站内信 --> 
+					<div id="ckecktor" style="padding-left: 100px;margin-bottom: 20px;"> 
+						<textarea id="newsContents" class="msg-content"></textarea>
+					</div>
+					<!-- 邮件 -->
+					 <div id="email_ckecktor" style="display:none;padding-left: 100px;margin-bottom: 20px;"> 
+						<textarea id="email_newsContents" class="msg-content"></textarea>
+					</div> 
+					<!--订阅文章 -->
+					<div id="dingyue_ckecktor" style="display:none;padding-left: 100px;margin-bottom: 20px;"> 
+						<textarea id="dingyue_newsContents" class="msg-content"></textarea>
+					</div>
 					<!-- 发送条数 -->
 					<p class="c zhan">
 						<span class="c-title">消耗短信：</span> <span class="c-content"><span
@@ -190,22 +282,94 @@
 						<span class="c-title">消耗邮件：</span> <span class="c-content"><span
 							id="useEmailMsg"></span> <em style="font-size: inherit;color: #999;padding-right:20px;padding-left:20px;">剩余邮件：<span id="hasEmail">${emailCount }</span></em>
 					</p>
+					
+				    <%--新添订阅文章 start--%>
+	                <p class="c dingyueChooseBtn">
+	                    <span class="c-title">请选择：</span>
+	                    <input type="radio" name="signup_vote" value="0">
+	                    <button class="btn btn-primary">我要报名</button>
+	                    <a href="##" class="numPerson">人数限制</a>
+	                    <input type="text" id="limitStuNum">
+	                </p>
+	                <p class="c dingyueChooseBtn">
+	                    <span class="c-title"></span>
+	                    <input type="radio" name="signup_vote" value="1">
+	                    <button class="btn btn-primary">赞成</button>
+	                    <button class="btn btn-default">反对</button>
+	                </p>
+					<!--  -->
 					<p class="text-center">
-						<a href="javascript:;" class="btn btn-sm btn-primary btn-send">发送通知</a>
+						<span class="sendBtn">
+							<a href="javascript:;" class="btn btn-sm btn-primary btn-send">发送通知</a>
+						</span>
+						<span class="dingyueSendBtn">
+							<a href="javascript:;" class="btn btn-sm btn-warning btn-publish">发布</a>
+	                     	<input type="checkbox" id="isNeedSend">是否推送
+	                    </span>
 					</p>
 				</div>
 			</div>
 		</div>
 	</div>
 
+<!--  -->
+
+<div class="upload-layer none" id="chooseDiv" style="width:1080px;height: 550px;">
+    <div class="upload-title">
+        <h2 class="h5">上传封面</h2>
+        <i class="iconfont close">&#xe610;</i>
+    </div>
+    <div class="pic-upload">
+        <p class="tips">
+        	 <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic()" value="重新选择文件"/>
+          	<!--<a href="javascript:;" class="btn btn-mini btn-primary">重新选择文件</a>--> 
+          	<div style="margin-top: 5px;">建议上传的图片尺寸为：516*282px </div> 
+        </p>
+        <div class="upload-content" style="padding:10px;">
+        <div class="attributes none">
+        	 <input type="hidden" id="x" name="x" value="0"/>
+            <input type="hidden" id="y" name="y" value="0"/>
+            <input type="hidden" id="w" name="w" value="0"/>
+            <input type="hidden" id="h" name="h" value="0"/>
+            <input type="hidden" id="x2" name="x2" value="0"/>
+            <input type="hidden" id="y2" name="y2" value="0"/>
+        </div>
+        	<div class="pic" style="width:516px;height:282px;background-color:#f2f2f2;">
+        		 <img id="target" src="" />
+            </div>
+            <div class="upload-big p1" style="width:456px;">
+            	<div class="preview-container" style="margin:0 auto;">
+                <img src="">
+                </div>
+            </div>
+            <div class="upload-sm p2">
+            	<div class="preview-container">
+                <img src="">
+                </div>
+            </div>
+            <div class="upload-mini p3">
+           		<div class="preview-container">
+                <img src="">
+                </div>
+            </div>
+        </div>
+        <p class="text-center">
+            <a href="javascript:classTypePic();" class="btn btn-primary">确定</a>
+            <a href="javascript:;" class="btn btn-default close">取消</a>
+        </p>
+    </div>
+</div>
+<div class="add-layer-bg none" id="stopDiv"></div>
 <!-- ajax加载中div开始 -->
 	<div class="loading lp-units-loading" style="display:none">
         <p><i></i>加载中,请稍后...</p>
     </div>
     <div class="loading-bg lp-units-loading-bg" style="display:none"></div>
 <!--  ajax加载中div结束 -->
-	<script type="text/javascript"
-		src="<%=rootPath%>/plugins/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="<%=rootPath%>/plugins/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="<%=rootPath %>/javascripts/ajaxfileupload.js"></script>
+     <script type="text/javascript" src="<%=rootPath %>/plugins/jcrop/js/jquery.Jcrop.js"></script>
+    <script type="text/javascript" src="<%=rootPath %>/javascripts/class/addClassTypeOnsale.js"></script>
 	<script type="text/javascript">
 		var classMoreStatus = '${classMoreStatus}';//多班号是否开启
 	
@@ -247,6 +411,23 @@
 		email_editor.config.baseFloatZIndex = 10100;
 		email_editor.config.customConfig = 'config.js';
 		
+		var dingyue_ckecktor = CKEDITOR.replace('dingyue_newsContents');
+		dingyue_ckecktor.config.width="570px";
+		dingyue_ckecktor.config.toolbar = [
+				[ 'mode', 'document', 'doctools' ],
+				[ 'Source', '-', 'NewPage' ],
+				[ 'basicstyles', 'cleanup' ],
+				[ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript',
+						'Superscript' ],
+				[ 'list', 'indent', 'blocks', 'align', 'bidi' ],
+				[ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent',
+						'JustifyLeft', 'JustifyCenter', 'JustifyRight',
+						'JustifyBlock' ], [ 'Link', 'Unlink' ],
+				[ 'Image', 'Table' ],
+				[ 'Styles', 'Format', 'Font', 'FontSize' ],
+				[ 'TextColor', 'BGColor' ], [ 'Maximize' ], [ '-' ]];
+		dingyue_ckecktor.config.baseFloatZIndex = 10100;
+		dingyue_ckecktor.config.customConfig = 'config.js';
 		
 		$(".lj-tops").bind("click",function(){
 			
@@ -255,7 +436,78 @@
 				_checkbox.attr('checked',false);
 			}
 		});
+		
+		//上传截取后的图片
+		function classTypePic() {
+			$.ajax({
+						url : rootPath + "/student/saveCutPic",
+						data : {
+							path : $("#target").attr("src"),
+							x : $("#x").val(),
+							y : $("#y").val(),
+							w : $("#w").val(),
+							h : $("#h").val(),
+							itemOneid : $("#itemOneid").val()
+						},
+						type : "post",
+						dataType : "json",
+						success : function(data) {
+							chooseOnePic(data.picOriginalUrl,
+									data.realPath);
+						}
+					})
+			$("#chooseDiv").css("display", "none");
+			$("#stopDiv").css("display", "none");
+			return;
+		}
+		//选择封面
+		function chooseOnePic(url,path){
+			$("#chooseDiv").css("display","none");
+			$("#stopDiv").css("display","none");
+			$("#commdotityPic").attr({"src":url,"realPath":path});
+		}
+		
+		$(".pic").on("change","#target", function() {
+			var theImage = new Image();
+			console.log($(this).attr("src"));
+			theImage.src = $(this).attr("src");
+			 if (theImage.complete) {
+				 	sourceHeight = theImage.height;
+					sourceWidth = theImage.width;
+					$.init(sourceWidth, sourceHeight);
+ 			    } else {
+ 			    	theImage.onload = function () {
+ 			        	sourceHeight = theImage.height;
+						sourceWidth = theImage.width;
+						$.init(sourceWidth, sourceHeight);
+ 			        };
+ 			    };
+			
+		});
+		//选择图片
+		function savePic(){
+				$.ajaxFileUpload({
+				url : rootPath+"/simpleClasses/savePic;"+ window["sessionName"] + "=" + window["sessionId"],
+				secureuri : false,// 安全协议
+				async : false,
+				fileElementId : 'imgData',
+				dataType:'json',
+				type : "POST",
+				success : function(data) {
+				  $("#sourcePic").attr("src",data.url);
+				  $("#target").parent().html('<img id="target" src="'+data.url+'" style="width:516px;height:282px;"/>');
+			      $("#target").trigger("change");
+			      $(".p1 img").attr("src",data.url);
+			      $(".p2 img").attr("src",data.url);
+			      $(".p3 img").attr("src",data.url);
+				},
+				error:function(arg1,arg2,arg3){
+					//console.log(arg1);
+				},
+				loadingEle: '#target',
+				fileName: 'imgData'
+			});
+		}
 	</script>
-
 </body>
 </html>

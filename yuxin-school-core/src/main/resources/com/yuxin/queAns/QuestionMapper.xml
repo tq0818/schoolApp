@@ -109,11 +109,6 @@
 		#{itemSecondId},
 		#{classifyId},
 		#{userId},
-		#{courseFlag},
-		#{courseId},
-		#{courseName},
-		#{courseLectureId},
-		#{courseLectureName},
 		#{answerCount},
 		#{scanCount},
 		#{adoptFlag},
@@ -125,6 +120,7 @@
 		#{delFlag},
 		#{questionType}
 	</sql>
+	
 	<sql id="batch_entity_properties">
 		#{item.id},
 		#{item.questionTitle},
@@ -313,4 +309,13 @@
 		<if test="delFlag != null">and q.del_flag = #{delFlag}</if>
 		limit #{firstIndex},#{pageSize}
 	</select>
+	
+	<!-- 适用于主键自增类型 -->
+	<insert id="insertQuestion" parameterType="com.yuxin.wx.model.queAns.QueQuestion" useGeneratedKeys="true" keyProperty="id">
+		<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+			SELECT @@IDENTITY
+		</selectKey>
+		insert into question_app( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
 </mapper>

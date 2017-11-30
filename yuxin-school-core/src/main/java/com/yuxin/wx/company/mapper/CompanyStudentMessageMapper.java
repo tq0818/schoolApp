@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.yuxin.wx.common.BaseMapper;
 import com.yuxin.wx.model.company.CompanyStudentMessage;
+import com.yuxin.wx.model.company.OrderWordNameApp;
 import com.yuxin.wx.model.user.UserMessage;
 import com.yuxin.wx.vo.student.StuMessageVo;
 
@@ -26,6 +27,23 @@ public interface CompanyStudentMessageMapper extends BaseMapper<CompanyStudentMe
 	 * @return
 	 */
 	String findCreatorName(Integer id);
+	
+	
+	/**
+	 * 订阅文章订阅统计信息	
+	 * @author cxl
+	 * @param companyStudentMessage
+	 * @return
+	 */
+	List<OrderWordNameApp> selMsgOfDingYueDetailByCond(OrderWordNameApp orderWordNameApp);
+	
+	/**
+	 * @Description: 总数
+	 * @author cxl
+	 * @param companyStudentMessage
+	 * @return
+	 */
+	Integer selMsgOfDingYueDetailCount(Integer id);
 
 	/**
 	 * 
@@ -108,6 +126,10 @@ public interface CompanyStudentMessageMapper extends BaseMapper<CompanyStudentMe
 	 * @param um
 	 */
 	void insertUserMessage(UserMessage um);
+	
+
+	
+	void batchInsertUserMessage(List<UserMessage> list);
 
 	/**
 	 * 
@@ -138,4 +160,5 @@ public interface CompanyStudentMessageMapper extends BaseMapper<CompanyStudentMe
 	List<StuMessageVo> findStudentMsgByGroup(StuMessageVo stuMessageVo);
 
 	Integer findStudentMsgByGroupCount(StuMessageVo stuMessageVo);
+
 }

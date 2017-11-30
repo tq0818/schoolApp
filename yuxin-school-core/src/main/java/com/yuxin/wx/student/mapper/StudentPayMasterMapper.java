@@ -72,6 +72,14 @@ public interface StudentPayMasterMapper extends BaseMapper<StudentPayMaster> {
 	    */
 	   Integer findByResourceid(Map<String,Object> param);
 	   
+   /**
+    * Class Name: IStudentPayMasterService.java
+    * @Description: 根据年级查询学生数(学生通知:订阅文章)
+    * @author cxl
+    */
+	Integer findByGradeCodes(Map<String,Object> param);
+ 
+	   
 	List<StuPayMasterVo> stuPayMasterList(StuPayMasterVo search);
 	
 	Integer stuPayMasterListCount(StuPayMasterVo search);

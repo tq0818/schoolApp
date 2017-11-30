@@ -1,9 +1,10 @@
 package com.yuxin.wx.model.company;
 
 import java.util.Date;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import com.yuxin.wx.util.ShortDateSerializer;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.yuxin.wx.util.ShortDateSerializer;
 import com.yuxin.wx.common.BaseEntity;
 
 /**
@@ -50,6 +51,12 @@ public class CompanyStudentMessage extends BaseEntity {
 	private String	itemSecondCode;
 	private String	itemThirdCode;
 	private Integer	isWxOpen;
+	
+
+	private Integer maxNum;
+	private Integer signupVote;
+	private String coverImg;
+	private String contentText;
 	// Constructor
 	public CompanyStudentMessage() {
 	}
@@ -377,4 +384,37 @@ public class CompanyStudentMessage extends BaseEntity {
 	public void setIsWxOpen(Integer isWxOpen) {
 		this.isWxOpen = isWxOpen;
 	}
+
+	public Integer getMaxNum() {
+		return maxNum;
+	}
+
+	public void setMaxNum(Integer maxNum) {
+		this.maxNum = maxNum;
+	}
+
+	public Integer getSignupVote() {
+		return signupVote;
+	}
+
+	public void setSignupVote(Integer signupVote) {
+		this.signupVote = signupVote;
+	}
+
+	public String getCoverImg() {
+		return coverImg;
+	}
+
+	public void setCoverImg(String coverImg) {
+		this.coverImg = coverImg;
+	}
+
+	public String getContentText() {
+		return contentText;
+	}
+
+	public void setContentText(String contentText) {
+		this.contentText = contentText;
+	}
+	
 }

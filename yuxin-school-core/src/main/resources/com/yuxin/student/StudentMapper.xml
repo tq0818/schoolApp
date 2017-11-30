@@ -955,8 +955,8 @@
 		ct.item_one_code = #{itemOneCode} and
 		ct.item_second_code = #{itemSecondCode} and
 		ct.item_third_code = #{itemThirdCode} and
-		m.commodity_id = #{classTypeId} and
-		<if test="isWxOpen == 1">u.wx_open_id is not null and u.wx_open_id !=''</if>
+		m.commodity_id = #{classTypeId} 
+		<if test="isWxOpen == 1"> and u.wx_open_id is not null and u.wx_open_id !=''</if>
 		and m.delete_flag = 0 and m.commodity_type='COMMODITY_CLASS'
 		and (m.pay_status_code='ORDER_PAID' or m.pay_status_code='ORDER_PART_PAY' or m.pay_status_code='ORDER_FINISHED' or m.pay_status_code='ORDER_PAID_NO_COURSE')
 		group by s.id
@@ -989,6 +989,24 @@
 		and (m.pay_status_code='ORDER_PAID' or m.pay_status_code='ORDER_PART_PAY' or m.pay_status_code='ORDER_FINISHED' or m.pay_status_code='ORDER_PAID_NO_COURSE')
 		group by m.stu_id
 		) c
+	</select>
+	<!-- 根据年级查询学生:订阅文章-->
+	<select id="queryStudentByGradeCodes" resultMap="studentResultMap" parameterType="map">
+		select id,name,user_id from student 
+		where edu_step is not NULL and edu_step!='' and
+			<foreach item="item" collection="gradecodes" open="(" separator=" or " close=")">
+				 <choose>
+			        <when test="item &lt;= 6"> 
+			       	  (edu_step='STEP_01' and #{curr_year}-CAST(edu_year AS INTEGER)<if test="curr_month &gt; 9">+1</if>=#{item})
+			        </when>
+			        <when test="item &gt; 6 and item &lt;= 9"> 
+			       	  (edu_step='STEP_02' and #{curr_year}-CAST(edu_year AS INTEGER)<if test="curr_month &gt; 9">+1</if>=#{item}-6)
+			        </when>
+			        <when test="item &gt; 9"> 
+			          (edu_step='STEP_03' and #{curr_year}-CAST(edu_year AS INTEGER)<if test="curr_month &gt; 9">+1</if>=#{item}-9)
+			        </when>
+			    </choose>
+			</foreach>
 	</select>
 
 	<select id="findByPhone" resultMap="studentResultMap" parameterType="map">
@@ -3671,7 +3689,9 @@
 		<result property="id" column="id" />
 		<result property="scoreTopic" column="score_topic" />
 		<result property="score" column="score" />
-		<result property="validTime" column="validTime"/>
+		<result property="validTime" column="valid_time"/>
+		<result property="invalidTime" column="invalid_time"/>
+		<result property="ststus" column="ststus"/>
 		<result property="oprator" column="oprator"/>
 	</resultMap>
 	<select id="queryTotalScoreVoByUserFrontId" resultMap="totalScoreVoResult" parameterType="map">
@@ -3699,8 +3719,15 @@
 		where total_score_id=#{totalScoreId}
 	</select>
 	<select id="queryScoreRulsAppVos" resultMap="scoreRulsAppVos">
-		select id,score_topic,score,valid_time,oprator from score_ruls_app
+		select id,score_topic,score,date_format(valid_time,'%Y-%c-%d %H:%i:%s') valid_time,oprator from score_ruls_app
 		where ststus=1
+	</select>
+	<select id="queryPageScoreRulsAppVos" resultMap="scoreRulsAppVos" parameterType="com.yuxin.wx.model.integral.ScoreRulsAppVo">
+		select id,score_topic,score,date_format(valid_time,'%Y-%c-%d %H:%i:%s') valid_time,date_format(invalid_time,'%Y-%c-%d %H:%i:%s') invalid_time,oprator,ststus from score_ruls_app
+		limit #{firstIndex},#{pageSize}
+	</select>
+	<select id="queryPageScoreRulsAppVosCount" resultType="int">
+		select count(1) from score_ruls_app
 	</select>
 	<select id="queryTotalScoreVoByUserId" resultMap="totalScoreVoResult" parameterType="map">
 		select ts.id,ts.total_score 
@@ -3726,4 +3753,16 @@
 		insert into total_score(user_id,total_score)
 		values (#{userId},#{totalScore})
 	</insert>
+	<update id="updateScoreRulsAppStatus" parameterType="com.yuxin.wx.model.integral.ScoreRulsAppVo">
+		update score_ruls_app 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="ststus != null and ststus != ''">ststus = #{bsstus},</if>
+			<if test="score != null and score != ''">score = #{score},</if>
+			<if test="validTime != null and validTime != ''">valid_time = #{validTime},</if>
+			<if test="invalidTime != null and invalidTime != ''">invalid_time = #{invalidTime},</if>
+		</trim>
+		<where>
+			id=#{id}
+		</where>
+	</update>
 </mapper>

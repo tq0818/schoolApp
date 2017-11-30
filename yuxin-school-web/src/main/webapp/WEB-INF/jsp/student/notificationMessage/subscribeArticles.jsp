@@ -322,6 +322,7 @@
 </script>
 
 <script>
+/* 
 //    推荐学段复选
 $('.articlesList').children('button').click(function () {
     if ($(this).hasClass('btn-primary')) {
@@ -346,7 +347,7 @@ $('.articlesList').children('button').eq(0).click(function () {
             allChildren.eq(i).removeClass('btn-primary');
         }
     }
-});
+}); */
 //点击订阅文章，显示新添加内容
     $('.c-content').children('a').click(function(){
         if($(this).index()==2){

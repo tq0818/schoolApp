@@ -63,7 +63,6 @@ i{font-style: normal}
 .labelSaveBtn{height: 60px;line-height: 60px;text-align: center;}
 .labelSaveBtn button{margin: 30px;}
 .labelContent li img{position: absolute;bottom: 1px;right: 2px;z-index: 100;}
-.labelAdd{font-size: 16px;}
 .labelInput{width: 40px;height: 24px;font-size: 14px;border-radius: 3px;}
 .labelContent li.labelInputContent{display: none;}
 .integralH5{display: inline-block;}
@@ -106,3 +105,6 @@ i{font-style: normal}
 .PointsReward{height: 28px;line-height: 28px;}
 .comQuestionPut{position: absolute;right: 130px;}
 .comQuestionLabel{position: absolute;right: 10px;}
+#zdyBtn button{margin-right: 10px;}
+#zdyBtn{display: inline-block;}
+.tableRule button{margin-right: 1px;}

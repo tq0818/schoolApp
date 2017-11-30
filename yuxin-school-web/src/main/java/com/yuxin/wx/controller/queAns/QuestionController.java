@@ -11,7 +11,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
@@ -40,12 +39,10 @@ import com.yuxin.wx.api.queAns.IQuestionService;
 import com.yuxin.wx.api.system.ISysConfigItemService;
 import com.yuxin.wx.api.system.ISysConfigServiceService;
 import com.yuxin.wx.api.system.ISysConfigTeacherService;
-import com.yuxin.wx.api.system.ISysSchoolItemRelationService;
 import com.yuxin.wx.api.system.ISysServiceDredgeConfigService;
 import com.yuxin.wx.api.user.IUsersService;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.common.SysConfigConstant;
-import com.yuxin.wx.model.commodity.CommoditySpecial;
 import com.yuxin.wx.model.company.Company;
 import com.yuxin.wx.model.company.CompanyFunctionSet;
 import com.yuxin.wx.model.company.CompanyMemberService;
@@ -56,14 +53,15 @@ import com.yuxin.wx.model.queAns.QuestionClassify;
 import com.yuxin.wx.model.system.SysConfigItem;
 import com.yuxin.wx.model.system.SysConfigService;
 import com.yuxin.wx.model.system.SysConfigTeacher;
-import com.yuxin.wx.model.system.SysSchoolItemRelation;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.utils.DateUtil;
-import com.yuxin.wx.utils.FileUtil;
 import com.yuxin.wx.utils.PropertiesUtil;
 import com.yuxin.wx.utils.WebUtils;
 import com.yuxin.wx.vo.queAns.QuestionVo;
 import com.yuxin.wx.vo.system.SysServiceDredgeVo;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * Controller of Question
@@ -119,8 +117,6 @@ public class QuestionController {
     @Autowired
     private ICompanyService companyService;
 
-    @Autowired
-    private ISysSchoolItemRelationService sysSchoolItemRelationServiceImpl;
 
     @Autowired
     private IAuthRoleService authRoleServiceImpl;
@@ -308,6 +304,28 @@ public class QuestionController {
         model.addAttribute("imgUrl", imgUrl);
 
         PageFinder<QuestionVo> pageFinder = questionServiceImpl.findVoByPage(question);
+        List<QuestionVo> questionList=new ArrayList<QuestionVo>();
+        if(pageFinder.getRowCount()>0){
+        	 questionList=pageFinder.getData();
+        	for(QuestionVo vo :questionList){
+        		String answerDesc=vo.getQuestionDesc();
+            	JSONArray array = JSONArray.fromObject(answerDesc);
+        		String img="";
+        		for(int i=0 ;i<array.size();i++){
+        			JSONObject job = array.getJSONObject(i); 
+        			if("0".equals(job.get("type").toString())){
+        				 img+="<span style='text-align: center;'>"+job.get("content");
+        			}else{
+        				img+=" <img alt=\'\' src=\'"+job.get("content")+"\' style=\'border-style:solid; border-width:2px; height:120px; width:120px \' /></span>";
+        			}
+        			
+        		}
+        		vo.setQuestionDesc(img);
+        	}
+        }
+        
+        
+		pageFinder.setData(questionList);
         model.addAttribute("pageFinder", pageFinder);
 
         return "queAns/questionIndexAjaxList";
@@ -402,7 +420,6 @@ public class QuestionController {
     @RequestMapping(value = "/questionClassfy")
     public String questionClassfy(Model model) {
         Integer companyId = WebUtils.getCurrentCompanyId();
-        Integer schoolId = WebUtils.getCurrentSchoolId();
         Company company = companyService.findCompanyById(companyId);
 
         CompanyMemberService cms = companyMemberServiceServiceImpl.findByCompanyId(companyId);
@@ -760,7 +777,6 @@ public class QuestionController {
      */
     @RequestMapping(value = "/toAddQuestione")
 	public String toAddQuestione(HttpServletRequest request,HttpServletResponse response,ModelMap model){
-		SysConfigItem search = new SysConfigItem();
 		List<SysConfigItem> subjectList = null;
 		try{
 			QuestionClassify questionClassify = new QuestionClassify();
@@ -797,18 +813,66 @@ public class QuestionController {
      * @return 
      * @throws
      */
+    @ResponseBody
     @RequestMapping(value = "/addQuestione")
-   	public String addQuestione(HttpServletRequest request,HttpServletResponse response,ModelMap model){
-    	String result = "redirect:/Question/comQuestionIndex";
-    	SysConfigItem search = new SysConfigItem();
-   		List<SysConfigItem> subjectList = null;
+   	public String addQuestione(HttpServletRequest request,QueQuestion queQuestion){
+    	String [] arrTagId=request.getParameterValues("systemTagIds[]");
+    	String [] arrTagName=request.getParameterValues("userDefuledNames[]");
+    	String questionDescTP=request.getParameter("questionDescTP");
+		questionDescTP=questionDescTP.substring(3, questionDescTP.lastIndexOf("<"));
+		String [] b=questionDescTP.split(";;");
+	    String a="[" ;
+		if(null!=b){
+			for(int i=0 ; i<b.length ;i++){
+				JSONObject jsonObject = new JSONObject();
+				String c =b[i].substring(0, 1);
+				if("<".equals(c)){
+					String e=b[i].substring(b[i].indexOf("http"), b[i].indexOf("\" src="));
+					jsonObject.put("content", e);
+					jsonObject.put("type", 1);
+					a+=jsonObject.toString();
+					a+=",";
+				}else{
+					if(b[i].indexOf("<img") == -1) {
+						jsonObject.put("content", b[i]);
+						jsonObject.put("type", 0);
+						a+=jsonObject.toString();
+						a+=",";	
+					}else{
+						String d= b[i].substring(0, b[i].indexOf("<"));
+						jsonObject.put("content", d);
+						jsonObject.put("type", 0);
+						a+=jsonObject.toString();
+						a+=",";
+						String e=b[i].substring(b[i].indexOf("http"), b[i].indexOf("\" src="));
+						jsonObject.put("content", e);
+						jsonObject.put("type", 1);
+						a+=jsonObject.toString();
+						a+=",";	
+					}
+					
+				}
+			}
+		}
+		a=a.substring(0, a.lastIndexOf(","));
+		a+="]";
+    	Integer companyId = WebUtils.getCurrentCompanyId();
+    	Integer schoolId = WebUtils.getCurrentSchoolId();
+    	Integer userId = WebUtils.getCurrentUserId(request);
+    	queQuestion.setQuestionDesc(a);
+    	queQuestion.setCompanyId(companyId);
+    	queQuestion.setSchoolId(schoolId);
+    	queQuestion.setUserId(userId);
+    	queQuestion.setDelFlag(1);
+    	queQuestion.setQuestionType("QUESTION_STUDENT");
+         
    		try{
-   			
+			questionServiceImpl.insertLabReturnId(arrTagName,arrTagId,queQuestion);
    		}catch(Exception e){
    			log.error("toAddSpecialPage is error :", e);
    		}
    		
-   		return result;
+   		return "success";
    	}
     /**
      * 
@@ -823,7 +887,6 @@ public class QuestionController {
      */
     @RequestMapping(value = "/labelManagement")
     public String labelManagement(HttpServletRequest request,HttpServletResponse response,ModelMap model){
-    	SysConfigItem search = new SysConfigItem();
     	List<SysConfigItem> subjectList = null;
     	try{
     		QuestionClassify questionClassify = new QuestionClassify();
@@ -864,20 +927,56 @@ public class QuestionController {
     public String addLab(HttpServletRequest request,HttpServletResponse response,ModelMap model){
     	try{
     		String biaoshi=request.getParameter("biaoshi");
-    		boolean flag=false;
     		QuestionClassify questionClassify = new QuestionClassify();
     		if("1".equals(biaoshi)){
     			String systemLab=request.getParameter("systemLab");
     			questionClassify.setLabName(systemLab);
-    			flag=questionServiceImpl.insert(questionClassify);
+    			questionClassify.setLabType(0);
+    			questionServiceImpl.insert(questionClassify);
     		}else{
     			String LabId=request.getParameter("LabId");
     			questionClassify.setId(Integer.valueOf(LabId));
-    			flag=questionServiceImpl.delet(questionClassify);
+    			questionServiceImpl.delet(questionClassify);
     		}
     	}catch(Exception e){
     		log.error("toAddSpecialPage is error :", e);
     	}
     	return "success";
+    }
+    /**
+     * 
+     * @author jishangyang 2017年11月29日 下午1:39:08
+     * @Method: checkName 
+     * @Description: 检验标签是否重复
+     * @param request
+     * @param response
+     * @param model
+     * @return 
+     * @throws
+     */
+    @ResponseBody
+    @RequestMapping(value = "/checkName")
+    public String checkName(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+    	try{
+    		QuestionClassify questionClassify = new QuestionClassify();
+    			String biaoshi=request.getParameter("biaoshi");
+    			String systemLab=request.getParameter("systemLab");
+    			questionClassify.setLabName(systemLab);
+    			if("1".equals(biaoshi)){
+    				questionClassify.setLabType(0);	
+    			}else{
+    				questionClassify.setLabType(2);	
+    			}
+    			boolean flag=questionServiceImpl.check(questionClassify);
+    			if(flag){
+    				return "success";
+    	    	}else{
+    	    		return "erro";
+    	    	}
+    	    	
+    	}catch(Exception e){
+    		log.error("toAddSpecialPage is error :", e);
+    	}
+    	return "erro";
     }
 }

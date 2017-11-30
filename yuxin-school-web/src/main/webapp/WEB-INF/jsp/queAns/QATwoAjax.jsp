@@ -3,7 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<style>
 
+.active{color:green;}
+</style>
 <c:forEach var="an" items="${alist }">
 <div class="twoanswer" data-id="${an.id }">
 <table class="onean"  cellpadding="0px" cellspacing="0px">
@@ -33,6 +36,10 @@
 				<c:if test="${types == 3 }">
 					<span class="delt" style="margin-left:10px;cursor: pointer;" data-id="${an.id }" data-types="2"><i class="iconfont">&#xe626;</i><span class="xzi">删除</span></span>
 				</c:if>
+				<c:if test="${an.isAdopt != 1}">
+					<span class="cn" style="margin-left:10px;cursor: pointer;"  data-id="${an.id }" ><i class="iconfont">&#xe605;</i><span class="xzi">采纳</span></span>
+				</c:if>
+				<span class="dz" style="margin-left:10px;cursor: pointer;"  data-id="${an.id }" data-types="${an.isThumbs}"><i class="iconfont <c:if test="${an.isThumbs ==1}"> active </c:if>">&#xe64e;</i><span class="xzi">点赞</span><span>${an.likeanswer}</span></span>
 			</div>
 		</td>
 	</tr>
