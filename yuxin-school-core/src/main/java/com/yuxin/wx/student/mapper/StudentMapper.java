@@ -364,4 +364,5 @@ public interface StudentMapper extends BaseMapper<Student> {
 	 */
 	Integer updateScoreRulsAppStatus(ScoreRulsAppVo scoreRulsAppVo);
 	
+	List<Student> queryStudentListByClassTypeId(Integer classTypeId);
 }

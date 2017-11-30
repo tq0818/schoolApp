@@ -203,15 +203,20 @@ public class QAManagerController {
  */
     @ResponseBody
     @RequestMapping("/adoptAns")
-    public JSONObject adoptAns(HttpServletRequest request, Integer id,Integer ids) {
+    public JSONObject adoptAns(HttpServletRequest request, Integer id,Integer ids,Integer anaswerUserId,Integer questionscore) {
         JSONObject json = new JSONObject();
+        Integer userId = WebUtils.getCurrentUserId(request);
         log.info("qa：采纳:");
         try {
             QuestionAnswer one = new QuestionAnswer();
             QueQuestion que=new QueQuestion();
             one.setId(id);
+            one.setUserId(anaswerUserId);//问题提出者ID
             one.setIsAdopt(1);
+            
             que.setId(ids);
+            que.setQuestionscore(questionscore);
+            que.setUserId(userId);//回答人ID
             questionAnswerServiceImpl.updateQAndA(one,que);
 
             json.put(JsonMsg.MSG, JsonMsg.SUCCESS);
@@ -288,6 +293,7 @@ public class QAManagerController {
         JSONObject json = new JSONObject();
         Users user = WebUtils.getCurrentUser();
         ans.setUserId(user.getId());
+        ans.setReplyUserName(user.getRealName());
         ans.setAnswerLevel(2);
         ans.setDelFlag(1);
         ans.setReadFlag(0);

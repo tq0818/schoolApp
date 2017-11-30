@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;import com.yuxin.wx.common.BaseServiceImpl;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.yuxin.wx.api.queAns.IQuestionAnswerService;
+import com.yuxin.wx.common.BaseServiceImpl;
+import com.yuxin.wx.model.integral.ScoreDetailsAppVo;
+import com.yuxin.wx.model.integral.TotalScoreVo;
 import com.yuxin.wx.model.queAns.QueQuestion;
 import com.yuxin.wx.model.queAns.QuestionAnswer;
 import com.yuxin.wx.queAns.mapper.QuestionAnswerMapper;
@@ -185,8 +188,37 @@ public class QuestionAnswerServiceImpl extends BaseServiceImpl implements IQuest
 
 	@Override
 	public boolean updateQAndA(QuestionAnswer ans, QueQuestion que) {
+		TotalScoreVo vo =new TotalScoreVo();
+		TotalScoreVo voo =new TotalScoreVo();
+		ScoreDetailsAppVo vo1 =new ScoreDetailsAppVo();
+		ScoreDetailsAppVo vo2 =new ScoreDetailsAppVo();
+		vo.setUserId(ans.getUserId().toString());
+		vo.setTotalScore(que.getQuestionscore().toString());
 		QuestionAnswerMapper.updateQuestionAdoptFlag(que);
 		QuestionAnswerMapper.updateAnswerAccept(ans);
+		vo1.setReduceAddFlag("0");//0减少
+		vo1.setOrigin("采纳");
+		vo1.setItemScore(que.getQuestionscore().toString());
+		vo2.setReduceAddFlag("1");//1增加
+		vo2.setOrigin("采纳");
+		vo2.setItemScore(que.getQuestionscore().toString());
+		//查询问题回答人是否有记录 没有就插入 有就更新
+		voo.setUserId(ans.getUserId().toString());
+		String id=QuestionAnswerMapper.searchTotalScore(voo);
+		if(null!=id && !"".equals(id)){
+			QuestionAnswerMapper.updateTotalScore(vo);
+			vo1.setTotalScoreId(String.valueOf(id));
+			vo2.setTotalScoreId(String.valueOf(id));
+			QuestionAnswerMapper.insertScoreDetailsApp(vo1);
+			QuestionAnswerMapper.insertScoreDetailsApp(vo2);
+		}else{
+			QuestionAnswerMapper.inserTotalScore(vo);
+			vo1.setTotalScoreId(String.valueOf(vo.getId()));
+			vo2.setTotalScoreId(String.valueOf(vo.getId()));
+			QuestionAnswerMapper.insertScoreDetailsApp(vo1);
+			QuestionAnswerMapper.insertScoreDetailsApp(vo2);
+		}
+		
 		return true;
 	};
 }

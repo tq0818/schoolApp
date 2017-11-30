@@ -2771,14 +2771,22 @@ public class ClassModuleController {
 			companyStudentMessage.setSendNum(stuList.size());
 			companyStudentMessage.setMessageStatus("STUDENT_MESSAGE_FINISH");
 			companyStudentMessageServiceImpl.update(companyStudentMessage);
-			String[] userIds = new String[userIdList.size()];
-			userIds=userIdList.toArray(userIds);
 			Map<String, String> params=new HashMap<String, String>();
 			params.put("message_method", companyStudentMessage.getMessageMethod());
 			params.put("message_id", String.valueOf(companyStudentMessage.getId()));
-			params.put("signup_vote", String.valueOf(companyStudentMessage.getSignupVote()));
-			//params.put("max_num", String.valueOf(companyStudentMessage.getMaxNum()));
-			String josnResult=JiGuangPushUtil.push(userIds , content, companyStudentMessage.getTitle(),params);
+			//极光推送
+			List<List<String>> sList = new ArrayList<List<String>>();
+			List<String> ssList = new ArrayList<String>();
+			for(int n = 1 ; n <= userIdList.size() ; n++){
+				ssList.add(userIdList.get(n-1));
+				if(n==stuList.size()||n%1000==0){
+					sList.add(ssList);
+					ssList= new ArrayList<String>();
+				}
+			}
+			for(List<String> userList:sList){
+				String josnResult=JiGuangPushUtil.push(userList , content, companyStudentMessage.getTitle(),params);
+			}
 			json.put(JsonMsg.RESULT, JsonMsg.SUCCESS);
 		}
 
@@ -2842,9 +2850,20 @@ public class ClassModuleController {
 			Map<String, String> params=new HashMap<String, String>();
 			params.put("message_method", companyStudentMessage.getMessageMethod());
 			params.put("message_id", String.valueOf(companyStudentMessage.getId()));
-			params.put("signup_vote", String.valueOf(companyStudentMessage.getSignupVote()));
+			//params.put("signup_vote", String.valueOf(companyStudentMessage.getSignupVote()));
 			//params.put("max_num", String.valueOf(companyStudentMessage.getMaxNum()));
-			String result=JiGuangPushUtil.push(userIds , content, companyStudentMessage.getTitle(),params);
+			List<List<String>> sList = new ArrayList<List<String>>();
+			List<String> ssList = new ArrayList<String>();
+			for(int n = 1 ; n <= userIdList.size() ; n++){
+				ssList.add(userIdList.get(n-1));
+				if(n==stuList.size()||n%1000==0){
+					sList.add(ssList);
+					ssList= new ArrayList<String>();
+				}
+			}
+			for(List<String> userList:sList){
+				String josnResult=JiGuangPushUtil.push(userList , content, companyStudentMessage.getTitle(),params);
+			}
 		}
 		json.put(JsonMsg.RESULT, JsonMsg.SUCCESS);
 		return json;

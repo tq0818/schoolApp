@@ -10,6 +10,7 @@ import cn.jpush.api.push.model.Options;
 import cn.jpush.api.push.model.Platform;
 import cn.jpush.api.push.model.PushPayload;
 import cn.jpush.api.push.model.audience.Audience;
+import cn.jpush.api.push.model.audience.AudienceTarget;
 import cn.jpush.api.push.model.notification.AndroidNotification;
 import cn.jpush.api.push.model.notification.IosNotification;
 import cn.jpush.api.push.model.notification.Notification;
@@ -26,8 +27,10 @@ import sun.misc.BASE64Encoder;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -59,27 +62,28 @@ public class JiGuangPushUtil {
 	    /**
 	     * 推送指定学员
 	     */
-	    public static String push(String[] userIds,String content,String title,Map<String, String> params) {
+	    public static String push(List<String> userIds,String content,String title,Map<String, String> params) {
 	    	String result="";
 	    	 try {
 		    	Resource resource = new ClassPathResource("/config.properties");
 				Properties props;
 				props= PropertiesLoaderUtils.loadProperties(resource);
 		        JPushClient jPushClient = new JPushClient(props.getProperty("jiguang.master"), props.getProperty("jiguang.appkey"));
-//		        String appkey = "fb048c9ad2fc49009ab93ade";
-//		        String master = "6f59c3366f8fa161b7738a63";
-//		        JPushClient jPushClient = new JPushClient(master, appkey);
 		        
-		        String id = "";
-		        for(int i = 0 ; i < userIds.length; i++){
-		            id += "\""+userIds[i]+"\""+ ",";
-		        }
-		        String ids = id.substring(0,id.lastIndexOf(","));
+//		        String id = "";
+//		        for(int i = 0 ; i < userIds.length; i++){
+//		            id += "\""+userIds[i]+"\""+ ",";
+//		        }
+//		        String ids = id.substring(0,id.lastIndexOf(","));
+		        
 		        params.put("content",content); 
 		        PushPayload builder = PushPayload.newBuilder()
-		                .setPlatform(Platform.android())
-//		                .setAudience(Audience.alias("338847"))//设置别名
-		                .setAudience(Audience.alias(ids))//设置别名
+		                .setPlatform(Platform.android_ios())
+//		                .setAudience(Audience.alias("501789"))//设置别名
+		                .setAudience(Audience.newBuilder()
+		                		.addAudienceTarget(AudienceTarget.alias(userIds))
+		                		.build())
+//		                .setAudience(Audience.alias(ids))//设置别名
 		                .setNotification(Notification.newBuilder()
 		                        .setAlert(params)
 		                        .addPlatformNotification(AndroidNotification.newBuilder()
@@ -92,8 +96,6 @@ public class JiGuangPushUtil {
 		                        .build())
 		                .build();
 		            PushResult results = jPushClient.sendPush(builder);
-//		            System.out.println(results.msg_id);
-//		            System.out.println(results.sendno);
 		            result="推送成功";
 	        } catch (Exception e) {
 //	            e.printStackTrace();

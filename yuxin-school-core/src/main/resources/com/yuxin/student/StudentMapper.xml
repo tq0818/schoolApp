@@ -997,13 +997,13 @@
 			<foreach item="item" collection="gradecodes" open="(" separator=" or " close=")">
 				 <choose>
 			        <when test="item &lt;= 6"> 
-			       	  (edu_step='STEP_01' and #{curr_year}-CAST(edu_year AS INTEGER)<if test="curr_month &gt; 9">+1</if>=#{item})
+			       	  (edu_step='STEP_01' and #{curr_year}-CAST(edu_year AS SIGNED)<if test="curr_month &gt; 9">+1</if>=#{item})
 			        </when>
 			        <when test="item &gt; 6 and item &lt;= 9"> 
-			       	  (edu_step='STEP_02' and #{curr_year}-CAST(edu_year AS INTEGER)<if test="curr_month &gt; 9">+1</if>=#{item}-6)
+			       	  (edu_step='STEP_02' and #{curr_year}-CAST(edu_year AS SIGNED)<if test="curr_month &gt; 9">+1</if>=#{item}-6)
 			        </when>
 			        <when test="item &gt; 9"> 
-			          (edu_step='STEP_03' and #{curr_year}-CAST(edu_year AS INTEGER)<if test="curr_month &gt; 9">+1</if>=#{item}-9)
+			          (edu_step='STEP_03' and #{curr_year}-CAST(edu_year AS SIGNED)<if test="curr_month &gt; 9">+1</if>=#{item}-9)
 			        </when>
 			    </choose>
 			</foreach>
@@ -3766,4 +3766,11 @@
 			id=#{id}
 		</where>
 	</update>
+	
+	<select id="queryStudentListByClassTypeId" parameterType="Integer" resultMap="com.yuxin.wx.model.student.Student">
+		SELECT DISTINCT s.id,s.name from student_pay_master spm ,student s 
+		where s.id=spm.stu_id and spm.delete_flag = 0 
+		and spm.pay_status_code in ('ORDER_PAID','ORDER_PART_PAY','ORDER_FINISHED','ORDER_PAID_NO_COURSE')	
+		and commodity_id=#{classTypeId}
+	</select>
 </mapper>
