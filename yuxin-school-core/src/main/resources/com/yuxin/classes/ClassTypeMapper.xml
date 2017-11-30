@@ -557,7 +557,7 @@
 		join class_type ct on ct.id=cpr.product_id
 		join sys_config_teacher sct ON ct.teacher_id = sct.id
 		join class_type_module_relation ctmr on ct.id = ctmr.class_type_id
-		join class_module_lesson cml on ctmr.module_id = cml.id
+		join class_module cml on ctmr.module_id = cml.id
 		join course_video_chapter cvc on cml.id=cvc.module_id
 		join course_video_lecture cvl on cvl.chapter_id=cvc.id
 		join video v on cvl.video_id=v.id

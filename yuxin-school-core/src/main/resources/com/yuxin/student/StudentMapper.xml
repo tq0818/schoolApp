@@ -3677,6 +3677,7 @@
 		<result property="userId" column="user_id" />
 		<result property="totalScore" column="total_score" />
 		<result property="stuName" column="name" />
+		<result property="totalScoreAll" column="total_score_all" />
 	</resultMap>
 	<resultMap type="com.yuxin.wx.model.integral.ScoreDetailsAppVo" id="scoreDetailsAppVo">
 		<result property="id" column="id" />
@@ -3750,8 +3751,8 @@
 	</insert>
 	<!-- 适用于主键自增类型 -->
 	<insert id="insertTotalScore" parameterType="com.yuxin.wx.model.integral.TotalScoreVo" useGeneratedKeys="true" keyProperty="id">
-		insert into total_score(user_id,total_score)
-		values (#{userId},#{totalScore})
+		insert into total_score(user_id,total_score,total_score_all)
+		values (#{userId},#{totalScore},#{totalScoreAll})
 	</insert>
 	<update id="updateScoreRulsAppStatus" parameterType="com.yuxin.wx.model.integral.ScoreRulsAppVo">
 		update score_ruls_app 
