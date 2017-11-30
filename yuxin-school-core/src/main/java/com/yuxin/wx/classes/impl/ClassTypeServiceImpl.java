@@ -6,10 +6,11 @@ import java.util.*;
 
 import com.yuxin.wx.commodity.mapper.CommodityMapper;
 import com.yuxin.wx.vo.classes.FirstRecommend;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;import com.yuxin.wx.common.BaseServiceImpl;
-
+import org.springframework.transaction.annotation.Transactional;
+import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.api.classes.IClassTypeService;
 import com.yuxin.wx.classes.mapper.ClassModuleLessonMapper;
 import com.yuxin.wx.classes.mapper.ClassModuleMapper;
@@ -622,6 +623,11 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 	@Override
 	public List<ClassTypeVo> getGardeIdList(ClassTypeVo search) {
 		return classTypeMapper.getGardeIdList(search);
+	}
+	
+	@Override
+	public List<ClassType> queryNeedPushLiveClass(){
+		return classTypeMapper.queryNeedPushLiveClass();
 	}
 }
 

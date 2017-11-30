@@ -719,4 +719,7 @@ public interface IStudentService  {
 	List<Integer> insertMoreStudents(List<StudentImportVo> students,String groupOneId,String groupTwoId,Integer userId);
 	
 	List<StudentListVo> queryStudentsListByIds(String ids);
+	
+	List<Student> queryStudentListByClassTypeId(Integer classTypeId);
+	
 }

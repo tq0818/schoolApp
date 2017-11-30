@@ -479,5 +479,9 @@ public interface IClassTypeService  {
 
 
 	List<ClassTypeVo> getGardeIdList(ClassTypeVo search);
-
+	
+	/**
+	 * 推送消息通知:推送直播课程消息通知(提前推送:10-12小时段内的课程)
+	 */
+	List<ClassType> queryNeedPushLiveClass();
 }
