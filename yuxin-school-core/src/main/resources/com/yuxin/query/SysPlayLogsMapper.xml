@@ -86,14 +86,14 @@
 		<if test="eduSchoolStep!=null and eduSchoolStep!=''">and r.edu_step_new_code = #{eduSchoolStep}</if>
 		<if test="eduYear!=null and eduYear!=''">and s.edu_year = #{eduYear}</if>
 		<if test="eduStep!=null and eduStep!=''">and s.edu_step = #{eduStep}</if>
-		<if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">and study_time between #{startTime} and #{endTime}</if>
+		<if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">and pl.study_time between #{startTime} and #{endTime}</if>
 		<if test="eduClass!=null and eduClass!=''">and s.edu_class like #{eduClass}</if>
 		<if test="companyId!=null and companyId!=''">and t.company_id = #{companyId}</if>
 		<if test="classTypeId!=null and classTypeId!=''">and t.id = #{classTypeId}</if>
 		<if test="className!=null and className!=''">and t.name = #{className} </if>
 		<if test="classStep!=null and classStep!=''">and t.item_second_code = #{classStep}</if>
 		<if test="classSubject!=null and classSubject!=''">and t.item_third_code = #{classSubject}</if>
-		<if test="username!=null and username!=''">and (uf.username like '%${username}%' or uf.mobile = ${username})</if>
+		<if test="username!=null and username!=''">and (uf.username like '%${username}%' or uf.mobile = '%${username}%')</if>
 		group by pl.user_id
 		<choose>
 			<when test="fieldName!=null and fieldName!=''">order by ${fieldName} </when>
@@ -129,14 +129,14 @@
 		<if test="eduSchoolStep!=null and eduSchoolStep!=''">and r.edu_step_new_code = #{eduSchoolStep}</if>
 		<if test="eduYear!=null and eduYear!=''">and s.edu_year = #{eduYear}</if>
 		<if test="eduStep!=null and eduStep!=''">and s.edu_step = #{eduStep}</if>
-		<if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">and study_time between #{startTime} and #{endTime}</if>
+		<if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">and pl.study_time between #{startTime} and #{endTime}</if>
 		<if test="eduClass!=null and eduClass!=''">and s.edu_class like #{eduClass}</if>
 		<if test="companyId!=null and companyId!=''">and t.company_id = #{companyId}</if>
 		<if test="classTypeId!=null and classTypeId!=''">and t.id = #{classTypeId}</if>
 		<if test="className!=null and className!=''">and t.name = #{className} </if>
 		<if test="classStep!=null and classStep!=''">and t.item_second_code = #{classStep}</if>
 		<if test="classSubject!=null and classSubject!=''">and t.item_third_code = #{classSubject}</if>
-		<if test="username!=null and username!=''">and (uf.username like '%${username}%' or uf.mobile = ${username})</if>
+		<if test="username!=null and username!=''">and (uf.username like '%${username}%' or uf.mobile = '%${username}%')</if>
 		group by pl.user_id) t
 	</select>
 
@@ -211,7 +211,7 @@
 		<if test="eduSchool!=null and eduSchool!=''">and s.edu_school = #{eduSchool}</if>
 		<if test="eduSchoolStep!=null and eduSchoolStep!=''">and r.edu_step_new_code = #{eduSchoolStep}</if>
 		<if test="eduSubject!=null and eduSubject!=''">and t.item_third_code = #{eduSubject}</if>
-		<if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">and study_time between #{startTime} and #{endTime}</if>
+		<if test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">and pl.study_time between #{startTime} and #{endTime}</if>
 		<if test="teaName!=null and teaName!=''">and ut.name like '%${teaName}%'</if>
 		<if test="companyId!=null and companyId!=''">and t.company_id = #{companyId}</if>
 		group by pl.class_type_id) t
