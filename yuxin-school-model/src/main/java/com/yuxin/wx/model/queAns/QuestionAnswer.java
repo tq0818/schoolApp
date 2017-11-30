@@ -38,7 +38,8 @@ public class QuestionAnswer extends BaseEntity {
 	private Integer isThumbs;//是否被点赞
 	private Integer th_user_id;//点赞用户
 	private Integer thumbsFlag;//0未点赞，1为点赞
-	private Integer isAdopt;//该用户的回答是否被采纳
+	private Integer isAdopt;//该用户的回答是否被采纳（question-answer中的字段）
+	private Integer isAccept;//该回答是否被采纳（question-answer-app中的字段）
 	// Constructor
 	public QuestionAnswer() {
 	}
