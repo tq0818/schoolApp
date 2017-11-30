@@ -15,7 +15,7 @@
 		id,
 		notice_code,
 		notice_topic,
-		publish_time,
+		date_format(publish_time,'%Y-%m-%d %T') as publish_time,
 		notice_content,
 		notice_status,
 		notice_url
