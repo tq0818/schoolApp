@@ -45,7 +45,7 @@ public class CourseVideoLectureVo extends BaseEntity {
 	private Integer hasHomework;
 	private Integer homeworkId;
 	private Integer homeworkType;
-	
+	private Integer paperId;//试卷id
 
 	
 	// Constructor
@@ -331,4 +331,12 @@ public class CourseVideoLectureVo extends BaseEntity {
 		this.homeworkType = homeworkType;
 	}
 
+	public Integer getPaperId() {
+		return paperId;
+	}
+
+	public void setPaperId(Integer paperId) {
+		this.paperId = paperId;
+	}
+	
 }

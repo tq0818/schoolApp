@@ -75,6 +75,8 @@ public class ClassModuleLesson extends BaseEntity {
 	private TikuPaper tikuPaper;
     private Date lessonDateTime;
     
+    private Integer paperId;
+    
 	public TikuPaper getTikuPaper() {
 		return tikuPaper;
 	}
@@ -547,6 +549,13 @@ public class ClassModuleLesson extends BaseEntity {
 	public void setLessonDateTime(Date lessonDateTime) {
 		this.lessonDateTime = lessonDateTime;
 	}
-	
+
+	public Integer getPaperId() {
+		return paperId;
+	}
+
+	public void setPaperId(Integer paperId) {
+		this.paperId = paperId;
+	}
 	
 }
