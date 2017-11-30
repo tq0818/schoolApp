@@ -32,7 +32,7 @@ public class QuestionAnswer extends BaseEntity {
 	private String replyUserType;	/*被回复人类型*/
 	
 	private String name;			/*回复人*/
-	private String imgurl;			/*头像地址*/
+	private String imgUrl;			/*头像地址*/
 	private String times;			/*时间*/
 	private int likeanswer;     /*点赞数 */
 	private Integer isThumbs;//是否被点赞
@@ -162,7 +162,7 @@ public class QuestionAnswer extends BaseEntity {
 		        + ", userId=" + userId + ", answerType=" + answerType + ", answerLevel=" + answerLevel + ", commentCount="
 		        + commentCount + ", createTime=" + createTime + ", delFlag=" + delFlag + ", parentId=" + parentId
 		        + ", replyUserId=" + replyUserId + ", replyUserName=" + replyUserName + ", readFlag=" + readFlag
-		        + ", replyUserType=" + replyUserType + ", name=" + name + ", imgurl=" + imgurl + ", times=" + times
+		        + ", replyUserType=" + replyUserType + ", name=" + name + ", imgUrl=" + imgUrl + ", times=" + times
 		        + ", likeanswer=" + likeanswer + ", isThumbs=" + isThumbs + ", th_user_id=" + th_user_id + ", thumbsFlag="
 		        + thumbsFlag + ", isAdopt=" + isAdopt + ", adoptFlag=" + adoptFlag + "]";
 	}
@@ -175,12 +175,12 @@ public class QuestionAnswer extends BaseEntity {
 		this.name = name;
 	}
 
-	public String getImgurl() {
-		return imgurl;
+	public String getImgUrl() {
+		return imgUrl;
 	}
 
-	public void setImgurl(String imgurl) {
-		this.imgurl = imgurl;
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	public String getTimes() {

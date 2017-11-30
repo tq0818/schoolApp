@@ -62,6 +62,7 @@ public class QuestionVo extends BaseEntity {
 	private List<QuestionAnswer> answerList;
 	private Integer collectCount;//收藏数
 	private String nickName;//昵称
+	private String headImg;//头像
 	// Constructor
 	public QuestionVo() {
 	}
@@ -462,6 +463,14 @@ public class QuestionVo extends BaseEntity {
 
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+
+	public String getHeadImg() {
+		return headImg;
+	}
+
+	public void setHeadImg(String headImg) {
+		this.headImg = headImg;
 	}
 	
 }
