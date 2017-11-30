@@ -997,13 +997,13 @@
 			<foreach item="item" collection="gradecodes" open="(" separator=" or " close=")">
 				 <choose>
 			        <when test="item &lt;= 6"> 
-			       	  (edu_step='STEP_01' and #{curr_year}-CAST(edu_year AS INTEGER)<if test="curr_month &gt; 9">+1</if>=#{item})
+			       	  (edu_step='STEP_01' and #{curr_year}-CAST(edu_year AS SIGNED)<if test="curr_month &gt; 9">+1</if>=#{item})
 			        </when>
 			        <when test="item &gt; 6 and item &lt;= 9"> 
-			       	  (edu_step='STEP_02' and #{curr_year}-CAST(edu_year AS INTEGER)<if test="curr_month &gt; 9">+1</if>=#{item}-6)
+			       	  (edu_step='STEP_02' and #{curr_year}-CAST(edu_year AS SIGNED)<if test="curr_month &gt; 9">+1</if>=#{item}-6)
 			        </when>
 			        <when test="item &gt; 9"> 
-			          (edu_step='STEP_03' and #{curr_year}-CAST(edu_year AS INTEGER)<if test="curr_month &gt; 9">+1</if>=#{item}-9)
+			          (edu_step='STEP_03' and #{curr_year}-CAST(edu_year AS SIGNED)<if test="curr_month &gt; 9">+1</if>=#{item}-9)
 			        </when>
 			    </choose>
 			</foreach>
