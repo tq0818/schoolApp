@@ -371,8 +371,8 @@
 			select IFNULL(exercise_score,0) exercise_score,ue.start_time,u.id ,s.name,u.username,u.mobile,
 			(SELECT item_value FROM sys_config_dict WHERE item_code = s.edu_area) AS eduArea,
               (SELECT item_value FROM sys_config_dict WHERE item_code = s.edu_school) AS eduSchool,
-              (SELECT item_value FROM sys_config_dict WHERE item_code = s.edu_step) AS eduStep,
-              s.edu_class AS eduClass,
+--               (SELECT item_value FROM sys_config_dict WHERE item_code = s.edu_step) AS eduStep,
+--               s.edu_class AS eduClass,
               s.edu_year AS eduYear
 			from tiku_user_exercise ue inner join users_front u on ue.user_id  = u.id inner join student s on s.user_id = ue.user_id
 			where (exercise_type = 'EXERCISE_TYPE_PAPER' or exercise_type = 'EXERCISE_TYPE_COURSEPAPER' or exercise_type='EXERCISE_TYPE_EXAM')

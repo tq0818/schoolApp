@@ -2,6 +2,7 @@ package com.yuxin.wx.api.queAns;
 
 import java.util.List;
 
+import com.yuxin.wx.model.queAns.QueQuestion;
 import com.yuxin.wx.model.queAns.QuestionAnswer;
 /**
  * Service Interface:QuestionAnswer
@@ -166,4 +167,18 @@ public interface IQuestionAnswerService  {
 	 * @throws
 	 */
 	boolean updatethumbs(QuestionAnswer ans);
+	
+	/**
+	 * 
+	 * @author jishangyang 2017年11月30日 下午5:02:54
+	 * @Method: updateQAndA 
+	 * @Description: 采纳更新回答采纳状态，更新问题采纳状态
+	 * @param ans
+	 * @param que
+	 * @return 
+	 * @throws
+	 */
+	boolean updateQAndA(QuestionAnswer ans,QueQuestion que);
+	
+	
 }

@@ -33,7 +33,7 @@
                     <tr>
                         <td>${ntv.noticeCode}</td>
                         <td>${ntv.noticeTopic}</td>
-                        <td>${ntv.publishTime}</td>
+                        <td id="time_${ntv.id}">${ntv.publishTime}</td>
                         <c:choose>
                             <c:when test="${fn:length(ntv.noticeContent)>25}">
                                 <td title="${ntv.noticeContent}" id="content_${ntv.id}">${fn:substring(ntv.noticeContent, 0, 25)}...</td>
@@ -147,7 +147,9 @@ $('.forbidBtn').click(function(){
             url :  "<%=rootPath %>"+"/student/updateNoticeTemplatStatus",
             type : "post",
             data : {"id":id,"noticeStatus":noticeStatus},
-            success : function(result) {
+            success : function(data) {
+                var time = data.nowDate;
+                var result = data.status;
                 if(obj.html()=='禁用'){
                     if(result=="1"){
                         obj.removeClass('btn-warning');
@@ -164,6 +166,7 @@ $('.forbidBtn').click(function(){
                         obj.addClass('btn-warning');
                         obj.html('禁用');
                         obj.attr("status","1");
+                        $("#time_"+id).html(time);
                         alert("操作成功");
                     }else{
                         alert("操作失败");

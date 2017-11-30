@@ -32,13 +32,15 @@ public class QuestionAnswer extends BaseEntity {
 	private String replyUserType;	/*被回复人类型*/
 	
 	private String name;			/*回复人*/
-	private String imgurl;			/*头像地址*/
+	private String imgUrl;			/*头像地址*/
 	private String times;			/*时间*/
 	private int likeanswer;     /*点赞数 */
 	private Integer isThumbs;//是否被点赞
 	private Integer th_user_id;//点赞用户
 	private Integer thumbsFlag;//0未点赞，1为点赞
 	private Integer isAdopt;//该用户的回答是否被采纳
+	private Integer adoptFlag; //记录采纳数量
+	private Integer isAccept;//该回答是否被采纳（question-answer-app中的字段）
 	// Constructor
 	public QuestionAnswer() {
 	}
@@ -46,7 +48,7 @@ public class QuestionAnswer extends BaseEntity {
 	/**
 	 * full Constructor
 	 */
-	public QuestionAnswer(Integer id, String answerDesc, Integer answerId, Integer questionId, Integer userId, String answerType, Integer answerLevel, Integer commentCount, Date createTime, Integer delFlag) {
+	public QuestionAnswer(Integer id, String answerDesc, Integer answerId, Integer questionId, Integer userId, String answerType, Integer answerLevel, Integer commentCount, Date createTime, Integer delFlag, Integer adoptFlag) {
 		setId(id);
 		this.answerDesc = answerDesc;
 		this.answerId = answerId;
@@ -57,6 +59,7 @@ public class QuestionAnswer extends BaseEntity {
 		this.commentCount = commentCount;
 		this.createTime = createTime;
 		this.delFlag = delFlag;
+		this.adoptFlag = adoptFlag;
 	}
 
 	// getter && setter
@@ -151,9 +154,17 @@ public class QuestionAnswer extends BaseEntity {
 		return this;
 	}
 	
+
+
 	@Override
 	public String toString() {
-		return "QuestionAnswer [" + "id=" + getId() + ", answerDesc=" + answerDesc + ", answerId=" + answerId + ", questionId=" + questionId + ", userId=" + userId + ", answerType=" + answerType + ", answerLevel=" + answerLevel + ", commentCount=" + commentCount + ", createTime=" + createTime + ", delFlag=" + delFlag +  "]";
+		return "QuestionAnswer [answerDesc=" + answerDesc + ", answerId=" + answerId + ", questionId=" + questionId
+		        + ", userId=" + userId + ", answerType=" + answerType + ", answerLevel=" + answerLevel + ", commentCount="
+		        + commentCount + ", createTime=" + createTime + ", delFlag=" + delFlag + ", parentId=" + parentId
+		        + ", replyUserId=" + replyUserId + ", replyUserName=" + replyUserName + ", readFlag=" + readFlag
+		        + ", replyUserType=" + replyUserType + ", name=" + name + ", imgUrl=" + imgUrl + ", times=" + times
+		        + ", likeanswer=" + likeanswer + ", isThumbs=" + isThumbs + ", th_user_id=" + th_user_id + ", thumbsFlag="
+		        + thumbsFlag + ", isAdopt=" + isAdopt + ", adoptFlag=" + adoptFlag + "]";
 	}
 
 	public String getName() {
@@ -164,12 +175,12 @@ public class QuestionAnswer extends BaseEntity {
 		this.name = name;
 	}
 
-	public String getImgurl() {
-		return imgurl;
+	public String getImgUrl() {
+		return imgUrl;
 	}
 
-	public void setImgurl(String imgurl) {
-		this.imgurl = imgurl;
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	public String getTimes() {
@@ -258,6 +269,16 @@ public class QuestionAnswer extends BaseEntity {
 
 	public void setIsAdopt(Integer isAdopt) {
 		this.isAdopt = isAdopt;
+	}
+
+	
+	public Integer getAdoptFlag() {
+		return adoptFlag;
+	}
+
+	
+	public void setAdoptFlag(Integer adoptFlag) {
+		this.adoptFlag = adoptFlag;
 	}
 	
 }

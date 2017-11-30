@@ -327,7 +327,7 @@ button.cloze {
            <shiro:hasPermission name="system_head">
             <li code="system_head"><a href="<%=rootPath %>/company/system/firstTransferStation" >系统</a></li>
 			</shiro:hasPermission>
-
+<%--
             <shiro:hasPermission name="statistics_all">
                 <li code="statistics_all"><a href="<%=rootPath %>/company/statistics/firstTransferStation" >总览</a></li>
             </shiro:hasPermission>
@@ -338,7 +338,7 @@ button.cloze {
 
             <shiro:hasPermission name="statistics_org">
                 <li code="statistics_org"><a href="<%=rootPath %>/company/orgstatistics/firstTransferStation" >总览</a></li>
-            </shiro:hasPermission>
+            </shiro:hasPermission>--%>
         </ul>
         <ul class="nav nav-right">
             <c:choose>

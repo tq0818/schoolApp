@@ -97,6 +97,13 @@ public class IntegralManageServiceImpl extends BaseServiceImpl implements IInteg
 			}else{
 				totalScoreVo.setTotalScore(totalScore+"");
 			}
+			//冗余score
+			String ryTotalScore=totalScoreVo.getTotalScoreAll();
+			if(ryTotalScore!=null&&allTotalScore!=""){
+				totalScoreVo.setTotalScoreAll(Integer.valueOf(ryTotalScore)+totalScore+"");
+			}else{
+				totalScoreVo.setTotalScoreAll(totalScore+"");
+			}
 			//更新总积分表
 			studentMapper.updateTotalScore(totalScoreVo);
 			//插入积分详细表
@@ -108,6 +115,7 @@ public class IntegralManageServiceImpl extends BaseServiceImpl implements IInteg
 			//用户没有总积分记录情况
 			TotalScoreVo totalScoreVo=new TotalScoreVo();
 			totalScoreVo.setTotalScore(totalScore+"");
+			totalScoreVo.setTotalScoreAll(totalScore+"");
 			totalScoreVo.setUserId(userFrontId);
 			//插入保存
 			studentMapper.insertTotalScore(totalScoreVo);

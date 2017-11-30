@@ -3,6 +3,7 @@ package com.yuxin.wx.queAns.mapper;
 import java.util.List;
 
 import com.yuxin.wx.common.BaseMapper;
+import com.yuxin.wx.model.queAns.QueQuestion;
 import com.yuxin.wx.model.queAns.QuestionAnswer;
 
 /**
@@ -82,4 +83,15 @@ public interface QuestionAnswerMapper extends BaseMapper<QuestionAnswer> {
 	Integer updatQuestionAnswer1(QuestionAnswer ans);
 	Integer insertThumbs(QuestionAnswer ans);
 	Integer updatethumbs(QuestionAnswer ans);
+	/**
+	 * 
+	 * @author jishangyang 2017年11月30日 下午5:09:12
+	 * @Method: updateQuestionAdoptFlag 
+	 * @Description: 更新采纳状态
+	 * @param que
+	 * @return 
+	 * @throws
+	 */
+	Integer updateQuestionAdoptFlag( QueQuestion que);
+	Integer updateAnswerAccept(QuestionAnswer ans);
 }

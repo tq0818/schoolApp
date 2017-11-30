@@ -1,12 +1,12 @@
 package com.yuxin.wx.api.queAns;
 
-import java.util.List;
-import java.util.Map;
-
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.queAns.QueQuestion;
 import com.yuxin.wx.model.queAns.QuestionClassify;
 import com.yuxin.wx.vo.queAns.QuestionVo;
+
+import java.util.List;
+import java.util.Map;
 /**
  * Service Interface:Question
  * @author wang.zx
@@ -112,6 +112,8 @@ public interface IQuestionService  {
 	 * @return
 	 */
 	PageFinder<QuestionVo> findVoByPage(QueQuestion search);
+
+
 
 	List<QuestionVo> findTeacherQuestion(Map<String, Object> search);
 	/**
