@@ -3677,6 +3677,7 @@
 		<result property="userId" column="user_id" />
 		<result property="totalScore" column="total_score" />
 		<result property="stuName" column="name" />
+		<result property="totalScoreAll" column="total_score_all" />
 	</resultMap>
 	<resultMap type="com.yuxin.wx.model.integral.ScoreDetailsAppVo" id="scoreDetailsAppVo">
 		<result property="id" column="id" />
@@ -3730,12 +3731,12 @@
 		select count(1) from score_ruls_app
 	</select>
 	<select id="queryTotalScoreVoByUserId" resultMap="totalScoreVoResult" parameterType="map">
-		select ts.id,ts.total_score 
+		select ts.id,ts.total_score,ts.total_score_all
 		from total_score ts
 		where ts.user_id=#{userFrontId}
 	</select>
 	<update id="updateTotalScore" parameterType="com.yuxin.wx.model.integral.TotalScoreVo">
-		update total_score set total_score = #{totalScore}
+		update total_score set total_score = #{totalScore},total_score_all=#{totalScoreAll}
 		<where>
 			id=#{totalScoreId}
 		</where>
@@ -3750,8 +3751,8 @@
 	</insert>
 	<!-- 适用于主键自增类型 -->
 	<insert id="insertTotalScore" parameterType="com.yuxin.wx.model.integral.TotalScoreVo" useGeneratedKeys="true" keyProperty="id">
-		insert into total_score(user_id,total_score)
-		values (#{userId},#{totalScore})
+		insert into total_score(user_id,total_score,total_score_all)
+		values (#{userId},#{totalScore},#{totalScoreAll})
 	</insert>
 	<update id="updateScoreRulsAppStatus" parameterType="com.yuxin.wx.model.integral.ScoreRulsAppVo">
 		update score_ruls_app 

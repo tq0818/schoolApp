@@ -92,7 +92,7 @@
 				<span class="anss" style="margin-left:10px;color: #0099ff;cursor: pointer;" data-id="${a.id }"><span class="xzi">回答:(<span class="count">${a.commentCount }</span>)</span></span>
 				<span class="ore" style="margin-left:30px;cursor: pointer;"><i class="iconfont">&#xe64f;</i><span class="xzi">回复</span></span>
 				<c:if test="${types == 3 }">
-					<span class="del" style="margin-left:10px;cursor: pointer;" data-id="${a.id }" data-types="1"><i class="iconfont">&#xe626;</i><span class="xzi">删除</span></span>
+					<span class="del" style="margin-left:10px;cursor: pointer;" data-id="${a.id }"  data-adotp="${a.isAdopt}" data-types="1"><i class="iconfont">&#xe626;</i><span class="xzi">删除</span></span>
 				</c:if>
 				<c:if test="${(a.isAdopt == 0 || null == a.isAdopt)}">
 					<span class="cn" style="margin-left:10px;cursor: pointer;"  data-id="${a.id }" data-ids="${a.questionId}" data-userId="${a.userId}" data-adopcount="${a.adoptFlag}" data-questionscore="${a.questionscore}"><i class="iconfont">&#xe605;</i><span class="xzi">采纳</span></span>

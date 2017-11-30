@@ -96,6 +96,10 @@ $(function(){
 	})
 	.on("click",".del",function(){
 		var parent = $(this).parents(".oneanswer");
+		if($(this).attr("data-adotp")== 1 ){
+			alert("问题已采纳，不能删除");
+			return;
+		}
 		//删除回答
 		if(req != null){
 			req.abort();

@@ -21,7 +21,8 @@
         <span class="tab-type" href=".tab2">目录树管理</span>
     </div>--%>
     <div class="cntr tab1 tab-info">
-        <div class="top"><input type="button" value="发布生效" id="publishRelation"></div>
+        <%--<div class="top"><input type="button" value="发布生效" id="publishRelation"></div>--%>
+            <div class="top"></div>
         <div class="content">
             <div class="tree_cntr">
                 <input id="addCatg" type="button" value="添加分类">

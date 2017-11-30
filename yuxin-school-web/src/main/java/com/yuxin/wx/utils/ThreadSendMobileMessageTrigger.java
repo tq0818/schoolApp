@@ -44,8 +44,6 @@ public class ThreadSendMobileMessageTrigger implements Runnable {
 			new Thread(new ThreadSendMobileMessageTrigger(companyMessageHistoryService)).start();
 			return;
 		}
-
-		
 	}
 
 }

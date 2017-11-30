@@ -15,7 +15,7 @@
 		id,
 		notice_code,
 		notice_topic,
-		publish_time,
+		date_format(publish_time,'%Y-%m-%d %T') as publish_time,
 		notice_content,
 		notice_status,
 		notice_url
@@ -27,6 +27,7 @@
 		from sys_notice_template_app
 		where 1=1
 		<if test="ntv.noticeUrl != null and ntv.noticeUrl != ''">and notice_url = #{ntv.noticeUrl}</if>
+		<if test="ntv.noticeCode != null and ntv.noticeCode != ''">and notice_code = #{ntv.noticeCode}</if>
 		limit #{ntv.firstIndex},#{ntv.pageSize}
 	</select>
 
