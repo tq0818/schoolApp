@@ -45,7 +45,7 @@ public class QueQuestion extends BaseEntity {
 	private List<Integer> questionIds;/* 根据右侧标签查出的问题id集合 */
 
 	private String userName; /* 用户名 */
-	private String headimg; /* 用户头像 */
+	private String headImg; /* 用户头像 */
 	private String queTime; /* 提问时间 */
 	private String ansTime; /* 最后回答 */
 
@@ -90,7 +90,7 @@ public class QueQuestion extends BaseEntity {
 	        String courseLectureName, Integer answerCount, Integer scanCount, Integer adoptFlag, Integer adoptAnswerId,
 	        Integer topFlag, Integer essenceFlag, Date createTime, Date updateTime, Integer delFlag, String questionType,
 	        Integer companyId, Integer schoolId, Integer biaoSecItemId, List<Integer> questionIds, String userName,
-	        String headimg, String queTime, String ansTime, String classIsOpen, List<Integer> commodityIds,
+	        String headImg, String queTime, String ansTime, String classIsOpen, List<Integer> commodityIds,
 	        List<Integer> questionId3s, List<Integer> questionNotins, String searchKey, Integer questionscore,
 	        String labelContent, Integer collectCount, String systemTagId, Integer userDefuledId,String userDefuledName) {
 		super();
@@ -121,7 +121,7 @@ public class QueQuestion extends BaseEntity {
 		this.biaoSecItemId = biaoSecItemId;
 		this.questionIds = questionIds;
 		this.userName = userName;
-		this.headimg = headimg;
+		this.headImg = headImg;
 		this.queTime = queTime;
 		this.ansTime = ansTime;
 		this.classIsOpen = classIsOpen;
@@ -332,7 +332,7 @@ public class QueQuestion extends BaseEntity {
 		        + ", adoptFlag=" + adoptFlag + ", adoptAnswerId=" + adoptAnswerId + ", topFlag=" + topFlag + ", essenceFlag="
 		        + essenceFlag + ", createTime=" + createTime + ", updateTime=" + updateTime + ", delFlag=" + delFlag
 		        + ", questionType=" + questionType + ", companyId=" + companyId + ", schoolId=" + schoolId + ", biaoSecItemId="
-		        + biaoSecItemId + ", questionIds=" + questionIds + ", userName=" + userName + ", headimg=" + headimg
+		        + biaoSecItemId + ", questionIds=" + questionIds + ", userName=" + userName + ", headImg=" + headImg
 		        + ", queTime=" + queTime + ", ansTime=" + ansTime + ", classIsOpen=" + classIsOpen + ", commodityIds="
 		        + commodityIds + ", questionId3s=" + questionId3s + ", questionNotins=" + questionNotins + ", searchKey="
 		        + searchKey + ", questionscore=" + questionscore + ", labelContent=" + labelContent + ", collectCount="
@@ -372,12 +372,12 @@ public class QueQuestion extends BaseEntity {
 		this.userName = userName;
 	}
 
-	public String getHeadimg() {
-		return headimg;
+	public String getHeadImg() {
+		return headImg;
 	}
 
-	public void setHeadimg(String headimg) {
-		this.headimg = headimg;
+	public void setHeadImg(String headImg) {
+		this.headImg = headImg;
 	}
 
 	public String getQueTime() {

@@ -496,7 +496,7 @@ $(function(){
         </div>
         <div class="btns" style="margin-left: 49px;">
             <p>
-                <a href="javascript:saveHeadPic();" class="btn btn-sm btn-default">完成</a>
+                <a href="##" class="btn btn-sm btn-default" onclick="saveHeadPic();">完成</a>
                 <a href="javascript:;" class="btn btn-sm btn-default hideBG">取消</a>
             </p>
         </div>

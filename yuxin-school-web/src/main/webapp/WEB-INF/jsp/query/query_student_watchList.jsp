@@ -38,7 +38,6 @@
 					<p class="screen-info" style="margin-bottom: 20px;">
 						<a href="/query/statistics/watchInfoList" class="btn ">概况</a>
 						<a href="/query/statistics/studentWatchInfoList" class="btn active">详情</a>
-
 					</p>
 					<form method="post" id="searchForm" class="screen-info">
 						<div>

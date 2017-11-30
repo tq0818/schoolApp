@@ -18,6 +18,7 @@ public class FetchScoreDetailsVO implements Serializable {
 	private Integer fixedPerson;
 	private Date fixedTime;
 	private Integer totalScoreId;
+	private Integer reduceAddFlag;
 	public Integer getId() {
 		return id;
 	}
@@ -71,6 +72,12 @@ public class FetchScoreDetailsVO implements Serializable {
 	}
 	public void setTotalScoreId(Integer totalScoreId) {
 		this.totalScoreId = totalScoreId;
+	}
+	public Integer getReduceAddFlag() {
+		return reduceAddFlag;
+	}
+	public void setReduceAddFlag(Integer reduceAddFlag) {
+		this.reduceAddFlag = reduceAddFlag;
 	}
 	
 }

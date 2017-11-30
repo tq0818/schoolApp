@@ -265,7 +265,7 @@
         $("#myForma").html("");
         var input = "<input type='hidden' value='" + id + "' name='id'/><input type='hidden' value='" + $("#labe").val() + "' name='lable'/>";
         $("#myForma").html(input);
-        $("#myForma").attr("action", "/editSimpleCourse/editClassTypeMessage").submit();
+        $("#myForma").attr("action", "<%=rootPath %>/editSimpleCourse/editClassTypeMessage").submit();
     }
 
 
