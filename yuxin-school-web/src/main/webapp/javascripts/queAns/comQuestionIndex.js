@@ -53,6 +53,11 @@ $(function(){
 	})
 	.on("click",".cn",function(){
 		//采纳
+		if($(this).attr("data-adopcount")>=5){
+			alert($(this).attr("data-adopcount"));
+			alert("最多能采纳5条回答");
+			return;
+		}
 		var parent = $(this).parents(".oneanswer");
 		if(req != null){
 			req.abort();
@@ -60,7 +65,7 @@ $(function(){
 		req = $.ajax({
 			url : rootPath + "/questionanswermanager/adoptAns",
 			type:"post",
-			data:{"id":$(this).attr("data-id")},
+			data:{"id":$(this).attr("data-id"),"ids":$(this).attr("data-ids")},
 			dataType:"json",
 			success:function(data){
 				if(data.msg == "success"){

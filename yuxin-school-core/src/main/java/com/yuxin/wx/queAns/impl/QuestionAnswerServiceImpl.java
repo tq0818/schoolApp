@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;import com.yuxin.wx.common.BaseServiceImpl;
 
 import com.yuxin.wx.api.queAns.IQuestionAnswerService;
+import com.yuxin.wx.model.queAns.QueQuestion;
 import com.yuxin.wx.model.queAns.QuestionAnswer;
 import com.yuxin.wx.queAns.mapper.QuestionAnswerMapper;
 
@@ -22,6 +23,9 @@ public class QuestionAnswerServiceImpl extends BaseServiceImpl implements IQuest
 
     @Autowired
     private QuestionAnswerMapper QuestionAnswerMapper;
+    
+    
+   
 
     /**
      * 
@@ -176,6 +180,13 @@ public class QuestionAnswerServiceImpl extends BaseServiceImpl implements IQuest
 				QuestionAnswerMapper.updatethumbs(ans);
 			}
 		}
+		return true;
+	}
+
+	@Override
+	public boolean updateQAndA(QuestionAnswer ans, QueQuestion que) {
+		QuestionAnswerMapper.updateQuestionAdoptFlag(que);
+		QuestionAnswerMapper.updateAnswerAccept(ans);
 		return true;
 	};
 }

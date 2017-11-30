@@ -17,9 +17,10 @@
 		<result property="replyUserName" column="reply_user_name" />
 		<result property="readFlag" column="read_flag" />
 		<result property="replyUserType" column="reply_user_type" />
-		<result property="likeanswer" column="like_anwser" />
+		<result property="likeanswer" column="like_answer" />
 		<result property="isAdopt" column="is_accept" />
 		<result property="isThumbs" column="is_thumbs" />
+		<result property="adoptFlag" column="adopt_flag" />
 	</resultMap>
 	
 	<sql id="table_columns">
@@ -39,7 +40,7 @@
 		read_flag,
 		reply_user_type,
 		is_accept,
-		like_anwser
+		like_answer
     </sql>
 	<sql id="table_columns_app">
 		t1.id as id,
@@ -58,7 +59,8 @@
 		t1.read_flag AS read_flag,
 		t1.reply_user_type as reply_user_type,
 		t1.is_accept as is_accept,
-		t1.like_anwser as like_anwser
+		t1.like_answer as like_answer,
+		t3.adopt_flag as adopt_flag
     </sql>
 	<sql id="entity_properties">
 		#{id},
@@ -147,7 +149,7 @@
 			<if test="readFlag != null">read_flag = #{readFlag},</if>
 			<if test="replyUserType != null and replyUserType != ''">reply_user_type = #{replyUserType},</if>
 			<if test="isAdopt != null and isAdopt != ''">is_accept = #{isAdopt},</if>
-			<if test="isThumbs != null and isThumbs != ''">like_anwser = #{isThumbs},</if>
+			<if test="isThumbs != null and isThumbs != ''">like_answer = #{isThumbs},</if>
 		</trim>
 		<where>id = #{id}</where>
 	</update>
@@ -202,10 +204,11 @@
 		select t2.is_thumbs as is_thumbs,<include refid="table_columns_app"/>
 		from question_answer_app  t1
 		left join thumbs_up t2 on t1.id = t2.answer_id and t2.user_id=#{userId}
-		where question_id = #{questionId}
-            and  answer_level = 1
-            and del_flag = 1
-		order by create_time asc
+			LEFT JOIN question_app t3 ON t3.id=t1.question_id
+		where t1.question_id = #{questionId}
+            and  t1.answer_level = 1
+            and t1.del_flag = 1
+		order by t1.create_time asc
 		limit #{firstIndex},#{pageSize}
 	</select>
 	<select id="findAnsCountByQueId" parameterType="Integer" resultType="Integer" >
@@ -225,9 +228,10 @@
 		select t2.is_thumbs as is_thumbs,<include refid="table_columns_app"/> 
 		from question_answer_app t1
 		left join thumbs_up t2 on t1.id = t2.answer_id and t2.user_id= #{userId}
+		LEFT JOIN question_app t3 ON t3.id=t1.question_id
 		where t1.answer_id = #{answerId} and 
 			t1.del_flag = 1
-		order by create_time asc
+		order by t1.create_time asc
 	</select>
 	
 	<!-- 批量修改 -->
@@ -240,11 +244,11 @@
 	</update>
 	<!--点赞操作-->
 	<update id="updatQuestionAnswer" parameterType="com.yuxin.wx.model.queAns.QuestionAnswer">
-		update question_answer_app set like_anwser=like_anwser+1 where id=#{id}
+		update question_answer_app set like_answer=like_answer+1 where id=#{id}
 	</update>
 	
 	<update id="updatQuestionAnswer1" parameterType="com.yuxin.wx.model.queAns.QuestionAnswer">
-		update question_answer_app set like_anwser=like_anwser-1 where id=#{id}
+		update question_answer_app set like_answer=like_answer-1 where id=#{id}
 	</update>
 	<insert id="insertThumbs" parameterType="com.yuxin.wx.model.queAns.QuestionAnswer" useGeneratedKeys="true" keyProperty="id">
 		insert into thumbs_up (answer_id,user_id,is_thumbs) 
@@ -253,5 +257,10 @@
 	<update id="updatethumbs" parameterType="com.yuxin.wx.model.queAns.QuestionAnswer">
 		update thumbs_up set is_thumbs=#{isThumbs} where answer_id=#{id} and user_id=#{userId}
 	</update>
-	
+	<update id="updateQuestionAdoptFlag" parameterType="com.yuxin.wx.model.queAns.QueQuestion">
+		update question_app  set adopt_flag=(CASE when adopt_flag is null then 1 else adopt_flag+1 end) where id=#{id} 
+	</update>
+	<update id="updateAnswerAccept" parameterType="com.yuxin.wx.model.queAns.QuestionAnswer">
+		update question_answer_app  set is_accept=1 where id=#{id} 
+	</update>
 </mapper>
