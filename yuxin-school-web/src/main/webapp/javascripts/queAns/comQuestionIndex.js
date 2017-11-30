@@ -53,6 +53,11 @@ $(function(){
 	})
 	.on("click",".cn",function(){
 		//采纳
+		if($(this).attr("data-adopcount")>=5){
+			alert($(this).attr("data-adopcount"));
+			alert("最多能采纳5条回答");
+			return;
+		}
 		var parent = $(this).parents(".oneanswer");
 		if(req != null){
 			req.abort();
@@ -60,7 +65,7 @@ $(function(){
 		req = $.ajax({
 			url : rootPath + "/questionanswermanager/adoptAns",
 			type:"post",
-			data:{"id":$(this).attr("data-id")},
+			data:{"id":$(this).attr("data-id"),"ids":$(this).attr("data-ids"),"anaswerUserId":$(this).attr("data-userId"),"questionscore" :$(this).attr("data-questionscore")},
 			dataType:"json",
 			success:function(data){
 				if(data.msg == "success"){
@@ -365,18 +370,6 @@ $(function(){
 							var id = $(this).attr("ids");
 							var userT = $(this).attr("userT");
 							$(".pl"+id+"").html("").append("<textarea id='editorSpace"+id+"'></textarea><div class='fr anExpressBut'><a href='javascript:void(0)' class='btn qxQue btn-default'>取消</a><a href='javascript:void(0)' class='btn fbQue btn-success' ids='"+id+"' userT='"+userT+"'>发布</a></div>").removeClass("none");
-							var rec = CKEDITOR.replace('editorSpace'+id+'');
-							rec.config.toolbar = [
-					  				[ 'mode', 'document', 'doctools' ],
-					  				[ 'basicstyles', 'cleanup' ],
-					  				[ 'Bold', 'Italic', 'Underline', 'Strike' ],
-					  				[ 'NumberedList', 'BulletedList',
-					  						'JustifyLeft', 'JustifyCenter', 'JustifyRight',
-					  						'JustifyBlock' ], [ 'Link', 'Unlink' ],
-					  				[ 'Image', 'Table' ],
-					  				['Maximize']
-					  				];
-							rec.config.customConfig = 'config.js';
 						});
 						//取消回答
 						$(".plContent").on("click",".qxQue",function(){

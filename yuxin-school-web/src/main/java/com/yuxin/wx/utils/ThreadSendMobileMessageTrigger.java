@@ -21,9 +21,8 @@ public class ThreadSendMobileMessageTrigger implements Runnable {
 	
 	@Override
 	public void run() {
-
 		try {
-			while (true) {
+			/*while (true) {
 				//log.info("短信通知触发站内通知--执行开始--");
 				List<CompanyMessageHistoryLog> logList=companyMessageHistoryService.queryAllMessageHistoryLog();
 				if(null!=logList&&logList.size()>0){
@@ -39,13 +38,11 @@ public class ThreadSendMobileMessageTrigger implements Runnable {
 				}
 				//log.info("短信通知触发站内通知--执行结束--");
 				Thread.sleep(2000);
-			}
+			}*/
 		} catch (Exception e) {
 			new Thread(new ThreadSendMobileMessageTrigger(companyMessageHistoryService)).start();
 			return;
 		}
-
-		
 	}
 
 }

@@ -36,8 +36,11 @@
 				<c:if test="${types == 3 }">
 					<span class="delt" style="margin-left:10px;cursor: pointer;" data-id="${an.id }" data-types="2"><i class="iconfont">&#xe626;</i><span class="xzi">删除</span></span>
 				</c:if>
-				<c:if test="${an.isAdopt != 1}">
-					<span class="cn" style="margin-left:10px;cursor: pointer;"  data-id="${an.id }" ><i class="iconfont">&#xe605;</i><span class="xzi">采纳</span></span>
+				<c:if test="${(an.isAdopt == 0 || null == an.isAdopt)  }">
+					<span class="cn" style="margin-left:10px;cursor: pointer;"  data-id="${an.id }" data-ids="${an.questionId }" data-userId="${an.userId}" data-adopcount="${an.adoptFlag}" data-questionscore="${an.questionscore}"><i class="iconfont">&#xe605;</i><span class="xzi">采纳</span></span>
+				</c:if>
+				<c:if test="${an.isAdopt == 1  }">
+					<span class="" style="margin-left:10px;cursor: pointer;"  data-id="${an.id }" data-id="${an.questionId }"><i class="iconfont">&#xe605;</i><span class="xzi">已采纳</span></span>
 				</c:if>
 				<span class="dz" style="margin-left:10px;cursor: pointer;"  data-id="${an.id }" data-types="${an.isThumbs}"><i class="iconfont <c:if test="${an.isThumbs ==1}"> active </c:if>">&#xe64e;</i><span class="xzi">点赞</span><span>${an.likeanswer}</span></span>
 			</div>

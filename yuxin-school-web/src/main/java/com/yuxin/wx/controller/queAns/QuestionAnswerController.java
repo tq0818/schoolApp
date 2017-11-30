@@ -67,6 +67,7 @@ public class QuestionAnswerController {
 	public String add(QuestionAnswer questionAnswer) {
 		Users users = WebUtils.getCurrentUser();
 		Integer userId = users.getId();
+		questionAnswer.setReplyUserName(users.getRealName());
 		questionAnswer.setUserId(users.getId());
 		questionAnswer.setDelFlag(1);
 		questionAnswer.setCreateTime(new Date());
