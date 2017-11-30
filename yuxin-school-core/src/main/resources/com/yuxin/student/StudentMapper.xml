@@ -3767,10 +3767,10 @@
 		</where>
 	</update>
 	
-	<select id="queryStudentListByClassTypeId" parameterType="Integer" resultMap="com.yuxin.wx.model.student.Student">
+	<!-- <select id="queryStudentListByClassTypeId" parameterType="Integer" resultMap="">
 		SELECT DISTINCT s.id,s.name from student_pay_master spm ,student s 
 		where s.id=spm.stu_id and spm.delete_flag = 0 
 		and spm.pay_status_code in ('ORDER_PAID','ORDER_PART_PAY','ORDER_FINISHED','ORDER_PAID_NO_COURSE')	
 		and commodity_id=#{classTypeId}
-	</select>
+	</select> -->
 </mapper>

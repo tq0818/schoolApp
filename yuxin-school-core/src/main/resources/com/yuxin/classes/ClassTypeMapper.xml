@@ -965,18 +965,21 @@
 	</select>
 
 	<select id="getGardeIdList" parameterType="com.yuxin.wx.vo.classes.ClassTypeVo"  resultMap="classTypeVoResultMap">
-		select grade_id  from first_recommend  where app_shelves_id = #{appId};
+		select grade_id  from first_recommend  where app_shelves_id = #{appId}
 	</select>
 	
-	<select id="queryNeedPushLiveClass" resultMap="classTypeResultMap">
-		SELECT ct.* from class_type ct
-		join class_type_module_relation ctmr on ctmr.class_type_id=ct.id
-		join class_module cm on cm.id=ctmr.module_id
-		join class_module_no cmn on cmn.module_id=cm.id
-		join class_module_lesson cml on cml.module_no_id=cmn.id
-		where ct.publish_status='CLASS_ON_SALE' and ct.del_flag=0 and ct.live_flag=1 
-			 AND cml.lesson_date is not null and cml.lesson_time_start is not null
-			 and date_add(NOW(), interval 10 hour) &le; STR_TO_DATE(CONCAT(date_format(cml.lesson_date, '%Y-%m-%d'),' ',cml.lesson_time_start),'%Y-%m-%d %H:%i')
-			 and date_add(NOW(), interval 12 hour) &gt; STR_TO_DATE(CONCAT(date_format(cml.lesson_date, '%Y-%m-%d'),' ',cml.lesson_time_start),'%Y-%m-%d %H:%i');
-	</select>
+	 <select id="queryNeedPushLiveClass" resultMap="classTypeResultMap">
+		 <![CDATA[ 
+		 SELECT ct.* from class_type ct
+			join class_type_module_relation ctmr on ctmr.class_type_id=ct.id
+			join class_module cm on cm.id=ctmr.module_id
+			join class_module_no cmn on cmn.module_id=cm.id
+			join class_module_lesson cml on cml.module_no_id=cmn.id
+			where ct.publish_status='CLASS_ON_SALE' and ct.del_flag=0 and ct.live_flag=1 
+				 AND cml.lesson_date is not null and cml.lesson_time_start is not null
+				 and date_add(NOW(), interval 10 hour) <= STR_TO_DATE(CONCAT(date_format(cml.lesson_date, '%Y-%m-%d'),' ',cml.lesson_time_start),'%Y-%m-%d %H:%i')
+				 and date_add(NOW(), interval 12 hour) > STR_TO_DATE(CONCAT(date_format(cml.lesson_date, '%Y-%m-%d'),' ',cml.lesson_time_start),'%Y-%m-%d %H:%i')
+		 
+		 ]]>
+	</select> 
 </mapper>
