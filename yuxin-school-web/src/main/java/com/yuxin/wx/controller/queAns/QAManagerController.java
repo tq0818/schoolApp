@@ -78,20 +78,20 @@ public class QAManagerController {
                         a.setName(user.getUsername());
                     }
                     if (user.getHeadPicMax() != null) {
-                        a.setImgUrl(user.getHeadPicMax());
+                        a.setImgurl(user.getHeadPicMax());
                     }
                 } else {
                     SysConfigTeacher teacher = sysConfigTeacherServiceImpl.findByUserId(a.getUserId());
                     if (teacher != null) {
                         a.setName(teacher.getName() != null ? teacher.getName() : ("*******" + teacher.getMobile().substring(7)));
                         if (teacher.getHeadpicUrl() != null) {
-                            a.setImgUrl(teacher.getHeadpicUrl());
+                            a.setImgurl(teacher.getHeadpicUrl());
                         }
                     } else {
                         Users user = usersServiceImpl.findUsersById(a.getUserId());
                         a.setName(user.getRealName() != null ? user.getRealName() : ("*******" + user.getMobile().substring(7)));
                         if (user.getHeadPicUrl() != null) {
-                            a.setImgUrl(user.getHeadPicUrl());
+                            a.setImgurl(user.getHeadPicUrl());
                         }
                     }
                 }
@@ -360,20 +360,20 @@ public class QAManagerController {
                         a.setName(user.getUsername());
                     }
                     if (user.getHeadPicMax() != null) {
-                        a.setImgUrl(user.getHeadPicMax());
+                        a.setImgurl(user.getHeadPicMax());
                     }
                 } else {
                     SysConfigTeacher teacher = sysConfigTeacherServiceImpl.findByUserId(a.getUserId());
                     if (teacher != null) {
                         a.setName(teacher.getName() != null ? teacher.getName() : ("*******" + teacher.getMobile().substring(7)));
                         if (teacher.getHeadpicUrl() != null) {
-                            a.setImgUrl(teacher.getHeadpicUrl());
+                            a.setImgurl(teacher.getHeadpicUrl());
                         }
                     } else {
                         Users user = usersServiceImpl.findUsersById(a.getUserId());
                         a.setName(user.getRealName() != null ? user.getRealName() : ("*******" + user.getMobile().substring(7)));
                         if (user.getHeadPicUrl() != null) {
-                            a.setImgUrl(user.getHeadPicUrl());
+                            a.setImgurl(user.getHeadPicUrl());
                         }
                     }
                 }
