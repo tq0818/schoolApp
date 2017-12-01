@@ -19,10 +19,10 @@
         <div class="heading">
             <h2 class="h5" style="display: inline-block;margin: 10px 0;">banner管理</h2>
             <div class="bannerButton">
-                <span><a href="javascript:;" class="btn btn-primary " >启用</a></span>
-                <span><a href="javascript:;" class="btn btn-primary " >禁用</a></span>
-                <span><a href="javascript:;" class="btn btn-primary changeOrder" >更改排序</a></span>
-                <span><a href="javascript:;" class="btn btn-primary " >添加banner</a></span>
+                <span><a href="##" class="btn btn-primary " >启用</a></span>
+                <span><a href="##" class="btn btn-primary " >禁用</a></span>
+                <span><a href="##" class="btn btn-primary changeOrder" >更改排序</a></span>
+                <span><a href="/Banner/addBanner" class="btn btn-primary " >添加banner</a></span>
             </div>
             <span class="line"></span>
         </div>
