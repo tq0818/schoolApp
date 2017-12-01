@@ -108,3 +108,4 @@ i{font-style: normal}
 #zdyBtn button{margin-right: 10px;}
 #zdyBtn{display: inline-block;}
 .tableRule button{margin-right: 1px;}
+.bannerButton{display: inline-block;position: absolute;right: 10px;top: 10px;}
