@@ -46,7 +46,7 @@ public class CourseVideoLectureVo extends BaseEntity {
 	private Integer homeworkId;
 	private Integer homeworkType;
 	private Integer paperId;//试卷id
-
+	private String url;//录播访问地址
 	
 	// Constructor
 	public CourseVideoLectureVo() {
@@ -337,6 +337,14 @@ public class CourseVideoLectureVo extends BaseEntity {
 
 	public void setPaperId(Integer paperId) {
 		this.paperId = paperId;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 	
 }

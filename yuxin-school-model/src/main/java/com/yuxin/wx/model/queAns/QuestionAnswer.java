@@ -32,7 +32,7 @@ public class QuestionAnswer extends BaseEntity {
 	private String replyUserType;	/*被回复人类型*/
 	
 	private String name;			/*回复人*/
-	private String imgUrl;			/*头像地址*/
+	private String imgurl;			/*头像地址*/
 	private String times;			/*时间*/
 	private int likeanswer;     /*点赞数 */
 	private Integer isThumbs;//是否被点赞
@@ -40,7 +40,8 @@ public class QuestionAnswer extends BaseEntity {
 	private Integer thumbsFlag;//0未点赞，1为点赞
 	private Integer isAdopt;//该用户的回答是否被采纳
 	private Integer adoptFlag; //记录采纳数量
-	private Integer isAccept;//该回答是否被采纳（question-answer-app中的字段）
+	private Integer isAccept;//该回答是否被采纳
+	private Integer questionscore;//问题奖励积分
 	// Constructor
 	public QuestionAnswer() {
 	}
@@ -48,8 +49,21 @@ public class QuestionAnswer extends BaseEntity {
 	/**
 	 * full Constructor
 	 */
-	public QuestionAnswer(Integer id, String answerDesc, Integer answerId, Integer questionId, Integer userId, String answerType, Integer answerLevel, Integer commentCount, Date createTime, Integer delFlag, Integer adoptFlag) {
-		setId(id);
+	
+
+	// getter && setter
+	// 在setter方法最后加上"return this;"并把返回参数改为QuestionAnswer可以实现连缀设置属性
+	
+	public String getAnswerDesc() {
+		return answerDesc;
+	}
+
+	public QuestionAnswer(String answerDesc, Integer answerId, Integer questionId, Integer userId, String answerType,
+	        Integer answerLevel, Integer commentCount, Date createTime, Integer delFlag, Integer parentId, Integer replyUserId,
+	        String replyUserName, Integer readFlag, String replyUserType, String name, String imgurl, String times,
+	        int likeanswer, Integer isThumbs, Integer th_user_id, Integer thumbsFlag, Integer isAdopt, Integer adoptFlag,
+	        Integer isAccept, Integer questionscore) {
+		super();
 		this.answerDesc = answerDesc;
 		this.answerId = answerId;
 		this.questionId = questionId;
@@ -59,14 +73,22 @@ public class QuestionAnswer extends BaseEntity {
 		this.commentCount = commentCount;
 		this.createTime = createTime;
 		this.delFlag = delFlag;
+		this.parentId = parentId;
+		this.replyUserId = replyUserId;
+		this.replyUserName = replyUserName;
+		this.readFlag = readFlag;
+		this.replyUserType = replyUserType;
+		this.name = name;
+		this.imgurl = imgurl;
+		this.times = times;
+		this.likeanswer = likeanswer;
+		this.isThumbs = isThumbs;
+		this.th_user_id = th_user_id;
+		this.thumbsFlag = thumbsFlag;
+		this.isAdopt = isAdopt;
 		this.adoptFlag = adoptFlag;
-	}
-
-	// getter && setter
-	// 在setter方法最后加上"return this;"并把返回参数改为QuestionAnswer可以实现连缀设置属性
-	
-	public String getAnswerDesc() {
-		return answerDesc;
+		this.isAccept = isAccept;
+		this.questionscore = questionscore;
 	}
 
 	public QuestionAnswer setAnswerDesc(String answerDesc) {
@@ -156,15 +178,18 @@ public class QuestionAnswer extends BaseEntity {
 	
 
 
+
+
 	@Override
 	public String toString() {
 		return "QuestionAnswer [answerDesc=" + answerDesc + ", answerId=" + answerId + ", questionId=" + questionId
 		        + ", userId=" + userId + ", answerType=" + answerType + ", answerLevel=" + answerLevel + ", commentCount="
 		        + commentCount + ", createTime=" + createTime + ", delFlag=" + delFlag + ", parentId=" + parentId
 		        + ", replyUserId=" + replyUserId + ", replyUserName=" + replyUserName + ", readFlag=" + readFlag
-		        + ", replyUserType=" + replyUserType + ", name=" + name + ", imgUrl=" + imgUrl + ", times=" + times
+		        + ", replyUserType=" + replyUserType + ", name=" + name + ", imgurl=" + imgurl + ", times=" + times
 		        + ", likeanswer=" + likeanswer + ", isThumbs=" + isThumbs + ", th_user_id=" + th_user_id + ", thumbsFlag="
-		        + thumbsFlag + ", isAdopt=" + isAdopt + ", adoptFlag=" + adoptFlag + "]";
+		        + thumbsFlag + ", isAdopt=" + isAdopt + ", adoptFlag=" + adoptFlag + ", isAccept=" + isAccept
+		        + ", questionscore=" + questionscore + "]";
 	}
 
 	public String getName() {
@@ -175,12 +200,12 @@ public class QuestionAnswer extends BaseEntity {
 		this.name = name;
 	}
 
-	public String getImgUrl() {
-		return imgUrl;
+	public String getImgurl() {
+		return imgurl;
 	}
 
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
+	public void setImgurl(String imgurl) {
+		this.imgurl = imgurl;
 	}
 
 	public String getTimes() {
@@ -279,6 +304,26 @@ public class QuestionAnswer extends BaseEntity {
 	
 	public void setAdoptFlag(Integer adoptFlag) {
 		this.adoptFlag = adoptFlag;
+	}
+
+	
+	public Integer getIsAccept() {
+		return isAccept;
+	}
+
+	
+	public void setIsAccept(Integer isAccept) {
+		this.isAccept = isAccept;
+	}
+
+	
+	public Integer getQuestionscore() {
+		return questionscore;
+	}
+
+	
+	public void setQuestionScore(Integer questionscore) {
+		this.questionscore = questionscore;
 	}
 	
 }

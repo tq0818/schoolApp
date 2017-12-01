@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.api.student.IStudentService;
 import com.yuxin.wx.common.PageFinder;
@@ -1783,5 +1784,9 @@ public class StudentServiceImpl extends BaseServiceImpl implements IStudentServi
 		return data;
 	}
 	
+	@Override
+	public List<Student> queryStudentListByClassTypeId(Integer classTypeId){
+		return studentMapper.queryStudentListByClassTypeId(classTypeId);
+	}
 	
 }
