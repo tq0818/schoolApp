@@ -2317,6 +2317,7 @@ public class ClassModuleController {
 		String status = "";
 		String message = "";
 		String content = companyStudentMessage.getContent();
+		String contentText = companyStudentMessage.getContentText();
 		if(companyStudentMessage.getMessageMethod().equals("STUDENT_MESSAGE_WEB")|| companyStudentMessage.getMessageMethod().equals("STUDENT_MESSAGE_EMAIL"))
 			content = replaceBlank(content);
 		companyStudentMessage.setContent(content);
@@ -2785,7 +2786,7 @@ public class ClassModuleController {
 				}
 			}
 			for(List<String> userList:sList){
-				String josnResult=JiGuangPushUtil.push(userList , content, companyStudentMessage.getTitle(),params);
+				String josnResult=JiGuangPushUtil.push(userList , contentText, companyStudentMessage.getTitle(),params);
 			}
 			json.put(JsonMsg.RESULT, JsonMsg.SUCCESS);
 		}
@@ -2862,7 +2863,7 @@ public class ClassModuleController {
 				}
 			}
 			for(List<String> userList:sList){
-				String josnResult=JiGuangPushUtil.push(userList , content, companyStudentMessage.getTitle(),params);
+				String josnResult=JiGuangPushUtil.push(userList , companyStudentMessage.getContentText(), companyStudentMessage.getTitle(),params);
 			}
 		}
 		json.put(JsonMsg.RESULT, JsonMsg.SUCCESS);
