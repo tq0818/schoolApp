@@ -62,21 +62,17 @@ public class BannerConfigController extends BaseWebController{
 	
 	Log log = LogFactory.getLog("log");
 	
-//	@RequestMapping(method = RequestMethod.GET)
-//	public String list(Model model, CertificateConfig search){
-//		if (search == null) {
-//			search = new CertificateConfig();
-//			// search.setPageSize(20);
-//		}
-//		model.addAttribute("list", certificateConfigServiceImpl.findCertificateConfigByPage(search));
-//		return "certificateConfig/list";
-//	}
+
 	
 	@RequestMapping(value="/comBannerIndex", method = RequestMethod.GET)
 	public String add(CertificateConfig CertificateConfig) {
 		
-		return "";
+		return "banner/bannerIndex";
 	}
 	
-	
+	@RequestMapping(value="/addBanner", method = RequestMethod.GET)
+	public String addBanner(CertificateConfig CertificateConfig) {
+		
+		return "banner/bannerAdd";
+	}
 }
