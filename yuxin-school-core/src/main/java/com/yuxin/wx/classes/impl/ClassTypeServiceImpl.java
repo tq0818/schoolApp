@@ -23,16 +23,10 @@ import com.yuxin.wx.course.mapper.CourseRemoteMapper;
 import com.yuxin.wx.course.mapper.CourseVideoChapterMapper;
 import com.yuxin.wx.course.mapper.CourseVideoMapper;
 import com.yuxin.wx.model.classes.ClassModule;
-import com.yuxin.wx.model.classes.ClassModuleLesson;
-import com.yuxin.wx.model.classes.ClassModuleNo;
 import com.yuxin.wx.model.classes.ClassType;
 import com.yuxin.wx.model.classes.ClassTypeModuleRelation;
 import com.yuxin.wx.model.classes.ClassTypeRemoteRelation;
-import com.yuxin.wx.model.commodity.Commodity;
 import com.yuxin.wx.model.course.CourseVideoChapter;
-import com.yuxin.wx.model.system.SysConfigItemTag;
-import com.yuxin.wx.model.system.SysConfigTeacher;
-import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.system.mapper.SysConfigItemTagMapper;
 import com.yuxin.wx.system.mapper.SysConfigTeacherMapper;
 import com.yuxin.wx.vo.classes.ClassPackageConditionVo;
@@ -626,8 +620,11 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 	}
 	
 	@Override
-	public List<ClassType> queryNeedPushLiveClass(){
-		return classTypeMapper.queryNeedPushLiveClass();
+	public List<ClassTypeVo> queryNeedPushLiveClass(){
+//		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//		String currtime=sdf.format(new Date());
+		List<ClassTypeVo> list=classTypeMapper.queryNeedPushLiveClass();
+		return list;
 	}
 }
 

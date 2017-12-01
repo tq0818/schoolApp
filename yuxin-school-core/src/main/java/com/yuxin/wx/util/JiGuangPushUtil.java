@@ -1,4 +1,4 @@
-package com.yuxin.wx.utils;
+package com.yuxin.wx.util;
 
 
 import cn.jpush.api.JPushClient;
