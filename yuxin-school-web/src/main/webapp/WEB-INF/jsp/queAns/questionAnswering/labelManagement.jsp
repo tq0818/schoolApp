@@ -130,7 +130,14 @@
             }
         })
     });
+
 	
+</script>
+<script>
+    //        二级菜单加active
+    $(function () {
+        $selectSubMenu('community_qa');
+    });
 </script>
 </body>
 </html>

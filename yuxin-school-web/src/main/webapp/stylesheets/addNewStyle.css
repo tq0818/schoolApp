@@ -109,3 +109,10 @@ i{font-style: normal}
 #zdyBtn{display: inline-block;}
 .tableRule button{margin-right: 1px;}
 .bannerButton{display: inline-block;position: absolute;right: 10px;top: 10px;}
+.bannerImg{width: 600px;height: 400px;margin-left: 50px;}
+.changeBanner{display: inline-block;width: 80px;height: 40px;line-height: 40px;background: #fff;
+position: relative;text-align: center;color: #aeaeae !important;font-size: 16px;text-decoration: none !important;
+cursor: pointer;border: 1px solid #c4c4c4;margin-left: 153px;margin-top: 20px;}
+.changeBanner input{position: absolute;left: 0;top: 0;opacity: 0;width: 80px;height: 40px;cursor: pointer;}
+.bannerInput{width: 364px;height: 36px;border: 1px solid #abadb3;margin-left: 100px;}
+.bannerBtnGroup button{margin: 10px;}
