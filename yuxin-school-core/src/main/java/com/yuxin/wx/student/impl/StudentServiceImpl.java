@@ -453,6 +453,14 @@ public class StudentServiceImpl extends BaseServiceImpl implements IStudentServi
 		// TODO Auto-generated method stub
 		return studentMapper.findByPayMaster(companyStudentMessage);
 	}
+	
+
+	@Override
+	public List<Student> findByPayMaster1(
+			CompanyStudentMessage companyStudentMessage) {
+		// TODO Auto-generated method stub
+		return studentMapper.findByPayMaster1(companyStudentMessage);
+	}
 
 	@Override
 	public List<Student> findByPaySlave(

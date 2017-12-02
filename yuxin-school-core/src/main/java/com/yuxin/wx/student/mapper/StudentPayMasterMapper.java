@@ -90,6 +90,8 @@ public interface StudentPayMasterMapper extends BaseMapper<StudentPayMaster> {
 	
 	Integer findCountByPayMaster(StudentPayMaster payMaster);
 	
+	Integer findCountByPayMaster1(StudentPayMaster payMaster);
+	
 	List<Map> queryorderTotalMoney(StuPayMasterVo search);
 
     /**

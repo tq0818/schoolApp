@@ -318,7 +318,15 @@ var msgCount;
 	//				}
 	 			}
  			}
- 			console.log('send');
+
+			var sendStuNum=$("#sendStu").text();
+			if(null==sendStuNum||''==sendStuNum||parseInt(sendStuNum)<1){
+	    		$('<div class="c-fa">'+ "可发送学员人数为0!" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+					$(this).remove();}
+				);
+				return;
+	    	}
+			
  			var isHurry = $('.hurryNotice:checked').val();
  			var lessonId = $('#classLesson').val();
  			if($.trim(lessonId) ==""){
@@ -374,6 +382,7 @@ var msgCount;
 			var method = $.trim($(".btn-method.btn-primary").attr("data-type"));
 			var msgcount = "";
 			var msgcounttext = "";
+			var sendStuNum=$("#sendStu").text();
 			var signup_vote=$("input[name='signup_vote']:checked").val();
 			var limitStuNum=$.trim($("#limitStuNum").val());
 			var isSend=null;
@@ -405,6 +414,12 @@ var msgCount;
 				);
 				return;
 	    	 }
+	    	if(null==sendStuNum||''==sendStuNum||parseInt(sendStuNum)<1){
+	    		$('<div class="c-fa">'+ "可发送学员人数为0!" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+					$(this).remove();}
+				);
+				return;
+	    	}
 	    	if(method == "STUDENT_MESSAGE_DINGYUE"){
 				CKupdate();
 				msgcount = $("#dingyue_newsContents").val();
