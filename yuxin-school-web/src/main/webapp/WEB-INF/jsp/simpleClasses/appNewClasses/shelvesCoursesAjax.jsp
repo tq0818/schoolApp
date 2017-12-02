@@ -91,7 +91,7 @@
     <div class="pages">
         <ul class="pagination"></ul>
     </div>
-    <input type="hidden" id="pageId" value="${courseList.pageNo-1}"/>
+    <input type="hidden" id="pageId" value="${courseList.pageNo}"/>
 </div>
 <%--弹出框--%>
 <div class="popupContainer">
