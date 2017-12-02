@@ -124,7 +124,6 @@
 		<result property="labDesc" column="lab_desc"/>
 		<result property="sort" column="sort"/>
 
-
 		<result property="categoryId" column="category_id"/>
 		<result property="gradeId" column="grade_id"/>
 		<result property="subjectId" column="subject_id"/>
@@ -132,6 +131,10 @@
 		<result property="knowId" column="knowledge_id"/>
 		<result property="stageId" column="stage_id"/>
 		<result property="typeId" column="type_id"/>
+		
+		<result property="moduleNoId" column="module_no_id"/>
+		<result property="moduleNoName" column="module_no_name"/>
+		
 	</resultMap>
 
 	<sql id="table_columns_first">
@@ -968,18 +971,20 @@
 		select grade_id  from first_recommend  where app_shelves_id = #{appId}
 	</select>
 	
-	 <select id="queryNeedPushLiveClass" resultMap="classTypeResultMap">
+	 <select id="queryNeedPushLiveClass" resultMap="classTypeVoResultMap">
 		 <![CDATA[ 
-		 SELECT ct.* from class_type ct
+		 	SELECT ct.id,ct.name,cml.lesson_name,cmn.id as module_no_id,cmn.name as module_no_name,
+		 		CONCAT(date_format(cml.lesson_date, '%Y-%m-%d'),' ',cml.lesson_time_start) as lesson_time_start,
+				ct.item_one_id,ct.item_second_id,ct.item_one_code,ct.item_second_code,ct.item_third_code
+			from class_type ct 	
 			join class_type_module_relation ctmr on ctmr.class_type_id=ct.id
 			join class_module cm on cm.id=ctmr.module_id
 			join class_module_no cmn on cmn.module_id=cm.id
 			join class_module_lesson cml on cml.module_no_id=cmn.id
 			where ct.publish_status='CLASS_ON_SALE' and ct.del_flag=0 and ct.live_flag=1 
 				 AND cml.lesson_date is not null and cml.lesson_time_start is not null
-				 and date_add(NOW(), interval 10 hour) <= STR_TO_DATE(CONCAT(date_format(cml.lesson_date, '%Y-%m-%d'),' ',cml.lesson_time_start),'%Y-%m-%d %H:%i')
-				 and date_add(NOW(), interval 12 hour) > STR_TO_DATE(CONCAT(date_format(cml.lesson_date, '%Y-%m-%d'),' ',cml.lesson_time_start),'%Y-%m-%d %H:%i')
-		 
+				 and date_add(now(), interval 10 hour) <  STR_TO_DATE(CONCAT(date_format(cml.lesson_date, '%Y-%m-%d'),' ',cml.lesson_time_start),'%Y-%m-%d %H:%i')
+				 and date_add(now(), interval 12 hour) >= STR_TO_DATE(CONCAT(date_format(cml.lesson_date, '%Y-%m-%d'),' ',cml.lesson_time_start),'%Y-%m-%d %H:%i')
 		 ]]>
 	</select> 
 </mapper>

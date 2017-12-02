@@ -409,7 +409,6 @@ var msgCount;
 				CKupdate();
 				msgcount = $("#dingyue_newsContents").val();
 				msgcounttext=dingyue_ckecktor.document.getBody().getText();
-				console.log(msgcount);
 			/*	msgcount = msgcount.replace(/<p>/g, "<span>");
 				msgcount = msgcount.replace(/<p /g, "<span ");
 				msgcount = msgcount.replace(/<\/p>/g, "</span><br>");*/

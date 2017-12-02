@@ -109,6 +109,9 @@ public class ClassTypeVo extends BaseEntity {
 	private String lessonLength;
 
 	private String lastPerson;
+	
+	private Integer moduleNoId;
+	private String moduleNoName;
 
 	public String getLastPerson() {
 		return lastPerson;
@@ -762,6 +765,23 @@ public class ClassTypeVo extends BaseEntity {
 	public void setOriginType(Integer originType) {
 		this.originType = originType;
 	}
+	
+	public Integer getModuleNoId() {
+		return moduleNoId;
+	}
+
+	public void setModuleNoId(Integer moduleNoId) {
+		this.moduleNoId = moduleNoId;
+	}
+
+	public String getModuleNoName() {
+		return moduleNoName;
+	}
+
+	public void setModuleNoName(String moduleNoName) {
+		this.moduleNoName = moduleNoName;
+	}
+
 	@Override
 	public String toString() {
 		return "ClassTypeVo [name=" + name + ", typeCode=" + typeCode + ", originalPrice=" + originalPrice
