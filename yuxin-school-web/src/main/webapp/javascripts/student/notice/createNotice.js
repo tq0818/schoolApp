@@ -296,9 +296,9 @@ var msgCount;
  				CKupdate();
  				msgcount = $("#newsContents").val();
  				msgcounttext=editor.document.getBody().getText();
- 				msgcount = msgcount.replace(/<p>/g, "<span>");
+ 			/*	msgcount = msgcount.replace(/<p>/g, "<span>");
  				msgcount = msgcount.replace(/<p /g, "<span ");
- 				msgcount = msgcount.replace(/<\/p>/g, "</span><br>");
+ 				msgcount = msgcount.replace(/<\/p>/g, "</span><br>");*/
  			}else if(method == 'STUDENT_MESSAGE_EMAIL'){
  				CKupdate();
  				msgcount = $("#email_newsContents").val();
@@ -409,9 +409,9 @@ var msgCount;
 				CKupdate();
 				msgcount = $("#dingyue_newsContents").val();
 				msgcounttext=dingyue_ckecktor.document.getBody().getText();
-				msgcount = msgcount.replace(/<p>/g, "<span>");
+			/*	msgcount = msgcount.replace(/<p>/g, "<span>");
 				msgcount = msgcount.replace(/<p /g, "<span ");
-				msgcount = msgcount.replace(/<\/p>/g, "</span><br>");
+				msgcount = msgcount.replace(/<\/p>/g, "</span><br>");*/
 			}
  			if(!msgcount){
 // 				if(!reg.test($.trim(arr[i]))){

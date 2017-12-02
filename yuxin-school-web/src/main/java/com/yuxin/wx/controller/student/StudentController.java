@@ -2599,6 +2599,16 @@ public class StudentController {
 		String fileName=path.substring(path.lastIndexOf("/")+1);
 		String tempPath=props.getProperty("server.imageupload.tempPath")+"/source/"+fileName;
 		String target=props.getProperty("server.imageupload.tempPath")+"/target/"+fileName;
+
+        File tempPathFile = new File(props.getProperty("server.imageupload.tempPath") + "/source/");
+        if(!tempPathFile.exists()){
+            tempPathFile.mkdirs();
+        }
+        File targetFile = new File(props.getProperty("server.imageupload.tempPath") + "/target/");
+        if(!targetFile.exists()){
+            targetFile.mkdirs();
+        }
+
 		String header="http://"+props.getProperty("yunduoketang.oss.imagedomain")+"/";
 		
 		path=path.replace(header, "");

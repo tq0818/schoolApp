@@ -1,4 +1,4 @@
-package com.yuxin.wx.utils;
+package com.yuxin.wx.util;
 
 
 import cn.jpush.api.JPushClient;
@@ -69,23 +69,15 @@ public class JiGuangPushUtil {
 				Properties props;
 				props= PropertiesLoaderUtils.loadProperties(resource);
 		        JPushClient jPushClient = new JPushClient(props.getProperty("jiguang.master"), props.getProperty("jiguang.appkey"));
-		        
-//		        String id = "";
-//		        for(int i = 0 ; i < userIds.length; i++){
-//		            id += "\""+userIds[i]+"\""+ ",";
-//		        }
-//		        String ids = id.substring(0,id.lastIndexOf(","));
-		        
 		        params.put("content",content); 
 		        PushPayload builder = PushPayload.newBuilder()
 		                .setPlatform(Platform.android_ios())
-//		                .setAudience(Audience.alias("501789"))//设置别名
+//		                .setAudience(Audience.alias("558174"))//设置别名
 		                .setAudience(Audience.newBuilder()
 		                		.addAudienceTarget(AudienceTarget.alias(userIds))
 		                		.build())
-//		                .setAudience(Audience.alias(ids))//设置别名
 		                .setNotification(Notification.newBuilder()
-		                        .setAlert(params)
+		                        .setAlert(content)
 		                        .addPlatformNotification(AndroidNotification.newBuilder()
 		                                .setTitle(StringUtils.isNotEmpty(title)?title:"消息通知")
 		                                .addExtras(params)

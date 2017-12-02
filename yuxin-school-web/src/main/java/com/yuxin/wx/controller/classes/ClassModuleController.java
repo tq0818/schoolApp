@@ -2317,6 +2317,7 @@ public class ClassModuleController {
 		String status = "";
 		String message = "";
 		String content = companyStudentMessage.getContent();
+		String contentText = companyStudentMessage.getContentText();
 		if(companyStudentMessage.getMessageMethod().equals("STUDENT_MESSAGE_WEB")|| companyStudentMessage.getMessageMethod().equals("STUDENT_MESSAGE_EMAIL"))
 			content = replaceBlank(content);
 		companyStudentMessage.setContent(content);
@@ -2785,7 +2786,7 @@ public class ClassModuleController {
 				}
 			}
 			for(List<String> userList:sList){
-				String josnResult=JiGuangPushUtil.push(userList , content, companyStudentMessage.getTitle(),params);
+				String josnResult=JiGuangPushUtil.push(userList , contentText, companyStudentMessage.getTitle(),params);
 			}
 			json.put(JsonMsg.RESULT, JsonMsg.SUCCESS);
 		}
@@ -2862,7 +2863,7 @@ public class ClassModuleController {
 				}
 			}
 			for(List<String> userList:sList){
-				String josnResult=JiGuangPushUtil.push(userList , content, companyStudentMessage.getTitle(),params);
+				String josnResult=JiGuangPushUtil.push(userList , companyStudentMessage.getContentText(), companyStudentMessage.getTitle(),params);
 			}
 		}
 		json.put(JsonMsg.RESULT, JsonMsg.SUCCESS);
@@ -3066,7 +3067,7 @@ public class ClassModuleController {
 				for(Student s : ssList){
 					if(null!=s && null!=s.getMobile() && !"".equals(s.getMobile())){//2016/7/7  手机为空则不发短信
 						CompanyMessageHistory cmh = new CompanyMessageHistory();
-						cmh.setReceiverUserId(""+s.getId());
+						cmh.setReceiverUserId(""+s.getUserId());
 						cmh.setReceiverMobile(s.getMobile().trim());
 						cmh.setContent("【成都数字学校】 您报名的"+className+"课程将于"+date+"开始，请您安排还自己的时间准时参与，非常感谢！");
 						cmh.setSendTime(new Date());

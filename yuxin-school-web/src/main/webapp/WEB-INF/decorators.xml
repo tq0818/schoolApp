@@ -552,6 +552,12 @@
         <pattern>/integralRule</pattern>
         <!--提问-->
         <pattern>/Question/toAddQuestione</pattern>
+        <!--首页banner图设置-->
+        <pattern>/Banner/comBannerIndex</pattern>
+        <!--新增banner图-->
+        <pattern>/Banner/addBanner</pattern>
+
+
 
 
 

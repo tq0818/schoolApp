@@ -113,7 +113,7 @@ function queryClassDetails(id){
 	$("#myForm").html("");
 	var input="<input type='hidden' value='"+id+"' name='id'/><input type='hidden' value='"+$("#lab").val()+"' name='lable'/>";
 	$("#myForm").html(input);
-	$("#myForm").attr("action","/editSimpleCourse/editClassTypeMessage").submit();
+	$("#myForm").attr("action",rootPath+"/editSimpleCourse/editClassTypeMessage").submit();
 }
 
 

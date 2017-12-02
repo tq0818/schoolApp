@@ -8,26 +8,35 @@ public class LableInfoVO implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Integer Id;
-	private String name;
-	private Integer audit;
+	private Integer id;
+	private String labName;
+	private Integer labType;
+	private Integer labStatus;
 	public Integer getId() {
-		return Id;
+		return id;
 	}
 	public void setId(Integer id) {
-		Id = id;
+		this.id = id;
 	}
-	public String getName() {
-		return name;
+	public String getLabName() {
+		return labName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setLabName(String labName) {
+		this.labName = labName;
 	}
-	public Integer getAudit() {
-		return audit;
+	public Integer getLabType() {
+		return labType;
 	}
-	public void setAudit(Integer audit) {
-		this.audit = audit;
+	public void setLabType(Integer labType) {
+		this.labType = labType;
 	}
+	public Integer getLabStatus() {
+		return labStatus;
+	}
+	public void setLabStatus(Integer labStatus) {
+		this.labStatus = labStatus;
+	}
+	
+	
 	
 }
