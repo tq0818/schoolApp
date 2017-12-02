@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuxin.wx.banner.mapper.BannerMapper">
+	<resultMap type="com.yuxin.wx.model.banner.Banner" id="BannerResultMap">
+		<result property="id" column="id" />
+		<result property="bannerName" column="banner_name" />
+		<result property="bannerDescribe" column="banner_describe" />
+		<result property="bannerContent" column="banner_content" />
+		<result property="bannerImgUrl" column="banner_img_url" />
+		<result property="isState" column="is_state" />
+		<result property="updateTime" column="update_time" />
+		<result property="orderByNum" column="order_by_num" />
+	</resultMap>
+	
+	<sql id="table_columns">
+		id,
+		banner_name,
+		banner_describe,
+		banner_content,
+		banner_img_url,
+		is_state,
+		update_time,
+		order_by_num
+   	</sql>
+	<sql id="entity_properties">
+		#{id},
+		#{bannerName},
+		#{bannerDescribe},
+		#{bannerContent},
+		#{bannerImgUrl},
+		#{isState},
+		#{updateTime},
+		#{orderByNum}
+	</sql>
+	
+	
+	<select id="findAllBanner" resultMap="BannerResultMap" parameterType="com.yuxin.wx.model.banner.Banner">
+		select <include refid="table_columns" />
+		from banner_app where is_state = #{isState} 
+		order by order_by_num DESC,update_time  DESC
+	</select>
+	<select id="queryMessageList" resultMap="BannerResultMap" parameterType="com.yuxin.wx.model.banner.Banner">
+		select <include refid="table_columns" />
+		from banner_app where is_state = #{isState} 
+		order by order_by_num DESC,update_time  DESC
+	</select>
+	<select id="queryMessageCount"  parameterType="com.yuxin.wx.model.banner.Banner" resultType="int">
+		select count(id) from banner_app where is_state = #{isState} 
+	</select>
+	<!-- 适用于主键自增类型 -->
+	<insert id="insertBanner" parameterType="com.yuxin.wx.model.banner.Banner" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO banner_app  (
+	banner_name,
+	banner_describe,
+	banner_content,
+	banner_img_url,
+	is_state,
+	update_time,
+	order_by_num
+	)
+	VALUES
+	(#{bannerName},#{bannerDescribe},#{bannerContent},#{bannerImgUrl},#{isState},#{updateTime},(select max(t1.order_by_num)+1  from banner_app t1))
+	</insert>
+	
+	<select id="findById" resultMap="BannerResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from banner_app
+		where id = #{id}
+	</select>
+	
+	<update id="update" parameterType="com.yuxin.wx.model.banner.Banner">
+		update banner_app 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="bannerName != null and bannerName != ''">banner_name = #{bannerName},</if>
+			<if test="bannerDescribe != null and bannerDescribe != ''">banner_describe = #{bannerDescribe},</if>
+			<if test="bannerContent != null and bannerContent != ''">banner_content = #{bannerContent},</if>
+			<if test="bannerImgUrl != null and bannerImgUrl != ''">banner_img_url = #{bannerImgUrl},</if>
+			<if test="isState != null">is_state = #{isState},</if>
+			<if test="updateTime != null">update_time = #{updateTime},</if>
+			<if test="orderByNum == null ">order_by_num = (select t2.num from (select (max(t1.order_by_num)+1) as num  from banner_app t1) t2),</if>
+			<if test="orderByNum != null ">order_by_num =  #{orderByNum},</if>
+		</trim>
+		<where>id = #{id}</where>
+	</update>
+	
+	<!-- 降序 -->
+	<select id="searchNum1" resultMap="BannerResultMap" parameterType="com.yuxin.wx.model.banner.Banner">
+		
+		select <include refid="table_columns" />
+		from banner_app where is_state = 1 and order_by_num=(select max(t1.order_by_num) from banner_app t1 where t1.is_state = 1 and t1.order_by_num<![CDATA[<]]>#{orderByNum})
+	</select>
+	<!-- 升序  -->
+	<select id="searchNum" resultMap="BannerResultMap" parameterType="com.yuxin.wx.model.banner.Banner">
+		select <include refid="table_columns" />
+		from banner_app where is_state = 1 and order_by_num=(select min(t1.order_by_num) from banner_app t1 where t1.is_state = 1 and t1.order_by_num<![CDATA[>]]>#{orderByNum})
+	</select>
+</mapper>

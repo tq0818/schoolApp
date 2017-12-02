@@ -87,7 +87,7 @@
 <div id="modelList" class="pageRecommendtionBg">
     <div class="mainbackground nopadding">
         <div class="heading">
-            <h2 class="h5" style="display: inline-block;margin: 10px 0;">banner添加</h2>
+            <h2 class="h5" style="display: inline-block;margin: 10px 0;">banner修改</h2>
             <span class="line"></span>
         </div>
         <div class="user-list">
@@ -104,6 +104,7 @@
                 <div class="checkBoxBtn">
                     <span>名称:</span>
                     <input type="text" name="bannerName" id="bannerName" value="${msgPage.bannerName }" class="bannerInput">
+                    <input type="hidden" name="bannerId" id="bannerId" value="${msgPage.id}" >
                 </div>
                 <div class="checkBoxBtn">
                     <span>描述:</span>
@@ -116,7 +117,7 @@
                 </div>
 
                 <div class="putQuestion bannerBtnGroup">
-                	<a href='#' onclick="yulan()"  id="yulan" class='btn btn-success'>预览</a>
+                	<a href='<%=rootPath %>/Banner/seachDetail/${msgPage.id}' target="_blank" class='btn btn-success'>预览</a>
                     <button  onclick="save()" type="button" class="btn btn-success"  >保存</button>
                     <button onclick="history.go(-1)" type="button"  class="btn btn-danger"  >取消</button>
                 </div>
@@ -124,9 +125,7 @@
         </div>
     </div>
 </div>
-<form method="post" id="hiddenForm" target="_blank" >
-	<input type="hidden" id="hiddenBannerContent" name="bannerContent">
-</form>
+
 <div class="upload-layer none" id="chooseDiv" style="width:1080px;height: 550px;">
     <div class="upload-title">
         <h2 class="h5">上传封面</h2>
@@ -249,19 +248,20 @@
 				 return;
 			 }
 	    	 var bannerName=$("#bannerName").val();
+	    	 var id=$("#bannerId").val();
 	    	 var bannerDescribe=$("#bannerDescribe").val();
 	    	 CKupdate();
 	    	 var bannerContent=editor.document.getBody().getHtml();
 	    	 if(null!=bannerContent && '<p><br></p>'!=bannerContent){
 	    		 $.ajax({
-	 	 			url: rootPath + "/Banner/addBanner",
+	 	 			url: rootPath + "/Banner/update",
 	 	 			type:"post",
-	 	 			data:{"bannerName":bannerName,"bannerContent" : bannerContent,"bannerDescribe":bannerDescribe,"bannerImgUrl" :bannerImgUrl},
+	 	 			data:{"id":id,"bannerName":bannerName,"bannerContent" : bannerContent,"bannerDescribe":bannerDescribe,"bannerImgUrl" :bannerImgUrl},
 	 	 			dataType:"json",
 	 	 			success:function(data){
 	 	 				if(data.msg == 'success'){
 	 	 					alert("保存成功");
-	 	 					window.location.href = "comBannerIndex";
+	 	 					window.location.href = "<%=rootPath %>/Banner/comBannerIndex";
 	 	 				}
 	 	 			}
 	 	 		});
@@ -269,18 +269,6 @@
 	    		 alert("内容不能为空");
 	    	 }
 	    	 
-	    } 
-		function yulan(){
-	    	 CKupdate();
-	    	 var bannerContent=editor.document.getBody().getHtml();
-	    	 if(null!=bannerContent && '<p><br></p>'!=bannerContent){
-	    		 
-   				$("#hiddenBannerContent").val(bannerContent);
-   				$("#hiddenForm").attr("action",rootPath+"/Banner/yulan").submit();
-   				
-	    	 }else{
-	    		 alert("预览内容不能为空");
-	    	 }
 	    } 
 		//上传截取后的图片
 		function classTypePic() {

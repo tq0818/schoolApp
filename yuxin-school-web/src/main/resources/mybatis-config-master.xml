@@ -229,6 +229,8 @@
 		<mapper resource="com/yuxin/queAns/QuestionClassifyMapper.xml"/>
 		<mapper resource="com/yuxin/queAns/QuestionMapper.xml"/>
 		
+		<mapper resource="com/yuxin/banner/BannerMapper.xml"/>
+		
 		<mapper resource="com/yuxin/common/BaseSqlMapper.xml"/>
 		<mapper resource="com/yuxin/student/LongitudinalTableColDefineMapper.xml"/>
  		<mapper resource="com/yuxin/student/LongitudinalTableDataMapper.xml"/> 

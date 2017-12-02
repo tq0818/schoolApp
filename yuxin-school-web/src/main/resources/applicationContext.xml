@@ -127,6 +127,7 @@
 				com.yuxin.wx.tiku.mapper,
 				com.yuxin.wx.crm.mapper,
 				com.yuxin.wx.queAns.mapper,
+				com.yuxin.wx.banner.mapper,
 				com.yuxin.wx.tiku.exam.mapper,
 				com.yuxin.wx.check,
 				com.yuxin.wx.common,
