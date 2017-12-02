@@ -85,7 +85,7 @@ public class JiGuangPushUtil {
 		                		.build())
 //		                .setAudience(Audience.alias(ids))//设置别名
 		                .setNotification(Notification.newBuilder()
-		                        .setAlert(params)
+		                        .setAlert(content)
 		                        .addPlatformNotification(AndroidNotification.newBuilder()
 		                                .setTitle(StringUtils.isNotEmpty(title)?title:"消息通知")
 		                                .addExtras(params)
@@ -94,6 +94,9 @@ public class JiGuangPushUtil {
 		                                .addExtras(params)
 		                                .build())
 		                        .build())
+//		                .setMessage(Message.content(content))//自定义消息内容
+		                .setOptions(Options.newBuilder().setApnsProduction(true).build())  
+		                //设置ios平台环境  True 表示推送生产环境，False 表示要推送开发环境   默认是开发    
 		                .build();
 		            PushResult results = jPushClient.sendPush(builder);
 		            result="推送成功";
