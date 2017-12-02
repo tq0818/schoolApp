@@ -962,6 +962,37 @@
 		group by s.id
 		) c
 	</select>
+	
+		<!-- 查询学员 -->
+	<select id="findByPayMaster1" resultMap="studentResultMap" parameterType="com.yuxin.wx.model.company.CompanyStudentMessage">
+		select c.id,
+		c.name,
+		c.mobile,
+		c.user_id,
+		c.email
+		from (
+		select s.id,
+		s.name,
+		s.mobile,
+		s.user_id,
+		s.email
+		from student s
+		inner join student_pay_master m
+		on s.id = m.stu_id
+		LEFT JOIN  class_type ct ON  ct.id = m.commodity_id
+		inner join users_front u on u.id = s.user_id
+		where s.is_login_app=1 and m.school_id = #{schoolId} and
+		m.company_id = #{companyId} and
+		ct.item_one_code = #{itemOneCode} and
+		ct.item_second_code = #{itemSecondCode} and
+		ct.item_third_code = #{itemThirdCode} and
+		m.commodity_id = #{classTypeId} 
+		<if test="isWxOpen == 1"> and u.wx_open_id is not null and u.wx_open_id !=''</if>
+		and m.delete_flag = 0 and m.commodity_type='COMMODITY_CLASS'
+		and (m.pay_status_code='ORDER_PAID' or m.pay_status_code='ORDER_PART_PAY' or m.pay_status_code='ORDER_FINISHED' or m.pay_status_code='ORDER_PAID_NO_COURSE')
+		group by s.id
+		) c
+	</select>
 
 	<select id="findByPaySlave" resultMap="studentResultMap" parameterType="com.yuxin.wx.model.company.CompanyStudentMessage">
 		select c.id,
@@ -993,7 +1024,7 @@
 	<!-- 根据年级查询学生:订阅文章-->
 	<select id="queryStudentByGradeCodes" resultMap="studentResultMap" parameterType="map">
 		select id,name,user_id from student 
-		where edu_step is not NULL and edu_step!='' and
+		where edu_step is not NULL and edu_step!='' and is_login_app=1 and
 			<foreach item="item" collection="gradecodes" open="(" separator=" or " close=")">
 				 <choose>
 			        <when test="item &lt;= 6"> 
@@ -3634,7 +3665,7 @@
 	
 	<select id="queryStudentListByClassTypeId" parameterType="Integer" resultMap="studentResultMap">
 		SELECT DISTINCT s.id,s.name,s.user_id from student_pay_master spm ,student s 
-		where s.id=spm.stu_id and spm.delete_flag = 0 
+		where s.id=spm.stu_id and spm.delete_flag = 0 and s.is_login_app=1
 		and spm.pay_status_code in ('ORDER_PAID','ORDER_PART_PAY','ORDER_FINISHED','ORDER_PAID_NO_COURSE')	
 		and commodity_id=#{classTypeId}
 	</select>

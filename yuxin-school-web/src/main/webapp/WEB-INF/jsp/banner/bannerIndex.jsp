@@ -19,51 +19,21 @@
         <div class="heading">
             <h2 class="h5" style="display: inline-block;margin: 10px 0;">banner管理</h2>
             <div class="bannerButton">
-                <span><a href="##" class="btn btn-primary " >启用</a></span>
-                <span><a href="##" class="btn btn-primary " >禁用</a></span>
-                <span><a href="##" class="btn btn-primary changeOrder" >更改排序</a></span>
-                <span><a href="/Banner/addBanner" class="btn btn-primary " >添加banner</a></span>
+                <span><button onclick="qiyong()" class="btn btn-primary " >启用</button></span>
+                <span><button onclick="jinyong()" class="btn btn-primary " >禁用</button></span>
+                <!-- <span><a href="##" class="btn btn-primary changeOrder" >更改排序</a></span> -->
+                <span><a href="<%=rootPath %>/Banner/addBanner" class="btn btn-primary " >添加banner</a></span>
             </div>
             <span class="line"></span>
         </div>
-        <div class="user-list">
-            <table class="table table-center" id="tableList">
-                <tbody>
-                <tr>
-                    <th width="10%">序号</th>
-                    <th width="20%">名称</th>
-                    <th width="20%">描述</th>
-                    <th width="20%">状态</th>
-                    <th width="30%">操作</th>
-                </tr>
-                <tr>
-                    <td>1<i class="icon iconfont">&#xe617;</i></td>
-                    <td>巴拉巴拉</td>
-                    <td>巴拉巴拉巴拉巴拉巴拉巴拉</td>
-                    <td>已启用</td>
-                    <td>
-                        <a href="##" class="btn btn-danger forbidBanner">禁用</a>
-                        <a href="##" class="btn btn-warning">修改</a>
-                        <a href="##" class="btn btn-success">查看</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2<i class="icon iconfont">&#xe61a;</i></td>
-                    <td>巴拉巴拉</td>
-                    <td>巴拉巴拉巴拉巴拉巴拉巴拉</td>
-                    <td>已启用</td>
-                    <td>
-                        <a href="##" class="btn btn-danger forbidBanner">禁用</a>
-                        <a href="##" class="btn btn-warning">修改</a>
-                        <a href="##" class="btn btn-success">查看</a>
-                    </td>
-                </tr>
-            </table>
+        <div class="user-list" id="tableList">
+            
+        </div>
+        <div class="user-list" id="tableList1" style="display: none">
+            
         </div>
     </div>
-    <div class="pages">
-        <ul class="pagination"></ul>
-    </div>
+   
 </div>
 
 <!-- ajax加载中div开始 -->
@@ -74,6 +44,10 @@
 <!-- ajax加载中div结束 -->
 
 <script>
+	$(document).ready(function() { 
+		qiyong();
+	
+	}); 
 //    点击禁用，弹窗提示
     $('.forbidBanner').click(function () {
         alert("只有启用banner才能支持排序！");
@@ -86,20 +60,38 @@
             $(this).html('更改排序');
         }
     });
-//    分页
-$(".pagination").pagination('${courseList.rowCount}', {
-    next_text : "下一页",
-    prev_text : "上一页",
-    current_page :'${courseList.pageNo-1}',
-    link_to : "javascript:void(0)",
-    num_display_entries : 8,
-    items_per_page : '${courseList.pageSize}',
-    num_edge_entries : 1,
-    callback:function(page,jq){
-        var pageNo = page + 1;
-        reloadCurrunt(pageNo);
-    }
-});
+
+	function jinyong(){
+		$.ajax({
+			url: rootPath + "/Banner/jinYong",
+			type:"post",
+			//data:{"systemLab":$('#systemLab').val(),"biaoshi":2},
+			dataType:"html",
+			success:function(data){
+				$('#tableList1').html(data);
+			 	var myTable= document.getElementById("tableList1"); 
+			 	myTable.style.display="block";
+			 	var myTable1= document.getElementById("tableList"); 
+			 	myTable1.style.display ="none";
+			}
+		});
+		
+	}
+	function qiyong(){
+		$.ajax({
+			url: rootPath + "/Banner/qiYong",
+			type:"post",
+			//data:{"systemLab":$('#systemLab').val(),"biaoshi":2},
+			dataType:"html",
+			success:function(data){
+				$('#tableList').html(data);
+			}
+		});
+		 var myTable1= document.getElementById("tableList"); 
+		 myTable1.style.display="block";
+		 var myTable= document.getElementById("tableList1"); 
+		 myTable.style.display ="none";
+	}
 </script>
 <script>
     //        二级菜单加active

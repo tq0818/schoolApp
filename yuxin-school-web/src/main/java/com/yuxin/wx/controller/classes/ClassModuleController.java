@@ -1939,8 +1939,7 @@ public class ClassModuleController {
 			spm.setItemSecondId(itemSecondId);
 			spm.setCommodityId(id);
 			spm.setCommodityType("COMMODITY_CLASS");
-			count = studentPayMasterServiceImpl.findCountByPayMaster(spm);
-
+			count = studentPayMasterServiceImpl.findCountByPayMaster1(spm);
 		}else if(messageType.equals("STUDENT_MESSAGE_MODULENO")){
 			Map<String,Object> param = new HashMap<String, Object>();
 			param.put("companyId", companyId);
@@ -2360,7 +2359,7 @@ public class ClassModuleController {
 				return json;
 			}
 			if(companyStudentMessage.getMessageType().equals("STUDENT_MESSAGE_CLASSTYPE")){
-				stuList = studentServiceImpl.findByPayMaster(companyStudentMessage);
+				stuList = studentServiceImpl.findByPayMaster1(companyStudentMessage);
 				if(stuList.size() == 0){
 					json.put(JsonMsg.RESULT, "stuno");
 					return json;
@@ -2718,7 +2717,7 @@ public class ClassModuleController {
 			// 查询 用户id
 			List<String> userIdList=new ArrayList<String>();
 			if(companyStudentMessage.getMessageType().equals("STUDENT_MESSAGE_CLASSTYPE")){
-				stuList = studentServiceImpl.findByPayMaster(companyStudentMessage);
+				stuList = studentServiceImpl.findByPayMaster1(companyStudentMessage);
 				if(stuList.size() == 0){
 					json.put(JsonMsg.RESULT, "stuno");
 					return json;

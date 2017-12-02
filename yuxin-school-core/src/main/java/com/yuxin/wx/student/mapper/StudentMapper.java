@@ -92,6 +92,8 @@ public interface StudentMapper extends BaseMapper<Student> {
 	 * @return
 	 */
 	List<Student> findByPayMaster(CompanyStudentMessage companyStudentMessage);
+
+	List<Student> findByPayMaster1(CompanyStudentMessage companyStudentMessage);
 	
    /**
     * Class Name: IStudentPayMasterService.java

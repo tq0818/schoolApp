@@ -1695,6 +1695,13 @@ public class StudentPayMasterServiceImpl extends BaseServiceImpl implements IStu
         // TODO Auto-generated method stub
         return this.studentPayMasterMapper.findCountByPayMaster(payMaster);
     }
+    
+    @Override
+    public Integer findCountByPayMaster1(StudentPayMaster payMaster) {
+        // TODO Auto-generated method stub
+        return this.studentPayMasterMapper.findCountByPayMaster1(payMaster);
+    }
+
 
     @Override
     public List<Map> queryorderTotalMoney(StuPayMasterVo search) {
