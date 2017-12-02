@@ -23,7 +23,7 @@ public class QuestionAnswer extends BaseEntity {
 	private String	answerType;		 /* 回答类型（1. 学生、2.老师、3.管理员） */ 
 	private Integer	answerLevel;		 /* 回复等级（1：问题的回答  2. 评论） */ 
 	private Integer	commentCount;		 /*  评论的数量 */ 
-	private String	createTime;		 /* 创建时间 */ 
+	private Date	createTime;		 /* 创建时间 */ 
 	private Integer	delFlag;		 /* 是否删除 */
 	private Integer parentId;		/* 二级回复Id*/
 	private Integer replyUserId;	/*被回复人id*/
@@ -59,7 +59,7 @@ public class QuestionAnswer extends BaseEntity {
 	}
 
 	public QuestionAnswer(String answerDesc, Integer answerId, Integer questionId, Integer userId, String answerType,
-	        Integer answerLevel, Integer commentCount, String createTime, Integer delFlag, Integer parentId, Integer replyUserId,
+	        Integer answerLevel, Integer commentCount, Date createTime, Integer delFlag, Integer parentId, Integer replyUserId,
 	        String replyUserName, Integer readFlag, String replyUserType, String name, String imgurl, String times,
 	        int likeanswer, Integer isThumbs, Integer th_user_id, Integer thumbsFlag, Integer isAdopt, Integer adoptFlag,
 	        Integer isAccept, Integer questionscore) {
@@ -156,18 +156,17 @@ public class QuestionAnswer extends BaseEntity {
 		return this;
 	}
 	
-	public String getCreateTime() {
+	@JsonSerialize(using = ShortDateSerializer.class)
+	public Date getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(String createTime) {
+	public QuestionAnswer setCreateTime(Date createTime) {
 		this.createTime = createTime;
+		return this;
 	}
-
-	public void setQuestionscore(Integer questionscore) {
-		this.questionscore = questionscore;
-	}
-
+	
+	
 	public Integer getDelFlag() {
 		return delFlag;
 	}
