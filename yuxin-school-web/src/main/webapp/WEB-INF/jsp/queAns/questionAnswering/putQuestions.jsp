@@ -255,5 +255,11 @@
 	editor.config.baseFloatZIndex = 10100;
 	editor.config.customConfig = 'config.js';
 </script>
+<script>
+    //        二级菜单加active
+    $(function () {
+        $selectSubMenu('community_qa');
+    });
+</script>
 </body>
 </html>
