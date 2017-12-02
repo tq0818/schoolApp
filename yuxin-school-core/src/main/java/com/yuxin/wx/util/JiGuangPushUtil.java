@@ -69,21 +69,13 @@ public class JiGuangPushUtil {
 				Properties props;
 				props= PropertiesLoaderUtils.loadProperties(resource);
 		        JPushClient jPushClient = new JPushClient(props.getProperty("jiguang.master"), props.getProperty("jiguang.appkey"));
-		        
-//		        String id = "";
-//		        for(int i = 0 ; i < userIds.length; i++){
-//		            id += "\""+userIds[i]+"\""+ ",";
-//		        }
-//		        String ids = id.substring(0,id.lastIndexOf(","));
-		        
 		        params.put("content",content); 
 		        PushPayload builder = PushPayload.newBuilder()
 		                .setPlatform(Platform.android_ios())
-//		                .setAudience(Audience.alias("501789"))//设置别名
+//		                .setAudience(Audience.alias("558174"))//设置别名
 		                .setAudience(Audience.newBuilder()
 		                		.addAudienceTarget(AudienceTarget.alias(userIds))
 		                		.build())
-//		                .setAudience(Audience.alias(ids))//设置别名
 		                .setNotification(Notification.newBuilder()
 		                        .setAlert(content)
 		                        .addPlatformNotification(AndroidNotification.newBuilder()
@@ -94,9 +86,6 @@ public class JiGuangPushUtil {
 		                                .addExtras(params)
 		                                .build())
 		                        .build())
-//		                .setMessage(Message.content(content))//自定义消息内容
-		                .setOptions(Options.newBuilder().setApnsProduction(true).build())  
-		                //设置ios平台环境  True 表示推送生产环境，False 表示要推送开发环境   默认是开发    
 		                .build();
 		            PushResult results = jPushClient.sendPush(builder);
 		            result="推送成功";
