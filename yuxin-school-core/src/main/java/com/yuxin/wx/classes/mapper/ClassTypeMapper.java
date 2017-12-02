@@ -3,15 +3,12 @@ package com.yuxin.wx.classes.mapper;
 import java.util.List;
 import java.util.Map;
 
-import com.yuxin.wx.model.classes.ClassModule;
 import com.yuxin.wx.model.classes.ClassType;
-import com.yuxin.wx.model.commodity.Commodity;
 import com.yuxin.wx.vo.classes.ClassPackageConditionVo;
 import com.yuxin.wx.vo.classes.ClassTypeVo;
 import com.yuxin.wx.vo.classes.FirstRecommend;
 import com.yuxin.wx.vo.company.MemberLevelAndClassTypeVo;
 import com.yuxin.wx.common.BaseMapper;
-import com.yuxin.wx.common.PageFinder;
 /**
  * Service Interface:ClassType
  * @author wang.zx
@@ -156,6 +153,6 @@ public interface ClassTypeMapper extends BaseMapper<ClassType> {
 	/**
 	 * 推送消息通知:推送直播课程消息通知(提前推送:10-12小时段内的课程)
 	 */
-	List<ClassType> queryNeedPushLiveClass();
+	List<ClassTypeVo> queryNeedPushLiveClass();
 
 }

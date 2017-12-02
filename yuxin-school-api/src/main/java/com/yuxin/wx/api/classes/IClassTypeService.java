@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.classes.ClassType;
-import com.yuxin.wx.model.commodity.Commodity;
 import com.yuxin.wx.vo.classes.ClassPackageConditionVo;
 import com.yuxin.wx.vo.classes.ClassTypeVo;
 import com.yuxin.wx.vo.classes.FirstRecommend;
@@ -483,5 +482,5 @@ public interface IClassTypeService  {
 	/**
 	 * 推送消息通知:推送直播课程消息通知(提前推送:10-12小时段内的课程)
 	 */
-	List<ClassType> queryNeedPushLiveClass();
+	List<ClassTypeVo> queryNeedPushLiveClass();
 }

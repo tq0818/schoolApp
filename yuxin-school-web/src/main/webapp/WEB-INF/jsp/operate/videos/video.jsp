@@ -160,7 +160,21 @@
 						<input type="button" value="搜索" class="btn btn-sm selectInfo btn-info L-btn-info" />
 					</div>
 				</div>
-				<table class="table table-hover table-center table-list L-table">
+				
+				
+				 <div class="main-content">
+		            <div class="video-list">
+		                
+		            </div>
+		            <div class="pages">
+		                <ul class="pagination">
+							
+						</ul>
+		            </div>
+		        </div>
+				
+				
+				<!-- <table class="table table-hover table-center table-list L-table">
 					<thead>
 						<tr>
 							<th width="18%">资源名称</th>
@@ -181,14 +195,13 @@
 						</tr>
 					</thead>
 					<tbody></tbody>
-				</table>
-
+				</table> -->
 			</div>
-			<div class="pages">
+			<!-- <div class="pages">
 				<ul class="pagination">
 
 				</ul>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<input type="hidden" id="itemOneId" />

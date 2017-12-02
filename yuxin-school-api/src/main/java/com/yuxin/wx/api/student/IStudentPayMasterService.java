@@ -420,6 +420,10 @@ PageFinder<StudentPayMaster> findList(StudentPayMaster payMaster);
     List<Map> countOrderByDate(StuPayMasterVo stuPayMasterVo);
     
     Integer findCountByPayMaster(StudentPayMaster payMaster);
+    /**
+     * 学员通知:登录过app的学员
+     */
+    Integer findCountByPayMaster1(StudentPayMaster payMaster);
     
     /**
      * 

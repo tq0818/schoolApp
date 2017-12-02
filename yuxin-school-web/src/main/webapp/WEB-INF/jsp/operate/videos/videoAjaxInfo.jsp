@@ -1,5 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/decorators/import.jsp"%>
+<table class="table table-hover table-center table-list L-table">
+	<thead>
+		<tr>
+			<th width="18%">资源名称</th>
+			<th width="10%">学科</th>
+			<th width="15%">
+                         <div class="operate_vedio_time">
+ 							<p>
+                                 <span class="sp_top sort"></span>
+                                 <span class="sp_bottom sort active"></span>
+                             </p>上传时间
+ 						</div>
+                     </th>
+			<th width="9%">标签</th>
+			<th width="7%">格式</th>
+                     <th width="8%">状态</th>
+                     <th width="6%">来源</th>
+			<th width="18%">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+<c:if test="${not empty pageFinder and not empty  pageFinder.data}">
 <c:forEach items="${pageFinder.data}" var="vo">
 	<tr>
         <td>
@@ -142,6 +164,12 @@
         </td>
     </tr>
 </c:forEach>
+</c:if>
+<c:if test="${ empty pageFinder or  empty pageFinder.data}">
+	<tr><th colspan=8>没有数据</th></tr>
+</c:if>
+</tbody>
+</table>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
