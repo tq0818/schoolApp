@@ -28,7 +28,7 @@
 						<span class="fromIconPc"></span>
 					</c:otherwise>
 				</c:choose>
-				<c:choose>
+				<%--<c:choose>
 					<c:when test="${allCommdotity.publishStatus=='CLASS_STOP_SALE' }">
 						<i class="tips tips_type" style="background-color: rgba(231,31,26,0.8);color: white;">
 							<c:choose>
@@ -45,15 +45,15 @@
 							<c:otherwise>停售</c:otherwise>
 						</c:choose></i>
 					</c:otherwise>
-				</c:choose>
+				</c:choose>--%>
 				<c:if test="${allCommdotity.iconLable !=null ||allCommdotity.iconLable.length>0}">
 					<i class="tips zb_date">
 							${allCommdotity.iconLable}
 					</i>
 				</c:if>
-				<c:if test="${allCommdotity.originType eq 1}">
+				<%--<c:if test="${allCommdotity.originType eq 1}">
 					<i class="add-com" id="com${allCommdotity.id}" marks="${allCommdotity.recommendFlag}" style="display: none;margin-right: 27px" onclick="Form.collectShop(${allCommdotity.id})">${allCommdotity.recommendFlag==1?'取消推荐':'加入推荐' }</i>
-				</c:if>
+				</c:if>--%>
 				<div class="infos-pic">
 					<a href="javascript:Form.showClassTypeDetail(${allCommdotity.id },'${allCommdotity.typeCode }');">
 						<c:if test="${allCommdotity.cover!=null }">

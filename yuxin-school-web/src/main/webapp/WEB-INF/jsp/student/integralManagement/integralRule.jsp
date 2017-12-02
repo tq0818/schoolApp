@@ -180,18 +180,22 @@ function editRule(objt){
                             $(".loading-bg").show();
                         },
                         success: function (jsonData) {
+
+//                            console.log(jsonData.data.length);
+
                         	if (jsonData.data.length == 0) {
-                            	if(userorg_roleopenflag == 1 && proxyOrgRole == 1){
+
+                            	/*if(userorg_roleopenflag == 1 && proxyOrgRole == 1){
     	                            $(".user-list")
     	                                .find("table")
     	                                .append(
     	                                '<tr><td colspan="7">没有查找到数据</td></tr>');
-                            	}else{
+                            	}else{*/
                             		  $(".user-list")
     	                                .find("table")
     	                                .append(
     	                                '<tr><td colspan="7">没有查找到数据</td></tr>');
-                            	}
+//                            	}
                             }
                              $.each(jsonData.data,function (i, stu) {
                             	 	var oprator="";
