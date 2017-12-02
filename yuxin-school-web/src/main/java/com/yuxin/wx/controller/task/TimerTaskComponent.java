@@ -760,25 +760,25 @@ public class TimerTaskComponent {
 	/**
 	 *	推送消息通知:推送直播课程消息通知(提前推送:10-12小时段内的课程)
 	 */
-	@Scheduled(cron = "0 0 0/2 * * ?")
+	@Scheduled(cron = "0 1 0/2 * * ?")
 	public void taskPushLiveClassMsg() {
  		SysTaskLog stl = new SysTaskLog();
 		try {
 			stl.setExecuteDate(new Date());
 			stl.setStartTime(new Date());
-			stl.setTaskName("推送直播课程消息通知(提前推送:10-12小时段内的课程)");
+			stl.setTaskName("直播课程消息推送通知");
 			stl.setOperator(0);
 			stl.setOperateTime(new Date());
-			log.info("推送直播课程消息通知(提前推送:10-12小时段内的课程)任务-----执行时间：" + new Date());
+			log.info("直播课程消息推送通知任务-----执行时间：" + new Date());
 			pushLiveClassMsgTask.pushLiveClassMsg();
-			log.info("推送直播课程消息通知(提前推送:10-12小时段内的课程)任务-----处理：完成");
+			log.info("直播课程消推送息通知任务-----处理：完成");
 			stl.setEndTime(new Date());
 			stl.setResult("推送成功");
 			stl.setErrorLog("无错误");
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			log.info("推送直播课程消息通知(提前推送:10-12小时段内的课程)-----异常：" + e.getMessage());
+			log.info("直播课程消息推送通知-----异常：" + e.getMessage());
 			stl.setEndTime(new Date());
 			stl.setResult("推送中出错");
 			stl.setErrorLog(e.getMessage());
