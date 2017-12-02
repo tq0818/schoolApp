@@ -299,8 +299,10 @@ public class QuestionServiceImpl extends BaseServiceImpl implements IQuestionSer
 				questionClassify.setLabName(arrTagName[i]);
 				questionClassify.setLabType(2);
 				questionClassifyMapper.insertLabReturnId(questionClassify);
-				arrTagId=Arrays.copyOf(arrTagId, arrTagId.length+1);
-				arrTagId[arrTagId.length-1]=String.valueOf(questionClassify.getId());
+				if(null!=arrTagId){
+					arrTagId=Arrays.copyOf(arrTagId, arrTagId.length+1);
+					arrTagId[arrTagId.length-1]=String.valueOf(questionClassify.getId());
+				}
 			}
 		}
 		questionMapper.insertQuestion(queQuestion);

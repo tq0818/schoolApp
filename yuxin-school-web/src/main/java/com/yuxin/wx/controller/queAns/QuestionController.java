@@ -835,7 +835,7 @@ public class QuestionController {
 					a+=",";
 				}else{
 					if(b[i].indexOf("<img") == -1) {
-						jsonObject.put("content", b[i]);
+						jsonObject.put("content", b[i].replace("&nbsp;", ""));
 						jsonObject.put("type", 0);
 						a+=jsonObject.toString();
 						a+=",";	
