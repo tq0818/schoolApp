@@ -2807,6 +2807,7 @@ public class ClassModuleController {
 		Users user = WebUtils.getCurrentUser();
 		companyStudentMessage.setCreator(user.getId());
 		companyStudentMessage.setMessageType("STUDENT_MESSAGE_DINGYUE");
+		companyStudentMessage.setMessageMethod("STUDENT_MESSAGE_DINGYUE");
 		companyStudentMessage.setCreatorName(user.getRealName() != null ? user.getRealName() : user.getUsername());
 		companyStudentMessage.setCreateTime(new Date());
 		companyStudentMessage.setMessageStatus("STUDENT_MESSAGE_COMMIT");

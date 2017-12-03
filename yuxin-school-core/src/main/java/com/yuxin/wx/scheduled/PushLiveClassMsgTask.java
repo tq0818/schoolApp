@@ -75,6 +75,7 @@ public class PushLiveClassMsgTask {
 					message.setItemSecondId(liveclass.getItemSecondId());
 					message.setClassTypeId(liveclass.getId());
 					message.setSchoolId(681);
+					message.setCreator(0);
 					message.setClassTypeName(liveclass.getName());
 					message.setModuleNoId(liveclass.getModuleNoId());
 					message.setModuleNoName(liveclass.getModuleNoName());

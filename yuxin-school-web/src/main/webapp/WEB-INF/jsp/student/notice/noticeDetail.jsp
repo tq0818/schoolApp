@@ -32,8 +32,8 @@
 	                       		<c:if test="${m.messageType == 'STUDENT_MESSAGE_GROUP' }">
 	                       			分组通知
 	                       		</c:if>
-	                       		<c:if test="${m.messageType == 'STUDENT_MESSAGE_WEIXIN' }">
-	                       			微信通知
+	                       		<c:if test="${m.messageType == 'STUDENT_MESSAGE_SYSTEM' }">
+	                       			系统通知
 	                       		</c:if>
 	                       </span>
 	                   </td>
@@ -67,6 +67,9 @@
 							<c:if test="${empty m.creatorName && empty m.username}">
 								${m.mobile }
 							</c:if>
+						    <c:if test="${m.creator eq 0}">
+							   	系统
+						    </c:if>
 	                      </span>
 	                   </td>
 	                   <td rowspan="2">
@@ -83,8 +86,8 @@
 	                       		<c:if test="${m.messageMethod == 'STUDENT_MESSAGE_WEB' }">
 	                       			站内信
 	                       		</c:if>
-	                       		<c:if test="${m.messageMethod == 'STUDENT_MESSAGE_EMAIL' }">
-	                       			邮件通知
+	                       		<c:if test="${m.messageMethod == 'STUDENT_MESSAGE_SYSTEM' }">
+	                       			系统通知
 	                       		</c:if>
 	                       		<c:if test="${m.messageMethod == 'STUDENT_MESSAGE_MOBILE_WEIXIN' }">
 	                       			微信指定通知
