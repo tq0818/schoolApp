@@ -243,8 +243,8 @@
 			window.location.href = "comBannerIndex";
 		} */
 		function save(){
-			 var bannerImgUrl=$("#commdotityPic")[0].src;
-			 if(null==bannerImgUrl || 'http://localhost:8088/manage/Banner/addBanner'==bannerImgUrl){
+			 var bannerImgUrl=$("#commdotityPic").attr("realPath");
+			 if(null==bannerImgUrl || ''==bannerImgUrl){
 				 alert("banner图不能为空");
 				 return;
 			 }

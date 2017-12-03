@@ -96,7 +96,7 @@
                     <span>banner图片:</span>
                 	<span class="c-content"> 
 							<span class="view">
-	                            <img id="commdotityPic" src="${msgPage.bannerImgUrl}" realPath="" >
+	                            <img id="commdotityPic" src="${msgPage.bannerImgUrl}" realPath="${msgPage.realyBannerImgUrl}" >
 	                        </span>
 	                        <span class="btns"><a href="javascript:;" class="btn btn-default btn-upload">选择封面</a></span>
                         </span>
@@ -117,7 +117,7 @@
                 </div>
 
                 <div class="putQuestion bannerBtnGroup">
-                	<a href='<%=rootPath %>/Banner/seachDetail/${msgPage.id}' target="_blank" class='btn btn-success'>预览</a>
+                	<a href='#' onclick="yulan()"  id="yulan" class='btn btn-success'>预览</a>
                     <button  onclick="save()" type="button" class="btn btn-success"  >保存</button>
                     <button onclick="history.go(-1)" type="button"  class="btn btn-danger"  >取消</button>
                 </div>
@@ -125,7 +125,9 @@
         </div>
     </div>
 </div>
-
+<form method="post" id="hiddenForm" target="_blank" >
+	<input type="hidden" id="hiddenBannerContent" name="bannerContent">
+</form>
 <div class="upload-layer none" id="chooseDiv" style="width:1080px;height: 550px;">
     <div class="upload-title">
         <h2 class="h5">上传封面</h2>
@@ -180,6 +182,20 @@
      <script type="text/javascript" src="<%=rootPath %>/plugins/jcrop/js/jquery.Jcrop.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/class/addClassTypeOnsale.js"></script>
 	<script type="text/javascript">
+	
+	function yulan(){
+   	 CKupdate();
+   	 var bannerContent=editor.document.getBody().getHtml();
+   	 if(null!=bannerContent && '<p><br></p>'!=bannerContent){
+   		 
+				$("#hiddenBannerContent").val(bannerContent);
+				$("#hiddenForm").attr("action",rootPath+"/Banner/yulan").submit();
+				
+   	 }else{
+   		 alert("预览内容不能为空");
+   	 }
+   }
+	
 	$(function(){
 		$(".btn-upload").on('click',function(){
 			$("#chooseDiv").css("display", "block");
@@ -242,8 +258,8 @@
 			window.location.href = "comBannerIndex";
 		} */
 		function save(){
-			 var bannerImgUrl=$("#commdotityPic")[0].src;
-			 if(null==bannerImgUrl || 'http://localhost:8088/manage/Banner/addBanner'==bannerImgUrl){
+			 var bannerImgUrl=$("#commdotityPic").attr("realPath");
+			 if(null==bannerImgUrl || ''==bannerImgUrl){
 				 alert("banner图不能为空");
 				 return;
 			 }
