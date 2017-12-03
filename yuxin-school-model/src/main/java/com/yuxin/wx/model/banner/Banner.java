@@ -18,7 +18,9 @@ public class Banner extends BaseEntity {
 	private String bannerName; /* 标题 */
 	private String bannerDescribe; /* 描述 */
 	private String bannerContent; /* 内容 */
+	private String bannerContentUrl; /* 内容 */
 	private String bannerImgUrl; /* banner图路径 */
+	private String realyBannerImgUrl; /* banner图路径 */
 	private Date updateTime; /* 更新时间 */
 	private Integer isState; /* 状态( 0： 禁用 1：启用) */
 	private Integer orderByNum;//排序号
@@ -28,29 +30,31 @@ public class Banner extends BaseEntity {
 	// Constructor
 	public Banner() {
 	}
-
-	public Banner(Integer id, String bannerName, String bannerDescribe, String bannerContent, String bannerImgUrl,
-	        Date updateTime, Integer isState, Integer orderByNum) {
+	
+	public Banner(Integer id, String bannerName, String bannerDescribe, String bannerContent, String bannerContentUrl,
+	        String bannerImgUrl, String realyBannerImgUrl, Date updateTime, Integer isState, Integer orderByNum) {
 		super();
 		this.id = id;
 		this.bannerName = bannerName;
 		this.bannerDescribe = bannerDescribe;
 		this.bannerContent = bannerContent;
+		this.bannerContentUrl = bannerContentUrl;
 		this.bannerImgUrl = bannerImgUrl;
+		this.realyBannerImgUrl = realyBannerImgUrl;
 		this.updateTime = updateTime;
 		this.isState = isState;
 		this.orderByNum = orderByNum;
 	}
 
-	
+
 	@Override
 	public String toString() {
 		return "Banner [id=" + id + ", bannerName=" + bannerName + ", bannerDescribe=" + bannerDescribe + ", bannerContent="
-		        + bannerContent + ", bannerImgUrl=" + bannerImgUrl + ", updateTime=" + updateTime + ", isState=" + isState
+		        + bannerContent + ", bannerContentUrl=" + bannerContentUrl + ", bannerImgUrl=" + bannerImgUrl
+		        + ", realyBannerImgUrl=" + realyBannerImgUrl + ", updateTime=" + updateTime + ", isState=" + isState
 		        + ", orderByNum=" + orderByNum + "]";
 	}
 
-	
 	public Integer getId() {
 		return id;
 	}
@@ -128,6 +132,26 @@ public class Banner extends BaseEntity {
 	
 	public void setOrderByNum(Integer orderByNum) {
 		this.orderByNum = orderByNum;
+	}
+
+	
+	public String getBannerContentUrl() {
+		return bannerContentUrl;
+	}
+
+	
+	public void setBannerContentUrl(String bannerContentUrl) {
+		this.bannerContentUrl = bannerContentUrl;
+	}
+
+	
+	public String getRealyBannerImgUrl() {
+		return realyBannerImgUrl;
+	}
+
+	
+	public void setRealyBannerImgUrl(String realyBannerImgUrl) {
+		this.realyBannerImgUrl = realyBannerImgUrl;
 	}
 
 	
