@@ -78,6 +78,10 @@
 	height: 96px;
 	overflow: hidden;
 }
+     #cke_newsContents{width: 900px !important;margin-left: 150px;}
+     #cke_1_top,#cke_1_bottom{margin-right: 0 !important;}
+    .contentBox{height: auto !important;}
+
 </style>
 </head>
 <body style="position:relative;">

@@ -201,12 +201,21 @@ function editRule(objt){
                             	 	var oprator="";
                             	 	if(stu.oprator!=null)
                             	 		oprator=stu.oprator;
+                                    var validTime = stu.validTime;
+                                    var invalidTime = stu.invalidTime;
+                                    if(validTime==null){
+                                        validTime = "";
+                                    }
+                                     if(invalidTime==null){
+                                         invalidTime = "";
+                                     }
+
                                     var htmlStr='<tr>'+
 			            	                    '<td>'+(i+1)+'</td>'+
 			            	                    '<td>'+stu.scoreTopic+'</td>'+
 			            	                    '<td><input type="text" value="'+stu.score+'" disabled="disabled"></td>'+
-			            	                    '<td><input type="text" value="'+stu.validTime+'" readonly class="dateRuleStart'+(i+1)+'"></td>'+
-			            	                    '<td><input type="text" value="'+stu.invalidTime+'" readonly class="dateRuleEnd'+(i+1)+'"></td>'+
+			            	                    '<td><input type="text" value="'+validTime+'" readonly class="dateRuleStart'+(i+1)+'"></td>'+
+			            	                    '<td><input type="text" value="'+invalidTime+'" readonly class="dateRuleEnd'+(i+1)+'"></td>'+
 			            	                    '<td>'+oprator+'</td>'+
 			            	                    '<td>';
 			            	                    

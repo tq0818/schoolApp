@@ -32,6 +32,14 @@ public class SysCyclePic extends BaseEntity {
 	private Integer picSequence;
 
 	private String typeName;
+	
+	private Integer bannerId; //APP后台的ID     
+	private String bannerName;   
+	private String bannerDescribe;
+	private String bannerContent; 
+	private String bannerImgUrl; 
+	private Integer isState;          
+	private Integer orderByNum;   
 	// Constructor
 	public SysCyclePic() {
 	}
@@ -192,6 +200,62 @@ public class SysCyclePic extends BaseEntity {
 
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
+	}
+	
+	public Integer getBannerId() {
+		return bannerId;
+	}
+
+	public void setBannerId(Integer bannerId) {
+		this.bannerId = bannerId;
+	}
+
+	public String getBannerName() {
+		return bannerName;
+	}
+
+	public void setBannerName(String bannerName) {
+		this.bannerName = bannerName;
+	}
+
+	public String getBannerDescribe() {
+		return bannerDescribe;
+	}
+
+	public void setBannerDescribe(String bannerDescribe) {
+		this.bannerDescribe = bannerDescribe;
+	}
+
+	public String getBannerContent() {
+		return bannerContent;
+	}
+
+	public void setBannerContent(String bannerContent) {
+		this.bannerContent = bannerContent;
+	}
+
+	public String getBannerImgUrl() {
+		return bannerImgUrl;
+	}
+
+	public void setBannerImgUrl(String bannerImgUrl) {
+		this.bannerImgUrl = bannerImgUrl;
+	}
+
+	public Integer getIsState() {
+		return isState;
+	}
+
+	public void setIsState(Integer isState) {
+		this.isState = isState;
+	}
+
+	public Integer getOrderByNum() {
+		return orderByNum;
+	}
+
+	public void setOrderByNum(Integer orderByNum) {
+		this.orderByNum = orderByNum;
 	}
 
 	@Override

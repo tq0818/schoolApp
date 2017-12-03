@@ -169,7 +169,7 @@
 	                    </c:choose>
                     </span>
                 </p>
-               <p class="c">
+              <%-- <p class="c">
                     <span class="c-title">是否为推荐课程</span>
                      <span class="c-content" style="color:black;">
                      	<c:if test="${classType.recommendFlag==1 }">
@@ -184,7 +184,7 @@
                         	<input type="radio" value="1" name="recommendFlag">是
                         	<input type="radio" checked="checked" value="0" name="recommendFlag">否
                         </c:if>
-                    </span>
+                    </span>--%>
                </p>
               <p class="c text-center">
              	<a href="javascript:Form.addFormOne('saveandtui')" class="btn btn-primary">保存并退出</a>

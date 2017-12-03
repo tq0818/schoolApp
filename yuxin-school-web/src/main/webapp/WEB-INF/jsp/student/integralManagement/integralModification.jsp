@@ -58,7 +58,7 @@
             </div>
             <div class="integraBtn">
                 <button class="btn btn-success">保存</button>
-                <button class="btn btn-warning">取消</button>
+                <a href="javascript:void(0);" onclick="history.go(-1)" class="btn btn-default">取消</a>
             </div>
         </div>
     </div>
@@ -103,6 +103,7 @@ $('.btn-success').click(function(){
     	}
     })
 });
+
 //点击积分调整，增加一条
 $('.adjusting').click(function () {
     var integralInput = $('.integralInput').val();

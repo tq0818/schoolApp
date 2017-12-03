@@ -857,6 +857,18 @@
 		where a.delete_flag=0  and a.mobile=#{mobile}
 		limit 0,1
 	</select>
+	<select id="queryByMobilea"  resultMap="studentResultMap"  parameterType="com.yuxin.wx.model.student.Student">
+		select a.*
+		from student a
+		inner join company c on (a.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=a.edu_school and c.is_area=2)  and c.id=#{companyId}
+		where a.delete_flag=0  and a.mobile=#{mobile}
+		UNION
+		select a.*
+		from student a
+		inner join company c on c.is_area=0 and c.id=#{companyId}
+		where a.delete_flag=0  and a.mobile=#{mobile}
+		limit 0,1
+	</select>
 	<select id="queryByUsername"  resultMap="studentResultMap"  parameterType="com.yuxin.wx.model.student.Student">
 		select <include refid="table_columns" />
 		from student a

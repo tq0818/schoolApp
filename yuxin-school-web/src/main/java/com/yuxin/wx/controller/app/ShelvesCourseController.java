@@ -1,27 +1,18 @@
 package com.yuxin.wx.controller.app;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.yuxin.wx.api.app.IShelvesCourseService;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.utils.PropertiesUtil;
-import org.apache.commons.lang.StringUtils;
+import com.yuxin.wx.vo.classes.ClassTypeVo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.yuxin.wx.api.app.IShelvesCourseService;
-import com.yuxin.wx.model.app.ShelvesCourse;
-import com.yuxin.wx.model.commodity.CommoditySpecial;
-import com.yuxin.wx.vo.classes.ClassTypeVo;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/shelvesCourse")
 public class ShelvesCourseController {	
@@ -73,6 +64,9 @@ public class ShelvesCourseController {
 					ctv.getPageSize(),
 					ctv.getFirstIndex()
 					);
+			if(courseList.getPageNo()==0){
+				courseList.setPageNo(courseList.getPageNo()+1);
+			}
 			model.addAttribute("courseList", courseList);
 			model.addAttribute("typeId", request.getParameter("typeId"));
 			model.addAttribute("typeStr", request.getParameter("typeStr"));

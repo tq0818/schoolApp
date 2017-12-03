@@ -648,7 +648,7 @@ public class StudentServiceImpl extends BaseServiceImpl implements IStudentServi
 				}
 			}
 			// 判断手机号是否已经存在
-			if (studentMapper.queryByMobile(student) != null) {
+			if (studentMapper.queryByMobilea(student) != null) {
 				return "0103";
 			}
 			// 判断姓名是否合法
