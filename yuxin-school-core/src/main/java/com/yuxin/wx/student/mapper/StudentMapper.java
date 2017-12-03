@@ -44,6 +44,7 @@ public interface StudentMapper extends BaseMapper<Student> {
 	Integer pageCount4(StudentVo search);
 	Student findMessageByMobile(Map<String, Object> map);
 	Student queryByMobile(Student search);
+	Student queryByMobilea(Student search);
 	
 	/**
 	 * 

@@ -313,7 +313,7 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 
 	@Override
 	public PageFinder<ClassTypeVo> findClassTypesByPage(ClassType search) {
-		System.out.println(search.getPage());
+
 		String []codes = new String [1];
 		List<ClassTypeVo> data = new ArrayList<ClassTypeVo>();
 		if (search.getItemFourthCode()!=null && search.getItemFourthCode().length()>0){

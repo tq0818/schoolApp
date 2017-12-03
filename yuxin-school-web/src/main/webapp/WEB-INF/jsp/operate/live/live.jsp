@@ -123,7 +123,7 @@
         
     </div>
     <div class="pages">
-        <ul class="paginationss">
+            <ul class="paginationss">
 	
 		</ul>
     </div>

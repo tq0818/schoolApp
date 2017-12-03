@@ -50,7 +50,7 @@
                                     <button updateId="${ntv.id}" status="${ntv.noticeStatus}" class="btn btn-warning forbidBtn">禁用</button>
                                 </c:when>
                                 <c:otherwise>
-                                    <button updateId="${ntv.id}" status="${ntv.noticeStatus}" class="btn btn-warning forbidBtn">启用</button>
+                                    <button updateId="${ntv.id}" status="${ntv.noticeStatus}" class="btn btn-success forbidBtn">启用</button>
                                 </c:otherwise>
                             </c:choose>
                             <button class="btn btn-primary editNoticeBtn" id="${ntv.id}">编辑</button>

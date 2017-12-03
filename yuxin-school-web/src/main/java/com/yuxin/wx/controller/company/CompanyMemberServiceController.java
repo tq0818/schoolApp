@@ -146,7 +146,7 @@ public class CompanyMemberServiceController {
 		cvf += FileQNUtils.convertFileSize(crf);
 
 		cvf = new BigDecimal(cvf).setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
-		
+
 		// 用户信息
 		Users user = usersServiceImpl.findUserByCompanyIdAndUserType(companyId);
 		/*
@@ -518,12 +518,12 @@ public class CompanyMemberServiceController {
 	public String editDomain(Model model) {
 		Company company = companyServiceImpl.findCompanyById(WebUtils.getCurrentCompanyId());
 		model.addAttribute("company", company);
-		return "company/companyDomain"; 
+		return "company/companyDomain";
 	}
 
 	@RequestMapping("/openSchool")
 	public String openSchool(Model model, HttpServletRequest request) {
-		// 获得公司id 
+		// 获得公司id
 		Integer companyId = WebUtils.getCurrentCompanyId();
 		Integer schoolId = WebUtils.getCurrentUserSchoolId(request);
 		Map<String, Object> param = new HashMap<String, Object>();

@@ -150,6 +150,7 @@
     });
     function toRcommon(categerorId,zhiboFlag,commodityId){
 
+
         $.ajax({
             url :"<%=rootPath %>/appNewClasses/homeRecommendation",
             type : "post",
@@ -205,13 +206,11 @@
                 batchReleaseArray.push(Number(batchReleaseListId));
             }
         }
-
         if(batchReleaseArray.length>0){
             var s = window.confirm("确认下架所选课程");
             if(s==true){
                 $.ajax({
                     type : 'post',
-
                     url : rootPath + '/simpleClasses/stopClassOnsaleAll',
                     data : {
                         "batchReleaseArray" : batchReleaseArray
