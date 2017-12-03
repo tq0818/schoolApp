@@ -1,41 +1,34 @@
 package com.yuxin.wx.controller.tiku.exam;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import javax.servlet.http.HttpServletRequest;
-
-import com.yuxin.wx.api.system.ISysConfigDictService;
-import com.yuxin.wx.api.tiku.*;
-import com.yuxin.wx.model.system.SysConfigDict;
-import com.yuxin.wx.model.tiku.*;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.yuxin.wx.api.student.IStudentPayMasterService;
 import com.yuxin.wx.api.system.ILongitudinalTableDataService;
+import com.yuxin.wx.api.system.ISysConfigDictService;
+import com.yuxin.wx.api.tiku.*;
 import com.yuxin.wx.api.tiku.exam.ITikuExamUserRelationService;
 import com.yuxin.wx.common.ExcelSheetEntity;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.common.ViewFiles;
 import com.yuxin.wx.model.student.StudentPayMaster;
 import com.yuxin.wx.model.system.LongitudinalTableData;
+import com.yuxin.wx.model.system.SysConfigDict;
+import com.yuxin.wx.model.tiku.*;
 import com.yuxin.wx.model.tiku.exam.TikuExamUserRelation;
 import com.yuxin.wx.utils.DateUtil;
 import com.yuxin.wx.utils.WebUtils;
 import com.yuxin.wx.vo.tiku.TikuUserExerciseVo;
 import com.yuxin.wx.vo.tiku.exam.TikuExamUserRelationVo;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Controller of TikuExamUserRelation
@@ -381,7 +374,7 @@ public class TikuExamUserRelationController {
         }
         PageFinder<TikuUserExerciseVo> pageFinder = this.tikuUserExerciseServiceImpl.findAllPaperRspdInfo(exercise);
         al = pageFinder.getData();
-        String title = "用户名称:userName,学员名称:name,区域:eduArea,学校:eduSchool,学段:eduStep,入学年份:eduYear,班级:eduClass,当前试卷分数:exerciseScore,考试时间:startTime";
+        String title = "用户名称:userName,学员名称:name,区域:eduArea,学校:eduSchool,班级:eduClass,当前试卷分数:exerciseScore,考试时间:startTime";
 
         ViewFiles excel = new ViewFiles();
         Map<String, Object> map = new HashMap<String, Object>();

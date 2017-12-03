@@ -128,7 +128,7 @@
                     	<a href="javascript:;" ids="remote" id="lableType" class="btn btn-mini btn-success }">其他</a>
                     </span>
                 </p>
-               <p class="c">
+               <%--<p class="c">
                     <span class="c-title">是否为推荐课程</span>
                      <span class="c-content" style="color:black;">
                      	<c:if test="${classType.recommendFlag==1 }">
@@ -144,7 +144,7 @@
                         	<input type="radio" checked="checked" value="0" name="recommendFlag">否
                         </c:if>
                     </span>
-               </p>
+               </p>--%>
               <p class="c text-center operator">
                 <a href="javascript:Form.addFormOne('save')" class="btn btn-primary">保存</a>
            		<a href="<%=rootPath %>/simpleClasses/showClassTypePage" class="btn btn-default">取消</a>

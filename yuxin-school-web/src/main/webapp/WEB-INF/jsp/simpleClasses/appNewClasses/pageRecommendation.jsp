@@ -53,7 +53,7 @@
             <p class="c">
                 <span class="t-title">阶段</span>
                 <span class="t-content" id="stageId">
-                	<a href="Form.showAllShelvesClssType('all','stageId');" ids="all" class="btn btn-mini btn-default btn-success">全部</a>
+                	<a href="javascript:Form.showAllShelvesClssType('all','stageId');" ids="all" class="btn btn-mini btn-default btn-success">全部</a>
                     <c:forEach items="${stages}" var="stage">
                         <a href="javascript:Form.showAllShelvesClssType('${stage.id}','typeId');" data-code="${stage.id}" class="btn btn-mini btn-default">${stage.name}</a>
                     </c:forEach>
@@ -140,8 +140,26 @@
 <input type="hidden" id="modelId" name="modelId" value="${modelId}">
 <script type="text/javascript">
     $('#batchRecommendation').click(function () {
-        $('.popupContainerRecommendation').show();
-        $('.popupOpacity').show();
+            //判断哪些复选框被选中
+            var batchReleaseList = $('#tableList').find('tr');
+            var batchReleaseArray = [];
+            var batchReleaseListId = '';
+            var batchReleaseListInput = '';
+
+            for(var i=1;i<batchReleaseList.length;i++){
+                batchReleaseListInput = batchReleaseList.eq(i).find('.signUpMany');
+                if(batchReleaseListInput.prop('checked')){
+                    batchReleaseListId = batchReleaseListInput.attr('data-id');
+                    batchReleaseArray.push(Number(batchReleaseListId));
+                }
+            }
+            if(batchReleaseArray.length>0){
+                $('.popupContainerRecommendation').show();
+                $('.popupOpacity').show();
+            }else {
+                alert("至少选择一项！");
+            }
+
     });
     $('.closePopupContainer').click(function () {
         $('.popupContainerRecommendation').hide();

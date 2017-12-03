@@ -66,7 +66,7 @@
                     <i class="iconfont ask" style="cursor: pointer;color:gray;" title="基数的值作为课程包购买人数的一部分，显示在网校前台">&#xe60f;</i>
                     </span>
                 </p>
-               <p class="c isrecomment">
+               <%--<p class="c isrecomment">
                     <span class="c-title">是否为推荐课程包</span>
                      <span class="c-content" style="color:black;">
                      	<c:if test="${classPackage.recommendFlag==1 }">
@@ -82,7 +82,7 @@
                         	<input type="radio" checked="checked" value="0" name="recommendFlag">否
                         </c:if>
                     </span>
-               </p>
+               </p>--%>
               <p class="c text-center">
              	<a href="javascript:void(0);" mark="no_continue" class="btn btn-primary save_baseInfo">保存</a>
              	<a href="javascript:void(0);" mark="continue" class="btn btn-primary save_baseInfo">保存并继续</a>

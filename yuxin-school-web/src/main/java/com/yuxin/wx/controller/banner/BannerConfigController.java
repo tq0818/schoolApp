@@ -2,6 +2,10 @@ package com.yuxin.wx.controller.banner;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -132,6 +136,7 @@ public class BannerConfigController extends BaseWebController{
     }
     /**
      * 
+     * 
      * @author jishangyang 2017年12月2日 下午4:46:20
      * @Method: update 
      * @Description: 修改保存
@@ -143,8 +148,23 @@ public class BannerConfigController extends BaseWebController{
      */
     @ResponseBody
     @RequestMapping("/update")
-    public JSONObject update(HttpServletRequest request,Model model,Banner banner) {
+    public JSONObject update(HttpServletRequest request,Model model,Banner banner)  {
     	JSONObject json = new JSONObject();
+    	
+    	try {
+    		Resource resource = new ClassPathResource("config.properties");
+        	Properties props=PropertiesLoaderUtils.loadProperties(resource);
+        	String url=props+banner.getBannerContentUrl();
+        	File file = new File(url);
+        	if (file.exists()) {
+                file.delete();
+            }
+			String htmlUrl=writeHtml(banner.getBannerContent());
+			banner.setBannerContentUrl(htmlUrl);
+		} catch (Exception e) {
+			log.error("修改保存失败", e);
+			e.printStackTrace();
+		}
     	banner.setUpdateTime(new Date());
     		bannerService.update(banner);
     	json.put(JsonMsg.MSG, JsonMsg.SUCCESS);
@@ -181,6 +201,18 @@ public class BannerConfigController extends BaseWebController{
 	@RequestMapping(value="/editBanner/{id}" )
 	public String editBanner(Model model,@PathVariable Integer id) {
 		Banner bannerVo =bannerService.findBannerById(id);
+    	try {
+    		String newUrl=bannerVo.getBannerImgUrl();
+    		bannerVo.setRealyBannerImgUrl(newUrl);
+    		Resource resource = new ClassPathResource("config.properties");
+			Properties props=PropertiesLoaderUtils.loadProperties(resource);
+			
+			newUrl=props.getProperty("imageServicePath")+newUrl;
+			bannerVo.setBannerImgUrl(newUrl);
+		} catch (IOException e) {
+			log.error("跳转修改页面报错", e);
+			e.printStackTrace();
+		}
 		model.addAttribute("msgPage", bannerVo);	
 		return "banner/bannerEdit";
 	}
@@ -261,10 +293,12 @@ public class BannerConfigController extends BaseWebController{
     public JSONObject addBanner(HttpServletRequest request, String bannerName,String bannerContent,String bannerDescribe,String bannerImgUrl) {
         JSONObject json = new JSONObject();
         try {
+            String htmlUrl=writeHtml(bannerContent);
         	Banner banner =new Banner();
         	banner.setBannerImgUrl(bannerImgUrl);
         	banner.setBannerName(bannerName);
         	banner.setBannerContent(bannerContent);
+        	banner.setBannerContentUrl(htmlUrl);
         	banner.setBannerDescribe(bannerDescribe);
         	banner.setUpdateTime(new Date());
         	banner.setIsState(1);
@@ -286,7 +320,7 @@ public class BannerConfigController extends BaseWebController{
 	  * 
 	  * @author jishangyang 2017年12月1日 下午7:51:16
 	  * @Method: saveCutPic 
-	  * @Description: TODO
+	  * @Description: 
 	  * @param request
 	  * @param itemOneid
 	  * @param path
@@ -341,14 +375,14 @@ public class BannerConfigController extends BaseWebController{
 		//示例图尺寸
 		double slW=0;
 		double slH=0;
-		if(realW/realH>516.00/282.00){
+		if(realW/realH>720.00/420.00){
 			//过宽
-			slH=516 * realH/realW;
-			slW=516;
+			slH=720 * realH/realW;
+			slW=420;
 		}else{
 			//过高
-			slH=282;
-			slW=282 * realW/realH;
+			slH=720;
+			slW=420 * realW/realH;
 		}
 		//原图所选中位置和区域
 		
@@ -366,7 +400,7 @@ public class BannerConfigController extends BaseWebController{
 		log.info("上传图片开始：");
 		String realPath=null;
 		try {
-			realPath=FileUtil.upload(cutImgPath,"dingyue", WebUtils.getCurrentCompanyId()+"");
+			realPath=FileUtil.upload(cutImgPath,"banner", WebUtils.getCurrentCompanyId()+"");
 		} catch (Exception e) {
 			log.error("上传文件失败",e);
 			e.printStackTrace();
@@ -382,5 +416,25 @@ public class BannerConfigController extends BaseWebController{
 		pics.setRealPath(realPath);
 		
 		return pics;
+	}
+	
+	public String writeHtml(String content) throws Exception{
+		OutputStreamWriter pw = null;//
+    	SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhss");
+    	String date = df.format(new Date());
+    	Resource resource = new ClassPathResource("config.properties");
+    	Properties props=PropertiesLoaderUtils.loadProperties(resource);
+    	String rtUrl="bannerHtml/"+date+".html";
+    	String url=props.getProperty("server.imageupload.tempPath") + "/bannerHtml/"+date+".html";
+    	
+        File tempPathFile = new File(props.getProperty("server.imageupload.tempPath") + "/bannerHtml/");
+        if(!tempPathFile.exists()){
+            tempPathFile.mkdirs();
+        }
+    	
+    	pw = new OutputStreamWriter(new FileOutputStream(url),"GBK");
+    	pw.write(content);
+    	pw.close();//关闭流
+	    return rtUrl;
 	}
 }
