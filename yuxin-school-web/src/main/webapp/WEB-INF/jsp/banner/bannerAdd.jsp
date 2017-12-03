@@ -140,7 +140,7 @@
         <p class="tips">
         	 <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic()" value="重新选择文件"/>
           	<!--<a href="javascript:;" class="btn btn-mini btn-primary">重新选择文件</a>--> 
-          	<div style="margin-top: 5px;">建议上传的图片尺寸为：516*282px </div> 
+          	<div style="margin-top: 5px;">建议上传的图片尺寸为：720*420px </div> 
         </p>
         <div class="upload-content" style="padding:10px;">
         <div class="attributes none">

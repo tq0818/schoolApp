@@ -375,14 +375,14 @@ public class BannerConfigController extends BaseWebController{
 		//示例图尺寸
 		double slW=0;
 		double slH=0;
-		if(realW/realH>516.00/282.00){
+		if(realW/realH>720.00/420.00){
 			//过宽
-			slH=516 * realH/realW;
-			slW=516;
+			slH=720 * realH/realW;
+			slW=420;
 		}else{
 			//过高
-			slH=282;
-			slW=282 * realW/realH;
+			slH=720;
+			slW=420 * realW/realH;
 		}
 		//原图所选中位置和区域
 		
