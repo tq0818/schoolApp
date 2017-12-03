@@ -85,9 +85,9 @@
 						<c:if test="${allCommdotity.videoFlag==1 }">
 							<a href="javascript:;" mark="video" class="btn btn-mini btn-default">录播</a>
 						</c:if>
-						<c:if test="${allCommdotity.faceFlag==1 }">
+					<%--	<c:if test="${allCommdotity.faceFlag==1 }">
 							<a href="javascript:;" mark="face" class="btn btn-mini btn-default">面授</a>
-						</c:if>
+						</c:if>--%>
 						<c:if test="${allCommdotity.liveFlag==0&&allCommdotity.videoFlag==0&&allCommdotity.faceFlag==0 }">
 							<a href="javascript:;" mark="remote" class="btn btn-mini btn-default">其他</a>
 						</c:if>

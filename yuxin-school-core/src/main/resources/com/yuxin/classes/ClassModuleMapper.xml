@@ -487,9 +487,7 @@
 		<if test="campusId != null and campusId != ''">and b.campus_id=#{campusId}</if>
 	</select>
 
-	<select id="findBySchoolId" parameterType="com.yuxin.wx.vo.classes.ModuleLessonVo"
-
-		resultMap="moduleLessonVoResultMap">
+	<select id="findBySchoolId" parameterType="com.yuxin.wx.vo.classes.ModuleLessonVo" resultMap="moduleLessonVoResultMap">
 		<choose>
 			<when test="classType == 1">
 				SELECT
@@ -629,7 +627,7 @@
 						<if test="status == 0 and statuss == 4 ">
 							and l.lesson_date = #{lessonDate} and 
 							#{currentTime} > l.lesson_time_start and
-							l.lesson_time_end > s#{currentTime}
+							l.lesson_time_end > #{currentTime}
 						</if>
 						<if test="status == 0 and statuss == 5 ">
 							and ((l.lesson_date = #{lessonDate} and 

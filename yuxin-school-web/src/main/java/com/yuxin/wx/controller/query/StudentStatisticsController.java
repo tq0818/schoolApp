@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.yuxin.wx.api.classes.IClassTypeService;
 import com.yuxin.wx.api.company.ICompanyFunctionSetService;
 import com.yuxin.wx.api.company.ICompanyPayConfigService;
-import com.yuxin.wx.api.course.IVideoService;
 import com.yuxin.wx.api.query.IStudentStatisticsService;
 import com.yuxin.wx.api.query.ISysPlayLogsService;
 import com.yuxin.wx.api.student.IStudentService;
@@ -16,7 +15,6 @@ import com.yuxin.wx.common.CCVideoConstant;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.common.PageFinder2;
 import com.yuxin.wx.common.ViewFiles;
-import com.yuxin.wx.model.classes.ClassType;
 import com.yuxin.wx.model.company.CompanyFunctionSet;
 import com.yuxin.wx.model.company.CompanyPayConfig;
 import com.yuxin.wx.model.system.SysConfigDict;
@@ -33,7 +31,6 @@ import com.yuxin.wx.vo.user.UsersAreaRelation;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.crypto.hash.Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -715,7 +712,7 @@ public class StudentStatisticsController {
 
 
     @RequestMapping(value="/statistics/studentWatchInfoList")
-    public String studentWatchInfoList(Model model, HttpServletRequest request) throws Exception {
+    public String studentWatchInfoList(Model model, HttpServletRequest request,String sort) throws Exception {
         // 查询课程的多课程单元和多班号功能
         CompanyFunctionSet search = new CompanyFunctionSet();
         search.setFunctionCode("COMPANY_FUNCTION_COURSE");
