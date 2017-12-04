@@ -94,10 +94,10 @@
                     url: rootPath + "/classStu/queryStudentsList",
                     data: data,
                     type: 'post',
-                    beforeSend: function (XMLHttpRequest) {
+                   /* beforeSend: function (XMLHttpRequest) {
                         $(".loading").show();
                         $(".loading-bg").show();
-                    },
+                    },*/
                     success: function (jsonData) {
                        
                         if (jsonData.data.length == 0) {
@@ -110,7 +110,7 @@
                                 $(".user-list")
                                     .find("table")
                                     .append(
-                                    '<tr data-buy="'+(stu.paymaterCount>0)+'">'
+                                    '<tr >'
 //                                    + '<td>'
 //                                    + '<input type="checkbox" class="signUpMany" value="' + stu.mobile + '">'
 //                                    + '</td>'

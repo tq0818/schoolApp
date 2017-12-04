@@ -41,7 +41,7 @@
 	                       			<c:when test="${msg.messageType == 'STUDENT_MESSAGE_MODULENO' }">班号通知</c:when>
 	                       			<c:when test="${msg.messageType == 'STUDENT_MESSAGE_SPECIAL' }">指定通知</c:when>
 	                       			<c:when test="${msg.messageType == 'STUDENT_MESSAGE_GROUP' }">分组通知</c:when>
-	                       			<c:when test="${msg.messageType == 'STUDENT_MESSAGE_WEIXIN' }">微信通知</c:when>
+	                       			<c:when test="${msg.messageType == 'STUDENT_MESSAGE_SYSTEM' }">系统通知</c:when>
 	                       		</c:choose>
 	                       </span>
 	                   </td>
@@ -69,6 +69,7 @@
 		                       <c:choose>
 		                       	<c:when test="${!empty msg.creatorName}">${msg.creatorName }</c:when>
 		                       	<c:when test="${!empty msg.username}">${msg.username }</c:when>
+								   <c:when test="${ msg.creator eq 0}">系统</c:when>
 		                       	<c:otherwise>${msg.mobile }</c:otherwise>
 		                       </c:choose>
 	                      </span>
@@ -85,7 +86,7 @@
 			                       	<c:when test="${msg.messageMethod == 'STUDENT_MESSAGE_MOBILE'}">短信通知</c:when>
 			                       	<c:when test="${msg.messageMethod == 'STUDENT_MESSAGE_WEB'}">站内信</c:when>
 			                       	<c:when test="${msg.messageMethod == 'STUDENT_MESSAGE_DINGYUE'}">订阅文章</c:when>
-			                       	<c:when test="${msg.messageMethod == 'STUDENT_MESSAGE_EMAIL'}">邮件通知</c:when>
+			                       	<c:when test="${msg.messageMethod == 'STUDENT_MESSAGE_SYSTEM'}">邮件通知</c:when>
 			                       	<c:when test="${msg.messageMethod == 'STUDENT_MESSAGE_MOBILE_WEIXIN'}">微信指定通知</c:when>
 		                       </c:choose>
 	                       </span>
@@ -172,7 +173,7 @@
                             </span>
                         </p>
                   		</c:if>
-                  		<c:if test="${msg.messageMethod eq 'STUDENT_MESSAGE_DINGYUE'}">
+                  		<%--<c:if test="${msg.messageMethod eq 'STUDENT_MESSAGE_DINGYUE'}">
                   		   <form method="post" id="exportDingyueForm">
 		                  		<div>
 									<span class="c-title">订阅统计：</span>
@@ -191,7 +192,7 @@
 									</div>
 								</div>
 							</form>
-                  		</c:if>
+                  		</c:if>--%>
                     </div>
                 </div>
             </div>

@@ -327,7 +327,7 @@
                                         <col width="25%">
                         </colgroup>
 							<tr >
-								<th >试卷名称</th>
+								<th >试卷名称1</th>
 								<th >所属题库</th>
 								<th >所属科目</th>
 								<th >试卷类型</th>

@@ -30,7 +30,8 @@
 		sys7.name as typeCode,
 		c.live_flag as liveFlag,
 		c.id,
-		app.category_id as courseCaId
+		app.category_id as courseCaId,
+		app.sort
 		FROM (
 			SELECT
 				ml.module_no_id,
@@ -98,7 +99,8 @@
 		sys7.name as typeCode,
 		c.live_flag as liveFlag,
 		c.id,
-		app.category_id as courseCaId
+		app.category_id as courseCaId,
+		app.sort
 		FROM (
 				SELECT
 					ml.module_no_id,
@@ -163,7 +165,8 @@
 		sys7.name as typeCode,
 		c.live_flag as liveFlag,
 		c.id,
-		app.category_id as courseCaId
+		app.category_id as courseCaId,
+		app.sort
 		from commodity c
 		join commodity_product_realtion cpr on cpr.com_id=c.id
 		join class_type ct on ct.id=cpr.product_id
@@ -185,7 +188,7 @@
 		<if test="knowledgeid != null and knowledgeid != ''">and app.knowledge_id = #{knowledgeid}</if>
 		<if test="stageid != null and stageid != ''">and app.stage_id = #{stageid}</if>
 		<if test="typeCode != null and typeCode != ''">and app.type_id = #{typeCode}</if>
-		)temp limit #{firstIndex},#{pageSize}
+		)temp ORDER  BY temp.sort limit #{firstIndex},#{pageSize}
 	</select>
 
 	<select id="queryShelvesCoursesCount"  parameterType="map" resultType="int">

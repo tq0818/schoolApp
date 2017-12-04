@@ -600,13 +600,14 @@
 
     <select id="getZhiBoModelListByIdsCount" parameterType="map" resultType="int">
         select count(1) from (
-        select ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as realPrice, cml.lesson_date as
-        lessonDate, cml.lesson_time_start as lessonTimeStart, sct.NAME teacher_name, sct.school_short_name, c.buy_num as
-        actualNum, app.img_url as imgUrl, case when app.is_shelves is null then '0' else app.is_shelves end as
-        isShelves, app.shelves_time as shelvesTime, ct.cover as cover, app.reserve_time, app.id as appId, app.lab_desc,
-        app.`price` as appPrice, app.`sale_price` as salePrice, sys1.name as itemOneName, sys2.name as itemSecondName,
-        sys3.name as itemThirdName, sys4.name as itemFourthName, sys5.name as itemTag, sys6.name as tagName, sys7.name
-        as typeCode, c.live_flag as liveFlag, c.id, app.category_id as courseCaId FROM (
+        select app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as
+        realPrice,CONCAT(date_format(cml.lesson_date,"%Y-%m-%d"),' ',cml.lesson_time_start) as lesson_date,sct.NAME
+        teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl, case when app.is_shelves is
+        null then '0' else app.is_shelves end as isShelves, app.shelves_time as shelvesTime, ct.cover as cover,
+        app.reserve_time, app.id as appId, app.lab_desc,app.sort sort, app.`price` as appPrice, app.`sale_price` as
+        salePrice, sys1.name as itemOneName, sys2.name as itemSecondName, sys3.name as itemThirdName, sys4.name as
+        itemFourthName, sys5.name as itemTag, sys6.name as tagName, sys7.name as typeCode, c.live_flag as liveFlag,
+        c.id, app.category_id as courseCaId FROM (
         SELECT ml.module_no_id, ml.lesson_date, ml.lesson_time_start, ml.lesson_time_end, ml.lesson_name FROM
         class_module_lesson ml WHERE ml.lesson_date <![CDATA[>=]]>now()
         ) cml JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id` JOIN `class_type_module_relation` ctmr ON
@@ -621,12 +622,12 @@
         and app.category_id =#{categoryid}
         GROUP BY c.id
         UNION
-        select ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as realPrice, cml.lesson_date,
-        cml.lesson_time_start,
+        select app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as
+        realPrice,CONCAT(date_format(cml.lesson_date,"%Y-%m-%d"),' ',cml.lesson_time_start) as lesson_date,
         sct.NAME teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl,
         case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
         app.shelves_time as shelvesTime, ct.cover as cover, app.reserve_time, app.id as appId,
-        app.lab_desc, app.`price` as appPrice, app.`sale_price` as salePrice,
+        app.lab_desc,app.sort sort, app.`price` as appPrice, app.`sale_price` as salePrice,
         sys1.name as itemOneName, sys2.name as itemSecondName, sys3.name as itemThirdName,
         sys4.name as itemFourthName, sys5.name as itemTag, sys6.name as tagName,
         sys7.name as typeCode, c.live_flag as liveFlag, c.id, app.category_id as courseCaId
@@ -656,7 +657,7 @@
         <if test="typeId !=null and typeId!=''">and app.type_id = #{typeId}</if>
         <if test="itemId !=null and itemId!='' ">and app.knowledge_pro_id= #{itemId}</if>
         <if test="stageId !=null and stageId!='' ">and app.stage_id= #{stageId}</if>
-        GROUP BY c.id
+        GROUP BY c.id HAVING MAX(cml.lesson_date) <![CDATA[<]]> NOW()
         ) A
     </select>
     <delete id="deleteFirstRecommendByIds">

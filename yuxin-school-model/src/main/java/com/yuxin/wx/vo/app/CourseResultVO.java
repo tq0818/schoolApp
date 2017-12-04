@@ -13,28 +13,29 @@ public class CourseResultVO implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	Integer commodityId;//商品ID
-	String commodityName;//商品名称
-	String coverUrl;//商品图片
-	Float realPrice;//真是价格
-	Float originalPrice;//原始价格
-	Integer classTypeId;//课程ID
-	String description;//课程简介
-	String detailDesc;//课程描述
-	String iconLable;//标签
-	Date publishTime;//发布时间
-	Integer videoWatchCount;//观看次数
-	String teacherName;//教师姓名
-	String resume;//教师简介
-	String schoolName;//学校名称
-	String schoolShortName;//学校简称
-	String gradeName;//阶段
-	Integer actualNum;//实际人数
-	Integer categoryId;//课程分类Id
-	String overview;//商品概述
-	String subjectName;//学科
-	String courseTime;//课程开始时间结束时间，格式是 2011-01-01 11:02:02
-	Integer buyNumMax;//最大购买数
+	private Integer commodityId;//商品ID
+	private String commodityName;//商品名称
+	private String coverUrl;//商品图片
+	private Float realPrice;//真是价格
+	private Float originalPrice;//原始价格
+	private Integer classTypeId;//课程ID
+	private String description;//课程简介
+	private String detailDesc;//课程描述
+	private String iconLable;//标签
+	private Date publishTime;//发布时间
+	private Integer videoWatchCount;//观看次数
+	private String teacherName;//教师姓名
+	private String resume;//教师简介
+	private String schoolName;//学校名称
+	private String schoolShortName;//学校简称
+	private String gradeName;//阶段
+	private Integer actualNum;//实际人数
+	private Integer categoryId;//课程分类Id
+	private String overview;//商品概述
+	private String subjectName;//学科
+	private String courseTime;//课程开始时间结束时间，格式是 2011-01-01 11:02:02
+	private Integer buyNumMax;//最大购买数
+	private String teacherLevel;//教师级别
 	public Integer getCommodityId() {
 		return commodityId;
 	}
@@ -166,6 +167,12 @@ public class CourseResultVO implements Serializable{
 	}
 	public void setBuyNumMax(Integer buyNumMax) {
 		this.buyNumMax = buyNumMax;
+	}
+	public String getTeacherLevel() {
+		return teacherLevel;
+	}
+	public void setTeacherLevel(String teacherLevel) {
+		this.teacherLevel = teacherLevel;
 	}
 	
 }

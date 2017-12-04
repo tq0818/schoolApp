@@ -132,7 +132,12 @@
             }
         } else {
             for (var i = 1; i <= grade.length; i++) {
-                allChildren.eq(i).addClass('active');
+               /* allChildren.eq(i).addClass('active');*/
+                allChildren.each(function(){
+                    if($(grade[0]).val()==$(this).attr("id")){
+                        $(this).addClass('active');
+                    }
+                });
             }
         }
     }
