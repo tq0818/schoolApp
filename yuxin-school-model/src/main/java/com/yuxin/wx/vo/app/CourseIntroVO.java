@@ -24,6 +24,7 @@ public class CourseIntroVO extends BaseEntity {
 	String rspFlag;
 	String imageUrl;
 	String coverUrl;
+	Integer isComment;//是否已经评论，0为未评论，否则为已经评论
 	List<SysConfigTeacher> teachers;
 	String descUrl;//课程介绍连接
 	public String getDetaildesc() {
@@ -122,4 +123,11 @@ public class CourseIntroVO extends BaseEntity {
 	public void setDescUrl(String descUrl) {
 		this.descUrl = descUrl;
 	}
+	public Integer getIsComment() {
+		return isComment;
+	}
+	public void setIsComment(Integer isComment) {
+		this.isComment = isComment;
+	}
+	
 }
