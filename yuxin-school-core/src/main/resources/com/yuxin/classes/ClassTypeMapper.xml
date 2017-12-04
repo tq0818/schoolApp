@@ -663,7 +663,7 @@
 		<if test="classType.name != null and classType.name != ''">and a.name like '%${classType.name}%'</if>
 		<if test="classType.itemOneId != null and classType.itemOneId != ''">and a.item_one_id = #{classType.itemOneId}</if>
 		<if test="classType.itemSecondId != null and classType.itemSecondId != ''">and a.item_second_id = #{classType.itemSecondId}</if>
-		<if test="classType.isShelves != null and classType.isShelves != ''">(and app.is_shelves = #{classType.isShelves} or app.is_shelves is null)</if>
+		<if test="classType.isShelves != null and classType.isShelves != ''">and app.is_shelves = #{classType.isShelves} or app.is_shelves is null</if>
 		<if test="classType.createSchoolId !=null and classType.createSchoolId != ''">and a.create_school_id = #{classType.createSchoolId}</if>
 		<if test="classType.itemTag != null and classType.itemTag != ''">and find_in_set(#{classType.itemTag},a.item_tag)>0</if>
 		<if test="classType.itemTag2 != null and classType.itemTag2 != ''">and find_in_set(#{classType.itemTag2},a.item_tag)>0</if>
@@ -676,7 +676,7 @@
 		<if test="classType.itemOneCode != null and classType.itemOneCode != ''">and a.item_one_code = #{classType.itemOneCode}</if>
 		<if test="classType.itemSecondCode != null and classType.itemSecondCode != ''">and a.item_second_code = #{classType.itemSecondCode}</if>
 		<if test="classType.itemThirdCode != null and classType.itemThirdCode != ''">and a.item_third_code = #{classType.itemThirdCode}</if>
-		<if test="classType.itemThirdCode != null and classType.itemThirdCode != ''">and a.origin_type = #{classType.originType}</if>
+		<if test="classType.originType != null and classType.originType != ''">and a.origin_type = #{classType.originType}</if>
 		<if test="classType.itemFourthCode != null and classType.itemFourthCode != ''">
 			and a.item_fourth_code in
 			<foreach item="item" index="index" collection="codes" open="(" separator="," close=")">#{item}</foreach>
@@ -762,7 +762,7 @@
 		<if test="itemSecondCode != null and itemSecondCode != ''">and item_second_code = #{itemSecondCode}</if>
 		<if test="itemThirdCode != null and itemThirdCode != ''">and item_third_code = #{itemThirdCode}</if>
 		<if test="createSchoolId != null and createSchoolId != ''">and create_school_id = #{createSchoolId}</if>
-		and del_flag=0
+		and del_flag=0 and live_flag=1
 		order by id desc
 	</select>
 	<select id="findByRemote" parameterType="String" resultMap="classTypeResultMap">

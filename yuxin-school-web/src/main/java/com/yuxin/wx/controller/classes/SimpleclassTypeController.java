@@ -1952,7 +1952,18 @@ public class SimpleclassTypeController {
 		String tempPath=props.getProperty("server.imageupload.tempPath")+"/source/"+fileName;
 		String target=props.getProperty("server.imageupload.tempPath")+"/target/"+fileName;
 		String header="http://"+props.getProperty("yunduoketang.oss.imagedomain")+"/";
-		
+
+		File tempFile = new File(props.getProperty("server.imageupload.tempPath")+"/source");
+		if(!tempFile.exists()){
+			tempFile.mkdirs();
+		}
+
+		File targetFile = new File(props.getProperty("server.imageupload.tempPath")+"/target");
+		if(!targetFile.exists()){
+			targetFile.mkdirs();
+		}
+
+
 		path=path.replace(header, "");
 		System.out.println("oss临时文件路径["+path+"]=====本地磁盘临时文件路径["+tempPath+"]======切图后临时文件路径["+target+"]");
 		FileUtil.download("temp", path,tempPath);

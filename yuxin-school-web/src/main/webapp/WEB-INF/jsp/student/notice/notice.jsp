@@ -35,7 +35,7 @@ function test(){
                         <a href="javascript:;" class="btn btn-mini btn-notice" data-type="STUDENT_MESSAGE_SPECIAL">指定通知</a>
                         <a href="javascript:;" class="btn btn-mini btn-notice" data-type="STUDENT_MESSAGE_GROUP">分组通知</a>
                         <a id="affiche" href="javascript:;" class="btn btn-mini btn-notice" data-type="STUDENT_MESSAGE_AFFICHE">公告</a>
-                        <a href="javascript:;" class="btn btn-mini btn-notice" data-type="STUDENT_MESSAGE_WEIXIN">微信指定通知</a>
+                        <a href="javascript:;" class="btn btn-mini btn-notice" data-type="STUDENT_MESSAGE_SYSTEM">系统通知</a>
                     </span>
                 </p>
                 <p class="c courseFlag">
@@ -71,7 +71,7 @@ function test(){
                         <a href="javascript:;" class="btn btn-mini btn-method btn-success"  data-type="all">全部</a>
                         <a href="javascript:;" class="btn btn-mini btn-method"  data-type="STUDENT_MESSAGE_MOBILE">短信</a>
                         <a href="javascript:;" class="btn btn-mini btn-method"  data-type="STUDENT_MESSAGE_WEB">站内信</a>
-                        <!-- <a href="javascript:;" class="btn btn-mini btn-method"  data-type="STUDENT_MESSAGE_EMAIL">邮件</a> -->
+                        <a href="javascript:;" class="btn btn-mini btn-method"  data-type="STUDENT_MESSAGE_SYSTEM">系统通知</a>
                         <a href="javascript:;" class="btn btn-mini btn-method"  data-type="STUDENT_MESSAGE_DINGYUE">订阅文章</a>
                     </span>
                 </p>

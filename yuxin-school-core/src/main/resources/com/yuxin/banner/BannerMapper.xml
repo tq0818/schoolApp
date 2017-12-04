@@ -6,6 +6,7 @@
 		<result property="bannerName" column="banner_name" />
 		<result property="bannerDescribe" column="banner_describe" />
 		<result property="bannerContent" column="banner_content" />
+		<result property="bannerContentUrl" column="banner_content_url" />
 		<result property="bannerImgUrl" column="banner_img_url" />
 		<result property="isState" column="is_state" />
 		<result property="updateTime" column="update_time" />
@@ -17,6 +18,7 @@
 		banner_name,
 		banner_describe,
 		banner_content,
+		banner_content_url,
 		banner_img_url,
 		is_state,
 		update_time,
@@ -27,6 +29,7 @@
 		#{bannerName},
 		#{bannerDescribe},
 		#{bannerContent},
+		#{bannerContentUrl},
 		#{bannerImgUrl},
 		#{isState},
 		#{updateTime},
@@ -53,13 +56,14 @@
 	banner_name,
 	banner_describe,
 	banner_content,
+	banner_content_url,
 	banner_img_url,
 	is_state,
 	update_time,
 	order_by_num
 	)
 	VALUES
-	(#{bannerName},#{bannerDescribe},#{bannerContent},#{bannerImgUrl},#{isState},#{updateTime},(select max(t1.order_by_num)+1  from banner_app t1))
+	(#{bannerName},#{bannerDescribe},#{bannerContent},#{bannerContentUrl},#{bannerImgUrl},#{isState},#{updateTime},(select max(t1.order_by_num)+1  from banner_app t1))
 	</insert>
 	
 	<select id="findById" resultMap="BannerResultMap" parameterType="String" >

@@ -69,12 +69,13 @@ public class PushLiveClassMsgTask {
 					message.setTitle(title);
 					message.setContentText(content);
 					message.setContent("<p>"+content+"</p>");
-					message.setMessageType("STUDENT_MESSAGE_CLASSTYPE");
-					message.setMessageMethod("STUDENT_MESSAGE_WEB");
+					message.setMessageType("STUDENT_MESSAGE_SYSTEM");
+					message.setMessageMethod("STUDENT_MESSAGE_SYSTEM");
 					message.setItemOneId(liveclass.getItemOneId());
 					message.setItemSecondId(liveclass.getItemSecondId());
 					message.setClassTypeId(liveclass.getId());
 					message.setSchoolId(681);
+					message.setCreator(0);
 					message.setClassTypeName(liveclass.getName());
 					message.setModuleNoId(liveclass.getModuleNoId());
 					message.setModuleNoName(liveclass.getModuleNoName());
