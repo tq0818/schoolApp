@@ -1,8 +1,10 @@
 package com.yuxin.wx.controller.course;
 
+import java.beans.MethodDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.DecimalFormat;
@@ -1088,7 +1090,7 @@ public class VideoController {
      * @param search
      * @return
      */
-    @RequestMapping(value = "/loadVideoAjaxInfo")
+    @RequestMapping(value = "/loadVideoAjaxInfo" , method = RequestMethod.POST)
     public String loadVideoAjaxInfo(Model model, HttpServletRequest request, VideoVo search) {
         Integer companyId = WebUtils.getCurrentCompanyId();
         CompanyPayConfig companyPayConfig = this.companyPayConfigService.findByCompanyId(companyId);

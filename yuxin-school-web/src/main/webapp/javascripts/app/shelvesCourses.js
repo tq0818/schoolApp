@@ -165,7 +165,7 @@
 	                }
 	            });
 	            if (subjectName != 'all') {
-	                datas.subjectName = subjectName;
+	                datas.subjectid = subjectName;
 	            }
 	            $("#kwonProId").find("a").each(function (i) {
 	                if ($(this).hasClass('btn-success')) {
@@ -292,6 +292,7 @@
 	            });
 			},
 			showAllShelvesClssType : function(id,typeStr){
+
 				var datas = {};
 				datas.typeStr=typeStr;
 				datas.typeId=id;
