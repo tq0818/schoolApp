@@ -19,6 +19,15 @@ public class UserMessageVo extends BaseEntity {
 	private String erroInfo;
 	private String signupVote;/*报名或者投票 0报名 1投票*/
 	private String signupVoteUrl;/*报名或者投票连接*/
+	private String createDate;
+
+	public String getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
 
 	public String getSignupVoteUrl() {
 		return signupVoteUrl;
