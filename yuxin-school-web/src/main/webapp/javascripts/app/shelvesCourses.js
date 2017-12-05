@@ -165,7 +165,7 @@
 	                }
 	            });
 	            if (subjectName != 'all') {
-	                datas.subjectName = subjectName;
+	                datas.subjectid = subjectName;
 	            }
 	            $("#kwonProId").find("a").each(function (i) {
 	                if ($(this).hasClass('btn-success')) {
@@ -173,15 +173,15 @@
 	                }
 	            });
 	            if (knowledgeName != 'all') {
-	                datas.knowledgeName = knowledgeName;
+	                datas.knowledgeProid = knowledgeName;
 	            }
 	            $("#knowId").find("a").each(function (i) {
 	                if ($(this).hasClass('btn-success')) {
-	                    knowledgeProName = $(this).attr("data-code");
+						knowledgeName = $(this).attr("data-code");
 	                }
 	            });
-	            if (knowledgeProName != 'all') {
-	                datas.knowledgeProName = knowledgeProName;
+	            if (knowledgeName != 'all') {
+	                datas.knowledgeid = knowledgeName;
 	            }
 	            $("#stageId").find("a").each(function (i) {
 	                if ($(this).hasClass('btn-success')) {
@@ -189,7 +189,7 @@
 	                }
 	            });
 	            if (stageName != 'all') {
-	                datas.stageName = stageName;
+	                datas.stageid = stageName;
 	            }
 	            $("#typeId").find("a").each(function (i) {
 	                if ($(this).hasClass('btn-success')) {
@@ -292,6 +292,7 @@
 	            });
 			},
 			showAllShelvesClssType : function(id,typeStr){
+
 				var datas = {};
 				datas.typeStr=typeStr;
 				datas.typeId=id;

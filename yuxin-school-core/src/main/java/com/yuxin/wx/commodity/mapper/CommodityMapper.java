@@ -95,7 +95,7 @@ public interface CommodityMapper extends BaseMapper<Commodity> {
 	 */
 	Integer getZhiBoModelListByIdsCount(Map<String, Object> param);
 	
-	void deleteFirstRecommendByIds(String appShelvesIds);
+	void deleteFirstRecommendByIds(@Param("list")List<String> appShelvesIdList);
 	/**
 	 * 更新推荐表顺序字段
 	 * @param appShelvesId

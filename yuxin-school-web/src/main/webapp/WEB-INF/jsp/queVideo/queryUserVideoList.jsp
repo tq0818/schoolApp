@@ -17,6 +17,8 @@
 	<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/query/statistics.css">
 	<style type="text/css">
 		.pages li.disabled{padding:0px;}
+		.queryUserVideoRight{width: 100%;}
+		.queryUserVideoRight .screen-info span{margin: 10px 0;}
 	</style>
 </head>
 <body>
@@ -27,8 +29,8 @@
 <!-- 二级导航 -->
 <jsp:include page="/WEB-INF/jsp/menu/menu_statistics.jsp"></jsp:include>
 <div class="u-wrap query overflow">
-	<jsp:include page="/WEB-INF/jsp/menu/menu_statistics_query.jsp"></jsp:include>
-	<div class="right-side set-system">
+	<%--<jsp:include page="/WEB-INF/jsp/menu/menu_statistics_query.jsp"></jsp:include>--%>
+	<div class="right-side set-system queryUserVideoRight">
 		<div class="mainbackground nopadding">
 			<div class="heading">
 				<h2 class="h5">点播情况</h2>
@@ -68,8 +70,6 @@
 							<option value="${index.index}">${index.index}班</option>
 						</c:forEach>
 					</select>
-				</div>
-				<div class="screen-info margin10">
 					<span class="date" style="margin-left: 0;">
 						<i class="text">日期</i>
 						<span><input type="text" name="startTime" class="date-picker from" value="${startTime}"/><em>至</em><input type="text" name="endTime" class="date-picker to" value="${endTime}"/></span>
@@ -78,6 +78,9 @@
 					<span><a href="javascript:;" class="btn btn-primary searchContents">查询</a></span>
 					<span><a href="javascript:;" class="btn btn-primary exportexcle">导出数据</a></span>
 				</div>
+				<%--<div class="screen-info margin10">--%>
+					<%----%>
+				<%--</div>--%>
 			</form>
 			<div class="user-list">
 				<table class="table table-center" id="tableList">
@@ -132,8 +135,8 @@
 <script type="text/javascript" src="<%=rootPath %>/javascripts/company/jquery.cityselect.js"></script>
 <script type="text/javascript">
 //	$selectSubMenu('statistics_org_detail');
-	$selectThirdMenu('videoList');
-	$selectThirdMenu('userVideoList');
+//	$selectThirdMenu('userVideoList');
+	$selectMenu('userVideoList');
 	$.tableSort($(".btn-sort"),{
 		callback:function(data){
 			console.log(data);

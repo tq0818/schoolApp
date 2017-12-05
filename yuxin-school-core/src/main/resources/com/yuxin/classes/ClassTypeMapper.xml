@@ -663,7 +663,7 @@
 		<if test="classType.name != null and classType.name != ''">and a.name like '%${classType.name}%'</if>
 		<if test="classType.itemOneId != null and classType.itemOneId != ''">and a.item_one_id = #{classType.itemOneId}</if>
 		<if test="classType.itemSecondId != null and classType.itemSecondId != ''">and a.item_second_id = #{classType.itemSecondId}</if>
-		<if test="classType.isShelves != null and classType.isShelves != ''">and app.is_shelves = #{classType.isShelves} or app.is_shelves is null</if>
+		<if test="classType.isShelves != null and classType.isShelves != ''">and (app.is_shelves = #{classType.isShelves} or app.is_shelves is null)</if>
 		<if test="classType.createSchoolId !=null and classType.createSchoolId != ''">and a.create_school_id = #{classType.createSchoolId}</if>
 		<if test="classType.itemTag != null and classType.itemTag != ''">and find_in_set(#{classType.itemTag},a.item_tag)>0</if>
 		<if test="classType.itemTag2 != null and classType.itemTag2 != ''">and find_in_set(#{classType.itemTag2},a.item_tag)>0</if>

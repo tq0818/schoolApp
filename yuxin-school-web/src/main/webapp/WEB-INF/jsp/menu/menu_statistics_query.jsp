@@ -8,7 +8,9 @@
         	<!-- <span class="iconfont return-pic hcancle">&#xe650;</span> -->
         </div>
         <ul id="course_manage" class="system_managelist tj_managelist">
-            <li class="subentry active" code="studentList" mark="/query/statistics/studentList"><p class="managelist-parent">学员</p></li>
+           <%-- <li class="subentry active" code="studentList" mark="/query/statistics/studentList"><p class="managelist-parent">学员</p></li>--%>
+               <li class="subentry active" code="userVideoList" mark="/query/statistics/userVideoList"><p class="managelist-parent">用户点播统计</p></li>
+               <li class="subentry active" code="watchInfoList" mark="/query/statistics/watchInfoList"><p class="managelist-parent">直播统计</p></li>
 <%--        	<shiro:hasAnyRoles name="教科院,区县负责人,学校负责人">
             <li class="subentry active" code="studentList" mark="/query/statistics/studentList"><p class="managelist-parent">学员</p></li>
             <li class="subentry" code="orgStuList" mark="/query/statistics/queryOrg"><p class="managelist-parent">学校</p></li>

@@ -14,6 +14,8 @@
 <link rel="stylesheet" href="<%=rootPath %>/stylesheets/query/statistics.css">
 <style type="text/css">
 		.pages li.disabled{padding:0px;}
+		.queryUserVideoRight{width: 100%;}
+
 	</style>
 <link rel="stylesheet" href="<%=rootPath %>/stylesheets/jedate.css">
 <script src="<%=rootPath %>/javascripts/plus/jquery.jedate.min.js"></script>
@@ -33,7 +35,7 @@
 		<c:if test="${role=='area'}">
 			<jsp:include page="/WEB-INF/jsp/menu/menu_statistics_query_area.jsp"></jsp:include>
 		</c:if>
-		<div class="right-side set-system">
+		<div class="right-side set-system queryUserVideoRight">
 			<div class="mainbackground nopadding">
 				<div class="heading">
 					<h2 class="h5">直播情况</h2>
@@ -135,6 +137,10 @@
             $.jeDate('#startDate', start);
             $.jeDate('#endDate', end);
 
+		</script>
+		<script>
+
+            $selectMenu('watchInfoList');
 		</script>
 
 </body>
