@@ -57,6 +57,70 @@ public class CompanyStudentMessage extends BaseEntity {
 	private Integer signupVote;
 	private String coverImg;
 	private String contentText;
+
+	/**
+	 * 系统消息发送相关信息
+	 */
+	private String userId;
+
+	private String comdId;
+
+	private String stuName;
+
+	private String courseName;
+
+	private String lessonName;
+
+	private String lessonStartTime;
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getComdId() {
+		return comdId;
+	}
+
+	public void setComdId(String comdId) {
+		this.comdId = comdId;
+	}
+
+	public String getStuName() {
+		return stuName;
+	}
+
+	public void setStuName(String stuName) {
+		this.stuName = stuName;
+	}
+
+	public String getCourseName() {
+		return courseName;
+	}
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
+	public String getLessonName() {
+		return lessonName;
+	}
+
+	public void setLessonName(String lessonName) {
+		this.lessonName = lessonName;
+	}
+
+	public String getLessonStartTime() {
+		return lessonStartTime;
+	}
+
+	public void setLessonStartTime(String lessonStartTime) {
+		this.lessonStartTime = lessonStartTime;
+	}
+
 	// Constructor
 	public CompanyStudentMessage() {
 	}

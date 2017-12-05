@@ -63,6 +63,7 @@ public class QuestionVo extends BaseEntity {
 	private Integer collectCount;//收藏数
 	private String nickName;//昵称
 	private String headImg;//头像
+	private Integer isChecke;//是否需要审核标识  1 不需要  2需要
 	// Constructor
 	public QuestionVo() {
 	}
@@ -71,7 +72,7 @@ public class QuestionVo extends BaseEntity {
 	 * full Constructor
 	 */
 	public QuestionVo(Integer id,Integer questionscore, Integer answerId, String questionTitle, String questionDesc, Integer itemOneId, Integer itemSecondId, Integer classifyId, Integer userId, Integer courseFlag, Integer courseId, String courseName, Integer courseLectureId, String courseLectureName, Integer answerCount, Integer scanCount, Integer adoptFlag, Integer adoptAnswerId, Integer topFlag, Integer essenceFlag, Date createTime, Date updateTime, Integer delFlag,
-			Integer readFlag) {
+			Integer readFlag,Integer isChecke) {
 		setId(id);
 		this.questionTitle = questionTitle;
 		this.questionDesc = questionDesc;
@@ -96,6 +97,7 @@ public class QuestionVo extends BaseEntity {
 		this.answerId = answerId;
 		this.readFlag = readFlag;
 		this.questionscore= questionscore;
+		this.isChecke=isChecke;
 	}
 
 	// getter && setter
@@ -300,9 +302,16 @@ public class QuestionVo extends BaseEntity {
 		return this;
 	}
 	
-	@Override
-	public String toString() {
-		return "QuestionVo [" + "id=" + getId() + ", questionTitle=" + questionTitle + ", questionDesc=" + questionDesc + ", itemOneId=" + itemOneId + ", itemSecondId=" + itemSecondId + ", classifyId=" + classifyId + ", userId=" + userId + ", courseFlag=" + courseFlag + ", courseId=" + courseId + ", courseName=" + courseName + ", courseLectureId=" + courseLectureId + ", courseLectureName=" + courseLectureName + ", answerCount=" + answerCount + ", scanCount=" + scanCount + ", adoptFlag=" + adoptFlag + ", adoptAnswerId=" + adoptAnswerId + ", topFlag=" + topFlag + ", essenceFlag=" + essenceFlag + ", createTime=" + createTime + ", updateTime=" + updateTime + ", delFlag=" + delFlag +  "]";
+	
+
+	
+	public Integer getIsChecke() {
+		return isChecke;
+	}
+
+	
+	public void setIsChecke(Integer isChecke) {
+		this.isChecke = isChecke;
 	}
 
 	public String getTiwenTime() {
@@ -471,6 +480,23 @@ public class QuestionVo extends BaseEntity {
 
 	public void setHeadImg(String headImg) {
 		this.headImg = headImg;
+	}
+
+	@Override
+	public String toString() {
+		return "QuestionVo [questionTitle=" + questionTitle + ", questionDesc=" + questionDesc + ", itemOneId=" + itemOneId
+		        + ", itemSecondId=" + itemSecondId + ", classifyId=" + classifyId + ", userId=" + userId + ", courseFlag="
+		        + courseFlag + ", courseId=" + courseId + ", courseName=" + courseName + ", courseLectureId=" + courseLectureId
+		        + ", courseLectureName=" + courseLectureName + ", answerCount=" + answerCount + ", scanCount=" + scanCount
+		        + ", adoptFlag=" + adoptFlag + ", adoptAnswerId=" + adoptAnswerId + ", topFlag=" + topFlag + ", essenceFlag="
+		        + essenceFlag + ", createTime=" + createTime + ", updateTime=" + updateTime + ", delFlag=" + delFlag
+		        + ", companyId=" + companyId + ", schoolId=" + schoolId + ", questionscore=" + questionscore + ", tiwenTime="
+		        + tiwenTime + ", lastAnsTime=" + lastAnsTime + ", headPic=" + headPic + ", userName=" + userName
+		        + ", subQuestionDesc=" + subQuestionDesc + ", answerId=" + answerId + ", nowAnsName=" + nowAnsName
+		        + ", nowHeadPic=" + nowHeadPic + ", nowUserId=" + nowUserId + ", nowAnsDesc=" + nowAnsDesc + ", questionType="
+		        + questionType + ", ansType=" + ansType + ", readFlag=" + readFlag + ", relList=" + relList + ", answerList="
+		        + answerList + ", collectCount=" + collectCount + ", nickName=" + nickName + ", headImg=" + headImg
+		        + ", isChecke=" + isChecke + "]";
 	}
 	
 }

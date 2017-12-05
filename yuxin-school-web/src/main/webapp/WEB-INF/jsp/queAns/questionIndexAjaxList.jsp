@@ -134,7 +134,9 @@
                             <c:if test="${que.topFlag != 1}">
                                 <i class="iconfont fr zdIcon cfont" title="加入置顶" ids="${que.id}">&#xe663;</i>
                             </c:if>
-                                   <!--    <i class="iconfont fr jhIcon cfont jht" title="审核">&#xe667;</i> -->
+                            <c:if test="${que.isChecke == 0}">
+                                <i class="iconfont fr shIcon cfont jht" title="审核" ids="${que.id}">&#xe667;</i> 
+                        	</c:if>
                         </c:if>
                     </div>
                     <div class="plContent none pl${que.id}" queId="${que.id}"></div>

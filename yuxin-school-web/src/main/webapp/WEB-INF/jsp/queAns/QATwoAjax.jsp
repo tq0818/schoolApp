@@ -43,6 +43,9 @@
 					<span class="" style="margin-left:10px;cursor: pointer;"  data-id="${an.id }" data-id="${an.questionId }"><i class="iconfont">&#xe605;</i><span class="xzi">已采纳</span></span>
 				</c:if>
 				<span class="dz" style="margin-left:10px;cursor: pointer;"  data-id="${an.id }" data-types="${an.isThumbs}"><i class="iconfont <c:if test="${an.isThumbs ==1}"> active </c:if>">&#xe64e;</i><span class="xzi">点赞</span><span>${an.likeanswer}</span></span>
+				<c:if test="${(an.isChecke == 0 || null == an.isChecke)}">
+					<span class="chec" style="margin-left:10px;cursor: pointer;" data-id="${an.id }" ><i class="iconfont">&#xe621;</i><span class="xzi">审核</span></span>
+				</c:if>
 			</div>
 		</td>
 	</tr>
