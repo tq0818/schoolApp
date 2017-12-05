@@ -47,7 +47,9 @@ public class CourseVideoLectureVo extends BaseEntity {
 	private Integer homeworkType;
 	private Integer paperId;//试卷id
 	private String url;//录播访问地址
-	
+	private String ccId;//video表中的video_cc_id
+	private String ccUserId;//
+	private String ccApiKey;
 	// Constructor
 	public CourseVideoLectureVo() {
 	}
@@ -345,6 +347,30 @@ public class CourseVideoLectureVo extends BaseEntity {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getCcId() {
+		return ccId;
+	}
+
+	public void setCcId(String ccId) {
+		this.ccId = ccId;
+	}
+
+	public String getCcUserId() {
+		return ccUserId;
+	}
+
+	public void setCcUserId(String ccUserId) {
+		this.ccUserId = ccUserId;
+	}
+
+	public String getCcApiKey() {
+		return ccApiKey;
+	}
+
+	public void setCcApiKey(String ccApiKey) {
+		this.ccApiKey = ccApiKey;
 	}
 	
 }
