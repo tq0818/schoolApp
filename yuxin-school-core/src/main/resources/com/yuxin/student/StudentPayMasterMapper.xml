@@ -882,7 +882,7 @@
 		<!--<if test="itemOneId != null">and a.item_one_id = #{itemOneId}</if>-->
 		<!--<if test="itemSecondId != null">and a.item_second_id=#{itemSecondId}</if>-->
 		<if test="commodityId != null">and a.commodity_id=#{commodityId}</if>
-		<if test="schoolId != null">and a.school_id=#{schoolId}</if>
+		<!--<if test="schoolId != null">and a.school_id=#{schoolId}</if>-->
 		group by a.stu_id
 		) c limit 1
 	</select>

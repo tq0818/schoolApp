@@ -98,7 +98,7 @@
             <div class="findQuestion">
                 <div>
                     <span>banner图片:</span>
-                	<span class="c-content"> 
+                	<span class="c-content bannerImg">
 							<span class="view">
 	                            <img id="commdotityPic" src="${msgPage.bannerImgUrl}" realPath="" >
 	                        </span>

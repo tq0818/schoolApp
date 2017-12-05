@@ -3,6 +3,8 @@ package com.yuxin.wx.controller.queAns;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.yuxin.wx.api.auth.IAuthRoleService;
 import com.yuxin.wx.api.queAns.IQuestionAnswerService;
 import com.yuxin.wx.api.queAns.IQuestionService;
+import com.yuxin.wx.common.TextCheck;
 import com.yuxin.wx.model.queAns.QueQuestion;
 import com.yuxin.wx.model.queAns.QuestionAnswer;
 import com.yuxin.wx.model.user.Users;
@@ -32,6 +35,8 @@ import com.yuxin.wx.utils.WebUtils;
 @Controller
 @RequestMapping("/QuestionAnswer")
 public class QuestionAnswerController {
+	
+	 private Log log = LogFactory.getLog("log");
 	
 	@Autowired
 	private IQuestionAnswerService questionAnswerServiceImpl;
@@ -67,33 +72,50 @@ public class QuestionAnswerController {
 	public String add(QuestionAnswer questionAnswer) {
 		Users users = WebUtils.getCurrentUser();
 		Integer userId = users.getId();
-		questionAnswer.setReplyUserName(users.getRealName());
-		questionAnswer.setUserId(users.getId());
-		questionAnswer.setDelFlag(1);
-		questionAnswer.setCreateTime(new Date());
-		questionAnswer.setAnswerLevel(1);
-		questionAnswer.setCommentCount(0);
-		questionAnswer.setReadFlag(0);
-		if(authRoleServiceImpl.hasRoleFlag(userId)){
-			questionAnswer.setAnswerType("QUESTION_ANSWER_MANAGE");
-		}else{  
-			questionAnswer.setAnswerType("QUESTION_ANSWER_TEACHER");
-		}      
-		questionAnswerServiceImpl.insert(questionAnswer);
-		QueQuestion entity = new QueQuestion();
-		Integer quesId = questionAnswer.getQuestionId();
-		entity.setId(quesId);
-		QueQuestion question = questionServiceImpl.findQuestionById(quesId);
-		Integer ansCount = question.getAnswerCount();
-		if(ansCount == null){
-			ansCount = 0;
-		}
-		ansCount = ansCount+1;
-		entity.setAnswerCount(ansCount);
+		boolean flag=false;
+		if(null!=questionAnswer.getAnswerDesc()){
+			String  answerDesc=questionAnswer.getAnswerDesc();
+			try {
+				flag=TextCheck.TextCheck(answerDesc);
+				if(flag){
+					questionAnswer.setIsChecke(1);
+				}else{
+					questionAnswer.setIsChecke(0);
+				}
+				questionAnswer.setReplyUserName(users.getRealName());
+				questionAnswer.setUserId(users.getId());
+				questionAnswer.setDelFlag(1);
+				questionAnswer.setCreateTime(new Date());
+				questionAnswer.setAnswerLevel(1);
+				questionAnswer.setCommentCount(0);
+				questionAnswer.setReadFlag(0);
+				if(authRoleServiceImpl.hasRoleFlag(userId)){
+					questionAnswer.setAnswerType("QUESTION_ANSWER_MANAGE");
+				}else{  
+					questionAnswer.setAnswerType("QUESTION_ANSWER_TEACHER");
+				}      
+				questionAnswerServiceImpl.insert(questionAnswer);
+				QueQuestion entity = new QueQuestion();
+				Integer quesId = questionAnswer.getQuestionId();
+				entity.setId(quesId);
+				QueQuestion question = questionServiceImpl.findQuestionById(quesId);
+				Integer ansCount = question.getAnswerCount();
+				if(ansCount == null){
+					ansCount = 0;
+				}
+				ansCount = ansCount+1;
+				entity.setAnswerCount(ansCount);
+				
+				entity.setUpdateTime(new Date());
+				
+				questionServiceImpl.update(entity);
+			} catch (Exception e) {
+				log.error("qa：添加回复出错：" + e.getMessage(), e);
+				e.printStackTrace();
+			
+			}
+		} 
 		
-		entity.setUpdateTime(new Date());
-		
-		questionServiceImpl.update(entity);
 		return "success";
 	}
 	

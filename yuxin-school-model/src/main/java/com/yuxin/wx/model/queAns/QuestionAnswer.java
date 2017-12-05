@@ -42,6 +42,7 @@ public class QuestionAnswer extends BaseEntity {
 	private Integer adoptFlag; //记录采纳数量
 	private Integer isAccept;//该回答是否被采纳
 	private Integer questionscore;//问题奖励积分
+	private Integer isChecke;//是否需要审核标识  1 不需要  2需要
 	// Constructor
 	public QuestionAnswer() {
 	}
@@ -62,7 +63,7 @@ public class QuestionAnswer extends BaseEntity {
 	        Integer answerLevel, Integer commentCount, Date createTime, Integer delFlag, Integer parentId, Integer replyUserId,
 	        String replyUserName, Integer readFlag, String replyUserType, String name, String imgurl, String times,
 	        int likeanswer, Integer isThumbs, Integer th_user_id, Integer thumbsFlag, Integer isAdopt, Integer adoptFlag,
-	        Integer isAccept, Integer questionscore) {
+	        Integer isAccept, Integer questionscore,Integer isChecke) {
 		super();
 		this.answerDesc = answerDesc;
 		this.answerId = answerId;
@@ -89,6 +90,7 @@ public class QuestionAnswer extends BaseEntity {
 		this.adoptFlag = adoptFlag;
 		this.isAccept = isAccept;
 		this.questionscore = questionscore;
+		this.isChecke=isChecke;
 	}
 
 	public QuestionAnswer setAnswerDesc(String answerDesc) {
@@ -178,8 +180,6 @@ public class QuestionAnswer extends BaseEntity {
 	
 
 
-
-
 	@Override
 	public String toString() {
 		return "QuestionAnswer [answerDesc=" + answerDesc + ", answerId=" + answerId + ", questionId=" + questionId
@@ -189,7 +189,7 @@ public class QuestionAnswer extends BaseEntity {
 		        + ", replyUserType=" + replyUserType + ", name=" + name + ", imgurl=" + imgurl + ", times=" + times
 		        + ", likeanswer=" + likeanswer + ", isThumbs=" + isThumbs + ", th_user_id=" + th_user_id + ", thumbsFlag="
 		        + thumbsFlag + ", isAdopt=" + isAdopt + ", adoptFlag=" + adoptFlag + ", isAccept=" + isAccept
-		        + ", questionscore=" + questionscore + "]";
+		        + ", questionscore=" + questionscore + ", isChecke=" + isChecke + "]";
 	}
 
 	public String getName() {
@@ -323,6 +323,21 @@ public class QuestionAnswer extends BaseEntity {
 
 	
 	public void setQuestionScore(Integer questionscore) {
+		this.questionscore = questionscore;
+	}
+
+	
+	public Integer getIsChecke() {
+		return isChecke;
+	}
+
+	
+	public void setIsChecke(Integer isChecke) {
+		this.isChecke = isChecke;
+	}
+
+	
+	public void setQuestionscore(Integer questionscore) {
 		this.questionscore = questionscore;
 	}
 	

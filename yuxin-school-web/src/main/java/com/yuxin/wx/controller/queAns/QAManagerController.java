@@ -22,6 +22,7 @@ import com.yuxin.wx.api.user.IUsersFrontService;
 import com.yuxin.wx.api.user.IUsersService;
 import com.yuxin.wx.common.JsonMsg;
 import com.yuxin.wx.common.PageFinder;
+import com.yuxin.wx.common.TextCheck;
 import com.yuxin.wx.model.queAns.QueQuestion;
 import com.yuxin.wx.model.queAns.QuestionAnswer;
 import com.yuxin.wx.model.system.SysConfigTeacher;
@@ -231,6 +232,38 @@ public class QAManagerController {
     }
     /**
      * 
+     * @author jishangyang 2017年12月5日 下午3:58:13
+     * @Method: checkMgc 
+     * @Description: 审核
+     * @param request
+     * @param id
+     * @param ids
+     * @return 
+     * @throws
+     */
+    @ResponseBody
+    @RequestMapping("/checkMgc")
+    public JSONObject checkMgc(HttpServletRequest request, Integer id,Integer ids) {
+    	JSONObject json = new JSONObject();
+    	log.info("qa：审核:");
+    	try {
+    		QuestionAnswer one = new QuestionAnswer();
+    		one.setId(id);
+    		one.setIsChecke(1);
+    		questionAnswerServiceImpl.update(one);
+    		
+    		json.put(JsonMsg.MSG, JsonMsg.SUCCESS);
+    		return json;
+    		
+    	} catch (Exception e) {
+    		log.error("qa：审核异常:" + e.getMessage(), e);
+    		e.printStackTrace();
+    		json.put(JsonMsg.MSG, JsonMsg.INFORMATION);
+    		return json;
+    	}
+    }
+    /**
+     * 
      * @author jishangyang 2017年11月29日 下午4:20:56
      * @Method: thumbs 
      * @Description:点赞操作
@@ -291,6 +324,7 @@ public class QAManagerController {
     @RequestMapping("/addAns")
     public JSONObject addAns(HttpServletRequest request, QuestionAnswer ans) {
         JSONObject json = new JSONObject();
+        boolean flag=false;
         Users user = WebUtils.getCurrentUser();
         ans.setUserId(user.getId());
         ans.setReplyUserName(user.getRealName());
@@ -307,6 +341,13 @@ public class QAManagerController {
         log.info("qa：添加回复：" + ans);
 
         try {
+        	String  answerDesc=ans.getAnswerDesc();
+            flag=TextCheck.TextCheck(answerDesc);
+    		if(flag){
+    			ans.setIsChecke(1);
+    		}else{
+    			ans.setIsChecke(0);
+    		}
             questionAnswerServiceImpl.insert(ans);
             // 查询一级回复
             QuestionAnswer one = questionAnswerServiceImpl.findQuestionAnswerById(ans.getAnswerId());

@@ -993,7 +993,7 @@
 		on s.id = m.stu_id
 		LEFT JOIN  class_type ct ON  ct.id = m.commodity_id
 		inner join users_front u on u.id = s.user_id
-		where s.is_login_app=1 and m.school_id = #{schoolId} and
+		where s.is_login_app=1 and
 		m.company_id = #{companyId} and
 		ct.item_one_code = #{itemOneCode} and
 		ct.item_second_code = #{itemSecondCode} and

@@ -101,7 +101,9 @@
 					<span class="" style="margin-left:10px;cursor: pointer;"  data-id="${a.id }" data-ids="${a.questionId}"><i class="iconfont">&#xe605;</i><span class="xzi">已采纳</span></span>
 				</c:if>
 				<span class="dz" style="margin-left:10px;cursor: pointer;"  data-id="${a.id }" data-types="${a.isThumbs}"><i class="iconfont <c:if test="${a.isThumbs ==1}"> active </c:if>">&#xe64e;</i><span class="xzi">点赞</span><span>${a.likeanswer}</span></span>
-				<!-- <span class="del" style="margin-left:10px;cursor: pointer;"  ><i class="iconfont">&#xe621;</i><span class="xzi">审核</span></span> -->
+				<c:if test="${(a.isChecke == 0 || null == a.isChecke)}">
+					<span class="chec" style="margin-left:10px;cursor: pointer;" data-id="${a.id }" ><i class="iconfont">&#xe621;</i><span class="xzi">审核</span></span>
+				</c:if>
 			</div>
 		</td>
 	</tr>
