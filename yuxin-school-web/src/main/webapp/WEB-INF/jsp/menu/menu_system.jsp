@@ -6,9 +6,9 @@
     <div class="header">    
         <a href="javascript:;" class="navbar-brand"><i class="iconfont">&#xe600;</i>系统</a>
         <ul class="nav nav-left navspace">
-            <shiro:hasPermission name="org_service">  
-            	<li code="org_service"><a href="<%=request.getContextPath() %>/company/companyService" id="kaitongfuwu">开通服务</a></li>
-            </shiro:hasPermission>
+            <%--<shiro:hasPermission name="org_service">  --%>
+            	<%--<li code="org_service"><a href="<%=request.getContextPath() %>/company/companyService" id="kaitongfuwu">开通服务</a></li>--%>
+            <%--</shiro:hasPermission>--%>
             
            	<shiro:hasPermission name="sys_user_auth">  
             	<li code="sys_user_auth"><a href="<%=request.getContextPath() %>/authPrivilege/showAuth">用户权限</a></li>
