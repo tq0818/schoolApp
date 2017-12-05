@@ -3622,7 +3622,7 @@
 		when 0 then CONCAT('-',item_score)
 		else CONCAT('+',item_score)
 		end as item_score,
-		origin,sd.create_time,u.username fixed_person
+		origin,sd.create_time,case when u.username is null then '系统' else u.username end fixed_person
 		from score_details_app sd
 		left join users u on u.id=sd.fixed_person
 		where total_score_id=#{totalScoreId}
