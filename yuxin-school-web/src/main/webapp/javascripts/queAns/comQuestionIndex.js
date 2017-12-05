@@ -75,6 +75,7 @@ $(function(){
 			}
 		});
 	})
+	
 	.on("click",".dz",function(){
 		//点赞
 		var parent = $(this).parents(".oneanswer");
@@ -89,6 +90,25 @@ $(function(){
 			success:function(data){
 				if(data.msg == "success"){
 					alert("点赞成功");
+					selOneAns(1);
+				}
+			}
+		});
+	})
+	.on("click",".chec",function(){
+		//点赞
+		var parent = $(this).parents(".oneanswer");
+		if(req != null){
+			req.abort();
+		}
+		req = $.ajax({
+			url : rootPath + "/questionanswermanager/checkMgc",
+			type:"post",
+			data:{"id":$(this).attr("data-id")},
+			dataType:"json",
+			success:function(data){
+				if(data.msg == "success"){
+					alert("审核成功");
 					selOneAns(1);
 				}
 			}
@@ -336,6 +356,15 @@ $(function(){
 								}
 							});
 						});
+						//审核点击
+						$(".shIcon").click(function(){
+							var id = $(this).attr("ids");
+							$.confirm("确认审核通过么？",function(result){
+								if(result){
+									Form.shQue(id);
+								}
+							});
+						});
 						//显示全部点击
 						$(".showAll").click(function(){
 							var id = $(this).attr("ids");
@@ -403,6 +432,17 @@ $(function(){
 			delQue : function(id){
 				$.ajax({
 					url : rootPath + "/Question/del/"+id,
+					type : "post",
+					success : function(data) {
+						if(data == 'success'){
+							Form.findQuestion(1,oneId,twoId,jz);
+						}
+					}
+				});
+			},
+			shQue : function(id){
+				$.ajax({
+					url : rootPath + "/Question/shenhe/"+id,
 					type : "post",
 					success : function(data) {
 						if(data == 'success'){

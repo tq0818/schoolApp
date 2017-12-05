@@ -66,6 +66,7 @@ public class QueQuestion extends BaseEntity {
 	
 	private String userDefuledName;//用户自定义标签名称
 	private String nickName;//昵称
+	private Integer isChecke;//是否需要审核标识  1 不需要  2需要
 	
 	
 	
@@ -92,7 +93,7 @@ public class QueQuestion extends BaseEntity {
 	        Integer companyId, Integer schoolId, Integer biaoSecItemId, List<Integer> questionIds, String userName,
 	        String headImg, String queTime, String ansTime, String classIsOpen, List<Integer> commodityIds,
 	        List<Integer> questionId3s, List<Integer> questionNotins, String searchKey, Integer questionscore,
-	        String labelContent, Integer collectCount, String systemTagId, Integer userDefuledId,String userDefuledName) {
+	        String labelContent, Integer collectCount, String systemTagId, Integer userDefuledId,String userDefuledName,Integer isChecke) {
 		super();
 		this.id= id;
 		this.questionTitle = questionTitle;
@@ -135,6 +136,7 @@ public class QueQuestion extends BaseEntity {
 		this.systemTagId = systemTagId;
 		this.userDefuledId = userDefuledId;
 		this.userDefuledName = userDefuledName;
+		this.isChecke= isChecke;
 	}
 
 	public QueQuestion setQuestionTitle(String questionTitle) {
@@ -323,24 +325,27 @@ public class QueQuestion extends BaseEntity {
 	 * @see java.lang.Object#toString() 
 	 */
 	
-	@Override
-	public String toString() {
-		return "QueQuestion [id="+id+",questionTitle=" + questionTitle + ", questionDesc=" + questionDesc + ", itemOneId=" + itemOneId
-		        + ", itemSecondId=" + itemSecondId + ", classifyId=" + classifyId + ", userId=" + userId + ", courseFlag="
-		        + courseFlag + ", courseId=" + courseId + ", courseName=" + courseName + ", courseLectureId=" + courseLectureId
-		        + ", courseLectureName=" + courseLectureName + ", answerCount=" + answerCount + ", scanCount=" + scanCount
-		        + ", adoptFlag=" + adoptFlag + ", adoptAnswerId=" + adoptAnswerId + ", topFlag=" + topFlag + ", essenceFlag="
-		        + essenceFlag + ", createTime=" + createTime + ", updateTime=" + updateTime + ", delFlag=" + delFlag
-		        + ", questionType=" + questionType + ", companyId=" + companyId + ", schoolId=" + schoolId + ", biaoSecItemId="
-		        + biaoSecItemId + ", questionIds=" + questionIds + ", userName=" + userName + ", headImg=" + headImg
-		        + ", queTime=" + queTime + ", ansTime=" + ansTime + ", classIsOpen=" + classIsOpen + ", commodityIds="
-		        + commodityIds + ", questionId3s=" + questionId3s + ", questionNotins=" + questionNotins + ", searchKey="
-		        + searchKey + ", questionscore=" + questionscore + ", labelContent=" + labelContent + ", collectCount="
-		        + collectCount + ", systemTagId=" + systemTagId + ", userDefuledId=" + userDefuledId + ", userDefuledName=" + userDefuledName +"]";
-	}
+
 
 	public Integer getBiaoSecItemId() {
 		return biaoSecItemId;
+	}
+
+	@Override
+	public String toString() {
+		return "QueQuestion [id=" + id + ", questionTitle=" + questionTitle + ", questionDesc=" + questionDesc + ", itemOneId="
+		        + itemOneId + ", itemSecondId=" + itemSecondId + ", classifyId=" + classifyId + ", userId=" + userId
+		        + ", courseFlag=" + courseFlag + ", courseId=" + courseId + ", courseName=" + courseName + ", courseLectureId="
+		        + courseLectureId + ", courseLectureName=" + courseLectureName + ", answerCount=" + answerCount + ", scanCount="
+		        + scanCount + ", adoptFlag=" + adoptFlag + ", adoptAnswerId=" + adoptAnswerId + ", topFlag=" + topFlag
+		        + ", essenceFlag=" + essenceFlag + ", createTime=" + createTime + ", updateTime=" + updateTime + ", delFlag="
+		        + delFlag + ", questionType=" + questionType + ", companyId=" + companyId + ", schoolId=" + schoolId
+		        + ", biaoSecItemId=" + biaoSecItemId + ", questionIds=" + questionIds + ", userName=" + userName + ", headImg="
+		        + headImg + ", queTime=" + queTime + ", ansTime=" + ansTime + ", classIsOpen=" + classIsOpen + ", commodityIds="
+		        + commodityIds + ", questionId3s=" + questionId3s + ", questionNotins=" + questionNotins + ", searchKey="
+		        + searchKey + ", questionscore=" + questionscore + ", labelContent=" + labelContent + ", collectCount="
+		        + collectCount + ", systemTagId=" + systemTagId + ", userDefuledId=" + userDefuledId + ", userDefuledName="
+		        + userDefuledName + ", nickName=" + nickName + ", isChecke=" + isChecke + "]";
 	}
 
 	public void setBiaoSecItemId(Integer biaoSecItemId) {
@@ -523,6 +528,16 @@ public class QueQuestion extends BaseEntity {
 
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
+	}
+
+	
+	public Integer getIsChecke() {
+		return isChecke;
+	}
+
+	
+	public void setIsChecke(Integer isChecke) {
+		this.isChecke = isChecke;
 	}
 
 	
