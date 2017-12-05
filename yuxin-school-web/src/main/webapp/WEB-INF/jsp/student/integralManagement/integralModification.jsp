@@ -39,7 +39,7 @@
                 </tr>
                 <c:forEach items="${totalScoreVo.scoreDetailsAppVos}" var="scoreDetailsAppVo" varStatus="status">
                 <tr>
-	                    <td>${status.count+1}</td>
+	                    <td>${status.index+1}</td>
 	                    <td>${scoreDetailsAppVo.origin}</td>
 	                    <td>${scoreDetailsAppVo.itemScore}</td>
 	                    <td>${scoreDetailsAppVo.createTime}</td>
@@ -123,7 +123,7 @@ $('.adjusting').click(function () {
     var userid=$('#userid').val();
     var username=$('#username').val();
     var integralselect = $('.integralselect').children('option:selected ').html();
-    var index = $('.table-center').find('tr').length-1;
+    var index = $('.table-center').find('tr').length;
     $.ajax({
     	url: rootPath+"/student/getTime",
     	dataType: "json",

@@ -3628,7 +3628,7 @@
 		where total_score_id=#{totalScoreId}
 	</select>
 	<select id="queryScoreRulsAppVos" resultMap="scoreRulsAppVos">
-		select id,score_topic,score,date_format(valid_time,'%Y-%c-%d %H:%i:%s') valid_time,oprator from score_ruls_app
+		select id,score_topic,score,date_format(valid_time,'%Y-%m-%d %T') valid_time,oprator from score_ruls_app
 		where ststus=1
 	</select>
 	<select id="queryPageScoreRulsAppVos" resultMap="scoreRulsAppVos" parameterType="com.yuxin.wx.model.integral.ScoreRulsAppVo">
