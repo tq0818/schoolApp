@@ -1,11 +1,7 @@
 package com.yuxin.wx.commodity.impl;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -295,7 +291,9 @@ public class CommodityServiceImpl extends BaseServiceImpl implements ICommodityS
         String[] appShelvesIdArray = appShelvesIds.split(",");
 
         //通过appShelvesIds先删除先有的记录
-        commodityMapper.deleteFirstRecommendByIds(appShelvesIds);
+
+        List<String> appShelvesIdList = Arrays.asList(appShelvesIdArray);
+        commodityMapper.deleteFirstRecommendByIds(appShelvesIdList);
         //插入对应的数据
         List<FirstRecommend> firstRecommends = new ArrayList<FirstRecommend>();
 

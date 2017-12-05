@@ -109,7 +109,7 @@ public class SpecialModelController {
     @ResponseBody
     @RequestMapping(value = "/insertOrupdateTuiJian")
     public boolean insertOrupdateTuiJian(Model model,String gradeIds,String appShelvesIds){
-    	if(gradeIds==null||gradeIds=="") return true;
+    	if(gradeIds==null||"".equals(gradeIds)) return true;
     	try{
     		return commodityServiceImpl.insertOrUpdate(gradeIds,appShelvesIds);
     	}catch(Exception e){

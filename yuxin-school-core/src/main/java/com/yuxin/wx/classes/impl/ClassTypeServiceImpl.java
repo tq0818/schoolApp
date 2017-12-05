@@ -550,7 +550,9 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 	@Override
 	public void insertAndUpdateFirstRecommond(List<FirstRecommend> frs,String sort,String appId) {
 		//删除first_recommend数据根据appid
-		commodityMapper.deleteFirstRecommendByIds(appId);
+		List<String> appShelvesIdList = new ArrayList<String>();
+		appShelvesIdList.add(appId);
+		commodityMapper.deleteFirstRecommendByIds(appShelvesIdList);
 		//插入数据
 		classTypeMapper.insertFirstRecommond(frs);
 		//根据appid更新app_shelves里的sort

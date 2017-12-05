@@ -660,16 +660,18 @@
         GROUP BY c.id HAVING MAX(cml.lesson_date) <![CDATA[<]]> NOW()
         ) A
     </select>
-    <delete id="deleteFirstRecommendByIds">
-		delete from first_recommend
-		where app_shelves_id in(#{appShelvesIds})
+    <delete id="deleteFirstRecommendByIds" parameterType="java.util.List">
+		delete from first_recommend where app_shelves_id in
+        <foreach collection="list" index="index" item="appId" open="(" separator="," close=")">
+            #{appId}
+        </foreach>
 	</delete>
     <update id="updateAppShelvesSort" parameterType="map">
         <if test="sort!=null and sort!=''">
             update app_shelves set sort = #{sort} where id = #{appShelvesId}
         </if>
         <if test="sort==null or sort==''">
-            update app_shelves set sort=null where id = #{appShelvesId}
+            update app_shelves set sort=null where id = #{appShelvesId}deleteFirstRecommendByIds
         </if>
     </update>
 </mapper>
