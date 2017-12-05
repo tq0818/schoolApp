@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/wx.tld" prefix="wx" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<% String rootPath=request.getContextPath(); %>
+<% String rootPath = request.getContextPath(); %>
 <style type="text/css">
     .register {
         position: fixed;
@@ -19,9 +19,11 @@
         box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
         z-index: 999
     }
+
     .none {
         display: none;
     }
+
     .register .reg-close {
         position: absolute;
         top: 12px;
@@ -33,17 +35,21 @@
         background-position: 0 0;
         cursor: pointer;
     }
+
     .register .reg-title {
         padding: 15px 30px;
         border-bottom: 1px solid #e5e5e5;
     }
+
     .register .reg-form {
         padding: 0 60px;
     }
+
     .register .reg-bottom {
         padding: 2px 52px;
         border-top: 1px solid #e5e5e5;
     }
+
     .mark-bg {
         position: fixed;
         top: 0;
@@ -62,16 +68,17 @@
 
 <div class="m-list clear">
     <ul class="clear" id="ulListss">
-	    <c:if test="${empty pageFinder.data}">
-	    	<li>没有发现您要找的内容</li>
-	    </c:if>
+        <c:if test="${empty pageFinder.data}">
+            <li>没有发现您要找的内容</li>
+        </c:if>
         <c:forEach items="${pageFinder.data }" var="que" varStatus="status">
-            
+
             <li class="wendaLi">
                 <div>
                     <div class="headPic">
                         <c:if test="${que.headPic == null }">
-                            <img alt="" src="<%=rootPath %>/images/user/iconfont-danxiantouxiangline.png" class="yuanPic" width="50px;" height="50px;">
+                            <img alt="" src="<%=rootPath %>/images/user/iconfont-danxiantouxiangline.png"
+                                 class="yuanPic" width="50px;" height="50px;">
                         </c:if>
                         <c:if test="${que.headPic != null }">
                             <img alt="" src="${que.headPic}" class="yuanPic" width="50px;" height="50px;">
@@ -93,34 +100,59 @@
                                 <i class="iconfont jht" style="cursor: default;">&#xe662;</i>
                             </c:if>
                             <span class="queTitle">${que.questionTitle}</span>
+
+                            <div class="queContent" value="${que.questionDesc }">
+                                    <c:if test="${fn:length(que.questionDesc)>90 }">
+                                        ${fn:substring(que.questionDesc, 0, 90)}
+                                    </c:if>
+                                    <c:if test="${fn:length(que.questionDesc)<=90 }">
+                                        ${que.questionDesc}
+                                    </c:if>
+                                    <c:if test="${empty que.questionDesc }">
+                                        &nbsp;&nbsp;
+                                    </c:if>
+                              <%--  <c:choose>
+                                    <c:when test="${fn:length(que.questionDesc)>60}">
+                                        ${fn:substring(que.questionDesc, 0, 60)}...
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${que.questionDesc }
+                                    </c:otherwise>
+                                </c:choose>--%>
+                            </div>
+
                         </div>
                         <div class="ques">
                             <span class="showCon${que.id }">${que.subQuestionDesc}</span>
                             <span class="showAllCon${que.id } none">${que.questionDesc}</span>
                         </div>
                         <div class="ans">
-                        	<span class="pr50">浏览量：<c:if test="${que.scanCount == null}">0</c:if><c:if test="${que.scanCount != null}">${que.scanCount}</c:if></span>
+                            <span class="pr50">浏览量：<c:if test="${que.scanCount == null}">0</c:if><c:if
+                                    test="${que.scanCount != null}">${que.scanCount}</c:if></span>
                             <span class="pr50">提问时间：${que.tiwenTime}</span>
-                                     <span class="pr50">
+                            <span class="pr50">
 										<i class="iconfont" style="font-size: 12px;cursor: default;" ids="${que.id}">&#xe669;</i>
-										<span class="showAll showAlls${que.id}" ids="${que.id}" style="cursor: pointer;">显示全部</span>
+										<span class="showAll showAlls${que.id}" ids="${que.id}"
+                                              style="cursor: pointer;">显示全部</span>
                                      </span>
-                                     <span class="pr50">
-										<i class="iconfont" style="cursor: default;" ids="${que.id}" userT="${que.userId }">&#xe668;</i>
-										<span class="showAns" ids="${que.id}" userT="${que.userId }" style="cursor: pointer;">回答</span>
+                            <span class="pr50">
+										<i class="iconfont" style="cursor: default;" ids="${que.id}"
+                                           userT="${que.userId }">&#xe668;</i>
+										<span class="showAns" ids="${que.id}" userT="${que.userId }"
+                                              style="cursor: pointer;">回答</span>
 		                            </span>
-		                            <span class="pr50">
+                            <span class="pr50">
 										<c:if test="${que.courseName != null}">
-										源自：${que.courseName }
-										</c:if>
+                                            源自：${que.courseName }
+                                        </c:if>
 										<c:if test="${que.courseLectureName != null}">
-										，${que.courseLectureName }
-										</c:if>
+                                            ，${que.courseLectureName }
+                                        </c:if>
 									</span>
-                                  </div>
-                              </div>
-                              <div class="mana">
-                                  <c:if test="${isMan == 'yes' }">
+                        </div>
+                    </div>
+                    <div class="mana">
+                        <c:if test="${isMan == 'yes' }">
                             <i class="iconfont delIcon fr cfont" ids="${que.id}">&#xe626;</i>
                             <c:if test="${que.essenceFlag == 1}">
                                 <i class="iconfont fr jhIcon cfont jht" title="取消精华" ids="${que.id}">&#xe662;</i>
@@ -135,8 +167,8 @@
                                 <i class="iconfont fr zdIcon cfont" title="加入置顶" ids="${que.id}">&#xe663;</i>
                             </c:if>
                             <c:if test="${que.isChecke == 0}">
-                                <i class="iconfont fr shIcon cfont jht" title="审核" ids="${que.id}">&#xe667;</i> 
-                        	</c:if>
+                                <i class="iconfont fr shIcon cfont jht" title="审核" ids="${que.id}">&#xe667;</i>
+                            </c:if>
                         </c:if>
                     </div>
                     <div class="plContent none pl${que.id}" queId="${que.id}"></div>
@@ -149,7 +181,7 @@
 <div class="pages">
     <ul class="pagination"></ul>
 </div>
-<input type="hidden" id="isMan" value="${isMan}" />
+<input type="hidden" id="isMan" value="${isMan}"/>
 <script type="text/javascript">
     $(document).ready(function () {
         $(".pagination").pagination('${pageFinder.rowCount}', {
