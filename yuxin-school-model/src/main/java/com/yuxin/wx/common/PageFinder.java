@@ -35,7 +35,6 @@ public class PageFinder<T> implements Serializable {
 	 * 页数
 	 */
 	private int pageCount;
-
 	/**
 	 * 跳转页数
 	 */
