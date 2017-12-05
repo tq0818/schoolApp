@@ -324,9 +324,10 @@ button.cloze {
             <li code="resource_head"><a href="<%=rootPath %>/company/resource/firstTransferStation">资源</a></li>
              </shiro:hasPermission>
 
-           <shiro:hasPermission name="system_head">
+           <%--<shiro:hasPermission name="system_head">
             <li code="system_head"><a href="<%=rootPath %>/company/system/firstTransferStation" >系统</a></li>
-			</shiro:hasPermission>
+			</shiro:hasPermission>--%>
+
             <shiro:hasPermission name="statistics_all">
                 <li code="statistics_all"><a href="<%=rootPath %>/company/statistics/firstTransferStation" >总览</a></li>
             </shiro:hasPermission>
@@ -342,11 +343,11 @@ button.cloze {
         <ul class="nav nav-right">
             <c:choose>
             	<c:when test="${sessionScope.loginUser.realName != null && sessionScope.loginUser.realName != ''}">
-            		<li class="uInfo"><a href="javascript:;" class="u" style="cursor: pointer;">${sessionScope.loginUser.schoolName}&nbsp;${sessionScope.loginUser.realName}</a><i class="iii">
+            		<li class="uInfo"><a href="javascript:;" class="u" style="cursor: pointer;">APP后台&nbsp;${sessionScope.loginUser.realName}</a><i class="iii">
             		</i>	<ul class="dropdown" style="display: none;overflow: hidden;"></ul></li>
             	</c:when>
             	<c:otherwise>
-            		<li class="uInfo"><a href="javascript:;" class="u" style="cursor: pointer;">${sessionScope.loginUser.schoolName}&nbsp;${sessionScope.loginUser.username}</a><i class="iii">
+            		<li class="uInfo"><a href="javascript:;" class="u" style="cursor: pointer;">APP后台&nbsp;${sessionScope.loginUser.username}</a><i class="iii">
             		</i>	<ul class="dropdown" style="display: none;overflow: hidden;"></ul></li>
             	</c:otherwise>
             </c:choose>

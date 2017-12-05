@@ -10,6 +10,7 @@
 	footer{
 		margin-top: 38%;
 	}
+
 </style>
 </head>
 <body>
@@ -40,7 +41,7 @@
 		</c:when>
 		<c:when test="${firstName eq 'areastatistics' }">
 			<jsp:include page="/WEB-INF/jsp/menu/menu_statistics_area.jsp"/>
-		</c:when>
+		</c:when>									<%--menu_statistics_query--%>
 		<c:when test="${firstName eq 'orgstatistics' }">
 			<jsp:include page="/WEB-INF/jsp/menu/menu_statistics_org.jsp"/>
 		</c:when>

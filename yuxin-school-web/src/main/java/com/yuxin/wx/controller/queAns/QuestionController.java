@@ -41,14 +41,17 @@ import com.yuxin.wx.api.system.ISysConfigServiceService;
 import com.yuxin.wx.api.system.ISysConfigTeacherService;
 import com.yuxin.wx.api.system.ISysServiceDredgeConfigService;
 import com.yuxin.wx.api.user.IUsersService;
+import com.yuxin.wx.common.ImageCheck;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.common.SysConfigConstant;
+import com.yuxin.wx.common.TextCheck;
 import com.yuxin.wx.model.company.Company;
 import com.yuxin.wx.model.company.CompanyFunctionSet;
 import com.yuxin.wx.model.company.CompanyMemberService;
 import com.yuxin.wx.model.company.CompanyNewStep;
 import com.yuxin.wx.model.company.CompanyServiceStatic;
 import com.yuxin.wx.model.queAns.QueQuestion;
+import com.yuxin.wx.model.queAns.QuestionAnswer;
 import com.yuxin.wx.model.queAns.QuestionClassify;
 import com.yuxin.wx.model.system.SysConfigItem;
 import com.yuxin.wx.model.system.SysConfigService;
@@ -158,6 +161,17 @@ public class QuestionController {
         questionServiceImpl.deleteQuestionById(id);
         return "success";
     }
+    @ResponseBody
+    @RequestMapping(value="/shenhe/{id}")
+	public String shenhe(Model model, @PathVariable Integer id) {
+    	QueQuestion question =new  QueQuestion();
+    	question.setId(id);
+    	question.setIsChecke(1);
+    	Date date = new Date();
+ 		question.setUpdateTime(date);
+	        questionServiceImpl.update(question);
+	        return "success";
+	}
 
     @ResponseBody
     @RequestMapping(value = "/{id:\\d+}", method = RequestMethod.GET)
@@ -825,27 +839,74 @@ public class QuestionController {
 	    String a="[" ;
 		if(null!=b){
 			for(int i=0 ; i<b.length ;i++){
+				boolean flag=false;
+				boolean flag1=false;
 				JSONObject jsonObject = new JSONObject();
 				String c =b[i].substring(0, 1);
 				if("<".equals(c)){
 					String e=b[i].substring(b[i].indexOf("http"), b[i].indexOf("\" src="));
+					try {
+						 flag=ImageCheck.ImageCheck(e);
+					} catch (Exception e1) {
+						flag=false;
+						e1.printStackTrace();
+					}
+					if(flag){
+						queQuestion.setIsChecke(1);
+					}else{
+						queQuestion.setIsChecke(0);
+					}
 					jsonObject.put("content", e);
 					jsonObject.put("type", 1);
 					a+=jsonObject.toString();
 					a+=",";
 				}else{
 					if(b[i].indexOf("<img") == -1) {
+						String str=b[i].replace("&nbsp;", "");
+						try {
+							flag=TextCheck.TextCheck(str);
+						} catch (Exception e) {
+							flag=false;
+							e.printStackTrace();
+						}
+						if(flag){
+							queQuestion.setIsChecke(1);
+						}else{
+							queQuestion.setIsChecke(0);
+						}
 						jsonObject.put("content", b[i].replace("&nbsp;", ""));
 						jsonObject.put("type", 0);
 						a+=jsonObject.toString();
 						a+=",";	
 					}else{
 						String d= b[i].substring(0, b[i].indexOf("<"));
+						try {
+							flag=TextCheck.TextCheck(d);
+						} catch (Exception e) {
+							flag=false;
+							e.printStackTrace();
+						}
+						if(flag){
+							queQuestion.setIsChecke(1);
+						}else{
+							queQuestion.setIsChecke(0);
+						}
 						jsonObject.put("content", d);
 						jsonObject.put("type", 0);
 						a+=jsonObject.toString();
 						a+=",";
 						String e=b[i].substring(b[i].indexOf("http"), b[i].indexOf("\" src="));
+						try {
+							flag1=TextCheck.TextCheck(e);
+						} catch (Exception e1) {
+							flag1=false;
+							e1.printStackTrace();
+						}
+						if(flag1){
+							queQuestion.setIsChecke(1);
+						}else{
+							queQuestion.setIsChecke(0);
+						}
 						jsonObject.put("content", e);
 						jsonObject.put("type", 1);
 						a+=jsonObject.toString();
@@ -860,6 +921,19 @@ public class QuestionController {
     	Integer companyId = WebUtils.getCurrentCompanyId();
     	Integer schoolId = WebUtils.getCurrentSchoolId();
     	Integer userId = WebUtils.getCurrentUserId(request);
+    	String questionTitle= queQuestion.getQuestionTitle();
+    	boolean flag1=false;
+    	try {
+    		flag1=TextCheck.TextCheck(questionTitle);
+			if(flag1){
+				flag1=true;
+			}else{
+				flag1=false;
+			}
+		} catch (Exception e1) {
+			flag1=false;
+			e1.printStackTrace();
+		}
     	queQuestion.setCreateTime(new Date());
     	queQuestion.setQuestionDesc(a);
     	queQuestion.setCompanyId(companyId);

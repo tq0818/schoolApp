@@ -22,6 +22,7 @@
 		<result property="isThumbs" column="is_thumbs" />
 		<result property="adoptFlag" column="adopt_flag" />
 		<result property="questionscore" column="question_score" />
+		<result property="isChecke" column="is_checke" />
 	</resultMap>
 
 	
@@ -42,7 +43,8 @@
 		read_flag,
 		reply_user_type,
 		is_accept,
-		like_answer
+		like_answer,
+		is_checke
     </sql>
 	<sql id="table_columns_app">
 		t1.id as id,
@@ -62,6 +64,7 @@
 		t1.reply_user_type as reply_user_type,
 		t1.is_accept as is_accept,
 		t1.like_answer as like_answer,
+		t1.is_checke as is_checke,
 		t3.adopt_flag as adopt_flag
     </sql>
 	<sql id="entity_properties">
@@ -81,7 +84,8 @@
 		#{readFlag},
 		#{replyUserType},
 		#{isAdopt},
-		#{likeanswer}
+		#{likeanswer},
+		#{isChecke}
 	</sql>
 	<sql id="batch_entity_properties">
 		#{item.id},
@@ -100,7 +104,9 @@
 		#{item.readFlag},
 		#{item.replyUserType},
 		#{item.isAdopt},
-		#{item.likeanswer}
+		#{item.likeanswer},
+		#{item.isChecke}
+		
 	</sql>
 	
 	<!-- 适用于主键自增类型 -->
@@ -152,6 +158,7 @@
 			<if test="replyUserType != null and replyUserType != ''">reply_user_type = #{replyUserType},</if>
 			<if test="isAdopt != null and isAdopt != ''">is_accept = #{isAdopt},</if>
 			<if test="isThumbs != null and isThumbs != ''">like_answer = #{isThumbs},</if>
+			<if test="isChecke != null and isChecke != ''">is_checke = #{isChecke},</if>
 		</trim>
 		<where>id = #{id}</where>
 	</update>

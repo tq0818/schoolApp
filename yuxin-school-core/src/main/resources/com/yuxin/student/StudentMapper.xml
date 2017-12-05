@@ -3622,13 +3622,13 @@
 		when 0 then CONCAT('-',item_score)
 		else CONCAT('+',item_score)
 		end as item_score,
-		origin,sd.create_time,u.username fixed_person
+		origin,sd.create_time,case when u.username is null then '系统' else u.username end fixed_person
 		from score_details_app sd
 		left join users u on u.id=sd.fixed_person
 		where total_score_id=#{totalScoreId}
 	</select>
 	<select id="queryScoreRulsAppVos" resultMap="scoreRulsAppVos">
-		select id,score_topic,score,date_format(valid_time,'%Y-%c-%d %H:%i:%s') valid_time,oprator from score_ruls_app
+		select id,score_topic,score,date_format(valid_time,'%Y-%m-%d %T') valid_time,oprator from score_ruls_app
 		where ststus=1
 	</select>
 	<select id="queryPageScoreRulsAppVos" resultMap="scoreRulsAppVos" parameterType="com.yuxin.wx.model.integral.ScoreRulsAppVo">

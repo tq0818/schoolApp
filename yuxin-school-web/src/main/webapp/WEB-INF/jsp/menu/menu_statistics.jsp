@@ -5,19 +5,25 @@
     <div class="header">
         <a href="javascript:;" class="navbar-brand"><i class="iconfont">&#xe6c5;</i>总览</a>
         <ul class="nav nav-left navspace">
-            <%--<shiro:hasPermission name="statistics_all">
-                <li code="statistics_all"><a href="<%=request.getContextPath() %>/query/statistics/index">总览</a></li>
-            </shiro:hasPermission>--%>
-            <shiro:hasPermission name="statistics_all_detail">
-                <li code="statistics_all_detail"><a href="<%=request.getContextPath() %>/query/statistics/studentList">查询统计</a></li>
+            <shiro:hasPermission name="statistics_all">
+               <%-- <li code="statistics_all"><a href="<%=request.getContextPath() %>/query/statistics/index">总览</a></li>--%>
             </shiro:hasPermission>
-
+            <shiro:hasPermission name="statistics_all_detail">
+               <%-- <li code="statistics_all_detail"><a href="<%=request.getContextPath() %>/query/statistics/studentList">查询统计</a></li>--%>
+                <li code="userVideoList"><a href="<%=request.getContextPath() %>/query/statistics/userVideoList">用户点播统计</a></li>
+                <li code="watchInfoList"><a href="<%=request.getContextPath() %>/query/statistics/watchInfoList">直播统计</a></li>
+            </shiro:hasPermission>
         </ul>
     </div>
 </div>
+<style>
+    .set-system{
+        margin-top: 0 ;
+    }
+</style>
 <script>
-	$(function() {
-        $selectMenu('statistics_all_detail');
-        $selectSubMenu('statistics_all_detail');
-    })
+//	$(function() {
+//        $selectMenu('userVideoList');
+//        $selectSubMenu('watchInfoList');
+//    })
 </script>

@@ -25,6 +25,7 @@
 		<result property="delFlag" column="del_flag" />
 		<result property="questionType" column="question_type" />
 		<result property="questionscore" column="question_score" />
+		<result property="isChecke" column="is_checke" />
 	</resultMap>
 	
 	<resultMap type="com.yuxin.wx.vo.queAns.QuestionVo" id="QuestionVoResultMap">
@@ -51,6 +52,7 @@
 		<result property="delFlag" column="del_flag" />
 		<result property="questionType" column="question_type" />
 		<result property="questionscore" column="question_score" />
+		<result property="isChecke" column="is_checke" />
 	</resultMap>
 	
 	<sql id="table_columns">
@@ -76,7 +78,8 @@
 		update_time,
 		del_flag,
 		question_type,
-		question_score
+		question_score,
+		is_checke
 		
     </sql>
     <sql id="table_columns_app">
@@ -102,7 +105,8 @@
 		t1.update_time,
 		t1.del_flag,
 		t1.question_type,
-		t1.question_score
+		t1.question_score,
+		t1.is_checke
 		
     </sql>
 	<sql id="entity_properties">
@@ -123,7 +127,9 @@
 		#{updateTime},
 		#{delFlag},
 		#{questionType},
-		#{questionscore}
+		#{questionscore},
+		#{isChecke}
+		
 	</sql>
 	
 	<sql id="batch_entity_properties">
@@ -206,6 +212,7 @@
 			<if test="updateTime != null and updateTime != ''">update_time = #{updateTime},</if>
 			<if test="delFlag != null">del_flag = #{delFlag},</if>
 			<if test="questionType != null">question_type = #{questionType},</if>
+			<if test="isChecke != null">is_checke = #{isChecke},</if>
 		</trim>
 		<where>id = #{id}</where>
 	</update>
@@ -275,7 +282,8 @@
 		<if test="userDefuledId != null">and t5.id = #{userDefuledId}</if> 
 		<if test="topFlag != null and topFlag != ''">and t1.top_flag = #{topFlag}</if>
 		<if test="essenceFlag != null and essenceFlag != ''">and t1.essence_flag = #{essenceFlag}</if>
-		order by t1.create_time desc
+		order by t1.top_flag desc,
+		t1.update_time desc
 		limit #{firstIndex},#{pageSize}
 	</select>
 	

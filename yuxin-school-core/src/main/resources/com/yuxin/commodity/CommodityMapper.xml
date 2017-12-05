@@ -482,7 +482,7 @@
         '--' as lesson_date, '--' as lesson_time_start, sct.NAME teacher_name, sct.school_short_name, c.buy_num as
         actualNum, app.img_url as imgUrl,
         case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
-        app.shelves_time as shelvesTime,app.sort sort,
+        date_format(app.shelves_time,'%Y-%m-%d %T') as shelvesTime,app.sort sort,
         ct.cover as cover, app.reserve_time,
         app.id as appId, app.lab_desc, app.`price` as appPrice, app.`sale_price` as salePrice, sys1.name as itemOneName,
         sys2.name as itemSecondName, sys3.name as itemThirdName, sys4.name as itemFourthName, sys5.name as itemTag,
@@ -540,7 +540,7 @@
         select app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as
         realPrice,CONCAT(date_format(cml.lesson_date,"%Y-%m-%d"),' ',cml.lesson_time_start) as lesson_date,sct.NAME
         teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl, case when app.is_shelves is
-        null then '0' else app.is_shelves end as isShelves, app.shelves_time as shelvesTime, ct.cover as cover,
+        null then '0' else app.is_shelves end as isShelves, date_format(app.shelves_time,'%Y-%m-%d %T') as shelvesTime, ct.cover as cover,
         app.reserve_time, app.id as appId, app.lab_desc,app.sort sort, app.`price` as appPrice, app.`sale_price` as
         salePrice, sys1.name as itemOneName, sys2.name as itemSecondName, sys3.name as itemThirdName, sys4.name as
         itemFourthName, sys5.name as itemTag, sys6.name as tagName, sys7.name as typeCode, c.live_flag as liveFlag,
@@ -563,7 +563,7 @@
         realPrice,CONCAT(date_format(cml.lesson_date,"%Y-%m-%d"),' ',cml.lesson_time_start) as lesson_date,
         sct.NAME teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl,
         case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
-        app.shelves_time as shelvesTime, ct.cover as cover, app.reserve_time, app.id as appId,
+        date_format(app.shelves_time,'%Y-%m-%d %T') as shelvesTime, ct.cover as cover, app.reserve_time, app.id as appId,
         app.lab_desc,app.sort sort, app.`price` as appPrice, app.`sale_price` as salePrice,
         sys1.name as itemOneName, sys2.name as itemSecondName, sys3.name as itemThirdName,
         sys4.name as itemFourthName, sys5.name as itemTag, sys6.name as tagName,
