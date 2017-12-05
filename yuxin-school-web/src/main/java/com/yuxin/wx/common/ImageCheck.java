@@ -5,10 +5,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Random;
 
 import org.apache.http.Consts;
 import org.apache.http.client.HttpClient;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -45,7 +49,8 @@ public class ImageCheck {
      * @param args
      * @throws Exception
      */
-    public static boolean ImageCheck(String url) throws Exception {
+    @SuppressWarnings("null")
+	public static boolean ImageCheck(String url) throws Exception {
     	boolean flag =false;
         Map<String, String> params = new HashMap<String, String>();
         // 1.设置公共参数
@@ -66,11 +71,17 @@ public class ImageCheck {
 
        //用此方法，直接传路径网易服务器存在图片不能下载的情况
         // 传图片base64编码进行检测，name结构产品自行设计，用于唯一定位该图片数据
-       
+        Properties props=null;
+        Resource resource = new ClassPathResource("config.properties");
+        props=PropertiesLoaderUtils.loadProperties(resource);
+        String target=props.getProperty("imageServiceRealPath");
+        String imgName=url.substring(url.indexOf("editor"),url.length());    
+        url=target+imgName;
+        String zhUrl=GetImageStr(url);
         JsonObject image2 = new JsonObject();
         image2.addProperty("name", "{\"imageId\": 33451123, \"contentId\": 78978}");
         image2.addProperty("type", 2);
-        image2.addProperty("data",url);
+        image2.addProperty("data",zhUrl);
         jsonArray.add(image2);
 
         params.put("images", jsonArray.toString());
@@ -111,7 +122,7 @@ public class ImageCheck {
                     	flag=true;
                         break;
                     case 1:
-                    	flag=true;
+                    	flag=false;
                         break;
                     case 2:
                     	flag=false;

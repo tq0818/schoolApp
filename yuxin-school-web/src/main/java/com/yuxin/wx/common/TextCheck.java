@@ -88,7 +88,7 @@ public class TextCheck {
             if (action == 0) {
             	flag=true;
             } else if (action == 1) {
-            	flag=true;
+            	flag=false;
             } else if (action == 2) {
             	flag=false;
             }
