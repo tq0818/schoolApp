@@ -82,7 +82,7 @@ margin-left: 25px;
 			});
 		};
 		project.queryOneItem = function(){
-			this.ajax("<%=rootPath%>/sysConfigItem/ajaxProject", {}, function(data){
+			this.ajax("/sysConfigItem/ajaxProject", {}, function(data){
 				$("#loadData").html(data);
 			});
 		};
@@ -98,7 +98,7 @@ margin-left: 25px;
 		if($("#man_directoryTree").html()==""){
 			$.ajax({
 				type:'post',
-				url:'<%=rootPath%>/itemTree/itemTree',
+				url:rootPath+'/itemTree/ajaxValue',
 				success:function (data) {
 					if(data){
 						$("#man_directoryTree").html(data);

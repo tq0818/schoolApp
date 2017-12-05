@@ -326,19 +326,20 @@ public class QuestionController {
             	JSONArray array = JSONArray.fromObject(answerDesc);
         		String img="";
         		for(int i=0 ;i<array.size();i++){
-        			JSONObject job = array.getJSONObject(i); 
-        			if("0".equals(job.get("type").toString())){
-        				 img+="<span style='text-align: center;'>"+job.get("content");
-        			}else{
-        				img+=" <img alt=\'\' src=\'"+job.get("content")+"\' style=\'border-style:solid; border-width:2px; height:120px; width:120px \' /></span>";
-        			}
-        			
+        			JSONObject job = array.getJSONObject(i);
+        			if(job.containsKey("type")){
+                        if("0".equals(job.get("type").toString())){
+                            img+="<span style='text-align: center;'>"+job.get("content");
+                        }else{
+                            img+=" <img alt=\'\' src=\'"+job.get("content")+"\' style=\'border-style:solid; border-width:2px; height:120px; width:120px \' /></span>";
+                        }
+                    }
+
         		}
         		vo.setQuestionDesc(img);
         	}
         }
-        
-        
+
 		pageFinder.setData(questionList);
         model.addAttribute("pageFinder", pageFinder);
 

@@ -95,6 +95,7 @@ public class CommodityVo extends BaseEntity {
     private String  paperDescription;
     private Integer userId;
     private Integer categoryId;//分类Id
+    private String courseTime;
     public Integer getSout() {
         return sout;
     }
@@ -820,4 +821,12 @@ public class CommodityVo extends BaseEntity {
 		this.categoryId = categoryId;
 	}
 
+	public String getCourseTime() {
+		return courseTime;
+	}
+
+	public void setCourseTime(String courseTime) {
+		this.courseTime = courseTime;
+	}
+	
 }

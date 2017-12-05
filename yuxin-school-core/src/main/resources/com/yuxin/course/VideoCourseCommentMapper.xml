@@ -145,7 +145,7 @@
 		<if test="companyId != null and companyId != ''">and vcc.company_id = #{companyId}</if>
 		<if test="schoolId != null and schoolId != ''">and vcc.school_id = #{schoolId}</if>
 		<if test="id != null and id != ''">and vcc.id = #{id}</if>
-		order by vcc.id desc limit #{firstIndex},#{pageSize} 
+		order by vcc.create_time desc limit #{firstIndex},#{pageSize}
 	</select>
 	<select id="commentCount" resultType="int" parameterType="com.yuxin.wx.vo.system.TeacherCommentVo">
 		select count(vcc.id) from video_course_comment vcc inner join sys_config_teacher sct on vcc.teacher_id = sct.id

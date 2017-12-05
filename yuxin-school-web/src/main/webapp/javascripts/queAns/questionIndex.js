@@ -323,6 +323,7 @@ $(function(){
 						});
 						//显示全部点击
 						$(".showAll").click(function(){
+
 							var id = $(this).attr("ids");
 							queId = id;
 							var html = $(this).html();
@@ -334,6 +335,7 @@ $(function(){
 							}
 							if(html == '显示全部'){
 								$(this).html("收起全部");
+                                $(this).attr("style","display:block;");//显示
 								$(".showCon"+id+"").addClass("none");
 								$(".showAllCon"+id+"").removeClass("none");
 								$(".pl"+id+"").removeClass("none");
@@ -349,6 +351,7 @@ $(function(){
 								});
 							}else{
 								$(this).html("显示全部");
+                                $(this).attr("style","display:none;");//隐藏
 								$(".pl"+id+"").addClass("none");
 								$(".showAllCon"+id+"").addClass("none");
 								$(".showCon"+id+"").removeClass("none");
