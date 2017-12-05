@@ -554,7 +554,7 @@
 		case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
 		date_format(app.reserve_time,'%Y-%m-%d %T') as reserveTime,date_format(app.shelves_time,'%Y-%m-%d %T') as shelvesTime,
 		app.price as appPrice,app.sale_price as salePrice,
-		v.video_time as lesson_date,app.id as appId,app.lab_desc
+		v.video_time as lesson_date,app.id as appId,app.lab_desc,app.category_id,app.subject_id,app.knowledge_pro_id,app.knowledge_id,app.stage_id,app.type_id
 		 from commodity c
 		join commodity_product_realtion cpr on cpr.com_id=c.id
 		join class_type ct on ct.id=cpr.product_id
@@ -580,13 +580,13 @@
 		app.price as appPrice,app.sale_price as salePrice,
 		app.id as appId,
 		app.lab_desc,
-		app.category_id as categoryId,
-		app.grade_id as gradeId,
-		app.subject_id as subjectId,
-		app.knowledge_pro_id as kwonProId ,
-		app.knowledge_id as knowId,
-		app.stage_id as stageId ,
-		app.type_id as typeId,
+		app.category_id ,
+		app.grade_id ,
+		app.subject_id ,
+		app.knowledge_pro_id  ,
+		app.knowledge_id ,
+		app.stage_id  ,
+		app.type_id ,
 		app.sort
 		FROM (
 				SELECT
@@ -619,13 +619,13 @@
 		app.reserve_time as reserveTime,app.shelves_time as shelvesTime,app.price as appPrice,app.sale_price as salePrice,
 		app.id as appId,
 		app.lab_desc,
-		app.category_id as categoryId,
-		app.grade_id as gradeId,
-		app.subject_id as subjectId,
-		app.knowledge_pro_id as kwonProId ,
-		app.knowledge_id as knowId,
-		app.stage_id as stageId ,
-		app.type_id as typeId,
+		app.category_id,
+		app.grade_id,
+		app.subject_id ,
+		app.knowledge_pro_id  ,
+		app.knowledge_id ,
+		app.stage_id ,
+		app.type_id ,
 		app.sort
 		FROM (
 			SELECT

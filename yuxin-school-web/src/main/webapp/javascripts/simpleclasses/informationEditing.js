@@ -18,6 +18,7 @@ function toOnsaleEdit(ids,zhiboFlag){
 }
 function chooseSlibMenu(obj){
 	var id = obj.attr("id").replace("List","");
+	console.log(id);
 	var parentId = obj.val();
 	$.ajax({
 		url : rootPath +"/simpleClasses/querySlibMenu",
@@ -40,7 +41,7 @@ function chooseSlibMenu(obj){
 					}
 				}
 				$("#gradeIdList").html(html);
-				chooseSlibMenu($("#gradeId"));
+				chooseSlibMenu($("#gradeIdList"));
 
 				//阶段
 				$("#stageIdList").html("");
@@ -67,7 +68,7 @@ function chooseSlibMenu(obj){
 				$("#typeIdList").html(html);
 
 
-			}else if("gradeIdList"==id){
+			}else if("gradeId"==id){
 				$("#subjectIdList").html("");
 				var html='';
 				for(var i=0;i<data.length;i++){
@@ -78,7 +79,7 @@ function chooseSlibMenu(obj){
 					}
 				}
 				$("#subjectIdList").html(html);
-				chooseSlibMenu($("#subjectId"));
+				chooseSlibMenu($("#subjectIdList"));
 			}else if("subjectId"==id){
 				$("#kwonProIdList").html("");
 				var html='';
@@ -90,7 +91,7 @@ function chooseSlibMenu(obj){
 					}
 				}
 				$("#kwonProIdList").html(html);
-				chooseSlibMenu($("#kwonProId"));
+				chooseSlibMenu($("#kwonProIdList"));
 			}else if("kwonProId"==id){
 				$("#knowIdList").html("");
 				var html='';

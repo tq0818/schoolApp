@@ -324,8 +324,8 @@ public class SimpleclassTypeController {
 
 			//查询二级菜单
 			List<SysDictApp>secondeMenus = null;
-			if(null!=firstMenus && firstMenus.size()>0){
-				search.setParentId(firstMenus.get(0).getId());
+			if(null!=firstMenus && firstMenus.size()>0 && null!=searchAndResult){
+				search.setParentId(Integer.parseInt(searchAndResult.getCategoryId()));
 				secondeMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
 
 				if(null!=secondeMenus && secondeMenus.size()>0){
@@ -343,29 +343,29 @@ public class SimpleclassTypeController {
 			}
 			//查询三级菜单
 			List<SysDictApp>thirdMenus = null;
-			if(null!=secondeMenus && secondeMenus.size()>0){
-				search.setParentId(secondeMenus.get(0).getId());
+			if(null!=secondeMenus && secondeMenus.size()>0 && null!=searchAndResult){
+				search.setParentId(Integer.parseInt(searchAndResult.getGradeId()));
 				thirdMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
 			}
 
 			//查询四级菜单
 			List<SysDictApp>forthMenus = null;
-			if(null!=thirdMenus && thirdMenus.size()>0){
-				search.setParentId(thirdMenus.get(0).getId());
+			if(null!=thirdMenus && thirdMenus.size()>0 && null!=searchAndResult){
+				search.setParentId(Integer.parseInt(searchAndResult.getSubjectId()));
 				forthMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
 			}
 
 			//查询五级菜单
 			List<SysDictApp>fifthMenus = null;
-			if(null!=forthMenus && forthMenus.size()>0){
-				search.setParentId(forthMenus.get(0).getId());
+			if(null!=forthMenus && forthMenus.size()>0 && null!=searchAndResult){
+				search.setParentId(Integer.parseInt(searchAndResult.getKwonProId()));
 				fifthMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
 			}
 
 			//查询阶段信息
 			List<SysDictApp>jieduanMenus = null;
 			if(null!=firstMenus && firstMenus.size()>0){
-				search.setParentId(firstMenus.get(0).getId());
+				search.setParentId(Integer.parseInt(searchAndResult.getCategoryId()));
 				jieduanMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
 				if(null!=jieduanMenus && jieduanMenus.size()>0){
 					List<SysDictApp>jieduans = new ArrayList<SysDictApp>();
@@ -381,7 +381,7 @@ public class SimpleclassTypeController {
 			//查询类型信息
 			List<SysDictApp>leixingMenus = null;
 			if(null!=firstMenus && firstMenus.size()>0){
-				search.setParentId(firstMenus.get(0).getId());
+				search.setParentId(Integer.parseInt(searchAndResult.getCategoryId()));
 				leixingMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
 				if(null!=leixingMenus && leixingMenus.size()>0){
 					List<SysDictApp>leixings = new ArrayList<SysDictApp>();
