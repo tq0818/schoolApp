@@ -333,6 +333,7 @@ $(function(){
 							}else{
 								types = "2";
 							}
+
 							if(html == '显示全部'){
 								$(this).html("收起全部");
 								$(".showCon"+id+"").addClass("none");
