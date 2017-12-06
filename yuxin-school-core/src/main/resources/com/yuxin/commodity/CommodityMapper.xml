@@ -671,7 +671,7 @@
             update app_shelves set sort = #{sort} where id = #{appShelvesId}
         </if>
         <if test="sort==null or sort==''">
-            update app_shelves set sort=null where id = #{appShelvesId}deleteFirstRecommendByIds
+            update app_shelves set sort=null where id = #{appShelvesId}
         </if>
     </update>
 </mapper>

@@ -43,8 +43,8 @@
 				</div>
 				<div class="content-right">
 					<p class="screen-info" style="margin-bottom: 20px;">
-						<a href="/query/statistics/watchInfoList" class="btn active">概况</a>
-						<a href="/query/statistics/studentWatchInfoList" class="btn">详情</a>
+						<a href="<%=rootPath %>/query/statistics/watchInfoList" class="btn active">概况</a>
+						<a href="<%=rootPath %>/query/statistics/studentWatchInfoList" class="btn">详情</a>
 						<c:if test="${isArea}">
 							<select class="select-box" id="eduStep" name="eduStep">
 								<option value="">请选择</option>
@@ -86,7 +86,7 @@
 		<script type="text/javascript" src="<%=rootPath %>/javascripts/common/DateUtils.js"></script>
 		<script type="text/javascript" src="<%=rootPath %>/javascripts/home-page.js"></script>
 		<script type="text/javascript" src="<%=rootPath %>/javascripts/query/statistical_watchInfo.js"></script>
-		<%--<script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>--%>
+		<script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 		<script type="text/javascript">
 
             $selectThirdMenu('watchInfoList');
