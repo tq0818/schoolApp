@@ -297,7 +297,7 @@
 				datas.typeStr=typeStr;
 				datas.typeId=id;
 				var categoryid = '',
-				gradeid = ''
+				gradeid = '',
 				subjectid = '',
 				knowledgeProid = '',
 				knowledgeid = '',

@@ -298,13 +298,15 @@
 		<if test="eduStep !=null and eduStep !=''">and essr.edu_step_new_code = #{eduStep}</if>
 		<if test="startDate !=null and startDate !=''">and lesson_date >= #{startDate}</if>
 		<if test="endDate !=null and endDate !=''">and lesson_date <![CDATA[<=]]> #{endDate}</if>
-		<if test="groupBy  !=''"> GROUP BY ${groupBy}</if>
+		<!--<if test="groupBy  !=''"> GROUP BY ${groupBy}</if>-->
 		) a ON
 		<!--		a.edu_area = c.item_code-->
+		<if test="role == null or role == ''">a.edu_area = c.item_code</if>
 		<if test="role =='all'">a.edu_area = c.item_code</if>
 		<if test="role =='area'">a.edu_school = c.item_code</if>
 		WHERE
 		<!-- 		c.dict_code = 'EDU_SCHOOL_AREA'-->
+		<if test="role == null or role == ''">c.dict_code = 'EDU_SCHOOL_AREA'</if>
 		<if test="role =='all'">c.dict_code = 'EDU_SCHOOL_AREA'</if>
 		<if test="role =='area'">c.dict_code = 'EDU_SCHOOL' and d.item_code = #{areaId} <if test="eduStep !=null and eduStep !=''"> and essr.edu_step_new_code=#{eduStep}</if></if>
 		GROUP BY
@@ -342,10 +344,12 @@
 		<if test="groupBy != null and groupBy  !=''"> GROUP BY ${groupBy}</if>
 		) a on
 		<!--a.edu_area = c.item_code-->
+		<if test="role == null or role == ''">a.edu_area = c.item_code</if>
 		<if test="role =='all'">a.edu_area = c.item_code</if>
 		<if test="role =='area'">a.edu_school = c.item_code</if>
 		WHERE
 		<!-- 		c.dict_code = 'EDU_SCHOOL_AREA'-->
+		<if test="role == null or role == ''">c.dict_code = 'EDU_SCHOOL_AREA'</if>
 		<if test="role =='all'">c.dict_code = 'EDU_SCHOOL_AREA'</if>
 		<if test="role =='area' ">c.dict_code = 'EDU_SCHOOL' and d.item_code = #{areaId} <if test="eduStep !=null and eduStep !=''"> and essr.edu_step_new_code=#{eduStep}</if></if>
 		GROUP BY

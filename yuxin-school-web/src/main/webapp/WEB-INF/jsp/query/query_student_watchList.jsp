@@ -15,8 +15,11 @@
 <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/splitscreen.css"/>
 	<link rel="stylesheet" href="<%=rootPath %>/stylesheets/query/statistics.css">
 	<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/popupwin.css">
+
 	<style type="text/css">
 		.pages li.disabled{padding:0px;}
+		.queryUserVideoRight{width: 100%;}
+
 	</style>
 </head>
 <body>
@@ -27,8 +30,8 @@
 	<!-- 二级导航 -->
 	<jsp:include page="/WEB-INF/jsp/menu/menu_statistics.jsp"></jsp:include>
 	<div class="u-wrap query overflow">
-	 	<jsp:include page="/WEB-INF/jsp/menu/menu_statistics_query.jsp"></jsp:include>
-		<div class="right-side set-system">
+	 	<%--<jsp:include page="/WEB-INF/jsp/menu/menu_statistics_query.jsp"></jsp:include>--%>
+		<div class="right-side set-system queryUserVideoRight">
 			<div class="mainbackground nopadding">
 				<div class="heading">
 					<h2 class="h5">直播情况</h2>
@@ -36,8 +39,8 @@
 				</div>
 				<div class="content-right">
 					<p class="screen-info" style="margin-bottom: 20px;">
-						<a href="/query/statistics/watchInfoList" class="btn ">概况</a>
-						<a href="/query/statistics/studentWatchInfoList" class="btn active">详情</a>
+						<a href="<%=rootPath %>/query/statistics/watchInfoList" class="btn ">概况</a>
+						<a href="<%=rootPath %>/query/statistics/studentWatchInfoList" class="btn active">详情</a>
 					</p>
 					<form method="post" id="searchForm" class="screen-info">
 						<div>
