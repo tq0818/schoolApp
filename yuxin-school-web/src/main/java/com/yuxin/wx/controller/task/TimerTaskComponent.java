@@ -109,7 +109,7 @@ public class TimerTaskComponent {
 		}
 	}
 
-	@Scheduled(cron = "0 0 * * * ?")
+	//@Scheduled(cron = "0 0 * * * ?")
 	public void live() {
 		if (properties.getTimerTaskSwitchLive().equals("off")) {
 			return;
@@ -139,7 +139,7 @@ public class TimerTaskComponent {
 		}
 	}
 
-	@Scheduled(cron = "0 10 * * * ?")
+	//@Scheduled(cron = "0 10 * * * ?")
 	public void email() {
 		if (properties.getTimerTaskSwitchEmail().equals("off")) {
 			return;
@@ -169,7 +169,7 @@ public class TimerTaskComponent {
 		}
 	}
 
-	@Scheduled(cron = "0 30 * * * ?")
+	//@Scheduled(cron = "0 30 * * * ?")
 	public void message() {
 		if (properties.getTimerTaskSwitchMessage().equals("off")) {
 			return;
@@ -199,7 +199,7 @@ public class TimerTaskComponent {
 		}
 	}
 
-	@Scheduled(cron = "0 40 * * * ?")
+	//@Scheduled(cron = "0 40 * * * ?")
 	public void video() {
 		if (properties.getTimerTaskSwitchVideo().equals("off")) {
 			return;
@@ -230,7 +230,7 @@ public class TimerTaskComponent {
 		}
 	}
 
-	@Scheduled(cron = "0 50 * * * ?")
+	//@Scheduled(cron = "0 50 * * * ?")
 	public void face() {
 		if (properties.getTimerTaskSwitchFace().equals("off")) {
 			return;
@@ -261,7 +261,7 @@ public class TimerTaskComponent {
 	}
 
 	// @Scheduled(cron = "0 */12 * * * ?")
-	@Scheduled(cron = "0 45 * * * ?")
+	//@Scheduled(cron = "0 45 * * * ?")
 	public void videoByLetv() {
 		if (properties.getTimerTaskSwitchVideo().equals("off")) {
 			return;
@@ -433,7 +433,7 @@ public class TimerTaskComponent {
 		}
 	}
 
-	@Scheduled(cron = "0 5 0 * * ?")
+	//@Scheduled(cron = "0 5 0 * * ?")
 	public void coupons() {
 		if (properties.getTimerTaskSwitchCoupons().equals("off")) {
 			return;
@@ -472,7 +472,7 @@ public class TimerTaskComponent {
 	 * @date 2016-6-13 下午5:58:59
 	 * @version 1.0
 	 */
-	@Scheduled(cron = "0 0 1 * * ?")
+	//@Scheduled(cron = "0 0 1 * * ?")
 	public void cmctask() {
 		if (properties.getTimerTaskSwitchCmc().equals("off")) {
 			return;
@@ -502,7 +502,7 @@ public class TimerTaskComponent {
 		}
 	}
 
-	@Scheduled(cron = "0 0 5 * * ?")
+	//@Scheduled(cron = "0 0 5 * * ?")
 	public void zsurl() {
 		if (properties.getTimerTaskSwitchZsurl().equals("off")) {
 			return;
@@ -639,7 +639,7 @@ public class TimerTaskComponent {
 	 * 处理正常流程的office文件转换成pdf文件
 	 * 
 	 */
-	@Scheduled(cron = "0 0/2 * * * ?")
+	//@Scheduled(cron = "0 0/2 * * * ?")
 	public void convertPdf() {
 		if(!"on".equals(properties.getConvertPDF())){
 			log.info("===================pdf转换任务关闭，不执行=============");
@@ -697,7 +697,7 @@ public class TimerTaskComponent {
 	 * 统计用户答题结果（只针对单选和多选）
 	 *
 	 */
-	 @Scheduled(cron = "0 0 * * * ?")
+	// @Scheduled(cron = "0 0 * * * ?")
 	 public void taskTikuUserExerciseAnswer() {
 		 SysTaskLog stl = new SysTaskLog();
 		 try {
@@ -729,7 +729,7 @@ public class TimerTaskComponent {
 	 * 每晚8点定时发送微信通知
 	 *
 	 */
-	@Scheduled(cron = "0 0 20 * * ?")
+	//@Scheduled(cron = "0 0 20 * * ?")
 	public void taskSendWeixinMsg() {
  		SysTaskLog stl = new SysTaskLog();
 		try {
