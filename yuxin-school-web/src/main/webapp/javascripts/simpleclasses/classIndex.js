@@ -506,11 +506,17 @@
 				});
 			},
 			queryCommodityByName : function(page){
+				var originType = "";
+				$("#courseOrigin").find("a").each(function(i){
+					if($(this).hasClass('btn-success')){
+						originType = $(this).attr("ids");
+					}
+				});
 				var name=$("#classTypeName").val();
 				$.ajax({
 					url : rootPath + "/simpleClasses/showAllclassType",
 					type : "post",
-					data : {"page" : page,"name":name},
+					data : {"page" : page,"name":name,"originType":originType},
 					beforeSend:function(XMLHttpRequest){
 			            $(".loading").show();
 			            $(".loading-bg").show();
