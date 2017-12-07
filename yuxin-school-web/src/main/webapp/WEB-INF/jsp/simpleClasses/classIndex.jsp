@@ -116,7 +116,14 @@
                     <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="IS_LIVE" class="btn btn-mini btn-default">直播</a>
                     <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="IS_VIDEO" class="btn btn-mini btn-default">录播</a>
                     <%--<a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="IS_FACE" class="btn btn-mini btn-default">面授</a>--%>
-                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="IS_REMOTE" class="btn btn-mini btn-default">其他</a>
+                    <%--<a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="IS_REMOTE" class="btn btn-mini btn-default">其他</a>--%>
+                </span>
+            </p>
+            <p class="c">
+                <span class="t-title">课程来源</span>
+                <span class="t-content" id="courseOrigin">
+                	<a href="javascript:Form.queryAllCommdityByItemNew(1)" ids="1" class="btn btn-mini btn-default btn-success">APP</a>
+                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="0" class="btn btn-mini btn-default">PC</a>
                 </span>
             </p>
         </div>

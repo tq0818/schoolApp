@@ -115,7 +115,8 @@ function queryClassDetails(id){
 	$("#myForm").attr("action","/editSimpleCourse/editClassTypeMessage").submit();
 }
 
-
+//请求状态
+var isLoading = false;
 function toShelves(flag,editFlag){
 	var courseCaId = $("#courseCaIdList").val();
 	var gradeId = $("#gradeIdList").val();
@@ -151,6 +152,13 @@ function toShelves(flag,editFlag){
 		alert("预约上架时间不能为空");
 		return;
 	}
+//请求状态为请求中则返回
+    if(isLoading){
+        alert("网络繁忙，请稍等！");
+        return;
+    }
+    //改变请求状态
+    isLoading = true;
 
 	$.ajax({
 		url : rootPath +"/simpleClasses/insertShelvesInfo",
@@ -168,8 +176,10 @@ function toShelves(flag,editFlag){
 					Form.queryAllCommdityByItemNew(1);
 				}
 			}else{
-				alert("失败")
+				alert("失败");
 			}
+            //重置请求状态
+            isLoading = false
 		}
 	});
 }
