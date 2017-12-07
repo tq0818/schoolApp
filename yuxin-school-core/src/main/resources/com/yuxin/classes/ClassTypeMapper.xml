@@ -697,6 +697,7 @@
 		<if test="classType.itemSecondCode != null and classType.itemSecondCode != ''">and a.item_second_code = #{classType.itemSecondCode}</if>
 		<if test="classType.itemThirdCode != null and classType.itemThirdCode != ''">and a.item_third_code = #{classType.itemThirdCode}</if>
 		<if test="classType.originType != null and classType.originType != ''">and a.origin_type = #{classType.originType}</if>
+		<if test="classType.originType == null or classType.originType == ''">and a.origin_type = 0</if>
 		<if test="classType.itemFourthCode != null and classType.itemFourthCode != ''">
 			and a.item_fourth_code in
 			<foreach item="item" index="index" collection="codes" open="(" separator="," close=")">#{item}</foreach>
@@ -748,6 +749,8 @@
 		<if test="classType.itemOneCode != null and classType.itemOneCode != ''">and ct.item_one_code = #{classType.itemOneCode}</if>
 		<if test="classType.itemSecondCode != null and classType.itemSecondCode != ''">and ct.item_second_code = #{classType.itemSecondCode}</if>
 		<if test="classType.itemThirdCode != null and classType.itemThirdCode != ''">and ct.item_third_code = #{classType.itemThirdCode}</if>
+		<if test="classType.originType == null or classType.originType == ''">and ct.origin_type = 0 </if>
+		<if test="classType.originType != null and classType.originType != ''">and ct.origin_type = #{classType.originType} </if>
 		<if test="classType.itemFourthCode != null and classType.itemFourthCode != ''">
             and ct.item_fourth_code in
             <foreach item="item" index="index" collection="codes" open="(" separator="," close=")">#{item}</foreach>

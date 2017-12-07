@@ -473,12 +473,18 @@
 						}
 					}
 				});
-                    if(flag!='all'){
-                        datas.liveFlag = liveFlag;
-                        datas.videoFlag = videoFlag;
-                        datas.faceFlag = faceFlag;
-                        datas.remoteFlag = remoteFlag;
+				if(flag!='all'){
+					datas.liveFlag = liveFlag;
+					datas.videoFlag = videoFlag;
+					datas.faceFlag = faceFlag;
+					datas.remoteFlag = remoteFlag;
                 }
+
+				$("#courseOrigin").find("a").each(function(i){
+					if($(this).hasClass('btn-success')){
+						datas.originType = $(this).attr("ids");
+					}
+				});
 
 				$.ajax({
 					url : rootPath + "/simpleClasses/showAllclassType",
