@@ -558,12 +558,12 @@
 		 from commodity c
 		join commodity_product_realtion cpr on cpr.com_id=c.id
 		join class_type ct on ct.id=cpr.product_id
-		join sys_config_teacher sct ON ct.teacher_id = sct.id
 		join class_type_module_relation ctmr on ct.id = ctmr.class_type_id
 		join class_module cml on ctmr.module_id = cml.id
 		join course_video_chapter cvc on cml.id=cvc.module_id
 		join course_video_lecture cvl on cvl.chapter_id=cvc.id
 		join video v on cvl.video_id=v.id
+		LEFT join sys_config_teacher sct ON ct.teacher_id = sct.id
 		left join app_shelves app on app.comdity_id=c.id
 		where c.id=#{classType.id} and ct.del_flag=0 and c.type='COMMODITY_CLASS'
 	</select>
@@ -605,7 +605,7 @@
 		JOIN class_type ct ON ct.id = ctmr.`class_type_id`
 		join commodity_product_realtion pr on ct.id = pr.product_id
 		join commodity c on c.id = pr.com_id
-		JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
+		LEFT JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
 		left join `app_shelves` app on app.`comdity_id`=c.id
 		where c.id = #{classType.id} and ct.del_flag=0 and c.type='COMMODITY_CLASS'
 		HAVING MAX(cml.lesson_date) <![CDATA[<=]]> NOW()
@@ -646,7 +646,7 @@
 		JOIN class_type ct ON ct.id = ctmr.`class_type_id`
 		join commodity_product_realtion pr on ct.id = pr.product_id
 		join commodity c on c.id = pr.com_id
-		JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
+		LEFT JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
 		left join `app_shelves` app on app.`comdity_id`=c.id
 		where c.id = #{classType.id} and ct.del_flag=0 and c.type='COMMODITY_CLASS'
 		GROUP BY c.id
