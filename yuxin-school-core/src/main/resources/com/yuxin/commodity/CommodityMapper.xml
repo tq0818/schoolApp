@@ -508,6 +508,7 @@
         <if test="itemId !=null and itemId!='' ">and app.knowledge_pro_id= #{itemId}</if>
         <if test="stageId !=null and stageId!='' ">and app.stage_id= #{stageId}</if>
         GROUP BY c.id
+        ORDER BY app.sort is null,app.sort asc,ct.update_time desc
         limit #{firstIndex},#{pageSize}
     </select>
 
@@ -537,7 +538,8 @@
 
     <!--查询直播-->
     <select id="getZhiBoModelListByIds" parameterType="map" resultMap="commodityVo1ResultMap">
-        select app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as
+        select * from(
+        select ct.update_time,app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as
         realPrice,CONCAT(date_format(cml.lesson_date,"%Y-%m-%d"),' ',cml.lesson_time_start) as lesson_date,sct.NAME
         teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl, case when app.is_shelves is
         null then '0' else app.is_shelves end as isShelves, date_format(app.shelves_time,'%Y-%m-%d %T') as shelvesTime, ct.cover as cover,
@@ -559,7 +561,7 @@
         and app.category_id =#{categoryid}
         GROUP BY c.id
         UNION
-        select app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as
+        select ct.update_time,app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as
         realPrice,CONCAT(date_format(cml.lesson_date,"%Y-%m-%d"),' ',cml.lesson_time_start) as lesson_date,
         sct.NAME teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl,
         case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
@@ -594,7 +596,8 @@
         <if test="typeId !=null and typeId!=''">and app.type_id = #{typeId}</if>
         <if test="itemId !=null and itemId!='' ">and app.knowledge_pro_id= #{itemId}</if>
         <if test="stageId !=null and stageId!='' ">and app.stage_id= #{stageId}</if>
-        GROUP BY c.id HAVING MAX(cml.lesson_date) <![CDATA[<]]> NOW()
+        GROUP BY c.id HAVING MAX(cml.lesson_date) <![CDATA[<]]> NOW())temp
+        ORDER BY sort is null,sort asc,update_time desc
         limit #{firstIndex},#{pageSize}
     </select>
 

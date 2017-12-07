@@ -4,6 +4,7 @@
 	<select id="queryShelvesCoursesByPage"  parameterType="map" resultType="com.yuxin.wx.vo.classes.ClassTypeVo">
 		select * from(
 		select
+		ct.update_time,
 		ct.name as lessonName,
 		ct.original_price as originalPrice,
 		ct.real_price as realPrice,
@@ -73,6 +74,7 @@
 		GROUP BY c.id
 		UNION
 		select
+		ct.update_time,
 		ct.name as lessonName,
 		ct.original_price as originalPrice,
 		ct.real_price as realPrice,
@@ -138,7 +140,8 @@
 		GROUP BY c.id
 		<![CDATA[HAVING MAX(cml.lesson_date) < NOW() ]]>
 		UNION
-		select 
+		select
+		ct.update_time,
 		ct.name as lessonName,
 		ct.original_price as originalPrice,
 		ct.real_price as realPrice,
@@ -188,7 +191,7 @@
 		<if test="knowledgeid != null and knowledgeid != ''">and app.knowledge_id = #{knowledgeid}</if>
 		<if test="stageid != null and stageid != ''">and app.stage_id = #{stageid}</if>
 		<if test="typeCode != null and typeCode != ''">and app.type_id = #{typeCode}</if>
-		)temp ORDER  BY temp.sort limit #{firstIndex},#{pageSize}
+		)temp ORDER  BY sort is null,sort asc,update_time desc limit #{firstIndex},#{pageSize}
 	</select>
 
 	<select id="queryShelvesCoursesCount"  parameterType="map" resultType="int">
