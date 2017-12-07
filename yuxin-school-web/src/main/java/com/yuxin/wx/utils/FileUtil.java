@@ -132,6 +132,8 @@ public class FileUtil {
 		 * 专题
 		 */
 		String SPECIAL="special";
+
+		String BANNER = "banner";
 	}
 
 	private static void init(){
@@ -158,6 +160,7 @@ public class FileUtil {
 					||Module.SCORM.equals(module)
 					||Module.SPECIAL.equals(module)
 					||Module.DINGYUE.equals(module)
+					||Module.BANNER.equals(module)
 					){
 				folder=module;
 			}
