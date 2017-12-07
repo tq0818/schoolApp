@@ -4,6 +4,8 @@
  * 页面js封装
  */
 (function($){
+    //请求状态
+    var isLoading = false;
 	var Form={
 			init : function(){
 				var $this=this;
@@ -580,6 +582,7 @@
 					}
 				});
 			},
+
 			deleteClassType : function(id){
 				$.confirm("您确定要删除此课程?",function(a){
 					if(a==true){

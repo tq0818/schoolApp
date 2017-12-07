@@ -120,6 +120,9 @@
 <script type="text/javascript" src="<%=rootPath %>/javascripts/classes.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 <script>
+
+    //请求状态
+    var isLoading = false;
     //        复写数据到页面
     var gradeIdArray = [];
     var grade = $(".gradeId");
@@ -192,6 +195,13 @@
                 return;
             }
         }
+//请求状态为请求中则返回
+        if(isLoading){
+            alert("网络繁忙，请稍等！");
+            return;
+        }
+        //改变请求状态
+        isLoading = true;
         $.ajax({
             url: rootPath + "/appNewClasses/insertRcommondInfo",
             type: "post",
@@ -204,6 +214,8 @@
                 } else {
                     alert("推荐失败")
                 }
+                //重置请求状态
+                isLoading = false;
             }
         });
     }
