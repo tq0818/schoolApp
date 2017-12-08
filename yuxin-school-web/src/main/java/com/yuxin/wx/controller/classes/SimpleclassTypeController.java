@@ -510,11 +510,14 @@ public class SimpleclassTypeController {
 	public String showAllProjectProduct(ClassType search,Model model){
 
 		if("CLASS_UNPUBLISHED".equals(search.getPublishStatus())){
-			search.setIsShelves("0");
+			search.setHasShelves("0");
+			search.setIsShelves("and ((app.is_shelves = 0 )OR (app.is_shelves = 1 AND now() <= app.reserve_time ))");
 		}else if("CLASS_ON_SALE".equals(search.getPublishStatus())){
-			search.setIsShelves("1");
+			search.setHasShelves("1");
+			search.setIsShelves("and ((app.is_shelves = 1 AND app.reserve_time IS NULL )OR (app.is_shelves = 1 AND now() >= app.reserve_time))");
 		}else if("CLASS_STOP_SALE".equals(search.getPublishStatus())){
-			search.setIsShelves("0");
+			search.setHasShelves("0");
+			search.setIsShelves("and ((app.is_shelves = 0 )OR (app.is_shelves = 1 AND now() <= app.reserve_time ))");
 		}
 
 		Users currentUser = WebUtils.getCurrentUser();
