@@ -73,6 +73,16 @@ public class CompanyStudentMessage extends BaseEntity {
 
 	private String lessonStartTime;
 
+	private String lessonDate;
+
+	public String getLessonDate() {
+		return lessonDate;
+	}
+
+	public void setLessonDate(String lessonDate) {
+		this.lessonDate = lessonDate;
+	}
+
 	public String getUserId() {
 		return userId;
 	}
