@@ -177,7 +177,7 @@
 	                }
 	            });
 	            if (gradeName != 'all') {
-	                datas.gradeName = gradeName;
+	                datas.gradeid = gradeName;
 	            }
 	            $("#subjectId").find("a").each(function (i) {
 	                if ($(this).hasClass('btn-success')) {
