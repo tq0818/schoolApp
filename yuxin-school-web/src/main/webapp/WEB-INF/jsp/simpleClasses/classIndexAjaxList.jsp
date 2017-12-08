@@ -17,7 +17,9 @@
 <form method="post" id="myForm01"></form>
 <div class="m-list clear">
 	<ul class="clear" id="ulListss">
-		<li class='add-class'> <a href='javascript:;' class="checkStudent operate_btn btn-sel-stu"><i class='iconfont icons'>&#xe61c;</i></a></li>
+		<c:if test="${originType=='1'}">
+			<li class='add-class'> <a href='javascript:;' class="checkStudent operate_btn btn-sel-stu"><i class='iconfont icons'>&#xe61c;</i></a></li>
+		</c:if>
 		<c:forEach items="${pageFinder.data }" var="allCommdotity" varStatus="status">
 			<li id="commodityLi${allCommdotity.id }" onmouseover="Form.showSave(${allCommdotity.id})" onmouseout="Form.closeSave(${allCommdotity.id})" publishStatus="${allCommdotity.publishStatus}">
 				<%--<c:choose>
