@@ -5,6 +5,7 @@ import com.yuxin.wx.api.company.ICompanyPayConfigService;
 import com.yuxin.wx.api.user.IUserHistoryService;
 import com.yuxin.wx.api.watchInfo.IWatchInfoService;
 import com.yuxin.wx.common.LiveRoomConstant;
+import com.yuxin.wx.model.app.UserStudyPlay;
 import com.yuxin.wx.model.classes.ClassModuleLesson;
 import com.yuxin.wx.model.company.CompanyPayConfig;
 import com.yuxin.wx.model.watchInfo.ClassRoomRelation;
@@ -15,6 +16,7 @@ import com.yuxin.wx.vo.user.UserHistoryAllVo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ApplicationObjectSupport;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -200,11 +202,63 @@ public class TestTask {
                 uha.setStudyTime(date);
                 uha.setDevice(play.getDevice());
                 userHistoryServiceImpl.insertPlayLogs(uha);
+                //若是app的来源，则需要进行插入表操作
+                if("Mobile".equals(play.getDevice())){
+                	Integer userId = Integer.parseInt(info[0]);
+                	Integer commodityId = Integer.parseInt(info[1]);
+                	Integer classTypeId = Integer.parseInt(info[2]);
+                	Integer lectureId = Integer.parseInt(info[3]);
+                	Integer studyLength = play.getPlay_duration();
+                	Date studyTime = date;
+                	String device = play.getDevice();
+                	Map map = new HashMap();
+                	map.put("userId",userId);
+                	map.put("commodityId",commodityId);
+                	map.put("classTypeId",classTypeId);
+                	map.put("lectureId",lectureId);
+                	//查询是否存在该条记录，如果存在则判断是否已学习完。不存在则插入
+                	String videoTime = userHistoryServiceImpl.queryVideoTime(lectureId);
+                	videoTime = timeChange(videoTime);
+                	UserStudyPlay userStudyPlay = userHistoryServiceImpl.queryUserStudyPlay(map);
+                	//存在，则判断是否已学习完，学完则跳过，反之则需要判断此次回写的学习时长与该课次的时长进行比较来放入status状态
+                	if(userStudyPlay != null){
+                		Integer status = userStudyPlay.getStatus();
+                		if(status.intValue() != 1){
+                			map.put("studyTime", studyTime);
+                			map.put("studyLength", studyLength);
+                			map.put("create", new Date());
+                			if(studyLength == Integer.parseInt(videoTime)){
+                    			map.put("status",1);//已完成
+                    		}else{
+                    			map.put("status",0);//未完成
+                    		}
+                			userHistoryServiceImpl.updateUserStudyPlay(map);
+                		}
+                	}else{
+                		map.put("studyTime", studyTime);
+            			map.put("studyLength", studyLength);
+            			map.put("create", new Date());
+                		if(studyLength == Integer.parseInt(videoTime)){
+                			map.put("status",1);//已完成
+                		}else{
+                			map.put("status",0);//未完成
+                		}
+                		userHistoryServiceImpl.insertUserStudyPlay(map);
+                	}
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
+    public String timeChange(String time){
+		String[] array = time.split(":");
+		Integer i = 0;
+		i = new Integer(array[0]).intValue() * 3600 + new Integer(array[1]).intValue() * 60 +new Integer(array[0]).intValue();
+		return i.toString();
+	}
+    
     public MessResult addWatchUser(Map<String,Object> map,List<WatchInfo> relations)  {
         String result = null;
         try {

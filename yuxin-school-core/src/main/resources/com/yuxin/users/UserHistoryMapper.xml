@@ -167,4 +167,51 @@
 		<include refid="entity_properties_all" />
 		)
 	</insert>
+	
+	<select id="queryUserStudyPlay" parameterType="Map" resultType="com.yuxin.wx.model.app.UserStudyPlay">
+		select  a.id as id,
+				a.user_id as userId,
+				a.commodity_id as commodityId,
+				a.class_type_id as classTypeId,
+				a.lecture_id as lectureId,
+				a.study_time as studyTime,
+				a.study_length as studyLength,
+				a.device as device,
+				a.status as status,
+				a.create_time as createTime
+		  from user_study_play a
+		 where a.user_id = #{userId}
+		   and a.commodity_id = #{commodityId}
+		   and a.class_type_id = #{classTypeId}
+		   and a.lecture_id = #{lectureId}
+	</select>
+	<insert id="insertUserStudyPlay" parameterType="Map">
+		insert into user_study_play (user_id,
+									 commodity_id,
+									 class_type_id,
+									 lecture_id,
+									 study_time,
+									 study_length,
+									 device,
+									 status,
+									 create_time)
+		values(#{userId},#{commodityId},#{classTypeId},#{lectureId},#{studyTime},#{studyLength},#{device},#{status},#{createTime})
+	</insert>
+	<update id="updateUserStudyPlay" parameterType="Map">
+		update user_study_play
+		   set study_time = #{studyTime},
+		       study_length = #{studyLength},
+		       status = #{status},
+		       create = #{createTime}
+		 where a.user_id = #{userId}
+		   and a.commodity_id = #{commodityId}
+		   and a.class_type_id = #{classTypeId}
+		   and a.lecture_id = #{lectureId}
+	</update>
+	<select id="queryVideoTime" parameterType="Integer" resultType="java.lang.Integer">
+		select b.video_time
+		  from course_video_lecture a
+		 inner join video b on a.video_id = b.id 
+		   and a.id = #{lectureId}
+	</select>
 </mapper>

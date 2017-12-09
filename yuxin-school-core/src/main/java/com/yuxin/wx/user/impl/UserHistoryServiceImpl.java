@@ -2,6 +2,7 @@ package com.yuxin.wx.user.impl;
 
 
 import java.util.List;
+import java.util.Map;
 
 import com.yuxin.wx.vo.user.UserHistoryAllVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;import com.yuxin.wx.common.BaseServiceImpl;
 
 import com.yuxin.wx.api.user.IUserHistoryService;
+import com.yuxin.wx.model.app.UserStudyPlay;
 import com.yuxin.wx.model.user.UserHistory;
 import com.yuxin.wx.user.mapper.UserHistoryMapper;
 
@@ -149,7 +151,25 @@ public class UserHistoryServiceImpl extends BaseServiceImpl implements IUserHist
 		userHistoryMapper.insertPlayLogs(uha);
 	}
 
+	@Override
+	public UserStudyPlay queryUserStudyPlay(Map map) {
+		// TODO Auto-generated method stub
+		return userHistoryMapper.queryUserStudyPlay(map);
+	}
 
+	@Override
+	public void insertUserStudyPlay(Map map) {
+		userHistoryMapper.insertUserStudyPlay(map);
+	}
 
+	@Override
+	public void updateUserStudyPlay(Map map) {
+		userHistoryMapper.updateUserStudyPlay(map);
+	}
+
+	@Override
+	public String queryVideoTime(Integer lectureId) {
+		return userHistoryMapper.queryVideoTime(lectureId);
+	}
 
 }

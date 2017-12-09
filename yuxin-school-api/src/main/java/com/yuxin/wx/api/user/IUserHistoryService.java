@@ -1,7 +1,9 @@
 package com.yuxin.wx.api.user;
 
 import java.util.List;
+import java.util.Map;
 
+import com.yuxin.wx.model.app.UserStudyPlay;
 import com.yuxin.wx.model.user.UserHistory;
 import com.yuxin.wx.vo.user.UserHistoryAllVo;
 
@@ -104,4 +106,12 @@ public interface IUserHistoryService  {
 	void insertHistoryAll(UserHistoryAllVo userHistoryAllVo);
 
     void insertPlayLogs(UserHistoryAllVo uha);
+    
+    UserStudyPlay queryUserStudyPlay(Map map);
+    
+    void insertUserStudyPlay(Map map);
+    
+    void updateUserStudyPlay(Map map);
+    
+    String queryVideoTime(Integer lectureId);
 }
