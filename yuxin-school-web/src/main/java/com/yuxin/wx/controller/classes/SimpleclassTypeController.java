@@ -511,20 +511,24 @@ public class SimpleclassTypeController {
 
 		if("CLASS_UNPUBLISHED".equals(search.getPublishStatus())){
 			search.setHasShelves("0");
-			search.setIsShelves("and ((app.is_shelves = 0 )OR (app.is_shelves = 1 AND now() <= app.reserve_time ))");
+			search.setIsShelves("and (app.is_shelves = 0 or app.is_shelves is null OR (app.is_shelves = 1 AND now() <= app.reserve_time ))");
 		}else if("CLASS_ON_SALE".equals(search.getPublishStatus())){
 			search.setHasShelves("1");
 			search.setIsShelves("and ((app.is_shelves = 1 AND app.reserve_time IS NULL )OR (app.is_shelves = 1 AND now() >= app.reserve_time))");
 		}else if("CLASS_STOP_SALE".equals(search.getPublishStatus())){
 			search.setHasShelves("0");
-			search.setIsShelves("and ((app.is_shelves = 0 )OR (app.is_shelves = 1 AND now() <= app.reserve_time ))");
+			search.setIsShelves("and (app.is_shelves = 0 or app.is_shelves is null OR (app.is_shelves = 1 AND now() <= app.reserve_time ))");
 		}
 
 		Users currentUser = WebUtils.getCurrentUser();
 		model.addAttribute("itemOneId", search.getItemOneId());
 		if(currentUser!=null)
 		search.setUserId(currentUser.getId());
-		search.setPageSize(7);
+		if(null!=search.getOriginType() && 1==search.getOriginType()){
+			search.setPageSize(7);
+		}else{
+			search.setPageSize(8);
+		}
 		search.setCreateSchoolId(WebUtils.getCurrentSchoolId());
 		search.setCompanyId(WebUtils.getCurrentCompanyId());
 		if(search.getPublishStatus()!=null && search.getPublishStatus().equals("all")){
@@ -551,6 +555,7 @@ public class SimpleclassTypeController {
 		model.addAttribute("searchName", search.getName());
 		int orderCount = classTypeServiceImpl.countSubjectClassOrder(search.getItemOneCode());
 		model.addAttribute("orderCount", orderCount);
+		model.addAttribute("originType", search.getOriginType());
 		return "simpleClasses/classIndexAjaxList";
 	}
 	
