@@ -29,6 +29,7 @@
 	<input type="hidden" name="lable" value="${lable }"/>
 	<input type="hidden" name="type" value="update"/>
 </form>
+<input id="originType" type="hidden" value="${ct.originType}"/>
 <div class="u-wrap classes">
     <div class="nopadding">
         <div class="steps">
