@@ -120,7 +120,9 @@
 		#{createTime},
 		#{creator},
 		#{barrage},
-		#{modetype}
+		#{modetype},
+		#{beforeStudyUrl},
+		#{afterStudyUrl}
 	</sql>
 	
 	<sql id="batch_entity_properties">
@@ -157,7 +159,9 @@
 		#{item.createTime},
 		#{item.creator},
 		#{item.barrage},
-		#{item.modetype}
+		#{item.modetype},
+		#{beforeStudyUrl},
+		#{afterStudyUrl}
 	</sql>
 	
 	<!-- 适用于主键自增类型 -->
