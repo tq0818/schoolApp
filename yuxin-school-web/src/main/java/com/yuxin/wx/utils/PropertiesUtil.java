@@ -88,7 +88,11 @@ public class PropertiesUtil {
 
 	private @Value("${eketang.live.server.address}")
 	String liveAddress;
+	private @Value("${check.text.netease.businessid}")
+	String textBusinessId;
 	
+	private @Value("${check.img.netease.businessid}")
+	String imgBusinessId;
 	
 	//项目根路径
 	private @Value("${hostUrl}")
@@ -436,4 +440,21 @@ public class PropertiesUtil {
 	public void setServiceWarningSend(String serviceWarningSend) {
 		this.serviceWarningSend = serviceWarningSend;
 	}
+
+	public String getTextBusinessId() {
+		return textBusinessId;
+	}
+
+	public void setTextBusinessId(String textBusinessId) {
+		this.textBusinessId = textBusinessId;
+	}
+
+	public String getImgBusinessId() {
+		return imgBusinessId;
+	}
+
+	public void setImgBusinessId(String imgBusinessId) {
+		this.imgBusinessId = imgBusinessId;
+	}
+	
 }
