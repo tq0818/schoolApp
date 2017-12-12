@@ -941,7 +941,7 @@ public class QuestionController {
     	queQuestion.setSchoolId(schoolId);
     	queQuestion.setUserId(userId);
     	queQuestion.setDelFlag(1);
-    	queQuestion.setQuestionType("QUESTION_STUDENT");
+    	queQuestion.setQuestionType("QUESTION_ADMIN");
          
    		try{
 			questionServiceImpl.insertLabReturnId(arrTagName,arrTagId,queQuestion);
