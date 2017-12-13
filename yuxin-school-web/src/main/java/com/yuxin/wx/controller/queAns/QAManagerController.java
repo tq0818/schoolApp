@@ -67,19 +67,19 @@ public class QAManagerController {
             // 查询头像
             
             for (QuestionAnswer a : anlist) {
-                log.info("qa：一级回复：" + a);
-                
                 if (a.getAnswerType().equals("QUESTION_ANSWER_STUDENT")) {
                     UsersFront user = usersFrontServiceImpl.findUsersFrontById(a.getUserId());
-                    if (user.getNickName() != null) {
-                        a.setName(user.getNickName());
-                    } else if (user.getMobile() != null) {
-                        a.setName("******" + user.getMobile().substring(7));
-                    } else {
-                        a.setName(user.getUsername());
-                    }
-                    if (user.getHeadPicMax() != null) {
-                        a.setImgurl(user.getHeadPicMax());
+                    if(user != null){
+                        if (user.getNickName() != null) {
+                            a.setName(user.getNickName());
+                        } else if (user.getMobile() != null) {
+                            a.setName("******" + user.getMobile().substring(7));
+                        } else {
+                            a.setName(user.getUsername());
+                        }
+                        if (user.getHeadPicMax() != null) {
+                            a.setImgurl(user.getHeadPicMax());
+                        }
                     }
                 } else {
                     SysConfigTeacher teacher = sysConfigTeacherServiceImpl.findByUserId(a.getUserId());
