@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import org.apache.http.Consts;
 import org.apache.http.client.HttpClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -23,6 +25,7 @@ import com.yuxin.wx.utils.SignatureUtils;
  * @author hzgaomin
  * @version 2016年2月3日
  */
+@Component
 public class TextCheck {
     /** 产品密钥ID，产品标识 */
     private final static String SECRETID = "4ebfc3e6f3ea895a756e4f42b107928d";
@@ -34,7 +37,8 @@ public class TextCheck {
     private final static String API_URL = "https://api.aq.163.com/v3/text/check";
     /** 实例化HttpClient，发送http请求使用，可根据需要自行调参 */
     private static HttpClient httpClient = HttpClient4Utils.createHttpClient(100, 20, 2000, 2000, 2000);
-    private static PropertiesUtil propertiesUtil = new PropertiesUtil();
+    @Autowired
+    private static PropertiesUtil propertiesUtil;
     /**
      * 
      * @param args
