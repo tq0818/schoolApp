@@ -35,7 +35,6 @@ import sun.misc.BASE64Encoder;
  * @author hzgaomin
  * @version 2016年2月3日
  */
-@Component
 public class ImageCheck {
     /** 产品密钥ID，产品标识 */
     private final static String SECRETID = "4ebfc3e6f3ea895a756e4f42b107928d";
@@ -47,15 +46,14 @@ public class ImageCheck {
     private final static String API_URL = "https://api.aq.163.com/v3/image/check";
     /** 实例化HttpClient，发送http请求使用，可根据需要自行调参 */
     private static HttpClient httpClient = HttpClient4Utils.createHttpClient(100, 20, 10000, 2000, 2000);
-    @Autowired
-    private static PropertiesUtil propertiesUtil = new PropertiesUtil();
+//    private static PropertiesUtil propertiesUtil = new PropertiesUtil();
     /**
      * 
      * @param args
      * @throws Exception
      */
     @SuppressWarnings("null")
-	public static boolean ImageCheck(String url) throws Exception {
+	public static boolean ImageCheck(String url,PropertiesUtil propertiesUtil) throws Exception {
     	boolean flag =false;
         Map<String, String> params = new HashMap<String, String>();
         // 1.设置公共参数

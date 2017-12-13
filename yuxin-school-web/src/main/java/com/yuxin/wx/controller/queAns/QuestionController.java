@@ -847,7 +847,7 @@ public class QuestionController {
 				if("<".equals(c)){
 					String e=b[i].substring(b[i].indexOf("http"), b[i].indexOf("\" src="));
 					try {
-						 flag=ImageCheck.ImageCheck(e);
+						 flag=ImageCheck.ImageCheck(e,properties);
 					} catch (Exception e1) {
 						flag=false;
 						e1.printStackTrace();
@@ -865,7 +865,7 @@ public class QuestionController {
 					if(b[i].indexOf("<img") == -1) {
 						String str=b[i].replace("&nbsp;", "");
 						try {
-							flag=TextCheck.TextCheck(str);
+							flag=TextCheck.TextCheck(str,properties);
 						} catch (Exception e) {
 							flag=false;
 							e.printStackTrace();
@@ -882,7 +882,7 @@ public class QuestionController {
 					}else{
 						String d= b[i].substring(0, b[i].indexOf("<"));
 						try {
-							flag=TextCheck.TextCheck(d);
+							flag=TextCheck.TextCheck(d,properties);
 						} catch (Exception e) {
 							flag=false;
 							e.printStackTrace();
@@ -898,7 +898,7 @@ public class QuestionController {
 						a+=",";
 						String e=b[i].substring(b[i].indexOf("http"), b[i].indexOf("\" src="));
 						try {
-							flag1=TextCheck.TextCheck(e);
+							flag1=TextCheck.TextCheck(e,properties);
 						} catch (Exception e1) {
 							flag1=false;
 							e1.printStackTrace();
@@ -925,7 +925,7 @@ public class QuestionController {
     	String questionTitle= queQuestion.getQuestionTitle();
     	boolean flag1=false;
     	try {
-    		flag1=TextCheck.TextCheck(questionTitle);
+    		flag1=TextCheck.TextCheck(questionTitle,properties);
 			if(flag1){
 				flag1=true;
 			}else{

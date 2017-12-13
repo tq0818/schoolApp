@@ -342,7 +342,7 @@ public class QAManagerController {
 
         try {
         	String  answerDesc=ans.getAnswerDesc();
-            flag=TextCheck.TextCheck(answerDesc);
+            flag=TextCheck.TextCheck(answerDesc,propertiesUtil);
     		if(flag){
     			ans.setIsChecke(1);
     		}else{
