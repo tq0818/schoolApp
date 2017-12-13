@@ -202,13 +202,13 @@
 		   set study_time = #{studyTime},
 		       study_length = #{studyLength},
 		       status = #{status},
-		       create = #{createTime}
-		 where a.user_id = #{userId}
-		   and a.commodity_id = #{commodityId}
-		   and a.class_type_id = #{classTypeId}
-		   and a.lecture_id = #{lectureId}
+		       create_time = #{createTime}
+		 where user_id = #{userId}
+		   and commodity_id = #{commodityId}
+		   and class_type_id = #{classTypeId}
+		   and lecture_id = #{lectureId}
 	</update>
-	<select id="queryVideoTime" parameterType="Integer" resultType="java.lang.Integer">
+	<select id="queryVideoTime" parameterType="Integer" resultType="java.lang.String">
 		select b.video_time
 		  from course_video_lecture a
 		 inner join video b on a.video_id = b.id 

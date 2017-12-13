@@ -16,6 +16,8 @@ public class CcResultVO implements Serializable {
 	private String ccId;
 	private String ccUserId;
 	private String ccApiKey;
+	private Integer videoClassTypeId;//录播课程Id
+	private Integer lectureId;
 	public String getCcId() {
 		return ccId;
 	}
@@ -34,5 +36,17 @@ public class CcResultVO implements Serializable {
 	public void setCcApiKey(String ccApiKey) {
 		this.ccApiKey = ccApiKey;
 	}
-
+	public Integer getVideoClassTypeId() {
+		return videoClassTypeId;
+	}
+	public void setVideoClassTypeId(Integer videoClassTypeId) {
+		this.videoClassTypeId = videoClassTypeId;
+	}
+	public Integer getLectureId() {
+		return lectureId;
+	}
+	public void setLectureId(Integer lectureId) {
+		this.lectureId = lectureId;
+	}
+	
 }
