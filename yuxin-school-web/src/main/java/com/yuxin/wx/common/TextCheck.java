@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import org.apache.http.Consts;
 import org.apache.http.client.HttpClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -34,13 +36,13 @@ public class TextCheck {
     private final static String API_URL = "https://api.aq.163.com/v3/text/check";
     /** 实例化HttpClient，发送http请求使用，可根据需要自行调参 */
     private static HttpClient httpClient = HttpClient4Utils.createHttpClient(100, 20, 2000, 2000, 2000);
-    private static PropertiesUtil propertiesUtil = new PropertiesUtil();
+//    private static PropertiesUtil propertiesUtil;
     /**
      * 
      * @param args
      * @throws Exception
      */
-    public static boolean  TextCheck(String str) throws Exception {
+    public static boolean  TextCheck(String str,PropertiesUtil propertiesUtil) throws Exception {
     	boolean flag=false;
         Map<String, String> params = new HashMap<String, String>();
         // 1.设置公共参数
