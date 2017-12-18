@@ -5,22 +5,27 @@
 <html lang="zh-cn">
 <head>
 <%@include file="/decorators/import.jsp" %>
-    <title>课程-开始招生</title> 
+    <title>课程-开始招生</title>
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/manage.css">
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/classes.css">
 	<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/popupwin.css">
-	<link rel="stylesheet" type="text/css" href="<%=rootPath%>/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" />
+	<%--<link rel="stylesheet" type="text/css" href="<%=rootPath%>/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" />--%>
 	<link rel="stylesheet" type="text/css" href="<%=rootPath %>/plugins/select2/select2.css"/>
 	<style type="text/css">
 		.up-input{position:relative;width:160px;height:32px;opacity:0;filter:alpha(opacity=0);z-index:1}
 		.upfile{position:relative;display:inline-block}
 		.upfile .btn-up{position:absolute;top:0;left:0;}
+		.popupOpacity{z-index: 1000;}
+		.admissionsPopup{z-index: 2000!important; }
     </style>
+	<link rel="stylesheet" href="<%=rootPath %>/stylesheets/jedate.css">
+	<script src="<%=rootPath %>/javascripts/plus/jquery.jedate.min.js"></script>
 	<script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/plupload.full.min.js"></script>
 	<script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/i18n/zh_CN.js"></script>
 	<script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/moxie.js"></script>
 	<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.2.1/jquery.js"></script>
 	<script type="text/javascript" src="http://cdn.staticfile.org/qiniu-js-sdk/1.0.14-beta/qiniu.js"></script>
+
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/menu/menu_class.jsp"></jsp:include>
@@ -431,7 +436,190 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript">
+
+<%--开始招生弹窗--%>
+<div class="popupContainerEdit admissionsPopup ">
+	<span class="closePopupContainer">x</span>
+	<div class="shelves">
+		<div id="shelvesList">
+			<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/addNewStyle.css">
+			<script src="<%=rootPath%>/javascripts/addNewCommonScript.js"></script>
+			<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/manage.css">
+			<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/company.css">
+			<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/classes.css">
+			<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/splitscreen.css">
+			<script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.min.js"></script>
+			<script type="text/javascript" src="<%=rootPath%>/javascripts/ajaxfileupload.js"></script>
+			<script type="text/javascript" src="<%=rootPath%>/javascripts/simpleclasses/informationEditing.js"></script>
+			<link rel="stylesheet" href="<%=rootPath%>/stylesheets/jedate.css">
+			<script src="<%=rootPath%>/javascripts/plus/jquery.jedate.min.js"></script>
+			<!-- 二级导航 -->
+			<div class="u-wrap classes">
+				<div class="informationEditHeader">
+					<div class="informationEditImg">
+						<img src="http://192.168.1.146:8090/img/course/18113/20171204/1f2138e5-9dd2-4780-a0d6-96b7e0681de1.jpg" id="pic" alt="">
+						<div class="informationEditChoose">
+							<a href="##"><input type="file" name="imgData" id="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico">选择图片</a>
+						</div>
+					</div>
+					<div class="informationEditDetail">
+						<ul>
+							<li>
+								<label>课程名称:</label>
+								<span>
+                                     test12
+                        </span>
+							</li>
+							<li>
+								<label>教师:</label>
+								<span>教师6</span>
+							</li>
+							<li>
+								<label>学校:</label>
+								<span>北大</span>
+							</li>
+
+							<li>
+								<label>时长:</label>
+								<span>2017-12-22 15:50~2017-12-22 16:25</span>
+							</li>
+							<li>
+								<label>学习人数:</label>
+								<span>3人学习</span>
+							</li>
+						</ul>
+						<a href="##" class="courseDetail btn btn-default" onclick="queryClassDetailsa(505);">课程详情</a>
+					</div>
+				</div>
+				<div>
+					<ul class="classification">
+						<li>
+							<label>课程分类</label>
+							<select id="courseCaIdList" onchange="chooseSlibMenu($(this));">
+								<option value="73" selected="">直播</option>
+							</select>
+						</li>
+						<li>
+							<label>学段</label>
+							<select id="gradeIdList" onchange="chooseSlibMenu($(this));">
+								<option value="74" selected="">初一</option>
+								<option value="90">初二</option>
+							</select>
+						</li>
+						<li>
+							<label>学科</label>
+							<select id="subjectIdList" onchange="chooseSlibMenu($(this));">
+								<option value="75" selected="">政治初</option>
+								<option value="80">历史初</option>
+								<option value="85">地理初</option>
+							</select>
+						</li>
+						<li>
+							<label>知识点专题</label>
+							<select id="kwonProIdList" onchange="chooseSlibMenu($(this));">
+								<option value="76" selected="">政治_pro</option>
+							</select>
+						</li>
+						<li>
+							<label>知识点</label>
+							<select id="knowIdList" onchange="chooseSlibMenu($(this));">
+								<option value="77" selected="">政治初A</option>
+								<option value="78">政治初B</option>
+								<option value="79">政治初C</option>
+							</select>
+						</li>
+						<li>
+							<label>阶段</label>
+							<select id="stageIdList">
+							</select>
+						</li>
+						<li>
+							<label>类型</label>
+							<select id="typeIdList">
+							</select>
+						</li>
+					</ul>
+				</div>
+				<div>
+					<ul class="screeningConditions">
+						<li>
+							<label>课程标签：</label><input type="text" id="labDesc" value="">
+						</li>
+						<li>
+							<label>价格：</label><input type="text" id="appPrice" value="0.0">
+						</li>
+						<li>
+							<label>实际价格：</label><input type="text" id="salePrice" value="0.0">
+						</li>
+
+						<li>
+							<label>开始时间：</label><input type="text" value="2017-12-22 15:50:00" disabled="disabled">
+						</li>
+
+					</ul>
+				</div>
+				<div class="submitCourse">
+					<button class="btn btn-success" onclick="toShelves('1','1');">立即上架</button>
+					<button class="btn btn-warning" onclick="toShelves('0','1');">预约上架</button>
+					<input type="hidden" id="shelvesTimes" value="">
+					<input type="text" placeholder="指定上架时间" id="shelvesTime" readonly="">
+				</div>
+				<script>
+                    var time = $("#shelvesTimes").val();
+                    time = time.replace(".0", "")
+                    $("#shelvesTime").val(time);
+				</script>
+			</div>
+
+			<input id="labe" name="lab" value="live" type="hidden">
+			<div id="shelvesInfo">
+				<input name="id" type="hidden" id="commodityId" value="505">
+				<input name="appId" type="hidden" id="appId" value="7">
+			</div>
+			<%--<form method="post" id="myForma">--%>
+
+			<%--</form>--%>
+			<%--<form method="post" id="myForm">--%>
+
+			<%--</form>--%>
+			<script>
+                $.jeDate("#shelvesTime", {
+                    format: "YYYY-MM-DD hh:mm:ss",
+                    isTime: true,
+                    minDate: "2014-09-19 00:00:00"
+                })
+
+                function queryClassDetailsa(id) {
+                    $("#myForma").html("");
+                    var input = "<input type='hidden' value='" + id + "' name='id'/><input type='hidden' value='" + $("#labe").val() + "' name='lable'/>";
+                    $("#myForma").html(input);
+                    $("#myForma").attr("action", "/editSimpleCourse/editClassTypeMessage").submit();
+                }
+
+				$('.closePopupContainer').click(function(){
+				    $('.admissionsPopup').hide();
+				});
+			</script>
+			<script>
+                //    图片预览
+                var fileEle = document.getElementById('imgData');
+                var imgEle = document.getElementById('pic');
+                fileEle.onchange = function(e) {
+                    var file1 = e.target.files[0];
+                    var url1 = window.URL.createObjectURL(file1);
+                    imgEle.src = url1;
+                    savePic();
+                }
+			</script>
+		</div>
+	</div>
+</div>
+<div class="popupOpacity"></div>
+
+
+
+
+	<script type="text/javascript">
 	function docChange(){
 		$("#dochint").html("<span style='color:red;' >正在上传</span>");
 		$.ajaxFileUpload({
@@ -463,17 +651,24 @@ function guid() {
     });
 }
 </script>
-	<script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/classTypesimplelive.js"></script>
-	<script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
+	<%--<script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/classTypesimplelive.js"></script>--%>
+	<%--<script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>--%>
 	<script type="text/javascript" src="<%=rootPath %>/javascripts/plus/jquery.cookie.js"></script>
 	<script type="text/javascript" src="<%=rootPath%>/javascripts/popupwin.js"></script>
 	 <script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap/js/bootstrap.min.js"></script>
-	 <script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-	 <script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+	 <%--<script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>--%>
+	 <%--<script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>--%>
 	<script type="text/javascript" src="<%=rootPath %>/plugins/select2/select2.js"></script> 
 	<script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery-ui.js"></script>
 	<script type="text/javascript" src="<%=rootPath %>/javascripts/common/DateUtils.js"></script>
 	<script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/selectTeacher.js"></script>
 	<script type="text/javascript" src="<%=rootPath%>/javascripts/ajaxfileupload.js"></script>
+	<%--点击开始招生，弹出弹窗--%>
+<script>
+	$('.complete').click(function(){
+	    $('.popupOpacity').show();
+	    $('.admissionsPopup').show();
+    });
+</script>
 </body>
 </html>
