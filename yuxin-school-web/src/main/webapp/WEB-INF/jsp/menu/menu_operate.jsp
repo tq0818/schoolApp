@@ -27,9 +27,9 @@
             <shiro:hasPermission name="netschool_news">  
             <%--<li code="netschool_news"><a href="<%=request.getContextPath() %>/sysConfigNews/showNews">新闻资讯</a></li>--%>
             </shiro:hasPermission>
-           <%-- <shiro:hasPermission name="financial">
+            <shiro:hasPermission name="financial">
             <li code="financial"><a href="<%=request.getContextPath() %>/payOrder/toOrder">财  务</a></li>
-            </shiro:hasPermission>--%>
+            </shiro:hasPermission>
        
          	<shiro:hasAnyRoles name="机构管理员,分校管理员,运营,课程顾问,客服,直播老师,助教">
             <shiro:hasPermission name="query_statistics">

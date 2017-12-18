@@ -48,6 +48,7 @@ public class PayOrder extends BaseEntity {
     private String couponCode;/* 优惠码 */
     private Double realPrice;
     private Double usedRecharge;
+    private String originType;/*数据来源*/
 
     private String mobile;
     private String stuName;
@@ -55,6 +56,14 @@ public class PayOrder extends BaseEntity {
     private String endDate;
     private Integer timeLen;
     private String timeMark;
+
+    public String getOriginType() {
+        return originType;
+    }
+
+    public void setOriginType(String originType) {
+        this.originType = originType;
+    }
 
     public PayOrder() {
         super();
@@ -66,7 +75,7 @@ public class PayOrder extends BaseEntity {
             Integer schoolId, String discountNo, String remittanceNumber, Double collectionAmount, Date collectionTime, Integer classPackageStageId,
             String commdityType, String remark, Double integralInstead, Double memberInstead, Integer memberId, Integer integralUsed, Double memberDiscount,
             Integer integralNum, Integer exchangeScale, Integer memberLength, String bizCode, Double couponInstead, String couponCode, Double realPrice,
-            Double usedRecharge, String mobile, String stuName, String startDate, String endDate, Integer timeLen, String timeMark) {
+            Double usedRecharge, String mobile, String stuName, String startDate, String endDate, Integer timeLen, String timeMark,String originType) {
         super();
         this.userId = userId;
         this.orderNum = orderNum;
@@ -109,6 +118,7 @@ public class PayOrder extends BaseEntity {
         this.endDate = endDate;
         this.timeLen = timeLen;
         this.timeMark = timeMark;
+        this.originType = originType;
     }
 
     public Integer getUserId() {
