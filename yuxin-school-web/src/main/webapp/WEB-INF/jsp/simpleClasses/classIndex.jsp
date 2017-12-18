@@ -10,7 +10,9 @@
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/classes.css">
      <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/operate.css" />
     <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
-    
+    <style>
+        .upload-layer{left: 50% !important;width:500px !important;margin-left:-250px;}
+    </style>
 </head>
 <body style="position:relative;">
 <input type="hidden" id="one" value="${itemOneId }"/>
