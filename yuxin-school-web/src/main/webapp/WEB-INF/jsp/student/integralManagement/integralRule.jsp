@@ -2,6 +2,7 @@
          pageEncoding="UTF-8"%>
 
 <!doctype html>
+
 <html lang="zh-cn">
 <head>
     <%@include file="/decorators/import.jsp" %>
@@ -123,6 +124,7 @@ function saveRule(objt){
      });
 }
 //点击编辑，该行变为可编辑状态
+
 function editRule(objt){
         var rowInput = $(objt).parent().siblings('td').find('input');
         rowInput.addClass('active');
@@ -157,6 +159,7 @@ function editRule(objt){
         var ScoreRuls = {
             init: function () {
                 var $this = this;
+
                 // 初始化数据
                 $this.search(1);
             },
@@ -197,8 +200,10 @@ function editRule(objt){
     	                                '<tr><td colspan="7">没有查找到数据</td></tr>');
 //                            	}
                             }
+
                              $.each(jsonData.data,function (i, stu) {
                             	 	var oprator="";
+
                             	 	if(stu.oprator!=null)
                             	 		oprator=stu.oprator;
                                     var validTime = stu.validTime;
@@ -210,15 +215,16 @@ function editRule(objt){
                                          invalidTime = "";
                                      }
 
+                                    var bl=(page-1)*10;
+
                                     var htmlStr='<tr>'+
-			            	                    '<td>'+(i+1)+'</td>'+
+			            	                    '<td>'+(i+1+bl)+'</td>'+
 			            	                    '<td>'+stu.scoreTopic+'</td>'+
 			            	                    '<td><input type="text" value="'+stu.score+'" disabled="disabled"></td>'+
 			            	                    '<td><input type="text" value="'+validTime+'" readonly class="dateRuleStart'+(i+1)+'"></td>'+
 			            	                    '<td><input type="text" value="'+invalidTime+'" readonly class="dateRuleEnd'+(i+1)+'"></td>'+
 			            	                    '<td>'+oprator+'</td>'+
 			            	                    '<td>';
-			            	                    
 			            	        var validStr="";
 			            	        if(stu.ststus=="1"){
 			            	        	validStr='<button class="btn btn-primary forbidBtn" name="'+stu.id+'" onclick="updateScoreRulsAppStatus(this)">禁用</button>';
@@ -233,6 +239,7 @@ function editRule(objt){
                                 	$(".user-list").find('table').append(htmlStr+validStr+lastStr);
                                 });
                             $("#pageNo").remove();
+
                             $(".user-list").after('<input type="hidden" id="pageNo" value="'+jsonData.pageNo+'"/>');
                             if (jsonData.rowCount >$("#selectCounts").val()) {
                                 $(".pagination").pagination(jsonData.rowCount,
@@ -247,8 +254,11 @@ function editRule(objt){
                                         callback: function (page, jq) {
                                             var pageNo = page + 1;
                                             $this.search(pageNo);
+
                                         }
+
                                     });
+
                             } else {
                                 $(".pagination").html('');
                             }
@@ -258,14 +268,17 @@ function editRule(objt){
                             $(".loading-bg").hide();
                         }
                     });
+
                 $("#maxCount").remove();
             }
         }
+
         $(document).ready(function () {
         	ScoreRuls.init();
         })
         window.ScoreRuls =ScoreRuls;
     })(jQuery)
+
 </script>
 
 <script>
