@@ -19,7 +19,7 @@
 .block .labels{
     float: left;
     width: 18%;
-    background: #1ebb90;
+    background: #fd9997;
     height:44px;
     font-size: 16px;
     color: #fff;
@@ -38,16 +38,16 @@
     top:0;
     right: -22px;
     border-width: 22px;
-    border-color:#f6f6f6 #f6f6f6 #f6f6f6 #1ebb90;
+    border-color:#f6f6f6 #f6f6f6 #f6f6f6 #fd9997;
     border-style: dashed dashed dashed solid;
     width: 0px;
     overflow: hidden;
 }
 .block .labels.else .sanjiao{
-    border-color:#f6f6f6 #f6f6f6 #f6f6f6 #b7b7b7;
+    border-color:#f6f6f6 #f6f6f6 #f6f6f6 #fd9997;
 }
 .block .labels.else1 .sanjiao{
-    border-color:#f6f6f6 #f6f6f6 #f6f6f6 #FE5151;
+    border-color:#f6f6f6 #f6f6f6 #f6f6f6 #fd9997;
 }
 .block del{
     font-size: 12px;
@@ -62,7 +62,7 @@
     color: #fff;
     font-size: 12px;
     text-align: center;
-    background-color: #78cdf2;
+    background-color: #f39b76;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -70,9 +70,6 @@
     padding: 0;
     margin: 8px 44px;
     border:0
-}
-.block button:hover{
-    background-color: #6db8d8;
 }
 .class-title {
     height: 32px;

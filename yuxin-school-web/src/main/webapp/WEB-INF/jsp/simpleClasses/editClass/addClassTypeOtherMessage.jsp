@@ -5,7 +5,7 @@
 <html lang="zh-cn">
 <head>
 <%@include file="/decorators/import.jsp" %>
-    <title>课程-基本信息</title> 
+    <title>课程-基本信息</title>
    <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/fatstyle.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/manage.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/company.css"/>
