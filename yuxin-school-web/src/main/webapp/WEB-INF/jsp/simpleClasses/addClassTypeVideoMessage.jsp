@@ -117,7 +117,7 @@
                     <span class="c-content">
                         <select name="isMicroClass" id="isMicroClass" >
                             <option value="0" <c:if test='${classType.isMicroClass != 1}'>selected="selected"</c:if>>回放课程</option>
-                            <option value="1" <c:if test='${classType.isMicroClass == 1}'>selected="selected"</c:if>>微课</option>
+                            <%--<option value="1" <c:if test='${classType.isMicroClass == 1}'>selected="selected"</c:if>>微课</option>--%>
                         </select>
                     </span>
                 </p>

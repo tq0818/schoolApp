@@ -60,6 +60,7 @@ public class StudentLeanClassRecordController {
 	private IStudentPayMasterService studentPayMasterServiceImpl;
 	
 	private Log log = LogFactory.getLog("log");
+
 	/**
 	 * 打开学员的学习进度页面
 	 */
@@ -349,7 +350,7 @@ public class StudentLeanClassRecordController {
 		search.setCompanyId(WebUtils.getCurrentCompanyId());
 		search.setSchoolId(WebUtils.getCurrentSchoolId());
 		search.setCommodityType("COMMODITY_CLASS");
-		PageFinder<StudentClassLeanDetailVo>  obj =  studentServiceImpl.queryStudentCtOrCpLeanRecord(search);
+		PageFinder<StudentClassLeanDetailVo>  obj = studentServiceImpl.queryStudentCtOrCpLeanRecord(search);
 		return obj;
 	}
 	
