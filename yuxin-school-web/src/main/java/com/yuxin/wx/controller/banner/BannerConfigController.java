@@ -425,9 +425,9 @@ public class BannerConfigController extends BaseWebController{
     	Resource resource = new ClassPathResource("config.properties");
     	Properties props=PropertiesLoaderUtils.loadProperties(resource);
     	String rtUrl="bannerHtml/"+date+".html";
-    	String url=props.getProperty("server.imageupload.tempPath") + "/bannerHtml/"+date+".html";
+    	String url=props.getProperty("imageServiceRealPath") + "/bannerHtml/"+date+".html";
     	
-        File tempPathFile = new File(props.getProperty("server.imageupload.tempPath") + "/bannerHtml/");
+        File tempPathFile = new File(props.getProperty("imageServiceRealPath") + "/bannerHtml/");
         if(!tempPathFile.exists()){
             tempPathFile.mkdirs();
         }
