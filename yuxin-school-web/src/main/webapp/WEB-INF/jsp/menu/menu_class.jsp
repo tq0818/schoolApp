@@ -60,9 +60,9 @@ $(function(){
 	<%--             <li code="class_resource"><a href="<%=rootPath %>/classModuleLesson/classesResource" >课程资料</a></li> --%>
 	<%--             </shiro:hasPermission> --%>
 	            
-	            <shiro:hasPermission name="open_class_set">  
+	           <%-- <shiro:hasPermission name="open_class_set">
 	            <li code="open_class_set"><a href="<%=rootPath %>/liveOpenCourse/toLiveShow" >公开课</a></li>
-	            </shiro:hasPermission>
+	            </shiro:hasPermission>--%>
 	            <%-- <shiro:hasPermission name="class_package"> --%>
 	             <%--<li code="course_package"><a href="<%=rootPath %>/classPackage/list" >课程包</a></li>--%>
 	            <%--</shiro:hasPermission>--%>
