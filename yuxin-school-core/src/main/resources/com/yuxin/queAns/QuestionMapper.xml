@@ -273,13 +273,13 @@
 		INNER JOIN question_lab_relations t2 ON t2.question_id=t1.id
 		JOIN question_lab_app t3 ON t3.id=t2.label_id and t3.lab_type=0 and t3.id = #{systemTagId}
 		</if>
-		<if test="userDefuledId != null">
+		<!--<if test="userDefuledId != null">
 		INNER JOIN question_lab_relations t4 ON t4.question_id=t1.id
 		JOIN question_lab_app t5 ON t5.id=t4.label_id and t5.lab_type=2 and t5.id = #{userDefuledId}
-		</if> 
+		</if> -->
 		where 1=1 
 		<if test="systemTagId != null">and t3.id = #{systemTagId}</if>
-		<if test="userDefuledId != null">and t5.id = #{userDefuledId}</if> 
+		<if test="userDefuledId != null">and t1.is_checke = #{userDefuledId}</if>
 		<if test="topFlag != null and topFlag != ''">and t1.top_flag = #{topFlag}</if>
 		<if test="essenceFlag != null and essenceFlag != ''">and t1.essence_flag = #{essenceFlag}</if>
 		order by t1.top_flag desc,
@@ -295,13 +295,13 @@
 		INNER JOIN question_lab_relations t2 ON t2.question_id=t1.id
 		JOIN question_lab_app t3 ON t3.id=t2.label_id and t3.lab_type=0 and t3.id = #{systemTagId}
 		</if>
-		<if test="userDefuledId != null">
+		<!--<if test="userDefuledId != null">
 		INNER JOIN question_lab_relations t4 ON t4.question_id=t1.id
 		JOIN question_lab_app t5 ON t5.id=t4.label_id and t5.lab_type=2 and t5.id = #{userDefuledId}
-		</if> 
+		</if> -->
 		where 1=1 
 		<if test="systemTagId != null">and t3.id = #{systemTagId}</if>
-		<if test="userDefuledId != null">and t5.id = #{userDefuledId}</if> 
+		<if test="userDefuledId != null">and t1.is_checke = #{userDefuledId}</if>
 		<if test="topFlag != null and topFlag != ''">and t1.top_flag = #{topFlag}</if>
 		<if test="essenceFlag != null and essenceFlag != ''">and t1.essence_flag = #{essenceFlag}</if>) t
 		

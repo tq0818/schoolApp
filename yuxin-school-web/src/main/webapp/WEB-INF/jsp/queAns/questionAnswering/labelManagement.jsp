@@ -38,7 +38,7 @@
                     </li>
                 </ul>
             </div>
-            <div>
+           <%-- <div>
                 <h6>用户自定义标签</h6>
                 <ul>
                 <c:forEach items="${userDefinedTag }" var="udt" varStatus="status">
@@ -48,7 +48,7 @@
                     </li>
                 </c:forEach>    
                 </ul>
-            </div>
+            </div>--%>
             <div class="labelSaveBtn">
                 <a href="<%=rootPath %>/Question/comQuestionIndex" class="btn btn-warning" >返回</a>
             </div>
