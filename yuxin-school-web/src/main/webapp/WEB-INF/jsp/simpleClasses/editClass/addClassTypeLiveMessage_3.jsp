@@ -79,12 +79,12 @@
 				</div>
                 <p class="c text-center" style="margin-top:20px;">
                     <c:if test="${ct.originType  eq 1 }">
-                      <a href="javascript:save();" class="btn btn-primary">保存</a>
+                      <a href="javascript:save();" class="btn btn-primary saveAddClass">保存</a>
                     </c:if>
-
+					<a href="<%=rootPath %>/simpleClasses/showClassTypePage" class="btn btn-default">取消</a>
                 </p>
             </div>
-        </div><a href="<%=rootPath %>/simpleClasses/showClassTypePage" class="btn btn-default">取消</a>
+        </div>
     </div>
 </div>
     </div>

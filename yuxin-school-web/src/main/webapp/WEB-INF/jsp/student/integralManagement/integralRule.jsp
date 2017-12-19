@@ -211,7 +211,7 @@ function editRule(objt){
                                      }
 
                                     var htmlStr='<tr>'+
-			            	                    '<td>'+(i+1)+'</td>'+
+			            	                    '<td>'+stu.sort+'</td>'+
 			            	                    '<td>'+stu.scoreTopic+'</td>'+
 			            	                    '<td><input type="text" value="'+stu.score+'" disabled="disabled"></td>'+
 			            	                    '<td><input type="text" value="'+validTime+'" readonly class="dateRuleStart'+(i+1)+'"></td>'+

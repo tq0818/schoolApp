@@ -37,7 +37,8 @@
 		overflow: auto;
 	}
 	body{
-		background:url('../images/login_bg.png') repeat;
+		background:url('../images/login_bg.png') no-repeat;
+		background-size: 100%;
 	}
 	.header a img{
 		margin-top:10px;

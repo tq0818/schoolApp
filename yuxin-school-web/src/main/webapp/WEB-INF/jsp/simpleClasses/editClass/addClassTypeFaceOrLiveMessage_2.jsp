@@ -300,7 +300,7 @@
                         </p>
                         <p class="c text-center" style="margin-top: 10px;" id="pcenter">
                         	<c:if test="${ctype.originType  eq 1 }">
-                            <a href="javascript:save('save');" class="btn btn-primary">保存</a>
+                            <a href="javascript:save('save');" class="btn btn-primary saveAddClass">保存</a>
                             </c:if>
                             <a href="<%=rootPath %>/simpleClasses/showClassTypePage" class="btn btn-default">取消</a>
                         </p>
@@ -510,7 +510,7 @@
                 </div>
             </div>
             <div class="btns">
-                <a href="javascript:;" class="btn btn-mini btn-primary btn-s">保存2</a>
+                <a href="javascript:;" class="btn btn-mini btn-primary btn-s">保存</a>
                 <a href="javascript:;" class="btn btn-mini btn-default btn-c">取消</a>
             </div>
         </div>
