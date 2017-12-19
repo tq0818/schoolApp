@@ -62,7 +62,7 @@
     color: #fff;
     font-size: 12px;
     text-align: center;
-    background-color: #237fd5;
+    background-color: #78cdf2;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -70,6 +70,9 @@
     padding: 0;
     margin: 8px 44px;
     border:0
+}
+.block button:hover{
+    background-color: #6db8d8;
 }
 .class-title {
     height: 32px;

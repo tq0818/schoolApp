@@ -759,9 +759,9 @@ input.btn {
 
 .btn-primary {
     color: #fff;
-    background-color: #1b6fbd;
+    background-color: #78cdf2;
     background-image: none;
-    border-color: #1b6fbd
+    border-color: #78cdf2;
 }
 
 a.btn-primary {
@@ -769,8 +769,9 @@ a.btn-primary {
 }
 
 .btn-primary:hover, a.btn-primary:hover {
-    background-color: #237fd5;
-    background-image: none
+    background-color: #6db8d8;
+    background-image: none;
+    border-color: #6db8d8;
 }
 
 .btn-primary.disabled, .btn-primary.disabled:hover, .btn-primary[disabled], .btn-primary[disabled]:hover {
@@ -799,9 +800,9 @@ a.btn-warning {
 
 .btn-success {
     color: #fff;
-    background-color: #1ebb90;
+    background-color: #84ccc9;
     background-image: none;
-    border-color: #1ebb90
+    border-color: #84ccc9;
 }
 
 a.btn-success {
@@ -810,8 +811,9 @@ a.btn-success {
 
 .btn-success:hover, a.btn-success:hover {
     color: #fff;
-    background-color: #1ca983;
-    background-image: none
+    background-color: #6ab1ae;
+    background-image: none;
+    border-color: #6ab1ae;
 }
 
 .btn-success.disabled, .btn-success.disabled:hover, .btn-success[disabled], .btn-success[disabled]:hover {
@@ -1013,8 +1015,8 @@ a.btn-links {
 }
 
 .navbar.reversal {
-    background-color: #000;
-    border-bottom-color: #000
+    background-color: #444;
+    border-bottom-color: #444;
 }
 
 .navbar.reversal .navbar-brand {
@@ -1026,7 +1028,7 @@ a.btn-links {
 }
 
 .navbar.reversal .nav li a:hover, .navbar.reversal .nav li a:active, .navbar.reversal .nav li a.active {
-    color: #c00
+    color: #f29b76;
 }
 
 .navbar.navbar-red {
