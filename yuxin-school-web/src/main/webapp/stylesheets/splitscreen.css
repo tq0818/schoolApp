@@ -37,7 +37,7 @@
 }
 .right-side{
     float: right;
-    width: 81%;
+    width: 100%;
     min-height: 576px;
     border: 1px solid #e9edee;
     background-color: #f6f6f6;

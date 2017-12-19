@@ -133,4 +133,31 @@ public interface ISysPlayLogsService {
      * @return
      */
     List<Map<String,Object>> queryTotleVideoCourseForSchool(Map<String, Object> papamMap);
+
+    /**
+     * 区县管理员概况导出
+     * @param videoCourseVo
+     * @return
+     */
+    List<VideoCourseVo> queryAreaCourseIndexList(VideoCourseVo videoCourseVo);
+
+    /**
+     * 教科院管理员概况-导出
+     * @param videoCourseVo
+     * @return
+     */
+    List<VideoCourseVo> queryCourseIndexList(VideoCourseVo videoCourseVo);
+
+
+    /**
+     * 获取用户总播放记录
+     * @return
+     */
+    List<Map<String,Object>> queryHistoryAll();
+
+    /**
+     * 查询区域的录播观看人数
+     * @return
+     */
+    List<Map<String,Object>> queryTotleVideoCourse1(Map<String, Object> papamMap);
 }
