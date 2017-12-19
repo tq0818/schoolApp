@@ -39,9 +39,20 @@ public class ScoreRulsAppVo extends BaseEntity{
 	 * 更新时间
 	 */
 	private String updateTime;
-	
-	
-	
+
+	/**
+	 * 排序
+	 */
+	private Integer sort;
+
+	public Integer getSort() {
+		return sort;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
+
 	public Integer getBsstus() {
 		return bsstus;
 	}

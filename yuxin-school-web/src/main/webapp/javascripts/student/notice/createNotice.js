@@ -436,7 +436,7 @@ var msgCount;
  					return false;
 //				}
  			}
- 			if(!signup_vote){
+ 			/*if(!signup_vote){
  				$('<div class="c-fa">'+ "请选择报名或投票！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
 					$(this).remove();}
 				);
@@ -456,7 +456,7 @@ var msgCount;
  					);
  					return false;
  				}
- 			} 			
+ 			}*/
  			if($("#isNeedSend").is(":checked")){
  				isSend="1";
  			}

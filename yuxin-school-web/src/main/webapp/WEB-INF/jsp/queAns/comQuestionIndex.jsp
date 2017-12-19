@@ -78,7 +78,7 @@ i.close {
                 
             </p>
            
-            <p class="c itemSec clear">
+            <%--<p class="c itemSec clear">
                 <span class="t-title fl">用户自定义标签：</span>
                 <span class="t-content fr" style="display: initial;">
                 	<a href="javascript:void(0);" class="btn clas btn-mini btn-default btn-success" ids="">全部</a>
@@ -86,8 +86,15 @@ i.close {
 	                   	<a href="javascript:void(0);" ids="${udt.id }" class="btn clas btn-mini btn-default">${udt.labName }</a>
                    </c:forEach>
                 </span>
+            </p>--%>
+            <p class="c itemSec clear">
+                <span class="t-title fl">审核状态：</span>
+                <span class="t-content fr" style="display: initial;">
+                	<a href="javascript:void(0);" class="btn clas btn-mini btn-default btn-success" ids="">全部</a>
+                    <a href="javascript:void(0);" ids="0" class="btn clas btn-mini btn-default">待审核</a>
+                    <a href="javascript:void(0);" ids="1" class="btn clas btn-mini btn-default">审核通过</a>
+                </span>
             </p>
-            
             <p class="c clear">
                 <span class="t-title fl">状态：</span>
                 <span class="t-content fr">

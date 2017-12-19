@@ -56,7 +56,7 @@
 						</div>
 						<div class="s remeber">
 								<span><input type="checkbox" id="rememberMe" name="rememberMe" value="1" checked=checked/> 记住我</span>
-								<a href="<%=rootPath%>/users/findPwd" style="color: red; margin-left: 50px;">忘记密码?</a>
+								<a href="<%=rootPath%>/users/findPwd" style="color: #f5b34f; margin-left: 50px;">忘记密码?</a>
 						</div>
 						<div class="c">
 							<button type="submit" class="btn btn-primary btn-login"> 登录</button>
@@ -67,7 +67,7 @@
 			</div>
 		</div>
 		<div class="bot">
-		
+
 		</div>
 	</div>
 	<!-- footer start -->
