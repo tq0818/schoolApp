@@ -432,7 +432,7 @@ public class BannerConfigController extends BaseWebController{
             tempPathFile.mkdirs();
         }
     	
-    	pw = new OutputStreamWriter(new FileOutputStream(url),"GBK");
+    	pw = new OutputStreamWriter(new FileOutputStream(url),"UTF-8");
     	pw.write(content);
     	pw.close();//关闭流
 	    return rtUrl;
