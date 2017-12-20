@@ -677,4 +677,33 @@
             update app_shelves set sort=null where id = #{appShelvesId}
         </if>
     </update>
+
+    <select id="queryVideoInfo" resultType="com.yuxin.wx.vo.app.VideoInfoVO">
+        SELECT
+        a.id as id,
+        a.company_id as companyId,
+        a. NAME as className,
+        a.cover as coverUrl,
+        f.video_time as videoTime,
+        g.base_num + g.buy_num as buyNum,
+        g.id as comId,
+        i.name as name,
+        a.live_flag as liveFlag
+        FROM
+        commodity g
+        INNER JOIN commodity_product_realtion h ON g.id = h.product_id
+        INNER JOIN class_type a ON h.com_id = a.id
+        INNER JOIN class_type_module_relation b ON a.id = b.class_type_id
+        INNER JOIN class_module c ON b.module_id = c.id
+        INNER JOIN course_video_chapter d ON c.id = d.module_id
+        INNER JOIN course_video_lecture e ON d.id = e.chapter_id
+        INNER JOIN video f ON e.video_id = f.id
+        INNER JOIN sys_config_teacher i ON i.id = a.teacher_id
+        INNER JOIN app_shelves aps ON aps.comdity_id = g.id AND aps.is_shelves = 1
+        WHERE a.del_flag = '0'
+        AND a.id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

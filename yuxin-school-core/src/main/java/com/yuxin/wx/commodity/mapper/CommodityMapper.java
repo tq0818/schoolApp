@@ -3,6 +3,7 @@ package com.yuxin.wx.commodity.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.yuxin.wx.vo.app.VideoInfoVO;
 import com.yuxin.wx.vo.classes.ClassTypeVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -107,4 +108,6 @@ public interface CommodityMapper extends BaseMapper<Commodity> {
 	 * @param param
 	 */
 	void updateAppShelvesSort(Map<String, Object> param);
+
+	List<VideoInfoVO> queryVideoInfo(List listid);
 }
