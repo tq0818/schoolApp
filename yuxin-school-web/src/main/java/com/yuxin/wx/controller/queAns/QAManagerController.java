@@ -261,7 +261,7 @@ public class QAManagerController {
     		QuestionAnswer questionAnswer = questionAnswerServiceImpl.findQuestionAnswerById(id);
     		UsersFront user = usersFrontServiceImpl.findUsersFrontById(questionAnswer.getUserId());
     		Map<String,String>map = new HashMap<String,String>();
-    		map.put("userName",user.getMobile());
+    		map.put("userName",user.getNickName());
         	noticeAndScoreServiceImpl.sendMsg(request.getRequestURI().replace(request.getContextPath(),""),user.getId().toString(),map);
     		return json;
     		

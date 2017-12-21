@@ -180,7 +180,7 @@ public class QuestionController {
  		UsersFront user = usersFrontServiceImpl.findUsersFrontById(question2.getUserId());
 	        questionServiceImpl.update(question);
 	        Map<String,String>map = new HashMap<String,String>();
-    		map.put("userName",user.getMobile());
+    		map.put("userName",user.getNickName());
     		String url = request.getRequestURI().replace(request.getContextPath(),"");
         	noticeAndScoreServiceImpl.sendMsg(url.substring(0, url.lastIndexOf("/")),user.getId().toString(),map);
 	        return "success";
