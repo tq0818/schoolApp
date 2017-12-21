@@ -419,7 +419,8 @@ public class BannerConfigController extends BaseWebController{
 	}
 	
 	public String writeHtml(String content) throws Exception{
-		OutputStreamWriter pw = null;//
+		content+="<script src= https://cdn.bootcss.com/jquery/1.12.3/jquery.min.js></script><script> $('a').attr('href','##') ;$('a').attr('target',' ')</script>";
+		OutputStreamWriter pw = null;
     	SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhss");
     	String date = df.format(new Date());
     	Resource resource = new ClassPathResource("config.properties");
