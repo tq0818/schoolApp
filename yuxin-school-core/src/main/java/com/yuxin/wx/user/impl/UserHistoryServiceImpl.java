@@ -172,4 +172,10 @@ public class UserHistoryServiceImpl extends BaseServiceImpl implements IUserHist
 		return userHistoryMapper.queryVideoTime(lectureId);
 	}
 
+	@Override
+	public List<UserHistory> findStudyRecord(Integer userId) {
+		// TODO Auto-generated method stub
+		return userHistoryMapper.findStudyRecord(userId);
+	};
+
 }

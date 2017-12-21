@@ -2202,23 +2202,11 @@
 		ON d.id = f.chapter_id
 		WHERE a.id = #{classTypeId}
 	</select>
-	<!--课程   已经完成的视频课次 -->
+
 	<select id="queryLecFinishCount" parameterType="com.yuxin.wx.vo.student.StudentClassLeanDetailVo" resultType="int">
-		SELECT COUNT(DISTINCT f.id)
-		FROM class_type a
-		INNER JOIN class_type_module_relation b
-		ON a.id = b.class_type_id
-		INNER JOIN class_module c
-		ON b.module_id = c.id
-		INNER JOIN course_video_chapter d
-		ON d.module_id = c.id
-		INNER JOIN course_video_lecture f
-		ON d.id = f.chapter_id
-		INNER JOIN user_history h
-		ON h.lecture_id = f.id
-		WHERE h.user_id = (SELECT a.id from users_front a INNER JOIN student b ON b.user_id = a.id WHERE b.id = #{stuId})
-		AND a.id = #{classTypeId}
-		AND h.study_status = '3';
+		SELECT SUM(case when u.study_length  is null then 0 else u.study_length  end) as user_history
+		FROM user_history u WHERE u.user_id =  #{stuId} and class_type_id = #{classTypeId} GROUP BY u.class_type_id
+
 	</select>
 
 	<!--课程包   所有的视频课次数 -->

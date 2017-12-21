@@ -141,6 +141,7 @@ public class TikuCategoryController {
 		List<TikuCategoryVo> list = tikuCategoryServiceImpl.findTikuCategoryVo(category);
 		model.addAttribute("ImagePath", properties.getProjectImageUrl());
 		model.addAttribute("list",list);
+		model.addAttribute("oraginType",category.getOraginType());
 		return "tiku/tikuAjax";
 	}
 	

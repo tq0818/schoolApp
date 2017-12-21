@@ -214,4 +214,16 @@
 		 inner join video b on a.video_id = b.id 
 		   and a.id = #{lectureId}
 	</select>
+
+	<select id="findStudyRecord" parameterType="Integer" resultMap="userHistoryResultMap">
+		select
+		a.id as id,
+		a.user_id as user_id,
+		a.commodity_id as commodity_id,
+		a.class_type_id as class_type_id,
+		sum(IFNULL(a.study_length,0)) as study_length
+		from user_history a where a.user_id=#{userId}
+		and not exists (select 1 from class_type b where b.id = a.class_type_id and b.live_flag = 1)
+		group by a.user_id,a.class_type_id
+	</select>
 </mapper>
