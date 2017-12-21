@@ -172,6 +172,7 @@
 		as topic_no
 		from tiku_category as tc
 		<if test="companyId != null and companyId != ''">where tc.company_id = #{companyId}</if>
+		<if test="oraginType != null and oraginType != ''">and tc.origin_type = #{oraginType}</if>
 	</select>
 	
 	<select id="findTopCountById" parameterType="Integer" resultType="Integer">

@@ -4,6 +4,14 @@
 	var subjectNameArray="";// 新增科目名称集合，已逗号分隔
 	var Forms = {
 		init : function() {
+            var $this=this;
+            $selectMenu("course_class_type");
+            $(".t-content").on('click','a.btn',function(){
+                var _this=$(this),status= _this.hasClass('btn-success');
+                if(!status){
+                    _this.addClass('btn-success').siblings('a').removeClass('btn-success');
+                }
+            });
 			Forms.loadTikuAjax();
 			Forms.loadBtnInfo();
 			$("#jia").hide();
@@ -200,8 +208,15 @@
 			});
 		},
 		loadTikuAjax : function(){
+			var oraginType = null;
+            $("#tiku").find("a").each(function(i){
+                if($(this).hasClass('btn-success')){
+                    oraginType=$(this).attr("ids");
+                }
+            });
 			$.ajax({
 				url : rootPath+"/tikuCategory/loadTikuAjax",
+				data:{"oraginType":oraginType},
 				type : "post",
 				beforeSend:function(XMLHttpRequest){
 		            $(".loading").show();
