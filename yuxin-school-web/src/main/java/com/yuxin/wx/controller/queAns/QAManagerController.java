@@ -3,7 +3,9 @@ package com.yuxin.wx.controller.queAns;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yuxin.wx.api.app.INoticeAndScoreService;
 import com.yuxin.wx.api.queAns.IQuestionAnswerService;
 import com.yuxin.wx.api.queAns.IQuestionService;
 import com.yuxin.wx.api.system.ISysConfigTeacherService;
@@ -56,6 +59,8 @@ public class QAManagerController {
 
     @Autowired
     private IQuestionService questionServiceImpl;
+    @Autowired
+    private INoticeAndScoreService noticeAndScoreServiceImpl;
 
     @RequestMapping("/selAns")
     public String selAnswer(Model model, HttpServletRequest request, QuestionAnswer ans, String types) {
@@ -253,6 +258,11 @@ public class QAManagerController {
     		questionAnswerServiceImpl.update(one);
     		
     		json.put(JsonMsg.MSG, JsonMsg.SUCCESS);
+    		QuestionAnswer questionAnswer = questionAnswerServiceImpl.findQuestionAnswerById(id);
+    		UsersFront user = usersFrontServiceImpl.findUsersFrontById(questionAnswer.getUserId());
+    		Map<String,String>map = new HashMap<String,String>();
+    		map.put("userName",user.getMobile());
+        	noticeAndScoreServiceImpl.sendMsg(request.getRequestURI().replace(request.getContextPath(),""),user.getId().toString(),map);
     		return json;
     		
     	} catch (Exception e) {

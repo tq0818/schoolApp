@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yuxin.wx.api.app.INoticeAndScoreService;
 import com.yuxin.wx.api.auth.IAuthRoleService;
 import com.yuxin.wx.api.company.ICompanyFunctionSetService;
 import com.yuxin.wx.api.company.ICompanyMemberServiceService;
@@ -40,6 +41,7 @@ import com.yuxin.wx.api.system.ISysConfigItemService;
 import com.yuxin.wx.api.system.ISysConfigServiceService;
 import com.yuxin.wx.api.system.ISysConfigTeacherService;
 import com.yuxin.wx.api.system.ISysServiceDredgeConfigService;
+import com.yuxin.wx.api.user.IUsersFrontService;
 import com.yuxin.wx.api.user.IUsersService;
 import com.yuxin.wx.common.ImageCheck;
 import com.yuxin.wx.common.PageFinder;
@@ -57,6 +59,7 @@ import com.yuxin.wx.model.system.SysConfigItem;
 import com.yuxin.wx.model.system.SysConfigService;
 import com.yuxin.wx.model.system.SysConfigTeacher;
 import com.yuxin.wx.model.user.Users;
+import com.yuxin.wx.model.user.UsersFront;
 import com.yuxin.wx.utils.DateUtil;
 import com.yuxin.wx.utils.PropertiesUtil;
 import com.yuxin.wx.utils.WebUtils;
@@ -120,12 +123,16 @@ public class QuestionController {
     @Autowired
     private ICompanyService companyService;
 
-
     @Autowired
     private IAuthRoleService authRoleServiceImpl;
 
     @Autowired
     private ISysConfigTeacherService sysConfigTeacherServiceImpl;
+    
+    @Autowired
+    private INoticeAndScoreService noticeAndScoreServiceImpl;
+    @Autowired
+    private IUsersFrontService usersFrontServiceImpl;
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model, QueQuestion search) {
@@ -163,13 +170,19 @@ public class QuestionController {
     }
     @ResponseBody
     @RequestMapping(value="/shenhe/{id}")
-	public String shenhe(Model model, @PathVariable Integer id) {
+	public String shenhe(HttpServletRequest request,Model model, @PathVariable Integer id) {
     	QueQuestion question =new  QueQuestion();
+    	QueQuestion question2 = questionServiceImpl.findQuestionById(id);
     	question.setId(id);
     	question.setIsChecke(1);
     	Date date = new Date();
  		question.setUpdateTime(date);
+ 		UsersFront user = usersFrontServiceImpl.findUsersFrontById(question2.getUserId());
 	        questionServiceImpl.update(question);
+	        Map<String,String>map = new HashMap<String,String>();
+    		map.put("userName",user.getMobile());
+    		String url = request.getRequestURI().replace(request.getContextPath(),"");
+        	noticeAndScoreServiceImpl.sendMsg(url.substring(0, url.lastIndexOf("/")),user.getId().toString(),map);
 	        return "success";
 	}
 
