@@ -79,7 +79,10 @@
 		del_flag,
 		question_type,
 		question_score,
-		is_checke
+		is_checke,
+		company_id,
+		school_id,
+		label_content
 		
     </sql>
     <sql id="table_columns_app">
@@ -128,7 +131,10 @@
 		#{delFlag},
 		#{questionType},
 		#{questionscore},
-		#{isChecke}
+		#{isChecke},
+		#{companyId},
+		#{schoolId},
+		#{labelContent}
 		
 	</sql>
 	

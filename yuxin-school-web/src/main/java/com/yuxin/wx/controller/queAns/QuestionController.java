@@ -954,8 +954,22 @@ public class QuestionController {
     	queQuestion.setSchoolId(schoolId);
     	queQuestion.setUserId(userId);
     	queQuestion.setDelFlag(1);
+    	queQuestion.setAnswerCount(0);
+    	queQuestion.setScanCount(0);
+    	queQuestion.setAdoptFlag(0);
+    	queQuestion.setEssenceFlag(0);
     	queQuestion.setQuestionType("QUESTION_ADMIN");
-         
+    	String labelContent = queQuestion.getLabelContent();
+    	String[] strings = labelContent.split(",");
+    	StringBuffer label = new StringBuffer().append("[");
+    	for (int i = 0; i < strings.length; i++) {
+			label.append("\"").append(strings[i]).append("\"");
+			if(i != strings.length -1){
+				label.append(",");
+			}
+		}
+    	label.append("]");
+    	queQuestion.setLabelContent(label.toString());
    		try{
 			questionServiceImpl.insertLabReturnId(arrTagName,arrTagId,queQuestion);
    		}catch(Exception e){
