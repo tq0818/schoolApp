@@ -210,8 +210,10 @@ function editRule(objt){
                                          invalidTime = "";
                                      }
 
+                                    var bl=(page-1)*10;
+
                                     var htmlStr='<tr>'+
-			            	                    '<td>'+(i+1)+'</td>'+
+			            	                    '<td>'+(i+1+bl)+'</td>'+
 			            	                    '<td>'+stu.scoreTopic+'</td>'+
 			            	                    '<td><input type="text" value="'+stu.score+'" disabled="disabled"></td>'+
 			            	                    '<td><input type="text" value="'+validTime+'" readonly class="dateRuleStart'+(i+1)+'"></td>'+

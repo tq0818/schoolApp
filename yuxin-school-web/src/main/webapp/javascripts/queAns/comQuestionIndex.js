@@ -278,6 +278,7 @@ $(function(){
 				Form.findQuestion(1,oneId,twoId,jz);
 			},
 			findQuestion : function(pageNo,oneId,twoId,jz,questionName){
+				//注（根据需求变更）：用户自定义标签改为了审核标签，后台接收字段任为userDefuledId，xml文件对应字段做相应改变
 				console.log("pageNo="+pageNo+",systemTagId="+oneId+",userDefuledId="+twoId+",jz="+jz,"questionName="+questionName);
 				var param = "";
 				if(oneId){

@@ -2327,8 +2327,8 @@ public class SimpleclassTypeController {
 		
 		List<SysConfigItem> firstItems = sysConfigItemServiceImpl.findSysConfigItemByPid(SysConfigConstant.ITEMTYPE_FIRST, null, WebUtils.getCurrentCompanyId(), WebUtils.getCurrentSchoolId());
 		model.addAttribute("firstItems", firstItems);
-		return "simpleClasses/classIndex";
-		//return "redirect:../showClassTypePage";
+//		return "simpleClasses/classIndex";
+		return "redirect:/simpleClasses/showClassTypePage";
 	}
 	
 	//下架后班型上架

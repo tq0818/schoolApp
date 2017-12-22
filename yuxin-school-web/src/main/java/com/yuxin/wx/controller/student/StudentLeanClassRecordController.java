@@ -11,6 +11,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.yuxin.wx.api.commodity.ICommodityService;
+import com.yuxin.wx.api.user.IUserHistoryService;
+import com.yuxin.wx.model.user.UserHistory;
+import com.yuxin.wx.vo.app.VideoInfoVO;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -47,11 +51,14 @@ import com.yuxin.wx.vo.student.StudentTiKuOrSubjectVo;
 @Controller
 @RequestMapping("/student_detail")
 public class StudentLeanClassRecordController {
-	
+	@Autowired
+	private ICommodityService commodityServiceImpl;
 	@Autowired
 	private IClassTypeService classTypeServiceImpl;
 	@Autowired
 	private IStudentService	studentServiceImpl;
+	@Autowired
+	private IUserHistoryService userHistoryServiceImpl;
 	/*@Autowired
 	private IUserHistoryService userHistoryServiceImpl	;*/
 //	@Autowired
@@ -60,6 +67,7 @@ public class StudentLeanClassRecordController {
 	private IStudentPayMasterService studentPayMasterServiceImpl;
 	
 	private Log log = LogFactory.getLog("log");
+
 	/**
 	 * 打开学员的学习进度页面
 	 */
@@ -167,27 +175,40 @@ public class StudentLeanClassRecordController {
 	 */
 	public String leanPercent(StudentClassLeanDetailVo data){
 		/**
-		 * 思路：获取到课程下所有的节，包含视频、直播和面授。
+		 * 原思路：获取到课程下所有的节，包含视频、直播和面授。
 		 * 		统计出用户在视频课次中所学习过的课次，其中user_history表中study_status值为3的记录
 		 * 		获取所有的直播和面授的课次的结束时间，遍历集合跟当前时间做比较，其中小于当前时间的为用户已经学习完成的视频和直播课程
 		 */
-		Integer lecCount = totoalLecture(data);
-		Integer lecFinishCount = lectuceFinishCount(data);
-		List<StudentLessTimeVo> lessionEndTimeList = totalLessonVo(data);
-		int lessonFinishCount = lessonFinishCount(lessionEndTimeList);
+		Integer lecCount = totoalLecture(data);//所有的视频课次（视频课的总时长）
+		Integer lecFinishCount = lectuceFinishCount(data);//视频课次完成数量（视频课的实际观看时长）
+		/*List<StudentLessTimeVo> lessionEndTimeList = totalLessonVo(data);//所有的直播课次数量（包含课程开始时间）（直播课的总时长）
+		int lessonFinishCount = lessonFinishCount(lessionEndTimeList);//直播课程完成数量（直播课的实际观看时长）*/
 		
-		return formatePercent(lecCount, lecFinishCount, lessionEndTimeList, lessonFinishCount);
+//		return formatePercent(lecCount, lecFinishCount, lessionEndTimeList, lessonFinishCount);
+		if(lecFinishCount == null){
+			lecFinishCount = 0;
+		}
+		return formatePercent(lecCount, lecFinishCount);
 	}
 	//格式化百分比进度
-	private String formatePercent(Integer lecCount, Integer lecFinishCount, List<StudentLessTimeVo> lessionEndTimeList, int lessonFinishCount) {
-		DecimalFormat df = new DecimalFormat("######0.00");   
-		double finish = lecFinishCount+lessonFinishCount;
-		double sumCount = lecCount+lessionEndTimeList.size();
+	private String formatePercent(Integer lecCount, Integer lecFinishCount) {
+		DecimalFormat df = new DecimalFormat("######0.00");
+		double finish = lecFinishCount;//视频课次完成数量
+		double sumCount = lecCount;//所有的视频课次（包含课程开始时间）
 		if(sumCount == 0)
 			return "0.00";
 		String f = df.format(finish/sumCount*100);
 		return f;
 	}
+	/*private String formatePercent(Integer lecCount, Integer lecFinishCount, List<StudentLessTimeVo> lessionEndTimeList, int lessonFinishCount) {
+		DecimalFormat df = new DecimalFormat("######0.00");   
+		double finish = lecFinishCount+lessonFinishCount;//视频课次完成数量+直播课程完成数量
+		double sumCount = lecCount+lessionEndTimeList.size();//所有的视频课次+所有的直播课次数量（包含课程开始时间）
+		if(sumCount == 0)
+			return "0.00";
+		String f = df.format(finish/sumCount*100);
+		return f;
+	}*/
 	//直播课程完成数量
 	private int lessonFinishCount(List<StudentLessTimeVo> lessionEndTimeList) {
 		int lessonFinishCount = 0;
@@ -289,15 +310,27 @@ public class StudentLeanClassRecordController {
 		List<StudentLessTimeVo> lessionEndTimeList = studentServiceImpl.queryLessionCount(data);
 		return lessionEndTimeList;
 	}
-	//视频课次完成数量
+	//视频课次实际观看时长
 	private Integer lectuceFinishCount(StudentClassLeanDetailVo data) {
+
 		Integer lecFinishCount = studentServiceImpl.queryLecFinishCount(data);
 		return lecFinishCount;
 	}
-	//所有的视频课次
+	//一个课程下所有课程的总时长
 	private Integer totoalLecture(StudentClassLeanDetailVo data) {
-		Integer lecCount = studentServiceImpl.queryLecCount(data);
-		return lecCount;
+	//根据商品ID去查询商品下的所有课程的课次的总时长和
+		List<Integer> listid = new ArrayList<>();
+		listid.add(data.getClassTypeId());
+		List<VideoInfoVO> videoList = commodityServiceImpl.queryVideoInfo(listid);
+		//video表中存在视屏时长
+		int time = 0;
+		for(VideoInfoVO videoInfoVO:videoList){
+			time+=Integer.parseInt(timeChange(videoInfoVO.getVideoTime()));
+		}
+			return time;
+
+	/*	Integer lecCount = studentServiceImpl.queryLecCount(data);
+		return lecCount;*/
 	}
 	/**
 	 * 打开学生所有的学习课程
@@ -322,13 +355,13 @@ public class StudentLeanClassRecordController {
 				Integer stuId = search.getStuId();
 				StudentClassLeanRecordVo vo = studentServiceImpl.queryStudentQuestionCount1(stuId,classTypeId);
 				vo.setName(studentPayMasterVo4.getClassTypeName());
-				vo.setApplyTime(studentPayMasterVo4.getApplyTime());
+				vo.setApplyTime(studentPayMasterVo4.getApplyTime());//报名时间
 				StudentClassLeanDetailVo data = new StudentClassLeanDetailVo();
 		 		data.setStuId(stuId);
 		 		data.setClassTypeId(classTypeId);
 		 		data.setCompanyId(WebUtils.getCurrentCompanyId());
 		 		data.setSchoolId(WebUtils.getCurrentSchoolId());
-		 		vo.setPrecent(leanPercent(data));
+		 		vo.setPrecent(leanPercent(data));//学习进度
 				list.add(vo);
 			}
 			model.addAttribute("list", list);
@@ -349,7 +382,7 @@ public class StudentLeanClassRecordController {
 		search.setCompanyId(WebUtils.getCurrentCompanyId());
 		search.setSchoolId(WebUtils.getCurrentSchoolId());
 		search.setCommodityType("COMMODITY_CLASS");
-		PageFinder<StudentClassLeanDetailVo>  obj =  studentServiceImpl.queryStudentCtOrCpLeanRecord(search);
+		PageFinder<StudentClassLeanDetailVo>  obj = studentServiceImpl.queryStudentCtOrCpLeanRecord(search);
 		return obj;
 	}
 	
@@ -404,7 +437,8 @@ public class StudentLeanClassRecordController {
 			int lessonFinishCount = lessonFinishCount2(lessionEndTimeList);
 			int truantCount = truantCount(lessionEndTimeList);
 			
-			dataMap.put("percent", formatePercent(lecCount, lecFinishCount, lessionEndTimeList, lessonFinishCountNomar)+"%");
+//			dataMap.put("percent", formatePercent(lecCount, lecFinishCount, lessionEndTimeList, lessonFinishCountNomar)+"%");
+			dataMap.put("percent", formatePercent(lecCount, lecFinishCount)+"%");
 			dataMap.put("finishCount", lecFinishCount+lessonFinishCount+"/"+(lecCount+lessionEndTimeList.size()));
 			dataMap.put("truantCount", truantCount==0?"-":truantCount);
 			
@@ -534,8 +568,7 @@ public class StudentLeanClassRecordController {
 	 * 学员做题记录导出
 	 * @author licong
 	 * @date 2016年4月28日 下午11:21:32
-	 * @param  
-	 * @param search
+	 * @param
 	 * @return
 	 */
 	@RequestMapping("/exportExerciseRecord")
@@ -593,6 +626,18 @@ public class StudentLeanClassRecordController {
 			mobile = "";
 		}
 		return mobile;
+	}
+
+	/**
+	 * 将字符串的十分秒转换为秒的字符串
+	 * @param time
+	 * @return
+	 */
+	public String timeChange(String time){
+		String[] array = time.split(":");
+		Integer i = 0;
+		i = new Integer(array[0]).intValue() * 3600 + new Integer(array[1]).intValue() * 60 +new Integer(array[0]).intValue();
+		return i.toString();
 	}
 	
 }

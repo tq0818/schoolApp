@@ -1,5 +1,6 @@
 package com.yuxin.wx.user.mapper;
 
+import java.util.List;
 import java.util.Map;
 
 import com.yuxin.wx.common.BaseMapper;
@@ -27,4 +28,11 @@ public interface UserHistoryMapper extends BaseMapper<UserHistory> {
     void updateUserStudyPlay(Map map);
     
     String queryVideoTime(Integer lectureId);
+
+    /**
+     * 查询用户学习的课程的时长
+     * @param userId
+     * @return
+     */
+    List<UserHistory> findStudyRecord(Integer userId);
 }

@@ -114,4 +114,11 @@ public interface IUserHistoryService  {
     void updateUserStudyPlay(Map map);
     
     String queryVideoTime(Integer lectureId);
+
+	/**
+	 * 查询同一个课程，下所有学习的时长记录
+	 * @param userId
+	 * @return
+	 */
+	List<UserHistory> findStudyRecord(Integer userId);
 }

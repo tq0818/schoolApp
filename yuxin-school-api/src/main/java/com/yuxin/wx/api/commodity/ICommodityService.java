@@ -6,6 +6,7 @@ import java.util.Map;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.common.PageFinder2;
 import com.yuxin.wx.model.commodity.Commodity;
+import com.yuxin.wx.vo.app.VideoInfoVO;
 import com.yuxin.wx.vo.commodity.CommodityDto;
 import com.yuxin.wx.vo.commodity.CommodityVo;
 
@@ -263,5 +264,12 @@ public interface ICommodityService {
 	 * @return
 	 */
 	public Boolean updateFirstRecommend(String appShelvesId,String sort);
+
+	/**
+	 * 通过课程id查询录播信息
+	 * @param listid
+	 * @return
+	 */
+	List<VideoInfoVO> queryVideoInfo(List listid);
 
 }

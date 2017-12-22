@@ -3,6 +3,7 @@ package com.yuxin.wx.commodity.impl;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.yuxin.wx.vo.app.VideoInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -320,5 +321,12 @@ public class CommodityServiceImpl extends BaseServiceImpl implements ICommodityS
         commodityMapper.updateAppShelvesSort(params);
         return true;
     }
+
+    @Override
+    public List<VideoInfoVO> queryVideoInfo(List listid){
+        List<VideoInfoVO> list = commodityMapper.queryVideoInfo(listid);
+        return list;
+    }
+
 
 }

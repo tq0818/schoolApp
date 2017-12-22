@@ -22,6 +22,15 @@ public class TikuCategory extends BaseEntity {
 	private Integer delFlag;		/*禁用*/
 	private String iconBackUrl;/*题库图标地址*/
 	private Integer originType;/* 来源，1表示来自app，0表示来自pc */
+	private String oraginType;
+
+	public String getOraginType() {
+		return oraginType;
+	}
+
+	public void setOraginType(String oraginType) {
+		this.oraginType = oraginType;
+	}
 
 	// Constructor
 	public TikuCategory() {

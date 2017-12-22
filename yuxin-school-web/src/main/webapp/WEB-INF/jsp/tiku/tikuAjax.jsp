@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/decorators/import.jsp"%>
+
 <c:forEach items="${list}" var="cv">
 
 	<c:if test="${cv.delFlag == '0' || empty cv.delFlag }">
@@ -71,11 +72,15 @@
 	</div>
 </c:forEach>
 
-<div class="block active">
-	<div class="b-btns" style="margin-left: -100px; margin-bottom: 120px;"
-		id="addTiku">
-		<div class="btn-addss btn-pro" id="createPro" title="添加题库">
-			<i class="iconfont" style="font-size: 80px">&#xe61c;</i>
+<c:if test="${oraginType  eq 1 }">
+	<div class="block active">
+		<div class="b-btns" style="margin-left: -100px; margin-bottom: 120px;"
+			 id="addTiku">
+			<div class="btn-addss btn-pro" id="createPro" title="添加题库">
+				<i class="iconfont" style="font-size: 80px">&#xe61c;</i>
+			</div>
 		</div>
 	</div>
-</div>
+</c:if>
+
+
