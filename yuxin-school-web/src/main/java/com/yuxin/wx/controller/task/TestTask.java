@@ -13,9 +13,12 @@ import com.yuxin.wx.model.watchInfo.WatchInfo;
 import com.yuxin.wx.utils.HttpPostRequest;
 import com.yuxin.wx.utils.MD5;
 import com.yuxin.wx.vo.user.UserHistoryAllVo;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.support.ApplicationObjectSupport;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -26,6 +29,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Administrator on 2017/10/19.
@@ -45,7 +50,7 @@ public class TestTask {
     private Log log = LogFactory.getLog("log");
 
 //    @RequestMapping(value="/getInfo")
-    @Scheduled(cron = "0 0 21 * * ?") //4小时(参数分别为:秒、分、时、日期、月份、星期、年)0 0 0/4 * * ?
+//    @Scheduled(cron = "0 0/7 0 * * ?") //4小时(参数分别为:秒、分、时、日期、月份、星期、年)0 0 0/4 * * ?
     public void test() {
         //获取当日的课次
 //        Date date = new Date();
@@ -89,16 +94,10 @@ public class TestTask {
                     watchInfoServiceImpl.addWatchInfo(lesson);
                 }
             }
+            
         }
         //获取前一天课次下所有课件
-
-
-
         //getWatchInfoForClass(sdf,lessonDate,map);
-
-
-
-
     }
 
     //获取回看记录
@@ -156,8 +155,8 @@ public class TestTask {
 
 
     //获取前一天录播观看个人信息
-    @RequestMapping(value="/getPlayInfo")
-    @Scheduled(cron = "0 0 21 * * ?") //4小时(参数分别为:秒、分、时、日期、月份、星期、年)0 0 0/4 * * ?
+//    @RequestMapping(value="/getPlayInfo")
+//    @Scheduled(cron = "0 0/10 * * * ?") //4小时(参数分别为:秒、分、时、日期、月份、星期、年)0 0 0/4 * * ?
     public void getPlayInfo() {
         String a = "";
         long b = System.currentTimeMillis()/1000L;
@@ -184,68 +183,86 @@ public class TestTask {
         System.out.println((c));
         String result = null;
         try {
+        	SimpleDateFormat sdft = new SimpleDateFormat("yyyy-MM-dd");
+        	Date createTime = sdft.parse(sdft.format(new Date()));
             result = HttpPostRequest.get("http://spark.bokecc.com/api/playlog/user/v2?"+infoUrl);
             System.out.println(result);
             Gson g = new Gson();
             PlayLogsResult plre =  g.fromJson(result,PlayLogsResult.class);
             System.out.println(plre.getPlay_logs().getPlay_log().size());
             List<PlayLog> playLog = plre.getPlay_logs().getPlay_log();
+            Pattern pattern = Pattern.compile("^[0-9]*$");  
             for(int n  = 0 ; n < playLog.size() ; n++){
-                PlayLog  play = playLog.get(n);
-                UserHistoryAllVo uha =new UserHistoryAllVo();
-                String  [] info = play.getCustom_id().split("_");
-                uha.setUserId(Integer.parseInt(info[0]));
-                uha.setCommodityId(Integer.parseInt(info[1]));
-                uha.setClassTypeId(Integer.parseInt(info[2]));
-                uha.setLectureId(Integer.parseInt(info[3]));
-                uha.setStudyLength(play.getPlay_duration());
-                uha.setStudyTime(date);
-                uha.setDevice(play.getDevice());
-                userHistoryServiceImpl.insertPlayLogs(uha);
-                //若是app的来源，则需要进行插入表操作
-                if("Mobile".equals(play.getDevice())){
-                	Integer userId = Integer.parseInt(info[0]);
-                	Integer commodityId = Integer.parseInt(info[1]);
-                	Integer classTypeId = Integer.parseInt(info[2]);
-                	Integer lectureId = Integer.parseInt(info[3]);
-                	Integer studyLength = play.getPlay_duration();
-                	Date studyTime = date;
-                	String device = play.getDevice();
-                	Map map = new HashMap();
-                	map.put("userId",userId);
-                	map.put("commodityId",commodityId);
-                	map.put("classTypeId",classTypeId);
-                	map.put("lectureId",lectureId);
-                	//查询是否存在该条记录，如果存在则判断是否已学习完。不存在则插入
-                	String videoTime = userHistoryServiceImpl.queryVideoTime(lectureId);
-                	videoTime = timeChange(videoTime);
-                	UserStudyPlay userStudyPlay = userHistoryServiceImpl.queryUserStudyPlay(map);
-                	//存在，则判断是否已学习完，学完则跳过，反之则需要判断此次回写的学习时长与该课次的时长进行比较来放入status状态
-                	if(userStudyPlay != null){
-                		Integer status = userStudyPlay.getStatus();
-                		if(status.intValue() != 1){
-                			map.put("studyTime", studyTime);
-                			map.put("studyLength", studyLength);
-                			map.put("create", new Date());
-                			if(studyLength == Integer.parseInt(videoTime)){
-                    			map.put("status",1);//已完成
-                    		}else{
-                    			map.put("status",0);//未完成
-                    		}
-                			userHistoryServiceImpl.updateUserStudyPlay(map);
-                		}
-                	}else{
-                		map.put("studyTime", studyTime);
-            			map.put("studyLength", studyLength);
-            			map.put("create", new Date());
-                		if(studyLength == Integer.parseInt(videoTime)){
-                			map.put("status",1);//已完成
-                		}else{
-                			map.put("status",0);//未完成
-                		}
-                		userHistoryServiceImpl.insertUserStudyPlay(map);
-                	}
-                }
+            	try{
+            		 PlayLog  play = playLog.get(n);
+                     UserHistoryAllVo uha =new UserHistoryAllVo();
+                     String  [] info = play.getCustom_id().split("_");
+                     //判断用户id是否符合规则
+                     Matcher matcher = pattern.matcher(info[0]);
+                     if(!matcher.matches()){
+                    	 continue;
+                     }
+                     uha.setUserId(Integer.parseInt(info[0]));
+                     uha.setCommodityId(Integer.parseInt(info[1]));
+                     uha.setClassTypeId(Integer.parseInt(info[2]));
+                     uha.setLectureId(Integer.parseInt(info[3]));
+                     uha.setStudyLength(play.getPlay_duration());
+                     uha.setStudyTime(date);
+                     uha.setDevice(play.getDevice());
+                     userHistoryServiceImpl.insertPlayLogs(uha);
+                     //若是app的来源，则需要进行插入表操作
+                     if("Mobile".equals(play.getDevice())){
+                     	Integer userId = Integer.parseInt(info[0]);
+                     	Integer commodityId = Integer.parseInt(info[1]);
+                     	Integer classTypeId = Integer.parseInt(info[2]);
+                     	Integer lectureId = Integer.parseInt(info[3]);
+                     	Integer studyLength = play.getPlay_duration();
+                     	Date studyTime = date;
+                     	String device = play.getDevice();
+                     	Map map = new HashMap();
+                     	map.put("userId",userId);
+                     	map.put("commodityId",commodityId);
+                     	map.put("classTypeId",classTypeId);
+                     	map.put("lectureId",lectureId);
+                     	//查询是否存在该条记录，如果存在则判断是否已学习完。不存在则插入
+                     	String videoTime = userHistoryServiceImpl.queryVideoTime(lectureId);
+                     	if(StringUtils.isEmpty(videoTime)){
+                     		continue;
+                     	}
+                     	videoTime = timeChange(videoTime);
+                     	UserStudyPlay userStudyPlay = userHistoryServiceImpl.queryUserStudyPlay(map);
+                     	//存在，则判断是否已学习完，学完则跳过，反之则需要判断此次回写的学习时长与该课次的时长进行比较来放入status状态
+                     	if(userStudyPlay != null){
+                     		Integer status = userStudyPlay.getStatus();
+                     		if(status.intValue() != 1){
+                     			map.put("studyTime", studyTime);
+                     			map.put("studyLength", studyLength);
+                     			map.put("createTime",createTime);
+                     			if(studyLength == Integer.parseInt(videoTime)){
+                         			map.put("status",1);//已完成
+                         		}else{
+                         			map.put("status",0);//未完成
+                         		}
+                     			userHistoryServiceImpl.updateUserStudyPlay(map);
+                     		}
+                     	}else{
+                     		map.put("studyTime", studyTime);
+                 			map.put("studyLength", studyLength);
+                 			map.put("createTime",createTime);
+                     		if(studyLength == Integer.parseInt(videoTime)){
+                     			map.put("status",1);//已完成
+                     		}else{
+                     			map.put("status",0);//未完成
+                     		}
+                     		userHistoryServiceImpl.insertUserStudyPlay(map);
+                     	}
+                     }
+            	}catch(Exception e){
+            		e.printStackTrace();
+            		continue;
+            	}
+               
+                System.out.println("定时任务:" + n);
             }
         } catch (Exception e) {
             e.printStackTrace();

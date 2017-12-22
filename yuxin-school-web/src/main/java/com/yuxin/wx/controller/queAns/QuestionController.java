@@ -941,12 +941,6 @@ public class QuestionController {
     	queQuestion.setSchoolId(schoolId);
     	queQuestion.setUserId(userId);
     	queQuestion.setDelFlag(1);
-    	//2017-12-21 zj  修改
-    	queQuestion.setAnswerCount(0);
-    	queQuestion.setAdoptFlag(0);
-    	queQuestion.setTopFlag(0);
-    	queQuestion.setEssenceFlag(0);
-    	queQuestion.setQuestionType("QUESTION_ADMIN");
          
    		try{
 			questionServiceImpl.insertLabReturnId(arrTagName,arrTagId,queQuestion);
