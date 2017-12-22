@@ -553,6 +553,8 @@ public interface IStudentService  {
 	 * 已经完成的视频课次
 	 */
 	Integer queryLecFinishCount(StudentClassLeanDetailVo codition);
+
+	Integer studyTime(StudentClassLeanDetailVo codition);
 	/**
 	 * 更新导入学员
 	 */
