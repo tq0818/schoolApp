@@ -83,7 +83,7 @@ public class ClassModuleLesson extends BaseEntity {
     private String afterStudyUrl;
     private String ccApiKey;
     
-    private String hccId;
+    private String hccId;//回放的ccId
     private String hccUserId;
     private String hccApiKey;
     private Integer videoClassTypeId;
