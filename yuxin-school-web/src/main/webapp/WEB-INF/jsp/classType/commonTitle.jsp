@@ -59,7 +59,9 @@
           		</c:if>
           	 </c:when>
           	 <c:otherwise>
-          	 	<button class="public_course" ids="${ct.id }" mark="sale">发布</button>
+				 <c:if test="${ct.originType eq 1}">
+					<button class="public_course" ids="${ct.id }" mark="sale">发布</button>
+				 </c:if>
           	 </c:otherwise>
           </c:choose>
     </div>
