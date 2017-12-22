@@ -313,7 +313,8 @@ public class StudentLeanClassRecordController {
 	//视频课次实际观看时长
 	private Integer lectuceFinishCount(StudentClassLeanDetailVo data) {
 
-		Integer lecFinishCount = studentServiceImpl.queryLecFinishCount(data);
+		/*Integer lecFinishCount = studentServiceImpl.queryLecFinishCount(data);*/
+		Integer lecFinishCount = studentServiceImpl.studyTime(data);
 		return lecFinishCount;
 	}
 	//一个课程下所有课程的总时长

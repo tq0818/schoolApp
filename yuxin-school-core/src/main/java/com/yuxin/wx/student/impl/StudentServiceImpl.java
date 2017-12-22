@@ -951,6 +951,13 @@ public class StudentServiceImpl extends BaseServiceImpl implements IStudentServi
 		Integer dataListCount = studentMapper.queryLecFinishCount(codition);
 		return dataListCount;
 	}
+	//studyTime
+	@Override
+	public Integer studyTime(StudentClassLeanDetailVo codition){
+		Integer dataListCount = studentMapper.studyTime(codition);
+		return dataListCount;
+	}
+
 	/**
 	 * 课程包  所有的视频课次数
 	 */
