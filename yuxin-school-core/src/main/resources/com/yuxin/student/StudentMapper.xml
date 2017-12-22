@@ -2209,6 +2209,13 @@
 
 	</select>
 
+	<select id="studyTime" parameterType="com.yuxin.wx.vo.student.StudentClassLeanDetailVo" resultType="int">
+		SELECT  MAX(IFNULL(a.study_length, 0))   FROM user_history_all a
+		WHERE a.user_id = ( SELECT a.id FROM users_front a LEFT JOIN student b
+		ON b.user_id = a.id
+		WHERE b.id = #{stuId}) and a.class_type_id = #{classTypeId}
+	</select>
+
 	<!--课程包   所有的视频课次数 -->
 	<select id="queryCpLecCount" parameterType="com.yuxin.wx.vo.student.StudentClassLeanDetailVo" resultType="int">
 		SELECT COUNT(DISTINCT f.id)
