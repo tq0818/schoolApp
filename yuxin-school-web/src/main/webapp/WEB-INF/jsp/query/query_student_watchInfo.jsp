@@ -32,8 +32,8 @@
 		<c:if test="${role=='area'}">
 			<jsp:include page="/WEB-INF/jsp/menu/menu_statistics_query_area.jsp"></jsp:include>
 		</c:if>--%>
-		<div class="right-side set-system">
-			<div class="mainbackground nopadding">
+		<div class="right-side set-system" style="width: 100%">
+			<div class="mainbackground nopadding" style="margin: 0 10px;">
 				<div class="heading">
 					<h2 class="h5">直播情况</h2>
 					<span class="line"></span>
@@ -96,7 +96,7 @@
 		<script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 		<script type="text/javascript">
 
-            $selectThirdMenu('watchInfoList');
+            $selectSubMenu('watchInfoList');
             function queryChartData(){
                 if ($("#endDate").val() != "") {
                     if ($("#endDate").val() < $("#startDate").val()) {

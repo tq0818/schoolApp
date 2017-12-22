@@ -22,8 +22,8 @@
     }
 </style>
 <script>
-//	$(function() {
-//        $selectMenu('userVideoList');
+    $(function() {
+        $selectMenu('statistics_all');
 //        $selectSubMenu('watchInfoList');
-//    })
+    })
 </script>
