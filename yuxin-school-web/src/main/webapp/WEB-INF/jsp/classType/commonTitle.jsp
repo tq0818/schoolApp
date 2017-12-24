@@ -9,13 +9,13 @@
          	 <%-- <c:if test="${ct.originType eq 1}">
          	 </c:if> --%>
       <c:choose>
-         	 <c:when test="${ct.publishStatus=='CLASS_ON_SALE' }">
+         	 <c:when test="${ct.isShelves=='1' }">
          		 <div class="labels classStatus">
 				            <s id="statusText">售卖中</s>
 				       <div class="sanjiao"></div>
 				   </div>
          	 </c:when>
-         	  <c:when test="${ct.publishStatus=='CLASS_STOP_SALE' }">
+         	  <c:when test="${ct.isShelves=='0' }">
          		 <div class="labels classStatus else1">
 				            <s id="statusText">已下架</s>
 				       <div class="sanjiao"></div>
@@ -53,7 +53,7 @@
         	价格：${ct.realPrice }元
         </div>
         <c:choose>
-          	 <c:when test="${ct.publishStatus=='CLASS_ON_SALE' }">
+          	 <c:when test="${ct.isShelves=='1' }">
           	 	<c:if test="${ct.originType eq 1}">
           		<button class="public_course" ids="${ct.id }" mark="nosale">下架</button>
           		</c:if>

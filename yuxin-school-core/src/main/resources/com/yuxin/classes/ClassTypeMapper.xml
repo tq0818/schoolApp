@@ -48,6 +48,8 @@
 		<result property="itemFourthCode" column="item_fourth_code" />
 		<result property="paperDescription" column="paper_description" />
 		<result property="originType" column="origin_type"/>
+		<result property="isShelves" column="is_shelves"/>
+
 	</resultMap>
 	
 	<resultMap type="com.yuxin.wx.vo.classes.ClassTypeVo" id="classTypeVoResultMap">
@@ -434,9 +436,66 @@
 	</update>
 	
 	<select id="findById" resultMap="classTypeResultMap" parameterType="String" >
-		select <include refid="table_columns" />
-		from class_type
-		where id = #{id}
+		select
+			ct.id,
+		ct.name,
+		ct.type_code,
+		ct.original_price,
+		ct.real_price,
+		ct.schools_id,
+		ct.item_one_id,
+		ct.item_second_id,
+		ct.description,
+		ct.publish_status,
+		ct.publish_time,
+		ct.is_sale,
+		ct.cover,
+		ct.sub_title,
+		ct.detail_desc,
+		ct.create_time,
+		ct.creator,
+		ct.update_time,
+		ct.updator,
+		ct.del_flag,
+		ct.company_id,
+		ct.lable_type,
+		ct.base_num,
+		ct.teacher_id,
+		ct.face_flag,
+		ct.live_flag,
+		ct.video_flag,
+		ct.remote_flag,
+		ct.recommend_flag,
+		ct.create_school_id,
+		ct.item_tag,
+		ct.validity_day,
+		ct.validity_date,
+		ct.video_watch_count,
+		ct.live_watch_count,
+		ct.integral_flag,
+		ct.member_flag,
+		ct.buy_num_max,
+		ct.protocol_id,
+		ct.icon_lable,
+		ct.item_one_code,
+		ct.item_second_code,
+		ct.item_third_code,
+		ct.item_fourth_code,
+		ct.is_micro_class,
+		ct.paper_description,
+		ct.origin_type,
+		 case when ((
+			app.is_shelves = 1
+			AND app.reserve_time IS NULL
+			)
+			OR (
+			app.is_shelves = 1
+			AND now() > app.reserve_time
+			)
+			) then 1 else 0 end  as is_shelves
+		from class_type ct
+		left join app_shelves app on app.comdity_id=ct.id
+		where ct.id = #{id}
 	</select>
 	
 	<select id="queryAll" resultMap="classTypeResultMap">
@@ -502,9 +561,19 @@
 		  b.item_name AS itemOneName,
 		  c.item_name AS itemSecondName,
 		  d.item_name AS itemThirdName,
-		 a.item_fourth_code AS itemFourthName
+		 a.item_fourth_code AS itemFourthName,
+		 case when ((
+			app.is_shelves = 1
+			AND app.reserve_time IS NULL
+			)
+			OR (
+			app.is_shelves = 1
+			AND now() > app.reserve_time
+			)
+			) then 1 else 0 end  as isShelves
 		FROM
 		  class_type a
+		left join app_shelves app on app.comdity_id=a.id
 		LEFT JOIN sys_config_item b on a.item_one_code = b.item_code
 		LEFT JOIN sys_config_item c on c.item_code = a.item_second_code
 		LEFT JOIN sys_config_item d on d.item_code = a.item_third_code
