@@ -27,9 +27,9 @@ import com.yuxin.wx.utils.SignatureUtils;
  */
 public class TextCheck {
     /** 产品密钥ID，产品标识 */
-    private final static String SECRETID = "4ebfc3e6f3ea895a756e4f42b107928d";
+    private final static String SECRETID = "ce829f22b0b1a7cfef2e22fb2ae7ddbf";
     /** 产品私有密钥，服务端生成签名信息使用，请严格保管，避免泄露 */
-    private final static String SECRETKEY = "4c0da0c13a52e054ebf95ae43b2e0d10";
+    private final static String SECRETKEY = "3ae31a0c0584b593792a2b2b5b577527";
     /** 业务ID，易盾根据产品业务特点分配 */
 //    private final static String BUSINESSID = "af69b70c7f08ef78b035923417c7fb1c";
     /** 易盾反垃圾云服务文本在线检测接口地址 */
