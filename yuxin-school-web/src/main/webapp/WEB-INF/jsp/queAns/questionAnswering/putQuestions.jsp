@@ -199,7 +199,6 @@
     			 }
     		 }
     	 }
-    	 console.log(labelContentString);
     	 var labelContent = labelContentString +","+ labelContentMyString;
     	 var systemId=new Array();
     	 var userDefued=new Array();
