@@ -35,7 +35,7 @@
                     <button type="button" class="btn btn-default labelContent" name="panduan" labtype="0" ids="${stag.id }">${stag.labName }</button>
                	</c:forEach>
             </div>
-            <div class="checkBoxBtn">
+            <%--<div class="checkBoxBtn">
                 <span>自定义标签:</span>
                 <div id="zdyBtn">
 	                <c:forEach items="${userDefinedTag }" var="udt" varStatus="status">
@@ -52,7 +52,7 @@
                         <button type="button" class="btn btn-success labelAdd">+</button>
                     </li>
                 </ul>
-            </div>
+            </div>--%>
             <div class="contentBox">
                 <span>内容:</span>
                 <div id="ckecktor"> 

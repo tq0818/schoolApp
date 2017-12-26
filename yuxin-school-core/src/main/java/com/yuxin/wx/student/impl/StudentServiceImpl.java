@@ -1387,6 +1387,7 @@ public class StudentServiceImpl extends BaseServiceImpl implements IStudentServi
 	 */
 	@Override
 	public PageFinder<StudentClassLeanDetailVo> queryStudentCtOrCpLeanRecord(StudentClassLeanDetailVo codition) {
+		codition.setPageSize(10);
 		List<StudentClassLeanDetailVo> dataList = studentMapper.queryStudentCtOrCpLeanRecord(codition);
 		Integer dataListCount = studentMapper.queryStudentCtOrCpLeanRecordCount(codition);
 		PageFinder<StudentClassLeanDetailVo> pageFinder = new PageFinder<StudentClassLeanDetailVo>(codition.getPage(),codition.getPageSize(),dataListCount,dataList);
