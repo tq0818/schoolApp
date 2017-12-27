@@ -424,17 +424,17 @@
                         }
                         $(".haostatus").each(function (i) {
                             if ($.trim($(this).text()) == "未开通") {
-                                $(this).css("color", "red");
+                                $(this).css("color", "#f97a79");
                             }
                         });
                         $(".ustatus").each(function (i) {
                             if ($.trim($(this).text()) == "禁用") {
-                                $(this).css("color", "red");
+                                $(this).css("color", "#f97a79");
                             }
                         });
                         $(".baoming").each(function (i) {
                             if ($.trim($(this).text()) == "未报名") {
-                                $(this).css("color", "red");
+                                $(this).css("color", "#f97a79");
                             }
                         });
                     },

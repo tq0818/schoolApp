@@ -49,6 +49,10 @@ public class PageFinder<T> implements Serializable {
 	 * 是否有下一页
 	 */
 	private boolean hasNext = false;
+	/**
+	 * 课程总评分
+	 */
+	private Double overallScore = 0.0;
 
 	public PageFinder(int pageNo, int rowCount) {
 		this.pageNo = pageNo;
@@ -181,4 +185,15 @@ public class PageFinder<T> implements Serializable {
 	public int getStartOfPage() {
 		return (pageNo - 1) * pageSize;
 	}
+
+	public Double getOverallScore() {
+		return overallScore;
+	}
+
+	public void setOverallScore(Double overallScore) {
+		this.overallScore = overallScore;
+	}
+
+	
+	
 }

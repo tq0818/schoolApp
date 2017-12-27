@@ -42,7 +42,7 @@ public class QuestionAnswer extends BaseEntity {
 	private Integer adoptFlag; //记录采纳数量
 	private Integer isAccept;//该回答是否被采纳
 	private Integer questionscore;//问题奖励积分
-	private Integer isChecke;//是否需要审核标识  1 不需要  2需要
+	private Integer isChecke;//是否需要审核标识 0是不通过 1,是通过
 	// Constructor
 	public QuestionAnswer() {
 	}

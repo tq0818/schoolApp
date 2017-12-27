@@ -4399,7 +4399,20 @@ public class StudentController {
     @ResponseBody
     @RequestMapping(value = "/integralRuleAjax")
     public PageFinder<ScoreRulsAppVo> queryScoreRulsAppVoList(HttpServletRequest request,ScoreRulsAppVo scoreRulsAppVo){
-    	return integralManageServiceImpl.queryPageScoreRulsAppVos(scoreRulsAppVo);
+        PageFinder<ScoreRulsAppVo> data = integralManageServiceImpl.queryPageScoreRulsAppVos(scoreRulsAppVo);
+        int i = 1;
+        if (scoreRulsAppVo.getPage() > 1) {
+            for (ScoreRulsAppVo appVo : data.getData()) {
+                appVo.setSort((scoreRulsAppVo.getPage()-1) * scoreRulsAppVo.getPageSize()+i);
+                i++;
+            }
+        } else {
+            for (ScoreRulsAppVo appVo : data.getData()) {
+                appVo.setSort(i);
+                i++;
+            }
+        }
+        return data;
     }
     /**
      * 更新积分规则状态

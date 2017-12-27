@@ -53,7 +53,7 @@
                                     <button updateId="${ntv.id}" status="${ntv.noticeStatus}" class="btn btn-success forbidBtn">启用</button>
                                 </c:otherwise>
                             </c:choose>
-                            <button class="btn btn-primary editNoticeBtn" id="${ntv.id}">编辑</button>
+                            <button class="btn btn-primary editNoticeBtn " id="${ntv.id}">编辑</button>
                         </td>
                     </tr>
                 </c:forEach>
@@ -76,6 +76,7 @@
         <ul>
             <li><button class="btn btn-primary" onclick="fillTemplate($(this));" code="(aa)">用户名称(aa)</button></li>
             <li><button class="btn btn-primary" onclick="fillTemplate($(this));" code="(bb)">课程名称(bb)</button></li>
+            <li><button class="btn btn-primary" onclick="fillTemplate($(this));" code="(ff)">课次名称(gg)</button></li>
             <li><button class="btn btn-primary" onclick="fillTemplate($(this));" code="(cc)">上课时间(cc)</button></li>
             <li><button class="btn btn-primary" onclick="fillTemplate($(this));" code="(dd)">积分变更名目(dd)</button></li>
             <li><button class="btn btn-primary" onclick="fillTemplate($(this));" code="(ee)">变化积分值(ee)</button></li>

@@ -508,6 +508,7 @@
         <if test="itemId !=null and itemId!='' ">and app.knowledge_pro_id= #{itemId}</if>
         <if test="stageId !=null and stageId!='' ">and app.stage_id= #{stageId}</if>
         GROUP BY c.id
+        ORDER BY app.sort is null,app.sort asc,ct.update_time desc
         limit #{firstIndex},#{pageSize}
     </select>
 
@@ -537,7 +538,8 @@
 
     <!--查询直播-->
     <select id="getZhiBoModelListByIds" parameterType="map" resultMap="commodityVo1ResultMap">
-        select app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as
+        select * from(
+        select ct.update_time,app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as
         realPrice,CONCAT(date_format(cml.lesson_date,"%Y-%m-%d"),' ',cml.lesson_time_start) as lesson_date,sct.NAME
         teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl, case when app.is_shelves is
         null then '0' else app.is_shelves end as isShelves, date_format(app.shelves_time,'%Y-%m-%d %T') as shelvesTime, ct.cover as cover,
@@ -559,7 +561,7 @@
         and app.category_id =#{categoryid}
         GROUP BY c.id
         UNION
-        select app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as
+        select ct.update_time,app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as
         realPrice,CONCAT(date_format(cml.lesson_date,"%Y-%m-%d"),' ',cml.lesson_time_start) as lesson_date,
         sct.NAME teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl,
         case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
@@ -594,7 +596,8 @@
         <if test="typeId !=null and typeId!=''">and app.type_id = #{typeId}</if>
         <if test="itemId !=null and itemId!='' ">and app.knowledge_pro_id= #{itemId}</if>
         <if test="stageId !=null and stageId!='' ">and app.stage_id= #{stageId}</if>
-        GROUP BY c.id HAVING MAX(cml.lesson_date) <![CDATA[<]]> NOW()
+        GROUP BY c.id HAVING MAX(cml.lesson_date) <![CDATA[<]]> NOW())temp
+        ORDER BY sort is null,sort asc,update_time desc
         limit #{firstIndex},#{pageSize}
     </select>
 
@@ -671,7 +674,36 @@
             update app_shelves set sort = #{sort} where id = #{appShelvesId}
         </if>
         <if test="sort==null or sort==''">
-            update app_shelves set sort=null where id = #{appShelvesId}deleteFirstRecommendByIds
+            update app_shelves set sort=null where id = #{appShelvesId}
         </if>
     </update>
+
+    <select id="queryVideoInfo" resultType="com.yuxin.wx.vo.app.VideoInfoVO">
+        SELECT
+        a.id as id,
+        a.company_id as companyId,
+        a. NAME as className,
+        a.cover as coverUrl,
+        f.video_time as videoTime,
+        g.base_num + g.buy_num as buyNum,
+        g.id as comId,
+        i.name as name,
+        a.live_flag as liveFlag
+        FROM
+        commodity g
+        INNER JOIN commodity_product_realtion h ON g.id = h.product_id
+        INNER JOIN class_type a ON h.com_id = a.id
+        INNER JOIN class_type_module_relation b ON a.id = b.class_type_id
+        INNER JOIN class_module c ON b.module_id = c.id
+        INNER JOIN course_video_chapter d ON c.id = d.module_id
+        INNER JOIN course_video_lecture e ON d.id = e.chapter_id
+        INNER JOIN video f ON e.video_id = f.id
+        INNER JOIN sys_config_teacher i ON i.id = a.teacher_id
+        INNER JOIN app_shelves aps ON aps.comdity_id = g.id AND aps.is_shelves = 1
+        WHERE a.del_flag = '0'
+        AND a.id in
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

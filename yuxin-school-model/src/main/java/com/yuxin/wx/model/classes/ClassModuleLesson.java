@@ -83,9 +83,11 @@ public class ClassModuleLesson extends BaseEntity {
     private String afterStudyUrl;
     private String ccApiKey;
     
-    private String hccId;
+    private String hccId;//回放的ccId
     private String hccUserId;
     private String hccApiKey;
+    private Integer videoClassTypeId;
+    private Integer lectureId;
 	public TikuPaper getTikuPaper() {
 		return tikuPaper;
 	}
@@ -629,6 +631,22 @@ public class ClassModuleLesson extends BaseEntity {
 
 	public void setHccApiKey(String hccApiKey) {
 		this.hccApiKey = hccApiKey;
+	}
+
+	public Integer getVideoClassTypeId() {
+		return videoClassTypeId;
+	}
+
+	public void setVideoClassTypeId(Integer videoClassTypeId) {
+		this.videoClassTypeId = videoClassTypeId;
+	}
+
+	public Integer getLectureId() {
+		return lectureId;
+	}
+
+	public void setLectureId(Integer lectureId) {
+		this.lectureId = lectureId;
 	}
 	
 }

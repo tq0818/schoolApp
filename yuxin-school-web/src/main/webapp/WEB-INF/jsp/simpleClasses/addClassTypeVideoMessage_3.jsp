@@ -67,6 +67,7 @@
 	<input type="hidden" name="type1" value="${type }"/>
 </form>
 <jsp:include page="/WEB-INF/jsp/menu/menu_class.jsp"></jsp:include>
+	<input type="hidden" id="originType" value="${ct.originType}"/>
 <div class="u-wrap classes">
     <div class="nopadding">
         <div class="steps">

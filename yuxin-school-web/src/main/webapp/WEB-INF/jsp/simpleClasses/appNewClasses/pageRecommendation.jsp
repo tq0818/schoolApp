@@ -28,7 +28,7 @@
                 <span class="t-content" id="gradeId">
                      <a href="javascript:Form.showAllShelvesClssType('all','gradeId');"  data-code="all" class="btn btn-mini btn-default btn-success">全部</a>
                     <c:forEach items="${grades}" var="grade">
-                           <a href="javascript:Form.showAllShelvesClssType('${grade.id}','gradeId');" data-code="${grade.id}" class="btn btn-mini btn-default">${grade.name}</a>
+                               <a href="javascript:Form.showAllShelvesClssType('${grade.id}','gradeId');" data-code="${grade.id}" class="btn btn-mini btn-default">${grade.name}</a>
                     </c:forEach>
                 </span>
             </p>

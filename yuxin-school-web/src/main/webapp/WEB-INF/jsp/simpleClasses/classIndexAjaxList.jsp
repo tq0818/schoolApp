@@ -17,17 +17,19 @@
 <form method="post" id="myForm01"></form>
 <div class="m-list clear">
 	<ul class="clear" id="ulListss">
-		<li class='add-class'> <a href='javascript:;' class="checkStudent operate_btn btn-sel-stu"><i class='iconfont icons'>&#xe61c;</i></a></li>
+		<c:if test="${originType=='1'}">
+			<li class='add-class'> <a href='javascript:;' class="checkStudent operate_btn btn-sel-stu"><i class='iconfont icons'>&#xe61c;</i></a></li>
+		</c:if>
 		<c:forEach items="${pageFinder.data }" var="allCommdotity" varStatus="status">
 			<li id="commodityLi${allCommdotity.id }" onmouseover="Form.showSave(${allCommdotity.id})" onmouseout="Form.closeSave(${allCommdotity.id})" publishStatus="${allCommdotity.publishStatus}">
-				<c:choose>
+				<%--<c:choose>
 					<c:when test="${allCommdotity.originType eq 1}">
 						<span class="fromIconPhone"></span>
 					</c:when>
 					<c:otherwise>
 						<span class="fromIconPc"></span>
 					</c:otherwise>
-				</c:choose>
+				</c:choose>--%>
 				<%--<c:choose>
 					<c:when test="${allCommdotity.publishStatus=='CLASS_STOP_SALE' }">
 						<i class="tips tips_type" style="background-color: rgba(231,31,26,0.8);color: white;">
@@ -88,9 +90,9 @@
 					<%--	<c:if test="${allCommdotity.faceFlag==1 }">
 							<a href="javascript:;" mark="face" class="btn btn-mini btn-default">面授</a>
 						</c:if>--%>
-						<c:if test="${allCommdotity.liveFlag==0&&allCommdotity.videoFlag==0&&allCommdotity.faceFlag==0 }">
+						<%--<c:if test="${allCommdotity.liveFlag==0&&allCommdotity.videoFlag==0&&allCommdotity.faceFlag==0 }">
 							<a href="javascript:;" mark="remote" class="btn btn-mini btn-default">其他</a>
-						</c:if>
+						</c:if>--%>
 					</div>
 					<p class="descript" title="${allCommdotity.description }">
 						<c:if test="${fn:length(allCommdotity.description)>15}">
@@ -114,9 +116,9 @@
 						</c:if>
 						<c:if test="${allCommdotity.isShelves == '' or allCommdotity.isShelves == 0}">
 							<%--<a href="javascript:Form.classTypeOnsale('${allCommdotity.appId}_${allCommdotity.id}');" class="btn btn-sm btn-default upSale">上架</a>--%>
-						<c:if test="${allCommdotity.publishStatus!='CLASS_UNPUBLISHED'}">
+						<%--<c:if test="${allCommdotity.publishStatus!='CLASS_UNPUBLISHED'}">--%>
 							<a href="javascript:toOnsaleEdit('${allCommdotity.appId}_${allCommdotity.id}','${allCommdotity.liveFlag}');" class="btn btn-sm btn-default upSale eidtShelvesCourses">上架</a>
-						</c:if>
+						<%--</c:if>--%>
 							<a href="javascript:Form.editClassType(${allCommdotity.id });" class="btn btn-sm btn-primary">管理</a>
 
 						</c:if>

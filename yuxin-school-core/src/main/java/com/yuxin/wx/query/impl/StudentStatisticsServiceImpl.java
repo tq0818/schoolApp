@@ -2,6 +2,7 @@ package com.yuxin.wx.query.impl;
 
 import com.yuxin.wx.api.query.IStudentStatisticsService;
 import com.yuxin.wx.common.PageFinder2;
+import com.yuxin.wx.model.system.SysConfigItemRelation;
 import com.yuxin.wx.model.system.SysConfigTeacher;
 import com.yuxin.wx.model.watchInfo.WatchInfoResult;
 import com.yuxin.wx.query.mapper.StudentStatisticsMapper;
@@ -174,9 +175,42 @@ public class StudentStatisticsServiceImpl implements IStudentStatisticsService{
             a.put ("watchTime",h + "小时" + m + "分" + s +"秒");
 
         }
-
-
         return result;
+    }
+
+    @Override
+    public PageFinder2<Map> queryStudentsWatchInfoCountCurrent(Map<String, Object> map) {
+        List<Map> data = studentstatisticsMapper.queryStudentsWatchInfoCountCurrent(map);
+        Integer count = studentstatisticsMapper.queryStudentsWatchInfoCountCurrentCount(map);
+        if(count==null){
+            count=0;
+        }
+
+        PageFinder2<Map> pageFinder = new PageFinder2<Map>(
+                (Integer)map.get("page"), (Integer)map.get("pageSize"), count, data);
+        return pageFinder;
+
+        //return studentstatisticsMapper.queryStudentsWatchInfoCountCurrent(map);
+    }
+
+    @Override
+    public List<Map> queryStudentsWatchInfoTime(Map<String, Object> map) {
+        return studentstatisticsMapper.queryStudentsWatchInfoTime(map);
+    }
+
+    @Override
+    public List<Map> exportStudentsWatchInfoCountCurrent(Map<String, Object> map) {
+        return studentstatisticsMapper.exportStudentsWatchInfoCountCurrent(map);
+    }
+
+    @Override
+    public List<Map> exportStudentsWatchInfoCountData(Map<String, Object> map) {
+        return studentstatisticsMapper.exportStudentsWatchInfoCountData(map);
+    }
+
+    @Override
+    public List<Map<String, Object>> getAreaTotalStatistics(Map<String, Object> map) {
+        return studentstatisticsMapper.getAreaTotalStatistics(map);
     }
 
 

@@ -18,6 +18,7 @@ public class HomePageResultVO implements Serializable {
 	private List<SysDictAppVO> gradeList;//学段集合
 	private List<CourseResultVO> courseResultVOList;//查询的结果集
 	private List<SysDictAppVO> subjectList;//学科的集合
+	private List<SysDictAppVO> pullDataList;//查询中考高考选择学科返回的知识面
 	public Integer getFlag() {
 		return flag;
 	}
@@ -47,6 +48,12 @@ public class HomePageResultVO implements Serializable {
 	}
 	public void setSubjectList(List<SysDictAppVO> subjectList) {
 		this.subjectList = subjectList;
+	}
+	public List<SysDictAppVO> getPullDataList() {
+		return pullDataList;
+	}
+	public void setPullDataList(List<SysDictAppVO> pullDataList) {
+		this.pullDataList = pullDataList;
 	}
 	
 }

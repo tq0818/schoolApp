@@ -48,6 +48,8 @@
 		<result property="itemFourthCode" column="item_fourth_code" />
 		<result property="paperDescription" column="paper_description" />
 		<result property="originType" column="origin_type"/>
+		<result property="isShelves" column="is_shelves"/>
+
 	</resultMap>
 	
 	<resultMap type="com.yuxin.wx.vo.classes.ClassTypeVo" id="classTypeVoResultMap">
@@ -434,9 +436,66 @@
 	</update>
 	
 	<select id="findById" resultMap="classTypeResultMap" parameterType="String" >
-		select <include refid="table_columns" />
-		from class_type
-		where id = #{id}
+		select
+			ct.id,
+		ct.name,
+		ct.type_code,
+		ct.original_price,
+		ct.real_price,
+		ct.schools_id,
+		ct.item_one_id,
+		ct.item_second_id,
+		ct.description,
+		ct.publish_status,
+		ct.publish_time,
+		ct.is_sale,
+		ct.cover,
+		ct.sub_title,
+		ct.detail_desc,
+		ct.create_time,
+		ct.creator,
+		ct.update_time,
+		ct.updator,
+		ct.del_flag,
+		ct.company_id,
+		ct.lable_type,
+		ct.base_num,
+		ct.teacher_id,
+		ct.face_flag,
+		ct.live_flag,
+		ct.video_flag,
+		ct.remote_flag,
+		ct.recommend_flag,
+		ct.create_school_id,
+		ct.item_tag,
+		ct.validity_day,
+		ct.validity_date,
+		ct.video_watch_count,
+		ct.live_watch_count,
+		ct.integral_flag,
+		ct.member_flag,
+		ct.buy_num_max,
+		ct.protocol_id,
+		ct.icon_lable,
+		ct.item_one_code,
+		ct.item_second_code,
+		ct.item_third_code,
+		ct.item_fourth_code,
+		ct.is_micro_class,
+		ct.paper_description,
+		ct.origin_type,
+		 case when ((
+			app.is_shelves = 1
+			AND app.reserve_time IS NULL
+			)
+			OR (
+			app.is_shelves = 1
+			AND now() > app.reserve_time
+			)
+			) then 1 else 0 end  as is_shelves
+		from class_type ct
+		left join app_shelves app on app.comdity_id=ct.id
+		where ct.id = #{id}
 	</select>
 	
 	<select id="queryAll" resultMap="classTypeResultMap">
@@ -502,9 +561,19 @@
 		  b.item_name AS itemOneName,
 		  c.item_name AS itemSecondName,
 		  d.item_name AS itemThirdName,
-		 a.item_fourth_code AS itemFourthName
+		 a.item_fourth_code AS itemFourthName,
+		 case when ((
+			app.is_shelves = 1
+			AND app.reserve_time IS NULL
+			)
+			OR (
+			app.is_shelves = 1
+			AND now() > app.reserve_time
+			)
+			) then 1 else 0 end  as isShelves
 		FROM
 		  class_type a
+		left join app_shelves app on app.comdity_id=a.id
 		LEFT JOIN sys_config_item b on a.item_one_code = b.item_code
 		LEFT JOIN sys_config_item c on c.item_code = a.item_second_code
 		LEFT JOIN sys_config_item d on d.item_code = a.item_third_code
@@ -554,16 +623,16 @@
 		case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
 		date_format(app.reserve_time,'%Y-%m-%d %T') as reserveTime,date_format(app.shelves_time,'%Y-%m-%d %T') as shelvesTime,
 		app.price as appPrice,app.sale_price as salePrice,
-		v.video_time as lesson_date,app.id as appId,app.lab_desc
+		v.video_time as lesson_date,app.id as appId,app.lab_desc,app.category_id,app.subject_id,app.knowledge_pro_id,app.knowledge_id,app.stage_id,app.type_id
 		 from commodity c
 		join commodity_product_realtion cpr on cpr.com_id=c.id
 		join class_type ct on ct.id=cpr.product_id
-		join sys_config_teacher sct ON ct.teacher_id = sct.id
 		join class_type_module_relation ctmr on ct.id = ctmr.class_type_id
 		join class_module cml on ctmr.module_id = cml.id
 		join course_video_chapter cvc on cml.id=cvc.module_id
 		join course_video_lecture cvl on cvl.chapter_id=cvc.id
 		join video v on cvl.video_id=v.id
+		LEFT join sys_config_teacher sct ON ct.teacher_id = sct.id
 		left join app_shelves app on app.comdity_id=c.id
 		where c.id=#{classType.id} and ct.del_flag=0 and c.type='COMMODITY_CLASS'
 	</select>
@@ -580,13 +649,13 @@
 		app.price as appPrice,app.sale_price as salePrice,
 		app.id as appId,
 		app.lab_desc,
-		app.category_id as categoryId,
-		app.grade_id as gradeId,
-		app.subject_id as subjectId,
-		app.knowledge_pro_id as kwonProId ,
-		app.knowledge_id as knowId,
-		app.stage_id as stageId ,
-		app.type_id as typeId,
+		app.category_id ,
+		app.grade_id ,
+		app.subject_id ,
+		app.knowledge_pro_id  ,
+		app.knowledge_id ,
+		app.stage_id  ,
+		app.type_id ,
 		app.sort
 		FROM (
 				SELECT
@@ -605,7 +674,7 @@
 		JOIN class_type ct ON ct.id = ctmr.`class_type_id`
 		join commodity_product_realtion pr on ct.id = pr.product_id
 		join commodity c on c.id = pr.com_id
-		JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
+		LEFT JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
 		left join `app_shelves` app on app.`comdity_id`=c.id
 		where c.id = #{classType.id} and ct.del_flag=0 and c.type='COMMODITY_CLASS'
 		HAVING MAX(cml.lesson_date) <![CDATA[<=]]> NOW()
@@ -619,13 +688,13 @@
 		app.reserve_time as reserveTime,app.shelves_time as shelvesTime,app.price as appPrice,app.sale_price as salePrice,
 		app.id as appId,
 		app.lab_desc,
-		app.category_id as categoryId,
-		app.grade_id as gradeId,
-		app.subject_id as subjectId,
-		app.knowledge_pro_id as kwonProId ,
-		app.knowledge_id as knowId,
-		app.stage_id as stageId ,
-		app.type_id as typeId,
+		app.category_id,
+		app.grade_id,
+		app.subject_id ,
+		app.knowledge_pro_id  ,
+		app.knowledge_id ,
+		app.stage_id ,
+		app.type_id ,
 		app.sort
 		FROM (
 			SELECT
@@ -646,7 +715,7 @@
 		JOIN class_type ct ON ct.id = ctmr.`class_type_id`
 		join commodity_product_realtion pr on ct.id = pr.product_id
 		join commodity c on c.id = pr.com_id
-		JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
+		LEFT JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
 		left join `app_shelves` app on app.`comdity_id`=c.id
 		where c.id = #{classType.id} and ct.del_flag=0 and c.type='COMMODITY_CLASS'
 		GROUP BY c.id
@@ -663,25 +732,49 @@
 		<if test="classType.name != null and classType.name != ''">and a.name like '%${classType.name}%'</if>
 		<if test="classType.itemOneId != null and classType.itemOneId != ''">and a.item_one_id = #{classType.itemOneId}</if>
 		<if test="classType.itemSecondId != null and classType.itemSecondId != ''">and a.item_second_id = #{classType.itemSecondId}</if>
-		<if test="classType.isShelves != null and classType.isShelves != ''">and (app.is_shelves = #{classType.isShelves} or app.is_shelves is null)</if>
+		<if test="classType.hasShelves != null and classType.hasShelves != ''">
+			${classType.isShelves}
+		</if>
+		<!--<if test="classType.hasShelves == '1'">
+			and ((
+			app.is_shelves = 1
+			AND app.reserve_time IS NULL
+			)
+			OR (
+			app.is_shelves = 1
+			AND now() <![CDATA[>=]]> app.reserve_time
+			)
+			)
+		</if>
+		<if test="classType.hasShelves == '0'">
+			and ((
+			app.is_shelves = 0
+			)
+			OR (
+			app.is_shelves = 1
+			AND now() <![CDATA[<=]]> app.reserve_time
+			)
+			)
+		</if>-->
 		<if test="classType.createSchoolId !=null and classType.createSchoolId != ''">and a.create_school_id = #{classType.createSchoolId}</if>
 		<if test="classType.itemTag != null and classType.itemTag != ''">and find_in_set(#{classType.itemTag},a.item_tag)>0</if>
 		<if test="classType.itemTag2 != null and classType.itemTag2 != ''">and find_in_set(#{classType.itemTag2},a.item_tag)>0</if>
-		<if test="classType.teacherId != null and classType.teacherId != ''">and a.teacher_id =${classType.teacherId} </if>
+		<if test="classType.teacherId != null and classType.teacherId != ''">and a.teacher_id =#{classType.teacherId} </if>
 		<if test="classType.teachersId != null and classType.teachersId != ''">or a.teacher_id in(${classType.teachersId}) </if>
-		<if test="classType.faceFlag != null and classType.faceFlag != ''">and a.face_flag = ${classType.faceFlag}</if>
-		<if test="classType.liveFlag != null and classType.liveFlag != ''">and a.live_flag = ${classType.liveFlag}</if>
-		<if test="classType.videoFlag != null and classType.videoFlag != ''">and a.video_flag = ${classType.videoFlag}</if>
+		<if test="classType.faceFlag != null and classType.faceFlag != ''">and a.face_flag = #{classType.faceFlag}</if>
+		<if test="classType.liveFlag != null and classType.liveFlag != ''">and a.live_flag = #{classType.liveFlag}</if>
+		<if test="classType.videoFlag != null and classType.videoFlag != ''">and a.video_flag = #{classType.videoFlag}</if>
 		<if test="classType.remoteFlag != null and classType.remoteFlag != ''">and a.remote_flag = ${classType.remoteFlag}</if>
 		<if test="classType.itemOneCode != null and classType.itemOneCode != ''">and a.item_one_code = #{classType.itemOneCode}</if>
 		<if test="classType.itemSecondCode != null and classType.itemSecondCode != ''">and a.item_second_code = #{classType.itemSecondCode}</if>
 		<if test="classType.itemThirdCode != null and classType.itemThirdCode != ''">and a.item_third_code = #{classType.itemThirdCode}</if>
 		<if test="classType.originType != null and classType.originType != ''">and a.origin_type = #{classType.originType}</if>
+		<if test="classType.originType == null or classType.originType == ''">and a.origin_type = 0</if>
 		<if test="classType.itemFourthCode != null and classType.itemFourthCode != ''">
 			and a.item_fourth_code in
 			<foreach item="item" index="index" collection="codes" open="(" separator="," close=")">#{item}</foreach>
 		</if>
-		ORDER BY a.subject_class_order is null,a.subject_class_order asc, a.update_time DESC
+		ORDER BY a.update_time DESC,a.subject_class_order is null,a.subject_class_order asc
 		limit #{classType.firstIndex},#{classType.pageSize}
 	</select>
 	
@@ -695,19 +788,29 @@
 		<if test="classType.name != null and classType.name != ''">and ct.name like '%${classType.name}%'</if>
 		<if test="classType.itemOneId != null and classType.itemOneId != ''">and ct.item_one_id = #{classType.itemOneId}</if>
 		<if test="classType.itemSecondId != null and classType.itemSecondId != ''">and ct.item_second_id = #{classType.itemSecondId}</if>
-		<if test="classType.isShelves != null and classType.isShelves != ''">and app.is_shelves = #{classType.isShelves}</if>
+		<if test="classType.hasShelves != null and classType.hasShelves != ''">
+			${classType.isShelves}
+		</if>
+		<!--<if test="classType.hasShelves == '1'">
+			and ((app.is_shelves = 1 AND app.reserve_time IS NULL )OR (app.is_shelves = 1 AND now() <![CDATA[>=]]> app.reserve_time))
+		</if>
+		<if test="classType.hasShelves == '0'">
+			and ((app.is_shelves = 0 )OR (app.is_shelves = 1 AND now() <![CDATA[<=]]> app.reserve_time ))
+		</if>-->
 		<if test="classType.createSchoolId !=null and classType.createSchoolId != ''">and ct.create_school_id = #{classType.createSchoolId}</if>
 		<if test="classType.itemTag != null and classType.itemTag != ''">and ct.find_in_set(#{classType.itemTag},item_tag)>0</if>
 		<if test="classType.itemTag2 != null and classType.itemTag2 != ''">and ct.find_in_set(#{classType.itemTag2},item_tag)>0</if>
-		<if test="classType.teacherId != null and classType.teacherId != ''">and ct.teacher_id =${classType.teacherId} </if>
+		<if test="classType.teacherId != null and classType.teacherId != ''">and ct.teacher_id =#{classType.teacherId} </if>
 		<if test="classType.teachersId != null and classType.teachersId != ''">or ct.teacher_id in(${classType.teachersId}) </if>
-		<if test="classType.faceFlag != null and classType.faceFlag != ''">and ct.face_flag = ${classType.faceFlag}</if>
-		<if test="classType.liveFlag != null and classType.liveFlag != ''">and ct.live_flag = ${classType.liveFlag}</if>
-		<if test="classType.videoFlag != null and classType.videoFlag != ''">and ct.video_flag = ${classType.videoFlag}</if>
-		<if test="classType.remoteFlag != null and classType.remoteFlag != ''">and ct.remote_flag = ${classType.remoteFlag}</if>
+		<if test="classType.faceFlag != null and classType.faceFlag != ''">and ct.face_flag = #{classType.faceFlag}</if>
+		<if test="classType.liveFlag != null and classType.liveFlag != ''">and ct.live_flag = #{classType.liveFlag}</if>
+		<if test="classType.videoFlag != null and classType.videoFlag != ''">and ct.video_flag = #{classType.videoFlag}</if>
+		<if test="classType.remoteFlag != null and classType.remoteFlag != ''">and ct.remote_flag = #{classType.remoteFlag}</if>
 		<if test="classType.itemOneCode != null and classType.itemOneCode != ''">and ct.item_one_code = #{classType.itemOneCode}</if>
 		<if test="classType.itemSecondCode != null and classType.itemSecondCode != ''">and ct.item_second_code = #{classType.itemSecondCode}</if>
 		<if test="classType.itemThirdCode != null and classType.itemThirdCode != ''">and ct.item_third_code = #{classType.itemThirdCode}</if>
+		<if test="classType.originType == null or classType.originType == ''">and ct.origin_type = 0 </if>
+		<if test="classType.originType != null and classType.originType != ''">and ct.origin_type = 1 </if>
 		<if test="classType.itemFourthCode != null and classType.itemFourthCode != ''">
             and ct.item_fourth_code in
             <foreach item="item" index="index" collection="codes" open="(" separator="," close=")">#{item}</foreach>

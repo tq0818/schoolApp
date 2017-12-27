@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuxin.wx.auth.mapper.app.SysNoticeMapper">
+
+    <resultMap type="com.yuxin.wx.model.company.NoticeTemplatVo" id="noticeTemplateResultMap">
+        <result property="id" column="id" />
+        <result property="noticeCode" column="notice_code" />
+        <result property="noticeTopic" column="notice_topic" />
+        <result property="publishTime" column="publish_time" />
+        <result property="noticeContent" column="notice_content" />
+        <result property="noticeStatus" column="notice_status" />
+        <result property="noticeUrl" column="notice_url" />
+    </resultMap>
+
+    <sql id="table_colum">
+        id,
+        notice_code,
+        notice_topic,
+        date_format(publish_time,'%Y-%m-%d %T') as publish_time,
+        notice_content,
+        notice_status,
+        notice_url
+    </sql>
+
+    <select id="queryNoticeTemplateByUrl" parameterType="map" resultMap="noticeTemplateResultMap">
+        select
+        <include refid="table_colum"/>
+        from sys_notice_template_app
+        where notice_status=1
+        <if test="noticeUrl != null and noticeUrl != ''">and notice_url = '${noticeUrl}' </if>
+        limit 1
+    </select>
+</mapper>

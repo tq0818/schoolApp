@@ -100,28 +100,8 @@
                                 <i class="iconfont jht" style="cursor: default;">&#xe662;</i>
                             </c:if>
                             <span class="queTitle">${que.questionTitle}</span>
-
-                            <div class="queContent" value="${que.questionDesc }">
-                                    <c:if test="${fn:length(que.questionDesc)>90 }">
-                                        ${fn:substring(que.questionDesc, 0, 90)}
-                                    </c:if>
-                                    <c:if test="${fn:length(que.questionDesc)<=90 }">
-                                        ${que.questionDesc}
-                                    </c:if>
-                                    <c:if test="${empty que.questionDesc }">
-                                        &nbsp;&nbsp;
-                                    </c:if>
-                              <%--  <c:choose>
-                                    <c:when test="${fn:length(que.questionDesc)>60}">
-                                        ${fn:substring(que.questionDesc, 0, 60)}...
-                                    </c:when>
-                                    <c:otherwise>
-                                        ${que.questionDesc }
-                                    </c:otherwise>
-                                </c:choose>--%>
-                            </div>
-
                         </div>
+
                         <div class="ques">
                             <span class="showCon${que.id }">${que.subQuestionDesc}</span>
                             <span class="showAllCon${que.id } none">${que.questionDesc}</span>

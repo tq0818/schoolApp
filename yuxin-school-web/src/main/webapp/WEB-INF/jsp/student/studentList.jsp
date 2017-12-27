@@ -91,8 +91,8 @@
         	<span><a href="javascript:;" class="btn btn-primary searchContents">搜索</a></span>
         </div>
         <div style="margin-top: 10px;text-align:right;padding:0 10px;">
-        	<span><a href="javascript:;" class="btn btn-primary addStudent">添加用户</a></span>
-        	<span><a href="javascript:;" class="btn btn-primary importexcle" target="_blank">导入用户</a></span>
+        	<%--<span><a href="javascript:;" class="btn btn-primary addStudent">添加用户</a></span>--%>
+        	<%--<span><a href="javascript:;" class="btn btn-primary importexcle" target="_blank">导入用户</a></span>--%>
         	<span><a href="javascript:;" class="btn btn-primary exportexcle">导出用户</a></span>
         	<span><a href="javascript:;" class="btn btn-primary signUpMany">批量报名</a></span>
         	<c:if test="${showFlag=='show' }">

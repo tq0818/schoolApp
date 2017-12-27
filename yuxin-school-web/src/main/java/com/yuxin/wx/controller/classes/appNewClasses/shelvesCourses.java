@@ -227,7 +227,7 @@ public class shelvesCourses {
         MultipartFile multipartFile = multiPartRquest.getFile("imgData");
         String realPath = null;
         try {
-            realPath = FileUtil.upload(multipartFile, "/img", WebUtils.getCurrentCompanyId() + "");
+            realPath = FileUtil.upload(multipartFile, "course", WebUtils.getCurrentCompanyId() + "");
         } catch (Exception e) {
             log.error("文件上传失败!", e);
             e.printStackTrace();

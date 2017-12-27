@@ -106,7 +106,7 @@ public class CommodityVo extends BaseEntity {
 
     private Integer sout;
 
-    private Date previewDate;//预览时间
+    private long previewDate;//预览时间
     private String range;//范围
     
     private String courseName;
@@ -151,12 +151,12 @@ public class CommodityVo extends BaseEntity {
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
 	}
-
-	public Date getPreviewDate() {
+	
+	public long getPreviewDate() {
 		return previewDate;
 	}
 
-	public void setPreviewDate(Date previewDate) {
+	public void setPreviewDate(long previewDate) {
 		this.previewDate = previewDate;
 	}
 

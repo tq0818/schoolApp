@@ -4,6 +4,8 @@
  * 页面js封装
  */
 (function($){
+    //请求状态
+    var isLoading = false;
 	var Form={
 			init : function(){
 				var $this=this;
@@ -471,12 +473,18 @@
 						}
 					}
 				});
-                    if(flag!='all'){
-                        datas.liveFlag = liveFlag;
-                        datas.videoFlag = videoFlag;
-                        datas.faceFlag = faceFlag;
-                        datas.remoteFlag = remoteFlag;
+				if(flag!='all'){
+					datas.liveFlag = liveFlag;
+					datas.videoFlag = videoFlag;
+					datas.faceFlag = faceFlag;
+					datas.remoteFlag = remoteFlag;
                 }
+
+				$("#courseOrigin").find("a").each(function(i){
+					if($(this).hasClass('btn-success')){
+						datas.originType = $(this).attr("ids");
+					}
+				});
 
 				$.ajax({
 					url : rootPath + "/simpleClasses/showAllclassType",
@@ -498,11 +506,17 @@
 				});
 			},
 			queryCommodityByName : function(page){
+				var originType = "";
+				$("#courseOrigin").find("a").each(function(i){
+					if($(this).hasClass('btn-success')){
+						originType = $(this).attr("ids");
+					}
+				});
 				var name=$("#classTypeName").val();
 				$.ajax({
 					url : rootPath + "/simpleClasses/showAllclassType",
 					type : "post",
-					data : {"page" : page,"name":name},
+					data : {"page" : page,"name":name,"originType":originType},
 					beforeSend:function(XMLHttpRequest){
 			            $(".loading").show();
 			            $(".loading-bg").show();
@@ -580,6 +594,7 @@
 					}
 				});
 			},
+
 			deleteClassType : function(id){
 				$.confirm("您确定要删除此课程?",function(a){
 					if(a==true){

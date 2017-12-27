@@ -93,6 +93,8 @@ public class ClassType extends BaseEntity {
 
     private String isShelves;
 
+    private String hasShelves;
+
     private String reserveTime;
 
     private String shelvesTime;
@@ -699,4 +701,13 @@ public class ClassType extends BaseEntity {
 	public void setOriginType(Integer originType) {
 		this.originType = originType;
 	}
+
+
+    public String getHasShelves() {
+        return hasShelves;
+    }
+
+    public void setHasShelves(String hasShelves) {
+        this.hasShelves = hasShelves;
+    }
 }

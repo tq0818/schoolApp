@@ -9,17 +9,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>直播情况</title>
+<link rel="stylesheet" type="text/css"
+	href="<%=rootPath%>/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" />
 <link href="<%=rootPath%>/stylesheets/query.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/splitscreen.css"/>
 <link rel="stylesheet" href="<%=rootPath %>/stylesheets/query/statistics.css">
-<style type="text/css">
+	<style type="text/css">
 		.pages li.disabled{padding:0px;}
-		.queryUserVideoRight{width: 100%;}
-
 	</style>
-<link rel="stylesheet" href="<%=rootPath %>/stylesheets/jedate.css">
-<script src="<%=rootPath %>/javascripts/plus/jquery.jedate.min.js"></script>
-
 </head>
 <body>
 		<input type="hidden" id="schoolId" value='${schoolId}'/>
@@ -29,37 +26,45 @@
 	<!-- 二级导航 -->
 	<jsp:include page="/WEB-INF/jsp/menu/menu_statistics.jsp"></jsp:include>
 	<div class="u-wrap query overflow">
-		<c:if test="${role=='all'}">
+		<%--<c:if test="${role=='all'}">
 			<jsp:include page="/WEB-INF/jsp/menu/menu_statistics_query.jsp"></jsp:include>
 		</c:if>
 		<c:if test="${role=='area'}">
 			<jsp:include page="/WEB-INF/jsp/menu/menu_statistics_query_area.jsp"></jsp:include>
-		</c:if>
-		<div class="right-side set-system queryUserVideoRight">
-			<div class="mainbackground nopadding">
+		</c:if>--%>
+		<div class="right-side set-system" style="width: 100%">
+			<div class="mainbackground nopadding" style="margin: 0 10px;">
 				<div class="heading">
 					<h2 class="h5">直播情况</h2>
 					<span class="line"></span>
 				</div>
 				<div class="content-right">
-					<p class="screen-info" style="margin-bottom: 20px;">
-						<a href="/query/statistics/watchInfoList" class="btn active">概况</a>
-						<a href="/query/statistics/studentWatchInfoList" class="btn">详情</a>
-						<c:if test="${isArea}">
-							<select class="select-box" id="eduStep" name="eduStep">
-								<option value="">请选择</option>
-								<c:forEach items="${eduStep}" var="eduStep">
-									<option value="${eduStep.itemCode}">${eduStep.itemValue}</option>
-								</c:forEach>
-							</select>
-						</c:if>
-						<span class="date">
-							<i class="text">日期</i>
-							<span><input type="text" id="startDate" name="startTime" class="date-picker from" value="${startDate}" placeholder="开始时间"><em>到</em>
-								<input type="text" id="endDate" name="endTime" class="date-picker to" value="${endDate}" placeholder="结束时间"></span>
-						</span>
-						<button class="btns-default" id="search" onclick="queryChartData();">查询</button>
-					</p>
+					<form id="searchForm">
+						<p class="screen-info" style="margin-bottom: 20px;">
+							<a href="<%=rootPath %>/query/statistics/watchInfoList" class="btn active">概况</a>
+							<a href="<%=rootPath %>/query/statistics/studentWatchInfoList" class="btn">详情</a>
+							<span class="pull-right">
+								<c:if test="${isArea}">
+									<select class="select-box" id="eduStep" name="eduStep">
+										<c:forEach items="${eduStep}" var="eduStep">
+											<option value="${eduStep.itemCode}">${eduStep.itemValue}</option>
+										</c:forEach>
+									</select>
+								</c:if>
+
+									<span class="date" style="margin-left: 0;">
+										<i class="text">日期</i>
+										<span><input type="text" id="startDate" name="startTime" class="date-picker from" value="${startDate}" placeholder="开始时间"><em>至</em>
+											<input type="text" id="endDate" name="endTime" class="date-picker to" value="${endDate}" placeholder="结束时间"></span>
+									</span>
+
+								<button class="btns-default" type="button" id="search" onclick="queryChartData();">查询</button>
+								<c:if test="${role=='all'}">
+									<button class="btns-default" type="button"  id="export" onclick="exportData();">导出人次</button>
+								</c:if>
+							</span>
+						</p>
+					</form>
 					<%--<div>
 						&lt;%&ndash;<input type="text" id="stuMobile" name="mobile" placeholder="手机号" maxlength="11"/>&ndash;%&gt;
 						&lt;%&ndash;<input type="text" id="stuusername" name="username" placeholder="用户名"/>&ndash;%&gt;
@@ -68,9 +73,9 @@
 						<input type="button" id="search" value="查询" onclick="queryChartData();"/>
 					</div>--%>
 
-					<div style="text-align: center;font-size: 16px;width: 100%;display: none;">总计观看人数<span id="watchIndex" style="color:red"></span></div>
+					<div style="text-align: center;font-size: 16px;width: 100%;display: none;">总计观看直播人数<span id="watchIndex" style="color:red"></span></div>
 					<div class="e-charst" id="watch_info_index"></div>
-					<div style="text-align: center;font-size: 16px;width: 100%;display: none;">总计观看人次<span id="watchAll" style="color:red"></span></div>
+					<div style="text-align: center;font-size: 16px;width: 100%;display: none;">总计观看直播人次<span id="watchAll" style="color:red"></span></div>
 					<div class="e-charst" id="watch_info_all"></div>
 				</div>
 			</div>
@@ -86,14 +91,23 @@
 		<script type="text/javascript" src="<%=rootPath %>/javascripts/common/DateUtils.js"></script>
 		<script type="text/javascript" src="<%=rootPath %>/javascripts/home-page.js"></script>
 		<script type="text/javascript" src="<%=rootPath %>/javascripts/query/statistical_watchInfo.js"></script>
-		<%--<script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>--%>
+		<script type="text/javascript" src="<%=rootPath %>/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+		<script type="text/javascript" src="<%=rootPath %>/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+		<script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 		<script type="text/javascript">
 
-            $selectThirdMenu('watchInfoList');
+            $selectSubMenu('watchInfoList');
             function queryChartData(){
+                if ($("#endDate").val() != "") {
+                    if ($("#endDate").val() < $("#startDate").val()) {
+                        $.msg("时间范围不正确");
+                        return;
+                    }
+
+                }
                 $.ajax({
                     url:rootPath+'/query/statistics/watchInfoTotal',
-                    data:{'startDate':$("#startDate").val(),'endDate':$("#endDate").val(),'eduStep':$("#eduStep").val()},
+                    data:{'startDate':$("#startDate").val()+" 00:00:00",'endDate':$("#endDate").val()+" 23:59:59",'eduStep':$("#eduStep").val()},
                     dataType:'json',
                     type:'post',
                     success:function(result){
@@ -113,35 +127,21 @@
 			}
 
             queryChartData();
-		</script>
 
 
-		<script>
-            //调用日历插件
-            var start = {
-                format:'YYYY-MM-DD',
-                maxDate: '2099-06-16 23:59:59', //最大日期
-                okfun: function (obj) {
-                    end.minDate = obj.val; //开始日选好后，重置结束日的最小日期
+			function exportData(){
+                if ($("#endDate").val() != "") {
+                    if ($("#endDate").val() < $("#startDate").val()) {
+                        $.msg("时间范围不正确");
+                        return;
+                    }
+
                 }
-            };
-            var end = {
-                format:'YYYY-MM-DD',
-                minDate: $.nowDate({DD: 0}), //设定最小日期为当前日期
-                maxDate: '2099-06-16 23:59:59', //最大日期
-                okfun: function (obj) {
-                    start.maxDate = obj.val; //将结束日的初始值设定为开始日的最大日期
-                }
-            };
-
-            $.jeDate('#startDate', start);
-            $.jeDate('#endDate', end);
+                $("#searchForm").attr("action",
+                    rootPath + "/query/exportStudentsWatchInfoCountData")
+                    .submit();
+            }
 
 		</script>
-		<script>
-
-            $selectMenu('watchInfoList');
-		</script>
-
 </body>
 </html>

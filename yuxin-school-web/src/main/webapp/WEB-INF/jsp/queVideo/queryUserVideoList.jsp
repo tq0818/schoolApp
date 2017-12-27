@@ -17,8 +17,7 @@
 	<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/query/statistics.css">
 	<style type="text/css">
 		.pages li.disabled{padding:0px;}
-		.queryUserVideoRight{width: 100%;}
-		.queryUserVideoRight .screen-info span{margin: 10px 0;}
+		.userVideoListNew select{width: 180px;margin-right: 10px;}
 	</style>
 </head>
 <body>
@@ -30,13 +29,13 @@
 <jsp:include page="/WEB-INF/jsp/menu/menu_statistics.jsp"></jsp:include>
 <div class="u-wrap query overflow">
 	<%--<jsp:include page="/WEB-INF/jsp/menu/menu_statistics_query.jsp"></jsp:include>--%>
-	<div class="right-side set-system queryUserVideoRight">
-		<div class="mainbackground nopadding">
+	<div class="right-side set-system" style="width: 100%">
+		<div class="mainbackground nopadding" style="margin: 0 10px;">
 			<div class="heading">
 				<h2 class="h5">点播情况</h2>
 				<span class="line"></span>
 			</div>
-			<form method="post" id="searchForm">
+			<form method="post" id="searchForm" class="userVideoListNew">
 				<div class="screen-info">
 					<span>区域：</span>
 					<select name="eduArea" id="eduArea">
@@ -70,17 +69,17 @@
 							<option value="${index.index}">${index.index}班</option>
 						</c:forEach>
 					</select>
+				</div>
+				<div class="screen-info margin10" style="margin-top: 10px;">
 					<span class="date" style="margin-left: 0;">
-						<i class="text">日期</i>
+						<i class="text" style="background: #f6f6f6;">日期</i>
 						<span><input type="text" name="startTime" class="date-picker from" value="${startTime}"/><em>至</em><input type="text" name="endTime" class="date-picker to" value="${endTime}"/></span>
 					</span>
-					<input type="text" id="username" name="username" placeholder="学员手机号/用户名查询"/>
-					<span><a href="javascript:;" class="btn btn-primary searchContents">查询</a></span>
+					<input type="text" id="username" name="username" placeholder="学员手机号/用户名查询"
+						   style="width: 180px;height: 23px;"/>
+					<span><a href="javascript:;" class="btn btn-primary searchContents" style="margin: 0 20px;">查询</a></span>
 					<span><a href="javascript:;" class="btn btn-primary exportexcle">导出数据</a></span>
 				</div>
-				<%--<div class="screen-info margin10">--%>
-					<%----%>
-				<%--</div>--%>
 			</form>
 			<div class="user-list">
 				<table class="table table-center" id="tableList">
@@ -119,7 +118,7 @@
 	</div>
 	<div class="loading-bg lp-units-loading-bg" style="display:none"></div>
 	<!--  ajax加载中div结束 -->
-</div>
+<%--</div>--%>
 <input type="hidden" id="selectCounts" value="10">
 <script type="text/javascript" src="<%=rootPath %>/javascripts/query/video/query_user_video_list.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/ajaxfileupload.js"></script>
@@ -134,9 +133,10 @@
 <script type="text/javascript" src="<%=rootPath%>/javascripts/popupwin.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/company/jquery.cityselect.js"></script>
 <script type="text/javascript">
+    $selectSubMenu('userVideoList');
 //	$selectSubMenu('statistics_org_detail');
+//	$selectThirdMenu('videoList');
 //	$selectThirdMenu('userVideoList');
-	$selectMenu('userVideoList');
 	$.tableSort($(".btn-sort"),{
 		callback:function(data){
 			console.log(data);

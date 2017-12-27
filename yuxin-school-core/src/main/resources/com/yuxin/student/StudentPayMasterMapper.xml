@@ -1015,10 +1015,14 @@
 	</select>
 	<select id="queryStuHasByClass" resultMap="payMasterListVo4" parameterType="com.yuxin.wx.vo.student.StudentClassLeanDetailVo">
 		SELECT a.commodity_id,a.class_type_name,DATE_FORMAT(a.apply_time,'%Y-%m-%d %H:%i:%s') as apply_time from student_pay_master a
+		INNER JOIN commodity c
+		on a.commodity_id = c.id
 		where a.company_id = #{companyId} and a.stu_id = #{stuId} and a.commodity_type='COMMODITY_CLASS'
-		and a.delete_flag = 0 and
-		(a.pay_status_code='ORDER_PAID' or a.pay_status_code='ORDER_PART_PAY' or a.pay_status_code='ORDER_FINISHED' or a.pay_status_code='ORDER_PAID_NO_COURSE');
-	</select>
+		and a.delete_flag = 0
+		and c.video_flag = 1
+		and (a.pay_status_code='ORDER_PAID' or a.pay_status_code='ORDER_PART_PAY' or a.pay_status_code='ORDER_FINISHED' or a.pay_status_code='ORDER_PAID_NO_COURSE')
+		limit #{firstIndex},#{pageSize}
+</select>
 	<!-- 会员升级时，查询旧订单信息 -->
 	<select id="findOrder" parameterType="map" resultMap="studentPayMasterResultMap">
 		select

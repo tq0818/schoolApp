@@ -2202,23 +2202,18 @@
 		ON d.id = f.chapter_id
 		WHERE a.id = #{classTypeId}
 	</select>
-	<!--课程   已经完成的视频课次 -->
+
 	<select id="queryLecFinishCount" parameterType="com.yuxin.wx.vo.student.StudentClassLeanDetailVo" resultType="int">
-		SELECT COUNT(DISTINCT f.id)
-		FROM class_type a
-		INNER JOIN class_type_module_relation b
-		ON a.id = b.class_type_id
-		INNER JOIN class_module c
-		ON b.module_id = c.id
-		INNER JOIN course_video_chapter d
-		ON d.module_id = c.id
-		INNER JOIN course_video_lecture f
-		ON d.id = f.chapter_id
-		INNER JOIN user_history h
-		ON h.lecture_id = f.id
-		WHERE h.user_id = (SELECT a.id from users_front a INNER JOIN student b ON b.user_id = a.id WHERE b.id = #{stuId})
-		AND a.id = #{classTypeId}
-		AND h.study_status = '3';
+		SELECT SUM(case when u.study_length  is null then 0 else u.study_length  end) as user_history
+		FROM user_history u WHERE u.user_id =  #{stuId} and class_type_id = #{classTypeId} GROUP BY u.class_type_id
+
+	</select>
+
+	<select id="studyTime" parameterType="com.yuxin.wx.vo.student.StudentClassLeanDetailVo" resultType="int">
+		SELECT  MAX(IFNULL(a.study_length, 0))   FROM user_history_all a
+		WHERE a.user_id = ( SELECT a.id FROM users_front a LEFT JOIN student b
+		ON b.user_id = a.id
+		WHERE b.id = #{stuId}) and a.class_type_id = #{classTypeId}
 	</select>
 
 	<!--课程包   所有的视频课次数 -->
@@ -3051,12 +3046,13 @@
 		INNER JOIN course_video_chapter cvc ON cvc.module_id = sps.module_id
 		INNER JOIN course_video_lecture f ON f.chapter_id = cvc.id
 		INNER JOIN sys_config_dict g ON g.item_code = sps.resource_type
-		WHERE spm.company_id = #{companyId} AND spm.school_id = #{schoolId} AND spm.stu_id= #{stuId}
+		WHERE spm.company_id = #{companyId} <!-- AND spm.school_id = #{schoolId} --> AND spm.stu_id= #{stuId}
 		<if test="commodityId != null and commodityId != ''">and spm.commodity_id =  #{commodityId}</if>
 		AND spm.commodity_type = #{commodityType}
 		AND sps.resource_type = 'TEACH_METHOD_VIDEO'
 		and (spm.pay_status_code='ORDER_PAID' or spm.pay_status_code='ORDER_PART_PAY' or spm.pay_status_code='ORDER_FINISHED' or spm.pay_status_code='ORDER_PAID_NO_COURSE')
 		AND sps.slave_status_code!='SUB_ORDER_DELTED'
+		AND g.item_value = '视频'
 		)lec
 		UNION All
 		select * from (
@@ -3109,47 +3105,112 @@
 		INNER JOIN class_module_no cmn ON sps.resource_id = cmn.id
 		INNER JOIN class_module_lesson e ON cmn.id = e.module_no_id
 		INNER JOIN sys_config_dict f ON f.item_code = sps.resource_type
-		WHERE spm.company_id = #{companyId} AND spm.school_id = #{schoolId} AND spm.stu_id= #{stuId}
+		WHERE spm.company_id = #{companyId} <!-- AND spm.school_id = #{schoolId} --> AND spm.stu_id= #{stuId}
 		<if test="commodityId != null and commodityId != ''">and spm.commodity_id =  #{commodityId}</if>
 		AND spm.commodity_type = #{commodityType}
 		AND (sps.resource_type = 'TEACH_METHOD_LIVE' or sps.resource_type = 'TEACH_METHOD_FACE')
 		and (spm.pay_status_code='ORDER_PAID' or spm.pay_status_code='ORDER_PART_PAY' or spm.pay_status_code='ORDER_FINISHED' or spm.pay_status_code='ORDER_PAID_NO_COURSE')
 		AND sps.slave_status_code!='SUB_ORDER_DELTED'
 		and e.del_flag = 0
+		AND f.item_value = '视频'
 		)less
 		ORDER BY last_lean_time desc,lec_les_id asc
 		LIMIT #{firstIndex},#{pageSize}
 	</select>
 	<select id="queryStudentCtOrCpLeanRecordCount" parameterType="com.yuxin.wx.vo.student.StudentClassLeanDetailVo" resultType="int">
-		SELECT SUM(id) FROM(
-		SELECT count( spm.id) as id
+		SELECT COUNT(1) from (
+		select * from (
+		SELECT  f.id AS lec_les_id,f.lecture_name,g.item_value,g.item_code,
+		IFNULL((SELECT DATE_FORMAT(MAX(q.study_time),'%Y-%m-%d %T') FROM user_history_all q
+		WHERE q.user_id = (SELECT a.id from users_front a LEFT JOIN student b ON b.user_id = a.id WHERE b.id = #{stuId})
+		AND q.lecture_id = f.id
+		GROUP BY q.lecture_id),0) as last_lean_time,
+		IFNULL((SELECT COUNT(*) FROM user_history_all a where a.lecture_id = f.id AND a.user_id =
+		(SELECT a.id from users_front a LEFT JOIN student b ON b.user_id = a.id WHERE b.id = #{stuId})
+		GROUP BY a.lecture_id),'0') as lean_count,
+		IFNULL((SELECT a.study_status FROM user_history a WHERE a.lecture_id = f.id AND a.user_id =
+		(SELECT a.id from users_front a LEFT JOIN student b ON b.user_id = a.id WHERE b.id = #{stuId})
+		),0) as study_status,
+		IFNULL((SELECT CAST(MAX(IFNULL(a.study_length,0)) AS CHAR)
+		FROM user_history_all a
+		WHERE a.user_id = (SELECT a.id from users_front a LEFT JOIN student b ON b.user_id = a.id WHERE b.id = #{stuId})
+		AND a.lecture_id = f.id
+		GROUP BY a.lecture_id),'0') as study_length,
+		'lecture' AS type,spm.class_type_name,spm.id as apm_id
 		FROM student_pay_master spm
 		INNER JOIN student_pay_slave sps ON sps.pay_master_id = spm.id
 		INNER JOIN course_video_chapter cvc ON cvc.module_id = sps.module_id
 		INNER JOIN course_video_lecture f ON f.chapter_id = cvc.id
 		INNER JOIN sys_config_dict g ON g.item_code = sps.resource_type
-		WHERE spm.company_id = #{companyId} AND spm.school_id = #{schoolId} AND spm.stu_id= #{stuId}
+		WHERE spm.company_id = #{companyId} <!-- AND spm.school_id = #{schoolId} --> AND spm.stu_id= #{stuId}
 		<if test="commodityId != null and commodityId != ''">and spm.commodity_id =  #{commodityId}</if>
 		AND spm.commodity_type = #{commodityType}
 		AND sps.resource_type = 'TEACH_METHOD_VIDEO'
 		and (spm.pay_status_code='ORDER_PAID' or spm.pay_status_code='ORDER_PART_PAY' or spm.pay_status_code='ORDER_FINISHED' or spm.pay_status_code='ORDER_PAID_NO_COURSE')
 		AND sps.slave_status_code!='SUB_ORDER_DELTED'
-
+		AND g.item_value = '视频'
+		)lec
 		UNION All
-
-		SELECT count( spm.id) as id
-		FROM student_pay_master spm
+		select * from (
+		SELECT  e.id,e.lesson_name,f.item_value,f.item_code,
+		(CASE WHEN
+		STR_TO_DATE(CONCAT(DATE_FORMAT(e.lesson_date,'%Y-%m-%d'),' ',e.lesson_time_start,':00'),'%Y-%m-%d %H:%i:%S')<![CDATA[<]]>DATE_FORMAT(now(),'%Y-%m-%d %H:%i:%S')
+		THEN (CASE WHEN (f.item_code = 'TEACH_METHOD_LIVE')
+		THEN (CASE WHEN (select watch_type from company_live_static_record clsr where clsr.user_id = uf.id and clsr.class_lesson_id = e.id) = 0
+		THEN (select DATE_FORMAT(clsr.in_time,'%Y-%m-%d %H:%i:%S') from company_live_static_record clsr where clsr.user_id = uf.id and clsr.class_lesson_id = e.id)
+		ELSE '旷课' END
+		)
+		ELSE STR_TO_DATE(CONCAT(DATE_FORMAT(e.lesson_date,'%Y-%m-%d'),' ',e.lesson_time_start,':00'),'%Y-%m-%d %H:%i:%S')
+		END
+		)
+		ELSE 0
+		END) as last_lean_time,
+		(CASE WHEN
+		STR_TO_DATE(CONCAT(DATE_FORMAT(e.lesson_date,'%Y-%m-%d'),' ',e.lesson_time_end,':00'),'%Y-%m-%d %H:%i:%S')<![CDATA[<]]>DATE_FORMAT(now(),'%Y-%m-%d %H:%i:%S')
+		THEN (CASE WHEN
+		(select watch_type from company_live_static_record clsr where clsr.user_id = uf.id and clsr.class_lesson_id = e.id) = 0
+		THEN '1'
+		ELSE '0' END)
+		ELSE '0'
+		END) as lean_count,
+		(CASE WHEN
+		STR_TO_DATE(CONCAT(DATE_FORMAT(e.lesson_date,'%Y-%m-%d'),' ',e.lesson_time_end,':00'),'%Y-%m-%d %H:%i:%S')<![CDATA[<]]>DATE_FORMAT(now(),'%Y-%m-%d %H:%i:%S')
+		THEN (CASE WHEN (f.item_code = 'TEACH_METHOD_LIVE')
+		THEN (CASE WHEN ((select watch_type from company_live_static_record clsr where clsr.user_id = uf.id and clsr.class_lesson_id = e.id) = 0)
+		THEN '已完成'
+		ELSE '未完成'
+		END)
+		ELSE '已完成' END)
+		ELSE '未完成'
+		END)as study_status ,
+		(CASE WHEN STR_TO_DATE(CONCAT(DATE_FORMAT(e.lesson_date,'%Y-%m-%d'),' ',e.lesson_time_end,':00'),'%Y-%m-%d %H:%i:%S')<![CDATA[<]]>DATE_FORMAT(now(),'%Y-%m-%d %H:%i:%S')
+		THEN (CASE WHEN (f.item_code LIKE 'TEACH_METHOD_LIVE')
+		THEN (CASE WHEN (select watch_type from company_live_static_record clsr where clsr.user_id = uf.id and clsr.class_lesson_id = e.id) = 0
+		THEN e.lesson_hour
+		ELSE 0
+		END)
+		ELSE e.lesson_hour
+		END)
+		ELSE 0
+		END)as study_length,
+		'lession' AS type,spm.class_type_name,spm.id as apm_id
+		FROM users_front uf
+		inner join student s on uf.id = s.user_id
+		inner join student_pay_master spm on s.id = spm.stu_id
 		INNER JOIN student_pay_slave sps ON sps.pay_master_id = spm.id
 		INNER JOIN class_module_no cmn ON sps.resource_id = cmn.id
 		INNER JOIN class_module_lesson e ON cmn.id = e.module_no_id
 		INNER JOIN sys_config_dict f ON f.item_code = sps.resource_type
-		WHERE spm.company_id = #{companyId} AND spm.school_id = #{schoolId} AND spm.stu_id= #{stuId}
+		WHERE spm.company_id = #{companyId} <!-- AND spm.school_id = #{schoolId} --> AND spm.stu_id= #{stuId}
 		<if test="commodityId != null and commodityId != ''">and spm.commodity_id =  #{commodityId}</if>
 		AND spm.commodity_type = #{commodityType}
 		AND (sps.resource_type = 'TEACH_METHOD_LIVE' or sps.resource_type = 'TEACH_METHOD_FACE')
 		and (spm.pay_status_code='ORDER_PAID' or spm.pay_status_code='ORDER_PART_PAY' or spm.pay_status_code='ORDER_FINISHED' or spm.pay_status_code='ORDER_PAID_NO_COURSE')
 		AND sps.slave_status_code!='SUB_ORDER_DELTED'
 		and e.del_flag = 0
+		AND f.item_value = '视频'
+		)less
+
 		)a
 	</select>
 

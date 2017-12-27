@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yuxin.wx.api.app.INoticeAndScoreService;
 import com.yuxin.wx.api.auth.IAuthRoleService;
 import com.yuxin.wx.api.company.ICompanyFunctionSetService;
 import com.yuxin.wx.api.company.ICompanyMemberServiceService;
@@ -40,6 +41,7 @@ import com.yuxin.wx.api.system.ISysConfigItemService;
 import com.yuxin.wx.api.system.ISysConfigServiceService;
 import com.yuxin.wx.api.system.ISysConfigTeacherService;
 import com.yuxin.wx.api.system.ISysServiceDredgeConfigService;
+import com.yuxin.wx.api.user.IUsersFrontService;
 import com.yuxin.wx.api.user.IUsersService;
 import com.yuxin.wx.common.ImageCheck;
 import com.yuxin.wx.common.PageFinder;
@@ -57,6 +59,7 @@ import com.yuxin.wx.model.system.SysConfigItem;
 import com.yuxin.wx.model.system.SysConfigService;
 import com.yuxin.wx.model.system.SysConfigTeacher;
 import com.yuxin.wx.model.user.Users;
+import com.yuxin.wx.model.user.UsersFront;
 import com.yuxin.wx.utils.DateUtil;
 import com.yuxin.wx.utils.PropertiesUtil;
 import com.yuxin.wx.utils.WebUtils;
@@ -120,12 +123,16 @@ public class QuestionController {
     @Autowired
     private ICompanyService companyService;
 
-
     @Autowired
     private IAuthRoleService authRoleServiceImpl;
 
     @Autowired
     private ISysConfigTeacherService sysConfigTeacherServiceImpl;
+    
+    @Autowired
+    private INoticeAndScoreService noticeAndScoreServiceImpl;
+    @Autowired
+    private IUsersFrontService usersFrontServiceImpl;
 
     @RequestMapping(method = RequestMethod.GET)
     public String list(Model model, QueQuestion search) {
@@ -163,13 +170,19 @@ public class QuestionController {
     }
     @ResponseBody
     @RequestMapping(value="/shenhe/{id}")
-	public String shenhe(Model model, @PathVariable Integer id) {
+	public String shenhe(HttpServletRequest request,Model model, @PathVariable Integer id) {
     	QueQuestion question =new  QueQuestion();
+    	QueQuestion question2 = questionServiceImpl.findQuestionById(id);
     	question.setId(id);
     	question.setIsChecke(1);
     	Date date = new Date();
  		question.setUpdateTime(date);
+ 		UsersFront user = usersFrontServiceImpl.findUsersFrontById(question2.getUserId());
 	        questionServiceImpl.update(question);
+	        Map<String,String>map = new HashMap<String,String>();
+    		map.put("userName",user.getNickName());
+    		String url = request.getRequestURI().replace(request.getContextPath(),"");
+        	noticeAndScoreServiceImpl.sendMsg(url.substring(0, url.lastIndexOf("/")),user.getId().toString(),map);
 	        return "success";
 	}
 
@@ -847,7 +860,7 @@ public class QuestionController {
 				if("<".equals(c)){
 					String e=b[i].substring(b[i].indexOf("http"), b[i].indexOf("\" src="));
 					try {
-						 flag=ImageCheck.ImageCheck(e);
+						 flag=ImageCheck.ImageCheck(e,properties);
 					} catch (Exception e1) {
 						flag=false;
 						e1.printStackTrace();
@@ -865,7 +878,7 @@ public class QuestionController {
 					if(b[i].indexOf("<img") == -1) {
 						String str=b[i].replace("&nbsp;", "");
 						try {
-							flag=TextCheck.TextCheck(str);
+							flag=TextCheck.TextCheck(str,properties);
 						} catch (Exception e) {
 							flag=false;
 							e.printStackTrace();
@@ -882,7 +895,7 @@ public class QuestionController {
 					}else{
 						String d= b[i].substring(0, b[i].indexOf("<"));
 						try {
-							flag=TextCheck.TextCheck(d);
+							flag=TextCheck.TextCheck(d,properties);
 						} catch (Exception e) {
 							flag=false;
 							e.printStackTrace();
@@ -898,7 +911,7 @@ public class QuestionController {
 						a+=",";
 						String e=b[i].substring(b[i].indexOf("http"), b[i].indexOf("\" src="));
 						try {
-							flag1=TextCheck.TextCheck(e);
+							flag1=TextCheck.TextCheck(e,properties);
 						} catch (Exception e1) {
 							flag1=false;
 							e1.printStackTrace();
@@ -925,7 +938,7 @@ public class QuestionController {
     	String questionTitle= queQuestion.getQuestionTitle();
     	boolean flag1=false;
     	try {
-    		flag1=TextCheck.TextCheck(questionTitle);
+    		flag1=TextCheck.TextCheck(questionTitle,properties);
 			if(flag1){
 				flag1=true;
 			}else{
@@ -941,8 +954,24 @@ public class QuestionController {
     	queQuestion.setSchoolId(schoolId);
     	queQuestion.setUserId(userId);
     	queQuestion.setDelFlag(1);
-    	queQuestion.setQuestionType("QUESTION_STUDENT");
-         
+
+    	queQuestion.setAnswerCount(0);
+    	queQuestion.setScanCount(0);
+    	queQuestion.setAdoptFlag(0);
+    	queQuestion.setEssenceFlag(0);
+    	queQuestion.setTopFlag(0);
+    	queQuestion.setQuestionType("QUESTION_ADMIN");
+    	String labelContent = queQuestion.getLabelContent();
+    	String[] strings = labelContent.split(",");
+    	StringBuffer label = new StringBuffer().append("[");
+    	for (int i = 0; i < strings.length; i++) {
+			label.append("\"").append(strings[i]).append("\"");
+			if(i != strings.length -1){
+				label.append(",");
+			}
+		}
+    	label.append("]");
+    	queQuestion.setLabelContent(label.toString());
    		try{
 			questionServiceImpl.insertLabReturnId(arrTagName,arrTagId,queQuestion);
    		}catch(Exception e){
