@@ -156,115 +156,101 @@
 	<!-- 查询所有的直播上课统计 -->
 	<select id="queryAllCompanyLiveStaticDetail" resultMap="companyLiveStaticDetailVoResultMap"
 			parameterType="com.yuxin.wx.vo.company.CompanyLiveStaticDetailVo">
-		select DISTINCT clsr.id,clsr.live_date,clsr.in_time,clsr.out_time,clsr.watch_type,uf.mobile,uf.username,uf.nick_name,s.`name`,s.email,e.lesson_name,d.`item_value` as edu_area,d1.`item_value` as edu_school,d2.`item_value` as edu_step,s.edu_year
-		FROM  (
-		SELECT
-		spm.id
+		SELECT 
+			uf.id,
+			swi.lesson_name as lessonName,
+			uf.username as userName,
+			s.`name` as name,
+			s.edu_year as eduYear,
+			d.item_value as eduArea,
+			d1.item_value as eduSchool,
+			d2.item_value as eduStep
 		FROM
-		student_pay_master spm
-		WHERE
-		spm.company_id = #{companyId}
-		AND spm.commodity_id = #{classTypeId}
-		AND spm.commodity_type = 'COMMODITY_CLASS'
-		AND (
-		spm.pay_status_code = 'ORDER_PAID'
-		OR spm.pay_status_code = 'ORDER_PART_PAY'
-		OR spm.pay_status_code = 'ORDER_FINISHED'
-		OR spm.pay_status_code = 'ORDER_PAID_NO_COURSE'
-		)
-		) spm2,
-		(
-		SELECT
-		sps.pay_master_id,
-		sps.resource_id
-		FROM
-		student_pay_slave sps
-		WHERE
-		sps.slave_status_code != 'SUB_ORDER_DELTED'
-		AND (
-		sps.resource_type = 'TEACH_METHOD_LIVE'
-		OR sps.resource_type = 'TEACH_METHOD_FACE'
-		)
-		GROUP BY
-		sps.resource_id
-		) sps2,
-		class_module_no cmn,
-		class_module_lesson e,
-		company_live_static_record clsr,
-		users_front uf,
-		student s LEFT JOIN sys_config_dict d on d.`item_code` = s.`edu_area` LEFT JOIN sys_config_dict d1 on d1.`item_code` = s.`edu_school` LEFT JOIN sys_config_dict d2 on d2.`item_code` = s.`edu_step`
-		WHERE
-		sps2.pay_master_id = spm2.id
-		AND sps2.resource_id = cmn.id
-		AND cmn.id = e.module_no_id
-		AND e.id = clsr.class_lesson_id
-		AND uf.id = clsr.user_id
-		AND s.user_id = uf.id
-		<if test="classLessionId != null and classLessionId != ''">and clsr.class_lesson_id = #{classLessionId}</if>
+		sys_watch_info swi
+		LEFT JOIN users_front uf ON uf.id = swi.user_id
+		LEFT JOIN student s ON s.user_id = uf.id
+		LEFT JOIN sys_config_dict d ON d.`item_code` = s.`edu_area`
+		LEFT JOIN sys_config_dict d1 ON d1.`item_code` = s.`edu_school`
+		LEFT JOIN sys_config_dict d2 ON d2.`item_code` = s.`edu_step`
+		where swi.classType_id = #{classTypeId}
+		<if test="classLessionId != null and classLessionId != ''">and swi.lesson_id = #{classLessionId}</if>
 		<if test="mobile != null and mobile != ''">and (uf.mobile = '${mobile}' or uf.username like '%${mobile}%' )</if>
-		<if test="watchType != null">and clsr.watch_type = #{watchType}</if>
 		<if test="eduArea!=null and eduArea!=''">and s.edu_area = #{eduArea}</if>
 		<if test="eduSchool!=null and eduSchool!=''">and s.edu_school = #{eduSchool}</if>
 		<if test="eduStep!=null and eduStep!=''">and s.edu_step = #{eduStep}</if>
 		<if test="eduYear!=null and eduYear!=''">and s.edu_year = #{eduYear}</if>
+		GROUP BY uf.id
+		UNION 
+		SELECT 
+			uf.id,
+			ct.name as lessonName,
+			uf.username as userName,
+			s.`name` as name,
+			s.edu_year as eduYear,
+			d.item_value as eduArea,
+			d1.item_value as eduSchool,
+			d2.item_value as eduStep
+		FROM
+		user_history ush
+		LEFT JOIN users_front uf ON uf.id = ush.user_id
+		LEFT JOIN student s ON s.user_id = uf.id
+		LEFT JOIN class_type ct ON ct.id = ush.class_type_id
+		LEFT JOIN sys_config_dict d ON d.`item_code` = s.`edu_area`
+		LEFT JOIN sys_config_dict d1 ON d1.`item_code` = s.`edu_school`
+		LEFT JOIN sys_config_dict d2 ON d2.`item_code` = s.`edu_step`
+		where ush.class_type_id = #{classTypeId}
+		<if test="classLessionId != null and classLessionId != ''">and ush.lecture_id = #{classLessionId}</if>
+		<if test="mobile != null and mobile != ''">and (uf.mobile = '${mobile}' or uf.username like '%${mobile}%' )</if>
+		<if test="eduArea!=null and eduArea!=''">and s.edu_area = #{eduArea}</if>
+		<if test="eduSchool!=null and eduSchool!=''">and s.edu_school = #{eduSchool}</if>
+		<if test="eduStep!=null and eduStep!=''">and s.edu_step = #{eduStep}</if>
+		<if test="eduYear!=null and eduYear!=''">and s.edu_year = #{eduYear}</if>
+		GROUP BY uf.id
 		limit #{firstIndex},#{pageSize}
 	</select>
 	<!-- 查询直播上课统计条数 -->
 	<select id="pageCountQueryAllCompanyLiveStaticDetail" resultType="int"
 			parameterType="com.yuxin.wx.vo.company.CompanyLiveStaticDetailVo">
 		SELECT
-		count(clsr.id)
+		count(id)
 		FROM
 		(
-		SELECT
-		spm.id
+		SELECT 
+			uf.id
 		FROM
-		student_pay_master spm
-		WHERE
-		spm.company_id = #{companyId}
-		AND spm.commodity_id =  #{classTypeId}
-		AND spm.commodity_type = 'COMMODITY_CLASS'
-		AND (
-		spm.pay_status_code = 'ORDER_PAID'
-		OR spm.pay_status_code = 'ORDER_PART_PAY'
-		OR spm.pay_status_code = 'ORDER_FINISHED'
-		OR spm.pay_status_code = 'ORDER_PAID_NO_COURSE'
-		)
-		) spm2,
-		(
-		SELECT
-		sps.pay_master_id,
-		sps.resource_id
-		FROM
-		student_pay_slave sps
-		WHERE
-		sps.slave_status_code != 'SUB_ORDER_DELTED'
-		AND (
-		sps.resource_type = 'TEACH_METHOD_LIVE'
-		OR sps.resource_type = 'TEACH_METHOD_FACE'
-		)
-		GROUP BY
-		sps.resource_id
-		) sps2,
-		class_module_no cmn,
-		class_module_lesson e,
-		company_live_static_record clsr,
-		users_front uf,
-		student s
-		WHERE
-		sps2.pay_master_id = spm2.id
-		AND sps2.resource_id = cmn.id
-		AND cmn.id = e.module_no_id
-		AND e.id = clsr.class_lesson_id
-		AND uf.id = clsr.user_id
-		AND s.user_id = uf.id
-		<if test="classLessionId != null and classLessionId != ''">and clsr.class_lesson_id = #{classLessionId}</if>
+		sys_watch_info swi
+		LEFT JOIN users_front uf ON uf.id = swi.user_id
+		LEFT JOIN student s ON s.user_id = uf.id
+		LEFT JOIN sys_config_dict d ON d.`item_code` = s.`edu_area`
+		LEFT JOIN sys_config_dict d1 ON d1.`item_code` = s.`edu_school`
+		LEFT JOIN sys_config_dict d2 ON d2.`item_code` = s.`edu_step`
+		where swi.classType_id = #{classTypeId}
+		<if test="classLessionId != null and classLessionId != ''">and swi.lesson_id = #{classLessionId}</if>
 		<if test="mobile != null and mobile != ''">and (uf.mobile = '${mobile}' or uf.username like '%${mobile}%' )</if>
-		<if test="watchType != null">and clsr.watch_type = #{watchType}</if>
 		<if test="eduArea!=null and eduArea!=''">and s.edu_area = #{eduArea}</if>
 		<if test="eduSchool!=null and eduSchool!=''">and s.edu_school = #{eduSchool}</if>
 		<if test="eduStep!=null and eduStep!=''">and s.edu_step = #{eduStep}</if>
 		<if test="eduYear!=null and eduYear!=''">and s.edu_year = #{eduYear}</if>
+		GROUP BY uf.id
+		UNION 
+		SELECT 
+			uf.id
+		FROM
+		user_history ush
+		LEFT JOIN users_front uf ON uf.id = ush.user_id
+		LEFT JOIN student s ON s.user_id = uf.id
+		LEFT JOIN sys_config_dict d ON d.`item_code` = s.`edu_area`
+		LEFT JOIN sys_config_dict d1 ON d1.`item_code` = s.`edu_school`
+		LEFT JOIN sys_config_dict d2 ON d2.`item_code` = s.`edu_step`
+		where ush.class_type_id = #{classTypeId}
+		<if test="classLessionId != null and classLessionId != ''">and ush.lecture_id = #{classLessionId}</if>
+		<if test="mobile != null and mobile != ''">and (uf.mobile = '${mobile}' or uf.username like '%${mobile}%' )</if>
+		<if test="eduArea!=null and eduArea!=''">and s.edu_area = #{eduArea}</if>
+		<if test="eduSchool!=null and eduSchool!=''">and s.edu_school = #{eduSchool}</if>
+		<if test="eduStep!=null and eduStep!=''">and s.edu_step = #{eduStep}</if>
+		<if test="eduYear!=null and eduYear!=''">and s.edu_year = #{eduYear}</if>
+		GROUP BY uf.id
+		)as total
 	</select>
 
 

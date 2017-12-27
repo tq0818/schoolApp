@@ -106,9 +106,9 @@
                 <span class="t-title">状态</span>
                 <span class="t-content" id="statusList">
                 	<a href="javascript:Form.queryAllCommdityByItemNew(1)" ids="all" class="btn btn-mini btn-default btn-success">全部</a>
+                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="CLASS_ON_SALE" class="btn btn-mini btn-default">已上架</a>
                     <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="CLASS_UNPUBLISHED" class="btn btn-mini btn-default">未上架</a>
-                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="CLASS_ON_SALE" class="btn btn-mini btn-default">招生中</a>
-                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="CLASS_STOP_SALE" class="btn btn-mini btn-default">已下架</a>
+                    <!-- <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="CLASS_STOP_SALE" class="btn btn-mini btn-default">已下架</a> -->
                 </span>
             </p>
             <p class="c">

@@ -12,7 +12,24 @@
     <link href="<%=rootPath %>/plugins/editor/froala_page.min.css" rel="stylesheet" type="text/css">
     <script src="<%=rootPath %>/plugins/editor/froala_editor.min.js"></script>
 
-
+	<style>
+		#cke_21{display : none !important;}
+		#cke_18{display : none !important;}
+		#cke_19{display : none !important;}
+		#cke_20{display : none !important;}
+		#cke_31{display : none !important;}
+		#cke_32{display : none !important;}
+		#cke_35{display : none !important;}
+		#cke_11{display : none !important;}
+		#cke_13{display : none !important;}
+		#cke_15{display : none !important;}
+		#cke_17{display : none !important;}
+		#cke_30{display : none !important;}
+		#cke_38{display : none !important;}
+		#cke_39{display : none !important;}
+		#cke_37{display : none !important;}
+		.findQuestion span{margin-right:2px !important;}
+	</style>	
 </head>
 
 <body>

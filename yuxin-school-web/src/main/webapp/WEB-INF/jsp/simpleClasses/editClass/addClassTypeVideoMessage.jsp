@@ -47,7 +47,7 @@
                 <p class="c">
                     <span class="c-title">分类</span>
                     <span class="c-content">
-                        <select name="itemOneCode" id="itemOneCodeList" onchange="Form.queryItemSecond()">
+                        <select name="itemOneCode" id="itemOneCodeList" onchange="Form.queryItemSecond()" disabled>
                             <option  value="" data-id="">请选择</option>
                         	<c:forEach items="${typeItems }" var="type" varStatus="status">
                                 <c:if test="${type.itemCode==classType.itemOneCode }">
@@ -66,7 +66,7 @@
                 <p class="c">
                     <span class="c-title">学段</span>
                     <span class="c-content">
-                        <select name="itemSecondCode" id="itemSecondCodeList" onchange="Form.queryItemThird()">
+                        <select name="itemSecondCode" id="itemSecondCodeList" onchange="Form.queryItemThird()" disabled>
                             <option  value="" data-id="">请选择</option>
                         </select>
                         <c:if test="${empty typeItems }">
@@ -77,7 +77,7 @@
                 <p class="c">
                     <span class="c-title">学科</span>
                     <span class="c-content">
-                        <select name="itemThirdCode" id="itemThirdCodeList" onchange="Form.queryTagsList(null,1)">
+                        <select name="itemThirdCode" id="itemThirdCodeList" onchange="Form.queryTagsList(null,1)" disabled>
                             <option  value="" data-id="">请选择</option>
                         </select>
                         <c:if test="${empty typeItems }">
@@ -88,7 +88,7 @@
                 <p class="c">
                     <span class="c-title">知识点</span>
                     <span class="c-content">
-                        <select name="itemFourthCode" id="itemFourthCodeList" >
+                        <select name="itemFourthCode" id="itemFourthCodeList" disabled>
                             <option  value="" data-id="">请选择</option>
                         </select>
                         <c:if test="${empty typeItems }">
@@ -99,7 +99,7 @@
                 <p class="c">
                     <span class="c-title">课程属性</span>
                     <span class="c-content">
-                        <select name="isMicroClass" id="isMicroClass" >
+                        <select name="isMicroClass" id="isMicroClass" disabled>
                             <option value="0" <c:if test='${classType.isMicroClass != 1}'>selected="selected"</c:if>>回放课程</option>
                             <option value="1" <c:if test='${classType.isMicroClass == 1}'>selected="selected"</c:if>>微课</option>
                         </select>
@@ -107,11 +107,11 @@
                 </p>
                 <p class="c">
                     <span class="c-title">封面标签</span>
-                    <span class="c-content"><input type="text" id="iconLable" name="iconLable" value="${classType.iconLable }" maxlength="18"></span>
+                    <span class="c-content"><input type="text" id="iconLable" name="iconLable" value="${classType.iconLable }" maxlength="18" disabled></span>
                 </p>
                 <p class="c">
                     <span class="c-title">课程名称</span>
-                    <span class="c-content"><input type="text" id="classTypeName" name="name" value="${classType.name }"><sb>*</sb></span>
+                    <span class="c-content"><input type="text" id="classTypeName" name="name" value="${classType.name }" disabled><sb>*</sb></span>
                     <span class="firstspan" style="display: none;margin-left:360px;margin-top:-28px;">该课程名称已存在</span>
                 </p>
                 <p class="c">
@@ -119,22 +119,22 @@
                     <span class="c-content">
                     <c:choose>
                     	<c:when test="${empty classType.originalPrice }">
-                    		<input id="prices" class="prices" name="originalPrice" type="text"><sb>*</sb>
+                    		<input id="prices" class="prices" name="originalPrice" type="text" disabled><sb>*</sb>
                     	</c:when>
                     	<c:otherwise>
-                    		<input type="text" name="originalPrice" class="prices" id="prices" value="${classType.originalPrice }"><sb>*</sb>
+                    		<input type="text" name="originalPrice" class="prices" id="prices" value="${classType.originalPrice }" disabled><sb>*</sb>
                     	</c:otherwise>
                     </c:choose>
                     </span>
                 </p>
                 <p class="c">
                     <span class="c-title">优惠价</span>
-                    <span class="c-content"><input name="realPrice" class="prices" id="realPrice"  type="text" value="${classType.realPrice }"><sb>*</sb></span>
+                    <span class="c-content"><input name="realPrice" class="prices" id="realPrice"  type="text" value="${classType.realPrice }" disabled><sb>*</sb></span>
                 </p>
                 <%@include file="/WEB-INF/jsp/classType/common_member_integral.jsp" %>
                  <p class="c">
                     <span class="c-title">购买基数</span>
-                    <span class="c-content"><input name="baseNum" type="text" value="${classType.baseNum }" class="baseNum"><sb>*</sb>
+                    <span class="c-content"><input name="baseNum" type="text" value="${classType.baseNum }" class="baseNum" disabled><sb>*</sb>
                      <i class="iconfont ask" style="cursor: pointer;color:gray;margin-left: 10px;" title="基数的值作为课程购买人数的一部分，显示在网校前台">&#xe60f;</i>
                     </span>
                 </p>
@@ -148,7 +148,7 @@
                 </p>
                  <p class="c">
                     <span class="c-title">总课时</span>
-                    <span class="c-content"><input name="courseNum" type="text" value="${courseNum==null?'0':courseNum }" class="courseNum">*</span>
+                    <span class="c-content"><input name="courseNum" type="text" value="${courseNum==null?'0':courseNum }" class="courseNum" disabled>*</span>
                 </p>
                  <p class="c">
                     <span class="c-title">授课方式</span>

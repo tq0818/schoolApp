@@ -91,7 +91,14 @@
 </div>
 <p class="c buyNumSetting none">
     <span class="c-title">课程购买人数限制</span>
-    <span class="c-content"><input name="buyNumMax" type="text" value="${classType.buyNumMax }">&nbsp;&nbsp;
+    <c:choose>
+    <c:when test="${classType.originType == 0}">  
+    	<span class="c-content"><input name="buyNumMax" disabled type="text" value="${classType.buyNumMax }">&nbsp;&nbsp;
+    </c:when>
+   	<c:otherwise> 
+    	<span class="c-content"><input name="buyNumMax" type="text" value="${classType.buyNumMax }">&nbsp;&nbsp;
+     </c:otherwise>
+	</c:choose>
      <i class="iconfont ask" style="cursor: pointer;color:gray;margin-left:10px;" title="请填写实际限制的购买人数，不包含购买基数">&#xe60f;</i>
     </span>
 </p>

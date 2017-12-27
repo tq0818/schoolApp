@@ -194,7 +194,7 @@
 			                                $("#lession_list") .find("table") .append(
 			                                    '<tr>'
 		                                		+ '<td>' + (live.lessonName? live.lessonName : '') + '</td>'
-			                                    + '<td>' +(live.watchType==0? '看直播' : live.watchType==1? '看回放' : '') + '</td>'
+			                                    //+ '<td>' +(live.watchType==0? '看直播' : live.watchType==1? '看回放' : '') + '</td>'
 			                                    // + '<td>' + (live.inTime?new Date(live.inTime).Format("yyyy-MM-dd hh:mm:ss"): '') + '</td>'
                                                 // + '<td>' + (live.mobile ? live.mobile : '') + '</td>'
 			                                    + '<td>' + (live.userName ? live.userName : '') + '</td>'
