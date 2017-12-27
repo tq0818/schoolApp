@@ -90,7 +90,7 @@
 			<div class="c-bottom">
 				<span>回复时间: ${a.times }</span>
 				<span class="anss" style="margin-left:10px;color: #0099ff;cursor: pointer;" data-id="${a.id }"><span class="xzi">回答:(<span class="count">${a.commentCount }</span>)</span></span>
-				<span class="ore" style="margin-left:30px;cursor: pointer;"><i class="iconfont">&#xe64f;</i><span class="xzi">回复</span></span>
+				<!-- <span class="ore" style="margin-left:30px;cursor: pointer;"><i class="iconfont">&#xe64f;</i><span class="xzi">回复</span></span> -->
 				<c:if test="${types == 3 }">
 					<span class="del" style="margin-left:10px;cursor: pointer;" data-id="${a.id }"  data-adotp="${a.isAdopt}" data-types="1"><i class="iconfont">&#xe626;</i><span class="xzi">删除</span></span>
 				</c:if>
