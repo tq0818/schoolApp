@@ -173,6 +173,10 @@
     		 alert("积分打赏不能为空");
     		 return;
     	 }
+    	 if(questionScore > 5){
+    		 alert("积分打赏最多5分");
+    		 return;
+    	 }
     	 CKupdate();
     	 
     	 var questionDescTP=editor.document.getBody().getHtml(); //取得纯文本

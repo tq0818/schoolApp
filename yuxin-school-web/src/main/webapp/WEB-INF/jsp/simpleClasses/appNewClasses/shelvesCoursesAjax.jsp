@@ -63,18 +63,18 @@
                 <td class="overflowHide" title="${course.actualNum}">${course.actualNum}</td>
                 <c:choose>
                     <c:when test="${course.appPrice eq ''}">
-                        <td class="overflowHide" title="${course.appPrice}">${course.appPrice}</td>
+                        <td class="overflowHide" title="${course.originalPrice}">${course.originalPrice}</td>
                     </c:when>
                     <c:otherwise>
-                        <td class="overflowHide" title="${course.originalPrice}">${course.originalPrice}</td>
+                        <td class="overflowHide" title="${course.appPrice}">${course.appPrice}</td>
                     </c:otherwise>
                 </c:choose>
                 <c:choose>
-                    <c:when test="${course.appPrice eq ''}">
-                        <td class="overflowHide" title="${course.salePrice}">${course.salePrice}</td>
+                    <c:when test="${course.salePrice eq ''}">
+                        <td class="overflowHide" title="${course.realPrice}">${course.realPrice}</td>
                     </c:when>
                     <c:otherwise>
-                        <td class="overflowHide" title="${course.realPrice}">${course.realPrice}</td>
+                        <td class="overflowHide" title="${course.salePrice}">${course.salePrice}</td>
                     </c:otherwise>
                 </c:choose>
                 <td>

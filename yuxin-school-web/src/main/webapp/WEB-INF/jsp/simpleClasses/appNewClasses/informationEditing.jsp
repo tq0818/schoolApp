@@ -204,10 +204,26 @@
                 <label>课程标签：</label><input type="text" id="labDesc" value="${searchAndResult.labDesc}">
             </li>
             <li>
-                <label>价格：</label><input type="text" id="appPrice" value="${searchAndResult.originalPrice}">
+                <label>价格：</label>
+                <c:choose>
+                    <c:when test="${searchAndResult.appPrice eq ''}">
+                       <input type="text" id="appPrice" value="${searchAndResult.originalPrice}">
+                    </c:when>
+                    <c:otherwise>
+                        <input type="text" id="appPrice" value="${searchAndResult.appPrice}">
+                    </c:otherwise>
+                </c:choose>
             </li>
             <li>
-                <label>实际价格：</label><input type="text" id="salePrice" value="${searchAndResult.realPrice}">
+                <label>实际价格：</label>
+                 <c:choose>
+                    <c:when test="${searchAndResult.salePrice eq ''}">
+                        <input type="text" id="salePrice" value="${searchAndResult.realPrice}">
+                    </c:when>
+                    <c:otherwise>
+                        <input type="text" id="salePrice" value="${searchAndResult.salePrice}">
+                    </c:otherwise>
+                </c:choose>
             </li>
             <c:if test="${searchAndResult.liveFlag == '1'}">
                 <li>
