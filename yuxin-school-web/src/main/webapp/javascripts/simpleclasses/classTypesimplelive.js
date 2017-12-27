@@ -1372,7 +1372,10 @@ var originType = null;
         var flag = $("#isFusheng").val();
         var isJigou = $("#isJigou").val();
         var isFenxiao = $("#isFenxiao").val();
-        var html = '<div class="action">' +
+        var originType = $("#originType").val();
+        var html='';
+        if(originType=='1'){
+        	html = '<div class="action">' +
             '<a href="javascript:void(0);" pid=' + moduleId + ' oid=' + lessonId + ' teac=' + teachers + ' mark="back" class="editson"><i class="iconfont">&#xe61c;</i></a>' +
             '<a href="javascript:void(0);" pid=' + moduleId + ' oid=' + lessonId + ' teac=' + teachers + ' mark="edit" class="editson"><i class="iconfont">&#xe625;</i></a>' +
             '<a href="javascript:void(0);" pid=' + moduleId + ' oid=' + lessonId + ' teac=' + teachers + ' mark="del" class="editson"><i class="iconfont">&#xe626;</i></a>' +
@@ -1381,6 +1384,7 @@ var originType = null;
             '<a href="javascript:void(0);" ids="' + lessonId + '" teac="' + teachers + '" class="coursePaper"><li>课后练习</li></a>' +
             '</ul>' +
             '</div>';
+        }
         var teacherId = $("#teacherId").val();
         if ((isJigou == false || isJigou == 'false') && (isFenxiao == false || isFenxiao == 'false')) {
             if (teacherId != teachers && (flag == true || flag == 'true')) {

@@ -93,7 +93,7 @@
     <span class="c-title">课程购买人数限制</span>
     <c:choose>
     <c:when test="${classType.originType == 0}">  
-    	<span class="c-content"><input name="buyNumMax" disabled type="text" value="${classType.buyNumMax }">&nbsp;&nbsp;
+    	<span class="c-content">${classType.buyNumMax }&nbsp;&nbsp;&nbsp;&nbsp;
     </c:when>
    	<c:otherwise> 
     	<span class="c-content"><input name="buyNumMax" type="text" value="${classType.buyNumMax }">&nbsp;&nbsp;

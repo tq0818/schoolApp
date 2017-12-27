@@ -44,10 +44,11 @@
         <form id="addFormOne" method="post">
         <div class="c-main">
             <div class="c-content">
+            	<c:if test="${classType.originType eq 1}">
                 <p class="c">
                 <span class="c-title">分类</span>
                 <span class="c-content">
-                        <select name="itemOneCode" id="itemOneCodeList" onchange="Form.queryItemSecond()" disabled >
+                        <select name="itemOneCode" id="itemOneCodeList" onchange="Form.queryItemSecond()" >
                             <option  value="" data-id="">请选择</option>
                         	<c:forEach items="${typeItems }" var="type" varStatus="status">
                                 <c:if test="${type.itemCode==classType.itemOneCode }">
@@ -63,80 +64,160 @@
                          </c:if>
                     </span>
                 </p>
+                </c:if>
+                <c:if test="${classType.originType ne 1}">
+                <p class="c">
+                <span class="c-title">分类</span>
+                	<span class="c-content">
+                        	<c:forEach items="${typeItems }" var="type" varStatus="status">
+                                <c:if test="${type.itemCode==classType.itemOneCode }">
+                                    ${type.itemName }
+                                </c:if>
+                            </c:forEach>
+                    </span>
+                </p>
+                </c:if>
                 <p class="c">
                     <span class="c-title">学段</span>
-                    <span class="c-content">
-                        <select name="itemSecondCode" id="itemSecondCodeList" onchange="Form.queryItemThird()" disabled>
-                            <option  value="" data-id="">请选择</option>
-                        </select>
-                        <c:if test="${empty typeItems }">
-                            <input type="text" class="readonly"  id="itemSecondName" marks="${classType.itemSecondCode }" value="${classType.itemSecondName}" readonly/>
-                        </c:if>
-                    </span>
+                    <c:if test="${classType.originType eq 1}">
+	                    <span class="c-content">
+	                        <select name="itemSecondCode" id="itemSecondCodeList" onchange="Form.queryItemThird()">
+	                            <option  value="" data-id="">请选择</option>
+	                        </select>
+	                        <c:if test="${empty typeItems }">
+	                            <input type="text"  id="itemSecondName" marks="${classType.itemSecondCode }" value="${classType.itemSecondName}" readonly/>
+	                        </c:if>
+	                    </span>
+                    </c:if>
+                    <c:if test="${classType.originType ne 1}">
+	                    <span class="c-content">
+	                        ${classType.itemSecondName}
+	                    </span>
+                    </c:if>
                 </p>
                 <p class="c">
                     <span class="c-title">学科</span>
-                    <span class="c-content">
-                        <select name="itemThirdCode" id="itemThirdCodeList" onchange="Form.queryTagsList(null,1)" disabled>
-                            <option  value="" data-id="">请选择</option>
-                        </select>
-                        <c:if test="${empty typeItems }">
-                            <input type="text" class="readonly"  id="itemThirdName" marks="${classType.itemThirdCode }" value="${classType.itemThirdName}" readonly/>
-                        </c:if>
-                    </span>
+                    <c:if test="${classType.originType eq 1}">
+	                    <span class="c-content">
+	                        <select name="itemThirdCode" id="itemThirdCodeList" onchange="Form.queryTagsList(null,1)">
+	                            <option  value="" data-id="">请选择</option>
+	                        </select>
+	                        <c:if test="${empty typeItems }">
+	                            <input type="text" class="readonly"  id="itemThirdName" marks="${classType.itemThirdCode }" value="${classType.itemThirdName}" readonly/>
+	                        </c:if>
+	                    </span>
+                    </c:if>
+                    <c:if test="${classType.originType ne 1}">
+	                    <span class="c-content">
+	                        ${classType.itemThirdName}
+	                    </span>
+                    </c:if>
                 </p>
                 <p class="c">
                     <span class="c-title">知识点</span>
-                    <span class="c-content">
-                        <select name="itemFourthCode" id="itemFourthCodeList" disabled>
-                            <option  value="" data-id="">请选择</option>
-                        </select>
-                        <c:if test="${empty typeItems }">
-                            <input type="text" class="readonly" id="itemFourthName" marks="${classType.itemFourthCode }" value="${classType.itemFourthName}" readonly/>
-                        </c:if>
-                    </span>
+                    <c:if test="${classType.originType eq 1}">
+	                    <span class="c-content">
+	                        <select name="itemFourthCode" id="itemFourthCodeList">
+	                            <option  value="" data-id="">请选择</option>
+	                        </select>
+	                        <c:if test="${empty typeItems }">
+	                            <input type="text" class="readonly" id="itemFourthName" marks="${classType.itemFourthCode }" value="${classType.itemFourthName}" readonly/>
+	                        </c:if>
+	                    </span>
+                    </c:if>
+                    <c:if test="${classType.originType ne 1}">
+	                    <span class="c-content">
+	                        ${classType.itemFourthName}
+	                    </span>
+                    </c:if>
                 </p>
                 <p class="c">
                     <span class="c-title">封面标签</span>
-                    <span class="c-content"><input type="text" disabled id="iconLable" name="iconLable" value="${classType.iconLable }" maxlength="18"></span>
+                    <span class="c-content">
+                    	<c:if test="${classType.originType eq 1}">
+                    		<input type="text" id="iconLable" name="iconLable" value="${classType.iconLable }" maxlength="18">
+                    	</c:if>
+                    	<c:if test="${classType.originType ne 1}">
+                    		${classType.iconLable}
+                    	</c:if>
+                    </span>
                 </p>
                 <p class="c">
                     <span class="c-title">课程名称</span>
-                    <span class="c-content"><input type="text" disabled id="classTypeName" name="name" value="${classType.name }"><sb>*</sb></span>
-                    <span class="firstspan" style="display: none;margin-left:360px;margin-top:-28px;">该课程名称已存在</span>
+                    <span class="c-content">
+                    	<c:if test="${classType.originType eq 1}">
+                    		<input type="text" id="classTypeName" name="name" value="${classType.name }"><sb>*</sb>
+                    		<span class="firstspan" style="display: none;margin-left:360px;margin-top:-28px;">该课程名称已存在</span>
+                    	</c:if>
+                    	<c:if test="${classType.originType ne 1}">
+                    		${classType.name}
+                    	</c:if>
+                    </span>
                 </p>
                 <p class="c">
                     <span class="c-title">定价</span>
                     <span class="c-content">
-                    <c:choose>
-                    	<c:when test="${empty classType.originalPrice }">
-                    		<input id="prices" class="prices" disabled name="originalPrice" type="text"><sb>*</sb>
-                    	</c:when>
-                    	<c:otherwise>
-                    		<input type="text" name="originalPrice" disabled id="prices" class="prices" value="${classType.originalPrice }"><sb>*</sb>
-                    	</c:otherwise>
-                    </c:choose>
+	                    <c:if test="${classType.originType eq 1}">
+		                    <c:choose>
+		                    	<c:when test="${empty classType.originalPrice }">
+		                    		<input id="prices" class="prices"  name="originalPrice" type="text"><sb>*</sb>
+		                    	</c:when>
+		                    	<c:otherwise>
+		                    		<input type="text" name="originalPrice" id="prices" class="prices" value="${classType.originalPrice }"><sb>*</sb>
+		                    	</c:otherwise>
+		                    </c:choose>
+	                    </c:if>
+	                    <c:if test="${classType.originType ne 1}">
+	                    		${classType.originalPrice }
+	                    </c:if>
                     </span>
                 </p>
                 <p class="c">
                     <span class="c-title">优惠价</span>
-                    <span class="c-content"><input name="realPrice" disabled id="realPrice" type="text" class="prices" value="${classType.realPrice }"><sb>*</sb></span>
+                    <span class="c-content">
+                    	<c:if test="${classType.originType eq 1}">
+                   			 <input name="realPrice" id="realPrice" type="text" class="prices" value="${classType.realPrice }"><sb>*</sb>
+                   		 </c:if>
+                   		 <c:if test="${classType.originType ne 1}">
+                   		 	${classType.realPrice}
+                   		 </c:if>
+                    </span>
                 </p>
                 <%@include file="/WEB-INF/jsp/classType/common_member_integral.jsp" %>
                  <p class="c">
                     <span class="c-title">购买基数</span>
-                    <span class="c-content"><input name="baseNum" disabled type="text" value="${classType.baseNum }"><sb>*</sb>
-                     <i class="iconfont ask" style="cursor: pointer;color:gray;margin-left: 10px;" title="基数的值作为课程购买人数的一部分，显示在网校前台">&#xe60f;</i>
+                    <span class="c-content">
+                    	<c:if test="${classType.originType eq 1}">
+                    		<input name="baseNum" type="text" value="${classType.baseNum }"><sb>*</sb>
+                    	</c:if>
+                    	<c:if test="${classType.originType ne 1}">
+                    		${classType.baseNum }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    	</c:if>
+                     	<i class="iconfont ask" style="cursor: pointer;color:gray;margin-left: 10px;" title="基数的值作为课程购买人数的一部分，显示在网校前台">&#xe60f;</i>
                     </span>
                 </p>
                 <c:if test="${lable=='live' }">
                  <p class="c setting">
                     <span class="c-title">课程有效天数</span>
-                    <span class="c-content"><input name="validityDay" class="settingcount" type="text" value="${classType.validityDay }"></span>
+                    <span class="c-content">
+                    	<c:if test="${classType.originType eq 1}">
+                    		<input name="validityDay" class="settingcount" type="text" value="${classType.validityDay }">
+                    	</c:if>
+                    	<c:if test="${classType.originType ne 1}">
+                    		${classType.validityDay }
+                    	</c:if>
+                    </span>
                 </p>
                  <p class="c setting">
                      <span class="c-title">观看次数</span>
-                    <span class="c-content"><input name="liveWatchCount" class="settingcount" type="text" value="${classType.liveWatchCount }"></span>
+                    <span class="c-content">
+                    	<c:if test="${classType.originType eq 1}">
+                    		<input name="liveWatchCount" class="settingcount" type="text" value="${classType.liveWatchCount }">
+                    	</c:if>
+                    	<c:if test="${classType.originType ne 1}">
+                    		${classType.liveWatchCount }
+                    	</c:if>
+                    </span>
                 </p>
                 </c:if>
                  <p class="c">
