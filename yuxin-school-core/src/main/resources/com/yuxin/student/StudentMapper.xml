@@ -3730,6 +3730,7 @@
 			<if test="score != null and score != ''">score = #{score},</if>
 			<if test="validTime != null and validTime != ''">valid_time = #{validTime},</if>
 			<if test="invalidTime != null and invalidTime != ''">invalid_time = #{invalidTime},</if>
+			<if test="oprator != null and oprator != ''">oprator = #{oprator},</if>
 		</trim>
 		<where>
 			id=#{id}
