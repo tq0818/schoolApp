@@ -92,6 +92,13 @@ a:hover {
 	            <h2 class="h5">题库</h2>
 	            <span class="line"></span>
 	        </div>
+			<p class="c">
+				<span class="t-title">题库来源</span>
+				<span class="t-content" id="tiku">
+                	<a href="javascript:Forms.loadTikuAjax(1);" ids="1" class="btn btn-mini btn-default btn-success">APP</a>
+                    <a href="javascript:Forms.loadTikuAjax(1);" ids="0" class="btn btn-mini btn-default">PC</a>
+                </span>
+			</p>
 	        <div class="main-content" style="overflow: hidden;">
 	        	<div id="info">
 	        	

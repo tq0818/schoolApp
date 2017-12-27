@@ -334,6 +334,7 @@
 		<mapper resource="com/yuxin/query/SysPlayLogsMapper.xml" />
 		<mapper resource="com/yuxin/app/SysDictAppMapper.xml" />
 		<mapper resource="com/yuxin/app/ShelvesCourseMapper.xml" />
+		<mapper resource="com/yuxin/app/SysNoticeMapper.xml" />
 	</mappers>
 
 </configuration>

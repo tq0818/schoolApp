@@ -454,7 +454,7 @@
 				po.remark,
 				 uf.mobile as discount_no,
 				 uf.username as coupon_code
-		from pay_order po  left join users_front uf on  uf.id = po.user_id where po.company_id = #{companyId}
+		from pay_order po  left join users_front uf on  uf.id = po.user_id where po.company_id = #{companyId} and origin_type=1
 		<if test="payStatus != null and payStatus !=''">
 			<if test="payStatus == 1">
 				and po.pay_status = 'PAY_NON'
@@ -504,7 +504,7 @@
 	
 	<select id="findCountByParams" resultType="int" parameterType="map">
 		select  count(po.id) 
-		from pay_order po <if test="mobile != null and mobile != ''"> left join users_front uf on  uf.id = po.user_id </if> where po.company_id = #{companyId} 
+		from pay_order po <if test="mobile != null and mobile != ''"> left join users_front uf on  uf.id = po.user_id </if> where po.company_id = #{companyId} and origin_type=1
 		<if test="payStatus != null and payStatus !=''">
 			<if test="payStatus == 1">
 				and po.pay_status = 'PAY_NON'

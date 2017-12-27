@@ -3,7 +3,9 @@ package com.yuxin.wx.controller.queAns;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yuxin.wx.api.app.INoticeAndScoreService;
 import com.yuxin.wx.api.queAns.IQuestionAnswerService;
 import com.yuxin.wx.api.queAns.IQuestionService;
 import com.yuxin.wx.api.system.ISysConfigTeacherService;
@@ -56,6 +59,8 @@ public class QAManagerController {
 
     @Autowired
     private IQuestionService questionServiceImpl;
+    @Autowired
+    private INoticeAndScoreService noticeAndScoreServiceImpl;
 
     @RequestMapping("/selAns")
     public String selAnswer(Model model, HttpServletRequest request, QuestionAnswer ans, String types) {
@@ -67,19 +72,19 @@ public class QAManagerController {
             // 查询头像
             
             for (QuestionAnswer a : anlist) {
-                log.info("qa：一级回复：" + a);
-                
                 if (a.getAnswerType().equals("QUESTION_ANSWER_STUDENT")) {
                     UsersFront user = usersFrontServiceImpl.findUsersFrontById(a.getUserId());
-                    if (user.getNickName() != null) {
-                        a.setName(user.getNickName());
-                    } else if (user.getMobile() != null) {
-                        a.setName("******" + user.getMobile().substring(7));
-                    } else {
-                        a.setName(user.getUsername());
-                    }
-                    if (user.getHeadPicMax() != null) {
-                        a.setImgurl(user.getHeadPicMax());
+                    if(user != null){
+                        if (user.getNickName() != null) {
+                            a.setName(user.getNickName());
+                        } else if (user.getMobile() != null) {
+                            a.setName("******" + user.getMobile().substring(7));
+                        } else {
+                            a.setName(user.getUsername());
+                        }
+                        if (user.getHeadPicMax() != null) {
+                            a.setImgurl(user.getHeadPicMax());
+                        }
                     }
                 } else {
                     SysConfigTeacher teacher = sysConfigTeacherServiceImpl.findByUserId(a.getUserId());
@@ -163,8 +168,10 @@ public class QAManagerController {
                 QuestionAnswer ans = questionAnswerServiceImpl.findQuestionAnswerById(id);
                 // 查询问题
                 QueQuestion que = questionServiceImpl.findQuestionById(ans.getQuestionId());
-                que.setAnswerCount(que.getAnswerCount() - 1);
-                questionServiceImpl.update(que);
+                if(ans.getIsChecke() ==1){
+	                que.setAnswerCount(que.getAnswerCount() - 1);
+	                questionServiceImpl.update(que);
+            	}
                 // 查询当前回复下所有的其他回复
                 List<Integer> alist = questionAnswerServiceImpl.findTwoAns(id);
                 alist.add(id);
@@ -253,6 +260,11 @@ public class QAManagerController {
     		questionAnswerServiceImpl.update(one);
     		
     		json.put(JsonMsg.MSG, JsonMsg.SUCCESS);
+    		QuestionAnswer questionAnswer = questionAnswerServiceImpl.findQuestionAnswerById(id);
+    		UsersFront user = usersFrontServiceImpl.findUsersFrontById(questionAnswer.getUserId());
+    		Map<String,String>map = new HashMap<String,String>();
+    		map.put("userName",user.getNickName());
+        	noticeAndScoreServiceImpl.sendMsg(request.getRequestURI().replace(request.getContextPath(),""),user.getId().toString(),map);
     		return json;
     		
     	} catch (Exception e) {
@@ -342,7 +354,7 @@ public class QAManagerController {
 
         try {
         	String  answerDesc=ans.getAnswerDesc();
-            flag=TextCheck.TextCheck(answerDesc);
+            flag=TextCheck.TextCheck(answerDesc,propertiesUtil);
     		if(flag){
     			ans.setIsChecke(1);
     		}else{

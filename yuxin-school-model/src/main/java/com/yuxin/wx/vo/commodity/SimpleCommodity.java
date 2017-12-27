@@ -82,6 +82,15 @@ public class SimpleCommodity extends BaseEntity {
 	private Integer buyNum;
 	private String isCollect;
 	private String itemThirdCode;
+	private String imgUrl;
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
 
 	public String getTeacherId() {
 		return teacherId;

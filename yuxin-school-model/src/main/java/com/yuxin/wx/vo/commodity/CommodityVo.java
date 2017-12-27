@@ -95,6 +95,7 @@ public class CommodityVo extends BaseEntity {
     private String  paperDescription;
     private Integer userId;
     private Integer categoryId;//分类Id
+    private String courseTime;
     public Integer getSout() {
         return sout;
     }
@@ -105,7 +106,7 @@ public class CommodityVo extends BaseEntity {
 
     private Integer sout;
 
-    private Date previewDate;//预览时间
+    private long previewDate;//预览时间
     private String range;//范围
     
     private String courseName;
@@ -150,12 +151,12 @@ public class CommodityVo extends BaseEntity {
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
 	}
-
-	public Date getPreviewDate() {
+	
+	public long getPreviewDate() {
 		return previewDate;
 	}
 
-	public void setPreviewDate(Date previewDate) {
+	public void setPreviewDate(long previewDate) {
 		this.previewDate = previewDate;
 	}
 
@@ -820,4 +821,12 @@ public class CommodityVo extends BaseEntity {
 		this.categoryId = categoryId;
 	}
 
+	public String getCourseTime() {
+		return courseTime;
+	}
+
+	public void setCourseTime(String courseTime) {
+		this.courseTime = courseTime;
+	}
+	
 }

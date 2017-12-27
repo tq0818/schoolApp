@@ -45,10 +45,10 @@
 					<div class="login-form1">
 						<span class="tips">${info}</span>
 						<div class="c" style="margin-top:10px;">
-							<input type="text" id="username" name="username" class="input-ctrl" value="lijt"  placeholder="用户名">
+							<input type="text" id="username" name="username" class="input-ctrl" placeholder="用户名">
 						</div>
 						<div class="c">
-							<input type="password" id="password" name="password"  class="input-ctrl" value="111111" placeholder="密码">
+							<input type="password" id="password" name="password"  class="input-ctrl"  placeholder="密码">
 						</div>
 						<div class="c none" id="codes">
 								<input type="text" id="checkcode" name="checkcode" value="" placeholder="图像验证码" class="code input-sm"> 
@@ -56,7 +56,7 @@
 						</div>
 						<div class="s remeber">
 								<span><input type="checkbox" id="rememberMe" name="rememberMe" value="1" checked=checked/> 记住我</span>
-								<a href="<%=rootPath%>/users/findPwd" style="color: red; margin-left: 50px;">忘记密码?</a>
+								<a href="<%=rootPath%>/users/findPwd" style="color: #f5b34f; margin-left: 50px;">忘记密码?</a>
 						</div>
 						<div class="c">
 							<button type="submit" class="btn btn-primary btn-login"> 登录</button>
@@ -67,7 +67,7 @@
 			</div>
 		</div>
 		<div class="bot">
-		
+
 		</div>
 	</div>
 	<!-- footer start -->

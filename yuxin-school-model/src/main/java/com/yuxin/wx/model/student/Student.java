@@ -74,6 +74,7 @@ public class Student extends BaseEntity {
 	private String eduYear;
 	private Integer isInSchool;
 	private String eduAreaName;
+	private Integer eduAreaId;
 	private String eduSchoolName;
 	private String eduStepName;
 	public Integer getTeacherFlag() {
@@ -670,5 +671,14 @@ public class Student extends BaseEntity {
 	public void setEduStepName(String eduStepName) {
 		this.eduStepName = eduStepName;
 	}
+
+	public Integer getEduAreaId() {
+		return eduAreaId;
+	}
+
+	public void setEduAreaId(Integer eduAreaId) {
+		this.eduAreaId = eduAreaId;
+	}
+
 	
 }

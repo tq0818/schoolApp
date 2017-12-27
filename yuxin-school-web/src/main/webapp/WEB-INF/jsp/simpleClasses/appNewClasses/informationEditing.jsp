@@ -95,8 +95,8 @@
                 <select id="courseCaIdList" onchange="chooseSlibMenu($(this));">
                     <c:forEach var="menu" items="${firstMenus}">
                         <c:choose>
-                            <c:when test="${searchAndResult.categoryId eq menu.id}">
-                                <option value="${menu.id}" select>${menu.name}</option>
+                            <c:when test="${searchAndResult.categoryId == menu.id}">
+                                <option value="${menu.id}" selected>${menu.name}</option>
                             </c:when>
                             <c:otherwise>
                                 <option value="${menu.id}">${menu.name}</option>
@@ -110,7 +110,7 @@
                 <select id="gradeIdList" onchange="chooseSlibMenu($(this));">
                     <c:forEach var="menu" items="${secondeMenus}" varStatus="status">
                         <c:choose>
-                            <c:when test="${searchAndResult.gradeId eq menu.id}">
+                            <c:when test="${searchAndResult.gradeId == menu.id}">
                                 <option value="${menu.id}" selected>${menu.name}</option>
                             </c:when>
                             <c:otherwise>
@@ -125,7 +125,7 @@
                 <select id="subjectIdList" onchange="chooseSlibMenu($(this));">
                     <c:forEach var="menu" items="${thirdMenus}">
                         <c:choose>
-                            <c:when test="${searchAndResult.subjectId eq menu.id}">
+                            <c:when test="${searchAndResult.subjectId == menu.id}">
                                 <option value="${menu.id}" selected>${menu.name}</option>
                             </c:when>
                             <c:otherwise>
@@ -140,7 +140,7 @@
                 <select id="kwonProIdList" onchange="chooseSlibMenu($(this));">
                     <c:forEach var="menu" items="${forthMenus}">
                         <c:choose>
-                            <c:when test="${searchAndResult.kwonProId eq menu.id}">
+                            <c:when test="${searchAndResult.kwonProId == menu.id}">
                                 <option value="${menu.id}" selected>${menu.name}</option>
                             </c:when>
                             <c:otherwise>
@@ -155,7 +155,7 @@
                 <select id="knowIdList" onchange="chooseSlibMenu($(this));">
                     <c:forEach var="menu" items="${fifthMenus}">
                         <c:choose>
-                            <c:when test="${searchAndResult.knowId eq menu.id}">
+                            <c:when test="${searchAndResult.knowId == menu.id}">
                                 <option value="${menu.id}" selected>${menu.name}</option>
                             </c:when>
                             <c:otherwise>
@@ -170,7 +170,7 @@
                 <select id="stageIdList">
                     <c:forEach var="menu" items="${jieduanMenus}">
                         <c:choose>
-                            <c:when test="${searchAndResult.stageId eq menu.id}">
+                            <c:when test="${searchAndResult.stageId == menu.id}">
                                 <option value="${menu.id}" selected>${menu.name}</option>
                             </c:when>
                             <c:otherwise>
@@ -186,7 +186,7 @@
                 <select id="typeIdList">
                     <c:forEach var="menu" items="${leixingMenus}">
                         <c:choose>
-                            <c:when test="${searchAndResult.typeId eq menu.id}">
+                            <c:when test="${searchAndResult.typeId == menu.id}">
                                 <option value="${menu.id}" selected>${menu.name}</option>
                             </c:when>
                             <c:otherwise>
@@ -204,10 +204,26 @@
                 <label>课程标签：</label><input type="text" id="labDesc" value="${searchAndResult.labDesc}">
             </li>
             <li>
-                <label>价格：</label><input type="text" id="appPrice" value="${searchAndResult.originalPrice}">
+                <label>价格：</label>
+                <c:choose>
+                    <c:when test="${searchAndResult.appPrice eq ''}">
+                       <input type="text" id="appPrice" value="${searchAndResult.originalPrice}">
+                    </c:when>
+                    <c:otherwise>
+                        <input type="text" id="appPrice" value="${searchAndResult.appPrice}">
+                    </c:otherwise>
+                </c:choose>
             </li>
             <li>
-                <label>实际价格：</label><input type="text" id="salePrice" value="${searchAndResult.realPrice}">
+                <label>实际价格：</label>
+                 <c:choose>
+                    <c:when test="${searchAndResult.salePrice eq ''}">
+                        <input type="text" id="salePrice" value="${searchAndResult.realPrice}">
+                    </c:when>
+                    <c:otherwise>
+                        <input type="text" id="salePrice" value="${searchAndResult.salePrice}">
+                    </c:otherwise>
+                </c:choose>
             </li>
             <c:if test="${searchAndResult.liveFlag == '1'}">
                 <li>

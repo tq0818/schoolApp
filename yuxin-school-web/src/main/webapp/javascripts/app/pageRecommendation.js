@@ -37,6 +37,7 @@
             $("#subjectId").find("a").each(function (i) {
                 if ($(this).hasClass('btn-success')) {
                     subjectName = $(this).attr("data-code");
+
                 }
             });
             if (subjectName != 'all') {
@@ -101,6 +102,7 @@
             })
         },
         showAllShelvesClssType: function (id, typeStr) {
+
 			var datas = {};
 			var categoryid = '',
 			gradeid = ''

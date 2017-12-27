@@ -324,8 +324,12 @@ public class SimpleclassTypeController {
 
 			//查询二级菜单
 			List<SysDictApp>secondeMenus = null;
-			if(null!=firstMenus && firstMenus.size()>0){
-				search.setParentId(firstMenus.get(0).getId());
+			if(null!=firstMenus && firstMenus.size()>0 && null!=searchAndResult){
+				if(null!=searchAndResult.getCategoryId() && !"".equals(searchAndResult.getCategoryId())){
+					search.setParentId(Integer.parseInt(searchAndResult.getCategoryId()));
+				}else{
+					search.setParentId(firstMenus.get(0).getId());
+				}
 				secondeMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
 
 				if(null!=secondeMenus && secondeMenus.size()>0){
@@ -343,29 +347,45 @@ public class SimpleclassTypeController {
 			}
 			//查询三级菜单
 			List<SysDictApp>thirdMenus = null;
-			if(null!=secondeMenus && secondeMenus.size()>0){
-				search.setParentId(secondeMenus.get(0).getId());
+			if(null!=secondeMenus && secondeMenus.size()>0 && null!=searchAndResult){
+				if(StringUtils.isNotBlank(searchAndResult.getGradeId())){
+					search.setParentId(Integer.parseInt(searchAndResult.getGradeId()));
+				}else{
+					search.setParentId(secondeMenus.get(0).getId());
+				}
 				thirdMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
 			}
 
 			//查询四级菜单
 			List<SysDictApp>forthMenus = null;
-			if(null!=thirdMenus && thirdMenus.size()>0){
-				search.setParentId(thirdMenus.get(0).getId());
+			if(null!=thirdMenus && thirdMenus.size()>0 && null!=searchAndResult){
+				if(StringUtils.isNotBlank(searchAndResult.getSubjectId())){
+					search.setParentId(Integer.parseInt(searchAndResult.getSubjectId()));
+				}else{
+					search.setParentId(thirdMenus.get(0).getId());
+				}
 				forthMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
 			}
 
 			//查询五级菜单
 			List<SysDictApp>fifthMenus = null;
-			if(null!=forthMenus && forthMenus.size()>0){
-				search.setParentId(forthMenus.get(0).getId());
+			if(null!=forthMenus && forthMenus.size()>0 && null!=searchAndResult){
+				if(StringUtils.isNotBlank(searchAndResult.getKwonProId())){
+					search.setParentId(Integer.parseInt(searchAndResult.getKwonProId()));
+				}else{
+					search.setParentId(forthMenus.get(0).getId());
+				}
 				fifthMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
 			}
 
 			//查询阶段信息
 			List<SysDictApp>jieduanMenus = null;
 			if(null!=firstMenus && firstMenus.size()>0){
-				search.setParentId(firstMenus.get(0).getId());
+				if(StringUtils.isNotBlank(searchAndResult.getCategoryId())){
+					search.setParentId(Integer.parseInt(searchAndResult.getCategoryId()));
+				}else{
+					search.setParentId(firstMenus.get(0).getId());
+				}
 				jieduanMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
 				if(null!=jieduanMenus && jieduanMenus.size()>0){
 					List<SysDictApp>jieduans = new ArrayList<SysDictApp>();
@@ -381,7 +401,11 @@ public class SimpleclassTypeController {
 			//查询类型信息
 			List<SysDictApp>leixingMenus = null;
 			if(null!=firstMenus && firstMenus.size()>0){
-				search.setParentId(firstMenus.get(0).getId());
+				if(StringUtils.isNotBlank(searchAndResult.getCategoryId())){
+					search.setParentId(Integer.parseInt(searchAndResult.getCategoryId()));
+				}else{
+					search.setParentId(firstMenus.get(0).getId());
+				}
 				leixingMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
 				if(null!=leixingMenus && leixingMenus.size()>0){
 					List<SysDictApp>leixings = new ArrayList<SysDictApp>();
@@ -486,18 +510,25 @@ public class SimpleclassTypeController {
 	public String showAllProjectProduct(ClassType search,Model model){
 
 		if("CLASS_UNPUBLISHED".equals(search.getPublishStatus())){
-			search.setIsShelves("0");
+			search.setHasShelves("0");
+			search.setIsShelves("and (app.is_shelves = 0 or app.is_shelves is null OR (app.is_shelves = 1 AND now() <= app.reserve_time ))");
 		}else if("CLASS_ON_SALE".equals(search.getPublishStatus())){
-			search.setIsShelves("1");
+			search.setHasShelves("1");
+			search.setIsShelves("and ((app.is_shelves = 1 AND app.reserve_time IS NULL )OR (app.is_shelves = 1 AND now() >= app.reserve_time))");
 		}else if("CLASS_STOP_SALE".equals(search.getPublishStatus())){
-			search.setIsShelves("0");
+			search.setHasShelves("0");
+			search.setIsShelves("and (app.is_shelves = 0 or app.is_shelves is null OR (app.is_shelves = 1 AND now() <= app.reserve_time ))");
 		}
 
 		Users currentUser = WebUtils.getCurrentUser();
 		model.addAttribute("itemOneId", search.getItemOneId());
 		if(currentUser!=null)
 		search.setUserId(currentUser.getId());
-		search.setPageSize(7);
+		if(null!=search.getOriginType() && 1==search.getOriginType()){
+			search.setPageSize(7);
+		}else{
+			search.setPageSize(8);
+		}
 		search.setCreateSchoolId(WebUtils.getCurrentSchoolId());
 		search.setCompanyId(WebUtils.getCurrentCompanyId());
 		if(search.getPublishStatus()!=null && search.getPublishStatus().equals("all")){
@@ -524,6 +555,7 @@ public class SimpleclassTypeController {
 		model.addAttribute("searchName", search.getName());
 		int orderCount = classTypeServiceImpl.countSubjectClassOrder(search.getItemOneCode());
 		model.addAttribute("orderCount", orderCount);
+		model.addAttribute("originType", search.getOriginType());
 		return "simpleClasses/classIndexAjaxList";
 	}
 	
@@ -2295,8 +2327,8 @@ public class SimpleclassTypeController {
 		
 		List<SysConfigItem> firstItems = sysConfigItemServiceImpl.findSysConfigItemByPid(SysConfigConstant.ITEMTYPE_FIRST, null, WebUtils.getCurrentCompanyId(), WebUtils.getCurrentSchoolId());
 		model.addAttribute("firstItems", firstItems);
-		return "simpleClasses/classIndex";
-		//return "redirect:../showClassTypePage";
+//		return "simpleClasses/classIndex";
+		return "redirect:/simpleClasses/showClassTypePage";
 	}
 	
 	//下架后班型上架

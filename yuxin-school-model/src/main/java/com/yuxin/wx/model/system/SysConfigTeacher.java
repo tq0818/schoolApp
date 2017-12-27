@@ -77,6 +77,8 @@ public class SysConfigTeacher extends BaseEntity {
 
 	private String remark;		//摘要
 	
+	private String subjectName;//教师所教学科
+	
 	/**
 	 * 学校简称
 	 */
@@ -483,4 +485,13 @@ public class SysConfigTeacher extends BaseEntity {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+
+	public String getSubjectName() {
+		return subjectName;
+	}
+
+	public void setSubjectName(String subjectName) {
+		this.subjectName = subjectName;
+	}
+	
 }

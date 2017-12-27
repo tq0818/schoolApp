@@ -10,15 +10,18 @@ import java.util.Random;
 
 import org.apache.http.Consts;
 import org.apache.http.client.HttpClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
+import org.springframework.stereotype.Component;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.yuxin.wx.utils.HttpClient4Utils;
+import com.yuxin.wx.utils.PropertiesUtil;
 import com.yuxin.wx.utils.SignatureUtils;
 
 import sun.misc.BASE64Encoder;
@@ -34,28 +37,28 @@ import sun.misc.BASE64Encoder;
  */
 public class ImageCheck {
     /** 产品密钥ID，产品标识 */
-    private final static String SECRETID = "4ebfc3e6f3ea895a756e4f42b107928d";
+    private final static String SECRETID = "ce829f22b0b1a7cfef2e22fb2ae7ddbf";
     /** 产品私有密钥，服务端生成签名信息使用，请严格保管，避免泄露 */
-    private final static String SECRETKEY = "4c0da0c13a52e054ebf95ae43b2e0d10";
+    private final static String SECRETKEY = "3ae31a0c0584b593792a2b2b5b577527";
     /** 业务ID，易盾根据产品业务特点分配 */
-    private final static String BUSINESSID = "fd7a3b8f88f29c5fc37158cec5da8238";
+//    private final static String BUSINESSID = "fd7a3b8f88f29c5fc37158cec5da8238";
     /** 易盾反垃圾云服务图片在线检测接口地址 */
     private final static String API_URL = "https://api.aq.163.com/v3/image/check";
     /** 实例化HttpClient，发送http请求使用，可根据需要自行调参 */
     private static HttpClient httpClient = HttpClient4Utils.createHttpClient(100, 20, 10000, 2000, 2000);
-
+//    private static PropertiesUtil propertiesUtil = new PropertiesUtil();
     /**
      * 
      * @param args
      * @throws Exception
      */
     @SuppressWarnings("null")
-	public static boolean ImageCheck(String url) throws Exception {
+	public static boolean ImageCheck(String url,PropertiesUtil propertiesUtil) throws Exception {
     	boolean flag =false;
         Map<String, String> params = new HashMap<String, String>();
         // 1.设置公共参数
         params.put("secretId", SECRETID);
-        params.put("businessId", BUSINESSID);
+        params.put("businessId", propertiesUtil.getImgBusinessId());
         params.put("version", "v3");
         params.put("timestamp", String.valueOf(System.currentTimeMillis()));
         params.put("nonce", String.valueOf(new Random().nextInt()));

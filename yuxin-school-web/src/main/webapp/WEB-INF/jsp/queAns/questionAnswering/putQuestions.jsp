@@ -32,14 +32,14 @@
             <div class="checkBoxBtn">
                 <span>系统标签:</span>
                 <c:forEach items="${systemTag }" var="stag" varStatus="status">
-                    <button type="button" class="btn btn-default" name="panduan" labtype="0" ids="${stag.id }">${stag.labName }</button>
+                    <button type="button" class="btn btn-default labelContent" name="panduan" labtype="0" ids="${stag.id }">${stag.labName }</button>
                	</c:forEach>
             </div>
-            <div class="checkBoxBtn">
+            <%--<div class="checkBoxBtn">
                 <span>自定义标签:</span>
                 <div id="zdyBtn">
 	                <c:forEach items="${userDefinedTag }" var="udt" varStatus="status">
-	                	<button type="button" class="btn btn-default" name="panduan" labtype="0" ids="${udt.id }">${udt.labName }</button>
+	                	<button type="button" class="btn btn-default labelContentMy" name="panduan" labtype="0" ids="${udt.id }">${udt.labName }</button>
 	                </c:forEach>
                </div>
                 <ul class="putQuestionContent">
@@ -52,7 +52,7 @@
                         <button type="button" class="btn btn-success labelAdd">+</button>
                     </li>
                 </ul>
-            </div>
+            </div>--%>
             <div class="contentBox">
                 <span>内容:</span>
                 <div id="ckecktor"> 
@@ -118,7 +118,7 @@
 						if(data == 'success'){
 							$('.labelInputContent').css('display','none');
 							$('.labelAddContent').show();
-							var html="<button type='button' class='btn btn-default' name='panduan' labtype='2' ids="+a+" >"+a+"</button>";
+							var html="<button type='button' class='btn btn-default labelContentMy' name='panduan' labtype='2' ids="+a+" >"+a+"</button>";
 						//  此处可发起ajax请求
 							$("#zdyBtn").append(html);
 							$("#systemLab").val('');
@@ -173,10 +173,37 @@
     		 alert("积分打赏不能为空");
     		 return;
     	 }
+    	 if(questionScore > 5){
+    		 alert("积分打赏最多5分");
+    		 return;
+    	 }
     	 CKupdate();
     	 
     	 var questionDescTP=editor.document.getBody().getHtml(); //取得纯文本
     	 var questionDesc=editor.document.getBody().getText(); //取得纯文本
+    	 var labelContentSys = $('.labelContent');
+    	 var labelContentMy = $('.labelContentMy');
+    	 var labelContentMyString="";    	 
+    	 for(var i=0;i<labelContentMy.length;i++){
+    		 if($('.labelContentMy').eq(i).hasClass('btn-primary')){
+    			 if(i ==  labelContentMy.length-1){
+    				 labelContentMyString+=$('.labelContentMy').eq(i).html();
+    			 }else{
+    			 labelContentMyString+=$('.labelContentMy').eq(i).html()+',';
+    			 }
+    		 }
+    	 }
+    	 var labelContentString="";    	 
+    	 for(var i=0;i<labelContentSys.length;i++){
+    		 if($('.labelContent').eq(i).hasClass('btn-primary')){
+    			 if(i ==  labelContentSys.length-1){
+    				 labelContentString+=$('.labelContent').eq(i).html();
+    			 }else{
+    				 labelContentString+=$('.labelContent').eq(i).html()+',';
+    			 }
+    		 }
+    	 }
+    	 var labelContent = labelContentString +","+ labelContentMyString;
     	 var systemId=new Array();
     	 var userDefued=new Array();
     	 var count=0;
@@ -208,7 +235,7 @@
     	  $.ajax({
  			url: rootPath + "/Question/addQuestione",
  			type:"post",
- 			data:{"questionTitle":questionTitle,"questionDesc" : questionDesc,"questionscore":questionScore,"systemTagIds":systemId,"userDefuledNames":userDefued,"questionDescTP":questionDescTP},
+ 			data:{"questionTitle":questionTitle,"questionDesc" : questionDesc,"questionscore":questionScore,"systemTagIds":systemId,"userDefuledNames":userDefued,"questionDescTP":questionDescTP,"labelContent":labelContent},
  			dataType:"json",
  			success:function(data){
  				if(data == 'success'){

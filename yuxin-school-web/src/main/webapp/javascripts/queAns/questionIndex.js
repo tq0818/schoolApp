@@ -323,6 +323,7 @@ $(function(){
 						});
 						//显示全部点击
 						$(".showAll").click(function(){
+
 							var id = $(this).attr("ids");
 							queId = id;
 							var html = $(this).html();
@@ -332,6 +333,7 @@ $(function(){
 							}else{
 								types = "2";
 							}
+
 							if(html == '显示全部'){
 								$(this).html("收起全部");
 								$(".showCon"+id+"").addClass("none");

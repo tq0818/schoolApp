@@ -63,18 +63,18 @@
                 <td class="overflowHide" title="${course.actualNum}">${course.actualNum}</td>
                 <c:choose>
                     <c:when test="${course.appPrice eq ''}">
-                        <td class="overflowHide" title="${course.appPrice}">${course.appPrice}</td>
+                        <td class="overflowHide" title="${course.originalPrice}">${course.originalPrice}</td>
                     </c:when>
                     <c:otherwise>
-                        <td class="overflowHide" title="${course.originalPrice}">${course.originalPrice}</td>
+                        <td class="overflowHide" title="${course.appPrice}">${course.appPrice}</td>
                     </c:otherwise>
                 </c:choose>
                 <c:choose>
-                    <c:when test="${course.appPrice eq ''}">
-                        <td class="overflowHide" title="${course.salePrice}">${course.salePrice}</td>
+                    <c:when test="${course.salePrice eq ''}">
+                        <td class="overflowHide" title="${course.realPrice}">${course.realPrice}</td>
                     </c:when>
                     <c:otherwise>
-                        <td class="overflowHide" title="${course.realPrice}">${course.realPrice}</td>
+                        <td class="overflowHide" title="${course.salePrice}">${course.salePrice}</td>
                     </c:otherwise>
                 </c:choose>
                 <td>
@@ -119,6 +119,8 @@
 
 </form>
 <script>
+    //请求状态
+    var isLoading = false;
     function proQueryClassDetails(id,liveFlag,videoFlag,faceFlag){
         $("#myForms").html("");
         var liveType="";
@@ -149,8 +151,13 @@
         reloadCurrunt();
     });
     function toRcommon(categerorId,zhiboFlag,commodityId){
-
-
+        //请求状态为请求中则返回
+        if(isLoading){
+            alert("网络繁忙，请稍等！");
+            return;
+        }
+        //改变请求状态
+        isLoading = true;
         $.ajax({
             url :"<%=rootPath %>/appNewClasses/homeRecommendation",
             type : "post",
@@ -161,6 +168,8 @@
             },
             success : function(result) {
                 $("#toRecommon").html(result);
+                //重置请求状态
+                isLoading = false;
             },
             complete:function(XMLHttpRequest,textStatus){
                 $(".loading").hide();
@@ -208,6 +217,10 @@
         }
         if(batchReleaseArray.length>0){
             var s = window.confirm("确认下架所选课程");
+            //请求状态为请求中则返回
+            if(isLoading) return;
+            //改变请求状态
+            isLoading = true;
             if(s==true){
                 $.ajax({
                     type : 'post',
@@ -221,8 +234,10 @@
                         if(data=='1'){
                             alert('下架课程成功！')
                             reloadCurrunt();
+                            isLoading = false;
                         }else {
                             alert("下架课程失败!");
+                            isLoading = false;
                         }
                     }
                 });

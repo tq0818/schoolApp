@@ -169,7 +169,7 @@
                </p>--%>
               <p class="c text-center operator">
               	<c:if test="${classType.originType eq 1}">
-                <a href="javascript:Form.addFormOne('save')" class="btn btn-primary">保存</a>
+                <a href="javascript:Form.addFormOne('save')" class="btn btn-primary saveAddClass">保存</a>
                 </c:if>
            		<a href="<%=rootPath %>/simpleClasses/showClassTypePage" class="btn btn-default">取消</a>
              </p>

@@ -61,14 +61,6 @@ public class SpecialModelController {
     /**
      * 跳转到批量首页推荐
      *
-     * @param model
-     * @param categoryid        模块ID
-     * @param gradeid 学段ID
-     * @param subjectid      科目ID
-     * @param knowledgeid         知识点ID
-     * @param knowledgeProid       知识点专题ID
-     * @param typeCode         类型ID
-     * @param stageid        阶段ID
      * @return
      */
     @ResponseBody
@@ -109,7 +101,7 @@ public class SpecialModelController {
     @ResponseBody
     @RequestMapping(value = "/insertOrupdateTuiJian")
     public boolean insertOrupdateTuiJian(Model model,String gradeIds,String appShelvesIds){
-    	if(gradeIds==null||gradeIds=="") return true;
+    	if(gradeIds==null||"".equals(gradeIds)) return true;
     	try{
     		return commodityServiceImpl.insertOrUpdate(gradeIds,appShelvesIds);
     	}catch(Exception e){

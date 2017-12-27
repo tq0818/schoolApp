@@ -79,15 +79,46 @@
 				</div>
                 <p class="c text-center" style="margin-top:20px;">
                     <c:if test="${ct.originType  eq 1 }">
-                      <a href="javascript:save();" class="btn btn-primary">保存</a>
+                      <a href="javascript:save();" class="btn btn-primary saveAddClass">保存</a>
                     </c:if>
-
+					<a href="<%=rootPath %>/simpleClasses/showClassTypePage" class="btn btn-default">取消</a>
                 </p>
             </div>
-        </div><a href="<%=rootPath %>/simpleClasses/showClassTypePage" class="btn btn-default">取消</a>
+        </div>
     </div>
 </div>
     </div>
+</div>
+
+<%--保存直播预习..回放信息--%>
+<div class="popupwin popuwinback add-fix" data-pupwin="modal" style="top:15%;left:18%;width:55%;height:auto;">
+	<div class="popupwin-title">
+		<h2 class="h5">关联课程</h2>
+		<i class="close iconfont"></i>
+	</div>
+	<div class="main form-horizontal">
+		<div class="form-body">
+			<input type="hidden" id="lessonUrlId"/>
+			<div class="form-group">
+				<label class="col-md-2 control-label">直播预习</label>
+				<div class="col-md-8" >
+					<input type="text" class="form-control" id="beforeStudyUrl" maxlength="200" name="beforeStudyUrl" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label">直播回放</label>
+				<div class="col-md-8" >
+					<input type="text" class="form-control" id="afterStudyUrl" maxlength="200" name="afterStudyUrl" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-3 col-md-offset-5">
+					<a class="btn btn-default btn-primary addclassInfo"  href="javascript:;">保&nbsp;&nbsp;存</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-default" data-pupwin-btn="cancle" href="javascript:;">取&nbsp;&nbsp;消</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 

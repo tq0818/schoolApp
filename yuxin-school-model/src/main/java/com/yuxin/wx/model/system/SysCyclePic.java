@@ -39,7 +39,8 @@ public class SysCyclePic extends BaseEntity {
 	private String bannerContent; 
 	private String bannerImgUrl; 
 	private Integer isState;          
-	private Integer orderByNum;   
+	private Integer orderByNum; 
+	private String bannerContentUrl;
 	// Constructor
 	public SysCyclePic() {
 	}
@@ -256,6 +257,14 @@ public class SysCyclePic extends BaseEntity {
 
 	public void setOrderByNum(Integer orderByNum) {
 		this.orderByNum = orderByNum;
+	}
+	
+	public String getBannerContentUrl() {
+		return bannerContentUrl;
+	}
+
+	public void setBannerContentUrl(String bannerContentUrl) {
+		this.bannerContentUrl = bannerContentUrl;
 	}
 
 	@Override

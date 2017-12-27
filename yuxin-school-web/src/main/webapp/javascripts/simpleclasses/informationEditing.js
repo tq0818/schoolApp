@@ -18,6 +18,7 @@ function toOnsaleEdit(ids,zhiboFlag){
 }
 function chooseSlibMenu(obj){
 	var id = obj.attr("id").replace("List","");
+	console.log(id);
 	var parentId = obj.val();
 	$.ajax({
 		url : rootPath +"/simpleClasses/querySlibMenu",
@@ -40,7 +41,7 @@ function chooseSlibMenu(obj){
 					}
 				}
 				$("#gradeIdList").html(html);
-				chooseSlibMenu($("#gradeId"));
+				chooseSlibMenu($("#gradeIdList"));
 
 				//阶段
 				$("#stageIdList").html("");
@@ -67,7 +68,7 @@ function chooseSlibMenu(obj){
 				$("#typeIdList").html(html);
 
 
-			}else if("gradeIdList"==id){
+			}else if("gradeId"==id){
 				$("#subjectIdList").html("");
 				var html='';
 				for(var i=0;i<data.length;i++){
@@ -78,7 +79,7 @@ function chooseSlibMenu(obj){
 					}
 				}
 				$("#subjectIdList").html(html);
-				chooseSlibMenu($("#subjectId"));
+				chooseSlibMenu($("#subjectIdList"));
 			}else if("subjectId"==id){
 				$("#kwonProIdList").html("");
 				var html='';
@@ -90,7 +91,7 @@ function chooseSlibMenu(obj){
 					}
 				}
 				$("#kwonProIdList").html(html);
-				chooseSlibMenu($("#kwonProId"));
+				chooseSlibMenu($("#kwonProIdList"));
 			}else if("kwonProId"==id){
 				$("#knowIdList").html("");
 				var html='';
@@ -114,7 +115,8 @@ function queryClassDetails(id){
 	$("#myForm").attr("action","/editSimpleCourse/editClassTypeMessage").submit();
 }
 
-
+//请求状态
+var isLoading = false;
 function toShelves(flag,editFlag){
 	var courseCaId = $("#courseCaIdList").val();
 	var gradeId = $("#gradeIdList").val();
@@ -150,6 +152,13 @@ function toShelves(flag,editFlag){
 		alert("预约上架时间不能为空");
 		return;
 	}
+//请求状态为请求中则返回
+    if(isLoading){
+        alert("网络繁忙，请稍等！");
+        return;
+    }
+    //改变请求状态
+    isLoading = true;
 
 	$.ajax({
 		url : rootPath +"/simpleClasses/insertShelvesInfo",
@@ -167,8 +176,10 @@ function toShelves(flag,editFlag){
 					Form.queryAllCommdityByItemNew(1);
 				}
 			}else{
-				alert("失败")
+				alert("失败");
 			}
+            //重置请求状态
+            isLoading = false
 		}
 	});
 }

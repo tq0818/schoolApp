@@ -107,6 +107,8 @@ function saveRule(objt){
 	data.score=score;
 	data.validTime=validTime;
 	data.invalidTime=invalidTime;
+	var username='${sessionScope.loginUser.username}';
+	$(objt).parent().siblings('td').eq(5).text(username);
 	 $.ajax({
          url: rootPath + "/student/updateScoreRuleById",
          data: data,
@@ -210,8 +212,10 @@ function editRule(objt){
                                          invalidTime = "";
                                      }
 
+                                    var bl=(page-1)*10;
+
                                     var htmlStr='<tr>'+
-			            	                    '<td>'+(i+1)+'</td>'+
+			            	                    '<td>'+(i+1+bl)+'</td>'+
 			            	                    '<td>'+stu.scoreTopic+'</td>'+
 			            	                    '<td><input type="text" value="'+stu.score+'" disabled="disabled"></td>'+
 			            	                    '<td><input type="text" value="'+validTime+'" readonly class="dateRuleStart'+(i+1)+'"></td>'+

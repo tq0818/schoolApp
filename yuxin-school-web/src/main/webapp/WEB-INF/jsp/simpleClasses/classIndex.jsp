@@ -10,7 +10,9 @@
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/classes.css">
      <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/operate.css" />
     <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
-    
+    <style>
+        .upload-layer{left: 50% !important;width:500px !important;margin-left:-250px;}
+    </style>
 </head>
 <body style="position:relative;">
 <input type="hidden" id="one" value="${itemOneId }"/>
@@ -116,7 +118,14 @@
                     <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="IS_LIVE" class="btn btn-mini btn-default">直播</a>
                     <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="IS_VIDEO" class="btn btn-mini btn-default">录播</a>
                     <%--<a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="IS_FACE" class="btn btn-mini btn-default">面授</a>--%>
-                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="IS_REMOTE" class="btn btn-mini btn-default">其他</a>
+                    <%--<a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="IS_REMOTE" class="btn btn-mini btn-default">其他</a>--%>
+                </span>
+            </p>
+            <p class="c">
+                <span class="t-title">课程来源</span>
+                <span class="t-content" id="courseOrigin">
+                	<a href="javascript:Form.queryAllCommdityByItemNew(1)" ids="1" class="btn btn-mini btn-default btn-success">APP</a>
+                    <a href="javascript:Form.queryAllCommdityByItemNew(1);" ids="0" class="btn btn-mini btn-default">PC</a>
                 </span>
             </p>
         </div>
@@ -160,19 +169,22 @@
 					$.each(jsonData,function(i,item){
 						if(item.groupCode=='SERVICE_LIVE'){
 							html+='<ul class="tabsn c4"><li class="b2">录播</li>'+
-					   			'<li class="b3">面授</li>'+
-						   		'<li class="b4">混合</li>'+
-						   		'<li class="b5">其他</li></ul>';
+//					   			'<li class="b3">面授</li>'+
+//						   		'<li class="b4">混合</li>'+
+//						   		'<li class="b5">其他</li>' +
+                                    '</ul>';
 						}else if(item.groupCode=='SERVICE_VIDEO'){
 								html+='<ul class="tabsn c4"><li class="b1">直播</li>'+
-					   			'<li class="b3">面授</li>'+
-						   		'<li class="b4">混合</li>'+
-						   		'<li class="b5">其他</li></ul>';
+//					   			'<li class="b3">面授</li>'+
+//						   		'<li class="b4">混合</li>'+
+//						   		'<li class="b5">其他</li' +
+                                        '></ul>';
 						}else if(item.groupCode=='SERVICE_FACE'){
 								html+='<ul class="tabsn c4"><li class="b1">直播</li>'+
 					   			'<li class="b2">录播</li>'+
-						   		'<li class="b4">混合</li>'+
-						   		'<li class="b5">其他</li></ul>';
+//						   		'<li class="b4">混合</li>'+
+//						   		'<li class="b5">其他</li>' +
+                                        '</ul>';
 						}
 					});
 				}else if(count==2){
@@ -184,27 +196,28 @@
 							num2=item.groupCode;
 						}
 					})
-					if((num1=="SERVICE_LIVE"&&num2=="SERVICE_VIDEO")||(num1=="SERVICE_VIDEO"&&num2=="SERVICE_LIVE")){
-						html+='<ul class="tabsn c2"><li class="b3">面授</li>'+
-				   		'<li class="b5">其他</li></ul>';
-					}
-					if((num1=="SERVICE_LIVE"&&num2=="SERVICE_FACE")||(num1=="SERVICE_FACE"&&num2=="SERVICE_LIVE")){
-						html+='<ul class="tabsn c2"><li class="b2">录播</li>'+
-				   		'<li class="b5">其他</li></ul>';
-					}
-					if((num1=="SERVICE_FACE"&&num2=="SERVICE_VIDEO")||(num1=="SERVICE_VIDEO"&&num2=="SERVICE_FACE")){
-						html+='<ul class="tabsn c2"><li class="b1">直播</li>'+
-				   		'<li class="b5">其他</li></ul>';
-					}
+//					if((num1=="SERVICE_LIVE"&&num2=="SERVICE_VIDEO")||(num1=="SERVICE_VIDEO"&&num2=="SERVICE_LIVE")){
+//						html+='<ul class="tabsn c2"><li class="b3">面授</li>'+
+//				   		'<li class="b5">其他</li></ul>';
+//					}
+//					if((num1=="SERVICE_LIVE"&&num2=="SERVICE_FACE")||(num1=="SERVICE_FACE"&&num2=="SERVICE_LIVE")){
+//						html+='<ul class="tabsn c2"><li class="b2">录播</li>'+
+//				   		'<li class="b5">其他</li></ul>';
+//					}
+//					if((num1=="SERVICE_FACE"&&num2=="SERVICE_VIDEO")||(num1=="SERVICE_VIDEO"&&num2=="SERVICE_FACE")){
+//						html+='<ul class="tabsn c2"><li class="b1">直播</li>'+
+//				   		'<li class="b5">其他</li></ul>';
+//					}
 				}else if(count==3){
-					html+='<ul class="tabsn c8">'+
-			   		'<li class="b5">其他</li></ul>';
+//					html+='<ul class="tabsn c8">'+
+//			   		'<li class="b5">其他</li></ul>';
 				}else{
 					html+='<ul class="tabsn"><li class="b1">直播</li>'+
 					'<li class="b2">录播</li>'+
-		   			'<li class="b3">面授</li>'+
-			   		'<li class="b4">混合</li>'+
-			   		'<li class="b5">其他</li></ul>';
+		   			/*'<li class="b3">面授</li>'+*/
+			   		/*'<li class="b4">混合</li>'+
+			   		'<li class="b5">其他</li>' +*/
+                            '</ul>';
 				}
 				/* $("#lsOne").append(html); */
 				$(html).appendTo("#lsOne");

@@ -117,4 +117,24 @@ public class SysPlayLogsServiceImpl implements ISysPlayLogsService{
         return sysPlayLogsMapper.queryTotleVideoCourseForSchool(papamMap);
     }
 
+    @Override
+    public List<VideoCourseVo> queryAreaCourseIndexList(VideoCourseVo videoCourseVo) {
+        return sysPlayLogsMapper.queryAreaCourseIndexList(videoCourseVo);
+    }
+
+    @Override
+    public List<VideoCourseVo> queryCourseIndexList(VideoCourseVo videoCourseVo) {
+        return sysPlayLogsMapper.queryCourseIndexList(videoCourseVo);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryHistoryAll() {
+        return sysPlayLogsMapper.queryHistoryAll();
+    }
+
+    @Override
+    public List<Map<String, Object>> queryTotleVideoCourse1(Map<String, Object> papamMap) {
+        return sysPlayLogsMapper.queryTotleVideoCourse1(papamMap);
+    }
+
 }

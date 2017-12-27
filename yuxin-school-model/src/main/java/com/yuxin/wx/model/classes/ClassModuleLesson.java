@@ -76,7 +76,18 @@ public class ClassModuleLesson extends BaseEntity {
     private Date lessonDateTime;
     
     private Integer paperId;
+    //ccId和ccuserId
+    private String ccId;
+    private String ccUserId;
+    private String beforeStudyUrl;
+    private String afterStudyUrl;
+    private String ccApiKey;
     
+    private String hccId;//回放的ccId
+    private String hccUserId;
+    private String hccApiKey;
+    private Integer videoClassTypeId;
+    private Integer lectureId;
 	public TikuPaper getTikuPaper() {
 		return tikuPaper;
 	}
@@ -556,6 +567,86 @@ public class ClassModuleLesson extends BaseEntity {
 
 	public void setPaperId(Integer paperId) {
 		this.paperId = paperId;
+	}
+
+	public String getCcId() {
+		return ccId;
+	}
+
+	public void setCcId(String ccId) {
+		this.ccId = ccId;
+	}
+
+	public String getCcUserId() {
+		return ccUserId;
+	}
+
+	public void setCcUserId(String ccUserId) {
+		this.ccUserId = ccUserId;
+	}
+
+	public String getBeforeStudyUrl() {
+		return beforeStudyUrl;
+	}
+
+	public void setBeforeStudyUrl(String beforeStudyUrl) {
+		this.beforeStudyUrl = beforeStudyUrl;
+	}
+
+	public String getAfterStudyUrl() {
+		return afterStudyUrl;
+	}
+
+	public void setAfterStudyUrl(String afterStudyUrl) {
+		this.afterStudyUrl = afterStudyUrl;
+	}
+
+	public String getCcApiKey() {
+		return ccApiKey;
+	}
+
+	public void setCcApiKey(String ccApiKey) {
+		this.ccApiKey = ccApiKey;
+	}
+
+	public String getHccId() {
+		return hccId;
+	}
+
+	public void setHccId(String hccId) {
+		this.hccId = hccId;
+	}
+
+	public String getHccUserId() {
+		return hccUserId;
+	}
+
+	public void setHccUserId(String hccUserId) {
+		this.hccUserId = hccUserId;
+	}
+
+	public String getHccApiKey() {
+		return hccApiKey;
+	}
+
+	public void setHccApiKey(String hccApiKey) {
+		this.hccApiKey = hccApiKey;
+	}
+
+	public Integer getVideoClassTypeId() {
+		return videoClassTypeId;
+	}
+
+	public void setVideoClassTypeId(Integer videoClassTypeId) {
+		this.videoClassTypeId = videoClassTypeId;
+	}
+
+	public Integer getLectureId() {
+		return lectureId;
+	}
+
+	public void setLectureId(Integer lectureId) {
+		this.lectureId = lectureId;
 	}
 	
 }

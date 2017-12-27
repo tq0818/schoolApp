@@ -4,7 +4,8 @@
  * 页面js封装
  */
 (function($){
-	
+    //请求状态
+    var isLoading = false;
 	var Form={
 			init : function(){
 				var $this=this;
@@ -52,7 +53,13 @@
 					$.msg('未选择年级');
 					return;
 				}
-				
+                //请求状态为请求中则返回
+                if(isLoading){
+                    alert("网络繁忙，请稍等！");
+                    return;
+                }
+                //改变请求状态
+                isLoading = true;
 				data.gradeIds=grade_ids;
 				data.appShelvesIds=classids;
 				$.ajax({
@@ -76,6 +83,9 @@
 	                		$('.popupContainerRecommendation').show();
 	                        $('.popupOpacity').show();
 	                	}
+
+                        //重置请求状态
+                        isLoading = false;
 	                },
 	                complete: function (XMLHttpRequest, textStatus) {
 	                    $(".loading").hide();
@@ -104,6 +114,13 @@
 				var data={};
 				data.appShelvesId=app_shelves_id;
 				data.sort=sort;
+                //请求状态为请求中则返回
+                if(isLoading){
+                    alert("网络繁忙，请稍等！");
+                    return;
+                }
+                //改变请求状态
+                isLoading = true;
 				$.ajax({
 	                url: rootPath + "/specialModel/updateFirstRecommendationNum",
 	                type: "post",
@@ -121,6 +138,8 @@
 	                	}else{
 	                		$.msg('保存失败');
 	                	}
+                        //重置请求状态
+                        isLoading = false;
 	                },
 	                complete: function (XMLHttpRequest, textStatus) {
 	                    $(".loading").hide();
@@ -132,6 +151,7 @@
 	        	$("#selectCounts").val($("#selectCount").val());
 	        	Form.queryshelvesCoursesApp();
 	        },
+
 			queryshelvesCoursesApp : function(page){
 
 	            var datas = {};
@@ -157,7 +177,7 @@
 	                }
 	            });
 	            if (gradeName != 'all') {
-	                datas.gradeName = gradeName;
+	                datas.gradeid = gradeName;
 	            }
 	            $("#subjectId").find("a").each(function (i) {
 	                if ($(this).hasClass('btn-success')) {
@@ -165,7 +185,7 @@
 	                }
 	            });
 	            if (subjectName != 'all') {
-	                datas.subjectName = subjectName;
+	                datas.subjectid = subjectName;
 	            }
 	            $("#kwonProId").find("a").each(function (i) {
 	                if ($(this).hasClass('btn-success')) {
@@ -173,15 +193,15 @@
 	                }
 	            });
 	            if (knowledgeName != 'all') {
-	                datas.knowledgeName = knowledgeName;
+	                datas.knowledgeProid = knowledgeName;
 	            }
 	            $("#knowId").find("a").each(function (i) {
 	                if ($(this).hasClass('btn-success')) {
-	                    knowledgeProName = $(this).attr("data-code");
+						knowledgeName = $(this).attr("data-code");
 	                }
 	            });
-	            if (knowledgeProName != 'all') {
-	                datas.knowledgeProName = knowledgeProName;
+	            if (knowledgeName != 'all') {
+	                datas.knowledgeid = knowledgeName;
 	            }
 	            $("#stageId").find("a").each(function (i) {
 	                if ($(this).hasClass('btn-success')) {
@@ -189,7 +209,7 @@
 	                }
 	            });
 	            if (stageName != 'all') {
-	                datas.stageName = stageName;
+	                datas.stageid = stageName;
 	            }
 	            $("#typeId").find("a").each(function (i) {
 	                if ($(this).hasClass('btn-success')) {
@@ -204,6 +224,14 @@
 	            datas.modelCode=$("#modelCode").val();
 	            datas.modelId=$("#modelId").val();
 	            $(".user-list").find("table").find("tr:gt(0)").remove();
+
+                //请求状态为请求中则返回
+                if(isLoading){
+                    alert("网络繁忙，请稍等！");
+                    return;
+                }
+                //改变请求状态
+                isLoading = true;
 	            $.ajax({
 	                url: rootPath + "/specialModel/getModelListByIds",
 	                type: "post",
@@ -284,6 +312,9 @@
 	                        } else {
 	                            $(".pagination").html('');
 	                        }
+
+                        //重置请求状态
+                        isLoading = false;
 	                },
 	                complete: function (XMLHttpRequest, textStatus) {
 	                    $(".loading").hide();
@@ -292,11 +323,12 @@
 	            });
 			},
 			showAllShelvesClssType : function(id,typeStr){
+
 				var datas = {};
 				datas.typeStr=typeStr;
 				datas.typeId=id;
 				var categoryid = '',
-				gradeid = ''
+				gradeid = '',
 				subjectid = '',
 				knowledgeProid = '',
 				knowledgeid = '',

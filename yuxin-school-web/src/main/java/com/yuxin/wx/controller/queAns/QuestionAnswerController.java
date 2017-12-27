@@ -25,6 +25,7 @@ import com.yuxin.wx.common.TextCheck;
 import com.yuxin.wx.model.queAns.QueQuestion;
 import com.yuxin.wx.model.queAns.QuestionAnswer;
 import com.yuxin.wx.model.user.Users;
+import com.yuxin.wx.utils.PropertiesUtil;
 import com.yuxin.wx.utils.WebUtils;
 
 /**
@@ -40,6 +41,9 @@ public class QuestionAnswerController {
 	
 	@Autowired
 	private IQuestionAnswerService questionAnswerServiceImpl;
+	
+	@Autowired
+    private PropertiesUtil propertiesUtil;
 	
 	@Autowired
 	private IQuestionService questionServiceImpl;
@@ -76,7 +80,7 @@ public class QuestionAnswerController {
 		if(null!=questionAnswer.getAnswerDesc()){
 			String  answerDesc=questionAnswer.getAnswerDesc();
 			try {
-				flag=TextCheck.TextCheck(answerDesc);
+				flag=TextCheck.TextCheck(answerDesc,propertiesUtil);
 				if(flag){
 					questionAnswer.setIsChecke(1);
 				}else{
