@@ -168,8 +168,10 @@ public class QAManagerController {
                 QuestionAnswer ans = questionAnswerServiceImpl.findQuestionAnswerById(id);
                 // 查询问题
                 QueQuestion que = questionServiceImpl.findQuestionById(ans.getQuestionId());
-                que.setAnswerCount(que.getAnswerCount() - 1);
-                questionServiceImpl.update(que);
+                if(ans.getIsChecke() ==1){
+	                que.setAnswerCount(que.getAnswerCount() - 1);
+	                questionServiceImpl.update(que);
+            	}
                 // 查询当前回复下所有的其他回复
                 List<Integer> alist = questionAnswerServiceImpl.findTwoAns(id);
                 alist.add(id);
