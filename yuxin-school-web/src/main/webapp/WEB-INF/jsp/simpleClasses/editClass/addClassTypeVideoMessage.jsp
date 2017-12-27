@@ -47,95 +47,173 @@
                 <p class="c">
                     <span class="c-title">分类</span>
                     <span class="c-content">
-                        <select name="itemOneCode" id="itemOneCodeList" onchange="Form.queryItemSecond()" disabled>
-                            <option  value="" data-id="">请选择</option>
-                        	<c:forEach items="${typeItems }" var="type" varStatus="status">
-                                <c:if test="${type.itemCode==classType.itemOneCode }">
-                                    <option selected="selected" value="${type.itemCode }" data-id="${type.id}">${type.itemName }</option>
+                        <c:choose>
+                            <c:when test="${ct.originType  eq 1}">
+                                <select name="itemOneCode" id="itemOneCodeList" onchange="Form.queryItemSecond()">
+                                    <option  value="" data-id="">请选择</option>
+                                    <c:forEach items="${typeItems }" var="type" varStatus="status">
+                                        <c:if test="${type.itemCode==classType.itemOneCode }">
+                                            <option selected="selected" value="${type.itemCode }" data-id="${type.id}">${type.itemName }</option>
+                                        </c:if>
+                                        <c:if test="${type.itemCode!=classType.itemOneCode }">
+                                            <option value="${type.itemCode }" data-id="${type.id}">${type.itemName }</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                                <c:if test="${empty typeItems }">
+                                    <input type="text" class="readonly" id="itemOneName" marks="${classType.itemOneCode }" value="${classType.itemOneName }">
                                 </c:if>
-                                <c:if test="${type.itemCode!=classType.itemOneCode }">
-                                    <option value="${type.itemCode }" data-id="${type.id}">${type.itemName }</option>
-                                </c:if>
-                            </c:forEach>
-                        </select>
-                         <c:if test="${empty typeItems }">
-                             <input type="text" class="readonly" id="itemOneName" marks="${classType.itemOneCode }" value="${classType.itemOneName }" readonly>
-                         </c:if>
+                            </c:when>
+                            <c:otherwise>
+                                ${classType.itemOneName}
+                            </c:otherwise>
+                        </c:choose>
                     </span>
                 </p>
                 <p class="c">
                     <span class="c-title">学段</span>
                     <span class="c-content">
-                        <select name="itemSecondCode" id="itemSecondCodeList" onchange="Form.queryItemThird()" disabled>
-                            <option  value="" data-id="">请选择</option>
-                        </select>
-                        <c:if test="${empty typeItems }">
-                            <input type="text" class="readonly" id="itemSecondName" marks="${classType.itemSecondCode }" value="${classType.itemSecondName}" readonly/>
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${ct.originType  eq 1}">
+                                <select name="itemSecondCode" id="itemSecondCodeList" onchange="Form.queryItemThird()">
+                                    <option  value="" data-id="">请选择</option>
+                                </select>
+                                <c:if test="${empty typeItems }">
+                                    <input type="text" class="readonly" id="itemSecondName" marks="${classType.itemSecondCode }" value="${classType.itemSecondName}"/>
+                                </c:if>
+                            </c:when>
+                            <c:otherwise>
+                                ${classType.itemSecondName}
+                            </c:otherwise>
+                        </c:choose>
+
                     </span>
                 </p>
                 <p class="c">
                     <span class="c-title">学科</span>
                     <span class="c-content">
-                        <select name="itemThirdCode" id="itemThirdCodeList" onchange="Form.queryTagsList(null,1)" disabled>
-                            <option  value="" data-id="">请选择</option>
-                        </select>
-                        <c:if test="${empty typeItems }">
-                            <input type="text" class="readonly" id="itemThirdName" marks="${classType.itemThirdCode }" value="${classType.itemThirdName}" readonly/>
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${ct.originType  eq 1}">
+                                <select name="itemThirdCode" id="itemThirdCodeList" onchange="Form.queryTagsList(null,1)">
+                                    <option  value="" data-id="">请选择</option>
+                                </select>
+                                <c:if test="${empty typeItems }">
+                                    <input type="text" class="readonly" id="itemThirdName" marks="${classType.itemThirdCode }" value="${classType.itemThirdName}"/>
+                                </c:if>
+                            </c:when>
+                            <c:otherwise>
+                                ${classType.itemThirdName}
+                            </c:otherwise>
+                        </c:choose>
+
                     </span>
                 </p>
                 <p class="c">
                     <span class="c-title">知识点</span>
                     <span class="c-content">
-                        <select name="itemFourthCode" id="itemFourthCodeList" disabled>
-                            <option  value="" data-id="">请选择</option>
-                        </select>
-                        <c:if test="${empty typeItems }">
-                            <input type="text" class="readonly" id="itemFourthName" marks="${classType.itemFourthCode }" value="${classType.itemFourthName}" readonly/>
-                        </c:if>
+                          <c:choose>
+                            <c:when test="${ct.originType  eq 1}">
+                                <select name="itemFourthCode" id="itemFourthCodeList">
+                                    <option  value="" data-id="">请选择</option>
+                                </select>
+                                <c:if test="${empty typeItems }">
+                                    <input type="text" class="readonly" id="itemFourthName" marks="${classType.itemFourthCode }" value="${classType.itemFourthName}"/>
+                                </c:if>
+                            </c:when>
+                              <c:otherwise>
+                                  ${classType.itemFourthName}
+                              </c:otherwise>
+                          </c:choose>
                     </span>
                 </p>
                 <p class="c">
                     <span class="c-title">课程属性</span>
                     <span class="c-content">
-                        <select name="isMicroClass" id="isMicroClass" disabled>
-                            <option value="0" <c:if test='${classType.isMicroClass != 1}'>selected="selected"</c:if>>回放课程</option>
-                            <option value="1" <c:if test='${classType.isMicroClass == 1}'>selected="selected"</c:if>>微课</option>
-                        </select>
+                         <c:choose>
+                            <c:when test="${ct.originType  eq 1}">
+                                <select name="isMicroClass" id="isMicroClass">
+                                    <option value="0" <c:if test='${classType.isMicroClass != 1}'>selected="selected"</c:if>>回放课程</option>
+                                    <option value="1" <c:if test='${classType.isMicroClass == 1}'>selected="selected"</c:if>>微课</option>
+                                </select>
+                            </c:when>
+                             <c:otherwise>
+                                 <c:if test='${classType.isMicroClass != 1}'>回放课程</c:if>
+                                 <c:if test='${classType.isMicroClass == 1}'>微课</c:if>
+                             </c:otherwise>
+                         </c:choose>
                     </span>
                 </p>
                 <p class="c">
                     <span class="c-title">封面标签</span>
-                    <span class="c-content"><input type="text" id="iconLable" name="iconLable" value="${classType.iconLable }" maxlength="18" disabled></span>
+                    <span class="c-content">
+                          <c:choose>
+                            <c:when test="${ct.originType  eq 1}">
+                                <input type="text" id="iconLable" name="iconLable" value="${classType.iconLable }" maxlength="18">
+                            </c:when>
+                              <c:otherwise>
+                                  ${classType.iconLable }
+                              </c:otherwise>
+                          </c:choose>
+                    </span>
                 </p>
                 <p class="c">
                     <span class="c-title">课程名称</span>
-                    <span class="c-content"><input type="text" id="classTypeName" name="name" value="${classType.name }" disabled><sb>*</sb></span>
-                    <span class="firstspan" style="display: none;margin-left:360px;margin-top:-28px;">该课程名称已存在</span>
+                    <c:choose>
+                        <c:when test="${ct.originType  eq 1}">
+                            <span class="c-content"><input type="text" id="classTypeName" name="name" value="${classType.name }"><sb>*</sb></span>
+                            <span class="firstspan" style="display: none;margin-left:360px;margin-top:-28px;">该课程名称已存在</span>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="c-content">${classType.name }</span>
+                        </c:otherwise>
+                    </c:choose>
                 </p>
                 <p class="c">
                     <span class="c-title">定价</span>
                     <span class="c-content">
-                    <c:choose>
-                    	<c:when test="${empty classType.originalPrice }">
-                    		<input id="prices" class="prices" name="originalPrice" type="text" disabled><sb>*</sb>
-                    	</c:when>
-                    	<c:otherwise>
-                    		<input type="text" name="originalPrice" class="prices" id="prices" value="${classType.originalPrice }" disabled><sb>*</sb>
-                    	</c:otherwise>
-                    </c:choose>
+                          <c:choose>
+                              <c:when test="${ct.originType  eq 1}">
+                                  <c:choose>
+                                      <c:when test="${empty classType.originalPrice }">
+                                          <input id="prices" class="prices" name="originalPrice" type="text"><sb>*</sb>
+                                      </c:when>
+                                      <c:otherwise>
+                                          <input type="text" name="originalPrice" class="prices" id="prices" value="${classType.originalPrice }"><sb>*</sb>
+                                      </c:otherwise>
+                                  </c:choose>
+                              </c:when>
+                              <c:otherwise>
+                                  ${classType.originalPrice }
+                              </c:otherwise>
+                          </c:choose>
                     </span>
                 </p>
                 <p class="c">
                     <span class="c-title">优惠价</span>
-                    <span class="c-content"><input name="realPrice" class="prices" id="realPrice"  type="text" value="${classType.realPrice }" disabled><sb>*</sb></span>
+                    <span class="c-content">
+                        <c:choose>
+                              <c:when test="${ct.originType  eq 1}">
+                                <input name="realPrice" class="prices" id="realPrice"  type="text" value="${classType.realPrice }"><sb>*</sb>
+                              </c:when>
+                            <c:otherwise>
+                                ${classType.realPrice }
+                            </c:otherwise>
+                        </c:choose>
+                    </span>
                 </p>
                 <%@include file="/WEB-INF/jsp/classType/common_member_integral.jsp" %>
                  <p class="c">
                     <span class="c-title">购买基数</span>
-                    <span class="c-content"><input name="baseNum" type="text" value="${classType.baseNum }" class="baseNum" disabled><sb>*</sb>
-                     <i class="iconfont ask" style="cursor: pointer;color:gray;margin-left: 10px;" title="基数的值作为课程购买人数的一部分，显示在网校前台">&#xe60f;</i>
+                    <span class="c-content">
+                         <c:choose>
+                             <c:when test="${ct.originType  eq 1}">
+                                 <input name="baseNum" type="text" value="${classType.baseNum }" class="baseNum" ><sb>*</sb>
+                                 <i class="iconfont ask" style="cursor: pointer;color:gray;margin-left: 10px;" title="基数的值作为课程购买人数的一部分，显示在网校前台">&#xe60f;</i>
+                             </c:when>
+                             <c:otherwise>
+                                 ${classType.baseNum }
+                             </c:otherwise>
+                         </c:choose>
                     </span>
                 </p>
                  <p class="c setting">
@@ -148,7 +226,16 @@
                 </p>
                  <p class="c">
                     <span class="c-title">总课时</span>
-                    <span class="c-content"><input name="courseNum" type="text" value="${courseNum==null?'0':courseNum }" class="courseNum" disabled>*</span>
+                    <span class="c-content">
+                         <c:choose>
+                             <c:when test="${ct.originType  eq 1}">
+                                 <input name="courseNum" type="text" value="${courseNum==null?'0':courseNum }" class="courseNum" >*
+                             </c:when>
+                             <c:otherwise>
+                                 ${courseNum==null?'0':courseNum }
+                             </c:otherwise>
+                         </c:choose>
+                    </span>
                 </p>
                  <p class="c">
                     <span class="c-title">授课方式</span>

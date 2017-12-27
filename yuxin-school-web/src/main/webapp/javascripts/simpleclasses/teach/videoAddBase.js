@@ -691,11 +691,20 @@
 							$(".video_name").val(jsonData.videoName);
 						}
 					})
-					if(data.freeFlag==1){
-						$("#open-paper").attr("checked",true);
-					}else if(data.freeFlag==2){
-						$("#open-paper2").attr("checked",true);
+					if("1"==originType){
+						if(data.freeFlag==1){
+							$("#open-paper").attr("checked",true);
+						}else if(data.freeFlag==2){
+							$("#open-paper2").attr("checked",true);
+						}
+					}else{
+						if(data.freeFlag==1){
+							$("#open-paper").attr("checked",true).disable();
+						}else if(data.freeFlag==2){
+							$("#open-paper2").attr("checked",true).disable();
+						}
 					}
+
 					$(".video_id").val(data.videoId);
 				}
 				

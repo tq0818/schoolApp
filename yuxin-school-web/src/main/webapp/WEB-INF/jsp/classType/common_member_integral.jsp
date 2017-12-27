@@ -93,13 +93,14 @@
     <span class="c-title">课程购买人数限制</span>
     <c:choose>
     <c:when test="${classType.originType == 0}">  
-    	<span class="c-content"><input name="buyNumMax" disabled type="text" value="${classType.buyNumMax }">&nbsp;&nbsp;
+    	<span class="c-content">${classType.buyNumMax }&nbsp;&nbsp;</span>
     </c:when>
    	<c:otherwise> 
     	<span class="c-content"><input name="buyNumMax" type="text" value="${classType.buyNumMax }">&nbsp;&nbsp;
+            <i class="iconfont ask" style="cursor: pointer;color:gray;margin-left:10px;" title="请填写实际限制的购买人数，不包含购买基数">&#xe60f;</i>
+         </span>
      </c:otherwise>
 	</c:choose>
-     <i class="iconfont ask" style="cursor: pointer;color:gray;margin-left:10px;" title="请填写实际限制的购买人数，不包含购买基数">&#xe60f;</i>
-    </span>
+
 </p>
 <script type="text/javascript" src="<%=request.getContextPath() %>/javascripts/class/integral_member.js"></script>
