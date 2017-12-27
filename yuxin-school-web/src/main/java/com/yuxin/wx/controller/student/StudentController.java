@@ -16,22 +16,13 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.qiniu.util.Json;
-import com.yuxin.wx.api.system.*;
-import com.yuxin.wx.common.*;
-import com.yuxin.wx.controller.user.RegisterController;
-import com.yuxin.wx.model.system.*;
-import com.yuxin.wx.util.ImageUtils;
-import com.yuxin.wx.utils.*;
-import com.yuxin.wx.vo.user.UsersAreaRelation;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -54,13 +45,13 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import sun.misc.BASE64Encoder;
+import cn.jpush.api.report.UsersResult.User;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yuxin.wx.api.app.ISysDictAppService;
@@ -88,13 +79,13 @@ import com.yuxin.wx.api.system.ISysConfigItemService;
 import com.yuxin.wx.api.system.ISysConfigSchoolService;
 import com.yuxin.wx.api.system.ISysConfigTeacherService;
 import com.yuxin.wx.api.user.IUsersFrontService;
-import com.yuxin.wx.model.app.SysDictApp;
 import com.yuxin.wx.common.ExcelSheetEntity;
 import com.yuxin.wx.common.JsonMsg;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.common.PageFinder2;
 import com.yuxin.wx.common.SysLoader;
 import com.yuxin.wx.common.ViewFiles;
+import com.yuxin.wx.model.app.SysDictApp;
 import com.yuxin.wx.model.classes.ClassModule;
 import com.yuxin.wx.model.classes.ClassModuleNo;
 import com.yuxin.wx.model.classes.ClassPackageCategory;
@@ -102,7 +93,6 @@ import com.yuxin.wx.model.classes.ClassType;
 import com.yuxin.wx.model.company.Company;
 import com.yuxin.wx.model.company.CompanyFunctionSet;
 import com.yuxin.wx.model.company.CompanyMemberService;
-import com.yuxin.wx.model.company.CompanyPics;
 import com.yuxin.wx.model.company.CompanyRegisterConfig;
 import com.yuxin.wx.model.company.CompanyServiceStatic;
 import com.yuxin.wx.model.integral.ScoreRulsAppVo;
@@ -120,10 +110,12 @@ import com.yuxin.wx.model.system.SysConfigItemRelation;
 import com.yuxin.wx.model.system.SysConfigSchool;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.model.user.UsersFront;
+import com.yuxin.wx.util.ImageUtils;
 import com.yuxin.wx.utils.DateUtil;
 import com.yuxin.wx.utils.EntityUtil;
 import com.yuxin.wx.utils.ExcelUtil;
 import com.yuxin.wx.utils.FileUploadUtil;
+import com.yuxin.wx.utils.FileUtil;
 import com.yuxin.wx.utils.ImportExcl;
 import com.yuxin.wx.utils.ParameterUtil;
 import com.yuxin.wx.utils.PropertiesUtil;
@@ -4434,6 +4426,8 @@ public class StudentController {
     @RequestMapping(value = "/updateScoreRuleById")
     public Boolean updateScoreRuleById(HttpServletRequest request,ScoreRulsAppVo scoreRulsAppVo){
     	try{
+    		Users loginUser=(Users)request.getSession().getAttribute("loginUser");
+    		scoreRulsAppVo.setOprator(loginUser==null?null:loginUser.getUsername());
     		return integralManageServiceImpl.updateScoreRuleById(scoreRulsAppVo);
     	}catch(Exception e){
     		log.error("updateScoreRuleById(HttpServletRequest,ScoreRulsAppVo)",e);
