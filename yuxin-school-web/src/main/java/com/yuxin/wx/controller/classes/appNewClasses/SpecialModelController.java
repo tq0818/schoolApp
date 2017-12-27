@@ -110,11 +110,26 @@ public class SpecialModelController {
     	}
     }
     @ResponseBody
+    @RequestMapping(value = "/giveUpFirstCommand")
+    public boolean giveUpFirstCommand(Model model,String appShelvesIds){
+    	try{
+    		commodityServiceImpl.giveUpFirstCommand(appShelvesIds);
+    		return true;
+    	}catch(Exception e){
+    		log_specialmodel.error("giveUpFirstCommand(Model,String)",e);
+    		return false;
+    	}
+    }
+    @ResponseBody
     @RequestMapping(value = "/updateFirstRecommendationNum")
     public boolean updateFirstRecommendationNum(String appShelvesId,String sort){
     	if(appShelvesId==null||appShelvesId=="") return true;
     	try{
-    		return commodityServiceImpl.updateFirstRecommend(appShelvesId, sort);
+    		if("delete".equals(sort)){
+    			return commodityServiceImpl.deleteFirstRecommend(appShelvesId);
+    		}else{
+    			return commodityServiceImpl.updateFirstRecommend(appShelvesId, sort);
+    		}
     	}catch(Exception e){
     		log_specialmodel.error("updateFirstRecommendationNum(String,String)",e);
     		return false;

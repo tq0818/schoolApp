@@ -569,33 +569,47 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 	public ClassTypeVo querySingleLiveClassTypeInfo(ClassTypeVo search) {
 		Map<Object,Object>map = new HashMap<Object,Object>();
 		map.put("classType",search);
-		List<ClassTypeVo> classTypes = classTypeMapper.querySingleLiveClassTypeInfo(map);
-		/*if(null!=classTypes && classTypes.size()>0){
+		List<ClassTypeVo> classTypes = classTypeMapper.querySingleLiveClassTypeSingleInfo(map);
+		if(null!=classTypes && classTypes.size()>0){
+			//规则：
+			//1、如果当前有正在进行的直播，则取正在进行直播最早的开始时间
+			//2、如果当期没有开始时间，则取最近的直播开始时间
+			Long liveSmartTime=null;
+			Long smartTime=null;
+			Long nowTime=new Date().getTime();
+			ClassTypeVo liveSmartTimeVo=null;
+			ClassTypeVo smartTimeVo=null;
 			for(ClassTypeVo ctv : classTypes){
+				if(ctv.getLessonDate()==null) continue;
 				String lessonStartTime = ctv.getLessonDate()+" "+ctv.getLessonTimeStart()+":00";
 				String lessonEndTime = ctv.getLessonDate()+" "+ctv.getLessonTimeEnd()+":00";
-				Date lessonStartDate =this.getDate(lessonStartTime);
-				Date lessonSEndDate = this.getDate(lessonEndTime);
-				if(lessonStartDate.getTime()>new Date().getTime()){
-					ctv.setLessonLength(String.valueOf((lessonSEndDate.getTime()-lessonStartDate.getTime())/(1000*60)));
-					return ctv;
+				Long lessonStartDateTime =this.getDate(lessonStartTime).getTime();
+				Long lessonSEndDateTime = this.getDate(lessonEndTime).getTime();
+				//如果当前有正在进行的直播，则取正在进行直播最早的开始时间
+				if(lessonStartDateTime<nowTime&&nowTime<lessonSEndDateTime){
+					if(liveSmartTime==null||liveSmartTime!=null&&liveSmartTime>lessonStartDateTime){
+						liveSmartTime=lessonStartDateTime;
+						liveSmartTimeVo=ctv;
+					}
 				}
-
+				//如果当期没有开始时间，则取最近的直播开始时间
+				if(smartTime==null&&nowTime<lessonStartDateTime||nowTime<lessonStartDateTime&&smartTime>lessonStartDateTime){
+					smartTime=lessonStartDateTime;
+					smartTimeVo=ctv;
+				}
 			}
 			ClassTypeVo ctOne = classTypes.get(0);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:MM:SS");
-			Date lessonStartDate =this.getDate(ctOne.getLessonDate()+" "+ctOne.getLessonTimeStart()+":00");
-			Date lessonSEndDate = this.getDate(ctOne.getLessonDate()+" "+ctOne.getLessonTimeEnd()+":00");
-			ctOne.setLessonLength(String.valueOf((lessonSEndDate.getTime()-lessonStartDate.getTime())/(1000*60)));
-
-			return ctOne;
-		}*/
-		if(null!=classTypes && classTypes.size()>0){
-			ClassTypeVo ctv = classTypes.get(0);
-			if(null!=ctv.getImgUrl()&&!"".equals(ctv.getImgUrl())){
-				ctv.setCover(ctv.getImgUrl());
+			if(null!=ctOne.getImgUrl()&&!"".equals(ctOne.getImgUrl())){
+				ctOne.setCover(ctOne.getImgUrl());
 			}
-			return ctv;
+			//设置最终时间
+			if(smartTime!=null){
+				ctOne=smartTimeVo;
+			}
+			if(liveSmartTime!=null){
+				ctOne=liveSmartTimeVo;
+			}
+			return ctOne;
 		}
 		return null;
 	}

@@ -478,7 +478,7 @@
 
     <!--查询推荐专题列表-->
     <select id="getModelListByIds" parameterType="map" resultMap="commodityVo1ResultMap">
-        select app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as realPrice,
+        select distinct app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as realPrice,
         '--' as lesson_date, '--' as lesson_time_start, sct.NAME teacher_name, sct.school_short_name, c.buy_num as
         actualNum, app.img_url as imgUrl,
         case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
@@ -490,7 +490,9 @@
         from commodity c
         join commodity_product_realtion cpr on cpr.com_id=c.id
         join class_type ct on ct.id=cpr.product_id
-        join sys_config_teacher sct ON ct.teacher_id = sct.id join app_shelves app on app.comdity_id=c.id
+        join sys_config_teacher sct ON ct.teacher_id = sct.id 
+        join app_shelves app on app.comdity_id=c.id
+        inner join first_recommend ap on app.id=ap.app_shelves_id
         join sys_dict_app sys1 on sys1.id=app.`category_id`
         join sys_dict_app sys2 on sys2.id=app.`grade_id`
         join sys_dict_app sys3 on sys3.id=app.`subject_id`
@@ -513,11 +515,13 @@
     </select>
 
     <select id="getModelListByIdsCount" parameterType="map" resultType="int">
-        select count(1)
+        select count(distinct app.id)
         from commodity c
         join commodity_product_realtion cpr on cpr.com_id=c.id
         join class_type ct on ct.id=cpr.product_id
-        join sys_config_teacher sct ON ct.teacher_id = sct.id join app_shelves app on app.comdity_id=c.id
+        join sys_config_teacher sct ON ct.teacher_id = sct.id 
+        join app_shelves app on app.comdity_id=c.id
+        inner join first_recommend ap on app.id=ap.app_shelves_id
         join sys_dict_app sys1 on sys1.id=app.`category_id`
         join sys_dict_app sys2 on sys2.id=app.`grade_id`
         join sys_dict_app sys3 on sys3.id=app.`subject_id`
@@ -539,7 +543,7 @@
     <!--查询直播-->
     <select id="getZhiBoModelListByIds" parameterType="map" resultMap="commodityVo1ResultMap">
         select * from(
-        select ct.update_time,app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as
+        select distinct ct.update_time,app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as
         realPrice,CONCAT(date_format(cml.lesson_date,"%Y-%m-%d"),' ',cml.lesson_time_start) as lesson_date,sct.NAME
         teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl, case when app.is_shelves is
         null then '0' else app.is_shelves end as isShelves, date_format(app.shelves_time,'%Y-%m-%d %T') as shelvesTime, ct.cover as cover,
@@ -552,8 +556,9 @@
         ) cml JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id` JOIN `class_type_module_relation` ctmr ON
         ctmr.`module_id` = cmn.`module_id` JOIN class_type ct ON ct.id = ctmr.`class_type_id` join
         commodity_product_realtion pr on ct.id = pr.product_id join commodity c on c.id = pr.com_id JOIN
-        sys_config_teacher sct ON ct.teacher_id = sct.id join `app_shelves` app on app.`comdity_id`=c.id join
-        sys_dict_app sys1 on sys1.id=app.`category_id` join sys_dict_app sys2 on sys2.id=app.`grade_id` join
+        sys_config_teacher sct ON ct.teacher_id = sct.id join `app_shelves` app on app.`comdity_id`=c.id 
+        inner join first_recommend ap on app.id=ap.app_shelves_id
+        join sys_dict_app sys1 on sys1.id=app.`category_id` join sys_dict_app sys2 on sys2.id=app.`grade_id` join
         sys_dict_app sys3 on sys3.id=app.`subject_id` join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id` join
         sys_dict_app sys5 on sys5.id=app.`knowledge_id` join sys_dict_app sys6 on sys6.id=app.`stage_id` join
         sys_dict_app sys7 on sys7.id=app.`type_id` where ct.del_flag=0 and c.type='COMMODITY_CLASS'
@@ -580,6 +585,7 @@
         join commodity c on c.id = pr.com_id
         JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
         join `app_shelves` app on app.`comdity_id`=c.id
+        inner join first_recommend ap on app.id=ap.app_shelves_id
         join sys_dict_app sys1 on sys1.id=app.`category_id`
         join sys_dict_app sys2 on sys2.id=app.`grade_id`
         join sys_dict_app sys3 on sys3.id=app.`subject_id`
@@ -603,7 +609,7 @@
 
     <select id="getZhiBoModelListByIdsCount" parameterType="map" resultType="int">
         select count(1) from (
-        select app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as
+        select distinct app.id shelves_id,ct.name as lessonName, ct.original_price as originalPrice, ct.real_price as
         realPrice,CONCAT(date_format(cml.lesson_date,"%Y-%m-%d"),' ',cml.lesson_time_start) as lesson_date,sct.NAME
         teacher_name, sct.school_short_name, c.buy_num as actualNum, app.img_url as imgUrl, case when app.is_shelves is
         null then '0' else app.is_shelves end as isShelves, app.shelves_time as shelvesTime, ct.cover as cover,
@@ -616,8 +622,9 @@
         ) cml JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id` JOIN `class_type_module_relation` ctmr ON
         ctmr.`module_id` = cmn.`module_id` JOIN class_type ct ON ct.id = ctmr.`class_type_id` join
         commodity_product_realtion pr on ct.id = pr.product_id join commodity c on c.id = pr.com_id JOIN
-        sys_config_teacher sct ON ct.teacher_id = sct.id join `app_shelves` app on app.`comdity_id`=c.id join
-        sys_dict_app sys1 on sys1.id=app.`category_id` join sys_dict_app sys2 on sys2.id=app.`grade_id` join
+        sys_config_teacher sct ON ct.teacher_id = sct.id join `app_shelves` app on app.`comdity_id`=c.id 
+        inner join first_recommend ap on app.id=ap.app_shelves_id
+        join sys_dict_app sys1 on sys1.id=app.`category_id` join sys_dict_app sys2 on sys2.id=app.`grade_id` join
         sys_dict_app sys3 on sys3.id=app.`subject_id` join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id` join
         sys_dict_app sys5 on sys5.id=app.`knowledge_id` join sys_dict_app sys6 on sys6.id=app.`stage_id` join
         sys_dict_app sys7 on sys7.id=app.`type_id` where ct.del_flag=0 and c.type='COMMODITY_CLASS'
@@ -644,6 +651,7 @@
         join commodity c on c.id = pr.com_id
         JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
         join `app_shelves` app on app.`comdity_id`=c.id
+        inner join first_recommend ap on app.id=ap.app_shelves_id
         join sys_dict_app sys1 on sys1.id=app.`category_id`
         join sys_dict_app sys2 on sys2.id=app.`grade_id`
         join sys_dict_app sys3 on sys3.id=app.`subject_id`
@@ -668,6 +676,9 @@
         <foreach collection="list" index="index" item="appId" open="(" separator="," close=")">
             #{appId}
         </foreach>
+	</delete>
+	<delete id="deleteFirstRecommend" parameterType="String">
+		delete from first_recommend where app_shelves_id=#{appShelvesId}
 	</delete>
     <update id="updateAppShelvesSort" parameterType="map">
         <if test="sort!=null and sort!=''">

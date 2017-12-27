@@ -257,6 +257,8 @@ public interface ICommodityService {
 	 * @return
 	 */
 	public Boolean insertOrUpdate(String gradeIds, String appShelvesIds);
+	
+	public void giveUpFirstCommand(String appShelvesIds);
 	/**
 	 * 更新表first_recommend的sort字段
 	 * @param appShelvesId
@@ -264,6 +266,9 @@ public interface ICommodityService {
 	 * @return
 	 */
 	public Boolean updateFirstRecommend(String appShelvesId,String sort);
+	
+	
+	public Boolean deleteFirstRecommend(String appShelvesId);
 
 	/**
 	 * 通过课程id查询录播信息

@@ -75,9 +75,9 @@
 <div id="modelList" class="pageRecommendtionBg">
 <div class="mainbackground nopadding">
     <div class="heading">
-        <h2 class="h5" style="display: inline-block;">已上架课程</h2>
-        <div style="margin-top: 10px;text-align:right;padding:0 10px;display: inline-block;margin-left: 75%;">
-            <span><a href="javascript:;" class="btn btn-primary signUpMany" id="batchRecommendation">批量推荐</a></span>
+        <h2 class="h5" style="display: inline-block;">已推荐课程</h2>
+        <div style="margin-top: 10px;text-align:right;padding:0 10px;display: inline-block;margin-left: 85%;">
+            <span><a href="javascript:;" class="btn btn-primary signUpMany" id="batchRecommendation">批量取消推荐</a></span>
         </div>
         <span class="line"></span>
     </div>
@@ -153,13 +153,53 @@
                     batchReleaseArray.push(Number(batchReleaseListId));
                 }
             }
-            if(batchReleaseArray.length>0){
+            /* if(batchReleaseArray.length>0){
                 $('.popupContainerRecommendation').show();
                 $('.popupOpacity').show();
             }else {
                 alert("至少选择一项！");
-            }
-
+            } */
+            
+            if(batchReleaseArray.length<=0){
+                 alert("至少选择一项！");
+                 return;
+             }
+            $.confirm("取消推荐后课程不会显示在推荐列表，是否确认取消推荐？", function(s) {
+	            if(s){
+	            	var classids='';
+	     			$("#tableList").find(".signUpMany").each(function(i){
+	     				if($(this).prop("checked")){
+	     					if(classids==''){
+	     						if($(this).val()=='all'||$(this).val()==undefined||$(this).val()=='') return;
+	     						classids=$(this).val();
+	     					}else
+	     						classids+=','+$(this).val();
+	     				}
+	     			});
+	     			var data={};
+	     			data.appShelvesIds=classids;
+	     			$.ajax({
+	                     url: rootPath + "/specialModel/giveUpFirstCommand",
+	                     type: "post",
+	                     data: data,
+	                     beforeSend: function (XMLHttpRequest) {
+	                         $(".loading").show();
+	                         $(".loading-bg").show();
+	                     },
+	                     success: function (jsonData) {
+	                     	if(jsonData){
+	                     		Form.queryshelvesCoursesApp(1);
+	                     	}else{
+	                     		$.msg('网络异常，请稍后再试！');
+	                     	}
+	                     },
+	                     complete: function (XMLHttpRequest, textStatus) {
+	                         $(".loading").hide();
+	                         $(".loading-bg").hide();
+	                     }
+	                 });
+	            }
+            });
     });
     $('.closePopupContainer').click(function () {
         $('.popupContainerRecommendation').hide();

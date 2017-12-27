@@ -720,6 +720,47 @@
 		where c.id = #{classType.id} and ct.del_flag=0 and c.type='COMMODITY_CLASS'
 		GROUP BY c.id
 	</select>
+	
+	<!--查询单条直播播课程数据信息-->
+	<select id="querySingleLiveClassTypeSingleInfo" resultMap="classTypeVoResultMap" parameterType="map">
+		select
+		ct.*,cml.lesson_date,
+		cml.lesson_time_start,
+		cml.lesson_time_end,
+		cml.lesson_name,sct.NAME teacher_name,sct.school_short_name,
+		c.buy_num as actualNum,app.img_url as imgUrl,case when app.is_shelves is null then '0' else app.is_shelves end as isShelves,
+		date_format(app.reserve_time,'%Y-%m-%d %T') as reserveTime,date_format(app.shelves_time,'%Y-%m-%d %T') as shelvesTime,
+		app.price as appPrice,app.sale_price as salePrice,
+		app.id as appId,
+		app.lab_desc,
+		app.category_id ,
+		app.grade_id ,
+		app.subject_id ,
+		app.knowledge_pro_id  ,
+		app.knowledge_id ,
+		app.stage_id  ,
+		app.type_id ,
+		app.sort
+		FROM (
+				SELECT
+					ml.module_no_id,
+					ml.`lesson_date`,
+					ml.lesson_time_start,
+					ml.lesson_time_end,
+					ml.lesson_name
+				FROM
+					class_module_lesson ml
+			) cml
+		JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id`
+		JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id`
+		JOIN class_type ct ON ct.id = ctmr.`class_type_id`
+		join commodity_product_realtion pr on ct.id = pr.product_id
+		join commodity c on c.id = pr.com_id
+		LEFT JOIN sys_config_teacher sct ON ct.teacher_id = sct.id
+		left join `app_shelves` app on app.`comdity_id`=c.id
+		where c.id =#{classType.id} and ct.del_flag=0 and c.type='COMMODITY_CLASS'
+		order by cml.lesson_date,cml.lesson_time_start,cml.lesson_time_end asc
+	</select>
 
 	<!-- 查询班型并分页 -->
 	<select id="queryClassTypesByPage" resultMap="classTypeVoResultMap" parameterType="map">
