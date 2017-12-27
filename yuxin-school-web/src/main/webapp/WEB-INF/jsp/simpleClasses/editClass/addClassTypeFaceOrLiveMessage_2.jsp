@@ -81,6 +81,10 @@
             $chooseMenu("detailCode");
             //	$(".footer").addClass("footer-fixed");
             var editor = CKEDITOR.replace('newsContents',{ extraPlugins: 'video',uiColor: "#fafafa",allowedContent: true } );
+            var originType='${ctype.originType}';
+            if(originType=='0'){
+            	CKEDITOR.config.readOnly = true;
+            }
             editor.config.width="880";
             editor.config.toolbar = [
                 [ 'mode', 'document', 'doctools' ], [ 'Source', '-', 'NewPage' ] ,
@@ -103,8 +107,6 @@
                     "<br>&nbsp;&nbsp;").replace(/<i /g,'<p ').replace(/<\/i>/g,'</p>');
             editor.setData(detailDesc);
             editor.config.customConfig = 'config.js';
-//            editor.config.startupMode ='source';
-//            editor.config.toolbar =[];
 
             $(".pic").on("change","#target", function() {
                 var theImage = new Image();
@@ -256,7 +258,11 @@
                             <img id="commdotityPic" src="${ct.cover }" realPath="" alt="课程图片">
                              <input id="classTypePic" type="hidden" realPath="${ct.cover }">
                         </span>
-                          <span class="btns"><a href="javascript:;" class="btn btn-default btn-upload">更换封面</a></span>
+                          <span class="btns">
+                          	<c:if test="${ctype.originType  eq 1 }">
+                          		<a href="javascript:;" class="btn btn-default btn-upload">更换封面</a>
+                          	</c:if>
+                          </span>
                       </c:if>
                     </span>
                         </p>
@@ -264,38 +270,59 @@
                         <p class="c">
                             <span class="c-title">名师 <i class="require-txt">*</i></span>
                             <span class="c-content">
-                        <select name="teacherId" id="teacherList" style="width:100px;">
-                             
-                           <c:forEach items="${teachers }" var="t">
-                               <c:if test="${teacher.id==t.id }">
-                                   <option value="${t.id }" selected="selected">${t.name }</option>
-                               </c:if>
-                               <c:if test="${teacher.id!=t.id }">
-                                   <option value="${t.id }">${t.name }</option>
-                               </c:if>
-                           </c:forEach>
-                        </select>
-                        <c:if test="${ctype.originType  eq 1 }">
-                        <span><span id="checkIsCommonTeac"><a href="javascript:void(0);" class="box-select" style="color:blue;">点击我添加教师</a></span></span>
-                   		</c:if>
-                    </span>
+                            <c:if test="${ctype.originType  eq 1 }">
+	                        	<select name="teacherId" id="teacherList" style="width:100px;">
+		                           <c:forEach items="${teachers }" var="t">
+		                               <c:if test="${teacher.id==t.id }">
+		                                   <option value="${t.id }" selected="selected">${t.name }</option>
+		                               </c:if>
+		                               <c:if test="${teacher.id!=t.id }">
+		                                   <option value="${t.id }">${t.name }</option>
+		                               </c:if>
+		                           </c:forEach>
+	                        	</select>
+                        	<span><span id="checkIsCommonTeac"><a href="javascript:void(0);" class="box-select" style="color:blue;">点击我添加教师</a></span></span>
+                   			</c:if>
+                   			<c:if test="${ctype.originType  ne 1 }">
+                   					<c:forEach items="${teachers }" var="t">
+		                               <c:if test="${teacher.id==t.id }">
+		                                   ${t.name }
+		                               </c:if>
+		                           </c:forEach>
+                   			</c:if>
+                    	</span>
                         </p>
                         <p class="c">
                             <span class="c-title">描述 <i class="require-txt">*</i></span>
                             <span class="c-content">
-                                <textarea name="description" id="description" placeholder="输入课程描述">${ct.description}</textarea>
+                            	<c:if test="${ctype.originType  eq 1 }">
+                                	<textarea name="description" id="description" placeholder="输入课程描述">${ct.description}</textarea>
+                                </c:if>
+                                <c:if test="${ctype.originType  ne 1 }">
+                                	${ct.description}
+                                </c:if>
                             </span>
                         </p>
                         <p class="c">
                             <span class="c-title">试卷描述</span>
                             <span class="c-content">
+                            	<c:if test="${ctype.originType  eq 1 }">
                                 <textarea name="paperDescription" id="paperDescription" placeholder="输入试卷描述">${ct.paperDescription}</textarea>
+                                </c:if>
+                                <c:if test="${ctype.originType  ne 1 }">
+                                	${ct.paperDescription}
+                                </c:if>
                             </span>
                         </p>
                         <p class="c clear">
                             <span class="c-title">课程详情 <i class="require-txt">*</i></span>
                         <div class="about-edit">
-                            <textarea class="ckeditor form-control" id="newsContents" name="content" rows="6" data-error-container="#editor2_error"></textarea>
+                        	<c:if test="${ctype.originType  eq 1 }">
+                            	<textarea class="ckeditor form-control" id="newsContents" name="content" rows="6" data-error-container="#editor2_error"></textarea>
+                            </c:if>
+                            <c:if test="${ctype.originType  ne 1 }">
+                            	<textarea class="ckeditor form-control" readonly="readonly" id="newsContents" name="content" rows="6" data-error-container="#editor2_error"></textarea>
+                            </c:if>
                         </div>
                         </p>
                         <p class="c text-center" style="margin-top: 10px;" id="pcenter">
