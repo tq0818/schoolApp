@@ -107,6 +107,8 @@ function saveRule(objt){
 	data.score=score;
 	data.validTime=validTime;
 	data.invalidTime=invalidTime;
+	var username='${sessionScope.loginUser.username}';
+	$(objt).parent().siblings('td').eq(5).text(username);
 	 $.ajax({
          url: rootPath + "/student/updateScoreRuleById",
          data: data,

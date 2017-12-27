@@ -200,8 +200,8 @@
     </div>
     <div>
         <ul class="screeningConditions">
-            <li>
-                <label>课程标签：</label><input type="text" id="labDesc" value="${searchAndResult.labDesc}">
+            <li style="display:none">
+                <label>课程标签：</label><input type="text" id="labDesc" value="${searchAndResult.labDesc}" >
             </li>
             <li>
                 <label>价格：</label>
