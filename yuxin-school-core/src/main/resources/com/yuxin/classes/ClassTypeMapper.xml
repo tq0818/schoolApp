@@ -749,7 +749,7 @@
 					ml.lesson_time_end,
 					ml.lesson_name
 				FROM
-					class_module_lesson ml
+					class_module_lesson ml where del_flag=0
 			) cml
 		JOIN class_module_no cmn ON cml.`module_no_id` = cmn.`id`
 		JOIN `class_type_module_relation` ctmr ON ctmr.`module_id` = cmn.`module_id`
