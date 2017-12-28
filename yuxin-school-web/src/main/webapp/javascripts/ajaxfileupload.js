@@ -119,6 +119,7 @@ jQuery.extend({
                         var fileEle = document.getElementById('imgData');
                         var imgEle = document.getElementById('pic');
                         fileEle.onchange = function(e) {
+
                             var file1 = e.target.files[0];
                             var url1 = window.URL.createObjectURL(file1);
                             imgEle.src = url1;
