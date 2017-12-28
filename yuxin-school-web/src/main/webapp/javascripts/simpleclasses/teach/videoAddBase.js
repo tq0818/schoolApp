@@ -511,7 +511,13 @@
 				var chapterDetail='<div class="t-c-r-t chapter" value="'+chapter_id+'">'+
 	                '<p class="c">'+
 	                '<span class="c-title">章的名称</span>'+
-	                '<span class="c-content"><input class="chapterName" type="text" maxlength="20" value="" placeholder="章的名称"></span>'+
+	                '<span class="c-content">' ;
+				if("1"==originType){
+					chapterDetail+='<input class="chapterName" type="text" maxlength="20" value="" placeholder="章的名称">' ;
+				}else{
+					chapterDetail+='<input class="chapterName" type="text" maxlength="20" readonly value="" placeholder="章的名称">' ;
+				}
+						chapterDetail+='</span>'+
 	            '</p>'+
 	            '<p class="c">'+
 		        '<span class="c-title"></span>'+
@@ -527,7 +533,14 @@
 				var chapterDetail='<div class="t-c-r-t chapter" value="">'+
 	                '<p class="c">'+
 	                '<span class="c-title">章的名称</span>'+
-	                '<span class="c-content"><input class="chapterName" maxlength="20" type="text" value="" placeholder="章的名称"></span>'+
+	                '<span class="c-content">' ;
+				if("1"==originType){
+					chapterDetail+='<input class="chapterName" type="text" maxlength="20" value="" placeholder="章的名称">' ;
+				}else{
+					chapterDetail+='<input class="chapterName" type="text" maxlength="20" readonly value="" placeholder="章的名称">' ;
+				}
+					//'<input class="chapterName" maxlength="20" type="text" value="" placeholder="章的名称">' ;
+				chapterDetail+='</span>'+
 	            '</p>'+
 	            '<p class="c">'+
 		        '<span class="c-title"></span>'+
@@ -560,8 +573,9 @@
 			var originType = $("#originType").val();
 			var chapter_id=lecture.parents(".dis").attr("id").substring(lecture.parents(".dis").attr("id").indexOf("_")+1);
 			var lecture_id=lecture.attr("id").substring(lecture.attr("id").indexOf("_")+1);
-			var lectureDetail='<div class="project-part"> '+'<h3 class="add-title">'+
-                '课次信息'+
+			var lectureDetail='<div class="project-part"> '+'<h3 class="add-title">';
+			if(originType=="1"){
+				lectureDetail+='课次信息'+
                 '</h3>'+'<div class="t-c-r-t lecture" value="'+lecture_id+'" fatherValue="'+chapter_id+'">'+
                 '<p class="c">'+
                 '<span class="c-title">类型：</span>'+
@@ -656,9 +670,105 @@
                             '</div>'+
                             '</div>'+   
 	            '<p class="c" style="text-align:center;padding:30px;">';
-					if(originType=="1"){
+
 						lectureDetail+='<a href="javascript:;" class="btn btn-primary q-btn-primary save">保存</a>';
-					}
+					}else {
+				lectureDetail+='课次信息'+
+					'</h3>'+'<div class="t-c-r-t lecture" value="'+lecture_id+'" fatherValue="'+chapter_id+'">'+
+					'<p class="c">'+
+					'<span class="c-title">类型：</span>'+
+					'<span class="c-content" id="c-content-one">'+
+					'<a href="javascript:;" id="vedio-paper" >'+
+					'<input type="radio" name="type-set" disabled class="radio" id="type-paper" value="paper" checked="true">'+
+					'<label style="display:inline;" for="type-paper">视频</label>	'+
+					'</a>'+
+					'<a href="javascript:;" class="q-type-choice"  >'+
+					'<input type="radio" name="type-set" disabled class="radio" id="type-paper2" value="chapter">'+
+					'<label style="display:inline;" for="type-paper2">Flash</label>'+
+					'</a>'+
+					'<a href="javascript:;" class="q-type-choice" >'+
+					'<input type="radio" name="type-set" disabled class="radio" id="type-paper3" value="paper" >'+
+					'<label style="display:inline;" for="type-paper3">音频</label>'+
+					'</a>'+
+					'<a href="javascript:;" class="q-type-choice"  >'+
+					'<input type="radio" name="type-set" disabled class="radio" id="type-paper4" value="chapter" >'+
+					'<label style="display:inline;" for="type-paper4">PPT</label>'+
+					'</a>'+
+					'<a href="javascript:;" class="q-type-choice"  >'+
+					'<input type="radio" name="type-set" disabled class="radio" id="type-paper5" value="paper" >'+
+					'<label style="display:inline;" for="type-paper5">文档</label>	'+
+					'</a>'+
+					'</span>'+
+					'</p>'+
+					'<p class="c">'+
+					'<span class="c-title">节的名称：</span>'+
+					'<span class="c-content">'+
+					'<input class="lectureName" maxlength="20" type="text" disabled placeholder="输入名称">'+
+					'<span id="free-sorce" class="none">'+'<input type="checkbox" disabled style="position:relative;top:2px;">免费资源</span>'+
+					'</span>'+
+					'</p>'+
+					'<p class="c" id="open-veido">'+
+					'<span class="c-title">公开视频：</span>'+
+					'<span class="c-content">'+
+					'<input type="checkbox" name="open-set" class="radio" disabled id="open-paper" value="paper" >'+
+					'<label style="display:inline;" for="open-paper">免费</label>	'+
+					'<input type="checkbox" name="open-set" class="radio" disabled id="open-paper2" value="chapter">'+
+					'<label style="display:inline;" for="open-paper2">试听</label>'+
+					'</span>'+
+					'</p>'+
+					'<p class="c vedio-name">'+
+					'<span class="c-title">视频名称：</span>'+
+					'<span class="c-content">'+
+					'<input type="text" disabled class="video_name q-text"/> <input type="hidden" class="video_id"><input type="hidden" class="file_id"><input type="hidden" class="publishStatus"/><input type="hidden" class="publishDate"/>'+
+					//'<input type="button" class="btn btn-sm btn-primary chooseVideo"  value="从库中选择">'+
+					'</span>'+
+					'</p>'+'<div class="tab-cont">'+
+					/*'<div class="tab-list">'+'<span  class="tab-left active" >课程资料</span>'+
+					'<span class="tab-right"  id="ss2">课后练习</span>'+
+					'</div>'+*/
+					'<div class="tab-item">'+
+					'<div class="q-item one ">'+
+					'<p class="c">'+
+					//'<span class="c-title">上传资料：</span>' +
+					'<span class="c-content">'+
+				//	'<i class="iconfont">&#xe6a3;</i>'+
+					//'<a href="javascript:;" class="btn btn-mini btn-primary">上传资料</a>'+
+					'</span>'+
+					'</p>'+
+					'<p class="c clear q-c" style="margin-top:-6px;">'+
+					'<span id="spanlist" class="c-title">资料列表：</span>'+
+					'<span class="c-content" id="courseList1'+lecture_id+'">'+
+					'</span>'+
+					'</p>'+
+					'</div>'+
+					'<div class="q-item two none">'+
+					'<p class="c">'+
+					'<span class="c-title">课后练习：</span>'+
+					'<span class="c-content">'+
+					'<a href="javascript:;" class="bd-exam hasClick" >'+
+					'<input type="radio" name="bind-set" class="radio" id="bind-paper" value="paper" checked="true">'+
+					'<label style="display:inline;" for="bind-paper">绑定试卷</label>'+
+					'</a>'+
+					'<a href="javascript:;" class="bd-part" >'+
+					'<input type="radio" name="bind-set" class="radio" id="bind-chapter" value="chapter">'+
+					'<label style="display:inline;" for="bind-chapter">绑定章节</label>'+
+					'</a>'+
+					'</span>'+
+					'</p>'+
+					'<div class="c" style="margin-bottom:20px;" id="q-chose">'+
+					'<span class="c-content" id="q-c-cont">'+
+					'<a href="javascript:;" class="q-btn btn btn-default choosePaper" id="selectpc">选择试卷</a>'+
+					'</span></div>'+
+					'<p class="c clear q-c">'+
+					'<span class="c-title" id="shiquanorzhangjiexinxi">试卷信息：</span>'+
+					'<span class="c-content n-list" >'+
+					' </span>'+
+					'   </p>'+
+					'</div>'+
+					'</div>'+
+					'</div>'+
+					'<p class="c" style="text-align:center;padding:30px;">';
+			}
 
 			lectureDetail+= '</p>'+
 		    '</div>'+
