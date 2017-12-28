@@ -32,7 +32,7 @@
 			</div>
 			<div class="c-bottom">
 				<span>回复时间: ${an.times }</span>
-				<span class="oret" style="margin-left:30px;cursor: pointer;"><i class="iconfont">&#xe64f;</i><span class="xzi">回复</span></span>
+				<!-- <span class="oret" style="margin-left:30px;cursor: pointer;"><i class="iconfont">&#xe64f;</i><span class="xzi">回复</span></span> -->
 				<c:if test="${types == 3 }">
 					<span class="delt" style="margin-left:10px;cursor: pointer;" data-adotp="${an.isAdopt}" data-id="${an.id }" data-types="2"><i class="iconfont">&#xe626;</i><span class="xzi">删除</span></span>
 				</c:if>

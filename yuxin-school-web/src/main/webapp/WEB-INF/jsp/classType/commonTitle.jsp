@@ -11,13 +11,13 @@
       <c:choose>
          	 <c:when test="${ct.isShelves=='1' }">
          		 <div class="labels classStatus">
-				            <s id="statusText">售卖中</s>
+				            <s id="statusText">已上架</s>
 				       <div class="sanjiao"></div>
 				   </div>
          	 </c:when>
          	  <c:when test="${ct.isShelves=='0' }">
          		 <div class="labels classStatus else1">
-				            <s id="statusText">已下架</s>
+				            <s id="statusText">未上架</s>
 				       <div class="sanjiao"></div>
 				   </div>
          	 </c:when>
@@ -52,7 +52,7 @@
         <div class="price">
         	价格：${ct.realPrice }元
         </div>
-        <c:choose>
+        <%-- <c:choose>
           	 <c:when test="${ct.isShelves=='1' }">
           	 	<c:if test="${ct.originType eq 1}">
           		<button class="public_course" ids="${ct.id }" mark="nosale">下架</button>
@@ -63,7 +63,7 @@
 					<button class="public_course" ids="${ct.id }" mark="sale">发布</button>
 				 </c:if>
           	 </c:otherwise>
-          </c:choose>
+          </c:choose> --%>
     </div>
 </div>
 

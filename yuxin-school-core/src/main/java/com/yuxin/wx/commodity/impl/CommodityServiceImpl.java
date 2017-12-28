@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.yuxin.wx.vo.app.VideoInfoVO;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -277,8 +279,16 @@ public class CommodityServiceImpl extends BaseServiceImpl implements ICommodityS
         }
         return new PageFinder2<CommodityDto>((Integer) param.get("page"), (Integer) param.get("pageSize"), count, datas);
     }
-
+    
     @Override
+	public void giveUpFirstCommand(String appShelvesIds) {
+    	if(StringUtils.isBlank(appShelvesIds)) return;
+    	String[] appShelvesIdArrays=appShelvesIds.split(",");
+    	List<String>appShelvesIdList=Arrays.asList(appShelvesIdArrays);;
+    	commodityMapper.deleteFirstRecommendByIds(appShelvesIdList);
+	}
+
+	@Override
     public int getModelListByIdsCount(Map<String, Object> param) {
         return commodityMapper.getModelListByIdsCount(param);
     }
@@ -323,6 +333,12 @@ public class CommodityServiceImpl extends BaseServiceImpl implements ICommodityS
     }
 
     @Override
+	public Boolean deleteFirstRecommend(String appShelvesId) {
+    	commodityMapper.deleteFirstRecommend(appShelvesId);
+		return true;
+	}
+
+	@Override
     public List<VideoInfoVO> queryVideoInfo(List listid){
         List<VideoInfoVO> list = commodityMapper.queryVideoInfo(listid);
         return list;

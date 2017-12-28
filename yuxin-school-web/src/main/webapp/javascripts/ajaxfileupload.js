@@ -116,6 +116,17 @@ jQuery.extend({
                         if (s.success)
                             s.success(data, status);
 
+                        var fileEle = document.getElementById('imgData');
+                        var imgEle = document.getElementById('pic');
+                        fileEle.onchange = function(e) {
+
+                            var file1 = e.target.files[0];
+                            var url1 = window.URL.createObjectURL(file1);
+                            imgEle.src = url1;
+                            savePic();
+                        }
+
+
                         // Fire the global callback
                         if (s.global)
                             jQuery.event.trigger("ajaxSuccess", [xml, s]);
@@ -144,11 +155,9 @@ jQuery.extend({
                     try {
                         jQuery(io).remove();
                         jQuery(form).remove();
-
                     } catch (e) {
                         jQuery.handleError(s, xml, null, e);
                     }
-
                 }, 100)
 
                 xml = null
@@ -257,7 +266,6 @@ jQuery.extend({
 						$(".gobal-progress").find('.gobal-progress-bar').css("width",percent+"%");
 					}else{
 						$(".gobal-progress").find('.gobal-progress-bar').css("width","100%");
-						clearInterval(refresh);
 						setTimeout(function(){
 							$(".gobal-progress-mb").fadeOut(200,function(){
 								$(".gobal-progress").fadeOut(100,function(){

@@ -94,6 +94,7 @@
 	            });
 			},
 			updateFirstRecommend:function(obj,str){
+				
 				var app_shelves_id=$(obj).attr('id');
 				var textId="recommendationNum_"+app_shelves_id;
 				var sort=$("#"+textId).val();
@@ -109,43 +110,86 @@
 					}
 				}
 				if(str=="delete"){
-					sort=""
+					sort="delete";
 				}
-				var data={};
-				data.appShelvesId=app_shelves_id;
-				data.sort=sort;
-                //请求状态为请求中则返回
-                if(isLoading){
-                    alert("网络繁忙，请稍等！");
-                    return;
-                }
-                //改变请求状态
-                isLoading = true;
-				$.ajax({
-	                url: rootPath + "/specialModel/updateFirstRecommendationNum",
-	                type: "post",
-	                data: data,
-	                beforeSend: function (XMLHttpRequest) {
-	                    $(".loading").show();
-	                    $(".loading-bg").show();
-	                },
-	                success: function (jsonData) {
-	                	if(jsonData){
-	                		$.msg('保存成功');
-	                		if(str=="delete"){
-	                			$("#"+textId).val("");
-	                		}
-	                	}else{
-	                		$.msg('保存失败');
-	                	}
-                        //重置请求状态
-                        isLoading = false;
-	                },
-	                complete: function (XMLHttpRequest, textStatus) {
-	                    $(".loading").hide();
-	                    $(".loading-bg").hide();
+				if(sort=="delete"){
+					 $.confirm("取消推荐后课程不会显示在推荐列表，是否确认取消推荐？", function(s) {
+						 if(!s) return;
+						 var data={};
+							data.appShelvesId=app_shelves_id;
+							data.sort=sort;
+			                //请求状态为请求中则返回
+			                if(isLoading){
+			                    alert("网络繁忙，请稍等！");
+			                    return;
+			                }
+			                //改变请求状态
+			                isLoading = true;
+							$.ajax({
+				                url: rootPath + "/specialModel/updateFirstRecommendationNum",
+				                type: "post",
+				                data: data,
+				                beforeSend: function (XMLHttpRequest) {
+				                    $(".loading").show();
+				                    $(".loading-bg").show();
+				                },
+				                success: function (jsonData) {
+				                	if(jsonData){
+				                		$.msg('保存成功');
+				                		if(str=="delete"){
+				                			$("#"+textId).val("");
+				                			$(obj).parent().parent().remove();
+				                		}
+				                	}else{
+				                		$.msg('保存失败');
+				                	}
+			                        //重置请求状态
+			                        isLoading = false;
+				                },
+				                complete: function (XMLHttpRequest, textStatus) {
+				                    $(".loading").hide();
+				                    $(".loading-bg").hide();
+				                }
+				            });
+					 });
+				}else{
+					var data={};
+					data.appShelvesId=app_shelves_id;
+					data.sort=sort;
+	                //请求状态为请求中则返回
+	                if(isLoading){
+	                    alert("网络繁忙，请稍等！");
+	                    return;
 	                }
-	            });
+	                //改变请求状态
+	                isLoading = true;
+					$.ajax({
+		                url: rootPath + "/specialModel/updateFirstRecommendationNum",
+		                type: "post",
+		                data: data,
+		                beforeSend: function (XMLHttpRequest) {
+		                    $(".loading").show();
+		                    $(".loading-bg").show();
+		                },
+		                success: function (jsonData) {
+		                	if(jsonData){
+		                		$.msg('保存成功');
+		                		if(str=="delete"){
+		                			$("#"+textId).val("");
+		                			$(obj).parent().parent().remove();
+		                		}
+		                	}else{
+		                		$.msg('保存失败');
+		                	}
+	                        //重置请求状态
+	                        isLoading = false;
+		                },
+		                complete: function (XMLHttpRequest, textStatus) {
+		                    $(".loading").hide();
+		                    $(".loading-bg").hide();
+		                }
+		            });
+				}
 			},
 			searchCount: function(){
 	        	$("#selectCounts").val($("#selectCount").val());

@@ -54,7 +54,7 @@
             </div>
             <div class="statistics-con" >
 
-                <div class="btn-grouplist">
+               <%-- <div class="btn-grouplist">
                     <a href="" class="btn active pull-left">观看热点</a>
                     <!-- ==================终端 选择pc和移动 新加=================-->
                     <div class="btn_group2 pull-right">
@@ -65,8 +65,8 @@
                             <a name="terminal" v="2" t="mobile" href="javascript:void(0);">移动</a>
                         </div>
                     </div>
-                </div>
-                <div class="demand-count viewsCount" axisPointer="line" id="viewsCount" style="width:100%;height: 380px;"></div>
+                </div>--%>
+                <div class="demand-count viewsCount" axisPointer="line" id="viewsCount" style="width:100%;"></div>
 
                 <div class="btn-grouplist"><a href="" class="btn active  pull-left">观看比例</a>
                     <!-- ==================终端 选择pc和移动 新加=================-->

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.yuxin.wx.vo.app.VideoInfoVO;
 import com.yuxin.wx.vo.classes.ClassTypeVo;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.yuxin.wx.common.BaseMapper;
@@ -110,4 +111,6 @@ public interface CommodityMapper extends BaseMapper<Commodity> {
 	void updateAppShelvesSort(Map<String, Object> param);
 
 	List<VideoInfoVO> queryVideoInfo(List listid);
+	
+	void deleteFirstRecommend(String appShelvesId);
 }

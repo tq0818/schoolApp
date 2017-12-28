@@ -185,8 +185,8 @@ function toShelves(flag,editFlag){
 }
 
 function savePic(){
-	$.ajaxFileUpload({
-		url: rootPath + "/appNewClasses/savePic;",
+    $.ajaxFileUpload({
+		url: rootPath + "/appNewClasses/savePic",
 		secureuri : false,// 安全协议
 		async : false,
 		fileElementId : 'imgData',
@@ -194,7 +194,6 @@ function savePic(){
 		type : "POST",
 		success : function(data) {
 			// $("#pic").attr("src",data.url);
-			console.log("上传成功！");
 		},
 		error:function(arg1,arg2,arg3){
 			//console.log(arg1);
@@ -203,3 +202,6 @@ function savePic(){
 		fileName: 'imgData'
 	});
 }
+
+
+

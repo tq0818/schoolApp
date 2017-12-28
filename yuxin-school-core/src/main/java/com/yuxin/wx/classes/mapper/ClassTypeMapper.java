@@ -124,6 +124,8 @@ public interface ClassTypeMapper extends BaseMapper<ClassType> {
     List<ClassType> findClassByItemRelation(Map<String, Object> map);
 
 	List<ClassTypeVo> querySingleLiveClassTypeInfo(Map<Object, Object> map);
+	
+	List<ClassTypeVo> querySingleLiveClassTypeSingleInfo(Map<Object, Object> map);
 
 	List<ClassTypeVo> querySingleOtherClassTypeInfo(Map<Object, Object> map);
 

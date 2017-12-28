@@ -47,18 +47,18 @@
 						<div class="count-chose clear">
 								<div class="count-search">
 									<input type="text" placeholder="学员手机号/用户名查询" id="mobile" name="mobile"/>
-										课次查询：<select id="classLesson" name="classLessionId">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;课次查询：<select id="classLesson" name="classLessionId">
 										<option value="">全部</option>
 										<c:forEach var="val" items="${list}">
 											<option value="${val.id}">${val.lesson_name}</option>
 										</c:forEach>
 									</select>
-										学习方式：<select id="watchType" name="watchType">
+										<!-- 学习方式：<select id="watchType" name="watchType">
 										<option value="">全部</option>
 										<option value="0">看直播</option>
 										<option value="1">看回放</option>
-									</select>
-									<span>总计上课人数：<em class="peoples"></em>人
+									</select> -->
+				<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总计上课人数：<em class="peoples"></em>人
 									</div>
 
 								<div class="count-search">
@@ -97,7 +97,7 @@
 							<table class="table table-center">
 								<colgroup>
 									<col width="14.29%">
-									<col width="10.29%">
+									<!-- <col width="10.29%"> -->
 									<col width="14.29%">
 									<col width="14.29%">
 									<col width="12.29%">
@@ -108,7 +108,7 @@
 								<tbody>
 									<tr>
 										<th>课次名称</th>
-										<th>学习方式</th>
+										<!-- <th>学习方式</th> -->
 										<%--<th>上课时间</th>--%>
 										<%--<th>手机号</th>--%>
 										<th>用户名</th>

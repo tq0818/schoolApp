@@ -78,6 +78,7 @@
 			<if test="bannerName != null and bannerName != ''">banner_name = #{bannerName},</if>
 			<if test="bannerDescribe != null and bannerDescribe != ''">banner_describe = #{bannerDescribe},</if>
 			<if test="bannerContent != null and bannerContent != ''">banner_content = #{bannerContent},</if>
+			<if test="bannerContentUrl != null and bannerContentUrl != ''">banner_content_url = #{bannerContentUrl},</if>
 			<if test="bannerImgUrl != null and bannerImgUrl != ''">banner_img_url = #{bannerImgUrl},</if>
 			<if test="isState != null">is_state = #{isState},</if>
 			<if test="updateTime != null">update_time = #{updateTime},</if>
