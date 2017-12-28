@@ -21,10 +21,14 @@
     <%--<link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/classedit.css"/>--%>
     <%--<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/popupwin.css">--%>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/plus/jquery.min.js"></script>
-    <script type="text/javascript" src="<%=rootPath%>/javascripts/ajaxfileupload.js"></script>
+    <script type="text/javascript" src="<%=rootPath %>/javascripts/ajaxfileupload.js"></script>
+    <script type="text/javascript" src="<%=rootPath %>/javascripts/ajaxupload.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/informationEditing.js"></script>
     <link rel="stylesheet" href="<%=rootPath %>/stylesheets/jedate.css">
     <script src="<%=rootPath %>/javascripts/plus/jquery.jedate.min.js"></script>
+    <style>
+        sb{color: red;}
+    </style>
 </head>
 <body style="position:relative;">
 <!-- 二级导航 -->
@@ -104,6 +108,7 @@
                         </c:choose>
                     </c:forEach>
                 </select>
+                <sb>*</sb>
             </li>
             <li>
                 <label>学段</label>
@@ -119,6 +124,7 @@
                         </c:choose>
                     </c:forEach>
                 </select>
+                <sb>*</sb>
             </li>
             <li>
                 <label>学科</label>
@@ -134,6 +140,7 @@
                         </c:choose>
                     </c:forEach>
                 </select>
+                <sb>*</sb>
             </li>
             <li>
                 <label>知识点专题</label>
@@ -149,6 +156,7 @@
                         </c:choose>
                     </c:forEach>
                 </select>
+                <sb>*</sb>
             </li>
             <li>
                 <label>知识点</label>
@@ -164,6 +172,7 @@
                         </c:choose>
                     </c:forEach>
                 </select>
+                <sb>*</sb>
             </li>
             <li>
                 <label>阶段</label>

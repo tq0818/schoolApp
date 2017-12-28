@@ -127,66 +127,90 @@ function toShelves(flag,editFlag){
 	var typeId = $("#typeIdList").val();
 	var id = $("#commodityId").val();
 	var appId = $("#appId").val();
-	var shelvesTime = $("#shelvesTime").val();
-	var labDesc = $("#labDesc").val();
-	var appPrice = $("#appPrice").val();
-	var salePrice = $("#salePrice").val();
-	if(appPrice){
-		var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
-		if (!reg.test(appPrice)) {
-			alert("请输入正确的价格");
-			return;
-		}
-	}
-	if("0"==flag && new Date() > new Date(shelvesTime)){
-        alert("预约时间不能小于当前时间");
-        return;
-	}
-	if(salePrice){
-		if (!reg.test(salePrice)) {
-			alert("请输入正确的销售价格");
-			return;
-		}
-	}
-	if("0"==flag && ""== $.trim(shelvesTime) ){
-		alert("预约上架时间不能为空");
-		return;
-	}
-//请求状态为请求中则返回
-    if(isLoading){
-        alert("网络繁忙，请稍等！");
-        return;
-    }
-    //改变请求状态
-    isLoading = true;
+    var shelvesTime = $("#shelvesTime").val();
+    var labDesc = $("#labDesc").val();
+    var appPrice = $("#appPrice").val();
+    var salePrice = $("#salePrice").val();
 
-	$.ajax({
-		url : rootPath +"/simpleClasses/insertShelvesInfo",
-		type : "post",
-		data : {"id":id,"appId":appId,"courseCaId":courseCaId,"gradeId":gradeId,"subjectId":subjectId,"kwonProId":kwonProId,
-			"appPrice":appPrice,"salePrice":salePrice,"knowId":knowId,"stageId":stageId,"typeId":typeId,"shelvesFlag":flag,"shelvesTime":shelvesTime,"labDesc":labDesc},
-		success : function(result) {
-			if("1"==result){
-				alert("成功")
-				$('.popupContainer').hide();
-				$('.popupOpacity').hide();
-				if('1'==editFlag){
-					reloadCurrunt();
-				}else{
-					Form.queryAllCommdityByItemNew(1);
-				}
-			}else{
-				alert("失败");
-			}
-            //重置请求状态
-            isLoading = false
-		}
-	});
+
+    if (courseCaId == null || courseCaId == "") {
+        alert("请选择课程分类");
+    } else if (gradeId == null || gradeId == "") {
+        alert("请选择学段");
+    } else if (subjectId == null || subjectId == "") {
+        alert("请选择学科");
+    } else if (kwonProId == null || kwonProId == "") {
+        alert("请选择知识点专题");
+    } else if (knowId == null|| knowId == "") {
+        alert("请选择知识点");
+    }else {
+        if(appPrice){
+            var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+            if (!reg.test(appPrice)) {
+                alert("请输入正确的价格");
+                return;
+            }
+        }
+        if(appPrice){
+            var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+            if (!reg.test(appPrice)) {
+                alert("请输入正确的价格");
+                return;
+            }
+        }
+        if("0"==flag && new Date() > new Date(shelvesTime)){
+            alert("预约时间不能小于当前时间");
+            return;
+        }
+        if(salePrice){
+            if (!reg.test(salePrice)) {
+                alert("请输入正确的销售价格");
+                return;
+            }
+        }
+        if("0"==flag && ""== $.trim(shelvesTime) ){
+            alert("预约上架时间不能为空");
+            return;
+        }
+//请求状态为请求中则返回
+        if(isLoading){
+            alert("网络繁忙，请稍等！");
+            return;
+        }
+        //改变请求状态
+        isLoading = true;
+        $.ajax({
+            url : rootPath +"/simpleClasses/insertShelvesInfo",
+            type : "post",
+            data : {"id":id,"appId":appId,"courseCaId":courseCaId,"gradeId":gradeId,"subjectId":subjectId,"kwonProId":kwonProId,
+                "appPrice":appPrice,"salePrice":salePrice,"knowId":knowId,"stageId":stageId,"typeId":typeId,"shelvesFlag":flag,"shelvesTime":shelvesTime,"labDesc":labDesc},
+            success : function(result) {
+                if("1"==result){
+                    alert("成功")
+                    $('.popupContainer').hide();
+                    $('.popupOpacity').hide();
+                    if('1'==editFlag){
+                        reloadCurrunt();
+                    }else{
+                        Form.queryAllCommdityByItemNew(1);
+                    }
+                }else{
+                    alert("失败");
+                }
+                //重置请求状态
+                isLoading = false
+            }
+        });
+	}
+
+
+
+
 }
 
 function savePic(){
-	$.ajaxFileUpload({
-		url: rootPath + "/appNewClasses/savePic;",
+    $.ajaxFileUpload({
+		url: rootPath + "/appNewClasses/savePic",
 		secureuri : false,// 安全协议
 		async : false,
 		fileElementId : 'imgData',
@@ -194,7 +218,6 @@ function savePic(){
 		type : "POST",
 		success : function(data) {
 			// $("#pic").attr("src",data.url);
-			console.log("上传成功！");
 		},
 		error:function(arg1,arg2,arg3){
 			//console.log(arg1);
@@ -203,3 +226,6 @@ function savePic(){
 		fileName: 'imgData'
 	});
 }
+
+
+
