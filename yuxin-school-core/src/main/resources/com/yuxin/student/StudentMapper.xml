@@ -3052,7 +3052,7 @@
 		AND sps.resource_type = 'TEACH_METHOD_VIDEO'
 		and (spm.pay_status_code='ORDER_PAID' or spm.pay_status_code='ORDER_PART_PAY' or spm.pay_status_code='ORDER_FINISHED' or spm.pay_status_code='ORDER_PAID_NO_COURSE')
 		AND sps.slave_status_code!='SUB_ORDER_DELTED'
-		AND g.item_value = '视频'
+		<!-- AND g.item_value = '视频' -->
 		)lec
 		UNION All
 		select * from (
@@ -3112,7 +3112,7 @@
 		and (spm.pay_status_code='ORDER_PAID' or spm.pay_status_code='ORDER_PART_PAY' or spm.pay_status_code='ORDER_FINISHED' or spm.pay_status_code='ORDER_PAID_NO_COURSE')
 		AND sps.slave_status_code!='SUB_ORDER_DELTED'
 		and e.del_flag = 0
-		AND f.item_value = '视频'
+		<!-- AND f.item_value = '视频' -->
 		)less
 		ORDER BY last_lean_time desc,lec_les_id asc
 		LIMIT #{firstIndex},#{pageSize}
