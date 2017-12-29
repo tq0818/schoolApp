@@ -59,7 +59,9 @@ public interface BannerMapper extends BaseMapper<Banner> {
 	Integer sortDesc1(Banner banner);
 	Banner searchNum(Integer id);
 	Banner searchNum1(Integer id);
-	
-	
-	
+
+	/**
+	 * 查询最大排序
+	 */
+	Integer searchMaxNum();
 }
