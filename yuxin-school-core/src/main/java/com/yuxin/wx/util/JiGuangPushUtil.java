@@ -83,7 +83,7 @@ public class JiGuangPushUtil {
 		                                .addExtras(params)
 		                                .build())
 		                        .addPlatformNotification(IosNotification.newBuilder()
-		                                .addExtras(params)
+		                                .addExtras(params).incrBadge(0)
 		                                .build())
 		                        .build())
 		                .build();
