@@ -63,7 +63,7 @@
 	order_by_num
 	)
 	VALUES
-	(#{bannerName},#{bannerDescribe},#{bannerContent},#{bannerContentUrl},#{bannerImgUrl},#{isState},#{updateTime},(select max(t1.order_by_num)+1  from banner_app t1))
+	(#{bannerName},#{bannerDescribe},#{bannerContent},#{bannerContentUrl},#{bannerImgUrl},#{isState},#{updateTime},#{orderByNum})
 	</insert>
 	
 	<select id="findById" resultMap="BannerResultMap" parameterType="String" >
@@ -98,5 +98,11 @@
 	<select id="searchNum" resultMap="BannerResultMap" parameterType="com.yuxin.wx.model.banner.Banner">
 		select <include refid="table_columns" />
 		from banner_app where is_state = 1 and order_by_num=(select min(t1.order_by_num) from banner_app t1 where t1.is_state = 1 and t1.order_by_num<![CDATA[>]]>#{orderByNum})
+	</select>
+
+	<!-- 查询最大序号  -->
+	<select id="searchMaxNum" resultType="int">
+		select max(order_by_num)
+		from banner_app
 	</select>
 </mapper>

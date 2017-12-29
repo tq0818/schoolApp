@@ -2785,7 +2785,7 @@ public class ClassModuleController {
 				}
 			}
 			for(List<String> userList:sList){
-				String josnResult=JiGuangPushUtil.push(userList , contentText, companyStudentMessage.getTitle(),params);
+				String josnResult=JiGuangPushUtil.push(userList , companyStudentMessage.getTitle(), companyStudentMessage.getTitle(),params);
 			}
 			json.put(JsonMsg.RESULT, JsonMsg.SUCCESS);
 		}
@@ -2863,7 +2863,7 @@ public class ClassModuleController {
 				}
 			}
 			for(List<String> userList:sList){
-				String josnResult=JiGuangPushUtil.push(userList , companyStudentMessage.getContentText(), companyStudentMessage.getTitle(),params);
+				String josnResult=JiGuangPushUtil.push(userList , companyStudentMessage.getTitle(), companyStudentMessage.getTitle(),params);
 			}
 		}
 		json.put(JsonMsg.RESULT, JsonMsg.SUCCESS);

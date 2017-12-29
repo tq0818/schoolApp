@@ -43,7 +43,14 @@ public class BannerServiceImpl extends BaseServiceImpl implements IBannerService
 
 	@Override
 	public Integer addBanner(Banner banner) {
-		
+
+		Integer sortNum = BannerMapper.searchMaxNum();
+		if(null==sortNum){
+			sortNum = 0;
+		}else{
+			sortNum+=1;
+		}
+		banner.setOrderByNum(sortNum);
 		return BannerMapper.insertBanner(banner);
 	}
 
