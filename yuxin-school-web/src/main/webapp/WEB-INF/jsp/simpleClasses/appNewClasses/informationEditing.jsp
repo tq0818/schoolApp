@@ -22,7 +22,6 @@
     <%--<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/popupwin.css">--%>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/plus/jquery.min.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/ajaxfileupload.js"></script>
-    <script type="text/javascript" src="<%=rootPath %>/javascripts/ajaxupload.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/informationEditing.js"></script>
     <link rel="stylesheet" href="<%=rootPath %>/stylesheets/jedate.css">
     <script src="<%=rootPath %>/javascripts/plus/jquery.jedate.min.js"></script>
