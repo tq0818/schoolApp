@@ -31,9 +31,8 @@
         }
 
         .classification>li {
-            display: inline-block  !important;
-            margin: 10px 25px 30px 0  !important;
-            width: 21%  !important;
+            margin: 10px 15px 30px 0  !important;
+            width: 22.5%  !important;
 
         }
     </style>
