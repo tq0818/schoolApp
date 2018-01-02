@@ -64,6 +64,7 @@ public class QuestionVo extends BaseEntity {
 	private String nickName;//昵称
 	private String headImg;//头像
 	private Integer isChecke;//是否需要审核标识  1 不需要  2需要
+	private String labelContent;
 	// Constructor
 	public QuestionVo() {
 	}
@@ -72,7 +73,7 @@ public class QuestionVo extends BaseEntity {
 	 * full Constructor
 	 */
 	public QuestionVo(Integer id,Integer questionscore, Integer answerId, String questionTitle, String questionDesc, Integer itemOneId, Integer itemSecondId, Integer classifyId, Integer userId, Integer courseFlag, Integer courseId, String courseName, Integer courseLectureId, String courseLectureName, Integer answerCount, Integer scanCount, Integer adoptFlag, Integer adoptAnswerId, Integer topFlag, Integer essenceFlag, Date createTime, Date updateTime, Integer delFlag,
-			Integer readFlag,Integer isChecke) {
+			Integer readFlag,Integer isChecke,String labelContent) {
 		setId(id);
 		this.questionTitle = questionTitle;
 		this.questionDesc = questionDesc;
@@ -98,6 +99,7 @@ public class QuestionVo extends BaseEntity {
 		this.readFlag = readFlag;
 		this.questionscore= questionscore;
 		this.isChecke=isChecke;
+		this.labelContent=labelContent;
 	}
 
 	// getter && setter
@@ -480,6 +482,14 @@ public class QuestionVo extends BaseEntity {
 
 	public void setHeadImg(String headImg) {
 		this.headImg = headImg;
+	}
+	
+	public String getLabelContent() {
+		return labelContent;
+	}
+
+	public void setLabelContent(String labelContent) {
+		this.labelContent = labelContent;
 	}
 
 	@Override
