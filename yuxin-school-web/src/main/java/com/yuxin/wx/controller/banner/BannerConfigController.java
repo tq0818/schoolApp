@@ -419,7 +419,16 @@ public class BannerConfigController extends BaseWebController{
 	}
 	
 	public String writeHtml(String content) throws Exception{
-		content+="<script src= https://cdn.bootcss.com/jquery/1.12.3/jquery.min.js></script><script> $('a').attr('href','##') ;$('a').attr('target',' ')</script>";
+		content="<!doctype html>" +
+				"<html lang=\"zh-cn\">" +
+				"<meta charset=\"GBK\"/>"+
+				"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=GBK\" />"+
+				"<head>" +
+				"    <title></title>" +
+				"</head>" +
+				"<body>"+content;
+		content+="<script src= https://cdn.bootcss.com/jquery/1.12.3/jquery.min.js></script><script> $('a').attr('href','##') ;$('a').attr('target',' ')</script></body>" +
+				"</html>";
 		OutputStreamWriter pw = null;
     	SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhss");
     	String date = df.format(new Date());
@@ -434,7 +443,7 @@ public class BannerConfigController extends BaseWebController{
         }
     	
     	pw = new OutputStreamWriter(new FileOutputStream(url),"GBK");
-    	pw.write(content);
+		pw.write(content);
     	pw.close();//关闭流
 	    return rtUrl;
 	}
