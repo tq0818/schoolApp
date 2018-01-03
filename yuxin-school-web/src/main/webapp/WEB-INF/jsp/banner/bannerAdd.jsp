@@ -111,7 +111,7 @@
                 </div>
                 <div class="checkBoxBtn">
                     <span>描述:</span>
-                    <input type="text" name="bannerDescribe" id="bannerDescribe" value="${msgPage.bannerDescribe }" class="bannerInput">
+                    <input type="text" name="bannerDescribe" id="bannerDescribe" value="${msgPage.bannerDescribe }" class="bannerInput" maxlength="255" placeholder="最长可输入255个字符">
                 </div>
                 <div class="contentBox">
                     <span>内容:</span>
