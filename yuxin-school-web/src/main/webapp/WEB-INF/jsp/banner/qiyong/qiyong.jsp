@@ -19,8 +19,28 @@
 	                	<c:if test="${!status.last}"><i onclick="desc(${m.id},${m.orderByNum},0)" class="icon iconfont desc">&#xe617;</i></c:if><!-- 下降图标 -->
 	                	<c:if test="${status.index !=0}"><i onclick="desc(${m.id},${m.orderByNum},1)" class="icon iconfont asc">&#xe61a;</i></c:if><!-- 上升图标 -->
 	                	</td>
-	                	<td width="25%">${m.bannerName }</td>
-	                	<td width="35%">${m.bannerDescribe }</td>
+
+
+
+						<c:choose>
+							<c:when test="${fn:length(m.bannerName)>20}">
+								<td width="15%" title="${m.bannerName}">${fn:substring(m.bannerName,0,20)}...</td>
+							</c:when>
+							<c:otherwise>
+								<td width="15%">${m.bannerName}</td>
+							</c:otherwise>
+						</c:choose>
+
+						<c:choose>
+							<c:when test="${fn:length(m.bannerDescribe)>40}">
+								<td width="45%" title="${m.bannerDescribe}">${fn:substring(m.bannerDescribe,0,40)}...</td>
+							</c:when>
+							<c:otherwise>
+								<td width="45%">${m.bannerDescribe}</td>
+							</c:otherwise>
+						</c:choose>
+
+	                	<%--<td width="35%">${m.bannerDescribe }</td>--%>
 	                	<td width="5%">启用</td>
 	                	<td width="20%">
 	                		<a href='javascript:;' onclick="changeStatu(${m.id})" class='btn btn-danger forbidBanner'>禁用</a>
