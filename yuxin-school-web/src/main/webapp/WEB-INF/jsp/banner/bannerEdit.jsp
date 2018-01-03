@@ -106,12 +106,12 @@
                 </div>
                 <div class="checkBoxBtn">
                     <span>名称:</span>
-                    <input type="text" name="bannerName" id="bannerName" value="${msgPage.bannerName }" class="bannerInput">
+                    <input type="text" name="bannerName" id="bannerName" value="${msgPage.bannerName }" class="bannerInput" maxlength="32" placeholder="最长可输入32个字符">
                     <input type="hidden" name="bannerId" id="bannerId" value="${msgPage.id}" >
                 </div>
                 <div class="checkBoxBtn">
                     <span>描述:</span>
-                    <input type="text" name="bannerDescribe" id="bannerDescribe" value="${msgPage.bannerDescribe }" class="bannerInput">
+                    <input type="text" name="bannerDescribe" id="bannerDescribe" value="${msgPage.bannerDescribe }" class="bannerInput" maxlength="255" placeholder="最长可输入255个字符">
                 </div>
                 <div class="contentBox">
                     <span>内容:</span>

@@ -7,22 +7,22 @@
 	        <table class="table table-center "id="table1" >
                 <tbody>
                 <tr >
-                    <th width="10%">序号</th>
-                    <th width="20%">名称</th>
-                    <th width="20%">描述</th>
-                    <th width="20%">状态</th>
-                    <th width="30%">操作</th>
+                    <th width="5%">序号</th>
+                    <th width="25%">名称</th>
+                    <th width="35%">描述</th>
+                    <th width="5%">状态</th>
+                    <th width="20%">操作</th>
                 </tr>
                 <c:forEach var="m" items="${msgPage}" varStatus="status">
 	                <tr>
-	                	<td>${status.index+1}
+	                	<td width="5%">${status.index+1}
 	                	<c:if test="${!status.last}"><i onclick="desc(${m.id},${m.orderByNum},0)" class="icon iconfont desc">&#xe617;</i></c:if><!-- 下降图标 -->
 	                	<c:if test="${status.index !=0}"><i onclick="desc(${m.id},${m.orderByNum},1)" class="icon iconfont asc">&#xe61a;</i></c:if><!-- 上升图标 -->
 	                	</td>
-	                	<td>${m.bannerName }</td>
-	                	<td>${m.bannerDescribe }</td>
-	                	<td>启用</td>
-	                	<td>
+	                	<td width="25%">${m.bannerName }</td>
+	                	<td width="35%">${m.bannerDescribe }</td>
+	                	<td width="5%">启用</td>
+	                	<td width="20%">
 	                		<a href='javascript:;' onclick="changeStatu(${m.id})" class='btn btn-danger forbidBanner'>禁用</a>
 	                   		<a href='<%=rootPath %>/Banner/editBanner/${m.id}'  class='btn btn-warning'>修改</a>
 	                   		<a href='<%=rootPath %>/Banner/seachDetail/${m.id}' target="_blank" class='btn btn-success'>查看</a>
