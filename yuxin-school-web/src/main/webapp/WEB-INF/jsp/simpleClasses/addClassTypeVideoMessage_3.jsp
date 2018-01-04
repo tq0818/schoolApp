@@ -27,6 +27,7 @@
     	function backReturn(){
     		$("#myForms").attr("action",rootPath+"/simpleClasses/updateClassTypeMessage").submit();
     	}
+    	
     	function guid() {
     	    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     	        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
@@ -120,6 +121,7 @@
             </div>
         </div>   
     <div class=" q-btns" style="text-align:center;">
+    				<a href="<%=rootPath  %>/simpleClasses/showClassTypePage" class="q-cancel">返回</a>
                     <a href="javascript:backReturn();" class="q-cancel">取消</a>
                    <%-- <a href="javascript:void(0);" id="next1" class="q-save next">保存</a>--%>
      </div>
