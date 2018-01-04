@@ -121,7 +121,7 @@
         </div>   
     <div class=" q-btns" style="text-align:center;">
                     <a href="javascript:backReturn();" class="q-cancel">取消</a>
-                    <a href="javascript:void(0);" id="next1" class="q-save next">保存</a>
+                   <%-- <a href="javascript:void(0);" id="next1" class="q-save next">保存</a>--%>
      </div>
     </div>
 </div>

@@ -194,7 +194,7 @@
 				<p class="c text-center" style="margin-top:20px;">
 					<a href="javascript:void(0);" class="btn btn-default cancle">返回</a>
 					<a href="<%=rootPath %>/simpleClasses/showClassTypePage" class="btn btn-primary">保存并退出</a>
-					<a href="javascript:void(0);" class="btn btn-primary complete">开始招生</a>
+					<%--<a href="javascript:void(0);" class="btn btn-primary complete">开始招生</a>--%>
 					<a href="<%=rootPath %>/simpleClasses/showClassTypePage" class="btn btn-default">取消</a>
 				</p>
 			</div>
