@@ -560,7 +560,7 @@
         inner join first_recommend ap on app.id=ap.app_shelves_id
         join sys_dict_app sys1 on sys1.id=app.`category_id` join sys_dict_app sys2 on sys2.id=app.`grade_id` join
         sys_dict_app sys3 on sys3.id=app.`subject_id` join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id` join
-        sys_dict_app sys5 on sys5.id=app.`knowledge_id` join sys_dict_app sys6 on sys6.id=app.`stage_id` join
+        sys_dict_app sys5 on sys5.id=app.`knowledge_id` left join sys_dict_app sys6 on sys6.id=app.`stage_id` left join
         sys_dict_app sys7 on sys7.id=app.`type_id` where ct.del_flag=0 and c.type='COMMODITY_CLASS'
         and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`))
         and app.category_id =#{categoryid}
@@ -626,7 +626,7 @@
         inner join first_recommend ap on app.id=ap.app_shelves_id
         join sys_dict_app sys1 on sys1.id=app.`category_id` join sys_dict_app sys2 on sys2.id=app.`grade_id` join
         sys_dict_app sys3 on sys3.id=app.`subject_id` join sys_dict_app sys4 on sys4.id=app.`knowledge_pro_id` join
-        sys_dict_app sys5 on sys5.id=app.`knowledge_id` join sys_dict_app sys6 on sys6.id=app.`stage_id` join
+        sys_dict_app sys5 on sys5.id=app.`knowledge_id` left join sys_dict_app sys6 on sys6.id=app.`stage_id` left join
         sys_dict_app sys7 on sys7.id=app.`type_id` where ct.del_flag=0 and c.type='COMMODITY_CLASS'
         and((app.`is_shelves`=1 and app.`reserve_time` is null) or (app.`is_shelves`=1 and now()>=app.`reserve_time`))
         and app.category_id =#{categoryid}
