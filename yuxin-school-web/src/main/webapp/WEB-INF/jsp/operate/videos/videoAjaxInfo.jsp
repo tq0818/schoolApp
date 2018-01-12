@@ -148,7 +148,8 @@
         	</span></p>
         </td>
         <td rtype="${vo.resourceType}">
-        	<c:if test="${vo.originType  eq 1 }">
+
+        	<c:if test="${vo.originType eq 1}">
 	        	<a class="btn btn-mini btn-default edit" href="javascript:;" videoName="${vo.videoName}" videoId="${vo.id}">编辑</a>
 	            <c:if test="${vo.resourceType == 'video'}">
 	                <c:if test="${vo.videoStatus == 'VIDEO_PROCESS_DELETE'}">

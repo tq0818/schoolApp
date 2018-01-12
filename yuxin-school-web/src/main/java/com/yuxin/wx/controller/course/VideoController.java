@@ -436,6 +436,7 @@ public class VideoController {
                 video.setSchoolId(user.getSchoolId());
                 video.setVideoCcId(detail.substring(index + 10, index + 42));
                 video.setVideoStatus(Constant.VIDEO_PROCESS_UPLOAD);
+                video.setOriginType(1);
                 this.videoServiceImpl.insert(video);
 
                 VideoTag vTag = new VideoTag();

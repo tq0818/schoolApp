@@ -76,7 +76,7 @@
         <result property="convertType" column="convertType"/>
         <result property="excep" column="excep"/>
 		<result property="filePath" column="filePath"/>
-		<result property="originType" column="origin_type"/>
+		<result property="originType" column="originType"/>
     </resultMap>
 	<sql id="table_columns">
 		id,
