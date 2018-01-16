@@ -180,7 +180,7 @@
 		LEFT JOIN student s on s.user_id = swf.user_id
 		LEFT JOIN edu_step_school_relation essr  on  essr.edu_school_code  = s.edu_school
 		where s.edu_identity=0
-		and (swf.device = 10 or swf.device = 8)
+		and (swf.device = 7 or swf.device = 9)
 		<if test="eduYear !=null and eduYear != ''">and edu_year = #{eduYear}</if>
 		<if test="eduSchool !=null and eduSchool != ''">and edu_school = #{eduSchool}</if>
 		<if test="eduArea !=null and eduArea !=''">and edu_area = #{eduArea}</if>
@@ -195,7 +195,7 @@
 		LEFT JOIN student s on s.user_id = swf.user_id
 		LEFT JOIN edu_step_school_relation essr  on  essr.edu_school_code  = s.edu_school
 		where s.edu_identity=0
-		and (swf.device = 10 or swf.device = 8)
+		and (swf.device = 7 or swf.device = 9)
 		<if test="eduYear !=null and eduYear != ''">and edu_year = #{eduYear}</if>
 		<if test="eduSchool !=null and eduSchool != ''">and edu_school = #{eduSchool}</if>
 		<if test="eduArea !=null and eduArea !=''">and edu_area = #{eduArea}</if>
@@ -228,7 +228,7 @@
 		LEFT JOIN student s ON s.user_id = swf.user_id
 		Left JOIN  edu_step_school_relation essr on  essr.edu_school_code = s.edu_school
 		where s.edu_identity=0
-		and (swf.device = 10 or swf.device = 8)
+		and (swf.device = 7 or swf.device = 9)
 		<if test="eduYear !=null and eduYear != ''">and edu_year = #{eduYear}</if>
 		<if test="schoolId !=null and schoolId != ''">and edu_school = #{schoolId}</if>
 		<if test="areaId !=null and areaId !=''">and edu_area = #{areaId}</if>
@@ -270,7 +270,7 @@
                 LEFT JOIN student s ON s.user_id = swf.user_id
 				Left JOIN  edu_step_school_relation essr on  essr.edu_school_code = s.edu_school
 				where s.edu_identity=0
-				and (swf.device = 10 or swf.device = 8)
+				and (swf.device = 7 or swf.device = 9)
 				<if test="eduYear !=null and eduYear != ''">and edu_year = #{eduYear}</if>
                 <if test="schoolId !=null and schoolId != ''">and edu_school = #{schoolId}</if>
                 <if test="areaId !=null and areaId !=''">and edu_area = #{areaId}</if>
@@ -321,7 +321,7 @@
 				LEFT JOIN  sys_config_dict  dnstep on  dnstep.item_code = essr.edu_step_new_code
                 WHERE
                     s.edu_identity=0
-                    and (swi.device = 10 or swi.device = 8)
+                    and (swi.device = 7 or swi.device = 9)
                     <if test="eduArea !=null and eduArea != ''">and s.edu_area = #{eduArea}</if>
                     <if test="eduSchool !=null and eduSchool != ''">and s.edu_school = #{eduSchool}</if>
                     <if test="eduStep !=null and eduStep != ''">and s.edu_step = #{eduStep}</if>
@@ -371,7 +371,7 @@
 						LEFT JOIN edu_step_school_relation essr on  essr.edu_school_code = s.edu_school
 						LEFT JOIN  sys_config_dict  dnstep on  dnstep.item_code = essr.edu_step_new_code
                         WHERE
-                        s.edu_identity=0 and (swi.device = 10 or swi.device = 8)
+                        s.edu_identity=0 and (swi.device = 7 or swi.device = 9)
                         <if test="eduArea !=null and eduArea != ''">and s.edu_area = #{eduArea}</if>
                         <if test="eduSchool !=null and eduSchool != ''">and s.edu_school = #{eduSchool}</if>
                         <if test="eduStep !=null and eduStep != ''">and s.edu_step = #{eduStep}</if>
@@ -636,7 +636,7 @@
 		LEFT JOIN student s  on s.user_id = swi.user_id
 		LEFT JOIN sys_config_dict  dic   on dic.item_code = s.edu_area
 
-		WHERE s.edu_identity=0 and (swi.device = 10 or swi.device = 8)
+		WHERE s.edu_identity=0 and (swi.device = 7 or swi.device = 9)
 		<if test="startDate !=null and startDate != ''">and swi.lesson_date >= #{startDate}</if>
 		<if test="endDate !=null and endDate != ''">and swi.lesson_date <![CDATA[<=]]> #{endDate}</if>
 
