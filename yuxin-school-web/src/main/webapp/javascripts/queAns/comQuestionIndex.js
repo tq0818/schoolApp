@@ -416,7 +416,12 @@ $(function(){
 							Form.CKupdate();
 							var plCon = $("#editorSpace"+id+"").val();
 							if(!plCon){
-								$('<div class="c-fa">'+ "评论内容不能为空" +'</div>').appendTo('body').fadeIn(100).delay(1000).fadeOut(200,function(){$(this).remove();
+								$('<div class="c-fa">'+ "回复内容不能为空" +'</div>').appendTo('body').fadeIn(100).delay(1000).fadeOut(200,function(){$(this).remove();
+								});
+								return;
+							}
+							if(plCon.length>2200){
+								$('<div class="c-fa">'+ "回复内容不能超过2000字" +'</div>').appendTo('body').fadeIn(100).delay(1000).fadeOut(200,function(){$(this).remove();
 								});
 								return;
 							}
@@ -485,6 +490,9 @@ $(function(){
 					success : function(data) {
 						if(data == 'success'){
 							Form.findQuestion(1,oneId,twoId,jz);
+						}else{
+							$('<div class="c-fa">'+ "回复失败" +'</div>').appendTo('body').fadeIn(100).delay(1000).fadeOut(200,function(){$(this).remove();
+							});
 						}
 					}
 				});

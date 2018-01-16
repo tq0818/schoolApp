@@ -44,7 +44,7 @@
         <div class="findQuestion">
             <div>
                 <span>标题:</span>
-                <input type="text" placeholder="请输入问题标题" id="questionTitle" name="questionTitle" class="inputQuestion">
+                <input type="text" placeholder="请输入问题标题(最多输入16个字)" id="questionTitle" name="questionTitle" class="inputQuestion" maxlength="16">
             </div>
             <div class="checkBoxBtn">
                 <span>系统标签:</span>

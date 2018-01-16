@@ -116,6 +116,7 @@ public class QuestionAnswerController {
 			} catch (Exception e) {
 				log.error("qa：添加回复出错：" + e.getMessage(), e);
 				e.printStackTrace();
+				return "fail";
 			
 			}
 		} 
