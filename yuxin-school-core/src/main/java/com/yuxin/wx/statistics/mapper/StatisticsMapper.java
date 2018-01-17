@@ -35,4 +35,5 @@ public interface StatisticsMapper extends BaseMapper<Statistics> {
 
 	List<Statistics2> queryAll2(Statistics statistics);
 
+	List<com.yuxin.wx.model.classes.Statistics> queryStatistisResult(Map<String, Object> map);
 }

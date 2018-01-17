@@ -16,7 +16,27 @@ public class Statistics extends BaseEntity implements Serializable {
 	private String email;
 	private Date login_time;
 
-	
+	//数据统计相关属性
+	private String excuteSql;
+	private String excuteResult;
+
+
+	public String getExcuteSql() {
+		return excuteSql;
+	}
+
+	public void setExcuteSql(String excuteSql) {
+		this.excuteSql = excuteSql;
+	}
+
+	public String getExcuteResult() {
+		return excuteResult;
+	}
+
+	public void setExcuteResult(String excuteResult) {
+		this.excuteResult = excuteResult;
+	}
+
 	public String getMobile() {
 		return mobile;
 	}

@@ -1,6 +1,7 @@
 package com.yuxin.wx.statistics.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;import com.yuxin
 import com.yuxin.wx.api.statistics.IStatisticsService;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.statistics.mapper.StatisticsMapper;
-import com.yuxin.wx.vo.student.StudentListVo;
 import com.yuxin.wx.model.statistics.QueryLessonByClassTypeVo;
 import com.yuxin.wx.model.statistics.Statistics;
 import com.yuxin.wx.model.statistics.Statistics2;
@@ -48,5 +48,10 @@ public class StatisticsServiceImpl extends BaseServiceImpl implements IStatistic
 		List<Statistics2> data = statisticsMapper.queryAll2(statistics);
 		PageFinder<Statistics2> pageFinder = new PageFinder<Statistics2>(1, 3, 4, data);
 		return pageFinder;
+	}
+
+	@Override
+	public List<com.yuxin.wx.model.classes.Statistics> queryStatistisResult(Map<String, Object> map) {
+		return statisticsMapper.queryStatistisResult(map);
 	}
 }

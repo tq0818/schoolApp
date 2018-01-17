@@ -104,5 +104,8 @@
 		<if test="mobile != null and mobile != ''">and uf.mobile = #{mobile}</if>
 	</select>
 
+	<select id="queryStatistisResult" resultMap="statisticsResultMap" parameterType="map">
+		${excuteSql}
+	</select>
 
 </mapper>

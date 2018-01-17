@@ -1,6 +1,7 @@
 package com.yuxin.wx.api.statistics;
 
 import java.util.List;
+import java.util.Map;
 
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.statistics.QueryLessonByClassTypeVo;
@@ -45,4 +46,11 @@ public interface IStatisticsService {
 
 	public PageFinder<Statistics> queryAll(Statistics statistics);
 	public PageFinder<Statistics2> queryAll2(Statistics statistics);
+
+	/**
+	 *查询各类数据
+	 * @param map
+	 * @return
+     */
+	List<com.yuxin.wx.model.classes.Statistics> queryStatistisResult(Map<String, Object> map);
 }

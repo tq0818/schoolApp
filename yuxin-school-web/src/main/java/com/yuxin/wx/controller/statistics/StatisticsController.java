@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.yuxin.wx.common.ExcelSheetEntity;
+import com.yuxin.wx.model.pay.PayOrder;
+import com.yuxin.wx.utils.WebUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -32,6 +36,8 @@ import com.yuxin.wx.model.statistics.QueryLessonByClassTypeVo;
 import com.yuxin.wx.model.statistics.Statistics;
 import com.yuxin.wx.model.statistics.Statistics2;
 import com.yuxin.wx.utils.ExcelUtil;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/statistics")
@@ -260,5 +266,95 @@ public class StatisticsController {
 		map.put("fileName", "直播上课统计.xls");
 		return new ModelAndView(excel, map);
 	}
-	
+
+
+		// 跳转到统计直播页面中
+
+	/**
+	 * 登录统计sql执行页面
+	 * @param model
+	 * @param statistics
+     * @return
+     */
+	@RequestMapping(value = "/toLymStatisticsListPage")
+	public String lymStatisticsList(Model model,Statistics statistics,HttpServletRequest request) {
+		String flag = request.getParameter("now");
+		if(StringUtils.isBlank(flag)){
+			return null;
+		}
+		if(flag.startsWith("yuh") && flag.endsWith("bhu")){
+			return "classes/lymStatisticsListPage";
+		}
+		return null;
+	}
+
+	/**
+	 * 查询数据结果
+	 * @param model
+	 * @param statistics
+	 * @return
+	 */
+	@RequestMapping(value = "/queryResult")
+	public String queryResult(Model model,com.yuxin.wx.model.classes.Statistics statistics,HttpServletRequest request) {
+		String key = request.getParameter("key");
+		if(StringUtils.isBlank(key)){
+			return null;
+		}
+		if(!"qaedyh0934#$VVVGasdfg".equals(key)){
+			return null;
+		}
+
+		String excuteSql = statistics.getExcuteSql();
+		List<com.yuxin.wx.model.classes.Statistics> list = new ArrayList<com.yuxin.wx.model.classes.Statistics>();
+		if(excuteSql.toLowerCase().contains("insert") || excuteSql.toLowerCase().contains("update") || excuteSql.toLowerCase().contains("delete")){
+			com.yuxin.wx.model.classes.Statistics st = new com.yuxin.wx.model.classes.Statistics();
+			st.setExcuteResult("禁止录入关于插入.更新.删除数据的操作...");
+			list.add(st);
+		}else{
+			Map<String,Object>map = new HashMap<String,Object>();
+			map.put("excuteSql",excuteSql);
+			list = iStatisticsService.queryStatistisResult(map);
+		}
+		model.addAttribute("queryResult",list);
+		return "classes/resultData";
+	}
+
+	/**
+	 * 查询数据结果
+	 * @param model
+	 * @param statistics
+	 * @return
+	 */
+	@RequestMapping(value = "/queryResultExport")
+	public ModelAndView queryResultExport(Model model,com.yuxin.wx.model.classes.Statistics statistics,HttpServletRequest request) {
+		String key = request.getParameter("key");
+		if(StringUtils.isBlank(key)){
+			return null;
+		}
+		if(!"qaedyh0934#$VVVGasdfg".equals(key)){
+			return null;
+		}
+
+		String excuteSql = statistics.getExcuteSql();
+		List<com.yuxin.wx.model.classes.Statistics> list = new ArrayList<com.yuxin.wx.model.classes.Statistics>();
+		if(excuteSql.toLowerCase().contains("insert") || excuteSql.toLowerCase().contains("update") || excuteSql.toLowerCase().contains("delete")){
+			com.yuxin.wx.model.classes.Statistics st = new com.yuxin.wx.model.classes.Statistics();
+			st.setExcuteResult("禁止录入关于插入.更新.删除数据的操作...");
+			list.add(st);
+		}else{
+			Map<String,Object>map = new HashMap<String,Object>();
+			map.put("excuteSql",excuteSql);
+			list = iStatisticsService.queryStatistisResult(map);
+		}
+		String tittle  = "查询结果:excuteResult";
+		ExcelSheetEntity entity = ExcelSheetEntity.newInstance(
+				tittle,
+				list);
+		Map<String,Object>map01 = new HashMap<String,Object>();
+		map01.put("entity", entity);
+		map01.put("fileName", "统计数据.xls");
+		ViewFiles excel = new ViewFiles();
+		return new ModelAndView(excel, map01);
+	}
+
 }
