@@ -19,6 +19,16 @@ public class StudentRankVO implements Serializable {
 	private Integer rankScore;//分数
 	private String headPicMax;//头像地址
 	private Integer rankId;//排名
+	private String isView;// 1 显示 0不显示
+
+	public String getIsView() {
+		return isView;
+	}
+
+	public void setIsView(String isView) {
+		this.isView = isView;
+	}
+
 	public Integer getId() {
 		return id;
 	}
