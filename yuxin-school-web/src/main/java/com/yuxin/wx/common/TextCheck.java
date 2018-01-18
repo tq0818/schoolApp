@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
+import com.mysql.jdbc.StringUtils;
 import org.apache.http.Consts;
 import org.apache.http.client.HttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,9 @@ public class TextCheck {
 
         // 4.发送HTTP请求，这里使用的是HttpClient工具包，产品可自行选择自己熟悉的工具包发送请求
         String response = HttpClient4Utils.sendPost(httpClient, API_URL, params, Consts.UTF_8);
+        if(StringUtils.isNullOrEmpty(response)){
+            response = HttpClient4Utils.sendPost(httpClient, API_URL, params, Consts.UTF_8);
+        }
 
         // 5.解析接口返回值
         JsonObject jObject = new JsonParser().parse(response).getAsJsonObject();
