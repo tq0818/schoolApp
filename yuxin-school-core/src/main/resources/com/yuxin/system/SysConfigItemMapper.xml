@@ -213,7 +213,7 @@
 	<select id="queryAll" resultMap="sysConfigItemResultMap">
 		select
 		<include refid="table_columns" />
-		from sys_config_item
+		from sys_config_item WHERE company_id = 18113
 	</select>
 
 	<!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
@@ -230,7 +230,8 @@
 			<if test="creator != null and creator != ''">and creator = #{creator}</if>
 			<if test="updateTime != null and updateTime != ''">and update_time = #{updateTime}</if>
 			<if test="updator != null and updator != ''">and updator = #{updator}</if>
-			and del_flag = 0 
+			and del_flag = 0
+			and company_id=18113
 		</trim>
 	</sql>
 
@@ -284,6 +285,7 @@
 			<if test="updator != null and updator != ''">and i.updator = #{updator}</if>
 			<if test="delFlag != null">and r.del_flag = #{delFlag}</if>
 			<if test="status != null and status != ''">and i.status = #{status}</if>
+			and r.company_id=18113
 	</select>
 	
 	<!-- 根据公司id和一级项目查询二级项目 -->
