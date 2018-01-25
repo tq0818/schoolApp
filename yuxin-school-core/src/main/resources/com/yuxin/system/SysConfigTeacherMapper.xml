@@ -755,6 +755,7 @@
 
 	<select id="findByCompanyCount" resultType="Integer"
 			parameterType="com.yuxin.wx.model.system.SysConfigTeacher">
+		select id from(
 		select count(st.id) id
 		from sys_config_teacher st
 		JOIN users_comany_relation ucr on ucr.user_id=st.user_id
