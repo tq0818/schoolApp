@@ -2,6 +2,7 @@ package com.yuxin.wx.controller.classes;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.yuxin.wx.api.app.INoticeAndScoreService;
 import com.yuxin.wx.api.auth.IAuthRoleService;
 import com.yuxin.wx.api.auth.IAuthUserRoleService;
 import com.yuxin.wx.api.classes.*;
@@ -195,6 +196,14 @@ public class ClassModuleController {
 	private IWeiXinService weiXinServiceImpl;
 	@Autowired
 	private ISysConfigItemRelationService sysConfigItemRelationServiceImpl;
+
+	@Autowired
+	private IUsersFrontService usersFrontServiceImpl;
+
+	@Autowired
+	private INoticeAndScoreService noticeAndScoreServiceImpl;
+
+
 	DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
 
@@ -4637,7 +4646,7 @@ public class ClassModuleController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/commentJson")
-	public PageFinder<TeacherCommentVo> commentJson(int page){
+	public PageFinder<TeacherCommentVo> commentJson(int page,String status){
 		Users users=WebUtils.getCurrentUser();
 		SysConfigTeacher teacher=sysConfigTeacherServiceImpl.findByUserId(users.getId());
 		TeacherCommentVo teacherCommentVo=new TeacherCommentVo();
@@ -4647,6 +4656,7 @@ public class ClassModuleController {
 		teacherCommentVo.setCompanyId(WebUtils.getCurrentCompanyId());
 		teacherCommentVo.setPageSize(10);
 		teacherCommentVo.setPage(page);
+		teacherCommentVo.setIsCheck(status);
 		PageFinder<TeacherCommentVo> pageFinder=this.ossURl(videoCourseCommentServiceImpl.findVideoCourseCommentByTeacherId(teacherCommentVo));
 		return pageFinder;
 	}
@@ -4659,11 +4669,12 @@ public class ClassModuleController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="/manageCommentJson")
-	public PageFinder<TeacherCommentVo> manageCommentJson(Integer page,Integer teacherId,Integer id){
+	public PageFinder<TeacherCommentVo> manageCommentJson(Integer page,Integer teacherId,Integer id,String status){
 		TeacherCommentVo teacherCommentVo=new TeacherCommentVo();
 		if (teacherId!=null) {
 			teacherCommentVo.setTeacherId(teacherId);
 		}
+		teacherCommentVo.setIsCheck(status);
 		teacherCommentVo.setId(id);
 		teacherCommentVo.setCompanyId(WebUtils.getCurrentCompanyId());
 		teacherCommentVo.setPageSize(10);
@@ -4789,6 +4800,32 @@ public class ClassModuleController {
 		vcc.setId(id);
 		vcc.setDelFlag(1);
 		videoCourseCommentServiceImpl.update(vcc);
+		return "success";
+	}
+
+
+	/**
+	 *
+	 * @fileName : ClassModuleController.java
+	 * @date : 2015年10月27日 下午6:12:52
+	 * @author :　杨延博
+	 * @description : 审核通过
+	 */
+	@ResponseBody
+	@RequestMapping(value="/throughComment")
+	public String throughComment(String id,HttpServletRequest request){
+		VideoCourseComment vcc=new VideoCourseComment();
+		Integer commId = Integer.parseInt(id.split("_")[0]);
+		Integer stuUserId = Integer.parseInt(id.split("_")[1]);
+		vcc.setId(commId);
+		vcc.setIsCheck("1");
+		videoCourseCommentServiceImpl.update(vcc);
+
+		UsersFront user = usersFrontServiceImpl.findUsersFrontById(stuUserId);
+		Map<String,String>map = new HashMap<String,String>();
+		map.put("userName",user.getNickName());
+		//String url = request.getRequestURI().replace(request.getContextPath(),"");
+		noticeAndScoreServiceImpl.sendMsg("/classModule/throughComment",String.valueOf(stuUserId),map);
 		return "success";
 	}
 

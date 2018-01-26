@@ -41,7 +41,60 @@
 							$(".delete").removeClass("active");
 						}
 					});
-			    });	
+			    });
+
+				$(".Y_background").on("click", ".check", function () {
+					var a=$(this);
+					$(this).addClass("active");
+					//$(".mark2").show();
+					var id = $(this).attr("id");
+					$.confirm("您是否确定审核通过该条评论",function(result){
+						console.log(result);
+						if(result){
+							$.ajax({
+								url: rootPath + "/classModule/throughComment",
+								data: {"id": id},
+								type: "post",
+								dataType: "json",
+								async: false,
+								success: function (e) {
+									if (e == "success") {
+										$.msg("审核成功!", 3000);
+										//$(".mark").hide();
+										//$(".check").removeClass("active");
+										a.remove();
+									} else {
+										$.msg("出现异常!", 3000);
+										//  $(".mark").hide();
+										$(".check").removeClass("active");
+										var status = "";
+										$(".checkStatus").find("a").each(function(){
+											if($(this).hasClass("btn-success")){
+												status= $(this).attr("id");
+											}
+										});
+										$this.search(null,status);
+									}
+
+								}
+							});
+						}else{
+							$(".check").removeClass("active");
+						}
+					});
+				});
+
+				$(".checkStatus").on('click','.status',function(){
+					var status=$(this).attr("id");
+					$(".checkStatus").find("a").each(function(){
+						if($(this).hasClass("btn-success")){
+							$(this).removeClass("btn-success");
+						}
+					});
+					$(this).addClass("btn-success");
+					$this.search(1,status);
+				});
+
                 //$(".mark2").on("click",".yes",function(){
 		        //	$.ajax({
 					//	url: rootPath+"/classModule/deleteComment",
@@ -112,10 +165,11 @@
 				// 初始化数据
 				$this.search();
 			},
-			search : function(page){
+			search : function(page,status){
 				var $this = this;
 				var data = {};
 				data.page = page ? page : 1;
+				data.status = status;
 				$(".comment_all").html('');
 				$.ajax({
 					url : rootPath + "/classModule/commentJson",
@@ -176,28 +230,30 @@
 									'<i class="iconfont">&#xe65e;</i>'+
 									'<i class="iconfont">&#xe65e;</i></span>';
 							}
-			        		$(".comment_all").append(
-			                    '<li class="Y_clear">'+
-			                    '<div class="headpic">'+
-			                        '<img src="'+(comment.userImage ? comment.userImage :rootPath+"/images/teachers.png")+'" alt="" width="50" height="50"/>'+
-			                    '</div>'+
-			                    '<div class="Y_backcomment_content">'+
-			                        '<div class="word Y_clear">'+
-			                            '<span>'+comment.userName+'：</span>'+
-			                            '<span class="wordcontent" style="word-break: break-all">'+comment.comment+'</span>'+
-			                        '</div>'+
-			                        '<p class="Y_time Y_mt10">'+
-			                            '<span>'+comment.createTimeText+'</span>'+
-			                            '<span>'+comment.createTime2Text+'</span>'+
-//			                            '<span><em>源自：</em>'+(comment.fromId> -1 ? comment.from+'</span>'+ 
+							var commentHtml= '<li class="Y_clear">'+
+								'<div class="headpic">'+
+								'<img src="'+(comment.userImage ? comment.userImage :rootPath+"/images/teachers.png")+'" alt="" width="50" height="50"/>'+
+								'</div>'+
+								'<div class="Y_backcomment_content">'+
+								'<div class="word Y_clear">'+
+								'<span>'+comment.userName+'：</span>'+
+								'<span class="wordcontent" style="word-break: break-all">'+comment.comment+'</span>'+
+								'</div>'+
+								'<p class="Y_time Y_mt10">'+
+								'<span>'+comment.createTimeText+'</span>'+
+								'<span>'+comment.createTime2Text+'</span>'+
+//			                            '<span><em>源自：</em>'+(comment.fromId> -1 ? comment.from+'</span>'+
 //			                            		'<span><em>章节：</em>'+(comment.videoChapter ? comment.videoChapter:'')+(comment.videoLecture?comment.videoLecture:'')+'</span>'
 //			                            		:'老师评论</span>')+
-												scorehtml+
-			                        '</p>'+
-			                    '</div>'+
-			                    '<button class="delete delete2"  id="'+comment.id+'">删除</button>'+
-			                '</li>'   
-			        		);
+								scorehtml+
+								'</p>'+
+								'</div>';
+								if(comment.isCheck=='0'){
+									commentHtml+='<button class="delete check" style="float: left;"  id="'+comment.id+'_'+comment.userId+'">审核通过</button>';
+								}
+								commentHtml+='<button class="delete delete2"  id="'+comment.id+'">删除</button>'+
+								'</li>';
+							$(".comment_all").append(commentHtml);
 			        	});
 			        	if (jsonData.rowCount > 10) {
 							$(".pagination").pagination(jsonData.rowCount,
@@ -211,7 +267,13 @@
 										num_edge_entries : 1,
 										callback : function(page, jq) {
 											var pageNo = page + 1;
-											$this.search(pageNo);
+											var status = "";
+											$(".checkStatus").find("a").each(function(){
+												if($(this).hasClass("btn-success")){
+													status= $(this).attr("id");
+												}
+											});
+											$this.search(pageNo,status);
 										}
 									});
 						} else {

@@ -14,7 +14,13 @@
             font-size: 13px;
             cursor: auto;
         }
-
+        .left{
+            text-align: right;
+        }
+        .checkStatus li{
+            display: inline-block;
+            margin: 0 10px;
+        }
     </style>
 </head>
 <body>
@@ -51,6 +57,23 @@
                     <div class="right showRight">
                         <span hide-div="showRight">更多<i class="iconfont">&#xe656;</i></span>
                     </div>
+                </div>
+
+            </div>
+            <div class="list">
+                <div class="check_list Y_clear Y_mt10">
+                    <div class="left">
+                        审核状态：
+                    </div>
+
+                    <div class="left" style="width: 90%;text-align: left;">
+                        <ul class="checkStatus">
+                            <li><a class="status btn btn-mini btn-default btn-success" id="">全部</a></li>
+                            <li><a class="status btn btn-mini btn-default" id="0">待审核</a></li>
+                            <li><a class="status btn btn-mini btn-default" id="1">审核通过</a></li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
             <div class="border"></div>

@@ -33,7 +33,16 @@ public class TeacherCommentVo extends BaseEntity {
 	}
 	private String createTimeText;
 	private String createTime2Text;
-	
+	private String isCheck;
+
+	public String getIsCheck() {
+		return isCheck;
+	}
+
+	public void setIsCheck(String isCheck) {
+		this.isCheck = isCheck;
+	}
+
 	public String getClassTypeName() {
 		return classTypeName;
 	}

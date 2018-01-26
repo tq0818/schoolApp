@@ -12,6 +12,10 @@
             font-size: 13px;
             cursor: auto;
         }
+        .lineNew{
+            border-left:none !important;
+        }
+        .checkStatus li{display: inline-block;}
     </style>
 </head>
 <body>
@@ -23,6 +27,23 @@
         <div class="Y_background Y_backcomment">
             <div class="Y_head">
                 <h2 class="h5">评论</h2>
+                <span class="line"></span>
+            </div>
+            <div class="list lineNew Y_head">
+                <div class="check_list Y_clear Y_mt10">
+                    <div class="left" style="display: inline-block;">
+                        审核状态：
+                    </div>
+
+                    <div class="left" style="width: 90%;text-align: left;display: inline-block;">
+                        <ul class="checkStatus">
+                            <li><a class="status btn btn-mini btn-default btn-success" id="">全部</a></li>
+                            <li><a class="status btn btn-mini btn-default" id="0">待审核</a></li>
+                            <li><a class="status btn btn-mini btn-default" id="1">审核通过</a></li>
+                        </ul>
+                    </div>
+
+                </div>
                 <span class="line"></span>
             </div>
             <ul class="comment_all">

@@ -15,11 +15,17 @@
             });
             //点击老师搜索评论
             $(".teahcerName").on("click", ".tName", function () {
-                $(".btn-success").removeClass("btn-success");
+                $(".teahcerName .btn-success").removeClass("btn-success");
                 $(this).addClass("btn-success");
                 var id = $(this).attr("id");
                 $(".clickTeacherId").attr("id", id);
-                $this.search(null, id);
+                var status ="";
+                $(".checkStatus a").each(function(){
+                    if($(this).hasClass("btn-success")){
+                        status=$(this).attr("id");
+                    }
+                });
+                $this.search(null, id,null,status);
             })
                 //点击显示全部老师
                 .on("click", ".showAllTeacher", function () {
@@ -40,6 +46,40 @@
             $(".Y_background").on("click", ".delete1", function () {
                 $(this).addClass("active");
                 $(".mark1").show()
+            });
+            $(".Y_background").on("click", ".check", function () {
+                var a=$(this);
+                $(this).addClass("active");
+                //$(".mark2").show();
+                var id = $(this).attr("id");
+                $.confirm("您是否确定审核通过该条评论",function(result){
+                    console.log(result);
+                    if(result){
+                        $.ajax({
+                            url: rootPath + "/classModule/throughComment",
+                            data: {"id": id},
+                            type: "post",
+                            dataType: "json",
+                            async: false,
+                            success: function (e) {
+                                if (e == "success") {
+                                    $.msg("审核成功!", 3000);
+                                    //$(".mark").hide();
+                                    //$(".check").removeClass("active");
+                                    a.remove();
+                                } else {
+                                    $.msg("出现异常!", 3000);
+                                    //  $(".mark").hide();
+                                    $(".check").removeClass("active");
+                                    $this.search(null, $(".clickTeacherId").attr("id"));
+                                }
+
+                            }
+                        });
+                    }else{
+                        $(".check").removeClass("active");
+                    }
+                });
             });
             $(".Y_background").on("click", ".delete2", function () {
                 var a=$(this);
@@ -167,6 +207,25 @@
                 );
 
             });
+
+            $(".checkStatus").on('click','.status',function(){
+                var status=$(this).attr("id");
+                var teacherId="";
+                $(".teahcerName").find("a").each(function(){
+                    if($(this).hasClass("btn-success")){
+                        teacherId = $(this).attr("id");
+                    }
+                });
+                $(".checkStatus").find("a").each(function(){
+                    if($(this).hasClass("btn-success")){
+                        $(this).removeClass("btn-success");
+                    }
+                });
+                $(this).addClass("btn-success");
+                $this.search(1, teacherId,null,status);
+
+            });
+
             // 初始化数据
             
             //--4.2
@@ -180,11 +239,12 @@
             	$this.searchTeacher();
             }
         },
-        search: function (page, teacherId,id) {
+        search: function (page, teacherId,id,status) {
             var $this = this;
             var data = {};
             data.teacherId = teacherId;
             data.id = id;
+            data.status=status;
             data.page = page ? page : 1;
             $(".comment_all").html('');
             $.ajax({
@@ -245,8 +305,8 @@
                                 '<i class="iconfont">&#xe65e;</i>'+
                                 '<i class="iconfont">&#xe65e;</i></span>';
                         }
-                        $(".comment_all").append(
-                            '<li class="Y_clear">' +
+
+                        var commentHtml=                            '<li class="Y_clear">' +
                             '<div class="headpic">' +
                             '<img src="' + (comment.userImage ? comment.userImage : rootPath + "/images/teachers.png") + '" alt="" width="50" height="50"/>' +
                             '</div>' +
@@ -264,10 +324,14 @@
                             scorehtml +
                             '<span>老师:'+'<a href="javascript:void(0);" class="teacherName" teacherId="'+comment.teacherId+'">'+comment.teacherName+'</a></span>'+
                             '</p>' +
-                            '</div>' +
-                            '<button class="delete delete2"  id="' + comment.id + '">删除</button>' +
-                            '</li>'
-                        );
+                            '</div>' ;
+                            if(comment.isCheck=='0'){
+                                commentHtml+=  '<button class="delete check" style="float: left" id="' + comment.id + '_'+comment.userId+'">审核通过</button>' ;
+                            }
+                            commentHtml+='<button class="delete delete2"  id="' + comment.id + '">删除</button>' +
+                            '</li>';
+
+                        $(".comment_all").append(commentHtml);
                     });
                     if (jsonData.rowCount > 10) {
                         $(".pagination").pagination(jsonData.rowCount,

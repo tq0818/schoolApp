@@ -25,6 +25,7 @@
 		<result property="createTime" column="create_time" />
 		<result property="userName" column="userName" />
 		<result property="classTypeId" column="class_type_id" />
+		<result property="isCheck" column="is_check" />
 	</resultMap>
 	<sql id="table_columns">
 		id,
@@ -98,6 +99,8 @@
 			<if test="companyId != null and companyId != ''">company_id = #{companyId},</if>
 			<if test="createTime != null and createTime != ''">create_time = #{createTime},</if>
 			<if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+			<if test="isCheck != null and isCheck != ''">is_check = #{isCheck},</if>
+
 		</trim>
 		<where>id = #{id}</where>
 	</update>
@@ -138,13 +141,14 @@
 		<include refid="page_where" />
 	</select>
 	<select id="findByTeacherId" resultMap="teacherCommentVoResultMap" parameterType="com.yuxin.wx.vo.system.TeacherCommentVo">
-		select vcc.id,teacher_id,comment,source,score,video_chapter_id,video_lecture_id,vcc.user_id,vcc.create_time,vcc.class_type_id,(select nick_name from users_front where id=vcc.user_id) as userName from video_course_comment vcc
+		select vcc.id,teacher_id,comment,source,score,video_chapter_id,video_lecture_id,vcc.user_id,vcc.create_time,vcc.class_type_id,vcc.is_check,(select nick_name from users_front where id=vcc.user_id) as userName from video_course_comment vcc
 		inner join sys_config_teacher syt on vcc.teacher_id = syt.id 
 		where vcc.del_flag=0 and syt.del_flag =0
 		<if test="teacherId != null and teacherId != ''">and teacher_id = #{teacherId}</if>
 		<if test="companyId != null and companyId != ''">and vcc.company_id = #{companyId}</if>
 		<if test="schoolId != null and schoolId != ''">and vcc.school_id = #{schoolId}</if>
 		<if test="id != null and id != ''">and vcc.id = #{id}</if>
+		<if test="isCheck != null and isCheck != ''">and vcc.is_check = #{isCheck}</if>
 		order by vcc.create_time desc limit #{firstIndex},#{pageSize}
 	</select>
 	<select id="commentCount" resultType="int" parameterType="com.yuxin.wx.vo.system.TeacherCommentVo">
@@ -153,6 +157,7 @@
 		<if test="teacherId != null and teacherId != ''">and teacher_id = #{teacherId}</if>
 		<if test="companyId != null and companyId != ''">and vcc.company_id = #{companyId}</if>
 		<if test="id != null and id != ''">and vcc.id = #{id}</if>
+		<if test="isCheck != null and isCheck != ''">and vcc.is_check = #{isCheck}</if>
 		limit 1
 	</select>
 	<!-- 其他自定义SQL -->

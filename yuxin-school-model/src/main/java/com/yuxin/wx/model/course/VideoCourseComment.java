@@ -49,6 +49,17 @@ public class VideoCourseComment extends BaseEntity {
 	private Integer classTypeId;
 	private Integer limit;
 	private Integer originType;
+
+	private String isCheck;
+
+	public String getIsCheck() {
+		return isCheck;
+	}
+
+	public void setIsCheck(String isCheck) {
+		this.isCheck = isCheck;
+	}
+
 	// Constructor
 	public VideoCourseComment() {
 	}

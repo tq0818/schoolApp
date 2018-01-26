@@ -359,10 +359,9 @@
 		u.head_pic_url headPicUrl,s.school_name,
 		u.proxy_org_id
 		from users u
-		join users_comany_relation ucr on ucr.user_id = u.id
-		inner join company c on c.id=ucr.company_id and c.is_area=0
+		inner join company c on c.is_area=u.is_area
 		inner join sys_config_school s on c.id = s.company_id
-		where username = #{userName}  limit 1
+		where username = #{userName} and c.is_area=0 limit 1
 	</select>
 
 	<select id="queryAll" resultMap="usersResultMap">
