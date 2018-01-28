@@ -63,6 +63,13 @@
 										//$(".mark").hide();
 										//$(".check").removeClass("active");
 										a.remove();
+										var status = "";
+										$(".checkStatus").find("a").each(function(){
+											if($(this).hasClass("btn-success")){
+												status= $(this).attr("id");
+											}
+										});
+										$this.search(null,status);
 									} else {
 										$.msg("出现异常!", 3000);
 										//  $(".mark").hide();
@@ -180,8 +187,20 @@
 			            $(".loading-bg").show();
 			        },
 			        success : function(jsonData) {
+						var status = "";
+						$(".checkStatus").find("a").each(function(){
+							if($(this).hasClass("btn-success")){
+								status= $(this).attr("id");
+							}
+						});
 			        	if (jsonData.data.length == 0) {
-			        		$(".comment_all").html('<div class="empty" style="height: 330px;">亲，您还没有被评论</div>');
+							if("0"==status){
+								$(".comment_all").html('<div class="empty" style="height: 330px;">亲，您还没有被评论待审核</div>');
+							}else if("1"==status){
+								$(".comment_all").html('<div class="empty" style="height: 330px;">亲，您还没有被评论审核通过</div>');
+							}else{
+								$(".comment_all").html('<div class="empty" style="height: 330px;">亲，您还没有被评论</div>');
+							}
 			        	}
 						var scorehtml='<span>评分:</span>' +
 							'<span class="Y_mr10" style="color: #fb9f1b;">' +

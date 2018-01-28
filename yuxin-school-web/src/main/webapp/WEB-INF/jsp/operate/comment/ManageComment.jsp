@@ -68,9 +68,9 @@
 
                     <div class="left" style="width: 90%;text-align: left;">
                         <ul class="checkStatus">
-                            <li><a class="status btn btn-mini btn-default btn-success" id="">全部</a></li>
-                            <li><a class="status btn btn-mini btn-default" id="0">待审核</a></li>
-                            <li><a class="status btn btn-mini btn-default" id="1">审核通过</a></li>
+                            <li><a class="status btn btn-mini btn-default btn-success" id="" style="cursor:pointer;">全部</a></li>
+                            <li><a class="status btn btn-mini btn-default" id="0" style="cursor:pointer;">待审核</a></li>
+                            <li><a class="status btn btn-mini btn-default" id="1" style="cursor:pointer;">审核通过</a></li>
                         </ul>
                     </div>
 

@@ -35,9 +35,16 @@
                 })
                 //点击全部按钮
                 .on('click', '.searchAllTeacher', function () {
-                    $(".btn-success").removeClass("btn-success");
+                    $(".clickTeacherId").attr("id", "");
+                    $(".teahcerName .btn-success").removeClass("btn-success");
                     $(this).addClass("btn-success");
-                    $this.search(1);
+                    var status ="";
+                    $(".checkStatus a").each(function(){
+                        if($(this).hasClass("btn-success")){
+                            status=$(this).attr("id");
+                        }
+                    });
+                    $this.search(1,null,null,status);
                     $this.searchTeacher();
                     $(".searchTeacher").val("");
                 });
@@ -67,6 +74,13 @@
                                     //$(".mark").hide();
                                     //$(".check").removeClass("active");
                                     a.remove();
+                                    var status ="";
+                                    $(".checkStatus a").each(function(){
+                                        if($(this).hasClass("btn-success")){
+                                            status=$(this).attr("id");
+                                        }
+                                    });
+                                    $this.search(null, $(".clickTeacherId").attr("id"),null,status);
                                 } else {
                                     $.msg("出现异常!", 3000);
                                     //  $(".mark").hide();
@@ -256,8 +270,21 @@
                     $(".loading-bg").show();
                 },
                 success: function (jsonData) {
+                    var status ="";
+                    $(".checkStatus a").each(function(){
+                        if($(this).hasClass("btn-success")){
+                            status=$(this).attr("id");
+                        }
+                    });
                     if (jsonData.data.length == 0) {
-                        $(".comment_all").html('<div class="empty" style="height: 330px;">亲，这个老师还没有被评论</div>');
+                        if("0"==status){
+                            $(".comment_all").html('<div class="empty" style="height: 330px;">亲，这个老师没有被评论待审核</div>');
+                        }else if("1"==status){
+                            $(".comment_all").html('<div class="empty" style="height: 330px;">亲，这个老师还没有被评论审核通过</div>');
+                        }else{
+                            $(".comment_all").html('<div class="empty" style="height: 330px;">亲，这个老师还没有被评论</div>');
+                        }
+
                     }
                     var scorehtml='<span>评分:</span>' +
                         '<span class="Y_mr10" style="color: #fb9f1b;">' +
@@ -346,7 +373,13 @@
                                 callback: function (page, jq) {
                                     var pageNo = page + 1;
                                     var teacherId = $(".clickTeacherId").attr("id");
-                                    $this.search(pageNo, teacherId);
+                                    var status ="";
+                                    $(".checkStatus a").each(function(){
+                                        if($(this).hasClass("btn-success")){
+                                            status=$(this).attr("id");
+                                        }
+                                    });
+                                    $this.search(pageNo, teacherId,null,status);
                                 }
                             });
                     } else {
