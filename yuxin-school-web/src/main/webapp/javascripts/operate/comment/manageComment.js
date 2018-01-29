@@ -278,9 +278,9 @@
                     });
                     if (jsonData.data.length == 0) {
                         if("0"==status){
-                            $(".comment_all").html('<div class="empty" style="height: 330px;">亲，这个老师没有被评论待审核</div>');
+                            $(".comment_all").html('<div class="empty" style="height: 330px;">亲，这个老师还没有待审核的评论哦</div>');
                         }else if("1"==status){
-                            $(".comment_all").html('<div class="empty" style="height: 330px;">亲，这个老师还没有被评论审核通过</div>');
+                            $(".comment_all").html('<div class="empty" style="height: 330px;">亲，这个老师还没有审核通过的评论哦</div>');
                         }else{
                             $(".comment_all").html('<div class="empty" style="height: 330px;">亲，这个老师还没有被评论</div>');
                         }
