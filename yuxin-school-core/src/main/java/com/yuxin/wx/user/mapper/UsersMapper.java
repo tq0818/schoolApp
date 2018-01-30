@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.yuxin.wx.common.BaseMapper;
+import com.yuxin.wx.model.teacher.UsersComanyRelation;
 import com.yuxin.wx.model.user.UserLoginSession;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.vo.privilege.RoleVo;
@@ -128,4 +129,6 @@ public interface UsersMapper extends BaseMapper<Users> {
 	 * @return
 	 */
     UsersAreaRelation findUsersAreaRelation(Integer id);
+
+	void insertUsersComanyRelation(UsersComanyRelation ucr);
 }

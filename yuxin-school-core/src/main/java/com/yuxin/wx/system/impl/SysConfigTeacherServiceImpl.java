@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.yuxin.wx.model.teacher.UsersComanyRelation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;import com.yuxin.wx.common.BaseServiceImpl;
@@ -290,6 +291,12 @@ public class SysConfigTeacherServiceImpl extends BaseServiceImpl implements ISys
         users.setRealName(sysConfigTeacher.getName());
         users.setMobile(sysConfigTeacher.getMobile());
         usersMapper.insert(users);
+        //添加教师学校关系表
+        UsersComanyRelation ucr=new UsersComanyRelation();
+        ucr.setUserId(users.getId());
+        ucr.setCompanyId(users.getCompanyId());
+        ucr.setIsUsed(1);
+        usersMapper.insertUsersComanyRelation(ucr);
         sysConfigTeacher.setUserId(users.getId());
         sysConfigTeacherMapper.insert(sysConfigTeacher);
         AuthUserRole authUserRole = new AuthUserRole();
