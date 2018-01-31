@@ -4,6 +4,8 @@ import java.util.Date;
 
 import com.yuxin.wx.model.course.CourseExercise;
 import com.yuxin.wx.model.tiku.TikuPaper;
+import com.yuxin.wx.vo.course.ChapterAndLectureListVo;
+import com.yuxin.wx.vo.course.CourseVideoLectureVo;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import com.yuxin.wx.util.ShortDateSerializer;
@@ -88,6 +90,29 @@ public class ClassModuleLesson extends BaseEntity {
     private String hccApiKey;
     private Integer videoClassTypeId;
     private Integer lectureId;
+
+
+
+	private CourseVideoLectureVo beforeVideo;
+
+	private CourseVideoLectureVo afterVideo;
+
+	public CourseVideoLectureVo getBeforeVideo() {
+		return beforeVideo;
+	}
+
+	public void setBeforeVideo(CourseVideoLectureVo beforeVideo) {
+		this.beforeVideo = beforeVideo;
+	}
+
+	public CourseVideoLectureVo getAfterVideo() {
+		return afterVideo;
+	}
+
+	public void setAfterVideo(CourseVideoLectureVo afterVideo) {
+		this.afterVideo = afterVideo;
+	}
+
 	public TikuPaper getTikuPaper() {
 		return tikuPaper;
 	}
