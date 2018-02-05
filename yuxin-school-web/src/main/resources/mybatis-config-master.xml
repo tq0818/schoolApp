@@ -335,6 +335,9 @@
 		<mapper resource="com/yuxin/app/SysDictAppMapper.xml" />
 		<mapper resource="com/yuxin/app/ShelvesCourseMapper.xml" />
 		<mapper resource="com/yuxin/app/SysNoticeMapper.xml" />
+
+		<!--小升初接口开发 18-02-05-->
+		<mapper resource="/com/yuxin/riseschool/RiseSchoolBackMapper.xml"/>
 	</mappers>
 
 </configuration>

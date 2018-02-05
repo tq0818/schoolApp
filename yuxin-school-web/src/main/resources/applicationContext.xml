@@ -136,7 +136,8 @@
 				com.yuxin.wx.certificate.mapper,
 				com.yuxin.wx.homework.mapper,
 				com.yuxin.wx.watchInfo.mapper,
-				com.yuxin.wx.query.mapper
+				com.yuxin.wx.query.mapper,
+				com.yuxin.wx.riseschool.mapper
 			</value>
 		</property>
 	</bean>
