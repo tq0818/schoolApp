@@ -8,6 +8,9 @@ import com.yuxin.wx.common.BaseEntity;
 @SuppressWarnings("serial")
 public class RiseSchoolInfoVo extends BaseEntity {
 
+    /**
+     * 学校基本信息
+     */
     private String schoolName;
     private String enrollmentType;
     private String provinceName;
@@ -21,7 +24,7 @@ public class RiseSchoolInfoVo extends BaseEntity {
     private String busRoad;
     private String userId;
 //    private String updateTime;
-//    private String createTime;
+    private String createTime;
     private Integer collectNum;
     private Integer isCollect;
     private Integer collectId;
@@ -29,6 +32,62 @@ public class RiseSchoolInfoVo extends BaseEntity {
     private String districtCode;
 
     private String enrollmentCode;
+
+    /**
+     * 学校升学和详情
+     */
+    // 详情或者升学
+    private String itemName;
+
+    //详情或者升学编码
+    private String itemCode;
+
+    //详情或者升学描述
+    private String itemDiscrible;
+
+    private String tittle;
+
+    private String content;
+
+    public String getTittle() {
+        return tittle;
+    }
+
+    public void setTittle(String tittle) {
+        this.tittle = tittle;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public String getItemCode() {
+        return itemCode;
+    }
+
+    public void setItemCode(String itemCode) {
+        this.itemCode = itemCode;
+    }
+
+    public String getItemDiscrible() {
+        return itemDiscrible;
+    }
+
+    public void setItemDiscrible(String itemDiscrible) {
+        this.itemDiscrible = itemDiscrible;
+    }
 
     public String getDistrictCode() {
         return districtCode;
@@ -174,11 +233,11 @@ public class RiseSchoolInfoVo extends BaseEntity {
 //        this.updateTime = updateTime;
 //    }
 //
-//    public String getCreateTime() {
-//        return createTime;
-//    }
-//
-//    public void setCreateTime(String createTime) {
-//        this.createTime = createTime;
-//    }
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
 }
