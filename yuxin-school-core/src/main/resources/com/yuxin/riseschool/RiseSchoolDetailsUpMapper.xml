@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuxin.wx.riseschool.mapper.RiseSchoolDetailsUpMapper">
+	<resultMap type="com.yuxin.wx.model.riseschool.RiseSchoolDetailsUp" id="riseDetailsMap">
+		<result property="itemCode" column="item_code" />
+		<result property="itemDiscrible" column="item_discrible" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="riseSchoolId" column="rise_school_id" />
+		<result property="riseSchoolId" column="rise_school_id" />
+		<result property="itemName" column="itemName" />
+	</resultMap>
+
+	<sql id="riseDetailsProperties">
+		id,
+		item_code,
+		item_discrible,
+		create_time,
+		update_time,
+		rise_school_id
+	</sql>
+	
+	<insert id="insert" parameterType="com.yuxin.wx.model.riseschool.RiseSchoolDetailsUp" useGeneratedKeys="true" keyProperty="id">
+		insert into rise_school_details_up(item_code,item_discrible,rise_school_id ) 
+		values ( #{itemCode},#{itemDiscrible}, #{riseSchoolId})
+	</insert>
+	
+	<update id="update" parameterType="com.yuxin.wx.model.riseschool.RiseSchoolDetailsUp">
+		update rise_school_details_up set
+		item_discrible = #{itemDiscrible},update_time = NOW()
+		where id = #{id}
+	</update>
+	<!-- 根据类型查询数据 -->
+
+	<select id="findByidAndCode" resultMap="riseDetailsMap" parameterType="map">
+		select
+		<include refid="riseDetailsProperties"/>
+		from rise_school_details_up 
+		where rise_school_id = ${riseSchoolId} and item_code = ${itemCode}
+	</select>
+	
+	<select id="queryRiseDetails" resultMap="riseDetailsMap" parameterType="map">
+		select rsdu.item_discrible as item_discrible,srsd.item_name as itemName from rise_school_details_up rsdu
+		INNER JOIN sys_rise_school_dict srsd ON rsdu.item_code = srsd.item_code
+		where rsdu.rise_school_id = ${riseSchoolId} and rsdu.item_code = ${itemCode}
+	</select>
+	
+	<select id="findsysDictByName" resultType="com.yuxin.wx.model.riseschool.SysDictVo" parameterType="String">
+		select * from sys_rise_school_dict
+		where item_name = ${itemName} and item_type = ${itemType}
+	</select>
+	
+	<select id="queryAllRiseDetails" resultMap="riseDetailsMap" parameterType="Integer">
+		select rsdu.*,srsd.item_name as itemName from rise_school_details_up rsdu
+		INNER JOIN sys_rise_school_dict srsd ON rsdu.item_code = srsd.item_code
+		where rise_school_id = ${shcoolId} 
+	</select>
+	
+
+
+
+</mapper>
