@@ -11,6 +11,7 @@
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/system.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" />
 	<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/popupwin.css">
+	<link rel="stylesheet" href="<%=rootPath %>/stylesheets/fonts/iconfont.css">
 	<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/earlyLitre.css">
 
 
@@ -179,22 +180,26 @@
 <div class="addNewSchool">
 	<h5>添加学校</h5>
 	<div>
-		<label for="">学校名称：</label>
+		<i class="icon iconfont star">&#xe605;</i>
+		<label for="" class="noMargin">学校名称：</label>
 		<input type="text"  maxlength="60">
 	</div>
 	<div class="schoolCount">
-		<label for="">学校账号：</label>
+		<i class="icon iconfont star">&#xe605;</i>
+		<label for="" class="noMargin">学校账号：</label>
 		<input type="text" placeholder="请输入学校管理员账号">
 		<span>初始密码为：111111</span>
 	</div>
 	<div>
-		<label for="">招生方式：</label>
+		<i class="icon iconfont star">&#xe605;</i>
+		<label for="" class="noMargin">招生方式：</label>
 		<select name="" id="">
 			<option value="">请选择招生方式</option>
 		</select>
 	</div>
 	<div class="schoolSite">
-		<label for="">学校地址：</label>
+		<i class="icon iconfont star">&#xe605;</i>
+		<label for="" class="noMargin">学校地址：</label>
 		<select name="" id="">
 			<option value="">学校所在省份</option>
 		</select>

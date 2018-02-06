@@ -20,3 +20,5 @@ margin-left: -150px;margin-top: -89px;background: #fff;border: 1px solid #797979
 .schoolSite input{margin-left: 97px;}
 .schoolCount input{width: 162px !important;}
 .schoolCount span{color: #ff0000;font-size: 12px;}
+.noMargin{margin-left: 0 !important;}
+.star{font-size: 12px;color: #ff0000;}
