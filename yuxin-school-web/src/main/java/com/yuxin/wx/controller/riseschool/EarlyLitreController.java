@@ -22,5 +22,14 @@ public class EarlyLitreController {
 
         return "/riseschool/schoolDetails";
     }
+    //基本信息
+    @RequestMapping(value = "/essential")
+    public String essential(){
+
+        return "/riseschool/essential";
+    }
+
+
+
 }
 

@@ -9,7 +9,7 @@
         <!-- <span class="iconfont return-pic hcancle">&#xe650;</span> -->
     </div>
     <ul id="course_manage" class="system_managelist">
-        <li class="subentry" code="" mark="/berkeley/permissionManagement/${companyId}">基本信息</li>
+        <li class="subentry" code="essential" mark="/riseschoolback/essential">基本信息</li>
         <li class="subentry" code="schoolDetails" mark="/riseschoolback/schoolDetails">学校详情</li>
         <li class="subentry" code="" mark="/classManager/getClassInfo/${companyId}">学校风采</li>
         <li class="subentry" code="" mark="/berkeley/permissionManagement/${companyId}">升学</li>

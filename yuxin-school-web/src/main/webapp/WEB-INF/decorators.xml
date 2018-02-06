@@ -563,7 +563,8 @@
         <pattern>/riseschoolback/earlyLitre</pattern>
         <!--学校详情-->
         <pattern>/riseschoolback/schoolDetails</pattern>
-
+        <!--基本信息-->
+        <pattern>/riseschoolback/essential</pattern>
 
     </decorator>
 
