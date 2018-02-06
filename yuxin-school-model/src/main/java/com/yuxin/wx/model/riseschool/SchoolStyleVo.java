@@ -14,6 +14,16 @@ public class SchoolStyleVo extends BaseEntity {
 
     private String schoolId;
 
+    private String isCover;
+
+    public String getIsCover() {
+        return isCover;
+    }
+
+    public void setIsCover(String isCover) {
+        this.isCover = isCover;
+    }
+
     public String getSchoolId() {
         return schoolId;
     }

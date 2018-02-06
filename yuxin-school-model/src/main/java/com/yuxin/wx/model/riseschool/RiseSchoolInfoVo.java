@@ -35,6 +35,7 @@ public class RiseSchoolInfoVo extends BaseEntity {
 
     private String imgUrl;
 
+
     /**
      * 学校升学和详情
      */
