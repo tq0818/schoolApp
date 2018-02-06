@@ -10,4 +10,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/riseschoolback")
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class RiseSchoolBackController {
+
 }

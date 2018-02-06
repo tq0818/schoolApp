@@ -316,7 +316,7 @@ button.cloze {
             <shiro:hasPermission name="operating_head">  
             <li code="operating_head"><a href="<%=rootPath %>/company/operate/firstTransferStation">运营</a></li>
              </shiro:hasPermission>
-            <shiro:hasPermission name="tiku_header">  
+            <shiro:hasPermission name="tiku_header">
              <li code="tiku_header"><a href="<%=rootPath %>/company/tiku/firstTransferStation">题库</a></li>
              </shiro:hasPermission>
              
@@ -324,9 +324,13 @@ button.cloze {
             <li code="resource_head"><a href="<%=rootPath %>/company/resource/firstTransferStation">资源</a></li>
              </shiro:hasPermission>
 
-           <%--<shiro:hasPermission name="system_head">
-            <li code="system_head"><a href="<%=rootPath %>/company/system/firstTransferStation" >系统</a></li>
-			</shiro:hasPermission>--%>
+           <%--<shiro:hasPermission name="system_head">--%>
+            <%--<li code="system_head"><a href="<%=rootPath %>/company/system/firstTransferStation" >系统</a></li>--%>
+			<%--</shiro:hasPermission>--%>
+
+            <%--<shiro:hasPermission name="statistics_all">--%>
+                <li code="earlyLitre"><a href="<%=rootPath %>/riseschoolback/earlyLitre" >小升初</a></li>
+            <%--</shiro:hasPermission>--%>
 
             <shiro:hasPermission name="statistics_all">
                 <li code="statistics_all"><a href="<%=rootPath %>/company/statistics/firstTransferStation" >总览</a></li>

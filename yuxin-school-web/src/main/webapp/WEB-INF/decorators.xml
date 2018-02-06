@@ -559,6 +559,12 @@
         <!--修改banner图-->
         <pattern>/Banner/editBanner/*</pattern>
 
+        <!--学校管理-->
+        <pattern>/riseschoolback/earlyLitre</pattern>
+        <!--学校详情-->
+        <pattern>/riseschoolback/schoolDetails</pattern>
+
+
     </decorator>
 
 </decorators>
