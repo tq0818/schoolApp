@@ -33,6 +33,8 @@ public class RiseSchoolInfoVo extends BaseEntity {
 
     private String enrollmentCode;
 
+    private String imgUrl;
+
     /**
      * 学校升学和详情
      */
@@ -239,5 +241,13 @@ public class RiseSchoolInfoVo extends BaseEntity {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }
