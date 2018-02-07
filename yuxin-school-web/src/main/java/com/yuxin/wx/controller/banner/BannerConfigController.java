@@ -311,8 +311,12 @@ public class BannerConfigController extends BaseWebController{
         	banner.setIsState(1);
         	banner.setBannerType(bannerType);
         	bannerService.addBanner(banner);
-
-            json.put(JsonMsg.MSG, JsonMsg.SUCCESS);
+        	if(bannerType == 0){
+        		json.put(JsonMsg.MSG, "success0");
+        	}
+        	if(bannerType == 1){
+        		json.put(JsonMsg.MSG, "success1");
+        	}
             return json;
             
         } catch (Exception e) {

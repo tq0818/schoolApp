@@ -45,6 +45,7 @@ public class RiseSchoolDynamicServiceImpl implements IRiseSchoolDynamicService{
 		List<RiseSchoolDynamicVo> list = riseSchoolDynamicMapper.queryAllDynamic(riseSchoolDynamic);
 		//总条数
 		Integer count = riseSchoolDynamicMapper.queryAllDynamicCount(riseSchoolDynamic.getRiseSchoolId());
+		riseSchoolDynamic.setPageSize(10);
 		PageFinder<RiseSchoolDynamicVo> pageFinder = new PageFinder<RiseSchoolDynamicVo>(riseSchoolDynamic.getPage(),riseSchoolDynamic.getPageSize(),count,list); 
 		return pageFinder;
 	}

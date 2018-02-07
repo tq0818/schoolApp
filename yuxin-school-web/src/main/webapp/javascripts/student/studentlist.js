@@ -118,7 +118,7 @@
             $this.search();
             //添加学员
             $(document).on('click','.addStudentOk',function(){
-            	Form.addTeacher();
+                Form.addTeacher();
             })
             // 收索
             $(".searchContents").on('click', function () {
@@ -136,44 +136,44 @@
                         $.msg("没有数据可以导出");
                     } else {
                         $("#searchForm").attr("action",
-                            rootPath + "/student/exportExcle")
+                                rootPath + "/student/exportExcle")
                             .submit();
                     }
 
                 });
             $(".exportStudentDatas").on('click',function(){
-                	 $("#searchForm").attr("action",
-                             rootPath + "/student/exportStudentPayMaster")
-                             .submit();
-              
+                $("#searchForm").attr("action",
+                        rootPath + "/student/exportStudentPayMaster")
+                    .submit();
+
             });
             $("#eduArea").change();
             //批量报名
             $(".signUpMany").on('click', function () {
-            	if(!student.checkMaxSignUpNum()){
-            		return false;
-            	}
-            	var umbile=$("#mobileSet").val();
-            	var uName=$("#userNameSet").val();
+                if(!student.checkMaxSignUpNum()){
+                    return false;
+                }
+                var umbile=$("#mobileSet").val();
+                var uName=$("#userNameSet").val();
                 var list = new Array;
                 $("#tableList").find(".signUpMany:checked").each(function () {
-                	if(umbile==1){
-                		if($(this).val() && $(this).val()!=""){
-                			list.push($(this).val());
-                		}else{
-                			list.push($(this).attr("uname"));
-                		}
-                	}else{
-                		if(uName==1){
-                			if($(this).attr("uname") && $(this).attr("uname")!=""){
-                				list.push($(this).attr("uname"));
-                			}else{
-                				list.push($(this).val());
-                			}
-                		}else{
-                			list.push($(this).val());
-                		}
-                	}
+                    if(umbile==1){
+                        if($(this).val() && $(this).val()!=""){
+                            list.push($(this).val());
+                        }else{
+                            list.push($(this).attr("uname"));
+                        }
+                    }else{
+                        if(uName==1){
+                            if($(this).attr("uname") && $(this).attr("uname")!=""){
+                                list.push($(this).attr("uname"));
+                            }else{
+                                list.push($(this).val());
+                            }
+                        }else{
+                            list.push($(this).val());
+                        }
+                    }
                 });
                 if (list.length == 0) {
                     $.msg("请至少选择一个学员");
@@ -200,20 +200,20 @@
                 }
             });
             $("#caddress").cityselect({
-				url:rootPath + "/javascripts/company/city.min.js",
-			    prov:"", //省份 
-			    city:"",     //市
-			    nodata:"none", //当子集无数据时，隐藏select
-			    required: false	
-			});
-          
-            
+                url:rootPath + "/javascripts/company/city.min.js",
+                prov:"", //省份
+                city:"",     //市
+                nodata:"none", //当子集无数据时，隐藏select
+                required: false
+            });
+
+
             selectGroup1('');
-			selectGroup1('_add');
+            selectGroup1('_add');
         },
         searchCount: function(){
-        	$("#selectCounts").val($("#selectCount").val());
-        	student.search();
+            $("#selectCounts").val($("#selectCount").val());
+            student.search();
         },
         search: function (page) {
             var $this = this;
@@ -226,12 +226,12 @@
             data.endTime = $(".to").val();
             data.status = $("#registStatus").val();// 注册状态
             data.registType = $("#registMethods").val();// 注册方式
-            data.paymaterCount = $("#payStatus").val();// 报名状态
-			data.province=$("#caddress").find("#prov").val()?$("#caddress").find("#prov").val():"";
-			data.city=$("#caddress").find("#city").val()?$("#caddress").find("#city").val():"";
-			data.county=$("#caddress").find("#dist").val()?$("#caddress").find("#dist").val():"";
-			data.groupOneId=$("#studentG1").val();
-			data.groupTwoId=$("#studentG2").val();
+            //data.paymaterCount = $("#payStatus").val();// 报名状态
+            data.province=$("#caddress").find("#prov").val()?$("#caddress").find("#prov").val():"";
+            data.city=$("#caddress").find("#city").val()?$("#caddress").find("#city").val():"";
+            data.county=$("#caddress").find("#dist").val()?$("#caddress").find("#dist").val():"";
+            data.groupOneId=$("#studentG1").val();
+            data.groupTwoId=$("#studentG2").val();
             data.eduArea=$("#eduArea").val();
             data.eduSchool=$("#eduSchool").val();
             data.page = page ? page : 1;
@@ -242,9 +242,9 @@
                 var telReg = !!tel.match(/^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
                 // 如果手机号码不能通过验证
                 if(isNaN(tel)){
-					$.msg('请输入有效的手机号码');
-					return;
-				}
+                    $.msg('请输入有效的手机号码');
+                    return;
+                }
 //                if (telReg == false) {
 //                    $.msg('请输入有效的手机号码');
 //                    return;
@@ -270,106 +270,106 @@
             var proxyOrgRole = $("#proxyOrgRole").val();
             var userorg_roleopenflag = $("#userorg_roleopenflag").val();
             $.ajax({
-                    url: rootPath + "/student/queryStudentsList",
-                    data: data,
-                    type: 'post',
-                    beforeSend: function (XMLHttpRequest) {
-                        $(".loading").show();
-                        $(".loading-bg").show();
-                    },
-                    success: function (jsonData) {
-                       
-                        if (jsonData.data.length == 0) {
-                        	if(userorg_roleopenflag == 1 && proxyOrgRole == 1){
-	                            $(".user-list")
-	                                .find("table")
-	                                .append(
-	                                '<tr><td colspan="15">没有查找到数据</td></tr>');
-                        	}else{
-                        		  $(".user-list")
-	                                .find("table")
-	                                .append(
-	                                '<tr><td colspan="14">没有查找到数据</td></tr>');
-                        	}
+                url: rootPath + "/student/queryStudentsList",
+                data: data,
+                type: 'post',
+                beforeSend: function (XMLHttpRequest) {
+                    $(".loading").show();
+                    $(".loading-bg").show();
+                },
+                success: function (jsonData) {
+
+                    if (jsonData.data.length == 0) {
+                        if(userorg_roleopenflag == 1 && proxyOrgRole == 1){
+                            $(".user-list")
+                                .find("table")
+                                .append(
+                                    '<tr><td colspan="15">没有查找到数据</td></tr>');
+                        }else{
+                            $(".user-list")
+                                .find("table")
+                                .append(
+                                    '<tr><td colspan="14">没有查找到数据</td></tr>');
                         }
-                        $.each(jsonData.data,function (i, stu) {
-                            var eduIdentity = null;
-                            if(stu.teacherFlag!=null){
-                                if(stu.teacherFlag==1){
-                                    eduIdentity = "教师";
-                                }
+                    }
+                    $.each(jsonData.data,function (i, stu) {
+                        var eduIdentity = null;
+                        if(stu.teacherFlag!=null){
+                            if(stu.teacherFlag==1){
+                                eduIdentity = "教师";
                             }
-                            if(eduIdentity==null){
-                                eduIdentity = (stu.eduIdentity!=null ? (stu.eduIdentity==0?"学生":"普通用户"): "")
-                            }
-                                $(".user-list")
-                                    .find("table")
-                                    .append(
-                                    '<tr data-buy="'+(stu.paymaterCount>0)+'">'
-                                    + '<td>'
-                                    + '<input type="checkbox" class="signUpMany" uName="'+(stu.username?stu.username:"")+'" value="' + (stu.mobile?stu.mobile:"") + '">'
-                                    + '</td>'
-                                    + '<td>'
-                                    + (stu.mobile ? stu.mobile
-                                        : "")
-                                    + '</td>'
-                                    + '<td>'
-                                    + (stu.username ? stu.username
-                                        : "")
-                                    + '</td>'
-                                    + '<td>'
-                                    + (stu.name ? stu.name
-                                        : "")
-                                    + '</td>'
-                                    + '<td>'
-                                    + eduIdentity
-                                    + '</td>'
-                                    + '<td>'
-                                    + (stu.eduArea ? stu.eduArea
-                                        : "")
-                                    + '</td>'
-                                    + '<td>'
-                                    + (stu.eduSchool ?stu.eduSchool
-                                        : "")
-                                    + '</td>'
-                                    + '<td>'
-                                    + (stu.eduStep!=null ? (stu.eduStep+stu.eduYear+"年"+stu.eduClass+"班")
-                                        : "")
-                                    + '</td>'
-                                    + (userorg_roleopenflag==1 && proxyOrgRole==1?'<td>'
-                                    + (stu.proxyOrgName ? stu.proxyOrgName
-                                        : "")
-                                    + '</td>':'')
-                                    + '<td>'
-                                    + (stu.createTime ? stu.createTime
-                                        : "")
-                                    + '</td>'
-                                    + '<td class="haostatus">'
-                                    + (stu.userId ? '已开通'
-                                        : '未开通')
-                                    + '</td>'
-                                    + '<td class="ustatus">'
-                                    + (stu.status == 1 ? '启用'
-                                        : '禁用')
-                                    + '</td>'
-                                    + '<td class="baoming" value="' + stu.ispay + '">'
-                                    + (stu.paymaterCount > 0 ? '已报名'
-                                        : '未报名')
-                                    + '</td>'
-                                    + '<td class="slink">'
-                                    + '<a class="showSignUp" mobile="' + (stu.mobile?stu.mobile:"") + '" uName="'+(stu.username?stu.username:"")+'" href="javascript:void(0);">报名</a>|'
-                                    + '<a class="studentDetail" mobile="' + (stu.mobile?stu.mobile:"") + '" uName="'+(stu.username?stu.username:"")+'" href="javascript:void(0);">详情</a>|'
-                                    + '<a class="more" href="javascript:void(0);">更多</a>'
-                                    + '<ul class="none box">'
-                                    + ' <li><a class="updateStudentMsg" stuId="' + stu.id + '" href="javascript:void(0);">修改信息</a></li>'
+                        }
+                        if(eduIdentity==null){
+                            eduIdentity = (stu.eduIdentity!=null ? (stu.eduIdentity==0?"学生":"普通用户"): "")
+                        }
+                        $(".user-list")
+                            .find("table")
+                            .append(
+                                '<tr data-buy="'+(stu.paymaterCount>0)+'">'
+                                + '<td>'
+                                + '<input type="checkbox" class="signUpMany" uName="'+(stu.username?stu.username:"")+'" value="' + (stu.mobile?stu.mobile:"") + '">'
+                                + '</td>'
+                                + '<td>'
+                                + (stu.mobile ? stu.mobile
+                                    : "")
+                                + '</td>'
+                                + '<td>'
+                                + (stu.username ? stu.username
+                                    : "")
+                                + '</td>'
+                                + '<td>'
+                                + (stu.name ? stu.name
+                                    : "")
+                                + '</td>'
+                                + '<td>'
+                                + eduIdentity
+                                + '</td>'
+                                + '<td>'
+                                + (stu.eduArea ? stu.eduArea
+                                    : "")
+                                + '</td>'
+                                + '<td>'
+                                + (stu.eduSchool ?stu.eduSchool
+                                    : "")
+                                + '</td>'
+                                + '<td>'
+                                + (stu.eduStep!=null ? (stu.eduStep+stu.eduYear+"年"+stu.eduClass+"班")
+                                    : "")
+                                + '</td>'
+                                + (userorg_roleopenflag==1 && proxyOrgRole==1?'<td>'
+                                + (stu.proxyOrgName ? stu.proxyOrgName
+                                    : "")
+                                + '</td>':'')
+                                + '<td>'
+                                + (stu.createTime ? stu.createTime
+                                    : "")
+                                + '</td>'
+                                + '<td class="haostatus">'
+                                + (stu.userId ? '已开通'
+                                    : '未开通')
+                                + '</td>'
+                                + '<td class="ustatus">'
+                                + (stu.status == 1 ? '启用'
+                                    : '禁用')
+                                + '</td>'
+                                    /* + '<td class="baoming" value="' + stu.ispay + '">'
+                                     + (stu.paymaterCount > 0 ? '已报名'
+                                     : '未报名')
+                                     + '</td>'*/
+                                + '<td class="slink">'
+                                    /* + '<a class="showSignUp" mobile="' + (stu.mobile?stu.mobile:"") + '" uName="'+(stu.username?stu.username:"")+'" href="javascript:void(0);">报名</a>|'*/
+                                + '<a class="studentDetail" mobile="' + (stu.mobile?stu.mobile:"") + '" uName="'+(stu.username?stu.username:"")+'" href="javascript:void(0);">详情</a>|'
+                                + '<a class="more" href="javascript:void(0);">更多</a>'
+                                + '<ul class="none box">'
+                                + ' <li><a class="updateStudentMsg" stuId="' + stu.id + '" href="javascript:void(0);">修改信息</a></li>'
                                     //+(($("#isDelete").val()==1)?((stu.paymaterCount > 0)?' <li><a class="delStudent" stuId="'+stu.id+'" href="javascript:void(0);">取消报名</a></li>':""):"")
-                                    + (stu.userId ? (stu.status == 1 ? '<li><a class="updateStatus" userId="' + stu.userId + '" status="' + stu.status + '" href="javascript:void(0);">禁用用户</a></li>'
-                                        : '<li><a class="updateStatus" userId="' + stu.userId + '" status="' + stu.status + '" href="javascript:void(0);">启用用户</a></li>' ) : '')
-                                    + (stu.status == 1 ? '<li><a class="changePwd" userId="' + stu.userId + '" href="javascript:void(0);">修改密码</a></li>' : '')
+                                + (stu.userId ? (stu.status == 1 ? '<li><a class="updateStatus" userId="' + stu.userId + '" status="' + stu.status + '" href="javascript:void(0);">禁用用户</a></li>'
+                                    : '<li><a class="updateStatus" userId="' + stu.userId + '" status="' + stu.status + '" href="javascript:void(0);">启用用户</a></li>' ) : '')
+                                + (stu.status == 1 ? '<li><a class="changePwd" userId="' + stu.userId + '" href="javascript:void(0);">修改密码</a></li>' : '')
                                     //+(stu.status == 1 && stu.paymaterCount > 0 ? '<li><a class="exportStudyRecord" stuId="'+stu.id+'" href="'+rootPath+'/student_detail/openStdentAllCl?stuId='+stu.id+'" target="_blank">学习记录</a></li>' : '')
                                     //+(stu.status == 1 && stu.paymaterCount > 0 ? '<li><a class="exportExcleRecord" stuId="'+stu.id+'" href="'+rootPath+'/student_detail/openStdentAllExt?stuId='+stu.id+'" target="_blank">做题记录</a></li>' : '')
                                     //+ ((stu.paymaterCount > 0 && stu.commodityType!='COMMODITY_PACKAGE') ? '<li><a class="toTransaction" mobile="' + (stu.mobile?stu.mobile:"") + '" uName="'+(stu.username?stu.username:"")+'" href="javascript:void(0);">异动</a></li>' : '')
-                                    + ('<li><a href="'+rootPath+'/student/integralModification?stuId='+stu.id+'">积分修改</a></li>')
+                                + ('<li><a href="'+rootPath+'/student/integralModification?stuId='+stu.id+'">积分修改</a></li>')
                                     //+ (stu.paymaterCount > 0 ? (stu.ispay == "1" ? '<li><a class="toMessage" mobile="' + (stu.mobile?stu.mobile:"") + '" uName="'+(stu.username?stu.username:"")+'" href="javascript:void(0);">补费</a></li>' : '' ) : '')
                                     //+ (stu.paymaterCount > 0 ?
                                     //    (stu.agentFlag == "1" ?
@@ -378,110 +378,110 @@
                                     //            : '')
                                     //        : '')
                                     //    : '')
-                                    + '</ul></td>'
-                                    + '</tr>');
-                            });
-                        $("#rowCount").remove();
-                        $("#pageNo").remove();
-                        $.ajax({
-                        	url: rootPath+"/student/queryBuyNum",
-                        	dataType: "text",
-                        	success:function(data){
-                        		
-                        		$(".user-list").after('<input type="hidden" id="rowCount" value="'+(data?data:0)+'"/>');
-                        	}
-                        })
-                        $(".user-list").after('<input type="hidden" id="pageNo" value="'+jsonData.pageNo+'"/>');
-                        
-                        if (jsonData.rowCount >$("#selectCounts").val()) {
-                            $(".pagination").pagination(jsonData.rowCount,
-                                {
-                                    next_text: "下一页",
-                                    prev_text: "上一页",
-                                    current_page: jsonData.pageNo - 1,
-                                    link_to: "javascript:void(0)",
-                                    num_display_entries: 8,
-                                    items_per_page: jsonData.pageSize,
-                                    num_edge_entries: 1,
-                                    callback: function (page, jq) {
-                                        var pageNo = page + 1;
-                                        $this.search(pageNo);
-                                    }
-                                });
-                            $(".pagination").find("li:first").css("background-color","#fff").css("border","1px solid #999").css('cursor','default');
-                            $(".pagination").find("li:first").before('每页：<select id="selectCount"  onchange="javascript:student.searchCount()">'+
-                					' <option value="10">10</option>'+
-                					' <option value="20">20</option>'+
-                					' <option value="30">30</option>'+
-                					' <option value="50">50</option>'+
-                					' <option value="100">100</option>'+
-                					' </select> 条   ');
-                            $("#selectCount").val($("#selectCounts").val());
-//                            $("#selectCount").css("margin-bottom","").css("margin-bottom","-78px");
-                        } else {
-                            $(".pagination").html('');
-//                            $("#selectCount").css("margin-bottom","").css("margin-bottom","-30px");
+                                + '</ul></td>'
+                                + '</tr>');
+                    });
+                    $("#rowCount").remove();
+                    $("#pageNo").remove();
+                    $.ajax({
+                        url: rootPath+"/student/queryBuyNum",
+                        dataType: "text",
+                        success:function(data){
+
+                            $(".user-list").after('<input type="hidden" id="rowCount" value="'+(data?data:0)+'"/>');
                         }
-                        $(".haostatus").each(function (i) {
-                            if ($.trim($(this).text()) == "未开通") {
-                                $(this).css("color", "#f97a79");
-                            }
-                        });
-                        $(".ustatus").each(function (i) {
-                            if ($.trim($(this).text()) == "禁用") {
-                                $(this).css("color", "#f97a79");
-                            }
-                        });
-                        $(".baoming").each(function (i) {
-                            if ($.trim($(this).text()) == "未报名") {
-                                $(this).css("color", "#f97a79");
-                            }
-                        });
-                    },
-                    complete: function (XMLHttpRequest, textStatus) {
-                        $(".loading").hide();
-                        $(".loading-bg").hide();
+                    })
+                    $(".user-list").after('<input type="hidden" id="pageNo" value="'+jsonData.pageNo+'"/>');
+
+                    if (jsonData.rowCount >$("#selectCounts").val()) {
+                        $(".pagination").pagination(jsonData.rowCount,
+                            {
+                                next_text: "下一页",
+                                prev_text: "上一页",
+                                current_page: jsonData.pageNo - 1,
+                                link_to: "javascript:void(0)",
+                                num_display_entries: 8,
+                                items_per_page: jsonData.pageSize,
+                                num_edge_entries: 1,
+                                callback: function (page, jq) {
+                                    var pageNo = page + 1;
+                                    $this.search(pageNo);
+                                }
+                            });
+                        $(".pagination").find("li:first").css("background-color","#fff").css("border","1px solid #999").css('cursor','default');
+                        $(".pagination").find("li:first").before('每页：<select id="selectCount"  onchange="javascript:student.searchCount()">'+
+                            ' <option value="10">10</option>'+
+                            ' <option value="20">20</option>'+
+                            ' <option value="30">30</option>'+
+                            ' <option value="50">50</option>'+
+                            ' <option value="100">100</option>'+
+                            ' </select> 条   ');
+                        $("#selectCount").val($("#selectCounts").val());
+//                            $("#selectCount").css("margin-bottom","").css("margin-bottom","-78px");
+                    } else {
+                        $(".pagination").html('');
+//                            $("#selectCount").css("margin-bottom","").css("margin-bottom","-30px");
                     }
-                });
+                    $(".haostatus").each(function (i) {
+                        if ($.trim($(this).text()) == "未开通") {
+                            $(this).css("color", "#f97a79");
+                        }
+                    });
+                    $(".ustatus").each(function (i) {
+                        if ($.trim($(this).text()) == "禁用") {
+                            $(this).css("color", "#f97a79");
+                        }
+                    });
+                    $(".baoming").each(function (i) {
+                        if ($.trim($(this).text()) == "未报名") {
+                            $(this).css("color", "#f97a79");
+                        }
+                    });
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    $(".loading").hide();
+                    $(".loading-bg").hide();
+                }
+            });
             $("#maxCount").remove();
             // 查询允许本机构报名的最大数量
             $.ajax({
-            	url: rootPath+"/companyMemberService/studentNum",
-            	dataType: "json",
-            	success: function(num){
-            		if(num){
-            			$(".user-list").after('<input type="hidden" id="maxCount" value="'+num+'"/>');
-            		}else{
-            			$(".user-list").after('<input type="hidden" id="maxCount" value="0"/>');
-            		}
-            	}
+                url: rootPath+"/companyMemberService/studentNum",
+                dataType: "json",
+                success: function(num){
+                    if(num){
+                        $(".user-list").after('<input type="hidden" id="maxCount" value="'+num+'"/>');
+                    }else{
+                        $(".user-list").after('<input type="hidden" id="maxCount" value="0"/>');
+                    }
+                }
             })
         },
         checkMaxSignUpNum: function(ele){
-        	var flag=true;
-        	$.ajax({
-        		type: "post",
-        		url:  rootPath+"/company/queryCompany",
-        		async: false,
-        		success: function(result){
-        			if(result){
-        				var cnt=0;
-        	        	$("#tableList").find("tr").find("input:checkbox:checked").each(function(){
-        	        		if($(this).parents("tr").attr("data-buy")!="true"){
-        	        			cnt++;
-        	        		}
-        	        	})
-        	        	if(ele && ele.parents("tr").attr("data-buy")!="true"){
-        	        		cnt=1;
-        	        	}
-        	        	if((parseInt($("#rowCount").val())+cnt)>$("#maxCount").val()){
-        	        		$.msg("报名人数已超过最大服务数，请升级版本或续费");
-        	        		flag=false;
-        	        	}
-        			}
-        		}
-        	});
-        	return flag;
+            var flag=true;
+            $.ajax({
+                type: "post",
+                url:  rootPath+"/company/queryCompany",
+                async: false,
+                success: function(result){
+                    if(result){
+                        var cnt=0;
+                        $("#tableList").find("tr").find("input:checkbox:checked").each(function(){
+                            if($(this).parents("tr").attr("data-buy")!="true"){
+                                cnt++;
+                            }
+                        })
+                        if(ele && ele.parents("tr").attr("data-buy")!="true"){
+                            cnt=1;
+                        }
+                        if((parseInt($("#rowCount").val())+cnt)>$("#maxCount").val()){
+                            $.msg("报名人数已超过最大服务数，请升级版本或续费");
+                            flag=false;
+                        }
+                    }
+                }
+            });
+            return flag;
         }
     }
 
@@ -540,16 +540,16 @@
                 }
             },
             suserName:{
-            	required: true,
-            	remote: {
-                     url: rootPath + "/student/checkFrontUserName",
-                     type: "post",
-                     dataType: "json",
-                     data: {
-                         username: function () {
-                             return $("#suserName").val();
-                         }
-                     }
+                required: true,
+                remote: {
+                    url: rootPath + "/student/checkFrontUserName",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        username: function () {
+                            return $("#suserName").val();
+                        }
+                    }
                 }
             },
             sEmergencyPhone: {
@@ -560,15 +560,15 @@
             sEmail: {
                 email: true,
                 remote: {
-            		url: rootPath+"/student/check",
-            		type:"post",
-            		dataType:"json",
-            		data:{
-            			email:function(){
-            				return $("#sEmail").val();
-            			}
-            		}
-            	}
+                    url: rootPath+"/student/check",
+                    type:"post",
+                    dataType:"json",
+                    data:{
+                        email:function(){
+                            return $("#sEmail").val();
+                        }
+                    }
+                }
             }
         },
         messages: {
@@ -591,8 +591,8 @@
                 remote: "手机号已经存在"
             },
             suserName:{
-            	 required: "用户名不能为空",
-            	 remote: "用户名已经存在"
+                required: "用户名不能为空",
+                remote: "用户名已经存在"
             },
             nPassword: {
                 required: "密码不能为空，且最少为六位数字或英文字母",
@@ -603,7 +603,7 @@
                 equalTo: "2次密码不一致，请修改"
             },
             sEmail:{
-            	remote: "邮箱已经存在"
+                remote: "邮箱已经存在"
             }
 
         },
@@ -633,7 +633,7 @@
                 date: true
             },
             uIdentityNum: {
-               // minlength: 15,
+                // minlength: 15,
                 remote: {
                     url: rootPath + "/student/checkUpdateIdentityExist",
                     type: "post",
@@ -660,38 +660,38 @@
 
             },
             uEmergencyPhone: {
-            	minlength: 8,
+                minlength: 8,
                 maxlength: 20,
                 digits: true
             },
             uTel:{
-            	  minlength: 8,
-            	  maxlength: 20,
-                  digits: true
+                minlength: 8,
+                maxlength: 20,
+                digits: true
             },
             uOfficeTel:{
-            	  minlength: 8,
-            	  maxlength: 20,
-                  digits: true
+                minlength: 8,
+                maxlength: 20,
+                digits: true
             },
             uQQ:{
-            	maxlength: 15,
-            	digits: true
+                maxlength: 15,
+                digits: true
             },
             uEmergencyContact:{
-            	maxlength: 20
+                maxlength: 20
             },
             uRegist:{
-            	 maxlength: 200
+                maxlength: 200
             },
             uWebChat:{
-            	maxlength: 50
+                maxlength: 50
             },
             uAddressDetail:{
-            	maxlength: 128
+                maxlength: 128
             },
             uEmail: {
-            	maxlength: 50,
+                maxlength: 50,
                 email: true
             }
         },
@@ -777,55 +777,55 @@
     var Link = {
         init: function () {
             $(".user-list").on("click", ".showSignUp", function () {
-            	var flag=$(this).parents("tr").attr("data-buy");
-				if(flag!="true"){
-					if(!student.checkMaxSignUpNum($(this))){
-	            		return false;
-	            	}
-				}
-				var umbile=$("#mobileSet").val();
-            	var uName=$("#userNameSet").val();
-            	var mobile = $(this).attr("mobile");
-                if(umbile!=1){
-                 	if(uName==1){
-                 		if($(this).attr("uname") && $(this).attr("uname")!=""){
-                 			mobile=$(this).attr("uname");
-                 		}else{
-                 			mobile=$(this).attr("mobile");
-                 		}
-             		}
-             	}
-                if(!mobile || mobile==""){
-                	mobile=$(this).attr("uname");
-                }
-                
-                var form = document.createElement("form");
-                document.body.appendChild(form);
-                form.action = rootPath + '/student/showSignUp';
-                form.method = "post";
-                form.target = "_self";
-                var fileName = document.createElement("input");
-                fileName.type = 'hidden';
-                fileName.value = mobile;
-                fileName.name = 'mobile';
-                form.appendChild(fileName);
-                form.submit();
-            })
-                .on("click", ".toTransaction", function () {
-                	var umbile=$("#mobileSet").val();
-                	var uName=$("#userNameSet").val();
-                	var mobile = $(this).attr("mobile");
+                    var flag=$(this).parents("tr").attr("data-buy");
+                    if(flag!="true"){
+                        if(!student.checkMaxSignUpNum($(this))){
+                            return false;
+                        }
+                    }
+                    var umbile=$("#mobileSet").val();
+                    var uName=$("#userNameSet").val();
+                    var mobile = $(this).attr("mobile");
                     if(umbile!=1){
-                     	if(uName==1){
-                     		if($(this).attr("uname") && $(this).attr("uname")!=""){
-                     			mobile=$(this).attr("uname");
-                     		}else{
-                     			mobile=$(this).attr("mobile");
-                     		}
-                 		}
-                 	}
+                        if(uName==1){
+                            if($(this).attr("uname") && $(this).attr("uname")!=""){
+                                mobile=$(this).attr("uname");
+                            }else{
+                                mobile=$(this).attr("mobile");
+                            }
+                        }
+                    }
                     if(!mobile || mobile==""){
-                    	mobile=$(this).attr("uname");
+                        mobile=$(this).attr("uname");
+                    }
+
+                    var form = document.createElement("form");
+                    document.body.appendChild(form);
+                    form.action = rootPath + '/student/showSignUp';
+                    form.method = "post";
+                    form.target = "_self";
+                    var fileName = document.createElement("input");
+                    fileName.type = 'hidden';
+                    fileName.value = mobile;
+                    fileName.name = 'mobile';
+                    form.appendChild(fileName);
+                    form.submit();
+                })
+                .on("click", ".toTransaction", function () {
+                    var umbile=$("#mobileSet").val();
+                    var uName=$("#userNameSet").val();
+                    var mobile = $(this).attr("mobile");
+                    if(umbile!=1){
+                        if(uName==1){
+                            if($(this).attr("uname") && $(this).attr("uname")!=""){
+                                mobile=$(this).attr("uname");
+                            }else{
+                                mobile=$(this).attr("mobile");
+                            }
+                        }
+                    }
+                    if(!mobile || mobile==""){
+                        mobile=$(this).attr("uname");
                     }
                     var form = document.createElement("form");
                     document.body.appendChild(form);
@@ -840,20 +840,20 @@
                     form.submit();
                 })
                 .on("click", ".toMessage", function () {
-                	var umbile=$("#mobileSet").val();
-                	var uName=$("#userNameSet").val();
-                	var mobile = $(this).attr("mobile");
+                    var umbile=$("#mobileSet").val();
+                    var uName=$("#userNameSet").val();
+                    var mobile = $(this).attr("mobile");
                     if(umbile!=1){
-                     	if(uName==1){
-                     		if($(this).attr("uname") && $(this).attr("uname")!=""){
-                     			mobile=$(this).attr("uname");
-                     		}else{
-                     			mobile=$(this).attr("mobile");
-                     		}
-                 		}
-                 	}
+                        if(uName==1){
+                            if($(this).attr("uname") && $(this).attr("uname")!=""){
+                                mobile=$(this).attr("uname");
+                            }else{
+                                mobile=$(this).attr("mobile");
+                            }
+                        }
+                    }
                     if(!mobile || mobile==""){
-                    	mobile=$(this).attr("uname");
+                        mobile=$(this).attr("uname");
                     }
                     var form = document.createElement("form");
                     document.body.appendChild(form);
@@ -868,20 +868,20 @@
                     form.submit();
                 })
                 .on("click", ".showStuMaterial", function () {
-                	var umbile=$("#mobileSet").val();
-                	var uName=$("#userNameSet").val();
-                	var mobile = $(this).attr("mobile");
+                    var umbile=$("#mobileSet").val();
+                    var uName=$("#userNameSet").val();
+                    var mobile = $(this).attr("mobile");
                     if(umbile!=1){
-                     	if(uName==1){
-                     		if($(this).attr("uname") && $(this).attr("uname")!=""){
-                     			mobile=$(this).attr("uname");
-                     		}else{
-                     			mobile=$(this).attr("mobile");
-                     		}
-                 		}
-                 	}
+                        if(uName==1){
+                            if($(this).attr("uname") && $(this).attr("uname")!=""){
+                                mobile=$(this).attr("uname");
+                            }else{
+                                mobile=$(this).attr("mobile");
+                            }
+                        }
+                    }
                     if(!mobile || mobile==""){
-                    	mobile=$(this).attr("uname");
+                        mobile=$(this).attr("uname");
                     }
                     var form = document.createElement("form");
                     document.body.appendChild(form);
@@ -896,20 +896,20 @@
                     form.submit();
                 })
                 .on("click", ".studentDetail", function () {
-                	var umbile=$("#mobileSet").val();
-                	var uName=$("#userNameSet").val();
-                	var mobile = $(this).attr("mobile");
+                    var umbile=$("#mobileSet").val();
+                    var uName=$("#userNameSet").val();
+                    var mobile = $(this).attr("mobile");
                     if(umbile!=1){
-                     	if(uName==1){
-                     		if($(this).attr("uname") && $(this).attr("uname")!=""){
-                     			mobile=$(this).attr("uname");
-                     		}else{
-                     			mobile=$(this).attr("mobile");
-                     		}
-                 		}
-                 	}
+                        if(uName==1){
+                            if($(this).attr("uname") && $(this).attr("uname")!=""){
+                                mobile=$(this).attr("uname");
+                            }else{
+                                mobile=$(this).attr("mobile");
+                            }
+                        }
+                    }
                     if(!mobile || mobile==""){
-                    	mobile=$(this).attr("uname");
+                        mobile=$(this).attr("uname");
                     }
                     var form = document.createElement("form");
                     document.body.appendChild(form);
@@ -954,39 +954,39 @@
                     $(this).find("ul").hide();
                 })
                 .on("click.link",".delStudent",function(){
-                	var id=$(this).attr("stuId");
-                	var $this=$(this).parents("tr");
-                	$.confirm("确定取消此学员的所有订单吗?",function(ok){
-                		if(ok){
-                			$.ajax({
-                    			url: rootPath+"/studentPayMaster/abolishPayMaster",
-                    			data:"stuId="+id,
-                    			dataType: "json",
-                    			success: function(data){
-                    				if(data){
-                    					$.msg("操作成功");
-                    					$this.find(".baoming").css("color","red").html("未报名");
-                    				}else{
-                    					$.msg("稍后重试");
-                    				}
-                    			}
-                    		})
-                		}
-                	});
+                    var id=$(this).attr("stuId");
+                    var $this=$(this).parents("tr");
+                    $.confirm("确定取消此学员的所有订单吗?",function(ok){
+                        if(ok){
+                            $.ajax({
+                                url: rootPath+"/studentPayMaster/abolishPayMaster",
+                                data:"stuId="+id,
+                                dataType: "json",
+                                success: function(data){
+                                    if(data){
+                                        $.msg("操作成功");
+                                        $this.find(".baoming").css("color","red").html("未报名");
+                                    }else{
+                                        $.msg("稍后重试");
+                                    }
+                                }
+                            })
+                        }
+                    });
                 }).on('click',".exportStudyRecord",function(){
 //                	var stuId = $(this).attr("stuId");
 //                	$("#exprotForm").attr("action",rootPath+"/student_detail/exportStuLeanRecord").find('input').val(stuId);
 //                	$("#exprotForm").submit();
-                }).on('click',".exportExcleRecord",function(){
+            }).on('click',".exportExcleRecord",function(){
 //                	$("#exprotForm").attr("action",rootPath+"/student_detail/exportExerciseRecord").find('input').val($(this).attr("stuId"));
 //                	$("#exprotForm").submit();
-                });
+            });
         }
     }
     //添加学员form
     var Form = {
         init: function () {
-        	var $this=this;
+            var $this=this;
             $.validator.addMethod("isMobile", function (value, element, params) {
                 if (/^09\d{8}|1[3,4,5,7,8]\d{9}$/.test(value)) {
                     return true;
@@ -1078,7 +1078,7 @@
             });
             // 打开添加学生
             $(".addStudent").on('click', function () {
-            	$(".addStudentPopup1").show();
+                $(".addStudentPopup1").show();
                 $(".addStudentPopup").popup("show");
                 $(".addStudentPopup").css("top", "2%");
                 $("#add_div_school").show();
@@ -1088,18 +1088,18 @@
                 $(".colsekuang").hide();
             });
             $(".canclekuang").on('click',function(){
-            	$(".addStudentPopup1").hide();
-            	$(".updateStudentPopup1").hide();
-            	 $(".changePw1").hide();
+                $(".addStudentPopup1").hide();
+                $(".updateStudentPopup1").hide();
+                $(".changePw1").hide();
             })
             Validator = $("#addStudentForm").validate(rules);
-			$("#sAddress").cityselect({
-				url:rootPath + "/javascripts/company/city.min.js",
-			    prov:"", //省份 
-			    city:"",     //市
-			    nodata:"none", //当子集无数据时，隐藏select
-			    required: false
-			});
+            $("#sAddress").cityselect({
+                url:rootPath + "/javascripts/company/city.min.js",
+                prov:"", //省份
+                city:"",     //市
+                nodata:"none", //当子集无数据时，隐藏select
+                required: false
+            });
         },
         addTeacher: function () {
             if ($("#addStudentForm").valid()) {
@@ -1113,7 +1113,7 @@
                     $("#addEduYear").find("option[value='']").prop("selected","true");
                 }
 
-            	var data={};
+                var data={};
                 data.name = $("#sName").val();
                 data.sex = $('input:radio[name="sSex"]:checked').val();
                 data.birthday = $("#sBirth").val();
@@ -1168,21 +1168,21 @@
                     }
                 }
                 $(".customData").find(".field").each(function(){
-                	data[$(this).attr("name")]=$(this).val();
+                    data[$(this).attr("name")]=$(this).val();
                 });
                 var re=/^[a-zA-Z]+[a-zA-Z0-9_]\w{2,14}$/;
                 if($("#suserName").val() && $("#suserName").val()!=""){
-                	if(!$("#suserName").val().match(re) || $("#suserName").val()=="null"){
-                    	$.msg("用户名格式不正确");
-                    	return;
+                    if(!$("#suserName").val().match(re) || $("#suserName").val()=="null"){
+                        $.msg("用户名格式不正确");
+                        return;
                     }
                 }
                 var addrflag=$("#addreSet").val();
                 if(addrflag && addrflag==1){
-                	if(!data.province || data.province==""){
-                		$.msg("请选择地址信息");
-                		return;
-                	}
+                    if(!data.province || data.province==""){
+                        $.msg("请选择地址信息");
+                        return;
+                    }
                 }
                 $.ajax({
                     type: 'post',
@@ -1190,7 +1190,7 @@
                     data: data,
                     dataType: 'json',
                     beforeSend: function ( XMLHttpRequest ) {
-                    	$(".addStudentOk").attr({"disabled":"disabled"});
+                        $(".addStudentOk").attr({"disabled":"disabled"});
                     },
                     success: function (jsonData) {
 //						$("#teacherList").append(
@@ -1199,9 +1199,9 @@
                         if (jsonData == "success") {
                             student.search();
                             if(!data.mobile && data.username){
-                            	Form.confirm("添加成功！学员账号初始密码为 ：111111");
+                                Form.confirm("添加成功！学员账号初始密码为 ：111111");
                             }else{
-                            	Form.confirm("添加成功！学员账号初始密码为手机号后六位");
+                                Form.confirm("添加成功！学员账号初始密码为手机号后六位");
                             }
                             $(".addStudentPopup").popup("hide");
                             $(".addStudentPopup1").hide();
@@ -1237,7 +1237,7 @@
                         }
                     },
                     complete: function ( XMLHttpRequest, textStatus ) {
-                    	$(".addStudentOk").removeAttr("disabled");
+                        $(".addStudentOk").removeAttr("disabled");
                     }
                 });
             } else {
@@ -1251,74 +1251,74 @@
             $("#insertman").prop("checked", false);
         },
         confirm: function(msg,callback){ //根据需求1415 任务656 将公共confirm修改到此
-    		var reminder,information,tips,sava,fadeOutBefor;
-    		// 如果传入的不是对象
-    		if(typeof msg!='object'){
-    			reminder='提示';
-    			information=msg;
-    			fadeOutBefor='yes';
-    			sava='确定';
-    		}else{
-    			reminder=msg.title || '提示';
-    			callback=msg.callback;
-    			fadeOutBefor=msg.fadeOutBefor || 'yes';
-    			information=msg.text;
-    			sava=msg.save || '保存';
-    		}
-    		tips='<div class="layerTips Confirm" style="display: none;">'+
-    			'<div class="layerTipsTitle">'+reminder+'<i class="Close iconfont Confirm_Close"></i></div>'+
-    			'<div class="layerTipsContent">'+information+'</div>'+
-    			'<div class="layerTipsBtns">'+
-    			'<a href="javascript:;" class="btn btn-mini btn-success Confirm_Ok">'+sava+'</a>'+
-    			'</div>'+
-    			'</div>'+
-    			'<div class="layerTipsBg Confirm" style="display: none;"></div>';
-    		$(document).find(".layerTips").remove();
-    		$(document).find(".layerTipsBg").remove();
-    		$(document).find("body").append(tips);
+            var reminder,information,tips,sava,fadeOutBefor;
+            // 如果传入的不是对象
+            if(typeof msg!='object'){
+                reminder='提示';
+                information=msg;
+                fadeOutBefor='yes';
+                sava='确定';
+            }else{
+                reminder=msg.title || '提示';
+                callback=msg.callback;
+                fadeOutBefor=msg.fadeOutBefor || 'yes';
+                information=msg.text;
+                sava=msg.save || '保存';
+            }
+            tips='<div class="layerTips Confirm" style="display: none;">'+
+                '<div class="layerTipsTitle">'+reminder+'<i class="Close iconfont Confirm_Close"></i></div>'+
+                '<div class="layerTipsContent">'+information+'</div>'+
+                '<div class="layerTipsBtns">'+
+                '<a href="javascript:;" class="btn btn-mini btn-success Confirm_Ok">'+sava+'</a>'+
+                '</div>'+
+                '</div>'+
+                '<div class="layerTipsBg Confirm" style="display: none;"></div>';
+            $(document).find(".layerTips").remove();
+            $(document).find(".layerTipsBg").remove();
+            $(document).find("body").append(tips);
 
-    		// 判断传入参数是否元素
-    		if(!(/<.*>.*<\/(\w+){3,8}/.test(information))){
-    			$('.layerTips .layerTipsContent').width('200px');
-    		}else{
-    			// 如果输入的是元素控制元素居中
-    			$('.layerTips.Confirm').css(
-    				{
-    					'margin-left':-$('.layerTips.Confirm').width()/2,
-    					'margin-top':-$('.layerTips.Confirm').height()/2
-    				});
-    		}
+            // 判断传入参数是否元素
+            if(!(/<.*>.*<\/(\w+){3,8}/.test(information))){
+                $('.layerTips .layerTipsContent').width('200px');
+            }else{
+                // 如果输入的是元素控制元素居中
+                $('.layerTips.Confirm').css(
+                    {
+                        'margin-left':-$('.layerTips.Confirm').width()/2,
+                        'margin-top':-$('.layerTips.Confirm').height()/2
+                    });
+            }
 
-    		// 背景样式及背景出现
-    		$('.layerTipsBg').fadeIn(200,function(){
-    			$('.layerTips.Confirm').fadeIn(200)
-    		});
-    		//确定
-    		$(document).off("click.ok.Confirm").on("click.ok.Confirm",".Confirm_Ok",function(){
-    			if(fadeOutBefor == 'yes'){
-    				$(this).parents('.layerTips').fadeOut(200,function(){
-    					$('.layerTipsBg.Confirm').fadeOut(200);
-    				});
-    			}
-    			if(callback){
-    				callback(true);
-    			}
-    		})
-    			.on("click.Close.Confirm",".Confirm_Close",function(){
-    				$(this).parents('.layerTips').fadeOut(200,function(){
-    					$('.layerTipsBg.Confirm').fadeOut(200);
-    				});
-    			});
-    		//取消
-    		$(document).off("click.cancle.Confirm").on("click.cancle.Confirm",".Confirm_Cancle",function(){
-    			$(this).parents('.layerTips').fadeOut(200,function(){
-    				$('.layerTipsBg.Confirm').fadeOut(200);
-    			});
-    			if(callback){
-    				callback(false);
-    			}
-    		});
-    	}
+            // 背景样式及背景出现
+            $('.layerTipsBg').fadeIn(200,function(){
+                $('.layerTips.Confirm').fadeIn(200)
+            });
+            //确定
+            $(document).off("click.ok.Confirm").on("click.ok.Confirm",".Confirm_Ok",function(){
+                    if(fadeOutBefor == 'yes'){
+                        $(this).parents('.layerTips').fadeOut(200,function(){
+                            $('.layerTipsBg.Confirm').fadeOut(200);
+                        });
+                    }
+                    if(callback){
+                        callback(true);
+                    }
+                })
+                .on("click.Close.Confirm",".Confirm_Close",function(){
+                    $(this).parents('.layerTips').fadeOut(200,function(){
+                        $('.layerTipsBg.Confirm').fadeOut(200);
+                    });
+                });
+            //取消
+            $(document).off("click.cancle.Confirm").on("click.cancle.Confirm",".Confirm_Cancle",function(){
+                $(this).parents('.layerTips').fadeOut(200,function(){
+                    $('.layerTipsBg.Confirm').fadeOut(200);
+                });
+                if(callback){
+                    callback(false);
+                }
+            });
+        }
     }
     //更新学员信息
     var update = {
@@ -1391,7 +1391,7 @@
 
         },
         queryStudent: function () {
-        	selectGroup1('_edit');
+            selectGroup1('_edit');
             $(".user-list").on("click", ".updateStudentMsg", function () {
                 update.clearData();
                 var id = $(this).attr("stuId");
@@ -1441,23 +1441,23 @@
                             $(".isUserFront").show();
                         }
                         $("#uAddress").cityselect({
-            				url:rootPath + "/javascripts/company/city.min.js",
-            			    prov:jsonData.province?jsonData.province:"", //省份 
-            			    city:jsonData.city?jsonData.city:"",
-            			    dist: jsonData.county?jsonData.county:"",//市
-            			    nodata:"none", //当子集无数据时，隐藏select
-            			    required: false	
-            			});
+                            url:rootPath + "/javascripts/company/city.min.js",
+                            prov:jsonData.province?jsonData.province:"", //省份
+                            city:jsonData.city?jsonData.city:"",
+                            dist: jsonData.county?jsonData.county:"",//市
+                            nodata:"none", //当子集无数据时，隐藏select
+                            required: false
+                        });
                         $("#studentG1_edit").find("option").each(function(){
-                        	$(this).removeAttr("selected");
+                            $(this).removeAttr("selected");
                         })
-                        $("#studentG1_edit").find("option[value='"+(jsonData.groupOneId?jsonData.groupOneId:'')+"']").attr("selected",true); 
+                        $("#studentG1_edit").find("option[value='"+(jsonData.groupOneId?jsonData.groupOneId:'')+"']").attr("selected",true);
                         $("#studentG1_edit").html($("#studentG1_edit").html());
                         selectGroup_2(null,'_edit',(jsonData.groupOneId?jsonData.groupOneId:''));
                         $("#studentG2_edit").find("option").each(function(){
-                        	$(this).removeAttr("selected");
+                            $(this).removeAttr("selected");
                         })
-                        $("#studentG2_edit").find("option[value='"+(jsonData.groupTwoId?jsonData.groupTwoId:'')+"']").attr("selected",true); 
+                        $("#studentG2_edit").find("option[value='"+(jsonData.groupTwoId?jsonData.groupTwoId:'')+"']").attr("selected",true);
                         $("#studentG2_edit").html($("#studentG2_edit").html());
 
 
@@ -1485,7 +1485,7 @@
 
 
                             //$("#edit_div_school").show();
-                           // $("#edit_div_class").show();
+                            // $("#edit_div_class").show();
                         }
 
                         $("#editEduArea").find("option").each(function(){
@@ -1515,11 +1515,11 @@
                 $(".updateStudentPopup").popup("show");
                 $(".updateStudentPopup").css("top", "2%");
                 $(".colsekuang").hide();
-                
+
                 getExpandField(".updateStudentPopup","w",function(){
-    				getExpandData(".updateStudentPopup","student","stu_id",id);
-    			});
-                
+                    getExpandData(".updateStudentPopup","student","stu_id",id);
+                });
+
             });
         },
         updateStudent: function () {
@@ -1533,8 +1533,8 @@
                     $("#editEduSchool").find("option[value='']").prop("selected","true");
                     $("#editEduYear").find("option[value='']").prop("selected","true");
                 }
-            	var data={};
-            	data.id=$("#uId").val();
+                var data={};
+                data.id=$("#uId").val();
                 data.name = $("#uName").val();
                 data.sex = $('input:radio[name="uSex"]:checked').val();
                 data.birthday = $("#uBirth").val();
@@ -1589,15 +1589,15 @@
                 }
 
                 $(".customData").find(".field").each(function(){
-                	console.log($(this).attr("name"),$(this).val());
-                	data[$(this).attr("name")]=$(this).val();
+                    console.log($(this).attr("name"),$(this).val());
+                    data[$(this).attr("name")]=$(this).val();
                 });
                 var addrflag=$("#addreSet").val();
                 if(addrflag && addrflag==1){
-                	if(!data.province || data.province==""){
-                		$.msg("请选择地址信息");
-                		return;
-                	}
+                    if(!data.province || data.province==""){
+                        $.msg("请选择地址信息");
+                        return;
+                    }
                 }
                 $.ajax({
                     type: 'post',
@@ -1613,35 +1613,35 @@
                             $(".updateStudentPopup1").hide();
                             update.clearData();
                         }else {
-                        	if(jsonData=="0101"){
-                        		 $.msg("手机号为空，请添加！");
-                        		 return;
-                        	}else if(jsonData=="0102"){
-                        		 $.msg("手机号格式不正确，请修改！");
-                        		 return;
-                        	}else if(jsonData=="0302"){
-                        		$.msg("身份证号格式不正确，请修改！");
-                        		return;
-                        	}else if(jsonData=="0303"){
-	                        	$.msg("身份证号已存在，请修改！");
-	                        	return;
-                        	}else if(jsonData=="0201" || jsonData=="0202"){
-	                        	$.msg("姓名不正确，请修改！");
-	                        	return;
-                        	}else if(jsonData=="0402" ){
-	                        	$.msg("邮箱不正确，请修改！");
-	                        	return;
-	                        }else if(jsonData=="0602" ){
-	                        	$.msg("紧急联系人不正确，请修改！");
-	                        	return;
-	                        }else if(jsonData=="0702" ){
-	                        	$.msg("紧急联系人电话不正确，请修改！");
-	                        	return;
-	                        }else{
-	                        	$.msg("格式错误，请重新修改");
-	                        }
+                            if(jsonData=="0101"){
+                                $.msg("手机号为空，请添加！");
+                                return;
+                            }else if(jsonData=="0102"){
+                                $.msg("手机号格式不正确，请修改！");
+                                return;
+                            }else if(jsonData=="0302"){
+                                $.msg("身份证号格式不正确，请修改！");
+                                return;
+                            }else if(jsonData=="0303"){
+                                $.msg("身份证号已存在，请修改！");
+                                return;
+                            }else if(jsonData=="0201" || jsonData=="0202"){
+                                $.msg("姓名不正确，请修改！");
+                                return;
+                            }else if(jsonData=="0402" ){
+                                $.msg("邮箱不正确，请修改！");
+                                return;
+                            }else if(jsonData=="0602" ){
+                                $.msg("紧急联系人不正确，请修改！");
+                                return;
+                            }else if(jsonData=="0702" ){
+                                $.msg("紧急联系人电话不正确，请修改！");
+                                return;
+                            }else{
+                                $.msg("格式错误，请重新修改");
+                            }
                         }
-                       
+
                     }
                 });
             } else {
@@ -1692,66 +1692,66 @@
         }
     }
     //查询扩展字段
-	var getExpandField=function(ele,rw,func){
-    	$(ele).find(".customData").remove();
-		$.ajax({
-			url: rootPath+"/longitudinalTableColDefine/getData",
-			dataType:"json",
-			success:function(jsonData){
-				var valueble;
-				$.each(jsonData,function(i,data){
-					if(data.allowModify){
-					var dom='<div class="form-group customData">';
-					if(rw=="r" && data.orgAllowRead ){
-						dom+='<label class="col-md-2 control-label">'+data.colComment+'</label> <div class="col-md-2">'+
-						'<span id="'+data.id+'" value="'+data.colValue+'" class="field">'+data.colName+'</span></div>';
-					}else if(rw=="w" && data.orgAllowWrite){
-						if(data.tldType=="text"){
-							dom+='<label class="col-md-2 control-label">'+data.colComment+(data.colAllowNull==0?'<i class="iconfont ico"></i>':'')+'</label> <div class="col-md-3">'+
-							'<input type="text" id="'+data.colName+'" name="'+data.colName+'" style="'+(data.styleCss?data.styleCss:'')+'" class="form-control field '+(data.styleClass?data.styleClass:'')+'" value="'+(data.defaultValue?data.defaultValue:'')+'" >'+
-							'</div>'+
-							'</div>';
-						}else if(data.tldType=="select"){
-							dom+='<label class="col-md-2 control-label">'+data.colComment+(data.colAllowNull==0?'<i class="iconfont ico"></i>':'')+'</label> <div class="col-md-3">'+
-							'<select style="'+(data.styleCss?data.styleCss:'')+'" class="form-control field '+(data.styleClass?data.styleClass:'')+'" value="'+(data.defaultValue?data.defaultValue:'')+'" id="'+data.colName+'" name="'+data.colName+'" value="'+(data.defaultValue?data.defaultValue:'')+'">';
-							$.each(data.itemsData,function(j,item){
-								dom+='<option value="'+item[data.itemsValue]+'">'+item[data.itemsName]+'</option>';
-							})
-							dom+='</div>'+
-							'</div>';
-						}
-					}
-					}else{
-						dom='<input type="hidden" id="'+data.colName+'" name='+data.colName+' value=""/>'
-					}
-					$(ele).find(".form-group:last").before(dom);
-				})
-				if(func){func()}
-			}
-		})
-	}
-	//查询扩展数据
-	var getExpandData=function(ele,table,colName,colValue){
-		var data={};
-		data.tableName=table;
-		data.colName=colName;
-		data.colValue=colValue;
-		$.ajax({
-			url: rootPath+"/longitudinalTableData/getData",
-			data:data,
-			dataType:"json",
-			success:function(jsonData){
-				$.each(jsonData,function(i,data){
-					if($(ele).find("#"+data.colName).is('input') || $(ele).find("#"+data.colName).is('select')){
-						$(ele).find("#"+data.colName).val(data.colValue);
-					}else{
-						$(ele).find("#"+data.colName).html(data.colValue);
-					}
-					
-				})
-			}
-		})
-	}
+    var getExpandField=function(ele,rw,func){
+        $(ele).find(".customData").remove();
+        $.ajax({
+            url: rootPath+"/longitudinalTableColDefine/getData",
+            dataType:"json",
+            success:function(jsonData){
+                var valueble;
+                $.each(jsonData,function(i,data){
+                    if(data.allowModify){
+                        var dom='<div class="form-group customData">';
+                        if(rw=="r" && data.orgAllowRead ){
+                            dom+='<label class="col-md-2 control-label">'+data.colComment+'</label> <div class="col-md-2">'+
+                                '<span id="'+data.id+'" value="'+data.colValue+'" class="field">'+data.colName+'</span></div>';
+                        }else if(rw=="w" && data.orgAllowWrite){
+                            if(data.tldType=="text"){
+                                dom+='<label class="col-md-2 control-label">'+data.colComment+(data.colAllowNull==0?'<i class="iconfont ico"></i>':'')+'</label> <div class="col-md-3">'+
+                                    '<input type="text" id="'+data.colName+'" name="'+data.colName+'" style="'+(data.styleCss?data.styleCss:'')+'" class="form-control field '+(data.styleClass?data.styleClass:'')+'" value="'+(data.defaultValue?data.defaultValue:'')+'" >'+
+                                    '</div>'+
+                                    '</div>';
+                            }else if(data.tldType=="select"){
+                                dom+='<label class="col-md-2 control-label">'+data.colComment+(data.colAllowNull==0?'<i class="iconfont ico"></i>':'')+'</label> <div class="col-md-3">'+
+                                    '<select style="'+(data.styleCss?data.styleCss:'')+'" class="form-control field '+(data.styleClass?data.styleClass:'')+'" value="'+(data.defaultValue?data.defaultValue:'')+'" id="'+data.colName+'" name="'+data.colName+'" value="'+(data.defaultValue?data.defaultValue:'')+'">';
+                                $.each(data.itemsData,function(j,item){
+                                    dom+='<option value="'+item[data.itemsValue]+'">'+item[data.itemsName]+'</option>';
+                                })
+                                dom+='</div>'+
+                                    '</div>';
+                            }
+                        }
+                    }else{
+                        dom='<input type="hidden" id="'+data.colName+'" name='+data.colName+' value=""/>'
+                    }
+                    $(ele).find(".form-group:last").before(dom);
+                })
+                if(func){func()}
+            }
+        })
+    }
+    //查询扩展数据
+    var getExpandData=function(ele,table,colName,colValue){
+        var data={};
+        data.tableName=table;
+        data.colName=colName;
+        data.colValue=colValue;
+        $.ajax({
+            url: rootPath+"/longitudinalTableData/getData",
+            data:data,
+            dataType:"json",
+            success:function(jsonData){
+                $.each(jsonData,function(i,data){
+                    if($(ele).find("#"+data.colName).is('input') || $(ele).find("#"+data.colName).is('select')){
+                        $(ele).find("#"+data.colName).val(data.colValue);
+                    }else{
+                        $(ele).find("#"+data.colName).html(data.colValue);
+                    }
+
+                })
+            }
+        })
+    }
     $(document).ready(function () {
         student.init();
         Form.init();
