@@ -1,7 +1,7 @@
 package com.yuxin.wx.riseschool.mapper;
 
-import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.riseschool.RiseSchoolManageVo;
+import com.yuxin.wx.model.riseschool.SearchRiseSchoolVo;
 import com.yuxin.wx.model.riseschool.SysDictVo;
 
 import java.util.List;
@@ -41,5 +41,10 @@ public interface RiseSchoolManageMapper {
      * @param map
      * @return
      */
-    List<SysDictVo> queryRiseSchoolInfo(Map map);
+    List<SysDictVo> queryRiseSchoolDict(Map map);
+
+    List<RiseSchoolManageVo> queryDimRiseSchoolInfo(SearchRiseSchoolVo serchRiseSchoolVo);
+
+    Integer queryDimRiseSchoolCount(SearchRiseSchoolVo serchRiseSchoolVo);
+
 }

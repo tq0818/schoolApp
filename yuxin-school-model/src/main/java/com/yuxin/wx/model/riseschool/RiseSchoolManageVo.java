@@ -23,6 +23,13 @@ public class RiseSchoolManageVo extends BaseModel{
     private String schoolFax;          //学校传真
     private String busRoad;//公交路线      //公交路线
     private Integer userId;//用户id      //用户
+    private Integer collectNum; //收藏数
+    private Integer baseNum; //收藏基数
+    private String userName;//用户名
+    private String enrollmentName;//用户名
+    private String provinceName;//用户名
+    private String cityName;//用户名
+    private String districtName;//用户名
     public Integer getId() {
         return id;
     }
@@ -141,5 +148,61 @@ public class RiseSchoolManageVo extends BaseModel{
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Integer getCollectNum() {
+        return collectNum;
+    }
+
+    public void setCollectNum(Integer collectNum) {
+        this.collectNum = collectNum;
+    }
+
+    public Integer getBaseNum() {
+        return baseNum;
+    }
+
+    public void setBaseNum(Integer baseNum) {
+        this.baseNum = baseNum;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getEnrollmentName() {
+        return enrollmentName;
+    }
+
+    public void setEnrollmentName(String enrollmentName) {
+        this.enrollmentName = enrollmentName;
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
     }
 }

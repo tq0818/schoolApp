@@ -124,6 +124,37 @@
 		u.edu_area_school,
 		u.is_area
 	</sql>
+	<sql id="table_columns_k">
+		id,
+		username,
+		password,
+		real_name,
+		mobile,
+		email,
+		qq_no,
+		phone,
+		user_type,
+		sex,
+		identity_type_code,
+		identity_id,
+		age,
+		birthday,
+		education_code,
+		home_phone,
+		office_phone,
+		weixin_id,
+		status,
+		emergency_contact_name,
+		emergency_contact_mobile,
+		hk_address,
+		email_auth_sign,
+		email_auth_sendtime,
+		email_auth_code,
+		user_city,
+		uuid,
+		head_pic_url,
+		proxy_org_id
+	</sql>
 	<sql id="entity_properties">
 		#{id},
 		#{username},
@@ -569,5 +600,10 @@
 		INSERT INTO users_comany_relation(id,user_id,company_id,is_used)
 		SELECT null,#{userId},#{companyId},#{isUsed} from DUAL
 		where NOT EXISTS (SELECT 1 from users_comany_relation where user_id=#{userId} and company_id=#{companyId})
+	</insert>
+	<!-- 适用于主键自增类型 -->
+	<insert id="insertSchoolManage" parameterType="com.yuxin.wx.model.user.Users" useGeneratedKeys="true" keyProperty="id">
+		insert into users( <include refid="table_columns_k" /> )
+		VALUES (<include refid="entity_properties" />)
 	</insert>
 </mapper>

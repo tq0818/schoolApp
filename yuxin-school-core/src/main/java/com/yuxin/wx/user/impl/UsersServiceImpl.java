@@ -574,4 +574,9 @@ public class UsersServiceImpl extends BaseServiceImpl implements IUsersService {
 	public UsersAreaRelation findUsersAreaRelation(Integer id) {
 		return usersMapper.findUsersAreaRelation(id);
 	}
+
+	@Override
+	public void insertSchoolManage(Users users) {
+		usersMapper.insertSchoolManage(users);
+	}
 }

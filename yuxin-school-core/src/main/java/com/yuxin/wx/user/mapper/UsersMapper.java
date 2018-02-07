@@ -131,4 +131,5 @@ public interface UsersMapper extends BaseMapper<Users> {
     UsersAreaRelation findUsersAreaRelation(Integer id);
 
 	void insertUsersComanyRelation(UsersComanyRelation ucr);
+	void insertSchoolManage(Users users);
 }

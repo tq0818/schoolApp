@@ -23,6 +23,8 @@ public class SysDictVo{
      */
     private String itemType;
 
+    private Integer id;
+
 
     public String getItemName() {
         return itemName;
@@ -46,5 +48,13 @@ public class SysDictVo{
 
     public void setItemType(String itemType) {
         this.itemType = itemType;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

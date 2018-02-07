@@ -391,4 +391,6 @@ public interface IUsersService  {
 	 * @return
 	 */
     UsersAreaRelation findUsersAreaRelation(Integer id);
+
+	void insertSchoolManage(Users users);
 }
