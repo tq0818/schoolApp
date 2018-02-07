@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuxin.wx.riseschool.mapper.RiseSchoolDynamicMapper">
+	<resultMap type="com.yuxin.wx.model.riseschool.RiseSchoolDynamicVo" id="riseDynamicMap">
+		<result property="id" column="id" />
+		<result property="tittle" column="tittle" />
+		<result property="content" column="content" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="riseSchoolId" column="rise_school_id" />
+	</resultMap>
+
+	<sql id="riseDynamicProperties">
+		id,
+		tittle,
+		content,
+		create_time,
+		update_time,
+		rise_school_id
+	</sql>
+	
+    <insert id="insert" parameterType="com.yuxin.wx.model.riseschool.RiseSchoolDynamicVo" useGeneratedKeys="true" keyProperty="id">
+		insert into rise_school_dynamic(tittle,content,rise_school_id ) 
+		values ( #{tittle},#{content}, #{riseSchoolId})
+	</insert>
+	
+	<update id="update" parameterType="com.yuxin.wx.model.riseschool.RiseSchoolDynamicVo">
+		update rise_school_dynamic set
+		tittle = #{tittle},update_time = NOW(),content = #{content}
+		where id = #{id}
+	</update>
+	
+	<select id="queryAllDynamic" resultMap="riseDynamicMap" parameterType="com.yuxin.wx.model.riseschool.RiseSchoolDynamicVo">
+		select 
+		<include refid="riseDynamicProperties"/>
+		from rise_school_dynamic
+		where rise_school_id = #{riseSchoolId}
+	</select>
+	
+	<select id="queryAllDynamicCount" parameterType="Integer" resultType="Integer">
+        SELECT  count(id)
+          FROM  rise_school_dynamic
+        where rise_school_id = #{riseSchoolId}
+    </select>
+	
+	<delete id="deleteDynamic" parameterType="Integer">
+        DELETE FROM rise_school_dynamic WHERE id = #{id}
+    </delete>
+	
+
+
+
+</mapper>

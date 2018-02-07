@@ -117,6 +117,7 @@ public class RiseSchoolDetailsUpController {
 			Map map = new HashMap<>();
 			map.put("itemCode", sysDictVo.getItemCode());
 			map.put("riseSchoolId", riseSchoolId);
+			//判断当前学校是否已经填写过对应的学校详情
 			RiseSchoolDetailsUp riseDetaile = riseSchoolDetailsUpImpl.findByidAndCode(map);
 			if(riseDetaile == null){
 				//新增
@@ -160,6 +161,7 @@ public class RiseSchoolDetailsUpController {
 			Map map = new HashMap<>();
 			map.put("itemCode", sysDictVo.getItemCode());
 			map.put("riseSchoolId", riseSchoolId);
+			//判断当前学校是否已经填写过对应的升学内容
 			RiseSchoolDetailsUp riseDetaile = riseSchoolDetailsUpImpl.findByidAndCode(map);
 			if(riseDetaile == null){
 				//新增
@@ -202,6 +204,7 @@ public class RiseSchoolDetailsUpController {
 		Map map = new HashMap<>();
 		map.put("itemCode", sysDictVo.getItemCode());
 		map.put("riseSchoolId", riseSchoolId);
+		//得到当前学校对应的学校详情的内容
 		RiseSchoolDetailsUp riseDetaile = riseSchoolDetailsUpImpl.queryRiseDetails(map);
 		if(riseDetaile == null ){
 			return null;
@@ -232,6 +235,7 @@ public class RiseSchoolDetailsUpController {
 		Map map = new HashMap<>();
 		map.put("itemCode", sysDictVo.getItemCode());
 		map.put("riseSchoolId", riseSchoolId);
+		//得到当前学校对应的升学的内容
 		RiseSchoolDetailsUp riseDetaile = riseSchoolDetailsUpImpl.queryRiseDetails(map);
 		if(riseDetaile == null ){
 			return null;

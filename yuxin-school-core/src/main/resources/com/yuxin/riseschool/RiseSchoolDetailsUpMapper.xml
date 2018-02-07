@@ -7,7 +7,6 @@
 		<result property="createTime" column="create_time" />
 		<result property="updateTime" column="update_time" />
 		<result property="riseSchoolId" column="rise_school_id" />
-		<result property="riseSchoolId" column="rise_school_id" />
 		<result property="itemName" column="itemName" />
 	</resultMap>
 

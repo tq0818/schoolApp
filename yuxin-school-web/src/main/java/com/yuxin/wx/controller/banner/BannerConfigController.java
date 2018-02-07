@@ -55,11 +55,17 @@ public class BannerConfigController extends BaseWebController{
 	Log log = LogFactory.getLog("log");
 	
 
-	
+	//跳转首页banner
 	@RequestMapping(value="/comBannerIndex", method = RequestMethod.GET)
 	public String search(HttpServletRequest request,Model model,Banner banner) {
 
 		return "banner/bannerIndex";
+	}
+	//跳转小升初banner
+	@RequestMapping(value="/riseBannerIndex", method = RequestMethod.GET)
+	public String riseBannerIndex(HttpServletRequest request,Model model,Banner banner) {
+		
+		return "riseschool/riseSchoolBanner";
 	}
 	
 	/**
