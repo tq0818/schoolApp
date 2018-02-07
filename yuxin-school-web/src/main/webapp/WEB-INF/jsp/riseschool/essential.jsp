@@ -20,60 +20,51 @@
                 <h2 class="h5">基本信息</h2>
                 <span class="line"></span>
             </div>
-            <div class="schoolDetailsContent">
-
+            <div class="schoolDetailsContent essentialInfo">
+                <div class="essentialInfoContent">
                     <div>
-                        <i class="icon iconfont star">&#xe605;</i>
                         <label for="" class="noMargin">学校名称：</label>
-                        <input type="text"  maxlength="60">
-                    </div>
-                    <div class="schoolCount">
-                        <i class="icon iconfont star">&#xe605;</i>
-                        <label for="" class="noMargin">学校账号：</label>
-                        <input type="text" placeholder="请输入学校管理员账号">
-                        <span>初始密码为：111111</span>
+                        <span>成都三原外国语学校</span>
                     </div>
                     <div>
-                        <i class="icon iconfont star">&#xe605;</i>
                         <label for="" class="noMargin">招生方式：</label>
-                        <select name="" id="">
-                            <option value="">请选择招生方式</option>
-                        </select>
+                        <span>自主招生</span>
                     </div>
                     <div class="schoolSite">
-                        <i class="icon iconfont star">&#xe605;</i>
                         <label for="" class="noMargin">学校地址：</label>
                         <select name="" id="">
-                            <option value="">学校所在省份</option>
+                            <option value="">四川</option>
                         </select>
                         <select name="" id="">
-                            <option value="">学校所在市</option>
+                            <option value="">成都</option>
                         </select>
                         <select name="" id="">
-                            <option value="">学校所在区</option>
+                            <option value="">高新区</option>
                         </select>
-                        <input type="text" placeholder="请输入详细地址" maxlength="60">
+                        <br/><input type="text" placeholder="请输入详细地址" maxlength="60" value="四川省成都市高新区天府三街">
                     </div>
                     <div>
                         <label for="">学校网址：</label>
-                        <input type="text">
+                        <input type="text" value="www.baidu.com">
                     </div>
                     <div>
                         <label for="">学校传真：</label>
-                        <input type="text">
+                        <input type="text" value="028233456">
                     </div>
                     <div>
                         <label for="">公交路线：</label>
-                        <input type="text" maxlength="200">
+                        <input type="text" maxlength="200" value="112/113到天府三街站    地铁1号线到天府三街站">
                     </div>
                     <div>
                         <label for="">收藏基数：</label>
-                        <input type="text" maxlength="4" placeholder="请输入0-1000">
+                        <input type="text" maxlength="4" placeholder="请输入0-1000" value="100">
                     </div>
                     <div class="countPopupBtn">
                         <a href="##" class="btn btn-sm btn-primary countPopupCancel">取消</a>
                         <a href="##" class="btn btn-sm btn-primary countPopupSave">保存</a>
                     </div>
+                </div>
+
 
             </div>
         </div>
@@ -91,6 +82,11 @@
 <script>
 //    左侧active切换
     $selectSubMenus('essential');
+</script>
+<script>
+    $('.countPopupCancel').click(function () {
+        history.go(-1);
+    });
 </script>
 </body>
 </html>

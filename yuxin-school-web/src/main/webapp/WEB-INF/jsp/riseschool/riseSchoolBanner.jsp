@@ -15,6 +15,7 @@
 <jsp:include page="/WEB-INF/jsp/menu/menu_operate.jsp"></jsp:include>
 <%--已上架课程列表--%>
 <div id="modelList" class="pageRecommendtionBg">
+    <jsp:include page="/WEB-INF/jsp/menu/menu_bannerLeft.jsp"></jsp:include>
     <div class="mainbackground nopadding">
         <div class="heading">
             <h2 class="h5" style="display: inline-block;margin: 10px 0;">banner管理</h2>
@@ -95,9 +96,10 @@
 </script>
 <script>
     //        二级菜单加active
-    $(function () {
-        $selectSubMenu('comBannerIndex');
-    });
+
+//        $selectSubMenu('riseSchoolBanner');
+        $selectSubMenus('riseSchoolBanner');
+
 </script>
 </body>
 </html>

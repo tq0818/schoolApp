@@ -5,17 +5,22 @@
 <head>
     <%@include file="/decorators/import.jsp" %>
     <title>首页banner图设置</title>
+    <link rel="stylesheet" href="<%=rootPath %>/stylesheets/splitscreen.css">
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/manage.css">
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/classes.css">
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/operate.css" />
     <script src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
+    <style>
+        .bannerManage{width: 80%;float: right;}
+    </style>
 </head>
 <body style="position:relative;">
 <!-- 二级导航 -->
 <jsp:include page="/WEB-INF/jsp/menu/menu_operate.jsp"></jsp:include>
 <%--已上架课程列表--%>
 <div id="modelList" class="pageRecommendtionBg">
-    <div class="mainbackground nopadding">
+    <jsp:include page="/WEB-INF/jsp/menu/menu_bannerLeft.jsp"></jsp:include>
+    <div class="mainbackground nopadding bannerManage ">
         <div class="heading">
             <h2 class="h5" style="display: inline-block;margin: 10px 0;">banner管理</h2>
             <div class="bannerButton">
@@ -95,9 +100,10 @@
 </script>
 <script>
     //        二级菜单加active
-    $(function () {
-        $selectSubMenu('comBannerIndex');
-    });
+
+//        $selectSubMenu('comBannerIndex');
+        $selectSubMenus('comBannerIndex');
+
 </script>
 </body>
 </html>
