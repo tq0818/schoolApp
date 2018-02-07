@@ -148,8 +148,8 @@ public class StudentController {
     @Autowired
     private ICompanyServiceStaticService companyServiceStaticServiceImpl;
 
-	@Autowired
-	private ISysDictAppService sysDictAppServiceImpl;
+    @Autowired
+    private ISysDictAppService sysDictAppServiceImpl;
 
     @Autowired
     private ICompanyService companyServiceImpl;
@@ -197,14 +197,14 @@ public class StudentController {
     private ISysConfigTeacherService sysConfigTeacherServiceImpl;
     @Autowired
     private ISysConfigItemRelationService sysConfigItemRelationServiceImpl;
-    
+
     @Autowired
     private IIntegralManageService integralManageServiceImpl;
 
     private static Logger log = Logger.getLogger(StudentController.class);
-    
+
     public static final String AFFICHE_TYPE = "AFFICHE";
-    
+
     // 跳转到学员列表页面
     @RequestMapping(value = "/studentList")
     public String forwardStudentList(Model model) {
@@ -2508,7 +2508,7 @@ public class StudentController {
         model.addAttribute("threeItem", threeItem);
         String goAffiche = request.getParameter("goAffiche");
         if(StringUtils.isNotBlank(goAffiche)){
-        	model.addAttribute("goAffiche", goAffiche);
+            model.addAttribute("goAffiche", goAffiche);
         }
         return "student/notice/notice";
     }
@@ -2561,36 +2561,36 @@ public class StudentController {
         model.addAttribute("oneItem", relations);
         String afficheFlag = request.getParameter("addAffiche");
         if(StringUtils.equals(afficheFlag, "addAffiche")){
-        	String afficheId = request.getParameter("afficheId");
-        	if(StringUtils.isNotBlank(afficheId)){
-        		CompanyOrgMessageVo msg = companyServiceImpl.queryMessageById(Integer.parseInt(afficheId));
-        		model.addAttribute("msg", msg);
+            String afficheId = request.getParameter("afficheId");
+            if(StringUtils.isNotBlank(afficheId)){
+                CompanyOrgMessageVo msg = companyServiceImpl.queryMessageById(Integer.parseInt(afficheId));
+                model.addAttribute("msg", msg);
             }
-        	return "student/notice/addAffiche";// 学员公告添加页面
+            return "student/notice/addAffiche";// 学员公告添加页面
         }else{
-        	//订阅文章查询所有学段字典
-        	List<SysDictApp> gradeCodeItems= sysDictAppServiceImpl.findSysDictAppByCode("GRADE_CODE");
+            //订阅文章查询所有学段字典
+            List<SysDictApp> gradeCodeItems= sysDictAppServiceImpl.findSysDictAppByCode("GRADE_CODE");
             model.addAttribute("gradeCodeItems", gradeCodeItems);
-        	return "student/notice/createNotice";
+            return "student/notice/createNotice";
         }
-        
+
     }
 
     @ResponseBody
-	@RequestMapping(value="/saveCutPic")
-	public CompanyPicsVo saveCutPic(HttpServletRequest request,Integer itemOneid, String path,double x,double y,double w,double h){
-		log.info("初始化截图开始：");
-		Resource resource = new ClassPathResource("config.properties");
-		Properties props=null;
-		try{
-			props=PropertiesLoaderUtils.loadProperties(resource);
-		}catch(Exception e){
-			log.error(e,e);
-			e.printStackTrace();
-		}
-		String fileName=path.substring(path.lastIndexOf("/")+1);
-		String tempPath=props.getProperty("server.imageupload.tempPath")+"/source/"+fileName;
-		String target=props.getProperty("server.imageupload.tempPath")+"/target/"+fileName;
+    @RequestMapping(value="/saveCutPic")
+    public CompanyPicsVo saveCutPic(HttpServletRequest request,Integer itemOneid, String path,double x,double y,double w,double h){
+        log.info("初始化截图开始：");
+        Resource resource = new ClassPathResource("config.properties");
+        Properties props=null;
+        try{
+            props=PropertiesLoaderUtils.loadProperties(resource);
+        }catch(Exception e){
+            log.error(e,e);
+            e.printStackTrace();
+        }
+        String fileName=path.substring(path.lastIndexOf("/")+1);
+        String tempPath=props.getProperty("server.imageupload.tempPath")+"/source/"+fileName;
+        String target=props.getProperty("server.imageupload.tempPath")+"/target/"+fileName;
 
         File tempPathFile = new File(props.getProperty("server.imageupload.tempPath") + "/source/");
         if(!tempPathFile.exists()){
@@ -2601,68 +2601,68 @@ public class StudentController {
             targetFile.mkdirs();
         }
 
-		String header="http://"+props.getProperty("yunduoketang.oss.imagedomain")+"/";
-		
-		path=path.replace(header, "");
-		System.out.println("oss临时文件路径["+path+"]=====本地磁盘临时文件路径["+tempPath+"]======切图后临时文件路径["+target+"]");
-		FileUtil.download("temp", path,tempPath);
-		//选中尺寸
-		BufferedImage img =null;
-		try{
-			 img = ImageIO.read(new File(tempPath));
-		}catch(Exception e){
-			log.error("读取图片失败:"+e,e);
-			e.printStackTrace();
-		}
-		//原图尺寸
-		double realW=img.getWidth();
-		double realH=img.getHeight();
-		//示例图尺寸
-		double slW=0;
-		double slH=0;
-		if(realW/realH>516.00/282.00){
-			//过宽
-			slH=516 * realH/realW;
-			slW=516;
-		}else{
-			//过高
-			slH=282;
-			slW=282 * realW/realH;
-		}
-		//原图所选中位置和区域
-		
-		int xx=(new   Double(x*realW/slW)).intValue();	
-		int yy=(new   Double(y*realH/slH)).intValue();
-		int ww=(new   Double(w*realW/slW)).intValue();
-		int hh=(new   Double(h*realH/slH)).intValue();
-		System.out.println("选中区域:["+x+","+y+","+w+","+h+"]----原图选中区域:["+xx+","+yy+","+ww+","+hh+"]");
-		//在原图中切图
-		String cutImgPath=ImageUtils.cutImage(tempPath,target,xx,yy,ww,hh);
-		//切好的图缩放到规定比例
+        String header="http://"+props.getProperty("yunduoketang.oss.imagedomain")+"/";
+
+        path=path.replace(header, "");
+        System.out.println("oss临时文件路径["+path+"]=====本地磁盘临时文件路径["+tempPath+"]======切图后临时文件路径["+target+"]");
+        FileUtil.download("temp", path,tempPath);
+        //选中尺寸
+        BufferedImage img =null;
+        try{
+            img = ImageIO.read(new File(tempPath));
+        }catch(Exception e){
+            log.error("读取图片失败:"+e,e);
+            e.printStackTrace();
+        }
+        //原图尺寸
+        double realW=img.getWidth();
+        double realH=img.getHeight();
+        //示例图尺寸
+        double slW=0;
+        double slH=0;
+        if(realW/realH>516.00/282.00){
+            //过宽
+            slH=516 * realH/realW;
+            slW=516;
+        }else{
+            //过高
+            slH=282;
+            slW=282 * realW/realH;
+        }
+        //原图所选中位置和区域
+
+        int xx=(new   Double(x*realW/slW)).intValue();
+        int yy=(new   Double(y*realH/slH)).intValue();
+        int ww=(new   Double(w*realW/slW)).intValue();
+        int hh=(new   Double(h*realH/slH)).intValue();
+        System.out.println("选中区域:["+x+","+y+","+w+","+h+"]----原图选中区域:["+xx+","+yy+","+ww+","+hh+"]");
+        //在原图中切图
+        String cutImgPath=ImageUtils.cutImage(tempPath,target,xx,yy,ww,hh);
+        //切好的图缩放到规定比例
 //		ImageUtils.scale2(target,target,241,446,true);
-		ImageUtils.resize(target, target, 446);
-		log.info("截图完成");
-		log.info("上传图片开始：");
-		String realPath=null;
-		try {
-			realPath=FileUtil.upload(cutImgPath,"dingyue", WebUtils.getCurrentCompanyId()+"");
-		} catch (Exception e) {
-			log.error("上传文件失败",e);
-			e.printStackTrace();
-		}
-		log.info("上传图片后路径："+realPath);
-		FileUtil.deleteFile(target);
-		FileUtil.deleteFile(cutImgPath);
-		
-		String picUrl="http://"+propertiesUtil.getProjectImageUrl()+"/"+realPath;
-		log.info("图片回显路径："+picUrl);
-		CompanyPicsVo pics=new CompanyPicsVo();
-		pics.setPicOriginalUrl(picUrl);
-		pics.setRealPath(realPath);
-		
-		return pics;
-	}
-    
+        ImageUtils.resize(target, target, 446);
+        log.info("截图完成");
+        log.info("上传图片开始：");
+        String realPath=null;
+        try {
+            realPath=FileUtil.upload(cutImgPath,"dingyue", WebUtils.getCurrentCompanyId()+"");
+        } catch (Exception e) {
+            log.error("上传文件失败",e);
+            e.printStackTrace();
+        }
+        log.info("上传图片后路径："+realPath);
+        FileUtil.deleteFile(target);
+        FileUtil.deleteFile(cutImgPath);
+
+        String picUrl="http://"+propertiesUtil.getProjectImageUrl()+"/"+realPath;
+        log.info("图片回显路径："+picUrl);
+        CompanyPicsVo pics=new CompanyPicsVo();
+        pics.setPicOriginalUrl(picUrl);
+        pics.setRealPath(realPath);
+
+        return pics;
+    }
+
     @RequestMapping("/createWeixin")
     public String createWeixin(Model model, HttpServletRequest request) {
         List<SysConfigItemRelation> relations = sysConfigItemRelationServiceImpl.findItemFront(new SysConfigItemRelation());
@@ -3284,7 +3284,7 @@ public class StudentController {
         if (EntityUtil.isNotBlank(search)) {
             search.setCompanyId(WebUtils.getCurrentCompanyId());
             // search.setSchoolId(WebUtils.getCurrentSchoolId());
-            search.setPageSize(50000);
+            search.setPageSize(20000);
             al = studentServiceImpl.findStudentsData(search);
         }
         List<Map<String, Object>> lists = new ArrayList<Map<String, Object>>();
@@ -4145,9 +4145,9 @@ public class StudentController {
     }
 
     /**
-     * 
+     *
      * Class Name: StudentController.java
-     * 
+     *
      * @Description: TODO(学员详情课程包)
      * @author dongshuai
      * @date 2016年11月1日 上午10:56:32
@@ -4217,9 +4217,9 @@ public class StudentController {
     };
 
     /**
-     * 
+     *
      * Class Name: StudentController.java
-     * 
+     *
      * @Description: TODO(学员详情课程)
      * @author dongshuai
      * @date 2016年11月1日 上午10:57:01
@@ -4260,20 +4260,20 @@ public class StudentController {
      */
     @RequestMapping("goAffichePage")
     public String goAffichePage(HttpServletRequest request,HttpServletResponse response,ModelMap model){
-    	int pageNum = 1;
-    	String pageNumStr = request.getParameter("page");
-    	if(StringUtils.isNotBlank(pageNumStr)){
-    		pageNum = Integer.parseInt(pageNumStr);
-    	}
-    	CompanyOrgMessageVo search = new CompanyOrgMessageVo();
-    	search.setPage(pageNum);
-    	search.setPageSize(5);
-    	search.setMessageType(AFFICHE_TYPE);
-    	PageFinder<CompanyOrgMessageVo> msgPage = companyServiceImpl.findMessageList(search);
-		model.addAttribute("msgPage", msgPage);
-    	return "student/notice/affiche";
+        int pageNum = 1;
+        String pageNumStr = request.getParameter("page");
+        if(StringUtils.isNotBlank(pageNumStr)){
+            pageNum = Integer.parseInt(pageNumStr);
+        }
+        CompanyOrgMessageVo search = new CompanyOrgMessageVo();
+        search.setPage(pageNum);
+        search.setPageSize(5);
+        search.setMessageType(AFFICHE_TYPE);
+        PageFinder<CompanyOrgMessageVo> msgPage = companyServiceImpl.findMessageList(search);
+        model.addAttribute("msgPage", msgPage);
+        return "student/notice/affiche";
     }
-    
+
     /**
      * 添加公告
      * @param request
@@ -4283,28 +4283,28 @@ public class StudentController {
      */
     @RequestMapping("addAffiche")
     public String addAffiche(HttpServletRequest request,HttpServletResponse response,ModelMap model){
-    	String url = "redirect:/student/notice?goAffiche=goAffiche";
-    	try{
-    		Users user = WebUtils.getCurrentUser(request);
-        	CompanyOrgMessageVo message = new CompanyOrgMessageVo();
-        	String content = request.getParameter("content");
-        	if(StringUtils.isBlank(content) || content.length() >200){
-        	   return url;
-        	}
-        	message.setContent(content);
-        	message.setSender(String.valueOf(user.getId()));
-        	message.setSenderName(user.getUsername());
-        	message.setMessageType("AFFICHE");
-        	message.setCompanyId(user.getCompanyId());
-        	message.setSendTime(new Date());
-        	message.setStatus(0);//0:下架，1上架
-        	companyServiceImpl.insertMsg(message);
-    	}catch(Exception e){
-    		log.error("add affiche is error :", e);
-    	}
+        String url = "redirect:/student/notice?goAffiche=goAffiche";
+        try{
+            Users user = WebUtils.getCurrentUser(request);
+            CompanyOrgMessageVo message = new CompanyOrgMessageVo();
+            String content = request.getParameter("content");
+            if(StringUtils.isBlank(content) || content.length() >200){
+                return url;
+            }
+            message.setContent(content);
+            message.setSender(String.valueOf(user.getId()));
+            message.setSenderName(user.getUsername());
+            message.setMessageType("AFFICHE");
+            message.setCompanyId(user.getCompanyId());
+            message.setSendTime(new Date());
+            message.setStatus(0);//0:下架，1上架
+            companyServiceImpl.insertMsg(message);
+        }catch(Exception e){
+            log.error("add affiche is error :", e);
+        }
         return url;
     }
-    
+
     /**
      * 返回公告页面
      * @param request
@@ -4313,9 +4313,9 @@ public class StudentController {
      */
     @RequestMapping("goBackAffiche")
     public String goBackAffiche(HttpServletRequest request,HttpServletResponse response){
-    	 return "redirect:/student/notice?goAffiche=goAffiche";
+        return "redirect:/student/notice?goAffiche=goAffiche";
     }
-    
+
     /**
      * 公告上下架
      * @param request
@@ -4325,20 +4325,20 @@ public class StudentController {
     @ResponseBody
     @RequestMapping("afficheShelving")
     public String afficheShelving(HttpServletRequest request,HttpServletResponse response){
-    	String result = "failed";
-    	try{
-    		int id = Integer.parseInt(request.getParameter("id"));
-    		int status = Integer.parseInt(request.getParameter("status"));
-    		CompanyOrgMessageVo msg = new CompanyOrgMessageVo();
-    		msg.setId(id);
-    		msg.setStatus(status);
-    		msg.setUpdateTime(new Date());
-    		companyServiceImpl.updateMsg(msg);
-    		result = "success";
-    	}catch(Exception e){
-    		log.error("afficheShelving is error :", e);
-    	}
-    	return result;
+        String result = "failed";
+        try{
+            int id = Integer.parseInt(request.getParameter("id"));
+            int status = Integer.parseInt(request.getParameter("status"));
+            CompanyOrgMessageVo msg = new CompanyOrgMessageVo();
+            msg.setId(id);
+            msg.setStatus(status);
+            msg.setUpdateTime(new Date());
+            companyServiceImpl.updateMsg(msg);
+            result = "success";
+        }catch(Exception e){
+            log.error("afficheShelving is error :", e);
+        }
+        return result;
     }
 
     @ResponseBody
@@ -4355,31 +4355,31 @@ public class StudentController {
      */
     @RequestMapping(value = "/integralModification")
     public String integralModification(HttpServletRequest request,String stuId,Model model){
-    	List<ScoreRulsAppVo> scoreRulsAppVos=integralManageServiceImpl.queryScoreRulsAppVos();
-    	TotalScoreVo totalScoreVo=integralManageServiceImpl.queryTotalScoreVoByUserFrontId(stuId);
-    	Users user = WebUtils.getCurrentUser(request);
-    	model.addAttribute("scoreRulsAppVos", scoreRulsAppVos);
-    	model.addAttribute("totalScoreVo", totalScoreVo);
-    	model.addAttribute("user",user);
-    	return "student/integralManagement/integralModification";
+        List<ScoreRulsAppVo> scoreRulsAppVos=integralManageServiceImpl.queryScoreRulsAppVos();
+        TotalScoreVo totalScoreVo=integralManageServiceImpl.queryTotalScoreVoByUserFrontId(stuId);
+        Users user = WebUtils.getCurrentUser(request);
+        model.addAttribute("scoreRulsAppVos", scoreRulsAppVos);
+        model.addAttribute("totalScoreVo", totalScoreVo);
+        model.addAttribute("user",user);
+        return "student/integralManagement/integralModification";
     }
     @ResponseBody
     @RequestMapping(value = "/getTime")
     public String getTime(HttpServletRequest request) {
-    	SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(new Date());
     }
     @ResponseBody
     @RequestMapping(value = "/saveOrUpdateTotalScore")
     public Boolean saveOrUpdateTotalScore(HttpServletRequest request){
-    	try{
-	    	String[] strValue=request.getParameterValues("strValue");
-	    	String userFrontId=request.getParameter("userFrontId");
-	    	return integralManageServiceImpl.saveOrUpdateTotalScore(strValue,userFrontId);
-    	}catch(Exception e){
-    		log.error("saveOrUpdateTotalScore(HttpServletRequest)",e);
-    		return false;
-    	}
+        try{
+            String[] strValue=request.getParameterValues("strValue");
+            String userFrontId=request.getParameter("userFrontId");
+            return integralManageServiceImpl.saveOrUpdateTotalScore(strValue,userFrontId);
+        }catch(Exception e){
+            log.error("saveOrUpdateTotalScore(HttpServletRequest)",e);
+            return false;
+        }
     }
     /**
      * 配置积分规则
@@ -4415,23 +4415,23 @@ public class StudentController {
     @ResponseBody
     @RequestMapping(value = "/updateScoreRulsAppStatus")
     public Boolean updateScoreRulsAppStatus(HttpServletRequest request,String rulesId,String status){
-    	try{
-    		return integralManageServiceImpl.updateScoreRulsAppStatus(rulesId, status);
-    	}catch(Exception e){
-    		log.error("updateScoreRulsAppStatus(HttpServletRequest,String,String)",e);
-    		return false;
-    	}
+        try{
+            return integralManageServiceImpl.updateScoreRulsAppStatus(rulesId, status);
+        }catch(Exception e){
+            log.error("updateScoreRulsAppStatus(HttpServletRequest,String,String)",e);
+            return false;
+        }
     }
     @ResponseBody
     @RequestMapping(value = "/updateScoreRuleById")
     public Boolean updateScoreRuleById(HttpServletRequest request,ScoreRulsAppVo scoreRulsAppVo){
-    	try{
-    		Users loginUser=(Users)request.getSession().getAttribute("loginUser");
-    		scoreRulsAppVo.setOprator(loginUser==null?null:loginUser.getUsername());
-    		return integralManageServiceImpl.updateScoreRuleById(scoreRulsAppVo);
-    	}catch(Exception e){
-    		log.error("updateScoreRuleById(HttpServletRequest,ScoreRulsAppVo)",e);
-    		return false;
-    	}
+        try{
+            Users loginUser=(Users)request.getSession().getAttribute("loginUser");
+            scoreRulsAppVo.setOprator(loginUser==null?null:loginUser.getUsername());
+            return integralManageServiceImpl.updateScoreRuleById(scoreRulsAppVo);
+        }catch(Exception e){
+            log.error("updateScoreRuleById(HttpServletRequest,ScoreRulsAppVo)",e);
+            return false;
+        }
     }
 }

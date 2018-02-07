@@ -4,7 +4,7 @@
 <html>
 <head>
     <%@include file="/decorators/import.jsp" %>
-    <title>首页banner图设置</title>
+    <title>小升初banner图设置</title>
     <link rel="stylesheet" href="<%=rootPath %>/stylesheets/splitscreen.css">
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/manage.css">
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/classes.css">
@@ -27,18 +27,18 @@
                 <span><button onclick="qiyong()" class="btn btn-primary " >启用</button></span>
                 <span><button onclick="jinyong()" class="btn btn-primary " >禁用</button></span>
                 <!-- <span><a href="##" class="btn btn-primary changeOrder" >更改排序</a></span> -->
-                <span><a href="<%=rootPath %>/Banner/addBanner/0" class="btn btn-primary " >添加banner</a></span>
+                <span><a href="<%=rootPath %>/Banner/addBanner/1" class="btn btn-primary " >添加banner</a></span>
             </div>
             <span class="line"></span>
         </div>
         <div class="user-list" id="tableList">
-            
+
         </div>
         <div class="user-list" id="tableList1" style="display: none">
-            
+
         </div>
     </div>
-   
+
 </div>
 
 <!-- ajax加载中div开始 -->
@@ -49,15 +49,15 @@
 <!-- ajax加载中div结束 -->
 
 <script>
-	$(document).ready(function() { 
-		qiyong();
-	
-	}); 
-//    点击禁用，弹窗提示
+    $(document).ready(function() {
+        qiyong();
+
+    });
+    //    点击禁用，弹窗提示
     $('.forbidBanner').click(function () {
         alert("只有启用banner才能支持排序！");
     });
-//    点击更改培训
+    //    点击更改培训
     $('.changeOrder').click(function () {
         if($(this).html()=='更改排序'){
             $(this).html('保存排序');
@@ -66,44 +66,46 @@
         }
     });
 
-	function jinyong(){
-		$.ajax({
-			url: rootPath + "/Banner/jinYong",
-			type:"post",
-			data:{bannerType:0},
-			dataType:"html",
-			success:function(data){
-				$('#tableList1').html(data);
-			 	var myTable= document.getElementById("tableList1"); 
-			 	myTable.style.display="block";
-			 	var myTable1= document.getElementById("tableList"); 
-			 	myTable1.style.display ="none";
-			}
-		});
-		
-	}
-	function qiyong(){
-		$.ajax({
-			url: rootPath + "/Banner/qiYong",
-			type:"post",
-			data:{bannerType:0},
-			dataType:"html",
-			success:function(data){
-				$('#tableList').html(data);
-			}
-		});
-		 var myTable1= document.getElementById("tableList"); 
-		 myTable1.style.display="block";
-		 var myTable= document.getElementById("tableList1"); 
-		 myTable.style.display ="none";
-	}
+    function jinyong(){
+        $.ajax({
+            url: rootPath + "/Banner/jinYong",
+            type:"post",
+            data:{bannerType:1},
+            dataType:"html",
+            success:function(data){
+                $('#tableList1').html(data);
+                var myTable= document.getElementById("tableList1");
+                myTable.style.display="block";
+                var myTable1= document.getElementById("tableList");
+                myTable1.style.display ="none";
+            }
+        });
+
+    }
+    function qiyong(){
+        $.ajax({
+            url: rootPath + "/Banner/qiYong",
+            type:"post",
+            data:{bannerType:1},
+            dataType:"html",
+            success:function(data){
+                $('#tableList').html(data);
+            }
+        });
+        var myTable1= document.getElementById("tableList");
+        myTable1.style.display="block";
+        var myTable= document.getElementById("tableList1");
+        myTable.style.display ="none";
+    }
 </script>
 <script>
     //        二级菜单加active
-    $(function () {
+    $(function(){
         $selectSubMenu('comBannerIndex');
-        $selectSubMenus('comBannerIndex');
-    });
+        $selectSubMenus('riseSchoolBanner');
+    })
+
+
 
 
 </script>

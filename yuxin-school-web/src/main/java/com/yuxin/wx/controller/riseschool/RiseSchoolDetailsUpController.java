@@ -39,8 +39,16 @@ public class RiseSchoolDetailsUpController {
 	 */
 	@RequestMapping("/schoolDetails")
     public String schoolDetails(HttpServletRequest request,Model model,Integer schoolId) {
-		//学校对应填写了哪些信息
-		List<RiseSchoolDetailsUp> queryAllRiseDetails = riseSchoolDetailsUpImpl.queryAllRiseDetails(schoolId);
+		//暂时写个死数据
+		//schoolId  =1;
+		if(schoolId == null){
+			return null;
+		}
+		//学校对应填写了学校详情哪些信息
+		Map mapList = new HashMap<>();
+		mapList.put("schoolId", schoolId);
+		mapList.put("itemType", "DETAILITEM");
+		List<RiseSchoolDetailsUp> queryAllRiseDetails = riseSchoolDetailsUpImpl.queryAllRiseDetails(mapList);
 		model.addAttribute("riseDetails", queryAllRiseDetails);
 		//加载学校简称或俗称
 		Map mapDict = new HashMap<>();
@@ -52,7 +60,8 @@ public class RiseSchoolDetailsUpController {
 		map.put("riseSchoolId", schoolId);
 		RiseSchoolDetailsUp riseSchoolDetailsUp = riseSchoolDetailsUpImpl.findByidAndCode(map);
 		model.addAttribute("riseSchoolDetailsUp", riseSchoolDetailsUp);
-		return "banner/jinyong/jinyong";
+		model.addAttribute("riseSchoolId", schoolId);
+		return "/riseschool/schoolDetails";
     }
 	/**
 	 * 跳转升学页面
@@ -63,8 +72,16 @@ public class RiseSchoolDetailsUpController {
 	 */
 	@RequestMapping("/upgradeSchool")
 	public String upgradeSchool(HttpServletRequest request,Model model,Integer schoolId) {
-		//学校对应填写了哪些信息
-		List<RiseSchoolDetailsUp> queryAllRiseDetails = riseSchoolDetailsUpImpl.queryAllRiseDetails(schoolId);
+		//暂时写个死数据
+		//schoolId  =1;
+		if(schoolId == null){
+			return null;
+		}
+		//学校对应填写了升学哪些信息
+		Map mapList = new HashMap<>();
+		mapList.put("schoolId", schoolId);
+		mapList.put("itemType", "UPSCHOOL");
+		List<RiseSchoolDetailsUp> queryAllRiseDetails = riseSchoolDetailsUpImpl.queryAllRiseDetails(mapList);
 		model.addAttribute("riseDetails", queryAllRiseDetails);
 		//加载学校简称或俗称
 		Map mapDict = new HashMap<>();
@@ -76,6 +93,7 @@ public class RiseSchoolDetailsUpController {
 		map.put("riseSchoolId", schoolId);
 		RiseSchoolDetailsUp riseSchoolDetailsUp = riseSchoolDetailsUpImpl.findByidAndCode(map);
 		model.addAttribute("riseSchoolDetailsUp", riseSchoolDetailsUp);
+		model.addAttribute("riseSchoolId", schoolId);
 		return "banner/jinyong/jinyong";
 	}
 	
@@ -105,6 +123,7 @@ public class RiseSchoolDetailsUpController {
 			Map map = new HashMap<>();
 			map.put("itemCode", sysDictVo.getItemCode());
 			map.put("riseSchoolId", riseSchoolId);
+			//判断当前学校是否已经填写过对应的学校详情
 			RiseSchoolDetailsUp riseDetaile = riseSchoolDetailsUpImpl.findByidAndCode(map);
 			if(riseDetaile == null){
 				//新增
@@ -148,6 +167,7 @@ public class RiseSchoolDetailsUpController {
 			Map map = new HashMap<>();
 			map.put("itemCode", sysDictVo.getItemCode());
 			map.put("riseSchoolId", riseSchoolId);
+			//判断当前学校是否已经填写过对应的升学内容
 			RiseSchoolDetailsUp riseDetaile = riseSchoolDetailsUpImpl.findByidAndCode(map);
 			if(riseDetaile == null){
 				//新增
@@ -190,11 +210,13 @@ public class RiseSchoolDetailsUpController {
 		Map map = new HashMap<>();
 		map.put("itemCode", sysDictVo.getItemCode());
 		map.put("riseSchoolId", riseSchoolId);
+		//得到当前学校对应的学校详情的内容
 		RiseSchoolDetailsUp riseDetaile = riseSchoolDetailsUpImpl.queryRiseDetails(map);
 		if(riseDetaile == null ){
-			riseDetaile.setItemDiscrible("");
+			return null;
+		}else{
+			return riseDetaile;
 		}
-		return riseDetaile;
 	}
 	/**
 	 * 加载升学内容
@@ -219,9 +241,10 @@ public class RiseSchoolDetailsUpController {
 		Map map = new HashMap<>();
 		map.put("itemCode", sysDictVo.getItemCode());
 		map.put("riseSchoolId", riseSchoolId);
+		//得到当前学校对应的升学的内容
 		RiseSchoolDetailsUp riseDetaile = riseSchoolDetailsUpImpl.queryRiseDetails(map);
 		if(riseDetaile == null ){
-			riseDetaile.setItemDiscrible("");
+			return null;
 		}
 		return riseDetaile;
 	}

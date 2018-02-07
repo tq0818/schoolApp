@@ -554,8 +554,10 @@
         <pattern>/Question/toAddQuestione</pattern>
         <!--首页banner图设置-->
         <pattern>/Banner/comBannerIndex</pattern>
+        <!--首页banner图设置-->
+        <pattern>/Banner/riseBannerIndex</pattern>
         <!--新增banner图-->
-        <pattern>/Banner/addBanner</pattern>
+        <pattern>/Banner/addBanner/*</pattern>
         <!--修改banner图-->
         <pattern>/Banner/editBanner/*</pattern>
 
@@ -563,8 +565,12 @@
         <pattern>/riseschoolback/earlyLitre</pattern>
         <!--学校详情-->
         <pattern>/riseschoolback/schoolDetails</pattern>
+        <!--升学-->
+        <pattern>/riseschoolback/upgradeSchools</pattern>
         <!--基本信息-->
         <pattern>/riseschoolback/essential</pattern>
+        <!--动态-->
+        <pattern>/riseschoolback/dynamic</pattern>
 
     </decorator>
 

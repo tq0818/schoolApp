@@ -14,7 +14,7 @@ $(function () {
         		}
             	$.ajax({
            	        type : 'post',
-           	        url : rootPath + '/riseSchoolDetailsUp/saveOrupdateSchoolDetails',
+           	        url : rootPath + '/riseSchoolDetailsUp/saveOrupdateUpgradeSchool',
            	        data : {
            	        	riseSchoolId:riseSchoolId,
            	        	itemDiscrible:itemDiscrible,
@@ -42,7 +42,7 @@ $(function () {
             	var riseSchoolId  = $("#riseSchoolId").val();
             	$.ajax({
            	        type : 'post',
-           	        url : rootPath + '/riseSchoolDetailsUp/queryRiseDetails',
+           	        url : rootPath + '/riseSchoolDetailsUp/queryUpgradeSchool',
            	        data : {
            	        	riseSchoolId:riseSchoolId,
            	        	itemName:itemName

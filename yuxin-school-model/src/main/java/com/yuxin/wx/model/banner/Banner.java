@@ -24,6 +24,7 @@ public class Banner extends BaseEntity {
 	private Date updateTime; /* 更新时间 */
 	private Integer isState; /* 状态( 0： 禁用 1：启用) */
 	private Integer orderByNum;//排序号
+	private Integer bannerType;//排序号
 	
 	
 	
@@ -32,7 +33,7 @@ public class Banner extends BaseEntity {
 	}
 	
 	public Banner(Integer id, String bannerName, String bannerDescribe, String bannerContent, String bannerContentUrl,
-	        String bannerImgUrl, String realyBannerImgUrl, Date updateTime, Integer isState, Integer orderByNum) {
+	        String bannerImgUrl, String realyBannerImgUrl, Date updateTime, Integer isState, Integer orderByNum,Integer bannerType) {
 		super();
 		this.id = id;
 		this.bannerName = bannerName;
@@ -44,6 +45,7 @@ public class Banner extends BaseEntity {
 		this.updateTime = updateTime;
 		this.isState = isState;
 		this.orderByNum = orderByNum;
+		this.bannerType = bannerType;
 	}
 
 
@@ -152,6 +154,14 @@ public class Banner extends BaseEntity {
 	
 	public void setRealyBannerImgUrl(String realyBannerImgUrl) {
 		this.realyBannerImgUrl = realyBannerImgUrl;
+	}
+
+	public Integer getBannerType() {
+		return bannerType;
+	}
+
+	public void setBannerType(Integer bannerType) {
+		this.bannerType = bannerType;
 	}
 
 	
