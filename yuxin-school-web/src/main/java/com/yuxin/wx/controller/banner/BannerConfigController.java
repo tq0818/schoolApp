@@ -180,12 +180,13 @@ public class BannerConfigController extends BaseWebController{
      * @return 
      * @throws
      */
-	@RequestMapping(value="/addBanner" , method = RequestMethod.GET)
-	public String addBanner(Model model,Banner banner) {
+	@RequestMapping(value="/addBanner/{id}" , method = RequestMethod.GET)
+	public String addBanner(Model model,Banner banner,@PathVariable Integer id) {
 		if(null!=banner.getId()){
 			Banner bannerVo =bannerService.findBannerById(banner.getId());
 			model.addAttribute("msgPage", bannerVo);	
 		}
+		model.addAttribute("bannerType", id);
 		return "banner/bannerAdd";
 	}
 	/**
@@ -290,7 +291,7 @@ public class BannerConfigController extends BaseWebController{
 	 */
 	@ResponseBody
     @RequestMapping("/addBanner")
-    public JSONObject addBanner(HttpServletRequest request, String bannerName,String bannerContent,String bannerDescribe,String bannerImgUrl) {
+    public JSONObject addBanner(HttpServletRequest request, String bannerName,String bannerContent,String bannerDescribe,String bannerImgUrl,Integer bannerType) {
         JSONObject json = new JSONObject();
         try {
             String htmlUrl=writeHtml(bannerContent);
@@ -302,7 +303,7 @@ public class BannerConfigController extends BaseWebController{
         	banner.setBannerDescribe(bannerDescribe);
         	banner.setUpdateTime(new Date());
         	banner.setIsState(1);
-        	
+        	banner.setBannerType(bannerType);
         	bannerService.addBanner(banner);
 
             json.put(JsonMsg.MSG, JsonMsg.SUCCESS);

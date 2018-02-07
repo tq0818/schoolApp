@@ -4,7 +4,7 @@
 <html>
 <head>
     <%@include file="/decorators/import.jsp" %>
-    <title>首页banner图设置</title>
+    <title>小升初banner图设置</title>
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/manage.css">
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/classes.css">
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/operate.css" />
@@ -22,7 +22,7 @@
                 <span><button onclick="qiyong()" class="btn btn-primary " >启用</button></span>
                 <span><button onclick="jinyong()" class="btn btn-primary " >禁用</button></span>
                 <!-- <span><a href="##" class="btn btn-primary changeOrder" >更改排序</a></span> -->
-                <span><a href="<%=rootPath %>/Banner/addBanner/0" class="btn btn-primary " >添加banner</a></span>
+                <span><a href="<%=rootPath %>/Banner/addBanner/1" class="btn btn-primary " >添加banner</a></span>
             </div>
             <span class="line"></span>
         </div>
@@ -65,7 +65,7 @@
 		$.ajax({
 			url: rootPath + "/Banner/jinYong",
 			type:"post",
-			data:{bannerType:0},
+			data:{bannerType:1},
 			dataType:"html",
 			success:function(data){
 				$('#tableList1').html(data);
@@ -81,7 +81,7 @@
 		$.ajax({
 			url: rootPath + "/Banner/qiYong",
 			type:"post",
-			data:{bannerType:0},
+			data:{bannerType:1},
 			dataType:"html",
 			success:function(data){
 				$('#tableList').html(data);

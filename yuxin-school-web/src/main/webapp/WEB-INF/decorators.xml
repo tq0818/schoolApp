@@ -555,7 +555,7 @@
         <!--首页banner图设置-->
         <pattern>/Banner/comBannerIndex</pattern>
         <!--新增banner图-->
-        <pattern>/Banner/addBanner</pattern>
+        <pattern>/Banner/addBanner/*</pattern>
         <!--修改banner图-->
         <pattern>/Banner/editBanner/*</pattern>
 

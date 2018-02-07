@@ -4,7 +4,7 @@
 <html>
 <head>
     <%@include file="/decorators/import.jsp" %>
-    <title>首页banner图设置</title>
+    <title>banner图设置</title>
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/manage.css">
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/classes.css">
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/operate.css" />
@@ -85,6 +85,7 @@
 </style>
 </head>
 <body style="position:relative;">
+<input type="hidden" id="bannerType" value="${bannerType }">
 <!-- 二级导航 -->
 <jsp:include page="/WEB-INF/jsp/menu/menu_operate.jsp"></jsp:include>
 <%--已上架课程列表--%>
@@ -256,11 +257,17 @@
 	    	 var bannerDescribe=$("#bannerDescribe").val();
 	    	 CKupdate();
 	    	 var bannerContent=editor.document.getBody().getHtml();
+	    	 var bannerType = $("#bannerType").val();
 	    	 if(null!=bannerContent && '<p><br></p>'!=bannerContent){
 	    		 $.ajax({
 	 	 			url: rootPath + "/Banner/addBanner",
 	 	 			type:"post",
-	 	 			data:{"bannerName":bannerName,"bannerContent" : bannerContent,"bannerDescribe":bannerDescribe,"bannerImgUrl" :bannerImgUrl},
+	 	 			data:{"bannerName":bannerName,
+	 	 				"bannerContent" : bannerContent,
+	 	 				"bannerDescribe":bannerDescribe,
+	 	 				"bannerImgUrl" :bannerImgUrl,
+	 	 				"bannerType" :bannerType
+	 	 				},
 	 	 			dataType:"json",
 	 	 			success:function(data){
 	 	 				if(data.msg == 'success'){

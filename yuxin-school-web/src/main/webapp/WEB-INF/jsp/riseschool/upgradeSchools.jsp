@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>学校详情</title>
+    <title>升学</title>
     <link rel="stylesheet" href="<%=rootPath %>/stylesheets/splitscreen.css">
     <link rel="stylesheet" href="<%=rootPath %>/stylesheets/fonts/iconfont.css">
     <link rel="stylesheet" href="<%=rootPath %>/stylesheets/riseschool/schoolDetails.css">
@@ -17,7 +17,7 @@
     <div class="right-side">
         <div class="mainbackground nopadding">
             <div class="heading">
-                <h2 class="h5">学校详情</h2>
+                <h2 class="h5">升学</h2>
                 <span class="line"></span>
             </div>
             <div class="schoolDetailsContent">
