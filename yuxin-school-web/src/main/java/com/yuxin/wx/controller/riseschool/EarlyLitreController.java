@@ -34,7 +34,10 @@ public class EarlyLitreController {
     @RequestMapping(value = "/schoolDetails")
     public String schoolDetails(HttpServletRequest request,Model model,Integer schoolId){
     	//暂时写个死数据
-		schoolId  =1;
+		//schoolId  =1;
+		if(schoolId == null){
+			return null;
+		}
 		//学校对应填写了学校详情哪些信息
 		Map mapList = new HashMap<>();
 		mapList.put("shcoolId", schoolId);
@@ -58,7 +61,10 @@ public class EarlyLitreController {
     @RequestMapping(value = "/upgradeSchools")
     public String upgradeSchools(HttpServletRequest request,Model model,Integer schoolId) {
     	//暂时写个死数据
-    	schoolId  =1;
+    	//schoolId  =1;
+    	if(schoolId == null){
+			return null;
+		}
     	//学校对应填写了升学哪些信息
 		Map mapList = new HashMap<>();
 		mapList.put("shcoolId", schoolId);
