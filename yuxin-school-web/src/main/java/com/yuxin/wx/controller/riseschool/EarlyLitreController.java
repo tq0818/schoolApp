@@ -90,6 +90,12 @@ public class EarlyLitreController {
 
         return "/riseschool/essential";
     }
+	//动态
+	@RequestMapping(value = "/dynamic")
+	public String dynamic(){
+
+		return "/riseschool/dynamic";
+	}
 
 
 

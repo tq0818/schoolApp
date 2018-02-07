@@ -569,6 +569,8 @@
         <pattern>/riseschoolback/upgradeSchools</pattern>
         <!--基本信息-->
         <pattern>/riseschoolback/essential</pattern>
+        <!--动态-->
+        <pattern>/riseschoolback/dynamic</pattern>
 
     </decorator>
 
