@@ -18,6 +18,8 @@ $(function () {
     $('.countManagement').click(function () {
         $('.opacityPopup').fadeIn();
         $('.countPopup').fadeIn();
+        //移除学校新增保存的id
+        $('#schoolBtn').find(".countPopupSave").removeAttr("id");
     });
     //点击保存或取消，隐藏弹窗
     $('.countPopupCancel').click(function () {
@@ -31,7 +33,7 @@ $(function () {
         $('.countPopup').fadeOut();
 
         $('.addNewSchool').fadeOut();
-        if ($(".countPopupSave").attr("id")){
+        if (!$("#schoolSave").attr("id")){
             //id存在则是账户管理密码保存
             updateAccount();
         }else{
@@ -44,6 +46,7 @@ $(function () {
     $('.addSchool').click(function () {
         $('.opacityPopup').fadeIn();
         $('.addNewSchool').fadeIn();
+        $('#schoolBtn').find(".countPopupSave").attr("id","schoolSave");
         //执行查询的省份 2018-2-7 zj
         addQueryRiseSchoolDict(0);
     });
@@ -117,6 +120,7 @@ function addRiseSchoolInfo() {
         success : function(data) {
             if (data.flag == 1){
                 $.msg(data.msg);
+                $('#schoolBtn').find(".countPopupSave").removeAttr("id");
                 //重新请求查询接口
                 queryRiseSchoolInfo(1);
             }else {

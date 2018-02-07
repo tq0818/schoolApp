@@ -189,9 +189,9 @@
 		<label for="">密码：</label>
 		<input type="password" id="password">
 	</div>
-	<div class="countPopupBtn">
+	<div class="countPopupBtn" id="accountBtn">
 		<a href="##" class="btn btn-sm btn-primary countPopupCancel">取消</a>
-		<a href="##" class="btn btn-sm btn-primary countPopupSave" id="accountSave">保存</a>
+		<a href="##" class="btn btn-sm btn-primary countPopupSave">保存</a>
 	</div>
 </div>
 
@@ -248,7 +248,7 @@
 		<label for="">收藏基数：</label>
 		<input type="number" maxlength="5" placeholder="请输入0-10000" max="10000" id="collectBaseCount">
 	</div>
-	<div class="countPopupBtn">
+	<div class="countPopupBtn" id="schoolBtn">
 		<a href="##" class="btn btn-sm btn-primary countPopupCancel">取消</a>
 		<a href="##" class="btn btn-sm btn-primary countPopupSave">保存</a>
 	</div>
