@@ -100,9 +100,11 @@
 </script>
 <script>
     //        二级菜单加active
-
-//        $selectSubMenu('comBannerIndex');
+    $(function () {
+        $selectSubMenu('comBannerIndex');
         $selectSubMenus('comBannerIndex');
+    });
+
 
 </script>
 </body>

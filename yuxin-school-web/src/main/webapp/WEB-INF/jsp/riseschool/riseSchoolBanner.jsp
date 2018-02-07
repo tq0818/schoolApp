@@ -100,9 +100,13 @@
 </script>
 <script>
     //        二级菜单加active
+    $(function(){
+        $selectSubMenu('comBannerIndex');
+        $selectSubMenus('riseSchoolBanner');
+    })
 
-    //        $selectSubMenu('comBannerIndex');
-    $selectSubMenus('riseSchoolBanner');
+
+
 
 </script>
 </body>
