@@ -29,5 +29,5 @@ public interface RiseSchoolDetailsUpMapper extends BaseMapper<RiseSchoolDetailsU
 	/**
 	 * 当前学校全部编辑了的内容
 	 */
-	List<RiseSchoolDetailsUp> queryAllRiseDetails(Integer shcoolId);
+	List<RiseSchoolDetailsUp> queryAllRiseDetails(Map map);
 }

@@ -338,6 +338,7 @@
 
 		<!--小升初接口开发 18-02-05-->
 		<mapper resource="com/yuxin/riseschool/RiseSchoolBackMapper.xml"/>
+		<mapper resource="com/yuxin/riseschool/RiseSchoolDetailsUpMapper.xml"/>
 	</mappers>
 
 </configuration>

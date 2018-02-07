@@ -12,7 +12,7 @@
         <li class="subentry" code="" mark="/berkeley/permissionManagement/${companyId}">基本信息</li>
         <li class="subentry" code="schoolDetails" mark="/riseschoolback/schoolDetails">学校详情</li>
         <li class="subentry" code="" mark="/classManager/getClassInfo/${companyId}">学校风采</li>
-        <li class="subentry" code="" mark="/berkeley/permissionManagement/${companyId}">升学</li>
+        <li class="subentry" code="upgradeSchools" mark="/riseschoolback/upgradeSchools">升学</li>
         <li class="subentry" code="" mark="/berkeley/permissionManagement/${companyId}">动态</li>
     </ul>
 </div>

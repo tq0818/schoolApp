@@ -563,6 +563,8 @@
         <pattern>/riseschoolback/earlyLitre</pattern>
         <!--学校详情-->
         <pattern>/riseschoolback/schoolDetails</pattern>
+        <!--升学-->
+        <pattern>/riseschoolback/upgradeSchools</pattern>
 
 
     </decorator>

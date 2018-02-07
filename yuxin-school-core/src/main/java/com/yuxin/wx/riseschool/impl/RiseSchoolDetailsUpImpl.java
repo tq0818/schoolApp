@@ -57,8 +57,8 @@ public class RiseSchoolDetailsUpImpl implements IRiseSchoolDetailsUpService{
 	}
 
 	@Override
-	public List<RiseSchoolDetailsUp> queryAllRiseDetails(Integer shcoolId) {
-		List<RiseSchoolDetailsUp> list = riseSchoolDetailsUpMapper.queryAllRiseDetails(shcoolId);
+	public List<RiseSchoolDetailsUp> queryAllRiseDetails(Map map) {
+		List<RiseSchoolDetailsUp> list = riseSchoolDetailsUpMapper.queryAllRiseDetails(map);
 		return list;
 	}
 
