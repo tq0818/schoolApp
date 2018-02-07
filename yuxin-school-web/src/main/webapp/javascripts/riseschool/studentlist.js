@@ -115,14 +115,14 @@
                 language: "zh-CN"
             });
             // 初始化数据
-            $this.search();
+            // $this.search();
             //添加学员
             $(document).on('click','.addStudentOk',function(){
             	Form.addTeacher();
             })
             // 收索
             $(".searchContents").on('click', function () {
-                $this.search();
+                // $this.search();
             });
             // 导入用户
             $(".importexcle").on('click', function () {
@@ -239,7 +239,7 @@
             data.proxyOrgName = $('#proxyOrgName').val();
             var tel = $("#stuMobile").val(); // 获取手机号
             if (tel != "") {
-                var telReg = !!tel.match(/^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
+                // var telReg = !!tel.match(/^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
                 // 如果手机号码不能通过验证
                 if(isNaN(tel)){
 					$.msg('请输入有效的手机号码');

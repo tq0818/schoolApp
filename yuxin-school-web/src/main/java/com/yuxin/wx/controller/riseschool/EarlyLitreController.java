@@ -78,5 +78,14 @@ public class EarlyLitreController {
 		model.addAttribute("riseSchoolId", schoolId);
 		 return "/riseschool/upgradeSchools";
 	}
+    //基本信息
+    @RequestMapping(value = "/essential")
+    public String essential(){
+
+        return "/riseschool/essential";
+    }
+
+
+
 }
 
