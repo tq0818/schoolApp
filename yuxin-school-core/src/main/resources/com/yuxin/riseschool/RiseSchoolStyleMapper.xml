@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuxin.wx.riseschool.mapper.RiseSchoolStyleMapper">
+    <resultMap id="riseSchoolStyleMap" type="com.yuxin.wx.model.riseschool.RiseSchoolStyleVo">
+        <result property="id" column="id" />
+        <result property="imgUrl" column="img_url" />
+        <result property="imgDiscrible" column="img_discrible" />
+        <result property="isTop" column="is_top" />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+        <result property="riseSchoolId" column="rise_school_id" />
+        <result property="isCover" column="is_cover" />
+    </resultMap>
+    <sql id="table_columns">
+       id,
+       img_url,
+       img_discrible,
+       is_top,
+       create_time,
+       update_time,
+       rise_school_id,
+       is_cover
+    </sql>
+    <sql id="table_properties">
+       #{id},
+       #{imgUrl},
+       #{imgDiscrible},
+       #{isTop},
+       #{createTime},
+       #{updateTime},
+       #{riseSchoolId},
+       #{isCover}
+    </sql>
+
+    <sql id="page_where">
+        <trim prefix="where" prefixOverrides="and | or ">
+            <if test="imgUrl != null and imgUrl != ''" >img_url=#{imgUrl}</if>
+            <if test="imgDiscrible != null and imgDiscrible != ''" >img_discrible=#{imgDiscrible}</if>
+            <if test="isTop != null" >is_top=#{isTop}</if>
+            <if test="createTime != null and createTime != ''" >create_time=#{createTime}</if>
+            <if test="updateTime != null and updateTime != ''" >update_time=#{updateTime}</if>
+            <if test="riseSchoolId != null" >rise_school_id=#{riseSchoolId}</if>
+            <if test="isCover != null" >is_cover=#{isCover}</if>
+        </trim>
+    </sql>
+
+    <insert id="insertRiseSchoolStyle" parameterType="com.yuxin.wx.model.riseschool.RiseSchoolStyleVo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO rise_school_style (<include refid="table_columns" />)
+        VALUES ( <include refid="table_properties" />)
+    </insert>
+    <update id="updateRiseSchoolStyle" parameterType="com.yuxin.wx.model.riseschool.RiseSchoolStyleVo">
+        UPDATE rise_school_style
+        <trim prefix="set" suffixOverrides=",">
+            <if test="imgUrl != null and imgUrl != ''" >img_url=#{imgUrl},</if>
+            <if test="imgDiscrible != null and imgDiscrible != ''" >img_discrible=#{imgDiscrible},</if>
+            <if test="isTop != null" >is_top=#{isTop},</if>
+            <if test="createTime != null and createTime != ''" >create_time=#{createTime},</if>
+            <if test="updateTime != null and updateTime != ''" >update_time=#{updateTime},</if>
+            <if test="riseSchoolId != null" >rise_school_id=#{riseSchoolId},</if>
+            <if test="isCover != null" >is_cover=#{isCover},</if>
+        </trim>
+        <where>id = #{id}</where>
+    </update>
+    <select id="queryRiseSchoolStyle" parameterType="com.yuxin.wx.model.riseschool.RiseSchoolStyleVo" resultMap="riseSchoolStyleMap">
+      SELECT <include refid="table_columns" />
+        FROM rise_school_style
+        <include refid="page_where" />
+        ORDER BY is_top DESC ,update_time DESC
+        limit #{firstIndex},#{pageSize}
+    </select>
+    <select id="queryRiseSchoolStyleCount" parameterType="com.yuxin.wx.model.riseschool.RiseSchoolStyleVo" resultType="java.lang.Integer">
+        SELECT  count(*)
+          FROM  rise_school_style
+        <include refid="page_where" />
+    </select>
+    <delete id="deleteRiseSchoolStyleById" parameterType="Integer">
+        DELETE FROM rise_school_style WHERE id = #{id}
+    </delete>
+    <select id="queryRiseSchoolStyleById" parameterType="Map" resultType="com.yuxin.wx.model.riseschool.RiseSchoolStyleVo">
+        SELECT <include refid="table_columns" />
+          FROM rise_school_style
+         WHERE rise_school_id = #{schoolId}
+           AND is_cover = #{isCover}
+    </select>
+</mapper>

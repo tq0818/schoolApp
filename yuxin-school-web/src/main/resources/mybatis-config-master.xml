@@ -323,7 +323,7 @@
 		<!--  老师代理机构邀请记录-->
 		<mapper resource="com/yuxin/company/OrganInviteRewardRecordMapper.xml"/>
 		<mapper resource="com/yuxin/company/TeacherInviteRewardRecordMapper.xml"/>
-		
+
 		<!-- 充值卡 -->
 		<mapper resource="com/yuxin/company/CompanyRechargeLibMapper.xml"/>
 		<mapper resource="com/yuxin/company/CompanyRechargePatchMapper.xml"/>
@@ -338,6 +338,8 @@
 
 		<!--小升初接口开发 18-02-05-->
 		<mapper resource="com/yuxin/riseschool/RiseSchoolBackMapper.xml"/>
+		<mapper resource="com/yuxin/riseschool/RiseSchoolManageMapper.xml"/>
+		<mapper resource="com/yuxin/riseschool/RiseSchoolStyleMapper.xml"/>
 	</mappers>
 
 </configuration>
