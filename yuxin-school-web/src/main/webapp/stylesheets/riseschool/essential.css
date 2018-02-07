@@ -1,0 +1,9 @@
+.essentialInfo{font-size: 14px;color: #666;}
+ label{display: inline-block;}
+.essentialInfo input{width: 492px;height: 18px;}
+.essentialInfoContent{width: 580px;margin: auto;}
+.essentialInfoContent .countPopupBtn{text-align: center;}
+.essentialInfoContent .countPopupBtn a{margin: 15px 30px;}
+.essentialInfoContent >div{height: 40px;line-height: 40px;}
+.essentialInfoContent >div.schoolSite{height: auto !important;}
+.schoolSite input{margin: 10px 0 10px 63px;}
