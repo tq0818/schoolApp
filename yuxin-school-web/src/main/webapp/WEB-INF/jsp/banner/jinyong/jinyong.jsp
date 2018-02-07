@@ -9,36 +9,36 @@
 	        <table class="table table-center "id="table" >
                 <tbody>
                 <tr id="tr1">
-					<th width="5%">序号</th>
-					<th width="25%">名称</th>
+					<th width="7%">序号</th>
+					<th width="20%">名称</th>
 					<th width="35%">描述</th>
 					<th width="5%">状态</th>
-					<th width="20%">操作</th>
+					<th width="27%">操作</th>
                 </tr>
                <c:forEach var="m" items="${msgPage.data}" varStatus="status">
 	                <tr>
-	                	<td>${status.index+1}</td>
+	                	<td width="7%">${status.index+1}</td>
 						<c:choose>
 							<c:when test="${fn:length(m.bannerName)>20}">
-								<td width="15%" title="${m.bannerName}">${fn:substring(m.bannerName,0,20)}...</td>
+								<td width="20%" title="${m.bannerName}">${fn:substring(m.bannerName,0,20)}...</td>
 							</c:when>
 							<c:otherwise>
-								<td width="15%">${m.bannerName}</td>
+								<td width="20%">${m.bannerName}</td>
 							</c:otherwise>
 						</c:choose>
 
 						<c:choose>
 							<c:when test="${fn:length(m.bannerDescribe)>40}">
-								<td width="45%" title="${m.bannerDescribe}">${fn:substring(m.bannerDescribe,0,40)}...</td>
+								<td width="40%" title="${m.bannerDescribe}">${fn:substring(m.bannerDescribe,0,40)}...</td>
 							</c:when>
 							<c:otherwise>
-								<td width="45%">${m.bannerDescribe}</td>
+								<td width="40%">${m.bannerDescribe}</td>
 							</c:otherwise>
 						</c:choose>
 	                	<%--<td>${m.bannerName }</td>
 	                	<td>${m.bannerDescribe }</td>--%>
 	                	<td width="5%">禁用</td>
-	                	<td width="20%">
+	                	<td width="27%">
 	                		<a href='javascript:;' onclick="changeStatu(${m.id})" class='btn btn-danger forbidBanner'>启用</a>
 	                   		<a href='<%=rootPath %>/Banner/editBanner/${m.id}'  class='btn btn-warning'>修改</a>
 	                   		<a href='##' class='btn btn-success'>查看</a>
