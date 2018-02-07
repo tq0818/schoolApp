@@ -60,7 +60,8 @@
 			data:{"id":id,"biaoshi": 1},
 			dataType:"html",
 			success:function(data){
-				$('#tableList').html(data);
+				/* $('#tableList').html(data); */
+				window.location.reload();
 			}
 		});
 	}

@@ -270,9 +270,13 @@
 	 	 				},
 	 	 			dataType:"json",
 	 	 			success:function(data){
-	 	 				if(data.msg == 'success'){
+	 	 				if(data.msg == 'success0'){
 	 	 					alert("保存成功");
-	 	 					window.location.href = "comBannerIndex";
+	 	 					window.location.href = "/Banner/comBannerIndex";
+	 	 				}
+	 	 				if(data.msg == 'success1'){
+	 	 					alert("保存成功");
+	 	 					window.location.href = "/Banner/riseBannerIndex";
 	 	 				}
 	 	 			}
 	 	 		});

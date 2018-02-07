@@ -74,7 +74,8 @@
 			data:{"id":id,"biaoshi": 0},
 			dataType:"html",
 			success:function(data){
-				$('#tableList1').html(data);
+				/* $('#tableList1').html(data); */
+				window.location.reload();
 			}
 		});
 	}
