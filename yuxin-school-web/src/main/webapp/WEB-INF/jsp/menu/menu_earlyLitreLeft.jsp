@@ -9,11 +9,11 @@
         <!-- <span class="iconfont return-pic hcancle">&#xe650;</span> -->
     </div>
     <ul id="course_manage" class="system_managelist">
-        <li class="subentry" code="essential" mark="/riseschoolback/essential?schoolId=${riseSchoolId}">基本信息</li>
-        <li class="subentry" code="schoolDetails" mark="/riseschoolback/schoolDetails?schoolId=${riseSchoolId}">学校详情</li>
-        <li class="subentry" code="mien" mark="/riseschoolback/mien?schoolId=${riseSchoolId}">学校风采</li>
-        <li class="subentry" code="upgradeSchools" mark="/riseschoolback/upgradeSchools?schoolId=${riseSchoolId}">升学</li>
-        <li class="subentry" code="dynamic" mark="/riseschoolback/dynamic?schoolId=${riseSchoolId}">动态</li>
+        <li class="subentry" code="essential" mark="/riseschoolback/essential?schoolId=${riseSchoolId}&schoolName=${schoolName}">基本信息</li>
+        <li class="subentry" code="schoolDetails" mark="/riseschoolback/schoolDetails?schoolId=${riseSchoolId}&schoolName=${schoolName}">学校详情</li>
+        <li class="subentry" code="mien" mark="/riseschoolback/mien?schoolId=${riseSchoolId}&schoolName=${schoolName}">学校风采</li>
+        <li class="subentry" code="upgradeSchools" mark="/riseschoolback/upgradeSchools?schoolId=${riseSchoolId}&schoolName=${schoolName}">升学</li>
+        <li class="subentry" code="dynamic" mark="/riseschoolback/dynamic?schoolId=${riseSchoolId}&schoolName=${schoolName}">动态</li>
     </ul>
 </div>
 <script>
