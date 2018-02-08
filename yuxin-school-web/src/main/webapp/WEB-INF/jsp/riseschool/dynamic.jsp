@@ -11,6 +11,10 @@
 
 </head>
 <body>
+<input type="hidden" id="pageSize" value='${result.pageSize}'/>
+<input type="hidden" id="pageNo" value='${result.pageNo}'/>
+<input type="hidden" id="rowCount" value='${result.rowCount}'/>
+<input type="hidden" id="riseSchoolId" value='${riseSchoolId}'/>
 <jsp:include page="/WEB-INF/jsp/menu/menu_earlyLitre.jsp"/>
 <div class="u-wrap admin overflow schoolDetails">
     <jsp:include page="/WEB-INF/jsp/menu/menu_earlyLitreLeft.jsp"></jsp:include>
@@ -24,52 +28,18 @@
                     <ul>
 
                         <li>
+                        <c:forEach items="${result.data}" var="dynamic">
                             <ul class="dynamicList">
-                                <li>动态标题</li>
+                                <li>${dynamic.tittle}</li>
                                 <li class="dashedLi"><span class="dashed"></span></li>
-                                <li> 2018/1/31 24:34 </li>
+                                <li>${dynamic.updateTime}</li>
                                 <li class="dynamicBtn">
                                     <a href="##" class="btn btn-primary btn-sm check">查看</a>
                                     <a href="##" class="btn btn-success btn-sm change">修改</a>
                                     <a href="##" class="btn btn-danger btn-sm delete">删除</a>
                                 </li>
                             </ul>
-                        </li>
-                        <li>
-                            <ul class="dynamicList">
-                                <li>动态标题</li>
-                                <li class="dashedLi"><span class="dashed"></span></li>
-                                <li> 2018/1/31 24:34 </li>
-                                <li class="dynamicBtn">
-                                    <a href="##" class="btn btn-primary btn-sm check">查看</a>
-                                    <a href="##" class="btn btn-success btn-sm change">修改</a>
-                                    <a href="##" class="btn btn-danger btn-sm delete">删除</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <ul class="dynamicList">
-                                <li>动态标题</li>
-                                <li class="dashedLi"><span class="dashed"></span></li>
-                                <li> 2018/1/31 24:34 </li>
-                                <li class="dynamicBtn">
-                                    <a href="##" class="btn btn-primary btn-sm check">查看</a>
-                                    <a href="##" class="btn btn-success btn-sm change">修改</a>
-                                    <a href="##" class="btn btn-danger btn-sm delete">删除</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <ul class="dynamicList">
-                                <li>动态标题</li>
-                                <li class="dashedLi"><span class="dashed"></span></li>
-                                <li> 2018/1/31 24:34 </li>
-                                <li class="dynamicBtn">
-                                    <a href="##" class="btn btn-primary btn-sm check">查看</a>
-                                    <a href="##" class="btn btn-success btn-sm change">修改</a>
-                                    <a href="##" class="btn btn-danger btn-sm delete">删除</a>
-                                </li>
-                            </ul>
+                        </c:forEach>    
                         </li>
 
                     </ul>
