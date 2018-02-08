@@ -2,7 +2,7 @@
 $(function () {
 	var checkId,changeId,deleteId; 
     //点击修改
-    $('.change').click(function () {
+    $('#dataList').on('click','.change',function () {
     	changeId = $(this).attr('id');
     	$.ajax({
    	        type : 'post',
@@ -60,8 +60,7 @@ $(function () {
         $('.addNews').fadeOut();
     });
     //点击查看
-    $('.check').click(function () {
-       
+    $('#dataList').on('click','.check',function () {
         var id = $(this).attr('id');
         $.ajax({
    	        type : 'post',
@@ -78,7 +77,7 @@ $(function () {
         $('.checkNews').fadeIn();
     });
     //点击删除
-    $('.delete').click(function () {
+    $('#dataList').on('click','.delete',function () {
     	var id = $(this).attr('id');
         $.confirm('是否删除该条动态？',function (data) {
             if(data){
@@ -163,7 +162,9 @@ $(function () {
                 $(".loading-bg").show();
             },
             success: function (jsonData) {
-                $.each(jsonData.data,function(i, dynamic) {
+            	$(".loading").hide();
+                $(".loading-bg").hide();
+                $.each(jsonData.data.data,function(i, dynamic) {
                     $('#dataList').append('<li>' +
                         '<ul class="dynamicList">' +
                         '<li>' + dynamic.tittle + '</li>' +
@@ -179,31 +180,32 @@ $(function () {
                     $("#rowCount").remove();
                     $("#pageNo").remove();
                     $("#dataList").after('<input type="hidden" id="pageNo" value="' + jsonData.pageNo + '"/>');
-                    if (jsonData.rowCount > $("#selectCounts").val()) {
-                        $(".pagination").pagination(jsonData.rowCount,
+                       if(jsonData.data.rowCount >jsonData.data.pageSize){ 
+                    	$(".pagination").pagination(jsonData.data.rowCount,
                             {
                                 next_text: "下一页",
                                 prev_text: "上一页",
-                                current_page: jsonData.pageNo - 1,
+                                current_page: jsonData.data.pageNo - 1,
                                 link_to: "javascript:void(0)",
                                 num_display_entries: 5,
-                                items_per_page: jsonData.pageSize,
+                                items_per_page: jsonData.data.pageSize,
                                 num_edge_entries: 1,
                                 callback: function (page, jq) {
                                     var pageNo = page + 1;
-                                    $this.dataList(pageNo);
+                                    //$this.dataList(pageNo);
+                                    dataList(pageNo);
                                 }
                             });
                         $(".pagination").find("li:first").css("background-color", "#fff").css("border", "1px solid #999").css('cursor', 'default');
                         $("#selectCount").val($("#selectCounts").val());
-                    } else {
-                        $(".pagination").html('');
-                    }
-                })
+                       }else{
+                    	   $(".pagination").html('');
+                       }
+                  })
             }
     	})
     }
-    $("#maxCount").remove();
+    /*$("#maxCount").remove();*/
     //进来就执行一次
     dataList(1);
     
