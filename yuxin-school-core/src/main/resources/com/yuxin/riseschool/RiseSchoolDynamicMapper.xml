@@ -37,6 +37,13 @@
 		where rise_school_id = #{riseSchoolId}
 	</select>
 	
+	<select id="checkDynamic" resultMap="riseDynamicMap" parameterType="Integer">
+		select 
+		<include refid="riseDynamicProperties"/>
+		from rise_school_dynamic
+		where id = #{id}
+	</select>
+	
 	<select id="queryAllDynamicCount" parameterType="Integer" resultType="Integer">
         SELECT  count(id)
           FROM  rise_school_dynamic

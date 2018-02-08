@@ -33,10 +33,11 @@
                                 <li>${dynamic.tittle}</li>
                                 <li class="dashedLi"><span class="dashed"></span></li>
                                 <li>${dynamic.updateTime}</li>
+                                
                                 <li class="dynamicBtn">
-                                    <a href="##" class="btn btn-primary btn-sm check">查看</a>
-                                    <a href="##" class="btn btn-success btn-sm change">修改</a>
-                                    <a href="##" class="btn btn-danger btn-sm delete">删除</a>
+                                    <a href="##" class="btn btn-primary btn-sm check" id='${dynamic.id}'>查看</a>
+                                    <a href="##" class="btn btn-success btn-sm change" id='${dynamic.id}'>修改</a>
+                                    <a href="##" class="btn btn-danger btn-sm delete" id='${dynamic.id}'>删除</a>
                                 </li>
                             </ul>
                         </c:forEach>    
@@ -57,14 +58,14 @@
 <%--点击修改--%>
 <div class="opacityPopup"></div>
 <div class="addNews changeNews">
-    <h5>新增动态</h5>
+    <h5>修改</h5>
     <div class="addNewsTitle">
         <label for="">动态标题：</label>
-        <input type="text" placeholder="最多12个字" maxlength="12">
+        <input type="text" id="changeTitle" placeholder="最多12个字" maxlength="12">
     </div>
     <div>
         <label for="">正&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp文：</label>
-        <textarea name="" id="" placeholder="最多2000个字" maxlength="2000"></textarea>
+        <textarea name="" id="changeContent" placeholder="最多2000个字" maxlength="2000"></textarea>
     </div>
     <div class="addNewsBtn">
         <a href="##" class="btn btn-sm btn-danger addNewsBtnCancel">取消</a>
@@ -74,21 +75,18 @@
 
 <%--点击查看--%>
 <div class="addNews checkNews">
-    <h5>新增动态</h5>
+    <h5>查看</h5>
     <div class="addNewsTitle">
         <label for="">动态标题：</label>
-        <span>学校开始招生了</span>
+        <span class="titleCheck"></span>
     </div>
     <div>
         <label for="">正&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp文：</label>
-        <span class="contentCheck">是那只孤飞的蝶，迎着风与霞光潋滟，于末日残存的天边，夺目地翩跹，
-            倘使棠梨的烂漫，能般配无瑕的云烟，心便雀跃地为你 化作春泥，
-            期盼着某天花如霰，这浮世尘烟，太像是天灵盖上一支箭，
-            偶获你一瞥 竟融成柔软心窝一块棉，蕴蓄诗行万千。
+        <span class="contentCheck">
         </span>
     </div>
     <div class="addNewsBtn">
-        <a href="##" class="btn btn-sm btn-success addNewsBtnSave">确定</a>
+        <a href="##" class="btn btn-sm btn-success addNewsBtncheck">确定</a>
     </div>
 </div>
 
