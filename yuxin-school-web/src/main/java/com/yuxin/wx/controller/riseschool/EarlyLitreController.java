@@ -113,10 +113,10 @@ public class EarlyLitreController {
     	if(schoolId == null){
 			return null;
 		}
-    	RiseSchoolDynamicVo riseSchoolDynamic = new RiseSchoolDynamicVo();
+    	/*RiseSchoolDynamicVo riseSchoolDynamic = new RiseSchoolDynamicVo();
 		riseSchoolDynamic.setRiseSchoolId(schoolId);
 		PageFinder<RiseSchoolDynamicVo> pageFinder = riseSchoolDynamicImpl.queryAllDynamic(riseSchoolDynamic);
-		model.addAttribute("result",pageFinder);
+		model.addAttribute("result",pageFinder);*/
     	model.addAttribute("riseSchoolId", schoolId);
 		return "/riseschool/dynamic";
 	}

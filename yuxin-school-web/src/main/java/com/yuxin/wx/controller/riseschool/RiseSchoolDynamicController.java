@@ -31,15 +31,13 @@ public class RiseSchoolDynamicController {
 	 */
 	@ResponseBody
 	@RequestMapping("/queryAllDynamic")
-	public JSONObject queryAllDynamic(HttpServletRequest request,Integer schoolId){
+	public JSONObject queryAllDynamic(HttpServletRequest request,RiseSchoolDynamicVo riseSchoolDynamic){
 		JSONObject json = new JSONObject();
-		if(schoolId == null){
+		if(riseSchoolDynamic.getRiseSchoolId() == null){
 			return null;
 		}
-		RiseSchoolDynamicVo riseSchoolDynamic = new RiseSchoolDynamicVo();
-		riseSchoolDynamic.setRiseSchoolId(schoolId);
 		PageFinder<RiseSchoolDynamicVo> pageFinder = riseSchoolDynamicImpl.queryAllDynamic(riseSchoolDynamic);
-        json.put("result",pageFinder);
+        json.put("data",pageFinder);
         return json;
 	}
 	
