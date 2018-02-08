@@ -142,10 +142,10 @@
 							<a class="countManagement"   href="##">账号管理</a>|
 							<a class="more" href="#3">管理</a>
 							<ul class="none box" style="display: none;">
-								<li><a class=""  href="javaScript:loalUrl(0,'${detail.id}');">基本信息</a></li>
-								<li><a class=""   href="javaScript:loalUrl(1,'${detail.id}');">学校详情</a></li>
-								<li><a class=""  href="javaScript:loalUrl(2,'${detail.id}');">学校风采</a></li>
-								<li><a href="javaScript:loalUrl(3,'${detail.id}');">升学</a></li>
+								<li><a class=""  href="javaScript:loalUrl(0,'${detail.id}','${detail.schoolName}');">基本信息</a></li>
+								<li><a class=""   href="javaScript:loalUrl(1,'${detail.id}','${detail.schoolName}');">学校详情</a></li>
+								<li><a class=""  href="javaScript:loalUrl(2,'${detail.id}','${detail.schoolName}');">学校风采</a></li>
+								<li><a href="javaScript:loalUrl(3,'${detail.id}','${detail.schoolName}');">升学</a></li>
 							</ul>
 						</td>
 						<td style="display:none" id="${detail.id}">${detail.id}</td>
@@ -206,7 +206,7 @@
 	<div class="schoolCount">
 		<i class="icon iconfont star">&#xe605;</i>
 		<label for="" class="noMargin">学校账号：</label>
-		<input type="text" id="userName" placeholder="请输入学校管理员账号">
+		<input type="text" id="userName" placeholder="请输入学校管理员账号" onblur="judgeAccountName()">
 		<span>初始密码为：111111</span>
 	</div>
 	<div>
@@ -234,7 +234,7 @@
 	</div>
 	<div>
 		<label for="">学校网址：</label>
-		<input type="text" id="schoolWeb">
+		<input type="text" id="schoolWeb" onblur="judgeSchoolWeb()">
 	</div>
 	<div>
 		<label for="">学校传真：</label>
@@ -262,7 +262,7 @@
 <script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/plugins/jquery-validation/jquery.validate.js"></script>
-<script type="text/javascript" src="<%=rootPath%>/javascripts/common/DateUtils"></script>
+<%--<script type="text/javascript" src="<%=rootPath%>/javascripts/common/DateUtils"></script>--%>
 <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>

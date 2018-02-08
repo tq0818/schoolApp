@@ -1,8 +1,11 @@
 package com.yuxin.wx.riseschool.impl;
 
+import com.yuxin.wx.api.auth.IAuthUserRoleService;
 import com.yuxin.wx.api.riseschool.RiseSchoolManageService;
 import com.yuxin.wx.api.user.IUsersService;
+import com.yuxin.wx.common.Constant;
 import com.yuxin.wx.common.PageFinder;
+import com.yuxin.wx.model.auth.AuthUserRole;
 import com.yuxin.wx.model.riseschool.RiseSchoolManageVo;
 import com.yuxin.wx.model.riseschool.SearchRiseSchoolVo;
 import com.yuxin.wx.model.riseschool.SysDictVo;
@@ -11,6 +14,7 @@ import com.yuxin.wx.riseschool.mapper.RiseSchoolManageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 @Service
@@ -19,6 +23,8 @@ public class RiseSchoolManageServiceImpl implements RiseSchoolManageService {
     private IUsersService usersServiceImpl;
     @Autowired
     private RiseSchoolManageMapper riseSchoolManageMapper;
+    @Autowired
+    private IAuthUserRoleService authUserRoleServiceImpl;
     @Override
     public void insertRiseSchoolInfo(RiseSchoolManageVo riseSchoolManageVo) {
         riseSchoolManageMapper.insertRiseSchoolInfo(riseSchoolManageVo);
@@ -42,6 +48,24 @@ public class RiseSchoolManageServiceImpl implements RiseSchoolManageService {
         if (users.getId() == null){
             throw new Exception("用户插入失败!");
         }
+        //添加用户关系表
+        usersServiceImpl.insertUserCompanyRalation(users.getId(),users.getCompanyId());
+        Integer curUserId = (Integer) map.get("curUserId");
+        for (int i = 0;i < 2;i++){
+            AuthUserRole authUserRole=new AuthUserRole();
+            authUserRole.setUserId(users.getId());
+            if (i == 0){
+                authUserRole.setRoleUid("14");
+            }else{
+                authUserRole.setRoleUid("15");
+            }
+            authUserRole.setCreateTime(new Date());
+            authUserRole.setCreator(curUserId+"");
+            authUserRole.setUpdateTime(new Date());
+            authUserRole.setUpdator(curUserId+"");
+            authUserRoleServiceImpl.insert(authUserRole);
+        }
+
         riseSchoolManageVo.setUserId(users.getId());
         //插入学校信息
         this.insertRiseSchoolInfo(riseSchoolManageVo);

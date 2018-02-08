@@ -53,10 +53,10 @@
                 <a class="countManagement"   href="##">账号管理</a>|
                 <a class="more" href="#3">管理</a>
                 <ul class="none box" style="display: none;">
-                    <li><a class=""  href="javaScript:loalUrl(0,'${detail.id}');">基本信息</a></li>
-                    <li><a class=""   href="javaScript:loalUrl(1,'${detail.id}');">学校详情</a></li>
-                    <li><a class=""  href="javaScript:loalUrl(2,'${detail.id}');">学校风采</a></li>
-                    <li><a href="javaScript:loalUrl(3,'${detail.id}');">升学</a></li>
+                    <li><a class=""  href="javaScript:loalUrl(0,'${detail.id}','${detail.schoolName}');">基本信息</a></li>
+                    <li><a class=""   href="javaScript:loalUrl(1,'${detail.id}','${detail.schoolName}');">学校详情</a></li>
+                    <li><a class=""  href="javaScript:loalUrl(2,'${detail.id}','${detail.schoolName}');">学校风采</a></li>
+                    <li><a href="javaScript:loalUrl(3,'${detail.id}','${detail.schoolName}');">升学</a></li>
                 </ul>
             </td>
             <td style="display:none" id="${detail.id}">${detail.id}</td>

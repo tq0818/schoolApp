@@ -14,6 +14,7 @@
 <jsp:include page="/WEB-INF/jsp/menu/menu_earlyLitre.jsp"/>
 <div class="u-wrap admin overflow schoolDetails">
     <jsp:include page="/WEB-INF/jsp/menu/menu_earlyLitreLeft.jsp"></jsp:include>
+    <input type="hidden" id="schoolId" value="${schoolId}">
     <div class="right-side">
         <div class="mainbackground nopadding">
             <div class="heading">
@@ -24,44 +25,44 @@
                 <div class="essentialInfoContent">
                     <div>
                         <label for="" class="noMargin">学校名称：</label>
-                        <span>成都三原外国语学校</span>
+                        <span id="schoolName">${result.schoolName}</span>
                     </div>
                     <div>
                         <label for="" class="noMargin">招生方式：</label>
-                        <span>自主招生</span>
+                        <span id="enRollMent">${result.enrollmentName}</span>
                     </div>
                     <div class="schoolSite">
                         <label for="" class="noMargin">学校地址：</label>
-                        <select name="" id="">
-                            <option value="">四川</option>
+                        <select name="" id="province" onclick="queryRiseSchoolDict(1)">
+                            <option value="">${result.provinceName}</option>
                         </select>
-                        <select name="" id="">
-                            <option value="">成都</option>
+                        <select name="" id="city" onclick="queryRiseSchoolDict(2)">
+                            <option value="">${result.cityName}</option>
                         </select>
-                        <select name="" id="">
-                            <option value="">高新区</option>
+                        <select name="" id="area">
+                            <option value="">${result.districtName}</option>
                         </select>
-                        <br/><input type="text" placeholder="请输入详细地址" maxlength="60" value="四川省成都市高新区天府三街">
+                        <br/><input type="text" id="schoolAddress" placeholder="请输入详细地址" maxlength="60" value="${result.detailAddress}">
                     </div>
                     <div>
                         <label for="">学校网址：</label>
-                        <input type="text" value="www.baidu.com">
+                        <input type="text" id="schoolWeb" value="${result.schoolWeb}">
                     </div>
                     <div>
                         <label for="">学校传真：</label>
-                        <input type="text" value="028233456">
+                        <input type="text" id="schoolFax" value="${result.schoolFax}">
                     </div>
                     <div>
                         <label for="">公交路线：</label>
-                        <input type="text" maxlength="200" value="112/113到天府三街站    地铁1号线到天府三街站">
+                        <input type="text" id="busRoad" maxlength="200" value="${result.busRoad}">
                     </div>
                     <div>
                         <label for="">收藏基数：</label>
-                        <input type="text" maxlength="4" placeholder="请输入0-1000" value="100">
+                        <input type="text" id="collectBaseCount" maxlength="5" placeholder="请输入0-10000" value="${result.baseNum}">
                     </div>
                     <div class="countPopupBtn">
                         <a href="##" class="btn btn-sm btn-primary countPopupCancel">取消</a>
-                        <a href="##" class="btn btn-sm btn-primary countPopupSave">保存</a>
+                        <a href="javaScript:updateRiseSchoolInfo();" class="btn btn-sm btn-primary countPopupSave">保存</a>
                     </div>
                 </div>
 

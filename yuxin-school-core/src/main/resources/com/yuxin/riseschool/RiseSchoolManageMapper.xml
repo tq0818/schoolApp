@@ -110,30 +110,34 @@
         <where>id = #{id}</where>
     </update>
     <select id="queryRiseSchoolInfo" parameterType="com.yuxin.wx.model.riseschool.RiseSchoolManageVo" resultMap="riseSchoolInfoMap">
-      SELECT rsi.id             AS id,
-             rsi.school_name    AS school_name,
-             rsi.enrollment_type AS enrollment_type,
-             rsi.province_code  AS province_code,
-             rsi.city_code      AS city_code,
-             rsi.district       AS district,
-             rsi.is_top         AS is_top,
-             rsi.is_shalve      AS is_shalve,
-             rsi.create_time    AS create_time,
-             rsi.update_time    AS update_time,
-             rsi.detail_address AS detail_address,
-             rsi.school_web     AS school_web,
-             rsi.school_fax     AS school_fax,
-             rsi.bus_road       AS bus_road,
-             rsi.user_id       AS user_id,
-             rsi.collect_num   AS collect_num,
-             rsi.base_num      AS base_num,
-             uss.userName AS userName,
-            (SELECT item_name FROM sys_rise_school_dict srsd WHERE srsd.item_code = rsi.enrollment_type) AS enrollmentName,
-            (SELECT item_name FROM sys_rise_school_dict srsd WHERE srsd.item_code = rsi.province_code) AS provinceName,
-            (SELECT item_name FROM sys_rise_school_dict srsd WHERE srsd.item_code = rsi.city_code) AS cityName,
-            (SELECT item_name FROM sys_rise_school_dict srsd WHERE srsd.item_code = rsi.district) AS districtName
-        FROM rise_school_info rsi
-        INNER JOIN users uss ON uss.id = rsi.user_id
+        SELECT rsi.id             AS id,
+                rsi.school_name    AS school_name,
+                rsi.enrollment_type AS enrollment_type,
+                rsi.province_code  AS province_code,
+                rsi.city_code      AS city_code,
+                rsi.district       AS district,
+                rsi.is_top         AS is_top,
+                rsi.is_shalve      AS is_shalve,
+                rsi.create_time    AS create_time,
+                rsi.update_time    AS update_time,
+                rsi.detail_address AS detail_address,
+                rsi.school_web     AS school_web,
+                rsi.school_fax     AS school_fax,
+                rsi.bus_road       AS bus_road,
+                rsi.user_id       AS user_id,
+                rsi.collect_num   AS collect_num,
+                rsi.base_num      AS base_num,
+                uss.userName AS userName,
+                srsdo.item_name AS enrollmentName,
+                srsdp.item_name AS provinceName,
+                srsdq.item_name AS cityName,
+                srsdr.item_name AS districtName
+          FROM rise_school_info rsi
+          INNER JOIN users uss ON uss.id = rsi.user_id
+          INNER JOIN sys_rise_school_dict srsdo ON srsdo.item_code = rsi.enrollment_type
+          INNER JOIN sys_rise_school_dict srsdp ON srsdp.item_code = rsi.province_code
+          INNER JOIN sys_rise_school_dict srsdq ON srsdq.item_code = rsi.city_code
+          INNER JOIN sys_rise_school_dict srsdr ON srsdr.item_code = rsi.district
         <trim prefix="where" prefixOverrides="and | or ">
             <if test="schoolName != null and schoolName != ''">rsi.school_name=#{schoolName}</if>
             <if test="enrollmentType != null and enrollmentType != ''">rsi.enrollment_type=#{enrollmentType}</if>
@@ -149,6 +153,7 @@
             <if test="schoolFax != null and schoolFax != ''">rsi.school_fax=#{schoolFax}</if>
             <if test="busRoad != null and busRoad != ''">rsi.bus_road=#{busRoad}</if>
             <if test="userId != null">rsi.user_id =#{userId}</if>
+            <if test="id != null">rsi.id =#{id}</if>
         </trim>
         ORDER BY rsi.is_top DESC ,rsi.update_time DESC
         limit #{firstIndex},#{pageSize}
@@ -183,13 +188,17 @@
                 rsi.collect_num   AS collect_num,
                 rsi.base_num      AS base_num,
                 uss.userName AS userName,
-                (SELECT item_name FROM sys_rise_school_dict srsd WHERE srsd.item_code = rsi.enrollment_type) AS enrollmentName,
-                (SELECT item_name FROM sys_rise_school_dict srsd WHERE srsd.item_code = rsi.province_code) AS provinceName,
-                (SELECT item_name FROM sys_rise_school_dict srsd WHERE srsd.item_code = rsi.city_code) AS cityName,
-                (SELECT item_name FROM sys_rise_school_dict srsd WHERE srsd.item_code = rsi.district) AS districtName
-        FROM rise_school_info rsi
-        INNER JOIN users uss ON uss.id = rsi.user_id
-        WHERE 1 = 1
+                srsdo.item_name AS enrollmentName,
+                srsdp.item_name AS provinceName,
+                srsdq.item_name AS cityName,
+                srsdr.item_name AS districtName
+          FROM rise_school_info rsi
+          INNER JOIN users uss ON uss.id = rsi.user_id
+          INNER JOIN sys_rise_school_dict srsdo ON srsdo.item_code = rsi.enrollment_type
+          INNER JOIN sys_rise_school_dict srsdp ON srsdp.item_code = rsi.province_code
+          INNER JOIN sys_rise_school_dict srsdq ON srsdq.item_code = rsi.city_code
+          INNER JOIN sys_rise_school_dict srsdr ON srsdr.item_code = rsi.district
+          WHERE 1 = 1
         <if test="schoolName != null and schoolName != ''"> AND rsi.school_name LIKE '%${schoolName}%'</if>
         <if test="provinceCode != null and provinceCode != ''"> AND  rsi.province_code = #{provinceCode}</if>
         <if test="cityCode != null and cityCode != ''"> AND rsi.city_code = #{cityCode}</if>

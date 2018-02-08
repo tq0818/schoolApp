@@ -606,4 +606,14 @@
 		insert into users( <include refid="table_columns_k" /> )
 		VALUES (<include refid="entity_properties" />)
 	</insert>
+
+	<select id="queryByNameCount" resultType="java.lang.Integer" parameterType="String" >
+		select count(*)
+		  from users
+		where username = #{userName}
+	</select>
+	<insert id="insertUserCompanyRalation" parameterType="map" useGeneratedKeys="true">
+		insert into users_comany_relation(user_id,company_id,is_used)
+		values(#{userId},#{companyId},1)
+	</insert>
 </mapper>

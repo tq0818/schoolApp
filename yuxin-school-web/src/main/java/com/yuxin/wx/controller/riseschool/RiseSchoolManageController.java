@@ -8,6 +8,7 @@ import com.yuxin.wx.model.riseschool.RiseSchoolManageVo;
 import com.yuxin.wx.model.riseschool.SearchRiseSchoolVo;
 import com.yuxin.wx.model.riseschool.SysDictVo;
 import com.yuxin.wx.model.user.Users;
+import com.yuxin.wx.utils.WebUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.util.ByteSource;
@@ -44,6 +45,7 @@ public class RiseSchoolManageController {
     @RequestMapping(value = "/addRiseSchoolInfo")
     public JSONObject addRiseSchoolInfo(HttpServletRequest request, RiseSchoolManageVo riseSchoolManageVo, Users users){
         Map map = new HashMap<>();
+        Integer curUserId = WebUtils.getCurrentUserId(request);
         JSONObject json = new JSONObject();
         riseSchoolManageVo.setIsTop(0);
         riseSchoolManageVo.setIsShalve(0);
@@ -52,8 +54,10 @@ public class RiseSchoolManageController {
         riseSchoolManageVo.setCreateTime(date);
         riseSchoolManageVo.setUpdateTime(date);
         users.setPassword(new Md5Hash("111111", ByteSource.Util.bytes(users.getUsername() + "salt")).toHex());
+        users.setCompanyId(WebUtils.getCurrentCompanyId());
         map.put("riseSchoolManageVo",riseSchoolManageVo);
         map.put("users",users);
+        map.put("curUserId",curUserId);
         try {
             riseSchoolManageServiceImpl.insertRiseSchoolInfoAndUsers(map);
             json.put("flag","1");//成功
@@ -162,5 +166,21 @@ public class RiseSchoolManageController {
         json.put("msg","成功");
         return json;
     }
+
+    /**
+     * 判断账号是否已经存在
+     * @param request
+     * @param username
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/judgeAccountName")
+    public JSONObject judgeAccountName(HttpServletRequest request,String username){
+        JSONObject json = new JSONObject();
+        Integer u = usersServiceImpl.queryByNameCount(username);
+        json.put("count",u.intValue());
+        return json;
+    }
+
 
 }

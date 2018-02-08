@@ -132,4 +132,6 @@ public interface UsersMapper extends BaseMapper<Users> {
 
 	void insertUsersComanyRelation(UsersComanyRelation ucr);
 	void insertSchoolManage(Users users);
+	Integer queryByNameCount(String userName);
+	void insertUserCompanyRalation(Map<String,Object> params);
 }

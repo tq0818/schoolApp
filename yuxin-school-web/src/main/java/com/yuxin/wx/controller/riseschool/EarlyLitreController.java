@@ -33,13 +33,14 @@ public class EarlyLitreController {
 	@Autowired
 	private IRiseSchoolDetailsUpService riseSchoolDetailsUpImpl;
     @Autowired
+    private RiseSchoolManageService riseSchoolManageServiceImpl;
     private RiseSchoolManageService riseSchoolInfoServiceImpl;
     @Autowired
 	private IRiseSchoolDynamicService riseSchoolDynamicImpl;
     //私立校后台-学校管理
     @RequestMapping(value = "/earlyLitre")
     public String earlyLitre(HttpServletRequest request, Model model,RiseSchoolManageVo riseSchoolManageVo){
-        PageFinder<RiseSchoolManageVo> pageFinder = riseSchoolInfoServiceImpl.queryRiseSchoolInfo(riseSchoolManageVo);
+        PageFinder<RiseSchoolManageVo> pageFinder = riseSchoolManageServiceImpl.queryRiseSchoolInfo(riseSchoolManageVo);
         model.addAttribute("result",pageFinder.getData());
         model.addAttribute("pageNo",riseSchoolManageVo.getPage());
         model.addAttribute("rowCount",pageFinder.getRowCount());
@@ -103,8 +104,14 @@ public class EarlyLitreController {
 	}
     //基本信息
     @RequestMapping(value = "/essential")
-    public String essential(){
-
+    public String essential(HttpServletRequest request,Model model,Integer schoolId,String schoolName){
+    	RiseSchoolManageVo riseSchoolManageVo = new RiseSchoolManageVo();
+    	riseSchoolManageVo.setId(schoolId);
+		PageFinder<RiseSchoolManageVo> pageFinder = riseSchoolManageServiceImpl.queryRiseSchoolInfo(riseSchoolManageVo);
+		List<RiseSchoolManageVo> list = pageFinder.getData();
+		model.addAttribute("result",(RiseSchoolManageVo)list.get(0));
+		model.addAttribute("schoolId",schoolId);
+		model.addAttribute("schoolName",schoolName);
         return "/riseschool/essential";
     }
 	//动态

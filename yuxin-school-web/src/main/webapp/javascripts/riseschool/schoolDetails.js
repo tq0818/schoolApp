@@ -60,3 +60,91 @@ $(function () {
         }
     });
 });
+
+//区域联动查询
+function queryRiseSchoolDict(areaFlag) {
+    var itemType = '';
+    var itemCode = '';
+    if (areaFlag == 1){
+    	if ($("#province").val() == null || $("#province").val() == ''){
+            itemType = 'PROVINCE';
+		}else {
+            itemType = 'CITY';
+            itemCode = $("#province").val();
+		}
+    }else if (areaFlag == 2){
+        itemType = 'DISTRICT';
+        itemCode = $("#city").val();
+    }
+    $.ajax({
+        url:rootPath +"/riseSchoolManage/queryRiseSchoolDict",
+        data:{"itemType":itemType,
+            "itemCode":itemCode},
+        dataType:"json",
+        success:function (data) {
+            //拼接下拉值
+            if (data.flag == 1){
+                var html = '';
+                for (var i in data.dictList){
+                    html = html + "<option value=\""+data.dictList[i].itemCode+"\">"+data.dictList[i].itemName+"</option>"
+                }
+                if (itemType == 'PROVINCE'){
+                    html = "<option value=\"\">请选择省份</option>" + html;
+                    $("#province").html("").html(html);
+                }else if (itemType == 'CITY'){
+                    html = "<option value=\"\">请选择市</option>" + html;
+                    $("#city").html("").html(html);
+                }else if (itemType == 'DISTRICT'){
+                    html = "<option value=\"\">请选择区</option>" + html;
+                    $("#area").html("").html(html);
+                }
+            }
+        }
+    });
+}
+
+//新增学校请求接口 2018-2-7 zj
+function updateRiseSchoolInfo() {
+    var province = $("#province").val();
+    var city = $("#city").val();
+    var district = $("#area").val();
+    var schoolAddress = $("#schoolAddress").val();
+    var schoolWeb = $("#schoolWeb").val();
+    var schoolFax = $("#schoolFax").val();
+    var busRoad = $("#busRoad").val();
+    var collectBaseCount = $("#collectBaseCount").val();
+    var schoolId = $("#schoolId").val();
+    if (province == null || province == '' || city == null || city == '' || district == null || district == ''
+        || schoolAddress == null || schoolAddress == ''){
+        $.msg("学校地址存在未录入项");
+        return ;
+    }
+    if (collectBaseCount == null || collectBaseCount == ''){
+        collectBaseCount = 0;
+	}
+    $.ajax({
+        url : rootPath +"/riseSchoolManage/updateRiseSchoolInfo",
+        data : {
+            "provinceCode":province,
+            "cityCode":city,
+            "district":district,
+            "detailAddress":schoolAddress,
+            "schoolWeb":schoolWeb,
+            "schoolFax":schoolFax,
+            "busRoad":busRoad,
+            "baseNum":collectBaseCount,
+			"id":schoolId
+        },
+        dataType:"json",
+        success : function(data) {
+            if (data.flag == 1){
+                $.msg(data.msg);
+                // $('#schoolBtn').find(".countPopupSave").removeAttr("id");
+                // //重新请求查询接口
+                // queryRiseSchoolInfo(1);
+            }else {
+                $.msg(data.msg);
+            }
+        }
+    });
+}

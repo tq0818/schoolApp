@@ -579,4 +579,17 @@ public class UsersServiceImpl extends BaseServiceImpl implements IUsersService {
 	public void insertSchoolManage(Users users) {
 		usersMapper.insertSchoolManage(users);
 	}
+
+	@Override
+	public Integer queryByNameCount(String userName) {
+		return usersMapper.queryByNameCount(userName);
+	}
+
+	@Override
+	public void insertUserCompanyRalation(Integer userId, Integer companyId) {
+		Map<String,Object> params=new HashMap<String,Object>();
+		params.put("userId", userId);
+		params.put("companyId",companyId);
+		usersMapper.insertUserCompanyRalation(params);
+	}
 }

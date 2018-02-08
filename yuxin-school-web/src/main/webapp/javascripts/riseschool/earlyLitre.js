@@ -44,6 +44,18 @@ $(function () {
     });
     //点击添加学校按钮弹窗
     $('.addSchool').click(function () {
+        //先清除之前的值再弹窗,相当于初始化页面
+        $("#schoolName").val("");
+        $("#userName").val("");
+        $("#province").html("<option value=\"\">学校所在省份</option>");
+        $("#city").html("<option value=\"\">学校所在市</option>");
+        $("#district").html("<option value=\"\">学校所在区</option>");
+        $("#schoolAddress").val("");
+        $("#schoolWeb").val("");
+        $("#schoolFax").val("");
+        $("#busRoad").val("");
+        $("#collectBaseCount").val("");
+
         $('.opacityPopup').fadeIn();
         $('.addNewSchool').fadeIn();
         $('#schoolBtn').find(".countPopupSave").attr("id","schoolSave");
@@ -100,6 +112,9 @@ function addRiseSchoolInfo() {
     if (province == null || province == '' || city == null || city == '' || district == null || district == ''
         || schoolAddress == null || schoolAddress == ''){
         $.msg("学校地址存在未录入项");
+        return ;
+    }
+    if (!confirm("是否添加")){
         return ;
     }
     $.ajax({
@@ -279,7 +294,7 @@ function updateRiseSchool(id,isShalves,isTop) {
         success: function (data) {
             if (data.flag == 1){
                 //成功之后进行刷新
-                queryRiseSchoolInfo(1);
+                queryDimRiseSchoolInfo(1);
             }else {
                 $.msg(data.msg);
             }
@@ -317,15 +332,56 @@ function setUserNameAndId(userId,userName) {
 }
 
 //页面跳转
-function loalUrl(flag,schoolId) {
+function loalUrl(flag,schoolId,schoolName) {
     if (flag == 0){//基本
-
+        window.location.href = rootPath + "/riseschoolback/essential?schoolId="+schoolId+"&schoolName="+schoolName;
     }else if (flag == 1){//详情
-        window.location.href = rootPath + "/riseschoolback/schoolDetails?schoolId="+schoolId;
+        window.location.href = rootPath + "/riseschoolback/schoolDetails?schoolId="+schoolId+"&schoolName="+schoolName;
     }else if (flag == 2){//风采
 
     }else if (flag == 3){//升学
-        window.location.href = rootPath + "/riseschoolback/upgradeSchools?schoolId="+schoolId;
+        window.location.href = rootPath + "/riseschoolback/upgradeSchools?schoolId="+schoolId+"&schoolName="+schoolName;
+    }
+}
+
+//正则判断学校账号是否是字母和数字的组合
+var regNum = /^[0-9]+$/;
+var regStr = /^[a-zA-Z]+$/;
+function judgeAccountName() {
+    var userName = $("#userName").val();
+    if (userName == null || userName == ''){
+        return ;
+    }
+    if (!regNum.test(userName)&&!regStr.test(userName)){
+        //校验账号是否重复
+        $.ajax({
+            url:rootPath + "/riseSchoolManage/judgeAccountName",
+            data:{"username":userName},
+            dataType:"json",
+            success:function (data) {
+                if (data.count != 0){
+                    $.msg("该账号已存在!",1000);
+                    $("#userName").val("");
+                    return ;
+                }
+            }
+        });
+    }else {
+        $.msg("账号只支持字母和数字的组合",1000);
+        return ;
+    }
+}
+
+//检验网址
+var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
+function judgeSchoolWeb() {
+    var schoolWeb = $("#schoolWeb").val();
+    if (schoolWeb != null || schoolWeb != ''){
+        if (!reg.test(schoolWeb)){
+            $.msg("请输入有效的网址!",1000);
+            $("#schoolWeb").val("")
+            return ;
+        }
     }
 }
 

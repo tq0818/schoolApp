@@ -393,4 +393,8 @@ public interface IUsersService  {
     UsersAreaRelation findUsersAreaRelation(Integer id);
 
 	void insertSchoolManage(Users users);
+
+	Integer queryByNameCount(String userName);
+
+	void insertUserCompanyRalation(Integer userId,Integer companyId);
 }
