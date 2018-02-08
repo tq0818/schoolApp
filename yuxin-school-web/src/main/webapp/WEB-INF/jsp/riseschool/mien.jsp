@@ -105,6 +105,7 @@
 </div>
 
 <script src="<%=rootPath %>/javascripts/riseschool/mien.js"></script>
+<script src="<%=rootPath %>/javascripts/riseschool/cutPic.js"></script>
 <script>
     //分页
      $(".pagination").pagination('',
