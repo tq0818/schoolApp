@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="<%=rootPath %>/stylesheets/fonts/iconfont.css">
     <link rel="stylesheet" href="<%=rootPath %>/stylesheets/riseschool/schoolDetails.css">
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/dynamic.css">
+    <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
 
 </head>
 <body>
@@ -22,6 +23,7 @@
         <div class="mainbackground nopadding">
             <div class="heading">
                 <h2 class="h5">动态</h2>
+                <a href="##" class="btn btn-primary btn-mb addNewDynamic">新增</a>
                 <span class="line"></span>
             </div>
             <div class="schoolDetailsContent essentialInfo">
@@ -33,17 +35,21 @@
                                 <li>${dynamic.tittle}</li>
                                 <li class="dashedLi"><span class="dashed"></span></li>
                                 <li>${dynamic.updateTime}</li>
-                                
                                 <li class="dynamicBtn">
-                                    <a href="##" class="btn btn-primary btn-sm check" id='${dynamic.id}'>查看</a>
-                                    <a href="##" class="btn btn-success btn-sm change" id='${dynamic.id}'>修改</a>
-                                    <a href="##" class="btn btn-danger btn-sm delete" id='${dynamic.id}'>删除</a>
+                                    <a href="##" class="btn btn-primary btn-sm check">查看</a>
+                                    <a href="##" class="btn btn-success btn-sm change">修改</a>
+                                    <a href="##" class="btn btn-danger btn-sm delete">删除</a>
                                 </li>
                             </ul>
                         </c:forEach>    
                         </li>
 
                     </ul>
+            </div>
+            <div class="pages">
+                <ul class="pagination">
+
+                </ul>
             </div>
         </div>
     </div>
@@ -58,14 +64,14 @@
 <%--点击修改--%>
 <div class="opacityPopup"></div>
 <div class="addNews changeNews">
-    <h5>修改</h5>
+    <h5>新增动态</h5>
     <div class="addNewsTitle">
         <label for="">动态标题：</label>
-        <input type="text" id="changeTitle" placeholder="最多12个字" maxlength="12">
+        <input type="text" placeholder="最多12个字" maxlength="12">
     </div>
     <div>
         <label for="">正&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp文：</label>
-        <textarea name="" id="changeContent" placeholder="最多2000个字" maxlength="2000"></textarea>
+        <textarea name="" id="" placeholder="最多2000个字" maxlength="2000"></textarea>
     </div>
     <div class="addNewsBtn">
         <a href="##" class="btn btn-sm btn-danger addNewsBtnCancel">取消</a>
@@ -75,23 +81,42 @@
 
 <%--点击查看--%>
 <div class="addNews checkNews">
-    <h5>查看</h5>
+    <h5>动态</h5>
     <div class="addNewsTitle">
         <label for="">动态标题：</label>
-        <span class="titleCheck"></span>
+        <span>学校开始招生了</span>
     </div>
     <div>
         <label for="">正&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp文：</label>
-        <span class="contentCheck">
+        <span class="contentCheck">是那只孤飞的蝶，迎着风与霞光潋滟，于末日残存的天边，夺目地翩跹，
+            倘使棠梨的烂漫，能般配无瑕的云烟，心便雀跃地为你 化作春泥，
+            期盼着某天花如霰，这浮世尘烟，太像是天灵盖上一支箭，
+            偶获你一瞥 竟融成柔软心窝一块棉，蕴蓄诗行万千。
         </span>
     </div>
     <div class="addNewsBtn">
-        <a href="##" class="btn btn-sm btn-success addNewsBtncheck">确定</a>
+        <a href="##" class="btn btn-sm btn-success addNewsBtnSave">确定</a>
     </div>
 </div>
 
 <script src="<%=rootPath %>/javascripts/riseschool/dynamic.js"></script>
 <script>
+    //分页
+    $(".pagination").pagination('',
+        {
+            next_text: "下一页",
+            prev_text: "上一页",
+            current_page: '',
+            link_to: "javascript:void(0)",
+            num_display_entries: 8,
+            items_per_page: 1,
+            num_edge_entries: '',
+            callback: function (page, jq) {
+                var pageNo = page + 1;
+
+            }
+        }
+    );
 //    左侧active切换
     $selectSubMenus('dynamic');
 </script>

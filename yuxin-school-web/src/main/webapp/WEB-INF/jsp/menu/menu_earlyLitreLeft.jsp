@@ -11,7 +11,7 @@
     <ul id="course_manage" class="system_managelist">
         <li class="subentry" code="essential" mark="/riseschoolback/essential">基本信息</li>
         <li class="subentry" code="schoolDetails" mark="/riseschoolback/schoolDetails">学校详情</li>
-        <li class="subentry" code="" mark="/classManager/getClassInfo/${companyId}">学校风采</li>
+        <li class="subentry" code="mien" mark="/riseschoolback/mien">学校风采</li>
         <li class="subentry" code="upgradeSchools" mark="/riseschoolback/upgradeSchools">升学</li>
         <li class="subentry" code="dynamic" mark="/riseschoolback/dynamic">动态</li>
     </ul>

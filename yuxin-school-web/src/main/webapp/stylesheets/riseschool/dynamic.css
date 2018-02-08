@@ -15,3 +15,5 @@ margin-left: -240px;margin-top: -232px;font-size: 14px;color: #666;padding: 0 26
 .addNewsBtn a{margin: 15px 30px;}
 .addNewsTitle{margin-bottom: 10px;}
 .contentCheck{width: 350px;height: 300px;display: inline-block;}
+.addNewDynamic{float: right;}
+.heading >h2{display: inline-block;margin-bottom: 10px;}

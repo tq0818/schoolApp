@@ -571,6 +571,8 @@
         <pattern>/riseschoolback/essential</pattern>
         <!--动态-->
         <pattern>/riseschoolback/dynamic</pattern>
+        <!--学校风采-->
+        <pattern>/riseschoolback/mien</pattern>
 
     </decorator>
 

@@ -120,8 +120,11 @@ public class EarlyLitreController {
     	model.addAttribute("riseSchoolId", schoolId);
 		return "/riseschool/dynamic";
 	}
-
-
+	//学校风采
+	@RequestMapping(value = "/mien")
+	public String mien(){
+		return "/riseschool/mien";
+	}
 
 }
 

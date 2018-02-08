@@ -20,6 +20,14 @@ $(function () {
         
         
     });
+    //点击新增
+    $('.addNewDynamic').click(function () {
+
+        $('.opacityPopup').fadeIn();
+        $('.changeNews').fadeIn();
+
+
+    });
     //点击修改确定
     $('.addNewsBtnSave').click(function () {
     	var riseSchoolId = $("#riseSchoolId").val();
