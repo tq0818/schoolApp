@@ -34,13 +34,13 @@
 
     <sql id="page_where">
         <trim prefix="where" prefixOverrides="and | or ">
-            <if test="imgUrl != null and imgUrl != ''" >img_url=#{imgUrl}</if>
-            <if test="imgDiscrible != null and imgDiscrible != ''" >img_discrible=#{imgDiscrible}</if>
-            <if test="isTop != null" >is_top=#{isTop}</if>
-            <if test="createTime != null and createTime != ''" >create_time=#{createTime}</if>
-            <if test="updateTime != null and updateTime != ''" >update_time=#{updateTime}</if>
-            <if test="riseSchoolId != null" >rise_school_id=#{riseSchoolId}</if>
-            <if test="isCover != null" >is_cover=#{isCover}</if>
+            <if test="imgUrl != null and imgUrl != ''" >AND img_url=#{imgUrl}</if>
+            <if test="imgDiscrible != null and imgDiscrible != ''" > AND img_discrible=#{imgDiscrible}</if>
+            <if test="isTop != null" >AND is_top=#{isTop}</if>
+            <if test="createTime != null and createTime != ''" >AND create_time=#{createTime}</if>
+            <if test="updateTime != null and updateTime != ''" >AND update_time=#{updateTime}</if>
+            <if test="riseSchoolId != null" >AND rise_school_id=#{riseSchoolId}</if>
+            <if test="isCover != null" > AND is_cover=#{isCover}</if>
         </trim>
     </sql>
 
@@ -76,7 +76,7 @@
     <delete id="deleteRiseSchoolStyleById" parameterType="Integer">
         DELETE FROM rise_school_style WHERE id = #{id}
     </delete>
-    <select id="queryRiseSchoolStyleById" parameterType="Map" resultType="com.yuxin.wx.model.riseschool.RiseSchoolStyleVo">
+    <select id="queryRiseSchoolStyleById" parameterType="Map" resultMap="riseSchoolStyleMap">
         SELECT <include refid="table_columns" />
           FROM rise_school_style
          WHERE rise_school_id = #{schoolId}
