@@ -338,7 +338,7 @@ function loalUrl(flag,schoolId,schoolName) {
     }else if (flag == 1){//详情
         window.location.href = rootPath + "/riseschoolback/schoolDetails?schoolId="+schoolId+"&schoolName="+schoolName;
     }else if (flag == 2){//风采
-
+        window.location.href = rootPath + "/riseschoolback/mien?schoolId="+schoolId+"&schoolName="+schoolName;
     }else if (flag == 3){//升学
         window.location.href = rootPath + "/riseschoolback/upgradeSchools?schoolId="+schoolId+"&schoolName="+schoolName;
     }

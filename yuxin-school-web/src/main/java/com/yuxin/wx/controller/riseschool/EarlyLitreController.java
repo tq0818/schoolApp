@@ -129,7 +129,7 @@ public class EarlyLitreController {
 	}
 	//学校风采
 	@RequestMapping(value = "/mien")
-	public String mien(){
+	public String mien(HttpServletRequest request,Model model,Integer schoolId,String schoolName){
 		return "/riseschool/mien";
 	}
 
