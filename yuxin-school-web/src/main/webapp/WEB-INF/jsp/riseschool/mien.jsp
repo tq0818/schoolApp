@@ -24,8 +24,49 @@
                 <h2 class="h5">学校风采</h2>
                 <span class="line"></span>
             </div>
-            <div class="schoolDetailsContent essentialInfo">
-
+            <div class="mienContent">
+                <%--<div class="addImg">--%>
+                    <%--<i class="icon iconfont">&#xe606;</i>--%>
+                <%--</div>--%>
+                <div class="imgList">
+                    <ul >
+                        <li class="addImg">
+                            <i class="icon iconfont">&#xe606;</i>
+                        </li>
+                        <li>
+                            <img src="<%=rootPath %>/images/1.jpg" alt="">
+                            <a href="##" class="btn btn-primary btn-sm rightShow">封面图片</a>
+                            <div class="listBg">
+                                <a href="##" class="btn btn-warning btn-sm coverChange">修改</a>
+                                <a href="##" class="btn btn-success btn-sm coverAdd">添加</a>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="<%=rootPath %>/images/1.jpg" alt="">
+                            <a href="##" class="btn btn-primary btn-sm rightShow">已置顶</a>
+                            <div class="listBg">
+                                <a href="##" class="btn btn-warning btn-sm imgTop">置顶</a>
+                                <a href="##" class="btn btn-success btn-sm imgAdd">删除</a>
+                                <a href="##" class="btn btn-success btn-sm imgChange">修改</a>
+                            </div>
+                        </li>
+                        <li class="noMargin">
+                            <img src="<%=rootPath %>/images/1.jpg" alt="">
+                        </li>
+                        <li>
+                            <img src="<%=rootPath %>/images/1.jpg" alt="">
+                        </li>
+                        <li>
+                            <img src="<%=rootPath %>/images/1.jpg" alt="">
+                        </li>
+                        <li>
+                            <img src="<%=rootPath %>/images/1.jpg" alt="">
+                        </li>
+                        <li class="noMargin">
+                            <img src="<%=rootPath %>/images/1.jpg" alt="">
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
