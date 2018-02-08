@@ -15,7 +15,7 @@
 <input type="hidden" id="pageSize" value='${result.pageSize}'/>
 <input type="hidden" id="pageNo" value='${result.pageNo}'/>
 <input type="hidden" id="rowCount" value='${result.rowCount}'/>
-<input type="hidden" id="riseSchoolId" value='1'/>
+<input type="hidden" id="riseSchoolId" value='${riseSchoolId}'/>
 <jsp:include page="/WEB-INF/jsp/menu/menu_earlyLitre.jsp"/>
 <div class="u-wrap admin overflow schoolDetails">
     <jsp:include page="/WEB-INF/jsp/menu/menu_earlyLitreLeft.jsp"></jsp:include>

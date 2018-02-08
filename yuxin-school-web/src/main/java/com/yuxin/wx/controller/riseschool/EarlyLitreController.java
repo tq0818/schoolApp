@@ -108,15 +108,9 @@ public class EarlyLitreController {
 	//动态
 	@RequestMapping(value = "/dynamic")
 	public String dynamic(HttpServletRequest request,Model model,Integer schoolId){
-		//暂时写个死数据
-    	schoolId  =1;
     	if(schoolId == null){
 			return null;
 		}
-    	/*RiseSchoolDynamicVo riseSchoolDynamic = new RiseSchoolDynamicVo();
-		riseSchoolDynamic.setRiseSchoolId(schoolId);
-		PageFinder<RiseSchoolDynamicVo> pageFinder = riseSchoolDynamicImpl.queryAllDynamic(riseSchoolDynamic);
-		model.addAttribute("result",pageFinder);*/
     	model.addAttribute("riseSchoolId", schoolId);
 		return "/riseschool/dynamic";
 	}
