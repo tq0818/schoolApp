@@ -71,6 +71,7 @@ public class EarlyLitreController {
 		RiseSchoolDetailsUp riseSchoolDetailsUp = riseSchoolDetailsUpImpl.findByidAndCode(map);
 		model.addAttribute("riseSchoolDetailsUp", riseSchoolDetailsUp);
 		model.addAttribute("riseSchoolId", schoolId);
+		model.addAttribute("schoolId", schoolId);
 		model.addAttribute("schoolName", schoolName);
         return "/riseschool/schoolDetails";
     }
@@ -99,6 +100,7 @@ public class EarlyLitreController {
 		RiseSchoolDetailsUp riseSchoolDetailsUp = riseSchoolDetailsUpImpl.findByidAndCode(map);
 		model.addAttribute("riseSchoolDetailsUp", riseSchoolDetailsUp);
 		model.addAttribute("riseSchoolId", schoolId);
+		model.addAttribute("schoolId", schoolId);
 		model.addAttribute("schoolName", schoolName);
 		 return "/riseschool/upgradeSchools";
 	}
@@ -121,6 +123,7 @@ public class EarlyLitreController {
 			return null;
 		}
     	model.addAttribute("riseSchoolId", schoolId);
+    	model.addAttribute("schoolId", schoolId);
     	model.addAttribute("schoolName", schoolName);
 		return "/riseschool/dynamic";
 	}
