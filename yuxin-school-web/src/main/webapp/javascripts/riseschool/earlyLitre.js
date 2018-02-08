@@ -149,6 +149,7 @@ function addRiseSchoolInfo() {
 function queryRiseSchoolDict(areaFlag) {
     var itemType = '';
     var itemCode = '';
+    var eduAreaNew = $("#eduArea").val();
     if (areaFlag == 0){
         itemType = 'PROVINCE';
     }else if (areaFlag == 1){
@@ -174,8 +175,14 @@ function queryRiseSchoolDict(areaFlag) {
                     html = "<option value=\"\">请选择省份</option>" + html;
                     $("#eduArea").html("").html(html);
                 }else if (areaFlag == 1){
-                    html = "<option value=\"\">请选择市</option>" + html;
+                	if(eduAreaNew == ""){
+                		html = "<option value=\"\">请选择市</option>";
+                	}else{
+                		html = "<option value=\"\">请选择市</option>" + html;
+                	}
                     $("#eduSchool").html("").html(html);
+                    html2 = "<option value=\"\">请选择区</option>";
+                    $("#registStatus").html("").html(html2);
                 }else if (areaFlag == 2){
                     html = "<option value=\"\">请选择区</option>" + html;
                     $("#registStatus").html("").html(html);
@@ -254,6 +261,20 @@ function queryRiseSchoolInfo(pageNo) {
 
 //模糊搜索
 function queryDimRiseSchoolInfo(pageNo) {
+	var enrolment = $('.enrolment').children('a');
+	var enrolmentVal;
+	for(var i= 0;i<enrolment.length;i++){
+		if(enrolment.eq(i).hasClass('btn-primary')){
+			enrolmentVal = enrolment.eq(i).attr('data-value');
+		}
+	}
+	var topState = $('.topState').children('a');
+	var topStateVal;
+	for(var i= 0;i<topState.length;i++){
+		if(topState.eq(i).hasClass('btn-primary')){
+			topStateVal = topState.eq(i).attr('data-value');
+		}
+	}
     var eduArea = $("#eduArea").val();
     var eduSchool = $("#eduSchool").val();
     var registStatus = $("#registStatus").val();
@@ -271,6 +292,8 @@ function queryDimRiseSchoolInfo(pageNo) {
             "isShalve":registMethods,
             "startTime":from,
             "endTime":to,
+            "isTop":topStateVal,
+            "enrollmentType":enrolmentVal,
             "schoolName":schoolShortName
         },
         dataType: "html",

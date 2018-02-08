@@ -15,7 +15,9 @@ public class SearchRiseSchoolVo extends BaseModel implements Serializable {
     private String district;           //区级
     private Integer isShalve;          //上架状态
     private String startTime;           //开始时间
-    private String endTime;           //结束时间
+    private String endTime;           //结束时间 
+    private Integer isTop;           //置顶状态0未置顶，1置顶
+    private String enrollmentType;   //招生类型
 
     public String getSchoolName() {
         return schoolName;
@@ -72,4 +74,21 @@ public class SearchRiseSchoolVo extends BaseModel implements Serializable {
     public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
+
+	public Integer getIsTop() {
+		return isTop;
+	}
+
+	public void setIsTop(Integer isTop) {
+		this.isTop = isTop;
+	}
+
+	public String getEnrollmentType() {
+		return enrollmentType;
+	}
+
+	public void setEnrollmentType(String enrollmentType) {
+		this.enrollmentType = enrollmentType;
+	}
+    
 }

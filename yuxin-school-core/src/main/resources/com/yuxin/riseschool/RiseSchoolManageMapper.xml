@@ -65,22 +65,20 @@
     </sql>
 
     <sql id="page_where">
-        <trim prefix="where" prefixOverrides="and | or ">
-            <if test="schoolName != null and schoolName != ''">school_name=#{schoolName}</if>
-            <if test="enrollmentType != null and enrollmentType != ''">enrollment_type=#{enrollmentType}</if>
-            <if test="provinceCode != null and provinceCode != ''">province_code=#{provinceCode}</if>
-            <if test="cityCode != null and cityCode != ''">city_code=#{cityCode}</if>
-            <if test="district != null and district != ''">district=#{district}</if>
-            <if test="isTop != null">is_top=#{isTop}</if>
-            <if test="isShalve != null">is_shalve=#{isShalve}</if>
-            <if test="createTime != null and createTime != ''">create_time=#{createTime}</if>
-            <if test="updateTime != null and updateTime != ''">update_time=#{updateTime}</if>
-            <if test="detailAddress != null and detailAddress != ''">detail_address=#{detailAddress}</if>
-            <if test="schoolWeb != null and schoolWeb != ''">school_web=#{schoolWeb}</if>
-            <if test="schoolFax != null and schoolFax != ''">school_fax=#{schoolFax}</if>
-            <if test="busRoad != null and busRoad != ''">bus_road=#{busRoad}</if>
-            <if test="userId != null">user_id =#{userId}</if>
-        </trim>
+            <if test="schoolName != null and schoolName != ''">and school_name=#{schoolName}</if>
+            <if test="enrollmentType != null and enrollmentType != ''">and enrollment_type=#{enrollmentType}</if>
+            <if test="provinceCode != null and provinceCode != ''">and province_code=#{provinceCode}</if>
+            <if test="cityCode != null and cityCode != ''">and city_code=#{cityCode}</if>
+            <if test="district != null and district != ''">and district=#{district}</if>
+            <if test="isTop != null">and is_top=#{isTop}</if>
+            <if test="isShalve != null">and is_shalve=#{isShalve}</if>
+            <if test="createTime != null and createTime != ''">and create_time=#{createTime}</if>
+            <if test="updateTime != null and updateTime != ''">and update_time=#{updateTime}</if>
+            <if test="detailAddress != null and detailAddress != ''">and detail_address=#{detailAddress}</if>
+            <if test="schoolWeb != null and schoolWeb != ''">and school_web=#{schoolWeb}</if>
+            <if test="schoolFax != null and schoolFax != ''">and school_fax=#{schoolFax}</if>
+            <if test="busRoad != null and busRoad != ''">and bus_road=#{busRoad}</if>
+            <if test="userId != null">and user_id =#{userId}</if>
     </sql>
 
     <insert id="insertRiseSchoolInfo" parameterType="com.yuxin.wx.model.riseschool.RiseSchoolManageVo" useGeneratedKeys="true" keyProperty="id">
@@ -138,29 +136,29 @@
           INNER JOIN sys_rise_school_dict srsdp ON srsdp.item_code = rsi.province_code
           INNER JOIN sys_rise_school_dict srsdq ON srsdq.item_code = rsi.city_code
           INNER JOIN sys_rise_school_dict srsdr ON srsdr.item_code = rsi.district
-        <trim prefix="where" prefixOverrides="and | or ">
-            <if test="schoolName != null and schoolName != ''">rsi.school_name=#{schoolName}</if>
-            <if test="enrollmentType != null and enrollmentType != ''">rsi.enrollment_type=#{enrollmentType}</if>
-            <if test="provinceCode != null and provinceCode != ''">rsi.province_code=#{provinceCode}</if>
-            <if test="cityCode != null and cityCode != ''">rsi.city_code=#{cityCode}</if>
-            <if test="district != null and district != ''">rsi.district=#{district}</if>
-            <if test="isTop != null">rsi.is_top=#{isTop}</if>
-            <if test="isShalve != null">rsi.is_shalve=#{isShalve}</if>
-            <if test="createTime != null and createTime != ''">rsi.create_time=#{createTime}</if>
-            <if test="updateTime != null and updateTime != ''">rsi.update_time=#{updateTime}</if>
-            <if test="detailAddress != null and detailAddress != ''">rsi.detail_address=#{detailAddress}</if>
-            <if test="schoolWeb != null and schoolWeb != ''">rsi.school_web=#{schoolWeb}</if>
-            <if test="schoolFax != null and schoolFax != ''">rsi.school_fax=#{schoolFax}</if>
-            <if test="busRoad != null and busRoad != ''">rsi.bus_road=#{busRoad}</if>
-            <if test="userId != null">rsi.user_id =#{userId}</if>
-            <if test="id != null">rsi.id =#{id}</if>
-        </trim>
+            where 1=1
+            <if test="schoolName != null and schoolName != ''">and rsi.school_name=#{schoolName}</if>
+            <if test="enrollmentType != null and enrollmentType != ''">and rsi.enrollment_type=#{enrollmentType}</if>
+            <if test="provinceCode != null and provinceCode != ''">and rsi.province_code=#{provinceCode}</if>
+            <if test="cityCode != null and cityCode != ''">and rsi.city_code=#{cityCode}</if>
+            <if test="district != null and district != ''">and rsi.district=#{district}</if>
+            <if test="isTop != null">and rsi.is_top=#{isTop}</if>
+            <if test="isShalve != null">and rsi.is_shalve=#{isShalve}</if>
+            <if test="createTime != null and createTime != ''">and rsi.create_time=#{createTime}</if>
+            <if test="updateTime != null and updateTime != ''">and rsi.update_time=#{updateTime}</if>
+            <if test="detailAddress != null and detailAddress != ''">and rsi.detail_address=#{detailAddress}</if>
+            <if test="schoolWeb != null and schoolWeb != ''">and rsi.school_web=#{schoolWeb}</if>
+            <if test="schoolFax != null and schoolFax != ''">and rsi.school_fax=#{schoolFax}</if>
+            <if test="busRoad != null and busRoad != ''">and rsi.bus_road=#{busRoad}</if>
+            <if test="userId != null">and rsi.user_id =#{userId}</if>
+            <if test="id != null">and rsi.id =#{id}</if>
         ORDER BY rsi.is_top DESC ,rsi.update_time DESC
         limit #{firstIndex},#{pageSize}
     </select>
     <select id="queryRiseSchoolCount" parameterType="com.yuxin.wx.model.riseschool.RiseSchoolManageVo" resultType="java.lang.Integer">
         SELECT  count(*)
           FROM  rise_school_info
+          where 1=1
         <include refid="page_where" />
     </select>
     <select id="queryRiseSchoolDict" parameterType="Map" resultType="com.yuxin.wx.model.riseschool.SysDictVo">
@@ -205,6 +203,8 @@
         <if test="district != null and district != ''">AND rsi.district = #{district}</if>
         <if test="isShalve != null">AND rsi.is_shalve = #{isShalve}</if>
         <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(rsi.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="isTop != null and isTop != 0">AND rsi.is_top = #{isTop}</if>
+        <if test="enrollmentType != null and enrollmentType != 0">AND rsi.enrollment_type = #{enrollmentType}</if>
         ORDER BY rsi.is_top DESC ,rsi.update_time DESC
         limit #{firstIndex},#{pageSize}
     </select>
@@ -218,5 +218,7 @@
         <if test="district != null and district != ''">AND district = #{district}</if>
         <if test="isShalve != null">AND is_shalve = #{isShalve}</if>
         <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+    	<if test="isTop != null and isTop != 0">AND is_top = #{isTop}</if>
+        <if test="enrollmentType != null and enrollmentType != 0">AND enrollment_type = #{enrollmentType}</if>
     </select>
 </mapper>
