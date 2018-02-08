@@ -47,7 +47,7 @@ public class EarlyLitreController {
     }
     //学校详情
     @RequestMapping(value = "/schoolDetails")
-    public String schoolDetails(HttpServletRequest request,Model model,Integer schoolId){
+    public String schoolDetails(HttpServletRequest request,Model model,Integer schoolId,String schoolName){
     	//暂时写个死数据
 		//schoolId  =1;
 		if(schoolId == null){
@@ -70,11 +70,12 @@ public class EarlyLitreController {
 		RiseSchoolDetailsUp riseSchoolDetailsUp = riseSchoolDetailsUpImpl.findByidAndCode(map);
 		model.addAttribute("riseSchoolDetailsUp", riseSchoolDetailsUp);
 		model.addAttribute("riseSchoolId", schoolId);
+		model.addAttribute("schoolName", schoolName);
         return "/riseschool/schoolDetails";
     }
     //升学
     @RequestMapping(value = "/upgradeSchools")
-    public String upgradeSchools(HttpServletRequest request,Model model,Integer schoolId) {
+    public String upgradeSchools(HttpServletRequest request,Model model,Integer schoolId,String schoolName) {
     	//暂时写个死数据
     	//schoolId  =1;
     	if(schoolId == null){
@@ -97,6 +98,7 @@ public class EarlyLitreController {
 		RiseSchoolDetailsUp riseSchoolDetailsUp = riseSchoolDetailsUpImpl.findByidAndCode(map);
 		model.addAttribute("riseSchoolDetailsUp", riseSchoolDetailsUp);
 		model.addAttribute("riseSchoolId", schoolId);
+		model.addAttribute("schoolName", schoolName);
 		 return "/riseschool/upgradeSchools";
 	}
     //基本信息
@@ -107,11 +109,12 @@ public class EarlyLitreController {
     }
 	//动态
 	@RequestMapping(value = "/dynamic")
-	public String dynamic(HttpServletRequest request,Model model,Integer schoolId){
+	public String dynamic(HttpServletRequest request,Model model,Integer schoolId,String schoolName){
     	if(schoolId == null){
 			return null;
 		}
     	model.addAttribute("riseSchoolId", schoolId);
+    	model.addAttribute("schoolName", schoolName);
 		return "/riseschool/dynamic";
 	}
 	//学校风采
