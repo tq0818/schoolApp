@@ -3,7 +3,7 @@
 bottom: 5px;left: 0;}
 .dashedLi{position: relative;width: 300px;}
 .dynamicBtn{margin-left: 40px;}
-.dynamicList{width: 720px;margin: auto;}
+.dynamicList{width: 825px;margin: 0 20px;}
 .opacityPopup{display: none;width: 100%;height: 100%;position: fixed;top: 0;left: 0;background: rgba(0,0,0,.5);}
 .addNews{display: none;width: 480px;height: 464px;background: #fff;border: 1px solid #333;position: fixed;left: 50%;top: 50%;
 margin-left: -240px;margin-top: -232px;font-size: 14px;color: #666;padding: 0 26px;}
@@ -17,3 +17,5 @@ margin-left: -240px;margin-top: -232px;font-size: 14px;color: #666;padding: 0 26
 .contentCheck{width: 350px;height: 300px;display: inline-block;}
 .addNewDynamic{float: right;}
 .heading >h2{display: inline-block;margin-bottom: 10px;}
+.dynamicList li:first-child{width: 175px;text-align: right;}
+.change{margin: 0 5px;}
