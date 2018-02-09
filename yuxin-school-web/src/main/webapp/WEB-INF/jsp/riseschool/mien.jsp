@@ -121,7 +121,7 @@
 
 <script src="<%=rootPath %>/javascripts/riseschool/mien.js"></script>
 <script src="<%=rootPath %>/javascripts/riseschool/cutPic.js"></script>
-<script src="<%=rootPath %>/javascripts/ajaxfileupload.js"></script>
+<script src="<%=rootPath %>/javascripts/riseschool/ajaxfileuploadR.js"></script>
 <script src="<%=rootPath %>/plugins/jcrop/js/jquery.Jcrop.js"></script>
 <script src="<%=rootPath %>/javascripts/plus/jquery.units.js"></script>
 <script src="<%=rootPath%>/javascripts/plus/jquery-ui.js"></script>

@@ -84,6 +84,8 @@ $(function () {
 
 //上传临时图片
 function savePic() {
+    //选择的时候应先清空，
+    $("#target").attr("src","");
     $.ajaxFileUpload({
         url : rootPath+"/riseSchoolStyle/upRiseSchoolStyleImg",
         secureuri : false,// 安全协议
@@ -97,6 +99,7 @@ function savePic() {
             if (data.flag == 1){
                 $("#target").attr("src",data.realPath);
                 $("#target").trigger("change");
+                $(".jcrop-holder").find("img").attr("src",data.realPath);
             }
         },
         error:function(arg1,arg2,arg3){
