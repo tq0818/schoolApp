@@ -2,11 +2,14 @@ package com.yuxin.wx.common;
 
 import com.yuxin.wx.api.auth.IAuthUserRoleService;
 import com.yuxin.wx.api.company.*;
+import com.yuxin.wx.api.riseschool.RiseSchoolManageService;
 import com.yuxin.wx.api.system.ISysConfigServiceService;
 import com.yuxin.wx.api.system.ISysServiceDredgeConfigService;
 import com.yuxin.wx.api.user.IUsersLoginSessionService;
 import com.yuxin.wx.api.user.IUsersService;
 import com.yuxin.wx.model.company.*;
+import com.yuxin.wx.model.riseschool.RiseSchoolInfoVo;
+import com.yuxin.wx.model.riseschool.RiseSchoolManageVo;
 import com.yuxin.wx.model.system.SysConfigService;
 import com.yuxin.wx.model.system.SysConfigTeacher;
 import com.yuxin.wx.model.user.Users;
@@ -91,6 +94,8 @@ public class BaseWebController {
 
     @Autowired
     private ISysConfigServiceService sysConfigServiceServiceImpl;
+    @Autowired
+    private RiseSchoolManageService riseSchoolManageServiceImpl;
 
     @RequestMapping(value = "/index", method = { RequestMethod.POST, RequestMethod.GET })
     public ModelAndView index(HttpServletRequest request, Model model) {
@@ -105,7 +110,15 @@ public class BaseWebController {
         }else{
             mv.setViewName("index/index");
         }*/
-        mv.setViewName("redirect:/simpleClasses/showClassTypePage");
+        Users user = WebUtils.getCurrentUser(request);
+        if("RISE_SCHOOL_MANAGER".equals(user.getUserType())){
+            Map<String,Object>params = new HashMap<String,Object>();
+            params.put("userId",user.getId());
+            RiseSchoolManageVo rsieSchool = riseSchoolManageServiceImpl.queryCurrentRiseSchoolInfo(params);
+            mv.setViewName("redirect:/riseschoolback/essential?schoolId="+rsieSchool.getId()+"&schoolName="+rsieSchool.getSchoolName());
+        }else{
+            mv.setViewName("redirect:/simpleClasses/showClassTypePage");
+        }
         Session session = subject.getSession(true);
         Company currtCompany = companyServiceImpl.findCompanyById(WebUtils.getCurrentCompanyId());
         if (currtCompany != null) {

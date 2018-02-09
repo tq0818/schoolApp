@@ -221,4 +221,25 @@
     	<if test="isTop != null and isTop != 0">AND is_top = #{isTop}</if>
         <if test="enrollmentType != null and enrollmentType != 0">AND enrollment_type = #{enrollmentType}</if>
     </select>
+    <select id="queryCurrentRiseSchoolInfo" parameterType="map" resultMap="riseSchoolInfoMap">
+         SELECT rsi.id             AS id,
+                rsi.school_name    AS school_name,
+                rsi.enrollment_type AS enrollment_type,
+                rsi.province_code  AS province_code,
+                rsi.city_code      AS city_code,
+                rsi.district       AS district,
+                rsi.is_top         AS is_top,
+                rsi.is_shalve      AS is_shalve,
+                rsi.create_time    AS create_time,
+                rsi.update_time    AS update_time,
+                rsi.detail_address AS detail_address,
+                rsi.school_web     AS school_web,
+                rsi.school_fax     AS school_fax,
+                rsi.bus_road       AS bus_road,
+                rsi.user_id       AS user_id,
+                rsi.collect_num   AS collect_num,
+                rsi.base_num      AS base_num
+          FROM rise_school_info rsi
+          WHERE rsi.user_id = #{userId}
+    </select>
 </mapper>

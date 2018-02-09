@@ -87,4 +87,9 @@ public class RiseSchoolManageServiceImpl implements RiseSchoolManageService {
         PageFinder<RiseSchoolManageVo> pageFinder = new PageFinder<RiseSchoolManageVo>(serchRiseSchoolVo.getPage(), serchRiseSchoolVo.getPageSize(), count, riseSchoolInfoVoList);
         return pageFinder;
     }
+
+    @Override
+    public RiseSchoolManageVo queryCurrentRiseSchoolInfo(Map<String, Object> params) {
+        return riseSchoolManageMapper.queryCurrentRiseSchoolInfo(params);
+    }
 }

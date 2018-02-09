@@ -56,6 +56,7 @@ public class RiseSchoolManageController {
         users.setPassword(new Md5Hash("111111", ByteSource.Util.bytes(users.getUsername() + "salt")).toHex());
         users.setCompanyId(WebUtils.getCurrentCompanyId());
         users.setStatus(1);
+        users.setUserType("RISE_SCHOOL_MANAGER");
         map.put("riseSchoolManageVo",riseSchoolManageVo);
         map.put("users",users);
         map.put("curUserId",curUserId);

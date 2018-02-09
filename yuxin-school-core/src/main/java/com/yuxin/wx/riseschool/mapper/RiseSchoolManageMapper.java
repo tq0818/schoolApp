@@ -47,4 +47,5 @@ public interface RiseSchoolManageMapper {
 
     Integer queryDimRiseSchoolCount(SearchRiseSchoolVo serchRiseSchoolVo);
 
+    RiseSchoolManageVo queryCurrentRiseSchoolInfo(Map<String, Object> params);
 }
