@@ -1,10 +1,6 @@
 package com.yuxin.wx.auth.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -250,5 +246,10 @@ public class AuthUserRoleServiceImpl extends BaseServiceImpl implements IAuthUse
 	public void deleteByRoleId(Integer id) {
 		authUserRoleMapper.deleteById(id);
 	}
-	
+
+	@Override
+	public List<AuthUserRole> queryRoleIds(Map<String,Object> params) {
+		return authUserRoleMapper.queryRoleIds(params);
+	}
+
 }

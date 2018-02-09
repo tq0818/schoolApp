@@ -55,6 +55,7 @@ public class RiseSchoolManageController {
         riseSchoolManageVo.setUpdateTime(date);
         users.setPassword(new Md5Hash("111111", ByteSource.Util.bytes(users.getUsername() + "salt")).toHex());
         users.setCompanyId(WebUtils.getCurrentCompanyId());
+        users.setStatus(1);
         map.put("riseSchoolManageVo",riseSchoolManageVo);
         map.put("users",users);
         map.put("curUserId",curUserId);
@@ -63,6 +64,7 @@ public class RiseSchoolManageController {
             json.put("flag","1");//成功
             json.put("msg","成功");
         } catch (Exception e) {
+            e.printStackTrace();
             json.put("flag","0");
             json.put("msg","添加学校信息失败");
         }

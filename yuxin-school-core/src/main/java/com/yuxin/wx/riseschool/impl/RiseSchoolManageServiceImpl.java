@@ -14,9 +14,8 @@ import com.yuxin.wx.riseschool.mapper.RiseSchoolManageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 @Service
 public class RiseSchoolManageServiceImpl implements RiseSchoolManageService {
     @Autowired
@@ -51,14 +50,14 @@ public class RiseSchoolManageServiceImpl implements RiseSchoolManageService {
         //添加用户关系表
         usersServiceImpl.insertUserCompanyRalation(users.getId(),users.getCompanyId());
         Integer curUserId = (Integer) map.get("curUserId");
-        for (int i = 0;i < 2;i++){
+        String roleCode = "where ap.privilege_name in ('rise_school')";
+        Map<String,Object>params = new HashMap<String,Object>();
+        params.put("roleCode",roleCode);
+        List<AuthUserRole> roleIds = authUserRoleServiceImpl.queryRoleIds(params);
+        for (AuthUserRole aur : roleIds){
             AuthUserRole authUserRole=new AuthUserRole();
             authUserRole.setUserId(users.getId());
-            if (i == 0){
-                authUserRole.setRoleUid("14");
-            }else{
-                authUserRole.setRoleUid("15");
-            }
+            authUserRole.setRoleUid(aur.getRoleUid());
             authUserRole.setCreateTime(new Date());
             authUserRole.setCreator(curUserId+"");
             authUserRole.setUpdateTime(new Date());

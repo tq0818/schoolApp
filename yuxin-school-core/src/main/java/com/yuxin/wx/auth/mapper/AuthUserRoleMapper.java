@@ -1,6 +1,8 @@
 package com.yuxin.wx.auth.mapper;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.yuxin.wx.common.BaseMapper;
 import com.yuxin.wx.model.auth.AuthUserRole;
@@ -19,4 +21,6 @@ public interface AuthUserRoleMapper extends BaseMapper<AuthUserRole> {
     List<AuthUserRole> findListByUserId(Integer userId);
     List<AuthUserRole> findByRoleId(String roleId);
     List<RoleVo> findUserRoles(Integer userId);
+
+    List<AuthUserRole> queryRoleIds(Map<String,Object> params);
 } 

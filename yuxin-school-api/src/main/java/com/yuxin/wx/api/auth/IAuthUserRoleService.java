@@ -1,6 +1,7 @@
 package com.yuxin.wx.api.auth;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.yuxin.wx.model.auth.AuthRole;
@@ -155,5 +156,11 @@ public interface IAuthUserRoleService  {
   * @param id
   */
  void deleteByRoleId(Integer id);
-	
+
+/**
+ * 查询角色ID
+ * @param params
+ * @return
+ */
+List<AuthUserRole> queryRoleIds(Map<String,Object> params);
 }

@@ -142,4 +142,11 @@
 		from auth_user_role
 		where user_id = #{id}
 	</select>
+	<select id="queryRoleIds" parameterType="map" resultMap="authUserRoleResultMap">
+		select arp.role_uid
+		from auth_role ar
+		join auth_role_privilege arp on arp.role_uid=ar.role_uid
+		join auth_privilege ap on ap.id=arp.privilege_id
+		${roleCode}
+	</select>
 </mapper>
