@@ -1,8 +1,10 @@
 package com.yuxin.wx.controller.riseschool;
 
 import com.yuxin.wx.api.riseschool.RiseSchoolManageService;
+import com.yuxin.wx.api.riseschool.RiseSchoolStyleService;
 import com.yuxin.wx.common.PageFinder;
-import com.yuxin.wx.model.riseschool.RiseSchoolManageVo;
+import com.yuxin.wx.model.riseschool.*;
+import com.yuxin.wx.utils.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.HashMap;
 import java.util.List;
@@ -19,9 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.yuxin.wx.api.riseschool.IRiseSchoolDetailsUpService;
 import com.yuxin.wx.api.riseschool.IRiseSchoolDynamicService;
-import com.yuxin.wx.model.riseschool.RiseSchoolDetailsUp;
-import com.yuxin.wx.model.riseschool.RiseSchoolDynamicVo;
-import com.yuxin.wx.model.riseschool.SysDictVo;
 
 /**
  * Created by lym_gxm on 18/2/5.
@@ -34,9 +33,14 @@ public class EarlyLitreController {
 	private IRiseSchoolDetailsUpService riseSchoolDetailsUpImpl;
     @Autowired
     private RiseSchoolManageService riseSchoolManageServiceImpl;
+	@Autowired
     private RiseSchoolManageService riseSchoolInfoServiceImpl;
     @Autowired
 	private IRiseSchoolDynamicService riseSchoolDynamicImpl;
+	@Autowired
+	private RiseSchoolStyleService riseSchoolStyleServiceImpl;
+	@Autowired
+	private PropertiesUtil propertiesUtil;
     //私立校后台-学校管理
     @RequestMapping(value = "/earlyLitre")
     public String earlyLitre(HttpServletRequest request, Model model,RiseSchoolManageVo riseSchoolManageVo){
@@ -130,6 +134,34 @@ public class EarlyLitreController {
 	//学校风采
 	@RequestMapping(value = "/mien")
 	public String mien(HttpServletRequest request,Model model,Integer schoolId,String schoolName){
+		//查询不是封面图片
+		RiseSchoolStyleVo riseSchoolStyleVo = new RiseSchoolStyleVo();
+		riseSchoolStyleVo.setRiseSchoolId(schoolId);
+		riseSchoolStyleVo.setIsCover(0);
+		riseSchoolStyleVo.setPageSize(6);
+		PageFinder<RiseSchoolStyleVo> pageFinder = riseSchoolStyleServiceImpl.queryRiseSchoolStyle(riseSchoolStyleVo);
+		String url = "http://"+propertiesUtil.getProjectImageUrl()+"/";
+		//处理图片
+		if (pageFinder.getData() != null && pageFinder.getData().size() > 0){
+			List<RiseSchoolStyleVo> list = pageFinder.getData();
+			for(RiseSchoolStyleVo r:list){
+				r.setImgUrl(url + r.getImgUrl());
+			}
+		}
+		//查询封面图
+		Map map = new HashMap();
+		map.put("schoolId",schoolId);
+		map.put("isCover",1);
+		RiseSchoolStyleVo coverVo = riseSchoolStyleServiceImpl.queryRiseSchoolStyleById(map);
+		if (coverVo != null){
+			coverVo.setImgUrl(url+coverVo.getImgUrl());
+		}
+		model.addAttribute("result",pageFinder.getData());
+		model.addAttribute("coverVo",coverVo);
+		model.addAttribute("pageNo",riseSchoolStyleVo.getPage());
+		model.addAttribute("rowCount",pageFinder.getRowCount());
+		model.addAttribute("schoolId",schoolId);
+		model.addAttribute("schoolName",schoolName);
 		return "/riseschool/mien";
 	}
 

@@ -44,7 +44,8 @@
             maxSize : [ initSize.w, initSize.h ],
             minSize : [ minWidth, minHeight ],
             bgFade : true,
-            allowSelect : false
+            allowSelect : false,
+            allowResize : true,
         }, function() {
             jc=jcrop_api = this;
             var bounds = this.getBounds();
@@ -138,7 +139,7 @@
             $img.css("height", h+"px").css("width", w+"px");
             // 改左侧图大小
             $('.jcrop-holder').find("img").css("height", h + "px").css("width", w + "px");
-            $('.jcrop-holder').css("height", h + "px").css("width",w + "px").css("margin-left", ml);
+            $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
             $('.jcrop-holder .jcrop-tracker').css("height", h + "px").css("width",w + "px");
         }
         var c = {};
