@@ -12,7 +12,15 @@ $(function(){
         <a href="javascript:;" class="navbar-brand"><i class="iconfont">&#xe61b;</i>小升初</a>
         <ul class="nav nav-left navspace">
         	<%--<shiro:hasPermission name="student_manage">--%>
-        	<li code="earlyLitre"><a href="<%=rootPath %>/riseschoolback/earlyLitre">学校管理</a></li>
+            <%--<c:choose>
+                <c:when test="${userType eq 'RISE_SCHOOL_MANAGER'}">
+                    <li code="earlyLitre"><a href="<%=rootPath %>/riseschoolback/essential?schoolId=${schoolId}&schoolName=${schoolName}">学校管理</a></li>
+                </c:when>
+                <c:otherwise>
+                    <li code="earlyLitre"><a href="<%=rootPath %>/riseschoolback/earlyLitre">学校管理</a></li>
+                </c:otherwise>
+            </c:choose>--%>
+                <li code="earlyLitre"><a href="<%=rootPath %>/riseschoolback/earlyLitre">学校管理</a></li>
         	<%--</shiro:hasPermission>--%>
         </ul>
     </div>

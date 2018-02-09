@@ -1,6 +1,7 @@
 package com.yuxin.wx.api.riseschool;
 
 import com.yuxin.wx.common.PageFinder;
+import com.yuxin.wx.model.riseschool.RiseSchoolInfoVo;
 import com.yuxin.wx.model.riseschool.RiseSchoolManageVo;
 import com.yuxin.wx.model.riseschool.SearchRiseSchoolVo;
 import com.yuxin.wx.model.riseschool.SysDictVo;
@@ -50,4 +51,11 @@ public interface RiseSchoolManageService {
      * @return
      */
     PageFinder<RiseSchoolManageVo> queryDimRiseSchoolInfo(SearchRiseSchoolVo serchRiseSchoolVo);
+
+    /**
+     *查询当前小升初学校
+     * @param params
+     * @return
+     */
+    RiseSchoolManageVo queryCurrentRiseSchoolInfo(Map<String, Object> params);
 }

@@ -4,7 +4,9 @@ import com.yuxin.wx.api.riseschool.RiseSchoolManageService;
 import com.yuxin.wx.api.riseschool.RiseSchoolStyleService;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.riseschool.*;
+import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.utils.PropertiesUtil;
+import com.yuxin.wx.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.yuxin.wx.api.riseschool.IRiseSchoolDetailsUpService;
 import com.yuxin.wx.api.riseschool.IRiseSchoolDynamicService;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created by lym_gxm on 18/2/5.
@@ -43,7 +46,16 @@ public class EarlyLitreController {
 	private PropertiesUtil propertiesUtil;
     //私立校后台-学校管理
     @RequestMapping(value = "/earlyLitre")
-    public String earlyLitre(HttpServletRequest request, Model model,RiseSchoolManageVo riseSchoolManageVo){
+    public Object earlyLitre(HttpServletRequest request, Model model,RiseSchoolManageVo riseSchoolManageVo){
+		ModelAndView mv = new ModelAndView();
+		Users user = WebUtils.getCurrentUser(request);
+		if("RISE_SCHOOL_MANAGER".equals(user.getUserType())){
+			Map<String,Object>params = new HashMap<String,Object>();
+			params.put("userId",user.getId());
+			RiseSchoolManageVo rsieSchool = riseSchoolManageServiceImpl.queryCurrentRiseSchoolInfo(params);
+			mv.setViewName("redirect:/riseschoolback/essential?schoolId="+rsieSchool.getId()+"&schoolName="+rsieSchool.getSchoolName());
+			return mv;
+		}
         PageFinder<RiseSchoolManageVo> pageFinder = riseSchoolManageServiceImpl.queryRiseSchoolInfo(riseSchoolManageVo);
         model.addAttribute("result",pageFinder.getData());
         model.addAttribute("pageNo",riseSchoolManageVo.getPage());
@@ -111,6 +123,7 @@ public class EarlyLitreController {
     //基本信息
     @RequestMapping(value = "/essential")
     public String essential(HttpServletRequest request,Model model,Integer schoolId,String schoolName){
+//		Users user = WebUtils.getCurrentUser(request);
     	RiseSchoolManageVo riseSchoolManageVo = new RiseSchoolManageVo();
     	riseSchoolManageVo.setId(schoolId);
 		PageFinder<RiseSchoolManageVo> pageFinder = riseSchoolManageServiceImpl.queryRiseSchoolInfo(riseSchoolManageVo);
@@ -118,6 +131,7 @@ public class EarlyLitreController {
 		model.addAttribute("result",(RiseSchoolManageVo)list.get(0));
 		model.addAttribute("schoolId",schoolId);
 		model.addAttribute("schoolName",schoolName);
+//		model.addAttribute("userType",user.getUserType());
         return "/riseschool/essential";
     }
 	//动态
