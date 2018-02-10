@@ -13,7 +13,9 @@
         <li class="subentry" code="schoolDetails" mark="/riseschoolback/schoolDetails?schoolId=${schoolId}&schoolName=${schoolName}">学校详情</li>
         <li class="subentry" code="mien" mark="/riseschoolback/mien?schoolId=${schoolId}&schoolName=${schoolName}">学校风采</li>
         <li class="subentry" code="upgradeSchools" mark="/riseschoolback/upgradeSchools?schoolId=${schoolId}&schoolName=${schoolName}">升学</li>
+        <c:if test="${userType eq 'RISE_SCHOOL_MANAGER'}">
         <li class="subentry" code="dynamic" mark="/riseschoolback/dynamic?schoolId=${schoolId}&schoolName=${schoolName}">动态</li>
+    	</c:if>
     </ul>
 </div>
 <script>

@@ -49,6 +49,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -115,7 +116,16 @@ public class BaseWebController {
             Map<String,Object>params = new HashMap<String,Object>();
             params.put("userId",user.getId());
             RiseSchoolManageVo rsieSchool = riseSchoolManageServiceImpl.queryCurrentRiseSchoolInfo(params);
-            mv.setViewName("redirect:/riseschoolback/essential?schoolId="+rsieSchool.getId()+"&schoolName="+rsieSchool.getSchoolName());
+            String shcoolName;
+			try {
+				shcoolName = URLEncoder.encode(rsieSchool.getSchoolName(),"utf-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				shcoolName = "";
+			}
+            mv.setViewName("redirect:/riseschoolback/essential?schoolId="+rsieSchool.getId()+"&schoolName="+shcoolName);
+            request.getSession().setAttribute("userType", user.getUserType());
         }else{
             mv.setViewName("redirect:/simpleClasses/showClassTypePage");
         }
