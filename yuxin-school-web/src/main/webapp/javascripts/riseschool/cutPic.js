@@ -1,23 +1,23 @@
 (function($) {
     var boundx, boundy, $preview, $preview2, $preview3, $pcnt, $pcnt2, $pcnt3, $pimg, $pimg2, $pimg3, $img,
         xsize, xsize2, xsize3, ysize, ysize2, ysize3, minHeight, maxHeight, minWidth, maxWidth, $scale, sourceHeight, sourceWidth;
-    $.init=function(initW,initH) {
-        $preview = $('#heandImageBig');
-        $preview2 = $('#heandImageMid');
-        $preview3 = $('#heandImageMin');
-        $pcnt = $('.p1 .preview-container');
-        $pcnt2 = $('.p2 .preview-container');
-        $pcnt3 = $('.p3 .preview-container');
-        $pimg = $('.p1 img');
-        $pimg2 = $('.p2 img');
-        $pimg3 = $('.p3 img');
-        $img = $("#target");
-        xsize = $pcnt.width();
-        xsize2 = $pcnt2.width();
-        xsize3 = $pcnt3.width();
-        ysize = $pcnt.height();
-        ysize2 = $pcnt2.height();
-        ysize3 = $pcnt3.height();
+    $.init=function(initW,initH,picFlag) {
+        // $preview = $('#heandImageBig');
+        // $preview2 = $('#heandImageMid');
+        // $preview3 = $('#heandImageMin');
+        // $pcnt = $('.p1 .preview-container');
+        // $pcnt2 = $('.p2 .preview-container');
+        // $pcnt3 = $('.p3 .preview-container');
+        // $pimg = $('.p1 img');
+        // $pimg2 = $('.p2 img');
+        // $pimg3 = $('.p3 img');
+        $img = picFlag == 1?$("#target"):$("#targetStyle");
+        // xsize = $pcnt.width();
+        // xsize2 = $pcnt2.width();
+        // xsize3 = $pcnt3.width();
+        // ysize = $pcnt.height();
+        // ysize2 = $pcnt2.height();
+        // ysize3 = $pcnt3.height();
         minHeight = 50;
         maxHeight = 282;
         minWidth = 120;
@@ -106,7 +106,7 @@
         $('#y2').val(c.y2);
 
 
-        updatePreview(c);
+        // updatePreview(c);
     }
 
     function clearCoords() {

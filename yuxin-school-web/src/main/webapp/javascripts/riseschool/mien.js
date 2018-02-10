@@ -32,17 +32,13 @@ $(function () {
     });
     //弹出弹窗
     $('.mienShow').click(function () {
+        //点击时，清空之前的图片
         $('.opacityPopup').fadeIn();
         $('.commonPopup').fadeIn();
+
         //标记不同的弹窗，为一个标志赋值表示不同的操作
         var windowFlag = '';
-        if($(this).hasClass('coverChange')){
-            windowFlag = '4';
-            var updateId = $(this).attr("data-value");
-            $("#updateId").val(updateId);
-        }else if($(this).hasClass('coverAdd')){
-            windowFlag = '3';
-        }else if ($(this).hasClass('addImg')){
+        if ($(this).hasClass('addImg')){
             windowFlag = '1';
         }else if ($(this).hasClass('imgChange')){
             windowFlag = '2';
@@ -55,6 +51,17 @@ $(function () {
     $('.coverShow').click(function () {
         $('.opacityPopup').fadeIn();
         $('.coverPopup').fadeIn();
+        var windowFlag = '';
+        //封面图标记窗口
+        if($(this).hasClass('coverChange')){
+            $(".uploadImageStyle").find("img").attr("src",$(".coverImg").find("img").attr("src")).attr("style","").attr("style","width: 400px;height: 300px;");
+            windowFlag = '4';
+            var updateId = $(this).attr("data-value");
+            $("#updateId").val(updateId);
+        }else if($(this).hasClass('coverAdd')){
+            windowFlag = '3';
+        }
+        $("#windowFlag").val(windowFlag);
     });
 
 
@@ -77,12 +84,31 @@ $(function () {
         if (theImage.complete) {
             sourceHeight = theImage.height;
             sourceWidth = theImage.width;
-            $.init(sourceWidth, sourceHeight);
+            $.init(sourceWidth, sourceHeight,1);
         } else {
             theImage.onload = function () {
                 sourceHeight = theImage.height;
                 sourceWidth = theImage.width;
-                $.init(sourceWidth, sourceHeight);
+                $.init(sourceWidth, sourceHeight,1);
+            };
+        };
+
+    });
+
+    //剪切图
+    $(".uploadImageStyle").on("change","#targetStyle", function() {
+        var theImage = new Image();
+        console.log($(this).attr("src"));
+        theImage.src = $(this).attr("src");
+        if (theImage.complete) {
+            sourceHeight = theImage.height;
+            sourceWidth = theImage.width;
+            $.init(sourceWidth, sourceHeight,2);
+        } else {
+            theImage.onload = function () {
+                sourceHeight = theImage.height;
+                sourceWidth = theImage.width;
+                $.init(sourceWidth, sourceHeight,2);
             };
         };
 
@@ -90,43 +116,57 @@ $(function () {
 
 });
 
-//上传临时图片
-function savePic() {
+//上传临时图片 1为风采 2为封面
+function savePic(saveFlag) {
     //选择的时候应先清空，
-    $("#target").attr("src","");
+    if (saveFlag == 1){
+        $("#target").attr("src","");
+    }else {
+        $("#targetStyle").attr("src","");
+    }
+    // $(".jcrop-holder").attr("style","display:block");
+    // $($($(".jcrop-holder").find("div")[0]).find("div")[0]).hide();
     $.ajaxFileUpload({
         url : rootPath+"/riseSchoolStyle/upRiseSchoolStyleImg",
         secureuri : false,// 安全协议
         async : false,
-        fileElementId : 'imgData',
+        fileElementId : saveFlag == 1?'imgData':'imgDataStyle',
         dataType:'json',
         type : "POST",
         success : function(data) {
             //显示图片
             // $("#sourcePic").attr("src",data.url);
             if (data.flag == 1){
-                $("#target").attr("src",data.realPath);
-                $("#target").trigger("change");
-                $(".jcrop-holder").find("img").attr("src",data.realPath);
+                if (saveFlag == 1){
+                    $("#target").attr("src",data.realPath);
+                    $("#target").trigger("change");
+                    $(".jcrop-holder").find("img").attr("src",data.realPath);
+                }else {
+                    $("#targetStyle").attr("src",data.realPath);
+                    $("#targetStyle").trigger("change");
+                    $(".jcrop-holder").find("img").attr("src",data.realPath);
+                }
+
             }
         },
         error:function(arg1,arg2,arg3){
             //console.log(arg1);
         },
-        loadingEle: '#target',
-        fileName: 'imgData'
+        saveFlag:saveFlag
+        // loadingEle:  saveFlag == 1?'#target':'#targetStyle',
+        // fileName: 'imgData'
     });
 }
 
 //上传剪切图,返回真实地址并插入数据库中
-function saveCutPic() {
+function saveCutPic(saveFlag) {
     var windowFlag = $("#windowFlag").val();
     var id = $("#updateId").val();
     //上传截取后的图片
     $.ajax({
         url : rootPath + "/riseSchoolStyle/saveCutPic",
         data : {
-            path : $("#target").attr("src"),
+            path : saveFlag == 1?$("#target").attr("src"):$("#targetStyle").attr("src"),
             x : $("#x").val(),
             y : $("#y").val(),
             w : $("#w").val(),

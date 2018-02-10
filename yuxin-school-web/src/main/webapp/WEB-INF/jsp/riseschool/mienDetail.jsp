@@ -19,10 +19,10 @@
             <div class="listBg">
                 <c:choose>
                     <c:when test="${coverVo.imgUrl == null or coverVo.imgUrl == ''}">
-                        <a href="##" class="btn btn-success btn-sm coverAdd mienShow">添加</a>
+                        <a href="##" class="btn btn-success btn-sm coverAdd coverShow">添加</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="##" class="btn btn-warning btn-sm coverChange mienShow" data-value="${coverVo.id}">修改</a>
+                        <a href="##" class="btn btn-warning btn-sm coverChange coverShow" data-value="${coverVo.id}">修改</a>
                     </c:otherwise>
                 </c:choose>
             </div>
@@ -56,17 +56,12 @@
     $(function () {
         //弹出弹窗
         $('.mienShow').click(function () {
+            console.log("第二个页面的东西");
             $('.opacityPopup').fadeIn();
-            $('.mienPopup').fadeIn();
+            $('.commonPopup').fadeIn();
             //标记不同的弹窗，为一个标志赋值表示不同的操作
             var windowFlag = '';
-            if($(this).hasClass('coverChange')){
-                windowFlag = '4';
-                var updateId = $(this).attr("data-value");
-                $("#updateId").val(updateId);
-            }else if($(this).hasClass('coverAdd')){
-                windowFlag = '3';
-            }else if ($(this).hasClass('addImg')){
+            if ($(this).hasClass('addImg')){
                 windowFlag = '1';
             }else if ($(this).hasClass('imgChange')){
                 windowFlag = '2';
@@ -84,6 +79,25 @@
             $(this).children('.imgInfo').hide();
             $(this).children('.listBg').hide();
             return false;
+        });
+
+        //封面图片弹窗
+        $('.coverShow').click(function () {
+            $('.opacityPopup').fadeIn();
+            $('.coverPopup').fadeIn();
+            var windowFlag = '';
+            //封面图标记窗口
+            if($(this).hasClass('coverChange')){
+//                $(".jcrop-holder").attr("style","display:none");
+                $(".jcrop-holder").remove();
+                $(".uploadImageStyle").find("img").attr("src",$(".coverImg").find("img").attr("src")).attr("style","").attr("style","width: 400px;height: 300px;");
+                windowFlag = '4';
+                var updateId = $(this).attr("data-value");
+                $("#updateId").val(updateId);
+            }else if($(this).hasClass('coverAdd')){
+                windowFlag = '3';
+            }
+            $("#windowFlag").val(windowFlag);
         });
     });
     //分页

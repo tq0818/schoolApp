@@ -116,14 +116,14 @@ jQuery.extend({
                         if (s.success)
                             s.success(data, status);
 
-                        var fileEle = document.getElementById('imgData');
-                        var imgEle = document.getElementById('target');
+                        var fileEle = s.saveFlag == 1?document.getElementById('imgData'):document.getElementById('imgDataStyle');
+                        var imgEle = s.saveFlag == 1?document.getElementById('target'):document.getElementById('targetStyle');
                         fileEle.onchange = function(e) {
 
                             var file1 = e.target.files[0];
                             var url1 = window.URL.createObjectURL(file1);
                             imgEle.src = url1;
-                            savePic();
+                            savePic(s.saveFlag);
                         }
 
 
