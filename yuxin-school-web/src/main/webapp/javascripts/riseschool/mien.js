@@ -27,12 +27,13 @@ $(function () {
     // 弹窗中，取消、保存隐藏弹窗
     $('.mienHide').click(function () {
             $('.opacityPopup').fadeOut();
-            $('.mienPopup').fadeOut();
+            $('.commonPopup').fadeOut();
+            $('.coverPopup').fadeOut();
     });
     //弹出弹窗
     $('.mienShow').click(function () {
         $('.opacityPopup').fadeIn();
-        $('.mienPopup').fadeIn();
+        $('.commonPopup').fadeIn();
         //标记不同的弹窗，为一个标志赋值表示不同的操作
         var windowFlag = '';
         if($(this).hasClass('coverChange')){
@@ -50,6 +51,13 @@ $(function () {
         }
         $("#windowFlag").val(windowFlag);
     });
+    //封面图片弹窗
+    $('.coverShow').click(function () {
+        $('.opacityPopup').fadeIn();
+        $('.coverPopup').fadeIn();
+    });
+
+
     //封面hover效果
     $('.imgList li').mouseover(function () {
         $(this).children('.imgInfo').show();

@@ -45,10 +45,10 @@
                             <div class="listBg">
                                 <c:choose>
                                     <c:when test="${coverVo.imgUrl == null or coverVo.imgUrl == ''}">
-                                        <a href="##" class="btn btn-success btn-sm coverAdd mienShow">添加</a>
+                                        <a href="##" class="btn btn-success btn-sm coverAdd coverShow">添加</a>
                                     </c:when>
                                     <c:otherwise>
-                                        <a href="##" class="btn btn-warning btn-sm coverChange mienShow" data-value="${coverVo.id}">修改</a>
+                                        <a href="##" class="btn btn-warning btn-sm coverChange coverShow" data-value="${coverVo.id}">修改</a>
                                     </c:otherwise>
                                 </c:choose>
                             </div>
@@ -102,7 +102,7 @@
 <input type="hidden" id="y2" name="y2" value="0"/>
 <%--新增，修改图片弹窗--%>
 <div class="opacityPopup"></div>
-<div class="mienPopup">
+<div class="mienPopup commonPopup">
     <div class="uploadImage">
         <label for="">风采图片：</label>
         <img src="<%=rootPath %>/images/1.jpg" alt="" id="target">
@@ -112,6 +112,20 @@
     <div class="imgDescripe">
         <label for="">图片描述：</label>
         <textarea  id="imgDiscrible" name="" placeholder="请输入图片描述(最多60个字)"  maxlength="60"></textarea>
+    </div>
+    <div class="mienBtn">
+        <a href="##" class="btn btn-sm btn-danger mienHide">取消</a>
+        <a href="##" class="btn btn-sm btn-success mienHide" onclick="saveCutPic()">保存</a>
+    </div>
+</div>
+
+<%--封面弹窗--%>
+<div class="mienPopup coverPopup">
+    <div class="uploadImage">
+        <label for="">风采图片：</label>
+        <img src="<%=rootPath %>/images/1.jpg" alt="" id="target" style="width: 400px;height: 300px;">
+        <%--<a href="##" class="btn btn-mb btn-success">上传图片</a>--%>
+        <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic()" value="重新选择文件"/>
     </div>
     <div class="mienBtn">
         <a href="##" class="btn btn-sm btn-danger mienHide">取消</a>
