@@ -7,7 +7,11 @@ import com.yuxin.wx.model.riseschool.*;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.utils.PropertiesUtil;
 import com.yuxin.wx.utils.WebUtils;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,11 +36,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/riseschoolback")
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class EarlyLitreController {
+public class EarlyLitreController extends BaseRiseSchoolController{
 	@Autowired
 	private IRiseSchoolDetailsUpService riseSchoolDetailsUpImpl;
-    @Autowired
-    private RiseSchoolManageService riseSchoolManageServiceImpl;
 	@Autowired
     private RiseSchoolManageService riseSchoolInfoServiceImpl;
     @Autowired
@@ -70,7 +73,12 @@ public class EarlyLitreController {
 		if(schoolId == null){
 			return null;
 		}
-		//学校对应填写了学校详情哪些信息
+		//如果输入非法参数调回首页
+		String isReturn = this.returnIndex(request, model, schoolId, schoolName);
+    	if(null!=isReturn){
+    		return isReturn;
+    	}
+         //学校对应填写了学校详情哪些信息
 		Map mapList = new HashMap<>();
 		mapList.put("shcoolId", schoolId);
 		mapList.put("itemType", "DETAILITEM");
@@ -99,6 +107,11 @@ public class EarlyLitreController {
     	if(schoolId == null){
 			return null;
 		}
+    	//如果输入非法参数调回首页
+		String isReturn = this.returnIndex(request, model, schoolId, schoolName);
+    	if(null!=isReturn){
+    		return isReturn;
+    	}
     	//学校对应填写了升学哪些信息
 		Map mapList = new HashMap<>();
 		mapList.put("shcoolId", schoolId);
@@ -124,6 +137,11 @@ public class EarlyLitreController {
     @RequestMapping(value = "/essential")
     public String essential(HttpServletRequest request,Model model,Integer schoolId,String schoolName){
 //		Users user = WebUtils.getCurrentUser(request);
+    	//如果输入非法参数调回首页
+		String isReturn = this.returnIndex(request, model, schoolId, schoolName);
+    	if(null!=isReturn){
+    		return isReturn;
+    	}
     	RiseSchoolManageVo riseSchoolManageVo = new RiseSchoolManageVo();
     	riseSchoolManageVo.setId(schoolId);
 		PageFinder<RiseSchoolManageVo> pageFinder = riseSchoolManageServiceImpl.queryRiseSchoolInfo(riseSchoolManageVo);
@@ -148,6 +166,11 @@ public class EarlyLitreController {
     	if(schoolId == null){
 			return null;
 		}
+    	//如果输入非法参数调回首页
+		String isReturn = this.returnIndex(request, model, schoolId, schoolName);
+    	if(null!=isReturn){
+    		return isReturn;
+    	}
     	model.addAttribute("riseSchoolId", schoolId);
     	model.addAttribute("schoolId", schoolId);
     	model.addAttribute("schoolName", schoolName);
@@ -157,6 +180,11 @@ public class EarlyLitreController {
 	@RequestMapping(value = "/mien")
 	public String mien(HttpServletRequest request,Model model,Integer schoolId,String schoolName){
 		//查询不是封面图片
+		//如果输入非法参数调回首页
+		String isReturn = this.returnIndex(request, model, schoolId, schoolName);
+    	if(null!=isReturn){
+    		return isReturn;
+    	}
 		RiseSchoolStyleVo riseSchoolStyleVo = new RiseSchoolStyleVo();
 		riseSchoolStyleVo.setRiseSchoolId(schoolId);
 		riseSchoolStyleVo.setIsCover(0);

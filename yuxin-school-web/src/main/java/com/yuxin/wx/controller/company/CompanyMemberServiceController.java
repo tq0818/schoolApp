@@ -634,8 +634,9 @@ public class CompanyMemberServiceController {
 		Subject subject = SecurityUtils.getSubject();
 		if(subject.hasRole("直播老师"))
 			isMaxRole = 2;
+		if(subject.hasRole("分校管理员(信息管理)"))
+			isMaxRole = 3;
 		model.addAttribute("isMaxRole", isMaxRole);
-
 		return "company/editPwd";
 	}
 
