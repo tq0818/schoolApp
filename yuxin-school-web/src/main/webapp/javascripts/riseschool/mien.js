@@ -41,6 +41,7 @@ $(function () {
         if ($(this).hasClass('addImg')){
             windowFlag = '1';
         }else if ($(this).hasClass('imgChange')){
+            $(".uploadImage").find("img").attr("src",$(this).parent(".listBg").siblings("img").attr("src")).attr("style","");
             windowFlag = '2';
             var updateId = $(this).attr("data-value");
             $("#updateId").val(updateId);
@@ -146,7 +147,7 @@ function savePic(saveFlag) {
                     $("#targetStyle").trigger("change");
                     $(".jcrop-holder").find("img").attr("src",data.realPath);
                 }
-
+                $("#imgData").removeAttr("type").attr("type","file");
             }
         },
         error:function(arg1,arg2,arg3){

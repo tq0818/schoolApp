@@ -1,3 +1,4 @@
+var jcrop_apis;
 (function($) {
     var boundx, boundy, $preview, $preview2, $preview3, $pcnt, $pcnt2, $pcnt3, $pimg, $pimg2, $pimg3, $img,
         xsize, xsize2, xsize3, ysize, ysize2, ysize3, minHeight, maxHeight, minWidth, maxWidth, $scale, sourceHeight, sourceWidth;
@@ -37,7 +38,7 @@
             onChange : showCoords,
             onSelect : showCoords,
             onRelease: clearCoords,
-            aspectRatio : $scale,
+            aspectRatio : picFlag == 1?0:$scale,
             allowMove : true,
             bgColor : "#f2f2f2",
             borderOpacity : 0.4,
@@ -46,6 +47,7 @@
             bgFade : true,
             allowSelect : false,
             allowResize : true,
+            sideHandles : false,
         }, function() {
             jc=jcrop_api = this;
             var bounds = this.getBounds();
@@ -62,6 +64,7 @@
 //					jcrop_api.setSelect([ size.w/4,size.h/4,3*size.w/4,3*size.h/4 ]);
             }
         });
+        jcrop_apis = jcrop_api;
 
     }
 

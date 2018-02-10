@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@include file="/decorators/import.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -6,7 +7,11 @@
 <%@ taglib uri = "/WEB-INF/wx.tld" prefix = "wx" %>
 <html>
 <head>
-    <title></title>
+    <link rel="stylesheet"  type="text/css" href="<%=rootPath%>/plugins/jcrop/css/jquery.Jcrop.css"/>
+    <script src="<%=rootPath%>/plugins/jcrop/js/jquery.Jcrop.js"></script>
+    <script src="<%=rootPath%>/javascripts/riseschool/cutPic.js"></script>
+    <title>
+    </title>
 </head>
 <body>
     <ul >
@@ -52,6 +57,7 @@
     </ul>
 </body>
 </html>
+
 <script>
     $(function () {
         //弹出弹窗
@@ -61,9 +67,15 @@
             $('.commonPopup').fadeIn();
             //标记不同的弹窗，为一个标志赋值表示不同的操作
             var windowFlag = '';
+            if (jcrop_apis){
+                jcrop_apis.destroy();
+            }
             if ($(this).hasClass('addImg')){
+                $(".uploadImage").find("img").attr("src","/manage/images/1.jpg");
                 windowFlag = '1';
             }else if ($(this).hasClass('imgChange')){
+//                jcrop_apis.destroy();
+                $(".uploadImage").find("img").attr("src",$(this).parent(".listBg").siblings("img").attr("src")).attr("style","");
                 windowFlag = '2';
                 var updateId = $(this).attr("data-value");
                 $("#updateId").val(updateId);
@@ -86,10 +98,12 @@
             $('.opacityPopup').fadeIn();
             $('.coverPopup').fadeIn();
             var windowFlag = '';
+            if (jcrop_apis){
+                jcrop_apis.destroy();
+            }
             //封面图标记窗口
             if($(this).hasClass('coverChange')){
 //                $(".jcrop-holder").attr("style","display:none");
-                $(".jcrop-holder").remove();
                 $(".uploadImageStyle").find("img").attr("src",$(".coverImg").find("img").attr("src")).attr("style","").attr("style","width: 400px;height: 300px;");
                 windowFlag = '4';
                 var updateId = $(this).attr("data-value");
