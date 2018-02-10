@@ -132,6 +132,14 @@ public class EarlyLitreController {
 		model.addAttribute("schoolId",schoolId);
 		model.addAttribute("schoolName",schoolName);
 //		model.addAttribute("userType",user.getUserType());
+		RiseSchoolManageVo riseSchoolManageVo1 = (RiseSchoolManageVo)list.get(0);
+		Map map = new HashMap();
+		//查询区域
+		map.clear();
+		map.put("itemType","DISTRICT");
+		map.put("parentCode",riseSchoolManageVo1.getCityCode());
+		List<SysDictVo> areaList = riseSchoolManageServiceImpl.queryRiseSchoolDict(map);
+		model.addAttribute("areaList",areaList);
         return "/riseschool/essential";
     }
 	//动态

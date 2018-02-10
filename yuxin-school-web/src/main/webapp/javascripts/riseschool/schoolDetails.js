@@ -91,9 +91,12 @@ function queryRiseSchoolDict(areaFlag) {
                 if (itemType == 'PROVINCE'){
                     html = "<option value=\"\">请选择省份</option>" + html;
                     $("#province").html("").html(html);
+                    $("#city").html("").html("<option value=\"\">请选择市</option>");
+                    $("#area").html("").html("<option value=\"\">请选择区</option>");
                 }else if (itemType == 'CITY'){
                     html = "<option value=\"\">请选择市</option>" + html;
                     $("#city").html("").html(html);
+                    $("#area").html("").html("<option value=\"\">请选择区</option>");
                 }else if (itemType == 'DISTRICT'){
                     html = "<option value=\"\">请选择区</option>" + html;
                     $("#area").html("").html(html);
@@ -116,7 +119,7 @@ function updateRiseSchoolInfo() {
     var schoolId = $("#schoolId").val();
     if (province == null || province == '' || city == null || city == '' || district == null || district == ''
         || schoolAddress == null || schoolAddress == ''){
-        $.msg("学校地址存在未录入项");
+        $.msg("学校地址存在未录入项",2000);
         return ;
     }
     if (collectBaseCount == null || collectBaseCount == ''){
@@ -148,3 +151,4 @@ function updateRiseSchoolInfo() {
         }
     });
 }
+

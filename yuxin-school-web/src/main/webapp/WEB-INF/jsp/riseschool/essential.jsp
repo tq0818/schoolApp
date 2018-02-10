@@ -29,18 +29,31 @@
                     </div>
                     <div>
                         <label for="" class="noMargin">招生方式：</label>
-                        <span id="enRollMent">${result.enrollmentName}</span>
+                        <span id="enRollMent" value="${result.enrollmentType}">${result.enrollmentName}</span>
                     </div>
                     <div class="schoolSite">
                         <label for="" class="noMargin">学校地址：</label>
                         <select name="" id="province" onclick="queryRiseSchoolDict(1)">
-                            <option value="">${result.provinceName}</option>
+                            <option value="">请选择省份</option>
+                            <option value="${result.provinceCode}" selected>${result.provinceName}</option>
                         </select>
                         <select name="" id="city" onclick="queryRiseSchoolDict(2)">
-                            <option value="">${result.cityName}</option>
+                            <option value="">请选择城市</option>
+                            <option value="${result.cityCode}" selected>${result.cityName}</option>
                         </select>
                         <select name="" id="area">
-                            <option value="">${result.districtName}</option>
+                            <option value="">请选择区域</option>
+                            <c:forEach var="district" items="${areaList}">
+                                <c:choose>
+                                    <c:when test="${result.district == district.itemCode}">
+                                        <option value="${district.itemCode}" selected>${district.itemName}</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="${district.itemCode}" >${district.itemName}</option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+
                         </select>
                         <br/><input type="text" id="schoolAddress" placeholder="请输入详细地址" maxlength="60" value="${result.detailAddress}">
                     </div>
