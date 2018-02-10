@@ -46,7 +46,7 @@
                     </div>
                     <div>
                         <label for="">学校网址：</label>
-                        <input type="text" id="schoolWeb" value="${result.schoolWeb}">
+                        <input type="text" id="schoolWeb" placeholder="示例:http://www.cdds365.com或https://www.baidu.com" value="${result.schoolWeb}">
                     </div>
                     <div>
                         <label for="">学校传真：</label>

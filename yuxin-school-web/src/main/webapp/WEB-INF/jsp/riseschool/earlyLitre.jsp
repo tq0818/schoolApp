@@ -19,6 +19,10 @@
 		.tips{
 			color:red;
 		}
+		.earlyLitreDetail{
+			padding-bottom : 100px;
+		}
+		
     </style>
 </head>
 
@@ -33,7 +37,7 @@
 <input type="hidden" value="${pageNo}" id="pageNo"/>
 <jsp:include page="/WEB-INF/jsp/menu/menu_earlyLitre.jsp"/>
 <div class="u-wrap set-system">
-    <div class="mainbackground nopadding">
+    <div class="mainbackground nopadding ">
         <div class="heading"> 
             <h2 class="h5">学校管理</h2>
             <span class="line"></span>
@@ -100,7 +104,7 @@
 				<span><a href="javascript:;" class="btn btn-primary addSchool">添加学校</a></span>
 			</div>
         </form>
-        <div class="user-list">
+        <div class="user-list earlyLitreDetail">
           	<table class="table table-center" id="tableList">
 				<tr data-buy="true">
 					<th width="5%">序号</th>
@@ -234,7 +238,7 @@
 	</div>
 	<div>
 		<label for="">学校网址：</label>
-		<input type="text" id="schoolWeb" onblur="judgeSchoolWeb()">
+		<input type="text" id="schoolWeb" onblur="judgeSchoolWeb()" placeholder="示例:http://www.cdds365.com或https://www.baidu.com">
 	</div>
 	<div>
 		<label for="">学校传真：</label>
