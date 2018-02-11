@@ -132,6 +132,10 @@ function addRiseSchoolInfo() {
                 "baseNum":collectBaseCount
         },
         dataType:"json",
+        beforeSend: function (XMLHttpRequest) {
+            $(".loading").show();
+            $(".loading-bg").show();
+        },
         success : function(data) {
             if (data.flag == 1){
                 $.msg(data.msg);
@@ -164,6 +168,10 @@ function queryRiseSchoolDict(areaFlag) {
         data:{"itemType":itemType,
               "itemCode":itemCode},
         dataType:"json",
+        beforeSend: function (XMLHttpRequest) {
+            $(".loading").show();
+            $(".loading-bg").show();
+        },
         success:function (data) {
             //拼接下拉值
             if (data.flag == 1){
@@ -301,9 +309,9 @@ function queryDimRiseSchoolInfo(pageNo) {
             "isTop":topStateVal,
             "enrollmentType":enrolmentVal,
             "schoolName":schoolShortName
-        },beforeSend: function(){
-            $('.loading').show();
-            $('.loading-bg').show();
+        },beforeSend: function (XMLHttpRequest) {
+            $(".loading").show();
+            $(".loading-bg").show();
         },
         dataType: "html",
         success: function (data) {
