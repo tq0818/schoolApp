@@ -359,6 +359,7 @@ function updateAccount() {
         url: rootPath + "/riseSchoolManage/updateUsersInfo",
         data: {
             "id":$("#accountUserName").attr("value"),
+            "username":$("#accountUserName").text(),
             "password":key
         },
         dataType: "json",
