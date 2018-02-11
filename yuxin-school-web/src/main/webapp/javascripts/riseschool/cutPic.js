@@ -38,7 +38,7 @@ var jcrop_apis;
             onChange : showCoords,
             onSelect : showCoords,
             onRelease: clearCoords,
-            aspectRatio : picFlag == 1?0:$scale,
+            aspectRatio : $scale,
             allowMove : true,
             bgColor : "#f2f2f2",
             borderOpacity : 0.4,
@@ -57,10 +57,10 @@ var jcrop_apis;
             var scale = parseInt(sourceWidth) / parseInt(sourceHeight);// 长宽比例
             var size = resizePic();
             if (scale > $scale) {
-                jcrop_api.setSelect([100,100,200,200])
+                jcrop_api.setSelect([100*75/30,100*75/30,200*75/30,200*75/30])
 //					jcrop_api.setSelect([ size.w/4,size.h/4,3*size.w/4,3*size.h/4 ]);
             } else {
-                jcrop_api.setSelect([100,100,200,200])
+                jcrop_api.setSelect([100*75/30,100*75/30,200*75/30,200*75/30])
 //					jcrop_api.setSelect([ size.w/4,size.h/4,3*size.w/4,3*size.h/4 ]);
             }
         });
@@ -132,7 +132,7 @@ var jcrop_apis;
             // 改左侧图大小
             $('.jcrop-holder').find("img").css("height", h + "px").css("width", w + "px");
             $('.jcrop-holder').css("height", h + "px").css("width",w + "px").css("margin-top", mt);
-            $('.jcrop-holder .jcrop-tracker').css("height", h + "px").css("width",w + "px");
+            $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
         } else {
             // 过高,高为100%，宽按比例缩
             h = maxHeight;
@@ -143,7 +143,7 @@ var jcrop_apis;
             // 改左侧图大小
             $('.jcrop-holder').find("img").css("height", h + "px").css("width", w + "px");
             $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
-            $('.jcrop-holder .jcrop-tracker').css("height", h + "px").css("width",w + "px");
+            $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
         }
         var c = {};
         c.w = w;
