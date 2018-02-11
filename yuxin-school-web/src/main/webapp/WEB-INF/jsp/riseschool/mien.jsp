@@ -111,6 +111,10 @@
         <%--<a href="##" class="btn btn-mb btn-success">上传图片</a>--%>
         <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(1)" value="重新选择文件"/>
     </div>
+    <div id="styleBtn">
+        <a href="##" class="btn btn-sm btn-primary">样式一</a>
+        <a href="##" class="btn btn-sm btn-default">样式二</a>
+    </div>
     <div class="imgDescripe">
         <label for="">图片描述：</label>
         <textarea  id="imgDiscrible" name="" placeholder="请输入图片描述(最多60个字)"  maxlength="60"></textarea>

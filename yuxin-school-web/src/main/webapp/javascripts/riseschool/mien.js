@@ -1,5 +1,12 @@
 //学校风采
 $(function () {
+
+    //样式一和样式二的换
+    $('#styleBtn a').click(function () {
+        console.log(1);
+        $(this).addClass('btn-primary').removeClass('btn-default');
+        $(this).siblings('a').addClass('btn-default').removeClass('btn-primary');
+    });
     //点击置顶
     $('.imgTop').click(function () {
         if($(this).html()=='置顶'){
@@ -18,11 +25,6 @@ $(function () {
             }
         })
     });
-    //点击新增
-    $('.addImg').click(function () {
-
-    });
-
 
     // 弹窗中，取消、保存隐藏弹窗
     $('.mienHide').click(function () {
@@ -255,3 +257,4 @@ function updateIsTop(styleId,isTop) {
         }
     });
 }
+
