@@ -6,6 +6,12 @@ $(function () {
         console.log(1);
         $(this).addClass('btn-primary').removeClass('btn-default');
         $(this).siblings('a').addClass('btn-default').removeClass('btn-primary');
+        //点击时改变图片裁剪框
+        var url = $("#target").attr("src");
+        jcrop_apis.destroy();
+        $("#target").trigger("change");
+        $(".jcrop-holder").find("img").attr("src",url);
+        $("#imgData").removeAttr("type").attr("type","file");
     });
     //点击置顶
     $('.imgTop').click(function () {
@@ -39,9 +45,13 @@ $(function () {
         $('.commonPopup').fadeIn();
 
         //标记不同的弹窗，为一个标志赋值表示不同的操作
+        if (jcrop_apis){
+            jcrop_apis.destroy();
+        }
         var windowFlag = '';
         if ($(this).hasClass('addImg')){
             windowFlag = '1';
+            $(".uploadImage").find("img").attr("src","/manage/images/1.jpg");
         }else if ($(this).hasClass('imgChange')){
             $(".uploadImage").find("img").attr("src",$(this).parent(".listBg").siblings("img").attr("src")).attr("style","");
             windowFlag = '2';
@@ -144,12 +154,12 @@ function savePic(saveFlag) {
                     $("#target").attr("src",data.realPath);
                     $("#target").trigger("change");
                     $(".jcrop-holder").find("img").attr("src",data.realPath);
+                    $("#imgData").removeAttr("type").attr("type","file");
                 }else {
                     $("#targetStyle").attr("src",data.realPath);
                     $("#targetStyle").trigger("change");
                     $(".jcrop-holder").find("img").attr("src",data.realPath);
                 }
-                $("#imgData").removeAttr("type").attr("type","file");
             }
         },
         error:function(arg1,arg2,arg3){
@@ -177,7 +187,8 @@ function saveCutPic(saveFlag) {
             imgDiscrible:$("#imgDiscrible").val(),
             riseSchoolId:$("#riseSchoolId").val(),
             windowFlag:windowFlag,
-            updateId:id
+            updateId:id,
+            cssStyle:$("#btnOne").hasClass("btn-primary")?0:1
         },
         type : "post",
         dataType : "json",
