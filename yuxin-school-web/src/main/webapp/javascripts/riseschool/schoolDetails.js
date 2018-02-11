@@ -20,7 +20,13 @@ $(function () {
            	        	itemDiscrible:itemDiscrible,
            	        	itemName:itemName
            	        },
+                    beforeSend: function () {
+                        $('.loading').show();
+                        $('.loading-bg').show();
+                    },
            	        success : function(data){
+                        $('.loading').hide();
+                        $('.loading-bg').hide();
            	        	if(data=="success"){
            	        		$.msg("保存成功");
            	        		window.location.reload();

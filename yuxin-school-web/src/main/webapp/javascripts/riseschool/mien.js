@@ -203,9 +203,14 @@ function queryRiseSchoolStyle(pageNo) {
               "pagesize":6,
             "riseSchoolId":$("#riseSchoolId").val(),
             "isCover":0
+        },beforeSend: function (XMLHttpRequest) {
+            $(".loading").show();
+            $(".loading-bg").show();
         },
         dataType: "html",
         success: function (data) {
+            $(".loading").hide();
+            $(".loading-bg").hide();
             $(".imgList").html("").html(data);
         }
     });

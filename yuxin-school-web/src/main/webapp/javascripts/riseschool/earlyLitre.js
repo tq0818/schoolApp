@@ -138,6 +138,8 @@ function addRiseSchoolInfo() {
         },
         success : function(data) {
             if (data.flag == 1){
+                $(".loading").hide();
+                $(".loading-bg").hide();
                 $.msg(data.msg);
                 $('#schoolBtn').find(".countPopupSave").removeAttr("id");
                 //重新请求查询接口
@@ -173,6 +175,8 @@ function queryRiseSchoolDict(areaFlag) {
             $(".loading-bg").show();
         },
         success:function (data) {
+            $(".loading").hide();
+            $(".loading-bg").hide();
             //拼接下拉值
             if (data.flag == 1){
                 var html = '';
