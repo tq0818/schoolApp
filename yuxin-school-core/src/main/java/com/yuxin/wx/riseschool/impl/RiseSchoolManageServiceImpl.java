@@ -92,4 +92,10 @@ public class RiseSchoolManageServiceImpl implements RiseSchoolManageService {
     public RiseSchoolManageVo queryCurrentRiseSchoolInfo(Map<String, Object> params) {
         return riseSchoolManageMapper.queryCurrentRiseSchoolInfo(params);
     }
+
+	@Override
+	public RiseSchoolManageVo findSchoolById(Integer schoolId) {
+		RiseSchoolManageVo schoolManageVo = riseSchoolManageMapper.findSchoolById(schoolId);
+		return schoolManageVo;
+	}
 }

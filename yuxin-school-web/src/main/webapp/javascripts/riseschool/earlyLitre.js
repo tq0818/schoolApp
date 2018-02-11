@@ -357,14 +357,23 @@ function setUserNameAndId(userId,userName) {
 //页面跳转
 function loalUrl(flag,schoolId,schoolName) {
     if (flag == 0){//基本
-        window.location.href = rootPath + "/riseschoolback/essential?schoolId="+schoolId+"&schoolName="+schoolName;
+        window.location.href = rootPath + "/riseschoolback/essential?schoolId="+schoolId;
     }else if (flag == 1){//详情
-        window.location.href = rootPath + "/riseschoolback/schoolDetails?schoolId="+schoolId+"&schoolName="+schoolName;
+        window.location.href = rootPath + "/riseschoolback/schoolDetails?schoolId="+schoolId;
     }else if (flag == 2){//风采
-        window.location.href = rootPath + "/riseschoolback/mien?schoolId="+schoolId+"&schoolName="+schoolName;
+        window.location.href = rootPath + "/riseschoolback/mien?schoolId="+schoolId;
     }else if (flag == 3){//升学
-        window.location.href = rootPath + "/riseschoolback/upgradeSchools?schoolId="+schoolId+"&schoolName="+schoolName;
+        window.location.href = rootPath + "/riseschoolback/upgradeSchools?schoolId="+schoolId;
     }
+//    if (flag == 0){//基本
+//    	window.location.href = rootPath + "/riseschoolback/essential?schoolId="+schoolId+"&schoolName="+schoolName;
+//    }else if (flag == 1){//详情
+//    	window.location.href = rootPath + "/riseschoolback/schoolDetails?schoolId="+schoolId+"&schoolName="+schoolName;
+//    }else if (flag == 2){//风采
+//    	window.location.href = rootPath + "/riseschoolback/mien?schoolId="+schoolId+"&schoolName="+schoolName;
+//    }else if (flag == 3){//升学
+//    	window.location.href = rootPath + "/riseschoolback/upgradeSchools?schoolId="+schoolId+"&schoolName="+schoolName;
+//    }
 }
 
 //正则判断学校账号是否是字母和数字的组合

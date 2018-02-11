@@ -58,4 +58,5 @@ public interface RiseSchoolManageService {
      * @return
      */
     RiseSchoolManageVo queryCurrentRiseSchoolInfo(Map<String, Object> params);
+    RiseSchoolManageVo findSchoolById(Integer schoolId);
 }

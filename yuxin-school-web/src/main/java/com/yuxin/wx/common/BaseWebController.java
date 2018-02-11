@@ -124,7 +124,8 @@ public class BaseWebController {
 				e.printStackTrace();
 				shcoolName = "";
 			}
-            mv.setViewName("redirect:/riseschoolback/essential?schoolId="+rsieSchool.getId()+"&schoolName="+shcoolName);
+            //mv.setViewName("redirect:/riseschoolback/essential?schoolId="+rsieSchool.getId()+"&schoolName="+shcoolName);
+            mv.setViewName("redirect:/riseschoolback/essential?schoolId="+rsieSchool.getId());
             request.getSession().setAttribute("userType", user.getUserType());
         }else{
             mv.setViewName("redirect:/simpleClasses/showClassTypePage");

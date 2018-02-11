@@ -11,7 +11,9 @@ import com.yuxin.wx.utils.WebUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,7 +98,17 @@ public class EarlyLitreController extends BaseRiseSchoolController{
 		model.addAttribute("riseSchoolDetailsUp", riseSchoolDetailsUp);
 		model.addAttribute("riseSchoolId", schoolId);
 		model.addAttribute("schoolId", schoolId);
-		model.addAttribute("schoolName", schoolName);
+		//乱码问题
+		/*String schoolNameCode;
+		try {
+			schoolNameCode = URLEncoder.encode(schoolName,"utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			schoolNameCode = "";
+		}*/
+		RiseSchoolManageVo schoolManageVo = riseSchoolManageServiceImpl.findSchoolById(schoolId);
+		model.addAttribute("schoolName",schoolManageVo.getSchoolName());
         return "/riseschool/schoolDetails";
     }
     //升学
@@ -130,7 +142,17 @@ public class EarlyLitreController extends BaseRiseSchoolController{
 		model.addAttribute("riseSchoolDetailsUp", riseSchoolDetailsUp);
 		model.addAttribute("riseSchoolId", schoolId);
 		model.addAttribute("schoolId", schoolId);
-		model.addAttribute("schoolName", schoolName);
+		//乱码问题
+		/*String schoolNameCode;
+		try {
+			schoolNameCode = URLEncoder.encode(schoolName,"utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			schoolNameCode = "";
+		}*/
+		RiseSchoolManageVo schoolManageVo = riseSchoolManageServiceImpl.findSchoolById(schoolId);
+		model.addAttribute("schoolName",schoolManageVo.getSchoolName());
 		 return "/riseschool/upgradeSchools";
 	}
     //基本信息
@@ -148,7 +170,17 @@ public class EarlyLitreController extends BaseRiseSchoolController{
 		List<RiseSchoolManageVo> list = pageFinder.getData();
 		model.addAttribute("result",(RiseSchoolManageVo)list.get(0));
 		model.addAttribute("schoolId",schoolId);
-		model.addAttribute("schoolName",schoolName);
+		//乱码问题
+		/*String schoolNameCode;
+		try {
+			schoolNameCode = URLEncoder.encode(schoolName,"utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			schoolNameCode = "";
+		}*/
+		RiseSchoolManageVo schoolManageVo = riseSchoolManageServiceImpl.findSchoolById(schoolId);
+		model.addAttribute("schoolName",schoolManageVo.getSchoolName());
 //		model.addAttribute("userType",user.getUserType());
 		RiseSchoolManageVo riseSchoolManageVo1 = (RiseSchoolManageVo)list.get(0);
 		Map map = new HashMap();
@@ -173,7 +205,17 @@ public class EarlyLitreController extends BaseRiseSchoolController{
     	}
     	model.addAttribute("riseSchoolId", schoolId);
     	model.addAttribute("schoolId", schoolId);
-    	model.addAttribute("schoolName", schoolName);
+    	//乱码问题
+		/*String schoolNameCode;
+		try {
+			schoolNameCode = URLEncoder.encode(schoolName,"utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			schoolNameCode = "";
+		}*/
+		RiseSchoolManageVo schoolManageVo = riseSchoolManageServiceImpl.findSchoolById(schoolId);
+		model.addAttribute("schoolName",schoolManageVo.getSchoolName());
 		return "/riseschool/dynamic";
 	}
 	//学校风采
@@ -211,7 +253,17 @@ public class EarlyLitreController extends BaseRiseSchoolController{
 		model.addAttribute("pageNo",riseSchoolStyleVo.getPage());
 		model.addAttribute("rowCount",pageFinder.getRowCount());
 		model.addAttribute("schoolId",schoolId);
-		model.addAttribute("schoolName",schoolName);
+		//乱码问题
+		/*String schoolNameCode;
+		try {
+			schoolNameCode = URLEncoder.encode(schoolName);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			schoolNameCode = "";
+		}*/
+		RiseSchoolManageVo schoolManageVo = riseSchoolManageServiceImpl.findSchoolById(schoolId);
+		model.addAttribute("schoolName",schoolManageVo.getSchoolName());
 		return "/riseschool/mien";
 	}
 

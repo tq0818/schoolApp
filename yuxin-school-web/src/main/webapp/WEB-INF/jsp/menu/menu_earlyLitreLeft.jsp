@@ -9,12 +9,12 @@
         <!-- <span class="iconfont return-pic hcancle">&#xe650;</span> -->
     </div>
     <ul id="course_manage" class="system_managelist">
-        <li class="subentry" code="essential" mark="/riseschoolback/essential?schoolId=${schoolId}&schoolName=${schoolName}">基本信息</li>
-        <li class="subentry" code="schoolDetails" mark="/riseschoolback/schoolDetails?schoolId=${schoolId}&schoolName=${schoolName}">学校详情</li>
-        <li class="subentry" code="mien" mark="/riseschoolback/mien?schoolId=${schoolId}&schoolName=${schoolName}">学校风采</li>
-        <li class="subentry" code="upgradeSchools" mark="/riseschoolback/upgradeSchools?schoolId=${schoolId}&schoolName=${schoolName}">升学</li>
+        <li class="subentry" code="essential" mark="/riseschoolback/essential?schoolId=${schoolId}">基本信息</li>
+        <li class="subentry" code="schoolDetails" mark="/riseschoolback/schoolDetails?schoolId=${schoolId}">学校详情</li>
+        <li class="subentry" code="mien" mark="/riseschoolback/mien?schoolId=${schoolId}">学校风采</li>
+        <li class="subentry" code="upgradeSchools" mark="/riseschoolback/upgradeSchools?schoolId=${schoolId}">升学</li>
         <c:if test="${userType eq 'RISE_SCHOOL_MANAGER'}">
-        <li class="subentry" code="dynamic" mark="/riseschoolback/dynamic?schoolId=${schoolId}&schoolName=${schoolName}">动态</li>
+        <li class="subentry" code="dynamic" mark="/riseschoolback/dynamic?schoolId=${schoolId}">动态</li>
     	</c:if>
     </ul>
 </div>
