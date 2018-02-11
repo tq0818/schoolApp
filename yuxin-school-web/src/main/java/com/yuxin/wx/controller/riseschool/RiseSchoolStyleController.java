@@ -1,9 +1,12 @@
 package com.yuxin.wx.controller.riseschool;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yuxin.wx.api.riseschool.RiseSchoolManageService;
 import com.yuxin.wx.api.riseschool.RiseSchoolStyleService;
 import com.yuxin.wx.common.PageFinder;
+import com.yuxin.wx.model.riseschool.RiseSchoolManageVo;
 import com.yuxin.wx.model.riseschool.RiseSchoolStyleVo;
+import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.util.ImageUtils;
 import com.yuxin.wx.utils.FileUtil;
 import com.yuxin.wx.utils.PropertiesUtil;
@@ -36,6 +39,8 @@ public class RiseSchoolStyleController {
     private RiseSchoolStyleService riseSchoolStyleServiceImpl;
     @Autowired
     private PropertiesUtil propertiesUtil;
+    @Autowired
+    private RiseSchoolManageService riseSchoolManageServiceImpl;
     /**
      * 添加学校风采
      * @param request
@@ -182,7 +187,7 @@ public class RiseSchoolStyleController {
         MultipartFile multipartFile = multiPartRquest.getFile("imgData");
         String realPath=null;
         try {
-            realPath = FileUtil.upload(multipartFile, "", WebUtils.getCurrentCompanyId()+"");
+            realPath = FileUtil.upload(multipartFile, "temp", WebUtils.getCurrentCompanyId()+"");
         } catch (Exception e) {
             e.printStackTrace();
             json.put("flag","0");
@@ -260,7 +265,11 @@ public class RiseSchoolStyleController {
 //        log.info("上传图片开始：");
         String realPath=null;
         try {
-            realPath=FileUtil.upload(cutImgPath,"null", WebUtils.getCurrentCompanyId()+"");
+           /* Users user = WebUtils.getCurrentUser(request);
+            Map<String,Object>params = new HashMap<String,Object>();
+            params.put("userId",user.getId());
+            RiseSchoolManageVo rsieSchool = riseSchoolManageServiceImpl.queryCurrentRiseSchoolInfo(params);*/
+            realPath=FileUtil.upload(cutImgPath,"riseSchoolStyle", WebUtils.getCurrentCompanyId()+"");
         } catch (Exception e) {
 //            log.error("上传文件失败",e);
             e.printStackTrace();
