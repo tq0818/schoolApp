@@ -11,7 +11,9 @@
     <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/plugins/jcrop/css/jquery.Jcrop.css"/>
     <style>
-        .gobal-progress{display: none !important;}
+        .gobal-progress{display: none !important;} 
+        .uploadImage .jcrop-holder{margin-top: 0!important;width: 400px !important;height: 300px !important; }
+        .uploadImage img,.jcrop-tracke,.uploadImageStyle img,.jcrop-holder{width: 300px !important;height: 300px!important;margin-top: 0!important;}
     </style>
 </head>
 <body>
@@ -40,7 +42,7 @@
                             <i class="icon iconfont">&#xe606;</i>
                         </li>
                         <li class="coverImg" id="${coverVo.id}" >
-                            <img src="${coverVo.imgUrl}" alt="">
+                            <img src="${coverVo.imgUrl}" alt="" >
                             <a href="##" class="btn btn-primary btn-sm rightShow">封面图片</a>
                             <div class="listBg">
                                 <c:choose>
@@ -105,7 +107,7 @@
 <div class="mienPopup commonPopup">
     <div class="uploadImage">
         <label for="">风采图片：</label>
-        <img src="<%=rootPath %>/images/1.jpg" alt="" id="target">
+        <img src="<%=rootPath %>/images/1.jpg" alt="" id="target" style="width: 300px;height: 300px;">
         <%--<a href="##" class="btn btn-mb btn-success">上传图片</a>--%>
         <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(1)" value="重新选择文件"/>
     </div>
