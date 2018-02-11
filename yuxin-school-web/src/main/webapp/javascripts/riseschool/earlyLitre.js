@@ -251,8 +251,14 @@ function queryRiseSchoolInfo(pageNo) {
                 "enrollmentType":enrolment,
                 "isTop":topState
         },
+        beforeSend: function(){
+               $('.loading').show();
+               $('.loading-bg').show();
+        },
         dataType: "html",
         success: function (data) {
+            $('.loading').hide();
+            $('.loading-bg').hide();
             $(".user-list").html("").html(data);
         }
     });
@@ -295,9 +301,14 @@ function queryDimRiseSchoolInfo(pageNo) {
             "isTop":topStateVal,
             "enrollmentType":enrolmentVal,
             "schoolName":schoolShortName
+        },beforeSend: function(){
+            $('.loading').show();
+            $('.loading-bg').show();
         },
         dataType: "html",
         success: function (data) {
+            $('.loading').hide();
+            $('.loading-bg').hide();
             $(".user-list").html("").html(data);
         }
     });
