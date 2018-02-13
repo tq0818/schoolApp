@@ -5,7 +5,7 @@
     <div class="left-side-title">
         <i class="icon iconfont" style="float: left;color: #cdcccc;font-size: 20px;margin-left: 2px;" id="backUp">&#xe650;</i>
         <%--<em title='${company.companyName }' style='overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width: 200px;display : inline-block;'>${company.companyName }</em>--%>
-        <em title='${schoolName}' style='overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width: 200px;display : inline-block;'>${schoolName}</em>
+        <em title='${schoolName}' style='overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width: 190px;display : inline-block;'>${schoolName}</em>
         <!-- <span class="iconfont return-pic hcancle">&#xe650;</span> -->
     </div>
     <ul id="course_manage" class="system_managelist">
