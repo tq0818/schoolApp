@@ -222,7 +222,14 @@ public class RiseSchoolStyleController {
         //剪切的图片
         String target=props.getProperty("server.imageupload.tempPath")+"/target/"+fileName;
         String header="http://"+props.getProperty("yunduoketang.oss.imagedomain")+"/";
-
+        File tempPathFile = new File(props.getProperty("server.imageupload.tempPath") + "/source/");
+        if(!tempPathFile.exists()){
+            tempPathFile.mkdirs();
+        }
+        File targetFile = new File(props.getProperty("server.imageupload.tempPath") + "/target/");
+        if(!targetFile.exists()){
+            targetFile.mkdirs();
+        }
         path=path.replace(header, "");
         System.out.println("oss临时文件路径["+path+"]=====本地磁盘临时文件路径["+tempPath+"]======切图后临时文件路径["+target+"]");
         FileUtil.download("temp", path,tempPath);
@@ -240,15 +247,43 @@ public class RiseSchoolStyleController {
         //示例图尺寸
         double slW=0;
         double slH=0;
-        if(realW/realH>516.00/282.00){
-            //过宽
-            slH=516 * realH/realW;
-            slW=516;
+        double scale=0;//根据不同类型的图片有不同的比例
+        String cssStyle = request.getParameter("cssStyle");
+        String windowFlag = request.getParameter("windowFlag");
+        if ("1".equals(windowFlag) || "2".equals(windowFlag) ){//1 ,2都是风采图,反之则是封面图
+            if ("0".equals(cssStyle)){//0是竖图，反之则是横图
+                if(realW/realH>750.00/1206.00){
+                    //过宽
+                    slH=750 * realH/realW;
+                    slW=750;
+                }else{
+                    //过高
+                    slH=1206;
+                    slW=1206 * realW/realH;
+                }
+            }else{
+                if(realW/realH>750.00/470.00){
+                    //过宽
+                    slH=750 * realH/realW;
+                    slW=750;
+                }else{
+                    //过高
+                    slH=470;
+                    slW=470 * realW/realH;
+                }
+            }
         }else{
-            //过高
-            slH=282;
-            slW=282 * realW/realH;
+            if(realW/realH>750.00/300.00){
+                //过宽
+                slH=750 * realH/realW;
+                slW=750;
+            }else{
+                //过高
+                slH=300;
+                slW=300 * realW/realH;
+            }
         }
+
         //原图所选中位置和区域
 
         int xx=(new   Double(x*realW/slW)).intValue();
@@ -294,7 +329,7 @@ public class RiseSchoolStyleController {
         CompanyPicsVo pics=new CompanyPicsVo();
 //        pics.setPicOriginalUrl(picUrl);
         pics.setRealPath(realPath);
-        String windowFlag = request.getParameter("windowFlag");
+        Date date = new Date();
         if ("1".equals(windowFlag)||"3".equals(windowFlag)){//1新增风采图 3新增封面图
             if ("1".equals(windowFlag)){
                 riseSchoolStyleVo.setIsCover(0);
@@ -305,7 +340,6 @@ public class RiseSchoolStyleController {
             //将剪切的图片地址存放数据库中
             riseSchoolStyleVo.setImgUrl(realPath);
             riseSchoolStyleVo.setIsTop(0);
-            Date date = new Date();
             riseSchoolStyleVo.setCreateTime(date);
             riseSchoolStyleVo.setUpdateTime(date);
             riseSchoolStyleServiceImpl.insertRiseSchoolStyle(riseSchoolStyleVo);
@@ -313,6 +347,7 @@ public class RiseSchoolStyleController {
             riseSchoolStyleVo.setRiseSchoolId(null);
             riseSchoolStyleVo.setId(updateId);
             riseSchoolStyleVo.setImgUrl(realPath);
+            riseSchoolStyleVo.setUpdateTime(date);
             riseSchoolStyleServiceImpl.updateRiseSchoolStyle(riseSchoolStyleVo);
         }
 

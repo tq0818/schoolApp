@@ -112,8 +112,8 @@
         <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(1)" value="重新选择文件"/>
     </div>
     <div id="styleBtn">
-        <a href="##" class="btn btn-sm btn-primary">样式一</a>
-        <a href="##" class="btn btn-sm btn-default">样式二</a>
+        <a href="##" class="btn btn-sm btn-primary" id="btnOne">样式一</a>
+        <a href="##" class="btn btn-sm btn-default" id="btnTwo">样式二</a>
     </div>
     <div class="imgDescripe">
         <label for="">图片描述：</label>

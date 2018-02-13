@@ -67,7 +67,7 @@
                     </div>
                     <div>
                         <label for="">公交路线：</label>
-                        <input type="text" id="busRoad" maxlength="200" value="${result.busRoad}">
+                        <input type="text" id="busRoad" maxlength="200" value="${result.busRoad}" title="${result.busRoad}">
                     </div>
                     <div>
                         <label for="">收藏基数：</label>
