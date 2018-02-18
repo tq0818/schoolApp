@@ -32,25 +32,25 @@
 	                        </c:forEach>
                         </li>
                         <li>
-                            <a href="##">住校情况</a>
+                            <a href="##">分班和在校生情况</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
-                            <c:if test="${riseDetail.itemName eq '住校情况'}">
+                            <c:if test="${riseDetail.itemName eq '分班和在校生情况'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
 	                        </c:if>
 	                        </c:forEach>
                         </li>
                         <li>
-                            <a href="##">就餐情况</a>
+                            <a href="##">初升高走向</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
-                            <c:if test="${riseDetail.itemName eq '就餐情况'}">
+                            <c:if test="${riseDetail.itemName eq '初升高走向'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
 	                        </c:if>
 	                        </c:forEach>
                         </li>
                         <li>
-                            <a href="##">托管及接送情况</a>
+                            <a href="##">往年升学情况和分数</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
-                            <c:if test="${riseDetail.itemName eq '托管及接送情况'}">
+                            <c:if test="${riseDetail.itemName eq '往年升学情况和分数'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
 	                        </c:if>
 	                        </c:forEach>
