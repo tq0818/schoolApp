@@ -6,7 +6,7 @@
     <title>升学</title>
     <link rel="stylesheet" href="<%=rootPath %>/stylesheets/splitscreen.css">
     <link rel="stylesheet" href="<%=rootPath %>/stylesheets/fonts/iconfont.css">
-    <link rel="stylesheet" href="<%=rootPath %>/stylesheets/riseschool/schoolDetails.css">
+    <link rel="stylesheet" href="<%=rootPath %>/stylesheets/riseschool/schoolUp.css">
 
 </head>
 <body>

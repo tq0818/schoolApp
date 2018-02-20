@@ -1,0 +1,14 @@
+.schoolDetails{margin: 15px auto;}
+.headContent{width: 720px;margin: auto;}
+.headContent li{display: inline-block;width: 120px;height: 28px;line-height: 28px;text-align: center;
+    font-size: 9px;cursor: pointer;background: #999999;border-radius: 3px;margin-top: 25px;
+    margin-right: 20px;position: relative;}
+.headContent li a{color: #fff;text-decoration: none;}
+.headContent li.noMargin{margin-right: 0;}
+.footerContent{text-align: center;}
+.footerContentDetail{width: 720px;height: 320px;font-size: 12px;color: #666;margin: 26px 0;
+    border: 1px solid #797979;line-height: 20px;}
+.btnStyle a{display: inline-block;width: 83px;height: 30px;line-height: 30px;text-align: center;
+    color: #fff;font-size: 12px;background: #1e6fbd;border-radius: 4px;text-decoration: none;margin: 0 29px;}
+.headContent .active{background: #169bd5;}
+.headContent .iconDetails{position: absolute;right: -7px;top: -15px;color: #f43033;}

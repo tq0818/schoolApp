@@ -5,6 +5,7 @@ $(function () {
     $('.btnSave').click(function () {
         for(var i= 0;i<menuList.length;i++){
             if(menuList.eq(i).hasClass('active')){
+                var _this = menuList.eq(i);
             	var riseSchoolId  = $("#riseSchoolId").val();
             	var itemDiscrible  = $("#footerContentDetail").val();
             	var itemName = menuList.eq(i).children('a').html();
@@ -29,7 +30,9 @@ $(function () {
                         $('.loading-bg').hide();
            	        	if(data=="success"){
            	        		$.msg("保存成功");
-           	        		window.location.reload();
+           	        		//window.location.reload();
+                            _this.append('<i class="icon iconfont iconDetails">&#xe611;</i>');
+                            _this.click();
            	        	}else{
            	        		alert("保存失败");
            	        	}
@@ -132,6 +135,7 @@ function updateRiseSchoolInfo() {
         collectBaseCount = 0;
 	}
     $.ajax({
+        type:"POST",
         url : rootPath +"/riseSchoolManage/updateRiseSchoolInfo",
         data : {
             "provinceCode":province,

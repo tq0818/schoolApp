@@ -104,7 +104,7 @@
     </div>
     <div>
         <label for="">正&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp文：</label>
-        <span class="contentCheck">
+        <span class="contentCheck" style="overflow-x: auto">
         </span>
     </div>
     <div class="addNewsBtn">

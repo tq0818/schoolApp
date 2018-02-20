@@ -29,10 +29,10 @@ $(function () {
         $('.addNewSchool').fadeOut();
     });
     $('.countPopupSave').click(function () {
-        $('.opacityPopup').fadeOut();
+       /* $('.opacityPopup').fadeOut();
         $('.countPopup').fadeOut();
 
-        $('.addNewSchool').fadeOut();
+        $('.addNewSchool').fadeOut();*/
         if (!$("#schoolSave").attr("id")){
             //id存在则是账户管理密码保存
             updateAccount();
@@ -118,6 +118,7 @@ function addRiseSchoolInfo() {
         return ;
     }
     $.ajax({
+        type:"POST",
         url : rootPath +"/riseSchoolManage/addRiseSchoolInfo",
         data : {"schoolName":schoolName ,
                 "enrollmentType":enRollMent,
@@ -147,6 +148,11 @@ function addRiseSchoolInfo() {
             }else {
                 $.msg(data.msg);
             }
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+            $('.opacityPopup').fadeOut();
+            $('.countPopup').fadeOut();
+            $('.addNewSchool').fadeOut();
         }
     });
 }
@@ -330,6 +336,7 @@ function queryDimRiseSchoolInfo(pageNo) {
 //更新上下架或者置顶
 function updateRiseSchool(id,isShalves,isTop) {
     $.ajax({
+        type:"POST",
         url: rootPath + "/riseSchoolManage/updateRiseSchoolInfo",
         data: {
             "id":id,

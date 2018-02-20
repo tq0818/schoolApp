@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +43,7 @@ public class RiseSchoolManageController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/addRiseSchoolInfo")
+    @RequestMapping(value = "/addRiseSchoolInfo",method = RequestMethod.POST)
     public JSONObject addRiseSchoolInfo(HttpServletRequest request, RiseSchoolManageVo riseSchoolManageVo, Users users){
         Map map = new HashMap<>();
         Integer curUserId = WebUtils.getCurrentUserId(request);
@@ -79,7 +80,7 @@ public class RiseSchoolManageController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/updateRiseSchoolInfo")
+    @RequestMapping(value = "/updateRiseSchoolInfo",method = RequestMethod.POST)
     public JSONObject updateRiseSchoolInfo(HttpServletRequest request, RiseSchoolManageVo riseSchoolManageVo){
         JSONObject json = new JSONObject();
         riseSchoolManageVo.setUpdateTime(new Date());
