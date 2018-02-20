@@ -1,6 +1,7 @@
 package com.yuxin.wx.model.riseschool;
 
 import com.yuxin.wx.common.BaseEntity;
+import com.yuxin.wx.vo.common.InterfaceResult;
 
 /**
  * Created by lym_gxm on 18/2/5.
@@ -28,6 +29,7 @@ public class RiseSchoolInfoVo extends BaseEntity {
     private Integer collectNum;
     private Integer isCollect;
     private Integer collectId;
+    private Integer baseNum;
 
     private String districtCode;
 
@@ -250,5 +252,13 @@ public class RiseSchoolInfoVo extends BaseEntity {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public Integer getBaseNum() {
+        return baseNum;
+    }
+
+    public void setBaseNum(Integer baseNum) {
+        this.baseNum = baseNum;
     }
 }

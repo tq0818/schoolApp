@@ -105,6 +105,12 @@ function addRiseSchoolInfo() {
         $.msg("学校账号未输入");
         return ;
     }
+    if (!regNum.test(userName)&&!regStr.test(userName)){
+
+    }else {
+        $.msg("账号只支持字母和数字的组合");
+        return ;
+    }
     if (enRollMent == null || enRollMent == ''){
         $.msg("未选择招生方式");
         return ;
