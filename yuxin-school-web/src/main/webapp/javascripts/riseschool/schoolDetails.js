@@ -131,9 +131,14 @@ function updateRiseSchoolInfo() {
         $.msg("学校地址存在未录入项",2000);
         return ;
     }
+
     if (collectBaseCount == null || collectBaseCount == ''){
         collectBaseCount = 0;
 	}
+    if(parseInt(collectBaseCount)<0 || parseInt(collectBaseCount)>10000){
+        $.msg("收藏基数请输入0-10000");
+        return ;
+    }
     $.ajax({
         type:"POST",
         url : rootPath +"/riseSchoolManage/updateRiseSchoolInfo",
@@ -161,4 +166,18 @@ function updateRiseSchoolInfo() {
         }
     });
 }
+//检验网址
+var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
+function judgeSchoolWeb() {
+    var schoolWeb = $("#schoolWeb").val();
+    if(!schoolWeb)return;
+    if (schoolWeb != null || schoolWeb != ""){
+        if (!reg.test(schoolWeb)){
+            $.msg("请输入有效的网址!",1000);
+            $("#schoolWeb").val("")
+            return ;
+        }
+    }
+}
+
 

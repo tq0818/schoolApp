@@ -17,5 +17,5 @@ margin-left: -240px;margin-top: -232px;font-size: 14px;color: #666;padding: 0 26
 .contentCheck{width: 350px;height: 300px;display: inline-block;}
 .addNewDynamic{float: right;}
 .heading >h2{display: inline-block;margin-bottom: 10px;}
-.dynamicList li:first-child{width: 175px;text-align: right;}
+.dynamicList li:first-child{width: 175px;text-align: left;}
 .change{margin: 0 5px;}

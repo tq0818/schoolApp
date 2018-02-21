@@ -59,7 +59,7 @@
                     </div>
                     <div>
                         <label for="">学校网址：</label>
-                        <input type="text" id="schoolWeb" placeholder="示例:http://www.cdds365.com或https://www.baidu.com" value="${result.schoolWeb}">
+                        <input type="text" id="schoolWeb" onblur="judgeSchoolWeb()" placeholder="示例:http://www.cdds365.com或https://www.baidu.com" value="${result.schoolWeb}">
                     </div>
                     <div>
                         <label for="">学校传真：</label>
@@ -67,11 +67,12 @@
                     </div>
                     <div>
                         <label for="">公交路线：</label>
-                        <input type="text" id="busRoad" maxlength="200" value="${result.busRoad}" title="${result.busRoad}">
+                        <%--<input type="text" id="busRoad" maxlength="200" value="${result.busRoad}" title="${result.busRoad}">--%>
+                        <textarea id="busRoad" maxlength="200" style="width: 492px" >${result.busRoad}</textarea>
                     </div>
                     <div>
                         <label for="">收藏基数：</label>
-                        <input type="text" id="collectBaseCount" maxlength="5" placeholder="请输入0-10000" value="${result.baseNum}">
+                        <input type="number" id="collectBaseCount" maxlength="5" max="10000" placeholder="请输入0-10000" value="${result.baseNum}">
                     </div>
                     <div class="countPopupBtn">
                         <a href="##" class="btn btn-sm btn-primary countPopupCancel">取消</a>

@@ -246,7 +246,8 @@
 	</div>
 	<div>
 		<label for="">公交路线：</label>
-		<input type="text" maxlength="200" id="busRoad">
+		<%--<input type="text" maxlength="200" id="busRoad">--%>
+		<textarea id="busRoad" maxlength="200" style="width: 486px"></textarea>
 	</div>
 	<div>
 		<label for="">收藏基数：</label>
@@ -254,7 +255,7 @@
 	</div>
 	<div class="countPopupBtn" id="schoolBtn">
 		<a href="##" class="btn btn-sm btn-primary countPopupCancel">取消</a>
-		<a href="##" class="btn btn-sm btn-primary countPopupSave">保存</a>
+		<a href="##" class="btn btn-sm btn-primary countPopupSave">确认添加</a>
 	</div>
 </div>
 

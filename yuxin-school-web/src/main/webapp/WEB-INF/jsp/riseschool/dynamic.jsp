@@ -23,7 +23,7 @@
         <div class="mainbackground nopadding">
             <div class="heading">
                 <h2 class="h5">动态</h2>
-                <a href="##" class="btn btn-primary btn-mb addNewDynamic">新增</a>
+                <a href="##" class="btn btn-primary btn-mb addNewDynamic">新增动态</a>
                 <span class="line"></span>
             </div>
             <div class="schoolDetailsContent essentialInfo" >
@@ -108,7 +108,7 @@
         </span>
     </div>
     <div class="addNewsBtn">
-        <a href="##" class="btn btn-sm btn-success addNewsBtncheck">确定</a>
+        <a href="##" class="btn btn-sm btn-success addNewsBtncheck">关闭</a>
     </div>
 </div>
 

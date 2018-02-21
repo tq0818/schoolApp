@@ -105,6 +105,29 @@ function addRiseSchoolInfo() {
         $.msg("学校账号未输入");
         return ;
     }
+    if(allStr.test(userName)){
+        if (!regNum.test(userName)&&!regStr.test(userName)){
+/*            //校验账号是否重复
+            $.ajax({
+                url:rootPath + "/riseSchoolManage/judgeAccountName",
+                data:{"username":userName},
+                dataType:"json",
+                success:function (data) {
+                    if (data.count != 0){
+                        $.msg("该账号已存在!",1000);
+                        $("#userName").val("");
+                        return ;
+                    }
+                }
+            });*/
+        }else {
+            $.msg("账号只支持字母和数字的组合",1000);
+            return ;
+        }
+    }else{
+        $.msg("账号只支持字母和数字的组合",1000);
+        return ;
+    }
     if (!regNum.test(userName)&&!regStr.test(userName)){
 
     }else {
@@ -120,6 +143,14 @@ function addRiseSchoolInfo() {
         $.msg("学校地址存在未录入项");
         return ;
     }
+    if (collectBaseCount == null || collectBaseCount == ""){
+        collectBaseCount = 0;
+    }
+    if(parseInt(collectBaseCount)<0 || parseInt(collectBaseCount)>10000){
+        $.msg("收藏基数请输入0-10000");
+        return ;
+    }
+
     if (!confirm("是否添加")){
         return ;
     }
@@ -378,6 +409,9 @@ function updateAccount() {
         dataType: "json",
         success: function (data) {
             $.msg(data.msg);
+            $('.opacityPopup').fadeOut();
+            $('.countPopup').fadeOut();
+            $('.addNewSchool').fadeOut();
         }
     });
 }
@@ -416,36 +450,44 @@ function loalUrl(flag,schoolId,schoolName) {
 //正则判断学校账号是否是字母和数字的组合
 var regNum = /^[0-9]+$/;
 var regStr = /^[a-zA-Z]+$/;
+var allStr = /^[a-zA-Z0-9]+$/;
 function judgeAccountName() {
     var userName = $("#userName").val();
     if (userName == null || userName == ''){
         return ;
     }
-    if (!regNum.test(userName)&&!regStr.test(userName)){
-        //校验账号是否重复
-        $.ajax({
-            url:rootPath + "/riseSchoolManage/judgeAccountName",
-            data:{"username":userName},
-            dataType:"json",
-            success:function (data) {
-                if (data.count != 0){
-                    $.msg("该账号已存在!",1000);
-                    $("#userName").val("");
-                    return ;
+    if(allStr.test(userName)){
+        if (!regNum.test(userName)&&!regStr.test(userName)){
+            //校验账号是否重复
+            $.ajax({
+                url:rootPath + "/riseSchoolManage/judgeAccountName",
+                data:{"username":userName},
+                dataType:"json",
+                success:function (data) {
+                    if (data.count != 0){
+                        $.msg("该账号已存在!",1000);
+                        $("#userName").val("");
+                        return ;
+                    }
                 }
-            }
-        });
-    }else {
+            });
+        }else {
+            $.msg("账号只支持字母和数字的组合",1000);
+            return ;
+        }
+    }else{
         $.msg("账号只支持字母和数字的组合",1000);
         return ;
     }
+
 }
 
 //检验网址
 var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
 function judgeSchoolWeb() {
     var schoolWeb = $("#schoolWeb").val();
-    if (schoolWeb != null || schoolWeb != ''){
+    if(!schoolWeb)return;
+    if (schoolWeb != null || schoolWeb != ""){
         if (!reg.test(schoolWeb)){
             $.msg("请输入有效的网址!",1000);
             $("#schoolWeb").val("")
