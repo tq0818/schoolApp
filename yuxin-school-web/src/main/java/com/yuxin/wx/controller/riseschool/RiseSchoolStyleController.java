@@ -262,14 +262,14 @@ public class RiseSchoolStyleController {
                     slW=300 * realW/realH;
                 }
             }else{
-                if(realW/realH>400.00/250.67){
+                if(realW/realH>300.00/188.47){
                     //过宽
-                    slH=400.00 * realH/realW;
-                    slW=400.00;
+                    slH=300 * realH/realW;
+                    slW=300.00;
                 }else{
                     //过高
-                    slH=250.67;
-                    slW=250.67 * realW/realH;
+                    slH=188.47;
+                    slW=188.47 * realW/realH;
                 }
             }
         }else{

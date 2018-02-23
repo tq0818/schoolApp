@@ -29,9 +29,9 @@ var jcrop_apis;
                 minHeight = 120.6;
                 minWidth = 75;
             }else {
-                $scale = 400/250.67;
-                maxHeight = 250.67;
-                maxWidth = 400;
+                $scale = 300/188.47;
+                maxHeight = 188.47;
+                maxWidth = 300;
                 minHeight = 47;
                 minWidth = 75;
             }
