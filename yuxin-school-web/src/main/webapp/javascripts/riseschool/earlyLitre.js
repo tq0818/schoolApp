@@ -151,7 +151,7 @@ function addRiseSchoolInfo() {
         return ;
     }
 
-    if (!confirm("是否添加")){
+    if (!confirm("是否确认添加该学校")){
         return ;
     }
     $.ajax({

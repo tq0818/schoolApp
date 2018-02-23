@@ -252,35 +252,35 @@ public class RiseSchoolStyleController {
         String windowFlag = request.getParameter("windowFlag");
         if ("1".equals(windowFlag) || "2".equals(windowFlag) ){//1 ,2都是风采图,反之则是封面图
             if ("0".equals(cssStyle)){//0是竖图，反之则是横图
-                if(realW/realH>750.00/1206.00){
+                if(realW/realH>186.56/300.00){
                     //过宽
-                    slH=750 * realH/realW;
-                    slW=750;
+                    slH=186.56 * realH/realW;
+                    slW=186.56;
                 }else{
                     //过高
-                    slH=1206;
-                    slW=1206 * realW/realH;
+                    slH=300;
+                    slW=300 * realW/realH;
                 }
             }else{
-                if(realW/realH>750.00/470.00){
+                if(realW/realH>400.00/250.67){
                     //过宽
-                    slH=750 * realH/realW;
-                    slW=750;
+                    slH=400.00 * realH/realW;
+                    slW=400.00;
                 }else{
                     //过高
-                    slH=470;
-                    slW=470 * realW/realH;
+                    slH=250.67;
+                    slW=250.67 * realW/realH;
                 }
             }
         }else{
-            if(realW/realH>750.00/300.00){
+            if(realW/realH>300/125){
                 //过宽
-                slH=750 * realH/realW;
-                slW=750;
+                slH=300 * realH/realW;
+                slW=300;
             }else{
                 //过高
-                slH=300;
-                slW=300 * realW/realH;
+                slH=125;
+                slW=125 * realW/realH;
             }
         }
 

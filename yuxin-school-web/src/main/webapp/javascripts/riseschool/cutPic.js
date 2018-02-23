@@ -23,22 +23,22 @@ var jcrop_apis;
         if (picFlag == 1){
 
             if ($('#btnOne').hasClass("btn-primary")){//竖图，反之则是横图
-                $scale = 750/1206;
-                maxHeight = 1206;
-                maxWidth = 750;
+                $scale = 186.56/300;
+                maxHeight = 300;
+                maxWidth = 186.56;
                 minHeight = 120.6;
                 minWidth = 75;
             }else {
-                $scale = 750/470;
-                maxHeight = 470;
-                maxWidth = 750;
+                $scale = 400/250.67;
+                maxHeight = 250.67;
+                maxWidth = 400;
                 minHeight = 47;
                 minWidth = 75;
             }
         }else {//封面图比例
-            $scale = 750/300;
-            maxHeight = 300;
-            maxWidth = 750;
+            $scale = 300/125;
+            maxHeight = 125;
+            maxWidth = 300;
             minHeight = 30;
             minWidth = 75;
         }
