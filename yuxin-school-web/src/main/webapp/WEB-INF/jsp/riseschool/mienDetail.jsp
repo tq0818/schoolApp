@@ -72,10 +72,12 @@
             }
             if ($(this).hasClass('addImg')){
                 $(".uploadImage").find("img").attr("src","/manage/images/1.jpg");
+                $("#imgDiscrible").val('');
                 windowFlag = '1';
             }else if ($(this).hasClass('imgChange')){
 //                jcrop_apis.destroy();
                 $(".uploadImage").find("img").attr("src",$(this).parent(".listBg").siblings("img").attr("src")).attr("style","");
+                $("#imgDiscrible").val($(this).parent(".listBg").siblings("span").text());
                 windowFlag = '2';
                 var updateId = $(this).attr("data-value");
                 $("#updateId").val(updateId);
