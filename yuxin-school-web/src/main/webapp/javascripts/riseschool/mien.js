@@ -52,8 +52,10 @@ $(function () {
         if ($(this).hasClass('addImg')){
             windowFlag = '1';
             $(".uploadImage").find("img").attr("src","/manage/images/1.jpg");
+            $("#imgDiscrible").val('');
         }else if ($(this).hasClass('imgChange')){
             $(".uploadImage").find("img").attr("src",$(this).parent(".listBg").siblings("img").attr("src")).attr("style","");
+            $("#imgDiscrible").val($(this).parent(".listBg").siblings("span").text());
             windowFlag = '2';
             var updateId = $(this).attr("data-value");
             $("#updateId").val(updateId);
@@ -232,6 +234,9 @@ function queryRiseSchoolStyle(pageNo) {
 
 //删除图片
 function deleteRiseSchoolStyle(styleId) {
+    if (!confirm("是否确认删除该图片")){
+        return ;
+    }
     $.ajax({
         url: rootPath + "/riseSchoolStyle/deleteRiseSchoolStyle",
         data: {id:styleId
