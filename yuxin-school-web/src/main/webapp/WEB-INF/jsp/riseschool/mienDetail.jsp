@@ -19,7 +19,7 @@
             <i class="icon iconfont">&#xe606;</i>
         </li>
         <li class="coverImg" id="${coverVo.id}" >
-            <img src="${coverVo.imgUrl}" alt="">
+            <img src="${coverVo.imgUrl}" alt="" style="width: 100%;height: auto">
             <a href="##" class="btn btn-primary btn-sm rightShow">封面图片</a>
             <div class="listBg">
                 <c:choose>
@@ -41,7 +41,16 @@
                     <li id="${schoolStyle.id}">
                 </c:otherwise>
             </c:choose>
-            <img src="${schoolStyle.imgUrl}" alt="">
+            <img src="${schoolStyle.imgUrl}" alt=""
+            <c:choose  >
+            <c:when test="${schoolStyle.imgType eq '2'}">
+                 style="width: 100%;height: auto"
+            </c:when>
+            <c:otherwise>
+                 style="width: auto;height: 100%"
+            </c:otherwise>
+            </c:choose>
+            >
             <span class="imgInfo">${schoolStyle.imgDiscrible}</span>
             <c:if test="${schoolStyle.isTop == 1}"><a href="##" class="btn btn-primary btn-sm rightShow">已置顶</a></c:if>
             <c:if test="${schoolStyle.isTop == 0}"><a href="##" class="btn btn-primary btn-sm rightShow">未置顶</a></c:if>
@@ -49,7 +58,7 @@
                 <c:if test="${schoolStyle.isTop == 1}"><a href="javaScript:updateIsTop('${schoolStyle.id}',0)" class="btn btn-warning btn-sm imgTop">取消置顶</a></c:if>
                 <c:if test="${schoolStyle.isTop == 0}"><a href="javaScript:updateIsTop('${schoolStyle.id}',1)" class="btn btn-warning btn-sm imgTop">置顶</a></c:if>
                 <a href="javaScript:deleteRiseSchoolStyle('${schoolStyle.id}')" class="btn btn-success btn-sm imgDelete">删除</a>
-                <a href="##" class="btn btn-success btn-sm imgChange mienShow" data-value="${schoolStyle.id}">修改</a>
+                <a href="##" class="btn btn-success btn-sm imgChange mienShow" data-value="${schoolStyle.id}" imgType="${schoolStyle.imgType}">修改</a>
             </div>
             </li>
         </c:forEach>
@@ -77,6 +86,12 @@
             }else if ($(this).hasClass('imgChange')){
 //                jcrop_apis.destroy();
                 $(".uploadImage").find("img").attr("src",$(this).parent(".listBg").siblings("img").attr("src")).attr("style","");
+                //横图
+                if($(this).attr("imgType")=="2"){
+                    $(".uploadImage").find("img").attr("style","width: 300px;height: auto;");
+                }else{
+                    $(".uploadImage").find("img").attr("style","width: auto;height: 300px;");
+                }
                 $("#imgDiscrible").val($(this).parent(".listBg").siblings("span").text());
                 windowFlag = '2';
                 var updateId = $(this).attr("data-value");
@@ -106,7 +121,7 @@
             //封面图标记窗口
             if($(this).hasClass('coverChange')){
 //                $(".jcrop-holder").attr("style","display:none");
-                $(".uploadImageStyle").find("img").attr("src",$(".coverImg").find("img").attr("src")).attr("style","").attr("style","width: 400px;height: 300px;");
+                $(".uploadImageStyle").find("img").attr("src",$(".coverImg").find("img").attr("src")).attr("style","").attr("style","width: 400px;height: auto;");
                 windowFlag = '4';
                 var updateId = $(this).attr("data-value");
                 $("#updateId").val(updateId);

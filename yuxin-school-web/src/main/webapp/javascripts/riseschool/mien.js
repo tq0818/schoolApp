@@ -55,6 +55,12 @@ $(function () {
             $("#imgDiscrible").val('');
         }else if ($(this).hasClass('imgChange')){
             $(".uploadImage").find("img").attr("src",$(this).parent(".listBg").siblings("img").attr("src")).attr("style","");
+            //横图
+            if($(this).attr("imgType")=="2"){
+                $(".uploadImage").find("img").attr("style","width: 300px;height: auto;");
+            }else{
+                $(".uploadImage").find("img").attr("style","width: auto;height: 300px;");
+            }
             $("#imgDiscrible").val($(this).parent(".listBg").siblings("span").text());
             windowFlag = '2';
             var updateId = $(this).attr("data-value");
@@ -69,7 +75,7 @@ $(function () {
         var windowFlag = '';
         //封面图标记窗口
         if($(this).hasClass('coverChange')){
-            $(".uploadImageStyle").find("img").attr("src",$(".coverImg").find("img").attr("src")).attr("style","").attr("style","width: 400px;height: 300px;");
+            $(".uploadImageStyle").find("img").attr("src",$(".coverImg").find("img").attr("src")).attr("style","").attr("style","width: 400px;height: auto;");
             windowFlag = '4';
             var updateId = $(this).attr("data-value");
             $("#updateId").val(updateId);

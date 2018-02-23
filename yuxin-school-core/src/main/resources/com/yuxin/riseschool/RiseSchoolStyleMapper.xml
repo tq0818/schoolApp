@@ -10,6 +10,7 @@
         <result property="updateTime" column="update_time" />
         <result property="riseSchoolId" column="rise_school_id" />
         <result property="isCover" column="is_cover" />
+        <result property="imgType" column="img_type" />
     </resultMap>
     <sql id="table_columns">
        id,
@@ -19,7 +20,8 @@
        create_time,
        update_time,
        rise_school_id,
-       is_cover
+       is_cover,
+       img_type
     </sql>
     <sql id="table_properties">
        #{id},
@@ -29,7 +31,8 @@
        #{createTime},
        #{updateTime},
        #{riseSchoolId},
-       #{isCover}
+       #{isCover},
+       #{imgType}
     </sql>
 
     <sql id="page_where">
@@ -58,6 +61,7 @@
             <if test="updateTime != null and updateTime != ''" >update_time=#{updateTime},</if>
             <if test="riseSchoolId != null" >rise_school_id=#{riseSchoolId},</if>
             <if test="isCover != null" >is_cover=#{isCover},</if>
+            <if test="imgType != null" >img_type=#{imgType},</if>
         </trim>
         <where>id = #{id}</where>
     </update>

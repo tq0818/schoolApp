@@ -14,6 +14,15 @@ public class RiseSchoolStyleVo extends BaseModel implements Serializable {
     private Date updateTime;       //更新时间
     private Integer riseSchoolId;  //学校id
     private Integer isCover;       //是否封面
+    private String imgType;
+
+    public String getImgType() {
+        return imgType;
+    }
+
+    public void setImgType(String imgType) {
+        this.imgType = imgType;
+    }
 
     public Integer getId() {
         return id;

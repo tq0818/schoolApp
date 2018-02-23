@@ -250,6 +250,7 @@ public class RiseSchoolStyleController {
         double scale=0;//根据不同类型的图片有不同的比例
         String cssStyle = request.getParameter("cssStyle");
         String windowFlag = request.getParameter("windowFlag");
+        String imgType = null;//1 竖图  2横图
         if ("1".equals(windowFlag) || "2".equals(windowFlag) ){//1 ,2都是风采图,反之则是封面图
             if ("0".equals(cssStyle)){//0是竖图，反之则是横图
                 if(realW/realH>186.56/300.00){
@@ -261,6 +262,7 @@ public class RiseSchoolStyleController {
                     slH=300;
                     slW=300 * realW/realH;
                 }
+                imgType = "1";
             }else{
                 if(realW/realH>300.00/188.47){
                     //过宽
@@ -271,6 +273,7 @@ public class RiseSchoolStyleController {
                     slH=188.47;
                     slW=188.47 * realW/realH;
                 }
+                imgType="2";
             }
         }else{
             if(realW/realH>300/125){
@@ -282,6 +285,7 @@ public class RiseSchoolStyleController {
                 slH=125;
                 slW=125 * realW/realH;
             }
+            imgType="2";
         }
 
         //原图所选中位置和区域
@@ -330,6 +334,7 @@ public class RiseSchoolStyleController {
 //        pics.setPicOriginalUrl(picUrl);
         pics.setRealPath(realPath);
         Date date = new Date();
+        riseSchoolStyleVo.setImgType(imgType);
         if ("1".equals(windowFlag)||"3".equals(windowFlag)){//1新增风采图 3新增封面图
             if ("1".equals(windowFlag)){
                 riseSchoolStyleVo.setIsCover(0);
