@@ -15,7 +15,7 @@
 a.rightShow{position: absolute;right: 0;top: 0;margin: 0;}
 .coverChange{left: 22px;}
 .coverAdd{right: 22px;}
-.imgInfo{position: absolute;left: 0;bottom: 40px;color: #fff;padding-left: 2px;
+.imgInfo{position: absolute;left: 0;bottom: 40px;color: #101010;padding-left: 2px;
     overflow: hidden;
     text-overflow:ellipsis;
     white-space: nowrap;width: 100%;display: inline-block;text-align: center;}

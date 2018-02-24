@@ -134,6 +134,8 @@ public class FileUtil {
 		String SPECIAL="special";
 
 		String BANNER = "banner";
+
+		String RISESCHOOLSRTYLE = "riseSchoolStyle";
 	}
 
 	private static void init(){
@@ -161,6 +163,7 @@ public class FileUtil {
 					||Module.SPECIAL.equals(module)
 					||Module.DINGYUE.equals(module)
 					||Module.BANNER.equals(module)
+					||Module.RISESCHOOLSRTYLE.equals(module)
 					){
 				folder=module;
 			}

@@ -206,6 +206,11 @@ function saveCutPic(saveFlag) {
             //上传成功则重新查询
             if (data.flag == 1){
                 queryRiseSchoolStyle(1);
+                if(saveFlag==1){
+                    $("#target").attr("src","");
+                }else{
+                    $("#targetStyle").attr("src","");
+                }
             }else {
                 $.msg(data.msg);
             }

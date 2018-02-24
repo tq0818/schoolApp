@@ -83,7 +83,9 @@
     <select id="queryRiseSchoolStyleById" parameterType="Map" resultMap="riseSchoolStyleMap">
         SELECT <include refid="table_columns" />
           FROM rise_school_style
-         WHERE rise_school_id = #{schoolId}
-           AND is_cover = #{isCover}
+         WHERE 1=1
+        <if test="schoolId != null" > and rise_school_id = #{schoolId}</if>
+        <if test="isCover != null" >    AND is_cover = #{isCover}</if>
+        <if test="id != null" > AND id=#{id}</if>
     </select>
 </mapper>
