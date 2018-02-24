@@ -2,7 +2,10 @@
 .addImg{margin-right: 20px;float: left;display: inline-block;width: 190px;height: 190px;line-height: 190px;background: #fff;text-align: center;}
 .addImg i{font-size: 60px;color: #666;}
 .imgList li{float: left;cursor: pointer;position: relative;margin-right: 40px;margin-top: 40px;width: 190px;height: 190px;border: 1px solid #bcbcbc;display: inline-block;}
-/*.imgList li img{width: 62%;height: auto;vertical-align: top;}*/
+.imgList li img{position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);}
 .imgList {display: inline-block;float: left;text-align: center;}
 .imgList ul{padding: 0 30px;}
 .noMargin{margin-right: 0 !important;}
