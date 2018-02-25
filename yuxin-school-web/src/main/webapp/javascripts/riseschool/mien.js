@@ -24,16 +24,19 @@ $(function () {
         }
     });
     // 点击删除
-    $('.imgDelete').click(function () {
+/*    $('.imgDelete').click(function () {
         $.confirm('确认删除？',function (status) {
             if(status){
                 $.msg("删除成功！");
             }
         })
-    });
+    });*/
 
     // 弹窗中，取消、保存隐藏弹窗
     $('.mienHide').click(function () {
+        if(jcrop_apis){
+            jcrop_apis.destroy();
+        }
         $('.opacityPopup').fadeOut();
         $('.commonPopup').fadeOut();
         $('.coverPopup').fadeOut();

@@ -207,7 +207,7 @@ public class RiseSchoolStyleController {
         JSONObject jsonObject = new JSONObject();
         Resource resource = new ClassPathResource("config.properties");
         Map<String,Object>params = new HashMap<String,Object>();
-        params.put("id",updateId);
+        params.put("id",updateId==null?-1:updateId);
         RiseSchoolStyleVo rssv = riseSchoolStyleServiceImpl.queryRiseSchoolStyleById(params);
         boolean flag = true;
         if(null!=rssv){

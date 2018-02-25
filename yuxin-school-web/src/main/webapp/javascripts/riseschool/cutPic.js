@@ -77,9 +77,15 @@ var jcrop_apis;
             if (scale > $scale) {
                 jcrop_api.setSelect([100*$scale,100*$scale,200*$scale,200*$scale])
 //					jcrop_api.setSelect([ size.w/4,size.h/4,3*size.w/4,3*size.h/4 ]);
+//                jcrop_api.animateTo([100*$scale,100*$scale,200*$scale,200*$scale],function(){
+//                    $(".jcrop-holder").find("div").eq(0).css({"top":"0px","left":"0px"});
+//                });
             } else {
                 jcrop_api.setSelect([100*$scale,100*$scale,200*$scale,200*$scale])
 //					jcrop_api.setSelect([ size.w/4,size.h/4,3*size.w/4,3*size.h/4 ]);
+//                jcrop_api.animateTo([100*$scale,100*$scale,200*$scale,200*$scale],function(){
+//                    $(".jcrop-holder").find("div").eq(0).css({"top":"0px","left":"0px"});
+//                });
             }
         });
         jcrop_apis = jcrop_api;
