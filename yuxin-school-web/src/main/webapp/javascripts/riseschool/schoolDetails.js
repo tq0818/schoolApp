@@ -31,8 +31,12 @@ $(function () {
            	        	if(data=="success"){
            	        		$.msg("保存成功");
            	        		//window.location.reload();
-                            _this.append('<i class="icon iconfont iconDetails">&#xe611;</i>');
-                            _this.click();
+           	        		if(itemDiscrible.length > 0){
+           	        			_this.append('<i class="icon iconfont iconDetails">&#xe611;</i>');
+           	        			_this.click();
+           	        		}else{
+           	        			_this.find("i").remove();
+           	        		}
            	        	}else{
            	        		alert("保存失败");
            	        	}
