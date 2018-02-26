@@ -11,6 +11,7 @@
 		<result property="isState" column="is_state" />
 		<result property="updateTime" column="update_time" />
 		<result property="orderByNum" column="order_by_num" />
+		<result property="bannerType" column="banner_type" />
 	</resultMap>
 	
 	<sql id="table_columns">
@@ -22,7 +23,8 @@
 		banner_img_url,
 		is_state,
 		update_time,
-		order_by_num
+		order_by_num,
+		banner_type
    	</sql>
 	<sql id="entity_properties">
 		#{id},

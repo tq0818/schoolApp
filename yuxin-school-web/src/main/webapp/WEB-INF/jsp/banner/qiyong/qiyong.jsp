@@ -52,6 +52,7 @@
             </table>
 	       </li>
    </ul>
+   <input type="hidden" value="${bannerType }" id="bannerType"/>
 <script type="text/javascript">
 	function changeStatu(id){
 		$.ajax({
@@ -66,10 +67,11 @@
 		});
 	}
 	function desc(id,orderNum,paixu){
+		var bannerType = $("#bannerType").val();
 		$.ajax({
 			url: rootPath + "/Banner/sort",
 			type:"post",
-			data:{"id":id,"biaoshi": paixu,"orderByNum":orderNum},//1上升 
+			data:{"id":id,"biaoshi": paixu,"orderByNum":orderNum,"bannerType":bannerType},//1上升 
 			dataType:"html",
 			success:function(data){
 				alert("排序保存成功");

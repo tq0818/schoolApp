@@ -84,6 +84,7 @@
 </style>
 </head>
 <body style="position:relative;">
+<input type="hidden" value="${bannerType }" id="bannerType"/>
 <!-- 二级导航 -->
 <jsp:include page="/WEB-INF/jsp/menu/menu_operate.jsp"></jsp:include>
 <%--已上架课程列表--%>
@@ -271,6 +272,7 @@
 	    	 var bannerDescribe=$("#bannerDescribe").val();
 	    	 CKupdate();
 	    	 var bannerContent=editor.document.getBody().getHtml();
+	    	 var bannerType = $("#bannerType").val();
 	    	 if(null!=bannerContent && '<p><br></p>'!=bannerContent){
 	    		 $.ajax({
 	 	 			url: rootPath + "/Banner/update",
@@ -280,7 +282,11 @@
 	 	 			success:function(data){
 	 	 				if(data.msg == 'success'){
 	 	 					alert("保存成功");
-	 	 					window.location.href = "<%=rootPath %>/Banner/comBannerIndex";
+	 	 					if(bannerType == 0){
+	 	 						window.location.href = "<%=rootPath %>/Banner/comBannerIndex";
+	 	 					}else{
+	 	 						window.location.href = "<%=rootPath %>/Banner/riseBannerIndex";
+	 	 					}
 	 	 				}
 	 	 			}
 	 	 		});
