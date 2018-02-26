@@ -285,7 +285,7 @@
             current_page: '${pageNo - 1}',
             link_to: "javascript:void(0)",
             num_display_entries: 8,
-            items_per_page: 12,
+            items_per_page: 10,
             num_edge_entries: 1,
             callback: function (page, jq) {
                 var pageNo = page + 1;

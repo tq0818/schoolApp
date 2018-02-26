@@ -12,3 +12,5 @@
     color: #fff;font-size: 12px;background: #1e6fbd;border-radius: 4px;text-decoration: none;margin: 0 29px;}
 .headContent .active{background: #169bd5;}
 .headContent .iconDetails{position: absolute;right: -7px;top: -15px;color: #f43033;}
+#busRoad{resize: none;}
+#footerContentDetail{resize: none;}

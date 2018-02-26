@@ -104,7 +104,7 @@
     </div>
     <div>
         <label for="">正&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp文：</label>
-        <textarea class="contentCheck" style="overflow-y: auto" readonly="readonly"></textarea>
+        <textarea class="contentCheck" id="checkContent" style="overflow-y: auto" readonly="readonly"></textarea>
     </div>
     <div class="addNewsBtn">
         <a href="##" class="btn btn-sm btn-success addNewsBtncheck">关闭</a>
