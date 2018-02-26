@@ -319,7 +319,7 @@ public class RiseSchoolStyleController {
             } catch (Exception e) {
                 e.printStackTrace();
                 jsonObject.put("flag","0");
-                jsonObject.put("msg","上传失败");
+                jsonObject.put("msg","裁剪框过大");
                 return jsonObject;
             }
             FileUtil.deleteFile(target);
