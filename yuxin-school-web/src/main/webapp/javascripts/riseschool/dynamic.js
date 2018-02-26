@@ -171,9 +171,9 @@ $(function () {
                         '<li class="dashedLi"><span class="dashed"></span></li>' +
                         '<li>' + dynamic.updateTime + '</li>' +
                         '<li class="dynamicBtn">' +
-                        '<a href="##" class="btn btn-primary btn-sm check" id="' + dynamic.id + '">查看</a>' +
-                        '<a href="##" class="btn btn-success btn-sm change" id="' + dynamic.id + '">修改</a>' +
-                        '<a href="##" class="btn btn-danger btn-sm delete" id="' + dynamic.id + '">删除</a>' +
+                        '<a href="javascript:void(0)" class="btn btn-primary btn-sm check" id="' + dynamic.id + '">查看</a>' +
+                        '<a href="javascript:void(0)" class="btn btn-success btn-sm change" id="' + dynamic.id + '">修改</a>' +
+                        '<a href="javascript:void(0)" class="btn btn-danger btn-sm delete" id="' + dynamic.id + '">删除</a>' +
                         '</li>' +
                         '</ul>' +
                         '</li>');
