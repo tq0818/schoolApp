@@ -24,7 +24,7 @@
                 <div class="headContent">
                     <ul>
                         <li class="active">
-                            <a href="##">招生方式</a>
+                            <a href="javascript:void(0)">招生方式</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
                             <c:if test="${riseDetail.itemName eq '招生方式'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
@@ -32,7 +32,7 @@
 	                        </c:forEach>
                         </li>
                         <li>
-                            <a href="##">分班和在校生情况</a>
+                            <a href="javascript:void(0)">分班和在校生情况</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
                             <c:if test="${riseDetail.itemName eq '分班和在校生情况'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
@@ -40,7 +40,7 @@
 	                        </c:forEach>
                         </li>
                         <li>
-                            <a href="##">初升高走向</a>
+                            <a href="javascript:void(0)">初升高走向</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
                             <c:if test="${riseDetail.itemName eq '初升高走向'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
@@ -48,7 +48,7 @@
 	                        </c:forEach>
                         </li>
                         <li>
-                            <a href="##">往年升学情况和分数</a>
+                            <a href="javascript:void(0)">往年升学情况和分数</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
                             <c:if test="${riseDetail.itemName eq '往年升学情况和分数'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
@@ -80,6 +80,11 @@
 <script>
 //    左侧active切换
     $selectSubMenus('upgradeSchools');
+</script>
+<script>
+    $('.btnCancel').click(function () {
+        history.go(-1);
+    });
 </script>
 </body>
 </html>

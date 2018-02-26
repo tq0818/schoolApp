@@ -24,7 +24,7 @@
                 <div class="headContent">
                     <ul>
                         <li class="active">
-                            <a href="##">学校简称或俗称</a>
+                            <a href="javascript:void(0)">学校简称或俗称</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
                             <c:if test="${riseDetail.itemName eq '学校简称或俗称'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
@@ -32,7 +32,7 @@
 	                        </c:forEach>
                         </li>
                         <li>
-                            <a href="##">办学类别和层次</a>
+                            <a href="javascript:void(0)">办学类别和层次</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
                             <c:if test="${riseDetail.itemName eq '办学类别和层次'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
@@ -40,7 +40,7 @@
 	                        </c:forEach>
                         </li>
                         <li>
-                            <a href="##">学校历史及概况</a>
+                            <a href="javascript:void(0)">学校历史及概况</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
                             <c:if test="${riseDetail.itemName eq '学校历史及概况'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
@@ -48,7 +48,7 @@
 	                        </c:forEach>
                         </li>
                         <li>
-                            <a href="##">办学理念</a>
+                            <a href="javascript:void(0)">办学理念</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
                             <c:if test="${riseDetail.itemName eq '办学理念'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
@@ -56,7 +56,7 @@
 	                        </c:forEach>
                         </li>
                         <li>
-                            <a href="##">校园规模和硬件</a>
+                            <a href="javascript:void(0)">校园规模和硬件</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
                             <c:if test="${riseDetail.itemName eq '校园规模和硬件'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
@@ -64,7 +64,7 @@
 	                        </c:forEach>
                         </li>
                         <li class="noMargin">
-                            <a href="##">教学师资及成绩</a>
+                            <a href="javascript:void(0)">教学师资及成绩</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
                             <c:if test="${riseDetail.itemName eq '教学师资及成绩'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
@@ -72,7 +72,7 @@
 	                        </c:forEach>
                         </li>
                         <li>
-                            <a href="##">教学特色</a>
+                            <a href="javascript:void(0)">教学特色</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
                             <c:if test="${riseDetail.itemName eq '教学特色'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
@@ -80,7 +80,7 @@
 	                        </c:forEach>
                         </li>
                         <li>
-                            <a href="##">住校情况</a>
+                            <a href="javascript:void(0)">住校情况</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
                             <c:if test="${riseDetail.itemName eq '住校情况'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
@@ -88,7 +88,7 @@
 	                        </c:forEach>
                         </li>
                         <li>
-                            <a href="##">就餐情况</a>
+                            <a href="javascript:void(0)">就餐情况</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
                             <c:if test="${riseDetail.itemName eq '就餐情况'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
@@ -96,7 +96,7 @@
 	                        </c:forEach>
                         </li>
                         <li>
-                            <a href="##">托管及接送情况</a>
+                            <a href="javascript:void(0)">托管及接送情况</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
                             <c:if test="${riseDetail.itemName eq '托管及接送情况'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
@@ -104,7 +104,7 @@
 	                        </c:forEach>
                         </li>
                         <li>
-                            <a href="##">费用情况</a>
+                            <a href="javascript:void(0)">费用情况</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
                             <c:if test="${riseDetail.itemName eq '费用情况'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
@@ -112,7 +112,7 @@
 	                        </c:forEach>
                         </li>
                         <li class="noMargin">
-                            <a href="##">奖学金</a>
+                            <a href="javascript:void(0)">奖学金</a>
                             <c:forEach items="${riseDetails}" var="riseDetail" varStatus="status">
                             <c:if test="${riseDetail.itemName eq '奖学金'}">
 	                        <i class="icon iconfont iconDetails">&#xe611;</i>
@@ -144,6 +144,11 @@
 <script>
 //    左侧active切换
     $selectSubMenus('schoolDetails');
+</script>
+<script>
+    $('.btnCancel').click(function () {
+    	window.history.go(-1);
+    });
 </script>
 </body>
 </html>
