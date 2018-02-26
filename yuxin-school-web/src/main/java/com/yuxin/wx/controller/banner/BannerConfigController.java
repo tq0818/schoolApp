@@ -283,7 +283,8 @@ public class BannerConfigController extends BaseWebController{
     	banner.setIsState(1);
     	List <Banner> qiyongList=bannerService.findBannerAll(banner);
     	model.addAttribute("msgPage", qiyongList);
-    	return "banner/qiyong/qiyong";
+		model.addAttribute("bannerType", banner.getBannerType());
+		return "banner/qiyong/qiyong";
     }
 	/**
 	 * 
