@@ -34,6 +34,8 @@ $(function () {
 
     // 弹窗中，取消、保存隐藏弹窗
     $('.mienHide').click(function () {
+        $("#btnOne").hide();
+        $("#btnTwo").hide();
         if (jcrop_apis){
             jcrop_apis.destroy();
         }
