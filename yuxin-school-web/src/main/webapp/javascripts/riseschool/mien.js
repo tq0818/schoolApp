@@ -34,7 +34,7 @@ $(function () {
 
     // 弹窗中，取消、保存隐藏弹窗
     $('.mienHide').click(function () {
-        if(jcrop_apis){
+        if (jcrop_apis){
             jcrop_apis.destroy();
         }
         $('.opacityPopup').fadeOut();
