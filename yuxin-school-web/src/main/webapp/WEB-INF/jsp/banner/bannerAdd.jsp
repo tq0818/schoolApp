@@ -184,7 +184,7 @@
 <script type="text/javascript" src="<%=rootPath%>/plugins/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/ajaxfileupload.js"></script>
      <script type="text/javascript" src="<%=rootPath %>/plugins/jcrop/js/jquery.Jcrop.js"></script>
-    <script type="text/javascript" src="<%=rootPath %>/javascripts/class/addClassTypeOnsale.js"></script>
+    <script type="text/javascript" src="<%=rootPath %>/javascripts/riseschool/addClassTypeOnsale.js"></script>
 	<script type="text/javascript">
 	$(function(){
 		$(".btn-upload").on('click',function(){
@@ -329,17 +329,18 @@
 		
 		$(".pic").on("change","#target", function() {
 			var theImage = new Image();
+			var bannerType = $("#bannerType").val();
 			console.log($(this).attr("src"));
 			theImage.src = $(this).attr("src");
 			 if (theImage.complete) {
 				 	sourceHeight = theImage.height;
 					sourceWidth = theImage.width;
-					$.init(sourceWidth, sourceHeight);
+					$.init(sourceWidth, sourceHeight,bannerType);
  			    } else {
  			    	theImage.onload = function () {
  			        	sourceHeight = theImage.height;
 						sourceWidth = theImage.width;
-						$.init(sourceWidth, sourceHeight);
+						$.init(sourceWidth, sourceHeight,bannerType);
  			        };
  			    };
 			
@@ -363,9 +364,9 @@
 				},
 				error:function(arg1,arg2,arg3){
 					//console.log(arg1);
-				},
-				loadingEle: '#target',
-				fileName: 'imgData'
+				}
+//				loadingEle: '#target',
+//				fileName: 'imgData'
 			});
 		}
 	</script>

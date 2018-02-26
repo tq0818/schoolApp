@@ -54,7 +54,7 @@ $(function () {
         var windowFlag = '';
         if ($(this).hasClass('addImg')){
             windowFlag = '1';
-            $(".uploadImage").find("img").attr("src","/manage/images/1.jpg");
+            $(".uploadImage").find("img").attr("src","").attr("style","").attr("style","width: 300px;height: 300px;");
             $("#imgDiscrible").val('');
         }else if ($(this).hasClass('imgChange')){
             $(".uploadImage").find("img").attr("src",$(this).parent(".listBg").siblings("img").attr("src")).attr("style","");

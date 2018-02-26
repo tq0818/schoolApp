@@ -184,7 +184,7 @@
 <script type="text/javascript" src="<%=rootPath%>/plugins/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/ajaxfileupload.js"></script>
      <script type="text/javascript" src="<%=rootPath %>/plugins/jcrop/js/jquery.Jcrop.js"></script>
-    <script type="text/javascript" src="<%=rootPath %>/javascripts/class/addClassTypeOnsale.js"></script>
+    <script type="text/javascript" src="<%=rootPath %>/javascripts/riseschool/addClassTypeOnsale.js"></script>
 	<script type="text/javascript">
 	
 	function yulan(){
@@ -272,7 +272,6 @@
 	    	 var bannerDescribe=$("#bannerDescribe").val();
 	    	 CKupdate();
 	    	 var bannerContent=editor.document.getBody().getHtml();
-	    	 var bannerType = $("#bannerType").val();
 	    	 if(null!=bannerContent && '<p><br></p>'!=bannerContent){
 	    		 $.ajax({
 	 	 			url: rootPath + "/Banner/update",
@@ -282,11 +281,7 @@
 	 	 			success:function(data){
 	 	 				if(data.msg == 'success'){
 	 	 					alert("保存成功");
-	 	 					if(bannerType == 0){
-	 	 						window.location.href = "<%=rootPath %>/Banner/comBannerIndex";
-	 	 					}else{
-	 	 						window.location.href = "<%=rootPath %>/Banner/riseBannerIndex";
-	 	 					}
+	 	 					window.location.href = "<%=rootPath %>/Banner/comBannerIndex";
 	 	 				}
 	 	 			}
 	 	 		});
@@ -329,15 +324,16 @@
 			var theImage = new Image();
 			console.log($(this).attr("src"));
 			theImage.src = $(this).attr("src");
+			var bannerType = $("#bannerType").val();
 			 if (theImage.complete) {
 				 	sourceHeight = theImage.height;
 					sourceWidth = theImage.width;
-					$.init(sourceWidth, sourceHeight);
+					$.init(sourceWidth, sourceHeight,bannerType);
  			    } else {
  			    	theImage.onload = function () {
  			        	sourceHeight = theImage.height;
 						sourceWidth = theImage.width;
-						$.init(sourceWidth, sourceHeight);
+						$.init(sourceWidth, sourceHeight,bannerType);
  			        };
  			    };
 			
@@ -362,8 +358,8 @@
 				error:function(arg1,arg2,arg3){
 					//console.log(arg1);
 				},
-				loadingEle: '#target',
-				fileName: 'imgData'
+//				loadingEle: '#target',
+//				fileName: 'imgData'
 			});
 		}
 	</script>
