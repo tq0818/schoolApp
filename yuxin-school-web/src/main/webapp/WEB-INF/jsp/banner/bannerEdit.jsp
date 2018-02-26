@@ -281,7 +281,7 @@
 	 	 			success:function(data){
 	 	 				if(data.msg == 'success'){
 	 	 					alert("保存成功");
-	 	 					window.location.href = "<%=rootPath %>/Banner/comBannerIndex";
+	 	 					window.location.href = "<%=rootPath %>/Banner/riseBannerIndex";
 	 	 				}
 	 	 			}
 	 	 		});
