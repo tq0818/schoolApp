@@ -148,6 +148,7 @@ function savePic(saveFlag) {
     }else {
         $("#targetStyle").attr("src","");
     }
+
     // $(".jcrop-holder").attr("style","display:block");
     // $($($(".jcrop-holder").find("div")[0]).find("div")[0]).hide();
     $.ajaxFileUpload({
@@ -160,6 +161,10 @@ function savePic(saveFlag) {
         success : function(data) {
             //显示图片
             // $("#sourcePic").attr("src",data.url);
+            //上传成功移除插件
+            if (jcrop_apis){
+                jcrop_apis.destroy();
+            }
             if (data.flag == 1){
                 if (saveFlag == 1){
                     $("#target").attr("src",data.realPath);
@@ -174,6 +179,7 @@ function savePic(saveFlag) {
                     $(".jcrop-holder").find("img").attr("src",data.realPath);
                 }
             }
+
         },
         error:function(arg1,arg2,arg3){
             //console.log(arg1);

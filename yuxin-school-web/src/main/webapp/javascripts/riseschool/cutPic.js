@@ -26,21 +26,21 @@ var jcrop_apis;
                 $scale = 186.56/300;
                 maxHeight = 300;
                 maxWidth = 186.56;
-                minHeight = 120.6;
-                minWidth = 75;
+                minHeight = 12.06;
+                minWidth = 7.5;
             }else {
                 $scale = 300/188.47;
                 maxHeight = 188.47;
                 maxWidth = 300;
-                minHeight = 47;
-                minWidth = 75;
+                minHeight =23.5 ;
+                minWidth = 37.5;
             }
         }else {//封面图比例
-            $scale = 300/125;
-            maxHeight = 125;
+            $scale = 300/120;
+            maxHeight = 120;
             maxWidth = 300;
-            minHeight = 30;
-            minWidth = 75;
+            minHeight = 6;
+            minWidth = 15;
         }
         sourceWidth=initW;
         sourceHeight=initH;
@@ -65,7 +65,7 @@ var jcrop_apis;
             bgFade : true,
             allowSelect : false,
             allowResize : true,
-            sideHandles : false,
+            sideHandles : false
         }, function() {
             jc=jcrop_api = this;
             var bounds = this.getBounds();
@@ -75,21 +75,14 @@ var jcrop_apis;
             var scale = parseInt(sourceWidth) / parseInt(sourceHeight);// 长宽比例
             var size = resizePic();
             if (scale > $scale) {
-                jcrop_api.animateTo([100*$scale,100*$scale,200*$scale,200*$scale],function () {
-                    $(".jcrop-holder").find("div").eq(0).css({"top":"0px","left":"0px"});
+                jcrop_api.animateTo([0,0,boundx*$scale,boundy*$scale],function () {
+
                 })
-//					jcrop_api.setSelect([ size.w/4,size.h/4,3*size.w/4,3*size.h/4 ]);
-//                jcrop_api.animateTo([100*$scale,100*$scale,200*$scale,200*$scale],function(){
-//                    $(".jcrop-holder").find("div").eq(0).css({"top":"0px","left":"0px"});
-//                });
             } else {
-                jcrop_api.animateTo([100*scale,100*scale,200*scale,200*scale],function () {
-                    $(".jcrop-holder").find("div").eq(0).css({"top":"0px","left":"0px"});
+                jcrop_api.animateTo([0,0,boundx*scale,boundy*scale],function () {
+
                 })
-//					jcrop_api.setSelect([ size.w/4,size.h/4,3*size.w/4,3*size.h/4 ]);
-//                jcrop_api.animateTo([100*$scale,100*$scale,200*$scale,200*$scale],function(){
-//                    $(".jcrop-holder").find("div").eq(0).css({"top":"0px","left":"0px"});
-//                });
+
             }
         });
         jcrop_apis = jcrop_api;
