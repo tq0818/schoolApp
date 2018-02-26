@@ -25,12 +25,21 @@
                  minWidth = 120;
                  maxWidth = 516;
                  $scale = 516 / 282;
-			 }else {
-                 minHeight = 30;
-                 maxHeight = 282;
-                 minWidth = 75;
-                 maxWidth = 516;
-                 $scale = 516 / 282;
+			 }else{
+			 	if (initW > initH){//横图
+                    minHeight = 30;
+                    maxHeight = 206.4;
+                    minWidth = 75;
+                    maxWidth = 516;
+                    $scale = 516 / 206.4;
+				}else{
+                    minHeight = 30;
+                    maxHeight = 282;
+                    minWidth = 75;
+                    maxWidth = 705;
+                    $scale = 705 / 282;
+				}
+
 			 }
 			sourceWidth=initW;
 			sourceHeight=initH;

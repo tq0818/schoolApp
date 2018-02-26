@@ -307,7 +307,8 @@
 							y : $("#y").val(),
 							w : $("#w").val(),
 							h : $("#h").val(),
-							itemOneid : $("#itemOneid").val()
+							itemOneid : $("#itemOneid").val(),
+                            bannerType:$("#bannerType").val()
 						},
 						type : "post",
 						dataType : "json",

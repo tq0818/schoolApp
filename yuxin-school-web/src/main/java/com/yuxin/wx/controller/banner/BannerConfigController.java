@@ -13,6 +13,7 @@ import java.util.Properties;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -346,7 +347,7 @@ public class BannerConfigController extends BaseWebController{
 	  */
 	@ResponseBody
 	@RequestMapping(value="/saveCutPic")
-	public CompanyPicsVo saveCutPic(HttpServletRequest request,Integer itemOneid, String path,double x,double y,double w,double h){
+	public CompanyPicsVo saveCutPic(HttpServletRequest request,Integer itemOneid, String path,double x,double y,double w,double h,String bannerType){
 		log.info("初始化截图开始：");
 		Resource resource = new ClassPathResource("config.properties");
 		Properties props=null;
@@ -388,15 +389,41 @@ public class BannerConfigController extends BaseWebController{
 		//示例图尺寸
 		double slW=0;
 		double slH=0;
-		if(realW/realH>516.00/282.00){
-			//过宽
-			slH=516 * realH/realW;
-			slW=516;
+		if(!StringUtils.isEmpty(bannerType)&&"1".equals(bannerType)){
+			if(realW > realH){//横图
+				if(realW/realH>516.00/206.4){
+					//过宽
+					slH=516 * realH/realW;
+					slW=516;
+				}else{
+					//过高
+					slH=206.4;
+					slW=206.4 * realW/realH;
+				}
+			}else{
+				if(realW/realH>705/282){
+					//过宽
+					slH=705 * realH/realW;
+					slW=705;
+				}else{
+					//过高
+					slH=282;
+					slW=282 * realW/realH;
+				}
+			}
+
 		}else{
-			//过高
-			slH=282;
-			slW=282 * realW/realH;
+			if(realW/realH>516.00/282.00){
+				//过宽
+				slH=516 * realH/realW;
+				slW=516;
+			}else{
+				//过高
+				slH=282;
+				slW=282 * realW/realH;
+			}
 		}
+
 		//原图所选中位置和区域
 		
 		int xx=(new   Double(x*realW/slW)).intValue();	
