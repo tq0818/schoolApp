@@ -409,6 +409,7 @@ function updateAccount() {
         dataType: "json",
         success: function (data) {
             $.msg(data.msg);
+            $("#password").val(""); 
             $('.opacityPopup').fadeOut();
             $('.countPopup').fadeOut();
             $('.addNewSchool').fadeOut();
