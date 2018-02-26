@@ -80,7 +80,7 @@
                 jcrop_apis.destroy();
             }
             if ($(this).hasClass('addImg')){
-                $(".uploadImage").find("img").attr("src","/manage/images/1.jpg");
+                $(".uploadImage").find("img").attr("src","");
                 $("#imgDiscrible").val('');
                 windowFlag = '1';
             }else if ($(this).hasClass('imgChange')){
