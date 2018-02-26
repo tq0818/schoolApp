@@ -79,6 +79,7 @@
             if (jcrop_apis){
                 jcrop_apis.destroy();
             }
+            $("#imgData").removeAttr("type").attr("type","file");
             if ($(this).hasClass('addImg')){
                 $(".uploadImage").find("img").attr("src","").attr("style","width: 300px;height: 300px;");
                 $("#imgDiscrible").val('');

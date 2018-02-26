@@ -11,7 +11,7 @@ $(function () {
         jcrop_apis.destroy();
         $("#target").trigger("change");
         $(".jcrop-holder").find("img").attr("src",url);
-        $("#imgData").removeAttr("type").attr("type","file");
+        // $("#imgData").removeAttr("type").attr("type","file");
     });
     //点击置顶
     $('.imgTop').click(function () {
@@ -48,7 +48,8 @@ $(function () {
         //点击时，清空之前的图片
         $('.opacityPopup').fadeIn();
         $('.commonPopup').fadeIn();
-
+        //清除上一次图片的名字
+        $("#imgData").removeAttr("type").attr("type","file");
         //标记不同的弹窗，为一个标志赋值表示不同的操作
         if (jcrop_apis){
             jcrop_apis.destroy();
@@ -172,7 +173,6 @@ function savePic(saveFlag) {
                     $("#target").attr("src",data.realPath);
                     $("#target").trigger("change");
                     $(".jcrop-holder").find("img").attr("src",data.realPath);
-                    $("#imgData").removeAttr("type").attr("type","file");
                     $("#btnOne").show();
                     $("#btnTwo").show();
                 }else {

@@ -23,7 +23,7 @@
         <div class="mainbackground nopadding">
             <div class="heading">
                 <h2 class="h5">动态</h2>
-                <a href="##" class="btn btn-primary btn-mb addNewDynamic">新增动态</a>
+                <a href="javascript:void(0)" class="btn btn-primary btn-mb addNewDynamic">新增动态</a>
                 <span class="line"></span>
             </div>
             <div class="schoolDetailsContent essentialInfo" >
@@ -36,9 +36,9 @@
                                 <li class="dashedLi"><span class="dashed"></span></li>
                                 <li>${dynamic.updateTime}</li>
                                 <li class="dynamicBtn">
-                                    <a href="##" class="btn btn-primary btn-sm check" id="${dynamic.id}">查看</a>
-                                    <a href="##" class="btn btn-success btn-sm change" id="${dynamic.id}">修改</a>
-                                    <a href="##" class="btn btn-danger btn-sm delete" id="${dynamic.id}">删除</a>
+                                    <a href="javascript:void(0)" class="btn btn-primary btn-sm check" id="${dynamic.id}">查看</a>
+                                    <a href="javascript:void(0)" class="btn btn-success btn-sm change" id="${dynamic.id}">修改</a>
+                                    <a href="javascript:void(0)" class="btn btn-danger btn-sm delete" id="${dynamic.id}">删除</a>
                                 </li>
                             </ul>
                         </c:forEach>    
@@ -74,8 +74,8 @@
         <textarea name="" id="changeContent" placeholder="最多2000个字" maxlength="2000"></textarea>
     </div>
     <div class="addNewsBtn">
-        <a href="##" class="btn btn-sm btn-danger addNewsBtnCancel">取消</a>
-        <a href="##" class="btn btn-sm btn-success addNewsBtnUpdate">确定</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-danger addNewsBtnCancel">取消</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-success addNewsBtnUpdate">确定</a>
     </div>
 </div>
 <%--点击新增--%>
@@ -90,8 +90,8 @@
         <textarea name="" id="saveContent" placeholder="最多2000个字" maxlength="2000"></textarea>
     </div>
     <div class="addNewsBtn">
-        <a href="##" class="btn btn-sm btn-danger addNewsBtnCancel">取消</a>
-        <a href="##" class="btn btn-sm btn-success addNewsBtnSave">确定</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-danger addNewsBtnCancel">取消</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-success addNewsBtnSave">确定</a>
     </div>
 </div>
 
@@ -107,7 +107,7 @@
         <textarea class="contentCheck" id="checkContent" style="overflow-y: auto" readonly="readonly"></textarea>
     </div>
     <div class="addNewsBtn">
-        <a href="##" class="btn btn-sm btn-success addNewsBtncheck">关闭</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-success addNewsBtncheck">关闭</a>
     </div>
 </div>
 
