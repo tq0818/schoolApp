@@ -30,6 +30,7 @@ $(function () {
            	        	if(data=="success"){
            	        		$.msg("保存成功");
            	        		//window.location.reload();
+           	        		//如果内容不为空则加上红勾
 							if(itemDiscrible.length > 0){
            	        			_this.append('<i class="icon iconfont iconDetails">&#xe611;</i>');
            	        			_this.click();
