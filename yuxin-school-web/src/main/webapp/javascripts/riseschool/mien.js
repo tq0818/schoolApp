@@ -166,6 +166,8 @@ function savePic(saveFlag) {
                     $("#target").trigger("change");
                     $(".jcrop-holder").find("img").attr("src",data.realPath);
                     $("#imgData").removeAttr("type").attr("type","file");
+                    $("#btnOne").show();
+                    $("#btnTwo").show();
                 }else {
                     $("#targetStyle").attr("src",data.realPath);
                     $("#targetStyle").trigger("change");
@@ -211,6 +213,8 @@ function saveCutPic(saveFlag) {
                 queryRiseSchoolStyle(1);
                 if(saveFlag==1){
                     $("#target").attr("src","");
+                    $("#btnOne").hide();
+                    $("#btnTwo").hide();
                 }else{
                     $("#targetStyle").attr("src","");
                 }
