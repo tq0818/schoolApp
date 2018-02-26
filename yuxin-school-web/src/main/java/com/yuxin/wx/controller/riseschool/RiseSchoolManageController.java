@@ -102,7 +102,8 @@ public class RiseSchoolManageController {
      */
     @RequestMapping(value = "/queryRiseSchoolInfo")
     public String queryRiseSchoolInfo(HttpServletRequest request, RiseSchoolManageVo riseSchoolManageVo, Model model){
-        PageFinder<RiseSchoolManageVo> pageFinder = riseSchoolManageServiceImpl.queryRiseSchoolInfo(riseSchoolManageVo);
+    	riseSchoolManageVo.setPageSize(10);
+    	PageFinder<RiseSchoolManageVo> pageFinder = riseSchoolManageServiceImpl.queryRiseSchoolInfo(riseSchoolManageVo);
         model.addAttribute("result",pageFinder.getData());
         model.addAttribute("pageNo",riseSchoolManageVo.getPage());
         model.addAttribute("rowCount",pageFinder.getRowCount());
@@ -118,7 +119,8 @@ public class RiseSchoolManageController {
      */
     @RequestMapping(value = "/queryDimRiseSchoolInfo")
     public String queryDimRiseSchoolInfo(HttpServletRequest request, SearchRiseSchoolVo serchRiseSchoolVo, Model model){
-        PageFinder<RiseSchoolManageVo> pageFinder = riseSchoolManageServiceImpl.queryDimRiseSchoolInfo(serchRiseSchoolVo);
+    	serchRiseSchoolVo.setPageSize(10);
+    	PageFinder<RiseSchoolManageVo> pageFinder = riseSchoolManageServiceImpl.queryDimRiseSchoolInfo(serchRiseSchoolVo);
         model.addAttribute("result",pageFinder.getData());
         model.addAttribute("pageNo",serchRiseSchoolVo.getPage());
         model.addAttribute("rowCount",pageFinder.getRowCount());

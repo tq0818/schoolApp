@@ -61,6 +61,7 @@ public class EarlyLitreController extends BaseRiseSchoolController{
 			mv.setViewName("redirect:/riseschoolback/essential?schoolId="+rsieSchool.getId()+"&schoolName="+rsieSchool.getSchoolName());
 			return mv;
 		}
+		riseSchoolManageVo.setPageSize(10);
         PageFinder<RiseSchoolManageVo> pageFinder = riseSchoolManageServiceImpl.queryRiseSchoolInfo(riseSchoolManageVo);
         model.addAttribute("result",pageFinder.getData());
         model.addAttribute("pageNo",riseSchoolManageVo.getPage());

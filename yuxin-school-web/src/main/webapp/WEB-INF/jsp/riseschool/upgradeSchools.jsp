@@ -61,7 +61,7 @@
                     <textarea name="" id='footerContentDetail' class="footerContentDetail" placeholder="最多2000个字" >${riseSchoolDetailsUp.itemDiscrible }</textarea>
                     <div class="btnStyle">
                         <a href="##" class="btnCancel">取消</a>
-                        <a href="##" class="btnSave">保存</a>
+                        <a href="javascript:void(0)" class="btnSave">保存</a>
                     </div>
                 </div>
             </div>
