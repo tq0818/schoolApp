@@ -347,7 +347,7 @@ function queryDimRiseSchoolInfo(pageNo) {
         if (parseInt(from.replace(/-/g,"")) > parseInt(to.replace(/-/g,""))){
             $(".from").val("");
             $(".to").val("");
-            $.msg("左边时间不能大于右边时间!",1500);
+            alert("左边时间不能晚于右边时间!");
             return;
         }
     }

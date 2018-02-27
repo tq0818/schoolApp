@@ -146,7 +146,7 @@ function updateRiseSchoolInfo() {
     }
     $.ajax({
         type:"POST",
-        url : rootPath +"/riseSchoolManage/updateRiseSchoolInfo",
+        url : rootPath +"/riseSchoolManage/updateRiseSchoolInfoTwo",
         data : {
             "provinceCode":province,
             "cityCode":city,

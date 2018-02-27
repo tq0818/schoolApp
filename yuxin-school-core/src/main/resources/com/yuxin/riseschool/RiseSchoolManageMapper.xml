@@ -107,6 +107,28 @@
         </trim>
         <where>id = #{id}</where>
     </update>
+    <update id="updateRiseSchoolInfoTwo" parameterType="com.yuxin.wx.model.riseschool.RiseSchoolManageVo">
+        UPDATE rise_school_info
+        <trim prefix="set" suffixOverrides=",">
+            <if test="schoolName != null and schoolName != ''">school_name=#{schoolName},</if>
+            <if test="enrollmentType != null and enrollmentType != ''">enrollment_type=#{enrollmentType},</if>
+            <if test="provinceCode != null and provinceCode != ''">province_code=#{provinceCode},</if>
+            <if test="cityCode != null and cityCode != ''">city_code=#{cityCode},</if>
+            <if test="district != null and district != ''">district=#{district},</if>
+            <if test="isTop != null">is_top=#{isTop},</if>
+            <if test="isShalve != null">is_shalve=#{isShalve},</if>
+            <if test="createTime != null and createTime != ''">create_time=#{createTime},</if>
+            <if test="updateTime != null and updateTime != ''">update_time=#{updateTime},</if>
+            <if test="detailAddress != null and detailAddress != ''">detail_address=#{detailAddress},</if>
+            school_web=#{schoolWeb},
+            school_fax=#{schoolFax},
+            bus_road=#{busRoad},
+            <if test="userId != null">user_id =#{userId},</if>
+            <if test="collectNum != null">collect_num =#{collectNum},</if>
+            <if test="baseNum != null">base_num =#{baseNum},</if>
+        </trim>
+        <where>id = #{id}</where>
+    </update>
     <select id="queryRiseSchoolInfo" parameterType="com.yuxin.wx.model.riseschool.RiseSchoolManageVo" resultMap="riseSchoolInfoMap">
         SELECT rsi.id             AS id,
                 rsi.school_name    AS school_name,
@@ -207,7 +229,7 @@
         <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(rsi.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
         <if test="isTop != null and isTop != 0">AND rsi.is_top = #{isTop}</if>
         <if test="enrollmentType != null and enrollmentType != 0">AND rsi.enrollment_type = #{enrollmentType}</if>
-        ORDER BY rsi.is_top DESC ,rsi.create_time DESC
+        ORDER BY rsi.is_top DESC ,rsi.update_time DESC
         limit #{firstIndex},#{pageSize}
     </select>
     <select id="queryDimRiseSchoolCount" parameterType="com.yuxin.wx.model.riseschool.SearchRiseSchoolVo" resultType="java.lang.Integer">

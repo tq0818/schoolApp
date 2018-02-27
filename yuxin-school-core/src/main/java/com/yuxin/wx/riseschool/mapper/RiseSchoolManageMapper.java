@@ -30,6 +30,12 @@ public interface RiseSchoolManageMapper {
     void updateRiseSchoolInfo(RiseSchoolManageVo riseSchoolManageVo);
 
     /**
+     * 更新学校信息
+     * @param riseSchoolManageVo
+     */
+    void updateRiseSchoolInfoTwo(RiseSchoolManageVo riseSchoolManageVo);
+
+    /**
      * 查询学校信息总条数
      * @param riseSchoolManageVo
      * @return

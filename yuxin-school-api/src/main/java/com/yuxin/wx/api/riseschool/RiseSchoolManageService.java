@@ -39,6 +39,12 @@ public interface RiseSchoolManageService {
     void updateRiseSchoolInfo(RiseSchoolManageVo riseSchoolManageVo);
 
     /**
+     * 更新学校信息
+     * @param riseSchoolManageVo
+     */
+    void updateRiseSchoolInfoTwo(RiseSchoolManageVo riseSchoolManageVo);
+
+    /**
      * 查询字典值
      * @param map
      * @return

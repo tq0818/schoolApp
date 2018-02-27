@@ -76,6 +76,11 @@ public class RiseSchoolManageServiceImpl implements RiseSchoolManageService {
     }
 
     @Override
+    public void updateRiseSchoolInfoTwo(RiseSchoolManageVo riseSchoolManageVo) {
+        riseSchoolManageMapper.updateRiseSchoolInfoTwo(riseSchoolManageVo);
+    }
+
+    @Override
     public List<SysDictVo> queryRiseSchoolDict(Map map) {
         return riseSchoolManageMapper.queryRiseSchoolDict(map);
     }

@@ -96,6 +96,28 @@ public class RiseSchoolManageController {
     }
 
     /**
+     * 更新基本信息
+     * @param request
+     * @param riseSchoolManageVo
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateRiseSchoolInfoTwo",method = RequestMethod.POST)
+    public JSONObject updateRiseSchoolInfoTwo(HttpServletRequest request, RiseSchoolManageVo riseSchoolManageVo){
+        JSONObject json = new JSONObject();
+        riseSchoolManageVo.setUpdateTime(new Date());
+        try {
+            riseSchoolManageServiceImpl.updateRiseSchoolInfoTwo(riseSchoolManageVo);
+            json.put("flag","1");//成功
+            json.put("msg","成功");
+        }catch (Exception e){
+            json.put("flag","0");
+            json.put("msg","添加学校信息失败");
+        }
+        return json;
+    }
+
+    /**
      * 查询学校信息
      * @param request
      * @return
