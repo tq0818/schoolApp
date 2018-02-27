@@ -263,15 +263,16 @@
 		} */
 		function save(){
 			 var bannerImgUrl=$("#commdotityPic").attr("realPath");
-			 if(null==bannerImgUrl || ''==bannerImgUrl){
+			 /* if(null==bannerImgUrl || ''==bannerImgUrl){
 				 alert("banner图不能为空");
 				 return;
-			 }
+			 } */
 	    	 var bannerName=$("#bannerName").val();
 	    	 var id=$("#bannerId").val();
 	    	 var bannerDescribe=$("#bannerDescribe").val();
 	    	 CKupdate();
 	    	 var bannerContent=editor.document.getBody().getHtml();
+	    	 var bannerType = $("#bannerType").val();
 	    	 if(null!=bannerContent && '<p><br></p>'!=bannerContent){
 	    		 $.ajax({
 	 	 			url: rootPath + "/Banner/update",
@@ -281,7 +282,11 @@
 	 	 			success:function(data){
 	 	 				if(data.msg == 'success'){
 	 	 					alert("保存成功");
-	 	 					window.location.href = "<%=rootPath %>/Banner/riseBannerIndex";
+	 	 					if(bannerType == 0){
+	 	 						window.location.href = "<%=rootPath %>/Banner/comBannerIndex";
+	 	 					}else{
+	 	 						window.location.href = "<%=rootPath %>/Banner/riseBannerIndex";
+	 	 					}
 	 	 				}
 	 	 			}
 	 	 		});
@@ -357,7 +362,7 @@
 				},
 				error:function(arg1,arg2,arg3){
 					//console.log(arg1);
-				},
+				}
 //				loadingEle: '#target',
 //				fileName: 'imgData'
 			});
