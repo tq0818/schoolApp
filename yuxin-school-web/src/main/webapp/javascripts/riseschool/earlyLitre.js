@@ -342,6 +342,15 @@ function queryDimRiseSchoolInfo(pageNo) {
     var registMethods = $("#registMethods").val();
     var from = $(".from").val();
     var to = $(".to").val();
+    //两个时间不为空时，则需要判断时间大小
+    if (from !=null && to != null){
+        if (parseInt(from.replace(/-/g,"")) > parseInt(to.replace(/-/g,""))){
+            $(".from").val("");
+            $(".to").val("");
+            $.msg("左边时间不能大于右边时间!",1500);
+            return;
+        }
+    }
     var schoolShortName = $("#schoolShortName").val();
     $.ajax({
         url: rootPath + "/riseSchoolManage/queryDimRiseSchoolInfo",
