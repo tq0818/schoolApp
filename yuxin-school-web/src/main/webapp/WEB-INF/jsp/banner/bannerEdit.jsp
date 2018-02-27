@@ -263,10 +263,10 @@
 		} */
 		function save(){
 			 var bannerImgUrl=$("#commdotityPic").attr("realPath");
-			 /* if(null==bannerImgUrl || ''==bannerImgUrl){
+			 if(null==bannerImgUrl || ''==bannerImgUrl){
 				 alert("banner图不能为空");
 				 return;
-			 } */
+			 }
 	    	 var bannerName=$("#bannerName").val();
 	    	 var id=$("#bannerId").val();
 	    	 var bannerDescribe=$("#bannerDescribe").val();
