@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/mine.css">
     <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/plugins/jcrop/css/jquery.Jcrop.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/mbox.css">
+
     <style>
         .gobal-progress{display: none !important;} 
         /*.uploadImage .jcrop-holder{margin-top: 0!important;width: 400px !important;height: 300px !important; }*/
@@ -154,6 +156,8 @@
 <script src="<%=rootPath %>/plugins/jcrop/js/jquery.Jcrop.js"></script>
 <script src="<%=rootPath %>/javascripts/plus/jquery.units.js"></script>
 <script src="<%=rootPath%>/javascripts/plus/jquery-ui.js"></script>
+<script type="text/javascript" src="<%=rootPath%>/javascripts/riseschool/jm-qi.js"></script>
+
 <script>
     //分页
      $(".pagination").pagination('${rowCount}',

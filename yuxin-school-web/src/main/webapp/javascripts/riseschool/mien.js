@@ -260,24 +260,40 @@ function queryRiseSchoolStyle(pageNo) {
 
 //删除图片
 function deleteRiseSchoolStyle(styleId) {
-    if (!confirm("是否确认删除该图片")){
+    /*if (!confirm("是否确认删除该图片")){
         return ;
-    }
-    $.ajax({
-        url: rootPath + "/riseSchoolStyle/deleteRiseSchoolStyle",
-        data: {id:styleId
-        },
-        dataType: "json",
-        success: function (data) {
-            if (data.flag == 1){
-                //刷新
-                $.msg(data.msg);
-                queryRiseSchoolStyle(1);
-            }else {
-                $.msg(data.msg);
+    }*/
+    $.mbox({
+        area: [ "450px", "auto" ], //弹框大小
+        border: [ 0, .5, "#666" ],
+        dialog: {
+            msg: "是否确认删除该图片",
+            btns: 2,   //1: 只有一个按钮   2：两个按钮  3：没有按钮 提示框
+            type: 2,   //1:对钩   2：问号  3：叹号
+            btn: [ "确认删除", "取消"],  //自定义按钮
+            yes: function() {  //点击左侧按钮：成功
+                $.ajax({
+                    url: rootPath + "/riseSchoolStyle/deleteRiseSchoolStyle",
+                    data: {id:styleId
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.flag == 1){
+                            //刷新
+                            $.msg(data.msg);
+                            queryRiseSchoolStyle(1);
+                        }else {
+                            $.msg(data.msg);
+                        }
+                    }
+                });
+            },
+            no: function() { //点击右侧按钮：失败
+                return false;
             }
         }
     });
+
 }
 
 //更新置顶
