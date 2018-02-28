@@ -20,14 +20,14 @@
         </li>
         <li class="coverImg" id="${coverVo.id}" >
             <img src="${coverVo.imgUrl}" alt="" style="width: 100%;height: auto">
-            <a href="##" class="btn btn-primary btn-sm rightShow">封面图片</a>
+            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">封面图片</a>
             <div class="listBg">
                 <c:choose>
                     <c:when test="${coverVo.imgUrl == null or coverVo.imgUrl == ''}">
-                        <a href="##" class="btn btn-success btn-sm coverAdd coverShow">添加</a>
+                        <a href="javascript:void(0)" class="btn btn-success btn-sm coverAdd coverShow">添加</a>
                     </c:when>
                     <c:otherwise>
-                        <a href="##" class="btn btn-warning btn-sm coverChange coverShow" data-value="${coverVo.id}">修改</a>
+                        <a href="javascript:void(0)" class="btn btn-warning btn-sm coverChange coverShow" data-value="${coverVo.id}">修改</a>
                     </c:otherwise>
                 </c:choose>
             </div>
@@ -52,13 +52,13 @@
             </c:choose>
             >
             <span class="imgInfo">${schoolStyle.imgDiscrible}</span>
-            <c:if test="${schoolStyle.isTop == 1}"><a href="##" class="btn btn-primary btn-sm rightShow">已置顶</a></c:if>
-            <c:if test="${schoolStyle.isTop == 0}"><a href="##" class="btn btn-primary btn-sm rightShow">未置顶</a></c:if>
+            <c:if test="${schoolStyle.isTop == 1}"><a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">已置顶</a></c:if>
+            <c:if test="${schoolStyle.isTop == 0}"><a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">未置顶</a></c:if>
             <div class="listBg">
                 <c:if test="${schoolStyle.isTop == 1}"><a href="javaScript:updateIsTop('${schoolStyle.id}',0)" class="btn btn-warning btn-sm imgTop">取消置顶</a></c:if>
                 <c:if test="${schoolStyle.isTop == 0}"><a href="javaScript:updateIsTop('${schoolStyle.id}',1)" class="btn btn-warning btn-sm imgTop">置顶</a></c:if>
                 <a href="javaScript:deleteRiseSchoolStyle('${schoolStyle.id}')" class="btn btn-success btn-sm imgDelete">删除</a>
-                <a href="##" class="btn btn-success btn-sm imgChange mienShow" data-value="${schoolStyle.id}" imgType="${schoolStyle.imgType}">修改</a>
+                <a href="javascript:void(0)" class="btn btn-success btn-sm imgChange mienShow" data-value="${schoolStyle.id}" imgType="${schoolStyle.imgType}">修改</a>
             </div>
             </li>
         </c:forEach>

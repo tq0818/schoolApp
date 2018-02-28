@@ -45,14 +45,14 @@
                         </li>
                         <li class="coverImg" id="${coverVo.id}" >
                             <img src="${coverVo.imgUrl}" alt="" style="width: 100%;height: auto">
-                            <a href="##" class="btn btn-primary btn-sm rightShow">封面图片</a>
+                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">封面图片</a>
                             <div class="listBg">
                                 <c:choose>
                                     <c:when test="${coverVo.imgUrl == null or coverVo.imgUrl == ''}">
-                                        <a href="##" class="btn btn-success btn-sm coverAdd coverShow">添加</a>
+                                        <a href="javascript:void(0)" class="btn btn-success btn-sm coverAdd coverShow">添加</a>
                                     </c:when>
                                     <c:otherwise>
-                                        <a href="##" class="btn btn-warning btn-sm coverChange coverShow" data-value="${coverVo.id}" imgType="${coverVo.imgType}">修改</a>
+                                        <a href="javascript:void(0)" class="btn btn-warning btn-sm coverChange coverShow" data-value="${coverVo.id}" imgType="${coverVo.imgType}">修改</a>
                                     </c:otherwise>
                                 </c:choose>
                             </div>
@@ -77,13 +77,13 @@
                             </c:choose>
                             >
                             <span class="imgInfo">${schoolStyle.imgDiscrible}</span>
-                            <c:if test="${schoolStyle.isTop == 1}"><a href="##" class="btn btn-primary btn-sm rightShow">已置顶</a></c:if>
-                            <c:if test="${schoolStyle.isTop == 0}"><a href="##" class="btn btn-primary btn-sm rightShow">未置顶</a></c:if>
+                            <c:if test="${schoolStyle.isTop == 1}"><a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">已置顶</a></c:if>
+                            <c:if test="${schoolStyle.isTop == 0}"><a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">未置顶</a></c:if>
                             <div class="listBg">
                                 <c:if test="${schoolStyle.isTop == 1}"><a href="javaScript:updateIsTop('${schoolStyle.id}',0)" class="btn btn-warning btn-sm imgTop">取消置顶</a></c:if>
                                 <c:if test="${schoolStyle.isTop == 0}"><a href="javaScript:updateIsTop('${schoolStyle.id}',1)" class="btn btn-warning btn-sm imgTop">置顶</a></c:if>
                                 <a href="javaScript:deleteRiseSchoolStyle('${schoolStyle.id}')" class="btn btn-success btn-sm imgDelete">删除</a>
-                                <a href="##" class="btn btn-success btn-sm imgChange mienShow" data-value="${schoolStyle.id}" imgType="${schoolStyle.imgType}">修改</a>
+                                <a href="javascript:void(0)" class="btn btn-success btn-sm imgChange mienShow" data-value="${schoolStyle.id}" imgType="${schoolStyle.imgType}">修改</a>
                             </div>
                             </li>
                         </c:forEach>
@@ -119,20 +119,20 @@
     <div class="uploadImage">
         <label for="">风采图片：</label>
         <img src="" alt="" id="target" style="width: 300px;height: 300px;">
-        <%--<a href="##" class="btn btn-mb btn-success">上传图片</a>--%>
+        <%--<a href="javascript:void(0)" class="btn btn-mb btn-success">上传图片</a>--%>
         <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(1)" value="重新选择文件"/>
     </div>
     <div id="styleBtn">
-        <a href="##" class="btn btn-sm btn-primary" id="btnOne" style="display: none">样式一</a>
-        <a href="##" class="btn btn-sm btn-default" id="btnTwo" style="display: none">样式二</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-primary" id="btnOne" style="display: none">样式一</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-default" id="btnTwo" style="display: none">样式二</a>
     </div>
     <div class="imgDescripe">
         <label for="">图片描述：</label>
         <textarea  id="imgDiscrible" name="" placeholder="请输入图片描述(最多60个字)"  maxlength="60"></textarea>
     </div>
     <div class="mienBtn">
-        <a href="##" class="btn btn-sm btn-danger mienHide">取消</a>
-        <a href="##" class="btn btn-sm btn-success mienHide" onclick="saveCutPic(1)">保存</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-danger mienHide">取消</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-success mienHide" onclick="saveCutPic(1)">保存</a>
     </div>
 </div>
 
@@ -141,12 +141,12 @@
     <div class="uploadImageStyle">
         <label for="">封面图片：</label>
         <img src="" alt="" id="targetStyle" style="width: 400px;height: 300px;">
-        <%--<a href="##" class="btn btn-mb btn-success">上传图片</a>--%>
+        <%--<a href="javascript:void(0)" class="btn btn-mb btn-success">上传图片</a>--%>
         <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgDataStyle" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(2)" value="重新选择文件"/>
     </div>
     <div class="mienBtn">
-        <a href="##" class="btn btn-sm btn-danger mienHide">取消</a>
-        <a href="##" class="btn btn-sm btn-success mienHide" onclick="saveCutPic(2)">保存</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-danger mienHide">取消</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-success mienHide" onclick="saveCutPic(2)">保存</a>
     </div>
 </div>
 
