@@ -15,6 +15,9 @@ public class SchoolStyleVo extends BaseEntity {
     private String schoolId;
 
     private String isCover;
+    
+    private String imgType;
+    
 
     public String getIsCover() {
         return isCover;
@@ -47,4 +50,13 @@ public class SchoolStyleVo extends BaseEntity {
     public void setImgDiscrible(String imgDiscrible) {
         this.imgDiscrible = imgDiscrible;
     }
+
+	public String getImgType() {
+		return imgType;
+	}
+
+	public void setImgType(String imgType) {
+		this.imgType = imgType;
+	}
+    
 }
