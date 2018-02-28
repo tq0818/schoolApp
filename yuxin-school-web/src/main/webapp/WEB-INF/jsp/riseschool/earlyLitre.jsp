@@ -13,9 +13,11 @@
 	<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/popupwin.css">
 	<link rel="stylesheet" href="<%=rootPath %>/stylesheets/fonts/iconfont.css">
 	<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/earlyLitre.css">
+	<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/mbox.css">
 
 
-    <style type="text/css">
+
+	<style type="text/css">
 		.tips{
 			color:red;
 		}
@@ -275,6 +277,8 @@
 <script type="text/javascript" src="<%=rootPath %>/javascripts/company/jquery.cityselect.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/selectStudentGroup.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/riseschool/earlyLitre.js"></script>
+<script type="text/javascript" src="<%=rootPath%>/javascripts/riseschool/jm-qi.js"></script>
+
 
 <script>
 	//分页

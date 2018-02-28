@@ -151,45 +151,58 @@ function addRiseSchoolInfo() {
         return ;
     }
 
-    if (!confirm("是否确认添加该学校")){
-        return ;
-    }
-    $.ajax({
-        type:"POST",
-        url : rootPath +"/riseSchoolManage/addRiseSchoolInfo",
-        data : {"schoolName":schoolName ,
-                "enrollmentType":enRollMent,
-                "provinceCode":province,
-                "cityCode":city,
-                "district":district,
-                "detailAddress":schoolAddress,
-                "schoolWeb":schoolWeb,
-                "schoolFax":schoolFax,
-                "busRoad":busRoad,
-                "username":userName,
-                "baseNum":collectBaseCount
-        },
-        dataType:"json",
-        beforeSend: function (XMLHttpRequest) {
-            $(".loading").show();
-            $(".loading-bg").show();
-        },
-        success : function(data) {
-            if (data.flag == 1){
-                $(".loading").hide();
-                $(".loading-bg").hide();
-                $.msg(data.msg);
-                $('#schoolBtn').find(".countPopupSave").removeAttr("id");
-                //重新请求查询接口
-                queryRiseSchoolInfo(1);
-            }else {
-                $.msg(data.msg);
+
+    $.mbox({
+        area: [ "450px", "auto" ], //弹框大小
+        border: [ 0, .5, "#666" ],
+        dialog: {
+            msg: "是否确认添加该学校",
+            btns: 2,   //1: 只有一个按钮   2：两个按钮  3：没有按钮 提示框
+            type: 2,   //1:对钩   2：问号  3：叹号
+            btn: [ "确认添加", "取消"],  //自定义按钮
+            yes: function() {  //点击左侧按钮：成功
+                $.ajax({
+                    type:"POST",
+                    url : rootPath +"/riseSchoolManage/addRiseSchoolInfo",
+                    data : {"schoolName":schoolName ,
+                        "enrollmentType":enRollMent,
+                        "provinceCode":province,
+                        "cityCode":city,
+                        "district":district,
+                        "detailAddress":schoolAddress,
+                        "schoolWeb":schoolWeb,
+                        "schoolFax":schoolFax,
+                        "busRoad":busRoad,
+                        "username":userName,
+                        "baseNum":collectBaseCount
+                    },
+                    dataType:"json",
+                    beforeSend: function (XMLHttpRequest) {
+                        $(".loading").show();
+                        $(".loading-bg").show();
+                    },
+                    success : function(data) {
+                        if (data.flag == 1){
+                            $(".loading").hide();
+                            $(".loading-bg").hide();
+                            $.msg(data.msg);
+                            $('#schoolBtn').find(".countPopupSave").removeAttr("id");
+                            //重新请求查询接口
+                            queryRiseSchoolInfo(1);
+                        }else {
+                            $.msg(data.msg);
+                        }
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                        $('.opacityPopup').fadeOut();
+                        $('.countPopup').fadeOut();
+                        $('.addNewSchool').fadeOut();
+                    }
+                });
+            },
+            no: function() { //点击右侧按钮：失败
+                return false;
             }
-        },
-        complete: function (XMLHttpRequest, textStatus) {
-            $('.opacityPopup').fadeOut();
-            $('.countPopup').fadeOut();
-            $('.addNewSchool').fadeOut();
         }
     });
 }
