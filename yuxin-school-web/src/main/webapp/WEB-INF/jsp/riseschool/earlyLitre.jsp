@@ -13,7 +13,7 @@
 	<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/popupwin.css">
 	<link rel="stylesheet" href="<%=rootPath %>/stylesheets/fonts/iconfont.css">
 	<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/earlyLitre.css">
-	<%--<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/mbox.css">--%>
+	<link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/mbox.css">
 	<style type="text/css">
 		.tips{
 			color:red;
