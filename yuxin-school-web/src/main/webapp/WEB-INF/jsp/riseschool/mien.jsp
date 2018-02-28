@@ -118,6 +118,7 @@
 <div class="mienPopup commonPopup">
     <div class="uploadImage">
         <label for="">风采图片：</label>
+
         <img src="" alt="" id="target" style="width: 300px;height: 300px;">
         <%--<a href="##" class="btn btn-mb btn-success">上传图片</a>--%>
         <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(1)" value="重新选择文件"/>

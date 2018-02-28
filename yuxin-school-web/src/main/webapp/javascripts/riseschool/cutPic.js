@@ -23,14 +23,14 @@ var jcrop_apis;
         if (picFlag == 1){
 
             if ($('#btnOne').hasClass("btn-primary")){//竖图，反之则是横图
-                $scale = 186.56/300;
+                $scale = 186.57/300;
                 maxHeight = 300;
-                maxWidth = 186.56;
+                maxWidth = 186.57;
                 minHeight = 12.06;
                 minWidth = 7.5;
             }else {
-                $scale = 300/188.47;
-                maxHeight = 188.47;
+                $scale = 300/188;
+                maxHeight = 188;
                 maxWidth = 300;
                 minHeight =23.5 ;
                 minWidth = 37.5;
