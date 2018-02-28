@@ -147,7 +147,7 @@
 </script>
 <script>
     $('.btnCancel').click(function () {
-    	window.history.go(-1);
+        location.href=document.referrer;
     });
 </script>
 </body>

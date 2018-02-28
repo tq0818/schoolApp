@@ -83,7 +83,7 @@
 </script>
 <script>
     $('.btnCancel').click(function () {
-        history.go(-1);
+        location.href=document.referrer;
     });
 </script>
 </body>
