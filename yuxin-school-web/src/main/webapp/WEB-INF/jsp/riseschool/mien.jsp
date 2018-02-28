@@ -132,7 +132,7 @@
         <textarea  id="imgDiscrible" name="" placeholder="请输入图片描述(最多60个字)"  maxlength="60"></textarea>
     </div>
     <div class="mienBtn">
-        <a href="javascript:void(0)" class="btn btn-sm btn-danger mienHide">取消</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-danger mienHide1">取消</a>
         <a href="javascript:void(0)" class="btn btn-sm btn-success mienHide" onclick="saveCutPic(1)">保存</a>
     </div>
 </div>
@@ -146,7 +146,7 @@
         <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgDataStyle" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(2)" value="重新选择文件"/>
     </div>
     <div class="mienBtn">
-        <a href="javascript:void(0)" class="btn btn-sm btn-danger mienHide">取消</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-danger mienHide1">取消</a>
         <a href="javascript:void(0)" class="btn btn-sm btn-success mienHide" onclick="saveCutPic(2)">保存</a>
     </div>
 </div>

@@ -33,7 +33,7 @@ $(function () {
     });*/
 
     // 弹窗中，取消、保存隐藏弹窗
-    $('.mienHide').click(function () {
+    $('.mienHide1').click(function () {
         $("#btnOne").hide();
         $("#btnTwo").hide();
         if (jcrop_apis){
@@ -79,6 +79,12 @@ $(function () {
         $('.opacityPopup').fadeIn();
         $('.coverPopup').fadeIn();
         var windowFlag = '';
+        //清除上一次图片的名字
+        $("#imgDataStyle").removeAttr("type").attr("type","file");
+        //标记不同的弹窗，为一个标志赋值表示不同的操作
+        if (jcrop_apis){
+            jcrop_apis.destroy();
+        }
         //封面图标记窗口
         if($(this).hasClass('coverChange')){
             $(".uploadImageStyle").find("img").attr("src",$(".coverImg").find("img").attr("src")).attr("style","").attr("style","width: 400px;height: auto;");
@@ -86,6 +92,7 @@ $(function () {
             var updateId = $(this).attr("data-value");
             $("#updateId").val(updateId);
         }else if($(this).hasClass('coverAdd')){
+            $(".uploadImageStyle").find("img").attr("src","").attr("style","").attr("style","width: 400px;height: 300px;");
             windowFlag = '3';
         }
         $("#windowFlag").val(windowFlag);
@@ -196,12 +203,24 @@ function savePic(saveFlag) {
 function saveCutPic(saveFlag) {
     var windowFlag = $("#windowFlag").val();
     var id = $("#updateId").val();
+    //判断图片是否为空或则是未更改就进行保存
     if (saveFlag == 1){//风采图，反之则是封面
+        //判断图片是否为空或则是未更改就进行保存
+        if (!$("#target").attr("src")){
+            $.msg("未选择图片");
+            return ;
+        }
         var temp = $("#target").attr("style").split(";");
+        //处理剪切框的宽高
         dealWidthAndHeight(temp);
     }else {
-
+        //判断图片是否为空或则是未更改就进行保存
+        if (!$("#targetStyle").attr("src")){
+            $.msg("未选择图片");
+            return ;
+        }
     }
+
     //上传截取后的图片
     $.ajax({
         url : rootPath + "/riseSchoolStyle/saveCutPic",
@@ -235,6 +254,14 @@ function saveCutPic(saveFlag) {
             }else {
                 $.msg(data.msg);
             }
+            $("#btnOne").hide();
+            $("#btnTwo").hide();
+            if (jcrop_apis){
+                jcrop_apis.destroy();
+            }
+            $('.opacityPopup').fadeOut();
+            $('.commonPopup').fadeOut();
+            $('.coverPopup').fadeOut();
         }
     })
     $("#chooseDiv").css("display", "none");

@@ -71,7 +71,6 @@
     $(function () {
         //弹出弹窗
         $('.mienShow').click(function () {
-            console.log("第二个页面的东西");
             $('.opacityPopup').fadeIn();
             $('.commonPopup').fadeIn();
             //标记不同的弹窗，为一个标志赋值表示不同的操作
@@ -119,6 +118,8 @@
             if (jcrop_apis){
                 jcrop_apis.destroy();
             }
+            //清除上一次图片的名字
+            $("#imgDataStyle").removeAttr("type").attr("type","file");
             //封面图标记窗口
             if($(this).hasClass('coverChange')){
 //                $(".jcrop-holder").attr("style","display:none");
@@ -127,6 +128,7 @@
                 var updateId = $(this).attr("data-value");
                 $("#updateId").val(updateId);
             }else if($(this).hasClass('coverAdd')){
+                $(".uploadImageStyle").find("img").attr("src","").attr("style","").attr("style","width: 400px;height: 300px;");
                 windowFlag = '3';
             }
             $("#windowFlag").val(windowFlag);
