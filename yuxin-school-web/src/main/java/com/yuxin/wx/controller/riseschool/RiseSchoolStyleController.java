@@ -268,10 +268,10 @@ public class RiseSchoolStyleController {
 
             if ("1".equals(windowFlag) || "2".equals(windowFlag) ){//1 ,2都是风采图,反之则是封面图
                 if ("0".equals(cssStyle)){//0是竖图，反之则是横图
-                    if(realW/realH>186.56/300.00){
+                    if(realW/realH>186.57/300.00){
                         //过宽
-                        slH=186.56 * realH/realW;
-                        slW=186.56;
+                        slH=186.57 * realH/realW;
+                        slW=186.57;
                     }else{
                         //过高
                         slH=300;
@@ -279,14 +279,14 @@ public class RiseSchoolStyleController {
                     }
                     imgType = "1";
                 }else{
-                    if(realW/realH>300.00/188.47){
+                    if(realW/realH>300.00/188){
                         //过宽
                         slH=300 * realH/realW;
                         slW=300.00;
                     }else{
                         //过高
-                        slH=188.47;
-                        slW=188.47 * realW/realH;
+                        slH=188;
+                        slW=188 * realW/realH;
                     }
                     imgType="2";
                 }

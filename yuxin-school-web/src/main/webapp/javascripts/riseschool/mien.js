@@ -196,6 +196,12 @@ function savePic(saveFlag) {
 function saveCutPic(saveFlag) {
     var windowFlag = $("#windowFlag").val();
     var id = $("#updateId").val();
+    if (saveFlag == 1){//风采图，反之则是封面
+        var temp = $("#target").attr("style").split(";");
+        dealWidthAndHeight(temp);
+    }else {
+
+    }
     //上传截取后的图片
     $.ajax({
         url : rootPath + "/riseSchoolStyle/saveCutPic",
@@ -314,5 +320,26 @@ function updateIsTop(styleId,isTop) {
             }
         }
     });
+}
+
+//处理获取的图片像素
+function dealWidthAndHeight(temp){
+
+    var w = 0;
+    var h = 0;
+    for(var i=0;i<temp.length;i++){
+        if(temp[i].indexOf("width")!=-1){
+            w = temp[i].split(":")[1].replace("px","");
+        }
+        if(temp[i].indexOf("height")!=-1){
+            h = temp[i].split(":")[1].replace("px","");
+        }
+    }
+    if (parseFloat($("#w").val()) > parseFloat(w)){
+        $("#w").val(w);
+    }
+    if (parseFloat($("#h").val()) > parseFloat(h)){
+        $("#h").val(h);
+    }
 }
 
