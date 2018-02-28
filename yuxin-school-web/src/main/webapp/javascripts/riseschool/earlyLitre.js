@@ -27,6 +27,7 @@ $(function () {
         $('.countPopup').fadeOut();
 
         $('.addNewSchool').fadeOut();
+        $("#password").val(""); 
     });
     $('.countPopupSave').click(function () {
        /* $('.opacityPopup').fadeOut();
