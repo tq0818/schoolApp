@@ -9,13 +9,18 @@
 <html>
 <head>
     <title>Title</title>
+    <style>
+        table{
+            word-wrap: break-word; word-break: break-all;
+        }
+    </style>
 </head>
 <body>
 <input type="hidden" id="dimFlag" value="${dimFlag}">
 <table class="table table-center" id="tableList">
     <tr data-buy="true">
         <th width="5%">序号</th>
-        <th width="16%">学校名称</th>
+        <th width="18%">学校名称</th>
         <th width="8%">招生类型</th>
         <th width="8%">省份</th>
         <th width="8%">市</th>
@@ -23,7 +28,7 @@
         <th width="8%">创建时间</th>
         <th width="10%">上下架状态</th>
         <th width="8%">置顶状态</th>
-        <th width="20">操作</th>
+        <th width="18%">操作</th>
        <%-- <th style="display:none" width="0%"></th>--%>
     </tr>
     <c:forEach items="${result}" var="detail" varStatus="status">
