@@ -23,7 +23,7 @@
             </div>
             <div class="schoolDetailsContent essentialInfo">
                 <div class="essentialInfoContent">
-                    <div>
+                    <div style="width: 800px;">
                         <label for="" class="noMargin">学校名称：</label>
                         <span id="schoolName">${result.schoolName}</span>
                     </div>
