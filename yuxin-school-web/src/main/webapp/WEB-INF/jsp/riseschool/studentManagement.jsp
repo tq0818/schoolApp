@@ -209,7 +209,7 @@
 
 <%--通过确认--%>
 <div class="opacityPopup"></div>
-<div>
+<div class="confirmPopup">
 	<div>是否确认通过该学生的申请？</div>
 	<a href="##">取消</a>
 	<a href="##">确认通过</a>
