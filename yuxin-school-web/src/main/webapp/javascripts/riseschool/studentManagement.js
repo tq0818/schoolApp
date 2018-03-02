@@ -520,3 +520,22 @@ function judgeSchoolWeb() {
     }
 }
 
+//点击通过显示弹窗
+$('.pass').click(function () {
+    $('.confirmPopup').fadeIn();
+    $('.opacityPopup').fadeIn();
+});
+//点击取消或者确认通过隐藏弹窗
+$('.hidePopup').click(function () {
+    $('.confirmPopup').fadeOut();
+    $('.opacityPopup').fadeOut();
+    $('.reason').fadeOut();
+});
+
+//点击不通过弹出弹窗
+$('.noPass').click(function () {
+    $('.reason').fadeIn();
+    $('.opacityPopup').fadeIn();
+});
+
+

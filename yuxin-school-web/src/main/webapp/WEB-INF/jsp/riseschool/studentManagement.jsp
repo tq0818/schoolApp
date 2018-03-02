@@ -113,9 +113,8 @@
 					<th width="8%">手机号</th>
 					<th width="8%">出生日期</th>
 					<th width="10%">户籍详细地址</th>
-					<th width="9%">
+					<th width="9%" class="btn-sort">
 						提交时间
-						<i class="icon iconfont">&#xe617;</i>
 					</th>
 					<th width="8%">审核状态</th>
 					<th width="9%">学生编号</th>
@@ -140,59 +139,11 @@
 					<td>待审核</td>
 					<td>18 21 10000 12</td>
 					<td>
-						<a href="##">通过</a>|
-						<a href="##">不通过</a>|
+						<a href="##" class="pass">通过</a>|
+						<a href="##" class="noPass">不通过</a>|
 						<a href="##">查看</a>
 					</td>
 				</tr>
-				<%--<c:forEach items="${result}" var="detail" varStatus="status">--%>
-					<%--<tr data-buy="true" onclick="setUserNameAndId('${detail.userId}','${detail.userName}')">--%>
-						<%--<td>${status.index+1}</td>--%>
-						<%--<td>${detail.schoolName}</td>--%>
-						<%--<td>${detail.enrollmentName}</td>--%>
-						<%--<td>${detail.provinceName}</td>--%>
-						<%--<td>${detail.cityName}</td>--%>
-						<%--<td>${detail.districtName}</td>--%>
-						<%--<td><fmt:formatDate value="${detail.createTime}" pattern="yyyy-MM-dd"/></td>--%>
-						<%--<td><c:if test="${detail.isShalve == 0}">未上架</c:if><c:if test="${detail.isShalve == 1}">已上架</c:if></td>--%>
-						<%--<td><c:if test="${detail.isTop == 0}">未置顶</c:if><c:if test="${detail.isTop == 1}">已置顶</c:if></td>--%>
-						<%--<td class="slink">--%>
-							<%--<c:if test="${detail.isShalve == 1}">--%>
-								<%--<a class="offShelf"  href="javaScript:updateRiseSchool('${detail.id}',0,'');" data-value="0">下架</a>|--%>
-							<%--</c:if>--%>
-							<%--<c:if test="${detail.isShalve == 0}">--%>
-								<%--<a class="upShelf"  href="javaScript:updateRiseSchool('${detail.id}',1,'');" data-value="1">上架</a>|--%>
-							<%--</c:if>--%>
-							<%--<c:if test="${detail.isTop == 0}">--%>
-								<%--<a class="top"  href="javaScript:updateRiseSchool('${detail.id}','',1);" data-value="1">置顶</a>|--%>
-							<%--</c:if>--%>
-							<%--<c:if test="${detail.isTop == 1}">--%>
-								<%--<a class="down"  href="javaScript:updateRiseSchool('${detail.id}','',0);" data-value="0">取消置顶</a>|--%>
-							<%--</c:if>--%>
-							<%--<a class="countManagement"   href="##">账号管理</a>|--%>
-							<%--<a class="more" href="#3">管理</a>--%>
-							<%--<ul class="none box" style="display: none;">--%>
-								<%--<li><a class=""  href="javaScript:loalUrl(0,'${detail.id}','${detail.schoolName}');">基本信息</a></li>--%>
-								<%--<li><a class=""   href="javaScript:loalUrl(1,'${detail.id}','${detail.schoolName}');">学校详情</a></li>--%>
-								<%--<li><a class=""  href="javaScript:loalUrl(2,'${detail.id}','${detail.schoolName}');">学校风采</a></li>--%>
-								<%--<li><a href="javaScript:loalUrl(3,'${detail.id}','${detail.schoolName}');">升学</a></li>--%>
-							<%--</ul>--%>
-						<%--</td>--%>
-						<%--<td style="display:none" id="${detail.id}">${detail.id}</td>--%>
-					<%--</tr>--%>
-				<%--</c:forEach>--%>
-
-
-				<%--<c:choose>
-					<c:when test="${userorg_roleopenflag==1 && proxyOrgRole ==1 }">
-						<tr><td colspan="15">暂无数据</td></tr>
-					</c:when>
-					<c:otherwise>
-						<tr><td colspan="14">暂无数据</td></tr>
-					</c:otherwise>
-				</c:choose>--%>
-				
-				
 		</table>
 			<div class="pages pagination">
 
@@ -211,8 +162,26 @@
 <div class="opacityPopup"></div>
 <div class="confirmPopup">
 	<div>是否确认通过该学生的申请？</div>
-	<a href="##">取消</a>
-	<a href="##">确认通过</a>
+	<a href="##" class="cancel hidePopup">取消</a>
+	<a href="##" class="confirmPass hidePopup">确认通过</a>
+</div>
+
+<%--不通过原因选择--%>
+<div class="reason">
+    <h5>不通过原因</h5>
+    <ul>
+        <li><input type="checkbox"><span>原因一</span></li>
+        <li><input type="checkbox"><span>原因二</span></li>
+        <li><input type="checkbox"><span>原因三</span></li>
+        <li><input type="checkbox"><span>原因四</span></li>
+        <li><input type="checkbox"><span>其他</span></li>
+    </ul>
+    <textarea name="" id="" cols="30" rows="10" class="descriptWord"placeholder="请输入原因，最多60个字。"
+    maxlength="60"></textarea>
+    <div class="btnGroup">
+        <a href="##" class="btn btn-sm btn-default hidePopup">取消</a>
+        <a href="##" class="btn btn-sm btn-primary hidePopup">确定</a>
+    </div>
 </div>
 
 

@@ -23,4 +23,19 @@ margin-left: -150px;margin-top: -89px;background: #fff;border: 1px solid #797979
 .noMargin{margin-left: 0 !important;}
 .star{font-size: 12px;color: #ff0000;}
 #busRoad{resize: none;}
-.confirmPopup{}
+.confirmPopup{display: none;position: absolute;left: 50%;top: 50%;width: 244px;height: 100px;border-radius: 3px;
+    margin-left: -122px;margin-top: -50px;z-index: 100;background: #fff;border: 1px solid #797979;}
+.confirmPopup div{height: 60px;line-height: 60px;text-align: center;border-bottom: 1px solid #797979;}
+.confirmPopup a{display: inline-block;width: 49%;text-align: center;height: 40px;line-height: 40px;}
+.confirmPopup a.cancel{border-right:1px solid #797979;}
+.reason{display: none;position: absolute;background: #fff;left: 50%;top: 50%;width: 446px;height: 390px;
+margin-left: -243px;margin-top: -195px;border: 1px solid #797979;padding: 0 20px;}
+.reason h5{height: 40px;line-height: 40px;text-align: center;color: #333;font-size: 16px;}
+.reason li{line-height: 28px;}
+.reason input{margin-top: -2px;vertical-align: middle;margin-right: 2px;}
+.descriptWord{width: 420px;height: 140px;resize: none;}
+.btnGroup{height: 56px;line-height: 56px;text-align: center;}
+.btnGroup a{margin: 0 30px;}
+.table.table-center .btn-sort{
+    background: url(../../images/query/ico-sort.png) no-repeat 90% center;
+}
