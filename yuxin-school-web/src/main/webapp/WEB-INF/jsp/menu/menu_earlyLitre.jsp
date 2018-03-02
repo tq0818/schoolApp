@@ -21,6 +21,7 @@ $(function(){
                 </c:otherwise>
             </c:choose>--%>
                 <li code="earlyLitre"><a href="<%=rootPath %>/riseschoolback/earlyLitre">学校管理</a></li>
+                <li code="studentManagement"><a href="<%=rootPath %>/riseschoolback/studentManagement">学员管理</a></li>
         	<%--</shiro:hasPermission>--%>
         </ul>
     </div>

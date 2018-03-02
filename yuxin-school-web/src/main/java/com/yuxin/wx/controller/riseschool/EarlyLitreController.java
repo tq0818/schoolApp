@@ -268,5 +268,14 @@ public class EarlyLitreController extends BaseRiseSchoolController{
 		return "/riseschool/mien";
 	}
 
+	/**
+	 * 学员管理
+	 * @return
+	 */
+	@RequestMapping(value = "/studentManagement")
+	public String studentManagement(){
+		return "/riseschool/studentManagement";
+	}
+
 }
 

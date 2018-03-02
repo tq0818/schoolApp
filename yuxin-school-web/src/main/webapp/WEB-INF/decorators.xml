@@ -574,6 +574,10 @@
         <!--学校风采-->
         <pattern>/riseschoolback/mien</pattern>
 
+        <!--学员管理-->
+        <pattern>/riseschoolback/studentManagement</pattern>
+
+
     </decorator>
 
 </decorators>
