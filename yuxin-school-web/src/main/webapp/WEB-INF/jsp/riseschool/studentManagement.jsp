@@ -21,9 +21,15 @@
 		.earlyLitreDetail{
 			padding-bottom : 100px;
 		}
-        table{
-            word-wrap: break-word; word-break: break-all;
-        }
+        /*table{*/
+            /*word-wrap: break-word; word-break: break-all;*/
+        /*}*/
+		.detailSite{
+			width: 130px;
+			overflow: hidden;
+			text-overflow:ellipsis;
+			white-space: nowrap;
+		}
     </style>
 </head>
 
@@ -66,9 +72,9 @@
 			<div style="margin-top: 10px;">
 				<label style="margin-right: 10px;">提交时间</label>
 				<span>
-					<input type="text" name="startTime" class="date-picker from"/>
+					<input type="text" name="startTime" class="date-picker from" readonly style="cursor: default;"/>
 					<em>到</em>
-					<input type="text" name="endTime" class="date-picker to"/>
+					<input type="text" name="endTime" class="date-picker to" readonly style="cursor: default;"/>
 				</span>
 				<%--<c:if test="${address==1}">--%>
 				<%--<span style="padding:0 15px;" id="caddress">--%>
@@ -102,14 +108,17 @@
 					<th width="5%">序号</th>
 					<th width="5%">姓名</th>
 					<th width="5%">性别</th>
-					<th width="12%">毕业学校</th>
-					<th width="12%">申请学校</th>
+					<th width="11%">毕业学校</th>
+					<th width="11%">申请学校</th>
 					<th width="8%">手机号</th>
 					<th width="8%">出生日期</th>
 					<th width="10%">户籍详细地址</th>
-					<th width="9%">提交时间</th>
+					<th width="9%">
+						提交时间
+						<i class="icon iconfont">&#xe617;</i>
+					</th>
 					<th width="8%">审核状态</th>
-					<th width="8%">学生编号</th>
+					<th width="9%">学生编号</th>
 					<th width="20%">操作</th>
 				<%--	<th style="display:none" width="0%"></th>--%>
 				</tr>
@@ -121,10 +130,15 @@
 					<td>成都七中</td>
 					<td>18623235314</td>
 					<td>1992-1-29</td>
-					<td>三二四医院小区</td>
+					<td>
+						<div class="detailSite">
+							三二四医院小区三二四医院小区医院小区医
+							院小区医院小区三二四医院小区三二四医院小区医院小区医院小区医院小区
+						</div>
+					</td>
 					<td>2018-3-3 12:31</td>
 					<td>待审核</td>
-					<td>12213</td>
+					<td>18 21 10000 12</td>
 					<td>
 						<a href="##">通过</a>|
 						<a href="##">不通过</a>|
@@ -193,82 +207,12 @@
 <div class="loading-bg lp-units-loading-bg" style="display:none"></div>
 <!--  ajax加载中div结束 -->
 
-<%--账号管理弹窗--%>
+<%--通过确认--%>
 <div class="opacityPopup"></div>
-<div class="countPopup">
-	<h5>账号管理</h5>
-	<div>
-		<label for="">账号：</label>
-		<span id="accountUserName"></span>
-	</div>
-	<div>
-		<label for="">密码：</label>
-		<input type="password" id="password">
-	</div>
-	<div class="countPopupBtn" id="accountBtn">
-		<a href="##" class="btn btn-sm btn-primary countPopupCancel">取消</a>
-		<a href="##" class="btn btn-sm btn-primary countPopupSave">保存</a>
-	</div>
-</div>
-
-<%--添加学校弹窗--%>
-<div class="addNewSchool">
-	<h5>添加学校</h5>
-	<div>
-		<i class="icon iconfont star">&#xe605;</i>
-		<label for="" class="noMargin">学校名称：</label>
-		<input type="text" id="schoolName" maxlength="60">
-	</div>
-	<div class="schoolCount">
-		<i class="icon iconfont star">&#xe605;</i>
-		<label for="" class="noMargin">学校账号：</label>
-		<input type="text" id="userName" placeholder="请输入学校管理员账号" onblur="judgeAccountName()">
-		<span>初始密码为：111111</span>
-	</div>
-	<div>
-		<i class="icon iconfont star">&#xe605;</i>
-		<label for="" class="noMargin">招生方式：</label>
-		<select name="" id="enRollMent">
-			<option value="">请选择招生方式</option>
-			<option value="0101">自主招生</option>
-			<option value="0102">按片划分</option>
-		</select>
-	</div>
-	<div class="schoolSite">
-		<i class="icon iconfont star">&#xe605;</i>
-		<label for="" class="noMargin">学校地址：</label>
-		<select name="" id="province" onchange="addQueryRiseSchoolDict(1)">
-			<option value="">学校所在省份</option>
-		</select>
-		<select name="" id="city" onchange="addQueryRiseSchoolDict(2)">
-			<option value="">学校所在市</option>
-		</select>
-		<select name="" id="district">
-			<option value="">学校所在区</option>
-		</select>
-		<input type="text" placeholder="请输入详细地址" maxlength="60" id="schoolAddress">
-	</div>
-	<div>
-		<label for="">学校网址：</label>
-		<input type="text" id="schoolWeb" onblur="judgeSchoolWeb()" placeholder="示例:http://www.cdds365.com或https://www.baidu.com">
-	</div>
-	<div>
-		<label for="">学校传真：</label>
-		<input type="text" id="schoolFax">
-	</div>
-	<div>
-		<label for="">公交路线：</label>
-		<%--<input type="text" maxlength="200" id="busRoad">--%>
-		<textarea id="busRoad" maxlength="200" style="width: 486px"></textarea>
-	</div>
-	<div>
-		<label for="">收藏基数：</label>
-		<input type="number" maxlength="5" placeholder="请输入0-10000" max="10000" id="collectBaseCount">
-	</div>
-	<div class="countPopupBtn" id="schoolBtn">
-		<a href="##" class="btn btn-sm btn-primary countPopupCancel">取消</a>
-		<a href="##" class="btn btn-sm btn-primary countPopupSave">确认添加</a>
-	</div>
+<div>
+	<div>是否确认通过该学生的申请？</div>
+	<a href="##">取消</a>
+	<a href="##">确认通过</a>
 </div>
 
 
@@ -288,7 +232,6 @@
 <script type="text/javascript" src="<%=rootPath%>/javascripts/selectStudentGroup.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/riseschool/jm-qi.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/riseschool/studentManagement.js"></script>
-
 
 <script>
 	//分页
