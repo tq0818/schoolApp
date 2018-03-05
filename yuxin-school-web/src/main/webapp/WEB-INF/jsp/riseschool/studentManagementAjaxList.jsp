@@ -53,14 +53,39 @@
 			<td>待审核</td>
 			<td>18 21 10000 12</td>
 			<td>
-				<a href="javascript:void(0)" class="pass">通过</a>|
-				<a href="javascript:void(0)" class="noPass">不通过</a>|
-				<a href="javascript:void(0)">查看</a>
+				<a href="javascript:void(0)" class="pass" id="1">通过</a>|
+				<a href="javascript:void(0)" class="noPass" id="2">不通过</a>|
+				<a href="javascript:watch(444)">查看</a>
 			</td>
 		</tr>
 </table>
 <div class="pages pagination">
 
+</div>
+<%--通过确认--%>
+<div class="opacityPopup"></div>
+<div class="confirmPopup">
+	<div>是否确认通过该学生的申请？</div>
+	<a href="javascript:void(0)" class="cancel hidePopup">取消</a>
+	<a href="javascript:pass()" class="confirmPass hidePopup">确认通过</a>
+</div>
+
+<%--不通过原因选择--%>
+<div class="reason">
+    <h5>不通过原因</h5>
+    <ul>
+        <li><input type="checkbox"><span>原因一</span></li>
+        <li><input type="checkbox"><span>原因二</span></li>
+        <li><input type="checkbox"><span>原因三</span></li>
+        <li><input type="checkbox"><span>原因四</span></li>
+        <li><input type="checkbox"><span>其他</span></li>
+    </ul>
+    <textarea name="" id="" cols="30" rows="10" class="descriptWord"placeholder="请输入原因，最多60个字。"
+    maxlength="60"></textarea>
+    <div class="btnGroup">
+        <a href="javascript:void(0)" class="btn btn-sm btn-default hidePopup">取消</a>
+        <a href="javascript:noPass()" class="btn btn-sm btn-primary hidePopup">确定</a>
+    </div>
 </div>
 </body>
 </html>
@@ -95,5 +120,26 @@
     		$("#timeOrder").val(1);
     	}
     	queryStudentApply(1);
+    });
+  //点击通过显示弹窗
+  var passId;
+  var noPassId;
+     $('.pass').click(function () {
+    	 passId = $(this).attr('id'); 
+        $('.confirmPopup').fadeIn();
+        $('.opacityPopup').fadeIn();
+    });
+    //点击取消或者确认通过隐藏弹窗
+    $('.hidePopup').click(function () {
+        $('.confirmPopup').fadeOut();
+        $('.opacityPopup').fadeOut();
+        $('.reason').fadeOut();
+    });
+
+    //点击不通过弹出弹窗
+    $('.noPass').click(function () {
+    	noPassId = $(this).attr('id') 
+        $('.reason').fadeIn();
+        $('.opacityPopup').fadeIn();
     });
 </script>

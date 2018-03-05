@@ -176,35 +176,20 @@ function updateAccount() {
     });
 }
 
-//页面跳转
-function loalUrl(flag,schoolId,schoolName) {
-    if (flag == 0){//基本
-        window.location.href = rootPath + "/riseschoolback/essential?schoolId="+schoolId;
-    }else if (flag == 1){//详情
-        window.location.href = rootPath + "/riseschoolback/schoolDetails?schoolId="+schoolId;
-    }else if (flag == 2){//风采
-        window.location.href = rootPath + "/riseschoolback/mien?schoolId="+schoolId;
-    }else if (flag == 3){//升学
-        window.location.href = rootPath + "/riseschoolback/upgradeSchools?schoolId="+schoolId;
-    }
+
+//通过
+function pass() {
+	alert(passId);
+}
+//不通过
+function noPass() {
+	alert(noPassId);
+}
+//查看
+function watch(id) {
+	alert(id);
 }
 
-//点击通过显示弹窗
-$('.pass').click(function () {
-    $('.confirmPopup').fadeIn();
-    $('.opacityPopup').fadeIn();
-});
-//点击取消或者确认通过隐藏弹窗
-$('.hidePopup').click(function () {
-    $('.confirmPopup').fadeOut();
-    $('.opacityPopup').fadeOut();
-    $('.reason').fadeOut();
-});
 
-//点击不通过弹出弹窗
-$('.noPass').click(function () {
-    $('.reason').fadeIn();
-    $('.opacityPopup').fadeIn();
-});
 
 
