@@ -63,15 +63,16 @@
 
 			<div style="margin: 10px 0">
 					<label for="" >申请学校</label>
-					<select name="" id="schoolName" style="margin-left: 10px;width: 300px;">
+					<select name="" id="schoolName" style="margin-left: 15px;width: 300px;position: absolute;"
+							onmousedown="if(this.options.length>6){this.size=7}" onblur="this.size=0" onchange="this.size=0" >
 						<option value="-1"></option>
 						<option value="0">全部</option>
 						<option value="c1">七中</option>
 					</select>
 				</div>
 
-			<div style="margin-top: 10px;">
-				<label style="margin-right: 10px;">提交时间</label>
+			<div style="margin-top: 10px;padding: 10px 0;">
+				<label style="margin-right: 12px;">提交时间</label>
 				<span>
 					<input type="text" name="startTime" class="date-picker from" readonly style="cursor: default;"/>
 					<em>到</em>
