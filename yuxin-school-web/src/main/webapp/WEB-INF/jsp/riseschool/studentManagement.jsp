@@ -64,7 +64,7 @@
 			<div style="margin: 10px 0">
 					<label for="" >申请学校</label>
 					<select name="" id="schoolName" style="margin-left: 10px;width: 300px;">
-						<option value="-1"></option>
+						<option value="-1">请选择学校</option>
 						<option value="0">全部</option>
 						<option value="c1">七中</option>
 					</select>

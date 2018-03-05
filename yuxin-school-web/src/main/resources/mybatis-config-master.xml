@@ -342,6 +342,7 @@
 		<mapper resource="com/yuxin/riseschool/RiseSchoolManageMapper.xml"/>
 		<mapper resource="com/yuxin/riseschool/RiseSchoolStyleMapper.xml"/>
 		<mapper resource="com/yuxin/riseschool/RiseSchoolDynamicMapper.xml"/>
+		<mapper resource="com/yuxin/riseschool/RiseStudentServiceFMapper.xml"/>
 	</mappers>
 
 </configuration>

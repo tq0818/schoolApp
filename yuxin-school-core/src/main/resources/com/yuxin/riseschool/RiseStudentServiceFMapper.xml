@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuxin.wx.riseschool.mapper.RiseStudentServiceFMapper">
+	<resultMap type="com.yuxin.wx.model.riseschool.RiseStudentVo" id="riseStudentMap">
+		<result property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="studentName" column="sudent_name" />
+		<result property="sex" column="sex" />
+		<result property="schoolName" column="school_name" />
+		<result property="schoolTag" column="school_tag" />
+		<result property="mobile" column="mobile" />
+		<result property="birthday" column="birthday" />
+		<result property="censusAddress" column="census_address" />
+		<result property="createTime" column="create_time" />
+		<result property="isCheck" column="is_check" />
+		<result property="studentNo" column="student_no" />
+	</resultMap>
+
+	
+	<update id="update" parameterType="com.yuxin.wx.model.riseschool.RiseSchoolDynamicVo">
+		update rise_school_dynamic set
+		tittle = #{tittle},update_time = NOW(),content = #{content}
+		where id = #{id}
+	</update>
+	
+	<select id="queryAllStudent" resultMap="riseStudentMap" parameterType="map">
+		SELECT 
+		rs.id as id,
+		rs.sudent_name as sudent_name,
+		rs.sex as sex,
+		rs.birthday as birthday,
+		rs.census_address as census_address,
+		rs.student_no as student_no,
+		ree.school_name as school_tag,
+		uf3.mobile as mobile,
+		rsi.create_time as create_time,
+		rsi.is_check as is_check,
+		rsii.school_name as school_name
+		from rise_student rs
+		INNER JOIN users_front3 uf3 ON rs.user_id = uf3.id
+		INNER JOIN rise_signup_info rsi ON rs.id = rsi.student_id
+		INNER JOIN rise_school_info rsii ON rsi.school_id = rsii.id
+		INNER JOIN rise_edu_experience ree ON rs.id = ree.student_id
+		where ree.is_graduate = 1
+		
+	</select>
+	
+	<select id="queryAllDynamicCount" parameterType="map" resultType=""Integer"">
+        SELECT  count(id)
+          FROM  rise_school_dynamic
+        where rise_school_id = #{riseSchoolId}
+    </select>
+    
+	<select id="queryAllSchool" resultType="com.yuxin.wx.model.riseschool.RiseSchoolManageVo">
+        select id,school_name from rise_school_info 
+		where is_shalve = 1
+    </select>
+
+</mapper>

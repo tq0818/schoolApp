@@ -20,7 +20,7 @@ public class RiseStudentVo extends BaseEntity {
 
     private String idNo;
 
-    private String censusAddress;
+    private String censusAddress;//户籍地址
 
     private String province;
 
@@ -37,14 +37,30 @@ public class RiseStudentVo extends BaseEntity {
     private String mobile;
 
     private String studentNo;
+    
+    private String schoolName;//申请学校
+    
+    private String schoolTag;//毕业学校
+    
+    private String createTime;//创建时间
+    
+    private String isCheck;//审核状态
 
     public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+	public void setUserId(Integer userId) {
         this.userId = userId;
     }
+	
+	public String getSchoolName() {
+		return schoolName;
+	}
+	
+	public void setSchoolName(String schoolName) {
+		this.schoolName = schoolName;
+	}
 
     public String getStudentName() {
         return studentName;
@@ -149,4 +165,29 @@ public class RiseStudentVo extends BaseEntity {
     public void setStudentNo(String studentNo) {
         this.studentNo = studentNo;
     }
+
+	public String getSchoolTag() {
+		return schoolTag;
+	}
+
+	public void setSchoolTag(String schoolTag) {
+		this.schoolTag = schoolTag;
+	}
+
+	public String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getIsCheck() {
+		return isCheck;
+	}
+
+	public void setIsCheck(String isCheck) {
+		this.isCheck = isCheck;
+	}
+    
 }
