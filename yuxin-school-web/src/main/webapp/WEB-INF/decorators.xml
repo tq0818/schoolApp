@@ -576,6 +576,8 @@
 
         <!--学员管理-->
         <pattern>/riseschoolback/studentManagement</pattern>
+        <!--学员详情-->
+        <pattern>/riseStudentSchoolTag/studentDetails</pattern>
 
 
     </decorator>

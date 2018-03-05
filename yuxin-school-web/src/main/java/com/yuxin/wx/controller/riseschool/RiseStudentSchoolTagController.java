@@ -25,5 +25,12 @@ public class RiseStudentSchoolTagController {
     public String queryRiseSchoolInfo(HttpServletRequest request,Model model){
         return "/riseschool/studentManagementAjaxList";
     }
+    /**
+     * 学员管理详情
+     */
+    @RequestMapping(value = "/studentDetails")
+    public String studentDetails(HttpServletRequest request,Model model){
+        return "/riseschool/studentDetails";
+    }
 
 }
