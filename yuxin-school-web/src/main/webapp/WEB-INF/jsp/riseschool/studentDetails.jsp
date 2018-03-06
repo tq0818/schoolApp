@@ -46,7 +46,7 @@
 <jsp:include page="/WEB-INF/jsp/menu/menu_earlyLitre.jsp"/>
 <div class="u-wrap set-system">
     <div class="mainbackground nopadding " style="height: 1000px;">
-		<div>
+		<div class="infoBox1">
 			<div class="heading" style="border-left: none;">
 				<h2 class="h5">学生信息</h2>
 				<span class="line"></span>
@@ -56,41 +56,41 @@
 					<ul>
 						<li>
 							<label for="">姓名</label>
-							<span>吴非儿</span>
+							<span style="margin-left: 200px;">吴非儿</span>
 						</li>
 						<li>
 							<label for="">手机号</label>
-							<span>18623235314</span>
+							<span style="margin-left: 188px;">18623235314</span>
 						</li>
 						<li>
 							<label for="">身份证号 </label>
-							<span>511623199201290129</span>
+							<span style="margin-left: 178px;">511623199201290129</span>
 						</li>
-						<li>
+						<li class="clickImg">
 							<label for="">户籍照片</label>
-							<img src="<%=rootPath%>/images/1.jpg" alt="">
-							<img src="<%=rootPath%>/images/1.jpg" alt="">
-							<img src="<%=rootPath%>/images/1.jpg" alt="">
+							<img src="<%=rootPath%>/images/1.jpg" alt="" style="margin-left: 178px;">
+							<img src="<%=rootPath%>/images/1.jpg" alt="" style="margin-left: 20px;">
+							<img src="<%=rootPath%>/images/1.jpg" alt="" style="margin-left: 20px;">
 						</li>
 					</ul>
 					<ul>
 						<li>
 							<label for="">性别</label>
-							<span>女</span>
+							<span style="margin-left: 200px;">女</span>
 						</li>
 						<li>
 							<label for="">出生日期</label>
-							<span>1992-01-29</span>
+							<span style="margin-left: 175px;">1992-01-29</span>
 						</li>
 						<li>
 							<label for="">户籍所在地</label>
-							<span>重庆 江北  三二四医院小区2栋二单元1205</span>
+							<span style="margin-left: 165px;">重庆 江北  三二四医院小区2栋二单元1205</span>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</div>
-		<div>
+		<div class="infoBox2">
 			<div class="heading" style="border-left: none;">
 				<h2 class="h5">教育经历</h2>
 				<span class="line"></span>
@@ -99,42 +99,18 @@
 				<div class="studentDetails">
 					<ul>
 						<li>
-							<label for="">姓名</label>
-							<span>吴非儿</span>
+							<label for="">毕业学校</label>
+							<span style="margin-left: 175px;"> 四川省  成都市  高新区  天府一中</span>
 						</li>
 						<li>
-							<label for="">手机号</label>
-							<span>18623235314</span>
-						</li>
-						<li>
-							<label for="">身份证号 </label>
-							<span>511623199201290129</span>
-						</li>
-						<li>
-							<label for="">户籍照片</label>
-							<img src="<%=rootPath%>/images/1.jpg" alt="">
-							<img src="<%=rootPath%>/images/1.jpg" alt="">
-							<img src="<%=rootPath%>/images/1.jpg" alt="">
-						</li>
-					</ul>
-					<ul>
-						<li>
-							<label for="">性别</label>
-							<span>女</span>
-						</li>
-						<li>
-							<label for="">出生日期</label>
-							<span>1992-01-29</span>
-						</li>
-						<li>
-							<label for="">户籍所在地</label>
-							<span>重庆 江北  三二四医院小区2栋二单元1205</span>
+							<label for="">成都数字学校测评成绩</label>
+							<span style="margin-left: 105px;">98分</span>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</div>
-		<div>
+		<div class="infoBox3">
 			<div class="heading" style="border-left: none;">
 				<h2 class="h5">家长信息</h2>
 				<span class="line"></span>
@@ -144,41 +120,23 @@
 					<ul>
 						<li>
 							<label for="">姓名</label>
-							<span>吴非儿</span>
+							<span style="margin-left: 200px;">吴非非</span>
 						</li>
 						<li>
 							<label for="">手机号</label>
-							<span>18623235314</span>
-						</li>
-						<li>
-							<label for="">身份证号 </label>
-							<span>511623199201290129</span>
-						</li>
-						<li>
-							<label for="">户籍照片</label>
-							<img src="<%=rootPath%>/images/1.jpg" alt="">
-							<img src="<%=rootPath%>/images/1.jpg" alt="">
-							<img src="<%=rootPath%>/images/1.jpg" alt="">
+							<span style="margin-left: 188px;">18623235314</span>
 						</li>
 					</ul>
 					<ul>
 						<li>
-							<label for="">性别</label>
-							<span>女</span>
-						</li>
-						<li>
-							<label for="">出生日期</label>
-							<span>1992-01-29</span>
-						</li>
-						<li>
-							<label for="">户籍所在地</label>
-							<span>重庆 江北  三二四医院小区2栋二单元1205</span>
+							<label for="">关系</label>
+							<span style="margin-left: 200px;">父女</span>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</div>
-		<div>
+		<div class="infoBox4">
 			<div class="heading" style="border-left: none;">
 				<h2 class="h5">个人荣誉</h2>
 				<span class="line"></span>
@@ -187,43 +145,22 @@
 				<div class="studentDetails">
 					<ul>
 						<li>
-							<label for="">姓名</label>
-							<span>吴非儿</span>
+							<span>校级三好学生</span>
 						</li>
 						<li>
-							<label for="">手机号</label>
-							<span>18623235314</span>
+							<span>优秀少先队员</span>
 						</li>
 						<li>
-							<label for="">身份证号 </label>
-							<span>511623199201290129</span>
-						</li>
-						<li>
-							<label for="">户籍照片</label>
-							<img src="<%=rootPath%>/images/1.jpg" alt="">
-							<img src="<%=rootPath%>/images/1.jpg" alt="">
-							<img src="<%=rootPath%>/images/1.jpg" alt="">
-						</li>
-					</ul>
-					<ul>
-						<li>
-							<label for="">性别</label>
-							<span>女</span>
-						</li>
-						<li>
-							<label for="">出生日期</label>
-							<span>1992-01-29</span>
-						</li>
-						<li>
-							<label for="">户籍所在地</label>
-							<span>重庆 江北  三二四医院小区2栋二单元1205</span>
+							<span>全国小学生英语演讲比赛一等奖</span>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</div>
-
-
+		<div class="infoBox5">
+			<a href="##" class="btn btn-mb btn-primary pass">通过</a>
+			<a href="##" class="btn btn-mb btn-default noPass">不通过</a>
+		</div>
     </div>
 </div>
 <!-- ajax加载中div开始 -->
@@ -259,6 +196,8 @@
     </div>
 </div>
 
+<%--点击户籍图片弹出大图--%>
+<img src="<%=rootPath%>/images/1.jpg" alt="" class="bigImage">
 
 <input type="hidden" id="selectCounts" value="10">
 <script type="text/javascript" src="<%=rootPath %>/javascripts/riseschool/studentlist.js"></script>
@@ -276,6 +215,13 @@
 <script type="text/javascript" src="<%=rootPath%>/javascripts/selectStudentGroup.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/riseschool/jm-qi.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/riseschool/studentDetails.js"></script>
+
+<script>
+    //二级导航
+    $(function () {
+        $selectSubMenu('studentManagement');
+    });
+</script>
 
 </body>
 </html>
