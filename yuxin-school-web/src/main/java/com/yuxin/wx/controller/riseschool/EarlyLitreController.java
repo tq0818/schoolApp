@@ -30,6 +30,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.yuxin.wx.api.riseschool.IRiseSchoolDetailsUpService;
 import com.yuxin.wx.api.riseschool.IRiseSchoolDynamicService;
+import com.yuxin.wx.api.riseschool.IRiseStudentServiceF;
+
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -49,6 +51,8 @@ public class EarlyLitreController extends BaseRiseSchoolController{
 	private RiseSchoolStyleService riseSchoolStyleServiceImpl;
 	@Autowired
 	private PropertiesUtil propertiesUtil;
+	@Autowired
+	private IRiseStudentServiceF riseStudentServiceF;
     //私立校后台-学校管理
     @RequestMapping(value = "/earlyLitre")
     public Object earlyLitre(HttpServletRequest request, Model model,RiseSchoolManageVo riseSchoolManageVo){
@@ -273,7 +277,9 @@ public class EarlyLitreController extends BaseRiseSchoolController{
 	 * @return
 	 */
 	@RequestMapping(value = "/studentManagement")
-	public String studentManagement(){
+	public String studentManagement(Model model){
+		List<RiseSchoolManageVo> list = riseStudentServiceF.queryAllSchool();
+		model.addAttribute("list",list);
 		return "/riseschool/studentManagement";
 	}
 

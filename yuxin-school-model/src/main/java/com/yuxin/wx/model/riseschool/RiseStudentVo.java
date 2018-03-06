@@ -4,6 +4,7 @@ import com.yuxin.wx.common.BaseEntity;
 import com.yuxin.wx.common.BaseModel;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by lym_gxm on 18/3/2.
@@ -21,6 +22,7 @@ public class RiseStudentVo extends BaseEntity {
     private String idNo;
 
     private String censusAddress;//户籍地址
+    private String censusDetAddress;//详细地址
 
     private String province;
 
@@ -34,7 +36,8 @@ public class RiseStudentVo extends BaseEntity {
 
     private String curator;
 
-    private String mobile;
+    private String mobile;//电话
+    private String curatorMobile;//家长电话
 
     private String studentNo;
     
@@ -43,8 +46,15 @@ public class RiseStudentVo extends BaseEntity {
     private String schoolTag;//毕业学校
     
     private String createTime;//创建时间
+    private Date putTime;//提交时间
+    
+    private String endTime;//结束时间
+    private String startTime;//开始时间
     
     private String isCheck;//审核状态
+    
+    private String timeOrder;//是否按照提交时间排序，1不是，2是
+    private String curatorRelation;//监护人状态(0父子，1父女，2母子，3母女，4其他)
 
     public Integer getUserId() {
         return userId;
@@ -166,14 +176,6 @@ public class RiseStudentVo extends BaseEntity {
         this.studentNo = studentNo;
     }
 
-	public String getSchoolTag() {
-		return schoolTag;
-	}
-
-	public void setSchoolTag(String schoolTag) {
-		this.schoolTag = schoolTag;
-	}
-
 	public String getCreateTime() {
 		return createTime;
 	}
@@ -188,6 +190,70 @@ public class RiseStudentVo extends BaseEntity {
 
 	public void setIsCheck(String isCheck) {
 		this.isCheck = isCheck;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+ 
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getTimeOrder() {
+		return timeOrder;
+	}
+
+	public void setTimeOrder(String timeOrder) {
+		this.timeOrder = timeOrder;
+	}
+
+	public String getSchoolTag() {
+		return schoolTag;
+	}
+
+	public void setSchoolTag(String schoolTag) {
+		this.schoolTag = schoolTag;
+	}
+
+	public Date getPutTime() {
+		return putTime;
+	}
+
+	public void setPutTime(Date putTime) {
+		this.putTime = putTime;
+	}
+
+	public String getCensusDetAddress() {
+		return censusDetAddress;
+	}
+
+	public void setCensusDetAddress(String censusDetAddress) {
+		this.censusDetAddress = censusDetAddress;
+	}
+
+	public String getCuratorMobile() {
+		return curatorMobile;
+	}
+
+	public void setCuratorMobile(String curatorMobile) {
+		this.curatorMobile = curatorMobile;
+	}
+
+	public String getCuratorRelation() {
+		return curatorRelation;
+	}
+
+	public void setCuratorRelation(String curatorRelation) {
+		this.curatorRelation = curatorRelation;
 	}
     
 }

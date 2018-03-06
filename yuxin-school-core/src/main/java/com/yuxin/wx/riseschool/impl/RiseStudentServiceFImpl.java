@@ -22,8 +22,8 @@ public class RiseStudentServiceFImpl implements IRiseStudentServiceF{
 	private RiseStudentServiceFMapper riseStudentServiceFMapper;
 
 	@Override
-	public List<RiseStudentVo> queryAllStudent(Map map) {
-		List<RiseStudentVo> list = riseStudentServiceFMapper.queryAllStudent(map);
+	public List<RiseStudentVo> queryAllStudent(RiseStudentVo riseStudent) {
+		List<RiseStudentVo> list = riseStudentServiceFMapper.queryAllStudent(riseStudent);
 		return list;
 	}
 
@@ -31,6 +31,42 @@ public class RiseStudentServiceFImpl implements IRiseStudentServiceF{
 	public List<RiseSchoolManageVo> queryAllSchool() {
 		List<RiseSchoolManageVo> list = riseStudentServiceFMapper.queryAllSchool();
 		return list;
+	}
+
+	@Override
+	public Integer queryAllStudentCount(RiseStudentVo riseStudent) {
+		Integer count = riseStudentServiceFMapper.queryAllStudentCount(riseStudent);
+		return count;
+	}
+
+	@Override
+	public void passStudent(Map map) {
+		riseStudentServiceFMapper.passStudent(map);
+		
+	}
+
+	@Override
+	public RiseStudentVo findById(String id) {
+		RiseStudentVo riseStudentVo = riseStudentServiceFMapper.findById(id);
+		return riseStudentVo;
+	}
+
+	@Override
+	public String findSchoolNo(String id) {
+		String schoolNo = riseStudentServiceFMapper.findSchoolNo(id);
+		return schoolNo;
+	}
+
+	@Override
+	public String findStudentCount() {
+		String studentCount = riseStudentServiceFMapper.findStudentCount();
+		return studentCount;
+	}
+
+	@Override
+	public void updateIsCheck(String id) {
+		riseStudentServiceFMapper.updateIsCheck(id);
+		
 	}
 
 }

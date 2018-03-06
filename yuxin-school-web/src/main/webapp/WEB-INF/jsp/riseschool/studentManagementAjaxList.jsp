@@ -17,6 +17,7 @@
 </head>
 <body>
 <input type="hidden" id="dimFlag" value="${dimFlag}">
+<input type="hidden" id="passPageNo" value="${data.pageNo}">
 <table class="table table-center" id="tableList">
 		<tr data-buy="true">
 			<th width="5%">序号</th>
@@ -35,29 +36,48 @@
 			<th width="20%">操作</th>
 		<%--	<th style="display:none" width="0%"></th>--%>
 		</tr>
+		<c:forEach items="${data.data}" var="list" varStatus="status">
 		<tr>
-			<td>1</td>
-			<td>杨君君</td>
-			<td>女</td>
-			<td>成都三原外国语小学</td>
-			<td>成都七中</td>
-			<td>18623235314</td>
-			<td>1992-1-29</td>
+			<td>${status.index+1}</td>
+			<td>${list.studentName}</td>
+			<td>${list.sex}</td>
+			<td>${list.schoolTag}</td>
+			<td>${list.schoolName}</td>
+			<td>${list.mobile}</td>
+			<td>${list.birthday}</td>
 			<td>
 				<div class="detailSite">
-					三二四医院小区三二四医院小区医院小区医
-					院小区医院小区三二四医院小区三二四医院小区医院小区医院小区医院小区
+					${list.censusDetAddress}
 				</div>
 			</td>
-			<td>2018-3-3 12:31</td>
+			<td><fmt:formatDate value="${list.putTime}"  pattern="yyyy-MM-dd HH:mm"/></td> 
+			<c:if test="${list.isCheck eq 1}">
 			<td>待审核</td>
-			<td>18 21 10000 12</td>
+			</c:if>
+			<c:if test="${list.isCheck eq 2}">
+			<td>已通过</td>
+			</c:if>
+			<c:if test="${list.isCheck eq 0}">
+			<td>未通过</td>
+			</c:if>
+			<td>${list.studentNo}</td>
 			<td>
-				<a href="javascript:void(0)" class="pass" id="1">通过</a>|
-				<a href="javascript:void(0)" class="noPass" id="2">不通过</a>|
-				<a href="javascript:watch(444)">查看</a>
+					<a href="javascript:void(0)" class="pass" id="${list.id}">通过</a>|
+					<a href="javascript:void(0)" class="noPass" id="${list.id}">不通过</a>|
+					<a href="javascript:watch(${list.id})">查看</a>
+				<%-- <c:choose>
+					<c:when test="${list.isCheck eq 1}">
+					<a href="javascript:void(0)" class="pass" id="${list.id}">通过</a>|
+					<a href="javascript:void(0)" class="noPass" id="${list.id}">不通过</a>|
+					<a href="javascript:watch(${list.id})">查看</a>
+					</c:when>
+					<c:otherwise>
+					<a href="javascript:watch(${list.id})">查看</a>
+					</c:otherwise>
+				</c:choose> --%>
 			</td>
 		</tr>
+		</c:forEach>
 </table>
 <div class="pages pagination">
 
@@ -91,22 +111,18 @@
 </html>
 <script>
     //分页
-    $(".pagination").pagination('${rowCount}',
+    $(".pagination").pagination('${data.rowCount}',
         {
             next_text: "下一页",
             prev_text: "上一页",
-            current_page: '${pageNo - 1}',
+            current_page: '${data.pageNo - 1}',
             link_to: "javascript:void(0)",
             num_display_entries: 8,
             items_per_page: 10,
             num_edge_entries: 1,
             callback: function (page, jq) {
                 var pageNo = page + 1;
-                if ($("#dimFlag").val() == 1){
-                    queryDimRiseSchoolInfo(pageNo);
-                }else {
-                    queryRiseSchoolInfo(pageNo);
-                }
+                queryStudentApply(pageNo);
 
             }
         }

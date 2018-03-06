@@ -16,10 +16,22 @@ public interface RiseStudentServiceFMapper extends BaseMapper<RiseSchoolDynamicV
 	/**
 	 * 查询全部
 	 */
-	List<RiseStudentVo> queryAllStudent(Map map);
+	List<RiseStudentVo> queryAllStudent(RiseStudentVo riseStudent);
 	/**
 	 * 查询全部学校
 	 * @return
 	 */
 	List<RiseSchoolManageVo> queryAllSchool();
+	/**
+	 * 查询个数
+	 * @return
+	 */
+	Integer queryAllStudentCount(RiseStudentVo riseStudent);
+	void passStudent(Map map);
+	RiseStudentVo findById(String id);
+	String findSchoolNo(String id);
+	//学生人数
+	String findStudentCount();
+	//通过更新状态
+	void updateIsCheck(String id);
 }

@@ -11,25 +11,31 @@
 		<result property="mobile" column="mobile" />
 		<result property="birthday" column="birthday" />
 		<result property="censusAddress" column="census_address" />
-		<result property="createTime" column="create_time" />
+		<result property="censusDetAddress" column="census_det_address" />
+		<result property="putTime" column="create_time" />
 		<result property="isCheck" column="is_check" />
 		<result property="studentNo" column="student_no" />
 	</resultMap>
 
 	
-	<update id="update" parameterType="com.yuxin.wx.model.riseschool.RiseSchoolDynamicVo">
-		update rise_school_dynamic set
-		tittle = #{tittle},update_time = NOW(),content = #{content}
+	<update id="passStudent" parameterType="map">
+		update rise_student set
+		student_no = #{studentNo},update_time = NOW()
 		where id = #{id}
 	</update>
+	<update id="updateIsCheck" parameterType="String">
+		update rise_signup_info set
+		is_check = 2,update_time = NOW()
+		where student_id = #{id}
+	</update>
 	
-	<select id="queryAllStudent" resultMap="riseStudentMap" parameterType="map">
+	<select id="queryAllStudent" resultMap="riseStudentMap" parameterType="com.yuxin.wx.model.riseschool.RiseStudentVo">
 		SELECT 
 		rs.id as id,
 		rs.sudent_name as sudent_name,
 		rs.sex as sex,
 		rs.birthday as birthday,
-		rs.census_address as census_address,
+		rs.census_det_address as census_det_address,
 		rs.student_no as student_no,
 		ree.school_name as school_tag,
 		uf3.mobile as mobile,
@@ -37,23 +43,87 @@
 		rsi.is_check as is_check,
 		rsii.school_name as school_name
 		from rise_student rs
-		INNER JOIN users_front3 uf3 ON rs.user_id = uf3.id
+		INNER JOIN users_front uf3 ON rs.user_id = uf3.id
 		INNER JOIN rise_signup_info rsi ON rs.id = rsi.student_id
 		INNER JOIN rise_school_info rsii ON rsi.school_id = rsii.id
 		INNER JOIN rise_edu_experience ree ON rs.id = ree.student_id
 		where ree.is_graduate = 1
-		
+		<if test="isCheck != null and isCheck != ''"> AND rsi.is_check = #{isCheck}</if>
+		<if test="schoolName != null and schoolName != '' and schoolName != 0"> AND rsii.id = #{schoolName}</if>
+		<if test="studentName != null and studentName != '' "> AND rs.sudent_name = #{studentName}</if>
+		<if test="mobile != null and mobile != ''"> AND uf3.mobile = #{mobile}</if>
+		<if test="studentNo != null and studentNo != ''"> AND rs.student_no = #{studentNo}</if>
+		<if test="schoolTag != null and schoolTag != ''"> AND ree.school_name LIKE "%${schoolTag}%"</if>
+		<if test="startTime != null and startTime != '' and endTime == ''">AND DATE_FORMAT(rsi.create_time,"%Y-%m-%d") = STR_TO_DATE(#{startTime},"%Y-%m-%d")</if>
+        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(rsi.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(rsi.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+		<if test="timeOrder == 1 ">ORDER BY create_time desc</if>
+		<if test="timeOrder == 2 ">ORDER BY create_time</if>
+        limit #{firstIndex},#{pageSize}
 	</select>
 	
-	<select id="queryAllDynamicCount" parameterType="map" resultType=""Integer"">
-        SELECT  count(id)
-          FROM  rise_school_dynamic
-        where rise_school_id = #{riseSchoolId}
+	<select id="queryAllStudentCount" parameterType="com.yuxin.wx.model.riseschool.RiseStudentVo" resultType="Integer">
+        SELECT 
+		count(rs.id)
+		from rise_student rs
+		INNER JOIN users_front uf3 ON rs.user_id = uf3.id
+		INNER JOIN rise_signup_info rsi ON rs.id = rsi.student_id
+		INNER JOIN rise_school_info rsii ON rsi.school_id = rsii.id
+		INNER JOIN rise_edu_experience ree ON rs.id = ree.student_id
+		where ree.is_graduate = 1
+		<if test="isCheck != null and isCheck != ''"> AND rsi.is_check = #{isCheck}</if>
+		<if test="schoolName != null and schoolName != '' and schoolName != 0 "> AND rsii.id = #{schoolName}</if>
+		<if test="studentName != null and studentName != ''"> AND rs.sudent_name = #{studentName}</if>
+		<if test="mobile != null and mobile != ''"> AND uf3.mobile = #{mobile}</if>
+		<if test="studentNo != null and studentNo != ''"> AND rs.student_no = #{studentNo}</if>
+		<if test="schoolTag != null and schoolTag != ''"> AND ree.school_name LIKE "%${schoolTag}%"</if>
+		<if test="startTime != null and startTime != '' and endTime == ''">AND DATE_FORMAT(rsi.create_time,"%Y-%m-%d") = STR_TO_DATE(#{startTime},"%Y-%m-%d")</if>
+        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(rsi.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(rsi.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
     </select>
     
 	<select id="queryAllSchool" resultType="com.yuxin.wx.model.riseschool.RiseSchoolManageVo">
-        select id,school_name from rise_school_info 
+        select id as id ,school_name as schoolName from rise_school_info 
 		where is_shalve = 1
+    </select>
+    
+	<select id="findStudentCount" resultType="String">
+        SELECT student_no from rise_student rs
+		INNER JOIN rise_signup_info rsi ON rs.id = rsi.student_id
+		where rsi.is_check =2
+		GROUP BY rsi.update_time
+		LIMIT 0,1
+    </select>
+    
+	<select id="findSchoolNo" resultType="String" parameterType="String">
+        select school_no from rise_school_info rs
+		INNER JOIN rise_signup_info rsi ON rs.id = rsi.school_id
+		INNER JOIN rise_student r ON r.id = rsi.student_id
+		where r.id = #{id}
+    </select>
+    
+	<select id="findById" resultType="com.yuxin.wx.model.riseschool.RiseStudentVo" parameterType="String">
+       	select 
+		rs.id as id,
+		rs.sudent_name as studentName,
+		rs.sex as sex,
+		rs.birthday as birthday,
+		rs.census_det_address as censusDetAddress,
+		rs.student_no as studentNo,
+		uf.mobile as mobile,
+		rsi.is_check as isCheck,
+		rs.id_no as idNo,
+		rs.census_address as censusAddress,
+		rs.census_url as censusUrl,
+		rs.head_url as headUrl,
+		rs.self_url as selfUrl,
+		rs.curator as curator,
+		rs.mobile as curatorMobile,
+		rs.curator_relation as curatorRelation
+		from rise_student rs
+		INNER JOIN users_front uf ON rs.user_id = uf.id
+		INNER JOIN rise_signup_info rsi ON rs.id = rsi.student_id
+		where rs.id = #{id}
     </select>
 
 </mapper>

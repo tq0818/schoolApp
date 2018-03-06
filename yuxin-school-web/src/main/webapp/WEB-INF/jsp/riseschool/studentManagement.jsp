@@ -42,7 +42,6 @@
 <input type="hidden" value="${userorg_roleopenflag }" id="userorg_roleopenflag"/>
 <input type="hidden" value="${rowCount }" id="rowCount"/>
 <input type="hidden" value="${pageNo}" id="pageNo"/>
-<input type="hidden" value="1" id="timeOrder"/>
 <jsp:include page="/WEB-INF/jsp/menu/menu_earlyLitre.jsp"/>
 <div class="u-wrap set-system">
     <div class="mainbackground nopadding ">
@@ -50,23 +49,26 @@
             <h2 class="h5">学员管理</h2>
             <span class="line"></span>
         </div>
-        <form method="post" id="searchForm">
+        <form method="post" id="searchFormStudent">
+        	<input type="hidden"  id="isCheckBtn" name="isCheck" value=""/>
 			<div class="searchFormArea">
 				<div class="isCheck">
 					<label for="">审核状态</label>
-					<a href="javascript:void(0)" class="btn btn-primary btn-sm" data-value="">全部</a>
-					<a href="javascript:void(0)" class="btn btn-default btn-sm" data-value="1">待审核</a>
-					<a href="javascript:void(0)" class="btn btn-default btn-sm" data-value="2">已通过</a>
-					<a href="javascript:void(0)" class="btn btn-default btn-sm" data-value="0">未通过</a>
+					<a href="javascript:void(0)"  class="btn btn-primary btn-sm" data-value="" >全部</a>
+					<a href="javascript:void(0)"  class="btn btn-default btn-sm" data-value="1" >待审核</a>
+					<a href="javascript:void(0)"  class="btn btn-default btn-sm" data-value="2" >已通过</a>
+					<a href="javascript:void(0)"  class="btn btn-default btn-sm" data-value="0" >未通过</a>
 				</div>
 			</div>
 
 			<div style="margin: 10px 0">
-					<label for="" >申请学校</label>
-					<select name="" id="schoolName" style="margin-left: 10px;width: 300px;">
+					<label for="schoolName" >申请学校</label>
+					<select name="schoolName" id="schoolName" style="margin-left: 10px;width: 300px;">
 						<option value="-1">请选择学校</option>
 						<option value="0">全部</option>
-						<option value="c1">七中</option>
+						<c:forEach items="${list}" var="list" >
+							<option value="${list.id}" data-id="${list.id}">${list.schoolName}</option>
+						</c:forEach>
 					</select>
 				</div>
 
@@ -79,12 +81,13 @@
 				</span>
 			</div>
 			<div style="margin: 10px 0;">
-				<input type="text" placeholder="姓名" id="studentName">
-				<input type="text" placeholder="手机号" id="mobile">
-				<input type="text" placeholder="学生编号" id="studentNo">
-				<input type="text" placeholder="毕业学校" id="SchoolTag">
+				<input type="text" placeholder="姓名" id="studentName" name="studentName">
+				<input type="text" placeholder="手机号" id="mobile" name="mobile">
+				<input type="text" placeholder="学生编号" id="studentNo" name="studentNo">
+				<input type="text" placeholder="毕业学校" id="SchoolTag" name="SchoolTag">
+				<input type="hidden" value="1" id="timeOrder" name="timeOrder"/>
 				<span style="margin-left: 10px;"><a href="javascript:;" class="btn btn-primary searchStudentManagement">搜索</a></span>
-				<span style="float: right"><a href="javascript:void(0);" class="btn btn-primary">导出用户</a></span>
+				<span style="float: right"><a href="javascript:void(0);" class="btn btn-primary exportexcleStudent">导出用户</a></span>
 			</div>
         </form>
         <div class="user-list earlyLitreDetail">
@@ -121,7 +124,7 @@
 
 <script>
 	//分页
-    $(".pagination").pagination('${rowCount}',
+    /* $(".pagination").pagination('${rowCount}',
         {
             next_text: "下一页",
             prev_text: "上一页",
@@ -135,7 +138,7 @@
                 queryRiseSchoolInfo(pageNo);
             }
         }
-    );
+    ); */
 
     //二级导航
     $(function () {

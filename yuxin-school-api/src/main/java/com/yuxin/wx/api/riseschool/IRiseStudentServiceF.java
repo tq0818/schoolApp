@@ -3,8 +3,6 @@ package com.yuxin.wx.api.riseschool;
 import java.util.List;
 import java.util.Map;
 
-import com.yuxin.wx.common.PageFinder;
-import com.yuxin.wx.model.riseschool.RiseSchoolDynamicVo;
 import com.yuxin.wx.model.riseschool.RiseSchoolManageVo;
 import com.yuxin.wx.model.riseschool.RiseStudentVo;
 
@@ -15,10 +13,25 @@ public interface IRiseStudentServiceF {
 	/**
 	 * 查询全部学生
 	 */
-	List<RiseStudentVo> queryAllStudent(Map map);
+	List<RiseStudentVo> queryAllStudent(RiseStudentVo riseStudent);
 	/**
 	 * 查询全部学校
 	 * @return
 	 */
 	List<RiseSchoolManageVo> queryAllSchool();
+	/**
+	 * 查询个数
+	 * @return
+	 */
+	Integer queryAllStudentCount(RiseStudentVo riseStudent);
+	
+	void passStudent(Map map);
+	//查询学生信息
+	RiseStudentVo findById(String id);
+	//学校编号
+	String findSchoolNo(String id);
+	//学生人数
+	String findStudentCount();
+	//通过更新状态
+	void updateIsCheck(String id);
 }
