@@ -24,7 +24,9 @@
 			<th width="5%">姓名</th>
 			<th width="5%">性别</th>
 			<th width="11%">毕业学校</th>
+			<c:if test="${userType ne 'RISE_SCHOOL_MANAGER'}">
 			<th width="11%">申请学校</th>
+			</c:if>
 			<th width="8%">手机号</th>
 			<th width="8%">出生日期</th>
 			<th width="10%">户籍详细地址</th>
@@ -42,7 +44,9 @@
 			<td>${list.studentName}</td>
 			<td>${list.sex}</td>
 			<td>${list.schoolTag}</td>
+			<c:if test="${userType ne 'RISE_SCHOOL_MANAGER'}">
 			<td>${list.schoolName}</td>
+			</c:if>
 			<td>${list.mobile}</td>
 			<td>${list.birthday}</td>
 			<td>
@@ -62,10 +66,7 @@
 			</c:if>
 			<td>${list.studentNo}</td>
 			<td>
-					<a href="javascript:void(0)" class="pass" id="${list.id}">通过</a>|
-					<a href="javascript:void(0)" class="noPass" id="${list.id}">不通过</a>|
-					<a href="javascript:watch(${list.id})">查看</a>
-				<%-- <c:choose>
+				<c:choose>
 					<c:when test="${list.isCheck eq 1}">
 					<a href="javascript:void(0)" class="pass" id="${list.id}">通过</a>|
 					<a href="javascript:void(0)" class="noPass" id="${list.id}">不通过</a>|
@@ -74,7 +75,7 @@
 					<c:otherwise>
 					<a href="javascript:watch(${list.id})">查看</a>
 					</c:otherwise>
-				</c:choose> --%>
+				</c:choose>
 			</td>
 		</tr>
 		</c:forEach>
@@ -94,13 +95,14 @@
 <div class="reason">
     <h5>不通过原因</h5>
     <ul>
-        <li><input type="checkbox"><span>原因一</span></li>
-        <li><input type="checkbox"><span>原因二</span></li>
-        <li><input type="checkbox"><span>原因三</span></li>
-        <li><input type="checkbox"><span>原因四</span></li>
-        <li><input type="checkbox"><span>其他</span></li>
+       <c:forEach items="${noPassList}" var="list">
+			<li>
+				<li><input type="checkbox" name="noPassReason" value="${list.reason}"><span>${list.reason}</span></li>
+			</li>
+		</c:forEach>
+        <li><input type="checkbox" name="noPassReason" value="其他"><span>其他</span></li>
     </ul>
-    <textarea name="" id="" cols="30" rows="10" class="descriptWord"placeholder="请输入原因，最多60个字。"
+    <textarea name="" id="otherReason" cols="30" rows="10" class="descriptWord"placeholder="请输入原因，最多60个字。"
     maxlength="60"></textarea>
     <div class="btnGroup">
         <a href="javascript:void(0)" class="btn btn-sm btn-default hidePopup">取消</a>

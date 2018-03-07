@@ -1,8 +1,12 @@
 package com.yuxin.wx.riseschool.impl;
 
 import com.yuxin.wx.api.riseschool.IRiseStudentServiceF;
+import com.yuxin.wx.model.riseschool.RiseEduExperience;
+import com.yuxin.wx.model.riseschool.RiseNopassReason;
+import com.yuxin.wx.model.riseschool.RisePersonalHonor;
 import com.yuxin.wx.model.riseschool.RiseSchoolManageVo;
 import com.yuxin.wx.model.riseschool.RiseStudentVo;
+import com.yuxin.wx.model.user.UsersFront;
 import com.yuxin.wx.riseschool.mapper.RiseStudentServiceFMapper;
 
 import java.util.List;
@@ -67,6 +71,36 @@ public class RiseStudentServiceFImpl implements IRiseStudentServiceF{
 	public void updateIsCheck(String id) {
 		riseStudentServiceFMapper.updateIsCheck(id);
 		
+	}
+
+	@Override
+	public List<RiseEduExperience> findExperience(String id) {
+		List<RiseEduExperience> experience = riseStudentServiceFMapper.findExperience(id);
+		return experience;
+	}
+
+	@Override
+	public List<RisePersonalHonor> findHonor(String id) {
+		List<RisePersonalHonor> findHonor = riseStudentServiceFMapper.findHonor(id);
+		return findHonor;
+	}
+
+	@Override
+	public List<RiseNopassReason> queryNoPass() {
+		List<RiseNopassReason> noPass = riseStudentServiceFMapper.queryNoPass();
+		return noPass;
+	}
+
+	@Override
+	public void updateIsCheckNoPass(RiseNopassReason reason) {
+		riseStudentServiceFMapper.updateIsCheckNoPass(reason);
+		
+	}
+
+	@Override
+	public UsersFront findUserByStudentId(Integer id) {
+		UsersFront usersFront = riseStudentServiceFMapper.findUserByStudentId(id);
+		return usersFront;
 	}
 
 }

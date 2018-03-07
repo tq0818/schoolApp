@@ -60,7 +60,11 @@
 					<a href="javascript:void(0)"  class="btn btn-default btn-sm" data-value="0" >未通过</a>
 				</div>
 			</div>
-
+			<c:choose>
+			<c:when test="${userType eq 'RISE_SCHOOL_MANAGER'}">
+				<input type="hidden"  id="schoolName" name="schoolName" value="${riseSchoolIdStudent }"/>
+			</c:when>
+			<c:otherwise>
 			<div style="margin: 10px 0">
 					<label for="" >申请学校</label>
 					<select name="schoolName" id="schoolName" style="margin-left: 15px;width: 300px;position: absolute;"
@@ -71,8 +75,9 @@
 							<option value="${list.id}" data-id="${list.id}">${list.schoolName}</option>
 						</c:forEach>
 					</select>
-				</div>
-
+			</div>
+			</c:otherwise>
+			</c:choose>
 			<div style="margin-top: 10px;padding: 10px 0;">
 				<label style="margin-right: 12px;">提交时间</label>
 				<span>

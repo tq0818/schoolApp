@@ -127,6 +127,7 @@ public class BaseWebController {
             //mv.setViewName("redirect:/riseschoolback/essential?schoolId="+rsieSchool.getId()+"&schoolName="+shcoolName);
             mv.setViewName("redirect:/riseschoolback/essential?schoolId="+rsieSchool.getId());
             request.getSession().setAttribute("userType", user.getUserType());
+            request.getSession().setAttribute("riseSchoolIdStudent", rsieSchool.getId());
         }else{
             mv.setViewName("redirect:/simpleClasses/showClassTypePage");
         }

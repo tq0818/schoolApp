@@ -12,6 +12,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,11 +22,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.yuxin.wx.api.app.INoticeAndScoreService;
+import com.yuxin.wx.api.company.ICompanyStudentMessageService;
 import com.yuxin.wx.api.riseschool.IRiseStudentServiceF;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.common.ViewFiles;
+import com.yuxin.wx.model.company.CompanyStudentMessage;
+import com.yuxin.wx.model.company.NoticeTemplatVo;
+import com.yuxin.wx.model.riseschool.RiseEduExperience;
+import com.yuxin.wx.model.riseschool.RiseNopassReason;
+import com.yuxin.wx.model.riseschool.RisePersonalHonor;
+import com.yuxin.wx.model.riseschool.RiseSchoolStyleVo;
 import com.yuxin.wx.model.riseschool.RiseStudentVo;
+import com.yuxin.wx.model.user.UserMessage;
+import com.yuxin.wx.model.user.UsersFront;
+import com.yuxin.wx.util.JiGuangPushUtil;
 import com.yuxin.wx.utils.ExcelUtil;
+import com.yuxin.wx.utils.PropertiesUtil;
 
 /**
  * 学员管理
@@ -32,8 +46,15 @@ import com.yuxin.wx.utils.ExcelUtil;
 @Controller
 @RequestMapping(value = "/riseStudentSchoolTag")
 public class RiseStudentSchoolTagController {
+	protected static final Logger LOG = LoggerFactory.getLogger(INoticeAndScoreService.class);
 	@Autowired
 	private IRiseStudentServiceF riseStudentServiceF ;
+	@Autowired
+	private PropertiesUtil propertiesUtil;
+	@Autowired
+    private INoticeAndScoreService noticeAndScoreServiceImpl;
+	@Autowired
+    private ICompanyStudentMessageService companyStudentMessageServiceImpl;
 	/**
      * 查询信息
      * @param request
@@ -46,7 +67,10 @@ public class RiseStudentSchoolTagController {
     	List<RiseStudentVo> list = riseStudentServiceF.queryAllStudent(riseStudent);
     	Integer count = riseStudentServiceF.queryAllStudentCount(riseStudent);
     	PageFinder<RiseStudentVo> pageFinder = new PageFinder<RiseStudentVo>(riseStudent.getPage(), riseStudent.getPageSize(), count, list);
+    	//不通过原因
+    	List<RiseNopassReason> noPassList = riseStudentServiceF.queryNoPass();
     	model.addAttribute( "data", pageFinder);
+    	model.addAttribute( "noPassList", noPassList);
     	return "/riseschool/studentManagementAjaxList";
     }
     /**
@@ -108,11 +132,98 @@ public class RiseStudentSchoolTagController {
     	
     }
     /**
+     * 不通过
+     * @param request
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    @ResponseBody
+    @RequestMapping(value = "/NopassStudent",method=RequestMethod.POST)
+    public String NopassStudent(HttpServletRequest request,Model model,RiseNopassReason reason){
+    	try {
+    		//更新通过状态,保存为不通过原因
+    		riseStudentServiceF.updateIsCheckNoPass(reason);
+    		UsersFront usersFront = riseStudentServiceF.findUserByStudentId(reason.getId());
+    		String url = request.getRequestURI().replace(request.getContextPath(),"");
+    		String noPassReason = "不通过原因是";
+             if(null!=usersFront){
+                 Map<String,String>tuisong = new HashMap<String,String>();
+                 //调用极光接口发送消息
+                 if(reason.getId() != null){
+                     List<String> userList = new ArrayList<String>();
+                     userList.add(usersFront.getId().toString());
+                     String result = JiGuangPushUtil.push(userList,noPassReason,null,tuisong);
+
+                     LOG.info("userId:"+usersFront.getId()+"url:"+url+"result:"+result);
+
+                     //记录消息
+                     CompanyStudentMessage companyStudentMessage = new CompanyStudentMessage();
+                     companyStudentMessage.setContent(noPassReason);
+                     companyStudentMessage.setContentText(noPassReason);
+                     Integer schoolId = 681;
+                     companyStudentMessage.setSchoolId(schoolId);
+                     companyStudentMessage.setMessageType("STUDENT_MESSAGE_SYSTEM");
+                     companyStudentMessage.setMessageMethod("STUDENT_MESSAGE_SYSTEM");
+                     companyStudentMessage.setCreator(0);
+                     companyStudentMessage.setCreateTime(new Date());
+                     companyStudentMessage.setMessageStatus("STUDENT_MESSAGE_COMMIT");
+                     companyStudentMessage.setTitle("系统消息");
+                     companyStudentMessage.setSendNum(1);
+                     companyStudentMessage.setFailNum(0);
+                     companyStudentMessage.setContentText(noPassReason);
+                     companyStudentMessageServiceImpl.insert(companyStudentMessage);
+                     //记录发送对象
+                     List<UserMessage> umList=new ArrayList<UserMessage>();
+                     UserMessage um = new UserMessage();
+                     um.setUserId(usersFront.getId());
+                     um.setMessageId(companyStudentMessage.getId());
+                     um.setReadFlag(0);
+                     umList.add(um);
+                     companyStudentMessageServiceImpl.batchInsertUserMessage(umList);
+                     companyStudentMessage.setMessageStatus("STUDENT_MESSAGE_FINISH");
+                     companyStudentMessageServiceImpl.update(companyStudentMessage);
+                     return "success";
+                 }
+             }
+             return "false";
+    	} catch (Exception e) {
+    		return "false";
+    	}
+    	
+    }
+    /**
      * 学员管理详情
      */
     @RequestMapping(value = "/studentDetails")
-    public String studentDetails(HttpServletRequest request,Model model){
-        return "/riseschool/studentDetails";
+    public String studentDetails(HttpServletRequest request,Model model,String id){
+    	//学生信息和家长信息
+    	if (id == null || id == "") {
+			return null;
+		}
+    	try {
+    		RiseStudentVo riseStudentVo = riseStudentServiceF.findById(id);
+        	String url = "http://"+propertiesUtil.getProjectImageUrl()+"/";
+    		//处理图片
+        	riseStudentVo.setCensusUrl(url+riseStudentVo.getCensusUrl());
+        	riseStudentVo.setHeadUrl(url+riseStudentVo.getHeadUrl());
+        	riseStudentVo.setSelfUrl(url+riseStudentVo.getSelfUrl());
+        	//教育经历
+        	List<RiseEduExperience> experienceList = riseStudentServiceF.findExperience(id);
+        	//个人荣誉
+        	List<RisePersonalHonor> honorList = riseStudentServiceF.findHonor(id);
+        	//不通过原因
+        	List<RiseNopassReason> noPassList = riseStudentServiceF.queryNoPass();
+        	
+        	model.addAttribute( "riseStudentVo", riseStudentVo);
+        	model.addAttribute( "experienceList", experienceList);
+        	model.addAttribute( "honorList", honorList);
+        	model.addAttribute( "noPassList", noPassList);
+        	model.addAttribute( "id", id);
+            return "/riseschool/studentDetails";
+		} catch (Exception e) {
+			return null;
+		}
+    	
     }
     /**
      * 导出

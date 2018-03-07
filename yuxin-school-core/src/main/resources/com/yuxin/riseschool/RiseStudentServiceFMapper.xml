@@ -4,7 +4,7 @@
 	<resultMap type="com.yuxin.wx.model.riseschool.RiseStudentVo" id="riseStudentMap">
 		<result property="id" column="id" />
 		<result property="userId" column="user_id" />
-		<result property="studentName" column="sudent_name" />
+		<result property="studentName" column="student_name" />
 		<result property="sex" column="sex" />
 		<result property="schoolName" column="school_name" />
 		<result property="schoolTag" column="school_tag" />
@@ -23,16 +23,23 @@
 		student_no = #{studentNo},update_time = NOW()
 		where id = #{id}
 	</update>
+	
 	<update id="updateIsCheck" parameterType="String">
 		update rise_signup_info set
 		is_check = 2,update_time = NOW()
 		where student_id = #{id}
 	</update>
 	
+	<update id="updateIsCheckNoPass" parameterType="com.yuxin.wx.model.riseschool.RiseNopassReason">
+		update rise_signup_info set
+		is_check = 0,update_time = NOW(),no_pass_reason=#{reason}
+		where student_id = #{id}
+	</update>
+	
 	<select id="queryAllStudent" resultMap="riseStudentMap" parameterType="com.yuxin.wx.model.riseschool.RiseStudentVo">
 		SELECT 
 		rs.id as id,
-		rs.sudent_name as sudent_name,
+		rs.student_name as student_name,
 		rs.sex as sex,
 		rs.birthday as birthday,
 		rs.census_det_address as census_det_address,
@@ -50,7 +57,7 @@
 		where ree.is_graduate = 1
 		<if test="isCheck != null and isCheck != ''"> AND rsi.is_check = #{isCheck}</if>
 		<if test="schoolName != null and schoolName != '' and schoolName != 0"> AND rsii.id = #{schoolName}</if>
-		<if test="studentName != null and studentName != '' "> AND rs.sudent_name = #{studentName}</if>
+		<if test="studentName != null and studentName != '' "> AND rs.student_name = #{studentName}</if>
 		<if test="mobile != null and mobile != ''"> AND uf3.mobile = #{mobile}</if>
 		<if test="studentNo != null and studentNo != ''"> AND rs.student_no = #{studentNo}</if>
 		<if test="schoolTag != null and schoolTag != ''"> AND ree.school_name LIKE "%${schoolTag}%"</if>
@@ -73,7 +80,7 @@
 		where ree.is_graduate = 1
 		<if test="isCheck != null and isCheck != ''"> AND rsi.is_check = #{isCheck}</if>
 		<if test="schoolName != null and schoolName != '' and schoolName != 0 "> AND rsii.id = #{schoolName}</if>
-		<if test="studentName != null and studentName != ''"> AND rs.sudent_name = #{studentName}</if>
+		<if test="studentName != null and studentName != ''"> AND rs.student_name = #{studentName}</if>
 		<if test="mobile != null and mobile != ''"> AND uf3.mobile = #{mobile}</if>
 		<if test="studentNo != null and studentNo != ''"> AND rs.student_no = #{studentNo}</if>
 		<if test="schoolTag != null and schoolTag != ''"> AND ree.school_name LIKE "%${schoolTag}%"</if>
@@ -87,12 +94,23 @@
 		where is_shalve = 1
     </select>
     
+	<select id="findUserByStudentId" resultType="com.yuxin.wx.model.user.UsersFront" parameterType="Integer">
+        SELECT uf.id as id,uf.username as username 
+		from users_front uf
+		INNER JOIN rise_student rs ON uf.id = rs.user_id
+		where rs.id = #{id}
+    </select>
+    
 	<select id="findStudentCount" resultType="String">
         SELECT student_no from rise_student rs
 		INNER JOIN rise_signup_info rsi ON rs.id = rsi.student_id
 		where rsi.is_check =2
 		GROUP BY rsi.update_time
 		LIMIT 0,1
+    </select>
+    
+	<select id="queryNoPass" resultType="com.yuxin.wx.model.riseschool.RiseNopassReason">
+        select id as id,reason as reason from rise_nopass_reason
     </select>
     
 	<select id="findSchoolNo" resultType="String" parameterType="String">
@@ -102,10 +120,31 @@
 		where r.id = #{id}
     </select>
     
+	<select id="findExperience" resultType="com.yuxin.wx.model.riseschool.RiseEduExperience" parameterType="String">
+        select 
+        srsd1.item_name as provinceName,
+        srsd2.item_name as cityName,
+        srsd3.item_name as districtName,
+        ree.school_name as schoolName
+        from rise_edu_experience ree
+		LEFT JOIN sys_rise_school_dict srsd1 ON ree.province = srsd1.item_code
+		LEFT JOIN sys_rise_school_dict srsd2 ON ree.city = srsd2.item_code
+		LEFT JOIN sys_rise_school_dict srsd3 ON ree.district = srsd3.item_code
+		where student_id = #{id}
+		ORDER BY ree.is_graduate desc
+    </select>
+    
+	<select id="findHonor" resultType="com.yuxin.wx.model.riseschool.RisePersonalHonor" parameterType="String">
+        select 
+        honor_content as honorContent 
+        from rise_personal_honor 
+		where student_id = 1
+    </select>
+    
 	<select id="findById" resultType="com.yuxin.wx.model.riseschool.RiseStudentVo" parameterType="String">
        	select 
 		rs.id as id,
-		rs.sudent_name as studentName,
+		rs.student_name as studentName,
 		rs.sex as sex,
 		rs.birthday as birthday,
 		rs.census_det_address as censusDetAddress,

@@ -127,11 +127,56 @@ function pass() {
 }
 //不通过
 function noPass() {
-	alert(noPassId);
+	var passPageNo = $("#passPageNo").val();
+	var otherReason = $("#otherReason").val();
+	obj = document.getElementsByName("noPassReason");
+    check_val = [];
+    for(k in obj){
+    	if(obj[k].checked)
+            
+            if(obj[k].value == "其他" && otherReason == ''){
+        		$.msg("请输入不通过原因");
+        		return;
+        	}else if(obj[k].value == "其他"){
+        		check_val.push(otherReason);
+        	}
+            else{
+        		check_val.push(obj[k].value);
+        	}
+    }
+    var reason = check_val.join("@");
+    if(reason == ''){
+    	$.msg("请选择不通过原因");
+		return;
+    }
+    $.ajax({
+    	type:"POST",
+        url: rootPath + "/riseStudentSchoolTag/NopassStudent",
+        data: {"id":noPassId,"reason":reason},
+        beforeSend: function(){
+               $('.loading').show();
+               $('.loading-bg').show();
+        },
+        success: function (data) {
+            $('.loading').hide();
+            $('.loading-bg').hide();
+            if(data=="success"){
+	        	$.msg("保存成功");
+	        	queryStudentApply(passPageNo);
+        	}else{
+        		$.msg("保存失败");
+        	}
+        }
+    });
 }
 //查看
 function watch(id) {
-	alert(id);
+	//post跳转，目前无法传参数
+	/*document.write("<form action="+rootPath + "/riseStudentSchoolTag/studentDetails method=post name=formx1 style='display:none'>");
+	document.write("<input type='hidden' name='id' value='"+id+"'");
+	document.write("</form>");
+	document.formx1.submit();*/
+	window.location.href = rootPath + "/riseStudentSchoolTag/studentDetails?id="+id;
 }
 
 

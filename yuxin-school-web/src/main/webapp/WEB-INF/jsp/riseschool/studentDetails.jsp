@@ -39,10 +39,7 @@
 <input type="hidden" value="${registConfig.usernameFlag }" id="userNameSet"/>
 <input type="hidden" value="${address }" id="addreSet"/>
 <input type="hidden" value="${proxyOrgRole }" id="proxyOrgRole"/>
-<input type="hidden" value="${userorg_roleopenflag }" id="userorg_roleopenflag"/>
-<input type="hidden" value="${rowCount }" id="rowCount"/>
-<input type="hidden" value="${pageNo}" id="pageNo"/>
-<input type="hidden" value="1" id="timeOrder"/>
+<input type="hidden" value="${id}" id="stuId"/>
 <jsp:include page="/WEB-INF/jsp/menu/menu_earlyLitre.jsp"/>
 <div class="u-wrap set-system">
     <div class="mainbackground nopadding " style="height: 1000px;">
@@ -56,35 +53,35 @@
 					<ul>
 						<li>
 							<label for="">姓名</label>
-							<span style="margin-left: 200px;">吴非儿</span>
+							<span style="margin-left: 200px;">${riseStudentVo.studentName }</span>
 						</li>
 						<li>
 							<label for="">手机号</label>
-							<span style="margin-left: 188px;">18623235314</span>
+							<span style="margin-left: 188px;">${riseStudentVo.mobile}</span>
 						</li>
 						<li>
 							<label for="">身份证号 </label>
-							<span style="margin-left: 178px;">511623199201290129</span>
+							<span style="margin-left: 178px;">${riseStudentVo.idNo}</span>
 						</li>
 						<li class="clickImg">
 							<label for="">户籍照片</label>
-							<img src="<%=rootPath%>/images/1.jpg" alt="" style="margin-left: 178px;">
-							<img src="<%=rootPath%>/images/1.jpg" alt="" style="margin-left: 20px;">
-							<img src="<%=rootPath%>/images/1.jpg" alt="" style="margin-left: 20px;">
+							<img src="${riseStudentVo.censusUrl}" alt="" style="margin-left: 178px;">
+							<img src="${riseStudentVo.headUrl}" alt="" style="margin-left: 20px;">
+							<img src="${riseStudentVo.selfUrl}" alt="" style="margin-left: 20px;">
 						</li>
 					</ul>
 					<ul>
 						<li>
 							<label for="">性别</label>
-							<span style="margin-left: 200px;">女</span>
+							<span style="margin-left: 200px;">${riseStudentVo.sex}</span>
 						</li>
 						<li>
 							<label for="">出生日期</label>
-							<span style="margin-left: 175px;">1992-01-29</span>
+							<span style="margin-left: 175px;">${riseStudentVo.birthday}</span>
 						</li>
 						<li>
 							<label for="">户籍所在地</label>
-							<span style="margin-left: 165px;">重庆 江北  三二四医院小区2栋二单元1205</span>
+							<span style="margin-left: 165px;">${riseStudentVo.censusAddress}&nbsp;&nbsp;${riseStudentVo.censusDetAddress}</span>
 						</li>
 					</ul>
 				</div>
@@ -100,7 +97,14 @@
 					<ul>
 						<li>
 							<label for="">毕业学校</label>
-							<span style="margin-left: 175px;"> 四川省  成都市  高新区  天府一中</span>
+							<c:forEach items="${experienceList}" var="list">
+								<span style="margin-left: 175px;">
+								${list.provinceName}&nbsp;&nbsp;
+								${list.cityName}&nbsp;&nbsp;
+								${list.districtName}&nbsp;&nbsp;
+								${list.schoolName}
+								</span>
+							</c:forEach>
 						</li>
 						<li>
 							<label for="">成都数字学校测评成绩</label>
@@ -120,17 +124,33 @@
 					<ul>
 						<li>
 							<label for="">姓名</label>
-							<span style="margin-left: 200px;">吴非非</span>
+							<span style="margin-left: 200px;">${riseStudentVo.curator}</span>
 						</li>
 						<li>
 							<label for="">手机号</label>
-							<span style="margin-left: 188px;">18623235314</span>
+							<span style="margin-left: 188px;">${riseStudentVo.curatorMobile}</span>
 						</li>
 					</ul>
 					<ul>
 						<li>
 							<label for="">关系</label>
-							<span style="margin-left: 200px;">父女</span>
+							<c:choose>
+							<c:when test="${riseStudentVo.curatorRelation eq 0}">
+								<span style="margin-left: 200px;">父子</span>
+							</c:when>
+							<c:when test="${riseStudentVo.curatorRelation eq 1}">
+								<span style="margin-left: 200px;">父女</span>
+							</c:when>
+							<c:when test="${riseStudentVo.curatorRelation eq 2}">
+								<span style="margin-left: 200px;">母子</span>
+							</c:when>
+							<c:when test="${riseStudentVo.curatorRelation eq 3}">
+								<span style="margin-left: 200px;">母女</span>
+							</c:when>
+							<c:otherwise>
+								<span style="margin-left: 200px;">其他</span>
+							</c:otherwise>
+							</c:choose>
 						</li>
 					</ul>
 				</div>
@@ -144,23 +164,21 @@
 			<div>
 				<div class="studentDetails">
 					<ul>
+					<c:forEach items="${honorList}" var="list">
 						<li>
-							<span>校级三好学生</span>
+							<span>${list.honorContent}</span>
 						</li>
-						<li>
-							<span>优秀少先队员</span>
-						</li>
-						<li>
-							<span>全国小学生英语演讲比赛一等奖</span>
-						</li>
+					</c:forEach>
 					</ul>
 				</div>
 			</div>
 		</div>
+		<c:if test="${riseStudentVo.isCheck eq 1}">
 		<div class="infoBox5">
-			<a href="##" class="btn btn-mb btn-primary pass">通过</a>
-			<a href="##" class="btn btn-mb btn-default noPass">不通过</a>
+			<a href="javascript:void(0)" class="btn btn-mb btn-primary pass">通过</a>
+			<a href="javascript:void(0)" class="btn btn-mb btn-default noPass">不通过</a>
 		</div>
+		</c:if>
     </div>
 </div>
 <!-- ajax加载中div开始 -->
@@ -175,29 +193,30 @@
 <div class="confirmPopup">
 	<div>是否确认通过该学生的申请？</div>
 	<a href="javascript:void(0)" class="cancel hidePopup">取消</a>
-	<a href="javascript:void(0)" class="confirmPass hidePopup">确认通过</a>
+	<a href="javascript:void(0)" class="confirmPass hidePopup studentDetailPass">确认通过</a>
 </div>
 
 <%--不通过原因选择--%>
 <div class="reason">
     <h5>不通过原因</h5>
     <ul>
-        <li><input type="checkbox"><span>原因一</span></li>
-        <li><input type="checkbox"><span>原因二</span></li>
-        <li><input type="checkbox"><span>原因三</span></li>
-        <li><input type="checkbox"><span>原因四</span></li>
-        <li><input type="checkbox"><span>其他</span></li>
+    	<c:forEach items="${noPassList}" var="list">
+			<li>
+				<li><input type="checkbox" name="noPassReason" value="${list.reason}"><span>${list.reason}</span></li>
+			</li>
+		</c:forEach>
+        <li><input type="checkbox" name="noPassReason" value="其他"><span>其他</span></li>
     </ul>
-    <textarea name="" id="" cols="30" rows="10" class="descriptWord"placeholder="请输入原因，最多60个字。"
+    <textarea name="" id="otherReason" cols="30" rows="10" class="descriptWord"placeholder="请输入原因，最多60个字。"
     maxlength="60"></textarea>
     <div class="btnGroup">
         <a href="javascript:void(0)" class="btn btn-sm btn-default hidePopup">取消</a>
-        <a href="javascript:void(0)" class="btn btn-sm btn-primary hidePopup">确定</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-primary hidePopup studentDetailNoPass">确定</a>
     </div>
 </div>
 
 <%--点击户籍图片弹出大图--%>
-<img src="<%=rootPath%>/images/1.jpg" alt="" class="bigImage">
+<img src="" alt="" class="bigImage" id='bigImage'>
 
 <input type="hidden" id="selectCounts" value="10">
 <script type="text/javascript" src="<%=rootPath %>/javascripts/riseschool/studentlist.js"></script>
