@@ -9,6 +9,7 @@ import com.yuxin.wx.model.riseschool.RiseNopassReason;
 import com.yuxin.wx.model.riseschool.RisePersonalHonor;
 import com.yuxin.wx.model.riseschool.RiseSchoolDetailsUp;
 import com.yuxin.wx.model.riseschool.RiseSchoolDynamicVo;
+import com.yuxin.wx.model.riseschool.RiseSchoolInfoVo;
 import com.yuxin.wx.model.riseschool.RiseSchoolManageVo;
 import com.yuxin.wx.model.riseschool.RiseStudentVo;
 import com.yuxin.wx.model.user.UsersFront;
@@ -46,4 +47,6 @@ public interface RiseStudentServiceFMapper extends BaseMapper<RiseSchoolDynamicV
 	//不通过原因
 	List<RiseNopassReason> queryNoPass();
 	UsersFront findUserByStudentId(Integer id);
+	RiseSchoolInfoVo getSchoolName(Integer id);
+	String findStudentGrade(Map map);
 }

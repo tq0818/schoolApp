@@ -1,9 +1,12 @@
 package com.yuxin.wx.riseschool.impl;
 
 import com.yuxin.wx.api.riseschool.IRiseStudentServiceF;
+import com.yuxin.wx.auth.mapper.app.SysNoticeMapper;
+import com.yuxin.wx.model.company.NoticeTemplatVo;
 import com.yuxin.wx.model.riseschool.RiseEduExperience;
 import com.yuxin.wx.model.riseschool.RiseNopassReason;
 import com.yuxin.wx.model.riseschool.RisePersonalHonor;
+import com.yuxin.wx.model.riseschool.RiseSchoolInfoVo;
 import com.yuxin.wx.model.riseschool.RiseSchoolManageVo;
 import com.yuxin.wx.model.riseschool.RiseStudentVo;
 import com.yuxin.wx.model.user.UsersFront;
@@ -24,6 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class RiseStudentServiceFImpl implements IRiseStudentServiceF{
 	@Autowired
 	private RiseStudentServiceFMapper riseStudentServiceFMapper;
+	@Autowired
+	private SysNoticeMapper sysNoticeMapper;
 
 	@Override
 	public List<RiseStudentVo> queryAllStudent(RiseStudentVo riseStudent) {
@@ -101,6 +106,24 @@ public class RiseStudentServiceFImpl implements IRiseStudentServiceF{
 	public UsersFront findUserByStudentId(Integer id) {
 		UsersFront usersFront = riseStudentServiceFMapper.findUserByStudentId(id);
 		return usersFront;
+	}
+
+	@Override
+	public NoticeTemplatVo queryNoticeTemplateByUrl(Map<String, Object> paramsMap) {
+		NoticeTemplatVo noticeTemplatVo = sysNoticeMapper.queryNoticeTemplateByUrl(paramsMap);
+		return noticeTemplatVo;
+	}
+
+	@Override
+	public RiseSchoolInfoVo getSchoolName(Integer id) {
+		RiseSchoolInfoVo schoolInfoVo = riseStudentServiceFMapper.getSchoolName(id);
+		return schoolInfoVo;
+	}
+
+	@Override
+	public String findStudentGrade(Map map) {
+		String grade = riseStudentServiceFMapper.findStudentGrade(map);
+		return grade;
 	}
 
 }

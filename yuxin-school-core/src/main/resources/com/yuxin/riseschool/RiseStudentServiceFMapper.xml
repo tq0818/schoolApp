@@ -94,11 +94,26 @@
 		where is_shalve = 1
     </select>
     
+	<select id="findStudentGrade" resultType="String" parameterType="map">
+       select max(tue.exercise_score)
+		  from course_exercise ce
+		  inner join tiku_user_exercise tue on ce.id  = tue.exercise_id 
+		  and tue.user_id = #{userId} 
+		  and ce.class_type_id = #{classTypeId}
+		  group by tue.exercise_id
+    </select>
+    
 	<select id="findUserByStudentId" resultType="com.yuxin.wx.model.user.UsersFront" parameterType="Integer">
-        SELECT uf.id as id,uf.username as username 
+        SELECT uf.id as id,uf.username as username ,uf.mobile as mobile
 		from users_front uf
 		INNER JOIN rise_student rs ON uf.id = rs.user_id
 		where rs.id = #{id}
+    </select>
+    
+	<select id="getSchoolName" resultType="com.yuxin.wx.model.riseschool.RiseSchoolInfoVo" parameterType="Integer">
+        select rs.school_name as schoolName from rise_school_info rs 
+		INNER JOIN rise_signup_info rsi ON rs.id = rsi.school_id
+		where rsi.student_id = #{id}
     </select>
     
 	<select id="findStudentCount" resultType="String">

@@ -108,7 +108,9 @@
 						</li>
 						<li>
 							<label for="">成都数字学校测评成绩</label>
-							<span style="margin-left: 105px;">98分</span>
+							<c:if test="${grade ne -1}">
+							<span style="margin-left: 105px;">${grade}分</span>
+							</c:if>
 						</li>
 					</ul>
 				</div>

@@ -81,6 +81,8 @@
             <li><button class="btn btn-primary" onclick="fillTemplate($(this));" code="(dd)">积分变更名目(dd)</button></li>
             <li><button class="btn btn-primary" onclick="fillTemplate($(this));" code="(ee)">变化积分值(ee)</button></li>
             <li><button class="btn btn-primary" onclick="fillTemplate($(this));" code="(ff)">现有积分值(ff)</button></li>
+            <li><button class="btn btn-primary" onclick="fillTemplate($(this));" code="(hh)">学生申请学校(hh)</button></li>
+            <li><button class="btn btn-primary" onclick="fillTemplate($(this));" code="(kk)">不通过原因(kk)</button></li>
         </ul>
         <div class="noticePopupBtn">
             <button class="btn btn-success noticePopupSave">保存</button>

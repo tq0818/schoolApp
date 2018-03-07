@@ -26,12 +26,14 @@ import com.yuxin.wx.api.app.INoticeAndScoreService;
 import com.yuxin.wx.api.company.ICompanyStudentMessageService;
 import com.yuxin.wx.api.riseschool.IRiseStudentServiceF;
 import com.yuxin.wx.common.PageFinder;
+import com.yuxin.wx.common.SMSHandler;
 import com.yuxin.wx.common.ViewFiles;
 import com.yuxin.wx.model.company.CompanyStudentMessage;
 import com.yuxin.wx.model.company.NoticeTemplatVo;
 import com.yuxin.wx.model.riseschool.RiseEduExperience;
 import com.yuxin.wx.model.riseschool.RiseNopassReason;
 import com.yuxin.wx.model.riseschool.RisePersonalHonor;
+import com.yuxin.wx.model.riseschool.RiseSchoolInfoVo;
 import com.yuxin.wx.model.riseschool.RiseSchoolStyleVo;
 import com.yuxin.wx.model.riseschool.RiseStudentVo;
 import com.yuxin.wx.model.user.UserMessage;
@@ -46,6 +48,14 @@ import com.yuxin.wx.utils.PropertiesUtil;
 @Controller
 @RequestMapping(value = "/riseStudentSchoolTag")
 public class RiseStudentSchoolTagController {
+	/**
+	 * 不通过审核短信模板
+	 */
+	public static final String NO_PASS="178572";
+	/**
+	 * 通过审核短信模板
+	 */
+	public static final String PASS="178572";
 	protected static final Logger LOG = LoggerFactory.getLogger(INoticeAndScoreService.class);
 	@Autowired
 	private IRiseStudentServiceF riseStudentServiceF ;
@@ -88,6 +98,8 @@ public class RiseStudentSchoolTagController {
     	String format = new SimpleDateFormat("yy",Locale.CHINESE).format(new Date());
     	
     	try {
+    		//拿到当前用户
+    		UsersFront usersFront = riseStudentServiceF.findUserByStudentId(Integer.valueOf(id));
     		//学校编号
         	String schoolNo = riseStudentServiceF.findSchoolNo(id);
         	//身份证后两位
@@ -121,6 +133,30 @@ public class RiseStudentSchoolTagController {
         	Map map = new HashMap<>();
         	map.put("id", id);
         	map.put("studentNo", studentNo);
+        	//当前接口地址
+        	String url = request.getRequestURI().replace(request.getContextPath(),"");
+        	Map<String,Object>paramsMap = new HashMap<String,Object>();
+            paramsMap.put("noticeUrl",url.replace(" ",""));
+            //拿到当前通知模板
+        	NoticeTemplatVo noticeTemplatVo = riseStudentServiceF.queryNoticeTemplateByUrl(paramsMap);
+        	//查询当期申请的学校名称
+        	RiseSchoolInfoVo schoolInfoVo = riseStudentServiceF.getSchoolName(Integer.valueOf(id));
+        	//通知内容
+        	String noPassReason = noticeTemplatVo.getNoticeContent();
+        	noPassReason = noPassReason.replace("(hh)",schoolInfoVo.getSchoolName());
+                Map<String,String>tuisong = new HashMap<String,String>();
+                	//发送短信
+	            	SMSHandler.send(usersFront.getMobile(), PASS, new String[]{noPassReason});
+                	//调用极光接口发送消息
+                    List<String> userList = new ArrayList<String>();
+                    userList.add(usersFront.getId().toString());
+                    String result = JiGuangPushUtil.push(userList,noPassReason,null,tuisong);
+
+                    LOG.info("userId:"+usersFront.getId()+"url:"+url+"result:"+result);
+
+                    //记录消息
+                    passStudentBase(noPassReason,usersFront.getId());
+        	
         	//更新学生编号
         	riseStudentServiceF.passStudent(map);
         	//更新通过状态
@@ -141,13 +177,22 @@ public class RiseStudentSchoolTagController {
     @RequestMapping(value = "/NopassStudent",method=RequestMethod.POST)
     public String NopassStudent(HttpServletRequest request,Model model,RiseNopassReason reason){
     	try {
-    		//更新通过状态,保存为不通过原因
-    		riseStudentServiceF.updateIsCheckNoPass(reason);
     		UsersFront usersFront = riseStudentServiceF.findUserByStudentId(reason.getId());
     		String url = request.getRequestURI().replace(request.getContextPath(),"");
-    		String noPassReason = "不通过原因是";
+    		Map<String,Object>paramsMap = new HashMap<String,Object>();
+            paramsMap.put("noticeUrl",url.replace(" ",""));
+            //拿到当前通知模板
+        	NoticeTemplatVo noticeTemplatVo = riseStudentServiceF.queryNoticeTemplateByUrl(paramsMap);
+        	//查询当期申请的学校名称
+        	RiseSchoolInfoVo schoolInfoVo = riseStudentServiceF.getSchoolName(reason.getId());
+        	//通知内容
+        	String noPassReason = noticeTemplatVo.getNoticeContent();
+        	noPassReason = noPassReason.replace("(hh)",schoolInfoVo.getSchoolName());
+        	noPassReason = noPassReason.replace("(kk)",reason.getReason());
              if(null!=usersFront){
                  Map<String,String>tuisong = new HashMap<String,String>();
+                 //发送短信
+                 SMSHandler.send(usersFront.getMobile(), NO_PASS, new String[]{noPassReason});
                  //调用极光接口发送消息
                  if(reason.getId() != null){
                      List<String> userList = new ArrayList<String>();
@@ -155,33 +200,10 @@ public class RiseStudentSchoolTagController {
                      String result = JiGuangPushUtil.push(userList,noPassReason,null,tuisong);
 
                      LOG.info("userId:"+usersFront.getId()+"url:"+url+"result:"+result);
-
-                     //记录消息
-                     CompanyStudentMessage companyStudentMessage = new CompanyStudentMessage();
-                     companyStudentMessage.setContent(noPassReason);
-                     companyStudentMessage.setContentText(noPassReason);
-                     Integer schoolId = 681;
-                     companyStudentMessage.setSchoolId(schoolId);
-                     companyStudentMessage.setMessageType("STUDENT_MESSAGE_SYSTEM");
-                     companyStudentMessage.setMessageMethod("STUDENT_MESSAGE_SYSTEM");
-                     companyStudentMessage.setCreator(0);
-                     companyStudentMessage.setCreateTime(new Date());
-                     companyStudentMessage.setMessageStatus("STUDENT_MESSAGE_COMMIT");
-                     companyStudentMessage.setTitle("系统消息");
-                     companyStudentMessage.setSendNum(1);
-                     companyStudentMessage.setFailNum(0);
-                     companyStudentMessage.setContentText(noPassReason);
-                     companyStudentMessageServiceImpl.insert(companyStudentMessage);
-                     //记录发送对象
-                     List<UserMessage> umList=new ArrayList<UserMessage>();
-                     UserMessage um = new UserMessage();
-                     um.setUserId(usersFront.getId());
-                     um.setMessageId(companyStudentMessage.getId());
-                     um.setReadFlag(0);
-                     umList.add(um);
-                     companyStudentMessageServiceImpl.batchInsertUserMessage(umList);
-                     companyStudentMessage.setMessageStatus("STUDENT_MESSAGE_FINISH");
-                     companyStudentMessageServiceImpl.update(companyStudentMessage);
+                     //记录信息
+                     passStudentBase(noPassReason,usersFront.getId());
+                     //更新通过状态,保存为不通过原因
+             		riseStudentServiceF.updateIsCheckNoPass(reason);
                      return "success";
                  }
              }
@@ -194,7 +216,8 @@ public class RiseStudentSchoolTagController {
     /**
      * 学员管理详情
      */
-    @RequestMapping(value = "/studentDetails")
+    @SuppressWarnings("unchecked")
+	@RequestMapping(value = "/studentDetails")
     public String studentDetails(HttpServletRequest request,Model model,String id){
     	//学生信息和家长信息
     	if (id == null || id == "") {
@@ -213,12 +236,22 @@ public class RiseStudentSchoolTagController {
         	List<RisePersonalHonor> honorList = riseStudentServiceF.findHonor(id);
         	//不通过原因
         	List<RiseNopassReason> noPassList = riseStudentServiceF.queryNoPass();
-        	
+        	//拿到当前用户
+    		UsersFront usersFront = riseStudentServiceF.findUserByStudentId(Integer.valueOf(id));
+        	Map map = new HashMap<>();
+        	String classTypeId = propertiesUtil.getClassTypeId();
+        	map.put("userId", usersFront.getId());
+        	map.put("classTypeId", classTypeId);
+        	String grade = riseStudentServiceF.findStudentGrade(map);
+        	if(grade == null || grade == ""){
+        		grade = "-1";
+        	}
         	model.addAttribute( "riseStudentVo", riseStudentVo);
         	model.addAttribute( "experienceList", experienceList);
         	model.addAttribute( "honorList", honorList);
         	model.addAttribute( "noPassList", noPassList);
         	model.addAttribute( "id", id);
+        	model.addAttribute( "grade", grade);
             return "/riseschool/studentDetails";
 		} catch (Exception e) {
 			return null;
@@ -270,5 +303,33 @@ public class RiseStudentSchoolTagController {
          map.put("workbook", wb);
          map.put("fileName", "学员管理.xls");
          return new ModelAndView(excel, map);
+    }
+    public void passStudentBase(String noPassReason,Integer userId){
+    	//记录消息
+        CompanyStudentMessage companyStudentMessage = new CompanyStudentMessage();
+        companyStudentMessage.setContent(noPassReason);
+        companyStudentMessage.setContentText(noPassReason);
+        Integer schoolId = 681;
+        companyStudentMessage.setSchoolId(schoolId);
+        companyStudentMessage.setMessageType("STUDENT_MESSAGE_SYSTEM");
+        companyStudentMessage.setMessageMethod("STUDENT_MESSAGE_SYSTEM");
+        companyStudentMessage.setCreator(0);
+        companyStudentMessage.setCreateTime(new Date());
+        companyStudentMessage.setMessageStatus("STUDENT_MESSAGE_COMMIT");
+        companyStudentMessage.setTitle("系统消息");
+        companyStudentMessage.setSendNum(1);
+        companyStudentMessage.setFailNum(0);
+        companyStudentMessage.setContentText(noPassReason);
+        companyStudentMessageServiceImpl.insert(companyStudentMessage);
+        //记录发送对象
+        List<UserMessage> umList=new ArrayList<UserMessage>();
+        UserMessage um = new UserMessage();
+        um.setUserId(userId);
+        um.setMessageId(companyStudentMessage.getId());
+        um.setReadFlag(0);
+        umList.add(um);
+        companyStudentMessageServiceImpl.batchInsertUserMessage(umList);
+        companyStudentMessage.setMessageStatus("STUDENT_MESSAGE_FINISH");
+        companyStudentMessageServiceImpl.update(companyStudentMessage);
     }
 }

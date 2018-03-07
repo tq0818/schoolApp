@@ -14,6 +14,8 @@ $('.hidePopup').click(function () {
 $('.noPass').click(function () {
     $('.opacityPopup').show();
     $('.reason').show();
+    $("input:checkbox").removeAttr("checked");
+    $("#otherReason").val('');
     return false;
 });
 var id = $("#stuId").val();

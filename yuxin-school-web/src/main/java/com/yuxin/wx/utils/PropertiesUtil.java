@@ -7,6 +7,9 @@ public class PropertiesUtil {
 	private@Value("${mongodb.server.name}")
 	String serverName;
 	
+	private@Value("${student.classTypeId}")
+	String classTypeId;
+	
 	private @Value("${timertask.switch.convert.pdf}")
 	String convertPDF;
 	
@@ -456,5 +459,14 @@ public class PropertiesUtil {
 	public void setImgBusinessId(String imgBusinessId) {
 		this.imgBusinessId = imgBusinessId;
 	}
+
+	public String getClassTypeId() {
+		return classTypeId;
+	}
+
+	public void setClassTypeId(String classTypeId) {
+		this.classTypeId = classTypeId;
+	}
+	
 	
 }

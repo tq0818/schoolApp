@@ -20,8 +20,8 @@
 <input type="hidden" id="passPageNo" value="${data.pageNo}">
 <table class="table table-center" id="tableList">
 		<tr data-buy="true">
-			<th width="5%">序号</th>
-			<th width="5%">姓名</th>
+			<th width="3%">序号</th>
+			<th width="7%">姓名</th>
 			<th width="5%">性别</th>
 			<th width="11%">毕业学校</th>
 			<c:if test="${userType ne 'RISE_SCHOOL_MANAGER'}">
@@ -30,10 +30,10 @@
 			<th width="8%">手机号</th>
 			<th width="8%">出生日期</th>
 			<th width="10%">户籍详细地址</th>
-			<th width="9%" class="btn-sort">
+			<th width="10%" class="btn-sort">
 				提交时间
 			</th>
-			<th width="8%">审核状态</th>
+			<th width="7%">审核状态</th>
 			<th width="9%">学生编号</th>
 			<th width="20%">操作</th>
 		<%--	<th style="display:none" width="0%"></th>--%>
@@ -159,5 +159,7 @@
     	noPassId = $(this).attr('id') 
         $('.reason').fadeIn();
         $('.opacityPopup').fadeIn();
+        $("input:checkbox").removeAttr("checked");
+        $("#otherReason").val('');
     });
 </script>
