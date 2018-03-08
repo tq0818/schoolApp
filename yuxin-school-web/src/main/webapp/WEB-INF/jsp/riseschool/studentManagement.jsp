@@ -69,7 +69,7 @@
 					<label for="" >申请学校</label>
 					<select name="schoolName" id="schoolName" style="margin-left: 15px;width: 300px;position: absolute;"
 							onmousedown="if(this.options.length>6){this.size=7}" onblur="this.size=0" onchange="this.size=0" >
-						<option value="-1"></option>
+						<option value="-1">请选择学校</option>
 						<option value="0">全部</option>
 						<c:forEach items="${list}" var="list" >
 							<option value="${list.id}" data-id="${list.id}">${list.schoolName}</option>
