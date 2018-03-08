@@ -20,7 +20,7 @@
 <input type="hidden" id="passPageNo" value="${data.pageNo}">
 <table class="table table-center" id="tableList">
 		<tr data-buy="true">
-			<th width="3%">序号</th>
+			<th width="4%">序号</th>
 			<th width="7%">姓名</th>
 			<th width="5%">性别</th>
 			<th width="11%">毕业学校</th>
@@ -33,7 +33,7 @@
 			<th width="10%" class="btn-sort">
 				提交时间
 			</th>
-			<th width="7%">审核状态</th>
+			<th width="6%">审核状态</th>
 			<th width="9%">学生编号</th>
 			<th width="20%">操作</th>
 		<%--	<th style="display:none" width="0%"></th>--%>

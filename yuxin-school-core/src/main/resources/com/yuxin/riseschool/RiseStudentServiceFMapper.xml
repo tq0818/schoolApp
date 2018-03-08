@@ -120,7 +120,7 @@
         SELECT student_no from rise_student rs
 		INNER JOIN rise_signup_info rsi ON rs.id = rsi.student_id
 		where rsi.is_check =2
-		GROUP BY rsi.update_time
+		GROUP BY rsi.update_time desc
 		LIMIT 0,1
     </select>
     

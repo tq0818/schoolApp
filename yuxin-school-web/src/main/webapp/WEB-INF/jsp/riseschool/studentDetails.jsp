@@ -136,23 +136,21 @@
 					<ul>
 						<li>
 							<label for="">关系</label>
-							<c:choose>
-							<c:when test="${riseStudentVo.curatorRelation eq 0}">
+							<c:if test="${riseStudentVo.curatorRelation eq 0}">
 								<span style="margin-left: 200px;">父子</span>
-							</c:when>
-							<c:when test="${riseStudentVo.curatorRelation eq 1}">
+							</c:if>
+							<c:if test="${riseStudentVo.curatorRelation eq 1}">
 								<span style="margin-left: 200px;">父女</span>
-							</c:when>
-							<c:when test="${riseStudentVo.curatorRelation eq 2}">
+							</c:if>
+							<c:if test="${riseStudentVo.curatorRelation eq 2}">
 								<span style="margin-left: 200px;">母子</span>
-							</c:when>
-							<c:when test="${riseStudentVo.curatorRelation eq 3}">
+							</c:if>
+							<c:if test="${riseStudentVo.curatorRelation eq 3}">
 								<span style="margin-left: 200px;">母女</span>
-							</c:when>
-							<c:otherwise>
+							</c:if>
+							<c:if test="${riseStudentVo.curatorRelation eq 4}">
 								<span style="margin-left: 200px;">其他</span>
-							</c:otherwise>
-							</c:choose>
+							</c:if>
 						</li>
 					</ul>
 				</div>
