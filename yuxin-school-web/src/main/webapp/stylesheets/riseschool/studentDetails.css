@@ -20,6 +20,6 @@
 .infoBox2{height: 160px;}
 .infoBox3{height: 160px;}
 .infoBox4{height: 160px;}
-.infoBox5{height: 15px;text-align: center;line-height: 150px;}
+.infoBox5{height: 15px;text-align: center;line-height: 150px;position: absolute;bottom: 80px;width: 100%;}
 .infoBox5 a{margin: 0 30px;}
 .bigImage{position: absolute;left: 50%;top: 25%;width: 400px;margin-left: -200px;display: none;}

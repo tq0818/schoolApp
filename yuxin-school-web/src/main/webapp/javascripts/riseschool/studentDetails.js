@@ -94,6 +94,8 @@ $('.clickImg img').click(function () {
 });
 //点击其他地方关闭大图
 $(document).click(function () {
-    $('.bigImage').hide();
-    $('.opacityPopup').hide();
+    if($('.bigImage').css('display')=='block'){
+        $('.bigImage').hide();
+        $('.opacityPopup').hide();
+    }
 });

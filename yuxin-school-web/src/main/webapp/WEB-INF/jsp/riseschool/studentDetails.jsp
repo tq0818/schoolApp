@@ -30,6 +30,13 @@
 			text-overflow:ellipsis;
 			white-space: nowrap;
 		}
+		.experienceList:nth-of-type(n+2){margin-left: 228px !important;}
+		.household{overflow: hidden;
+			text-overflow:ellipsis;
+			white-space: nowrap;
+			display: inline-block;
+			width: 350px;
+		}
     </style>
 </head>
 
@@ -80,8 +87,8 @@
 							<span style="margin-left: 175px;">${riseStudentVo.birthday}</span>
 						</li>
 						<li>
-							<label for="">户籍所在地</label>
-							<span style="margin-left: 165px;">${riseStudentVo.censusAddress}&nbsp;&nbsp;${riseStudentVo.censusDetAddress}</span>
+							<label for="" style="float: left;">户籍所在地</label>
+							<span style="margin-left: 165px;" class="household">${riseStudentVo.censusAddress}&nbsp;&nbsp;${riseStudentVo.censusDetAddress}</span>
 						</li>
 					</ul>
 				</div>
@@ -98,7 +105,7 @@
 						<li>
 							<label for="">毕业学校</label>
 							<c:forEach items="${experienceList}" var="list">
-								<span style="margin-left: 175px;">
+								<span style="margin-left: 175px;" class="experienceList">
 								${list.provinceName}&nbsp;&nbsp;
 								${list.cityName}&nbsp;&nbsp;
 								${list.districtName}&nbsp;&nbsp;
@@ -202,10 +209,10 @@
     <ul>
     	<c:forEach items="${noPassList}" var="list">
 			<li>
-				<li><input type="checkbox" name="noPassReason" value="${list.reason}"><span>${list.reason}</span></li>
+				<li><label for=""><input type="checkbox" name="noPassReason" value="${list.reason}"><span>${list.reason}</span></label></li>
 			</li>
 		</c:forEach>
-        <li><input type="checkbox" name="noPassReason" value="其他"><span>其他</span></li>
+        <li><label for=""><input type="checkbox" name="noPassReason" value="其他"><span>其他</span></label></li>
     </ul>
     <textarea name="" id="otherReason" cols="30" rows="10" class="descriptWord"placeholder="请输入原因，最多60个字。"
     maxlength="60"></textarea>
