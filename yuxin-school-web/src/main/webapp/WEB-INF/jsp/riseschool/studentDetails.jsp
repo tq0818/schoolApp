@@ -49,7 +49,7 @@
 <input type="hidden" value="${id}" id="stuId"/>
 <jsp:include page="/WEB-INF/jsp/menu/menu_earlyLitre.jsp"/>
 <div class="u-wrap set-system">
-    <div class="mainbackground nopadding " style="height: 1000px;">
+    <div class="mainbackground nopadding ">
 		<div class="infoBox1">
 			<div class="heading" style="border-left: none;">
 				<h2 class="h5">学生信息</h2>
@@ -169,8 +169,8 @@
 				<h2 class="h5">个人荣誉</h2>
 				<span class="line"></span>
 			</div>
-			<div>
-				<div class="studentDetails">
+			<div style="display: inline-block;width: 100%;">
+				<div class="studentDetails" style="display: inline-block;">
 					<ul>
 					<c:forEach items="${honorList}" var="list">
 						<li>
@@ -179,14 +179,16 @@
 					</c:forEach>
 					</ul>
 				</div>
+				<c:if test="${riseStudentVo.isCheck eq 1}">
+					<div class="infoBox5">
+						<a href="javascript:void(0)" class="btn btn-mb btn-primary pass">通过</a>
+						<a href="javascript:void(0)" class="btn btn-mb btn-default noPass">不通过</a>
+					</div>
+				</c:if>
 			</div>
+
 		</div>
-		<c:if test="${riseStudentVo.isCheck eq 1}">
-		<div class="infoBox5">
-			<a href="javascript:void(0)" class="btn btn-mb btn-primary pass">通过</a>
-			<a href="javascript:void(0)" class="btn btn-mb btn-default noPass">不通过</a>
-		</div>
-		</c:if>
+
     </div>
 </div>
 <!-- ajax加载中div开始 -->
