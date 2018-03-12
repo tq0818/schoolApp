@@ -111,6 +111,7 @@
 								${list.districtName}&nbsp;&nbsp;
 								${list.schoolName}
 								</span>
+								<br/>
 							</c:forEach>
 						</li>
 						<li>
