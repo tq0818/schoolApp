@@ -109,4 +109,10 @@ public class RiseSchoolManageServiceImpl implements RiseSchoolManageService {
 		String schoolNo = riseSchoolManageMapper.findSchoolNo();
 		return schoolNo;
 	}
+
+	@Override
+	public Integer checkSchoolName(String schoolName) {
+		Integer count = riseSchoolManageMapper.checkSchoolName(schoolName);
+		return count;
+	}
 }

@@ -17,8 +17,8 @@
 .studentDetails img{width: 74px;height: 66px;}
 .studentDetails ul li{line-height: 40px;}
 .infoBox1{height: 300px;}
-.infoBox2{height: 160px;}
-.infoBox3{height: 160px;}
+.infoBox2{height: 360px;}
+.infoBox3{height: 180px;}
 .infoBox4{height: auto;}
 .infoBox5{height: 150px;text-align: center;line-height: 150px;width: 100%;display: inline-block;}
 .infoBox5 a{margin: 0 30px;}

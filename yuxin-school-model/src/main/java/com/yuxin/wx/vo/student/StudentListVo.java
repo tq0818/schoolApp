@@ -100,7 +100,7 @@ public class StudentListVo extends BaseEntity{
 	private String eduStep;
 	private String eduYear;
 	private Integer isStu; //是否学生，1是。0否
-
+	private String nickName;//20180312 zj新增
 	public Integer getIsStu() {
 		return isStu;
 	}
@@ -678,6 +678,14 @@ public class StudentListVo extends BaseEntity{
 	}
 	public void setProxyOrgName(String proxyOrgName) {
 		this.proxyOrgName = proxyOrgName;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 	
 }

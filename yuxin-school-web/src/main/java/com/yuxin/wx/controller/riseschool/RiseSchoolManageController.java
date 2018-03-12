@@ -135,6 +135,28 @@ public class RiseSchoolManageController {
         }
         return json;
     }
+    /**
+     * 检查学校名称是否重复
+     * @param request
+     * @param riseSchoolManageVo
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/checkSchoolName",method = RequestMethod.POST)
+    public JSONObject checkSchoolName(HttpServletRequest request, String schoolName){
+    	JSONObject json = new JSONObject();
+    	try {
+    		Integer count = riseSchoolManageServiceImpl.checkSchoolName(schoolName);
+    		if(count > 0){
+    			json.put("flag","1");//重复
+    			json.put("msg","学校名称重复");
+    		}
+    	}catch (Exception e){
+    		json.put("flag","0");
+    		json.put("msg","通过");
+    	}
+    	return json;
+    }
 
     /**
      * 查询学校信息

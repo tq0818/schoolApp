@@ -198,6 +198,10 @@
          WHERE item_type = #{itemType}
          <if test="parentCode != null and parentCode != ''"> AND parent_code = #{parentCode}</if>
     </select>
+    <select id="checkSchoolName" parameterType="String" resultType="Integer">
+        select count(id) from rise_school_info
+		where school_name = #{schoolName}
+    </select>
     <select id="queryDimRiseSchoolInfo" parameterType="com.yuxin.wx.model.riseschool.SearchRiseSchoolVo" resultMap="riseSchoolInfoMap">
         SELECT rsi.id             AS id,
                 rsi.school_name    AS school_name,

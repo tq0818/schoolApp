@@ -318,6 +318,10 @@
                                     : "")
                                 + '</td>'
                                 + '<td>'
+                                + (stu.nickName ? stu.nickName
+                                    : "")
+                                + '</td>'
+                                + '<td>'
                                 + (stu.name ? stu.name
                                     : "")
                                 + '</td>'

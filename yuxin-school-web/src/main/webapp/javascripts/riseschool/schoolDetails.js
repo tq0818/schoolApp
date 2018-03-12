@@ -122,6 +122,36 @@ function queryRiseSchoolDict(areaFlag) {
 
 //新增学校请求接口 2018-2-7 zj
 function updateRiseSchoolInfo() {
+	var check = true;
+	var schoolId = $("#schoolId").val();
+	var schoolName = $("#schoolName").val();
+	if (schoolName == null || schoolName == ''){
+        $.msg("未输入学校名称");
+        return ;
+    }
+	var oldSchoolName = $("#oldSchoolName").val();
+	if(schoolName ==  oldSchoolName){
+		schoolName = null;
+	}else{
+		//检查学校名称是否重复
+		$.ajax({
+	        type:"POST",
+	        url : rootPath +"/riseSchoolManage/checkSchoolName",
+	        data : {"schoolName":schoolName},
+	        async: false,
+	        dataType:"json",
+	        success : function(data) {
+	            if (data.flag == 1){
+	                $.msg(data.msg);
+	                check = false;
+	            }
+	        }
+	    });
+	}
+	if(check == false){
+		return;
+	}
+	var enRollMent = $("#enRollMent").val();
     var province = $("#province").val();
     var city = $("#city").val();
     var district = $("#area").val();
@@ -130,7 +160,6 @@ function updateRiseSchoolInfo() {
     var schoolFax = $("#schoolFax").val();
     var busRoad = $("#busRoad").val();
     var collectBaseCount = $("#collectBaseCount").val();
-    var schoolId = $("#schoolId").val();
     if (province == null || province == '' || city == null || city == '' || district == null || district == ''
         || schoolAddress == null || schoolAddress == ''){
         $.msg("学校地址存在未录入项",2000);
@@ -156,7 +185,9 @@ function updateRiseSchoolInfo() {
             "schoolFax":schoolFax,
             "busRoad":busRoad,
             "baseNum":collectBaseCount,
-			"id":schoolId
+			"id":schoolId,
+			"enrollmentType":enRollMent,
+			"schoolName":schoolName
         },
         dataType:"json",
         success : function(data) {
