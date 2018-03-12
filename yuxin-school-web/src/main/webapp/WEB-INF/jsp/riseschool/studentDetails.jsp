@@ -170,7 +170,7 @@
 				<span class="line"></span>
 			</div>
 			<div style="display: inline-block;width: 100%;">
-				<div class="studentDetails" style="display: inline-block;">
+				<div class="studentDetails" style="display: inline-block;width: 100%;">
 					<ul>
 					<c:forEach items="${honorList}" var="list">
 						<li>
