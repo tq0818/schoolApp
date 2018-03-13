@@ -229,7 +229,10 @@
 </div>
 
 <%--点击户籍图片弹出大图--%>
-<img src="" alt="" class="bigImage" id='bigImage'>
+<div id='bigImage'>
+	<img src="" alt="" class="bigImage" >
+</div>
+
 
 <input type="hidden" id="selectCounts" value="10">
 <script type="text/javascript" src="<%=rootPath %>/javascripts/riseschool/studentlist.js"></script>
