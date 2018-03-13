@@ -51,4 +51,6 @@ public interface IRiseStudentServiceF {
 	UsersFront findUserByStudentId(Integer id);
 	RiseSchoolInfoVo getSchoolName(Integer id);
 	NoticeTemplatVo queryNoticeTemplateByUrl(Map<String, Object> paramsMap);
+	//已经通过了几个审核
+	Integer passCount(String id);
 }

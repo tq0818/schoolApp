@@ -49,4 +49,6 @@ public interface RiseStudentServiceFMapper extends BaseMapper<RiseSchoolDynamicV
 	UsersFront findUserByStudentId(Integer id);
 	RiseSchoolInfoVo getSchoolName(Integer id);
 	String findStudentGrade(Map map);
+	//已经通过了几个审核
+	Integer passCount(String id);
 }

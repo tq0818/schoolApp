@@ -81,9 +81,9 @@
 			<div style="margin-top: 10px;padding: 10px 0;">
 				<label style="margin-right: 12px;">提交时间</label>
 				<span>
-					<input type="text" name="startTime" class="date-picker from" readonly style="cursor: default;"/>
+					<input type="text" name="startTime" class="date-picker from"  style="cursor: default;"/>
 					<em>到</em>
-					<input type="text" name="endTime" class="date-picker to" readonly style="cursor: default;"/>
+					<input type="text" name="endTime" class="date-picker to"  style="cursor: default;"/>
 				</span>
 			</div>
 			<div style="margin: 10px 0;">

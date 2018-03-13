@@ -62,6 +62,7 @@ public class RiseStudentVo extends BaseEntity {
     
     private String timeOrder;//是否按照提交时间排序，1不是，2是
     private String curatorRelation;//监护人状态(0父子，1父女，2母子，3母女，4其他)
+    private String schoolId;//学校id
 
     public Integer getUserId() {
         return userId;
@@ -276,6 +277,14 @@ public class RiseStudentVo extends BaseEntity {
 
 	public void setCuratorMobile(String curatorMobile) {
 		this.curatorMobile = curatorMobile;
+	}
+
+	public String getSchoolId() {
+		return schoolId;
+	}
+
+	public void setSchoolId(String schoolId) {
+		this.schoolId = schoolId;
 	}
 
 //	public String getCuratorRelation() {

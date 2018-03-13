@@ -99,6 +99,11 @@ public class RiseStudentSchoolTagController {
     	String format = new SimpleDateFormat("yy",Locale.CHINESE).format(new Date());
     	
     	try {
+    		//判断当前学生是否已经有三个学校通过了审核
+    		Integer passCount = riseStudentServiceF.passCount(id);
+    		if(passCount > 2){
+    			return "false";
+    		}
     		//拿到当前用户
     		UsersFront usersFront = riseStudentServiceF.findUserByStudentId(Integer.valueOf(id));
     		//学校编号
@@ -145,22 +150,22 @@ public class RiseStudentSchoolTagController {
             //拿到当前通知模板
         	NoticeTemplatVo noticeTemplatVo = riseStudentServiceF.queryNoticeTemplateByUrl(paramsMap);
         	//查询当期申请的学校名称
-//        	 RiseSchoolInfoVo schoolInfoVo = riseStudentServiceF.getSchoolName(Integer.valueOf(id));
-//        	//通知内容
-//        	String noPassReason = noticeTemplatVo.getNoticeContent();
-//        	noPassReason = noPassReason.replace("(hh)",schoolInfoVo.getSchoolName());
-//                Map<String,String>tuisong = new HashMap<String,String>();
-//                	//发送短信
-//	            	SMSHandler.send(usersFront.getMobile(), PASS, new String[]{noPassReason});
-//                	//调用极光接口发送消息
-//                    List<String> userList = new ArrayList<String>();
-//                    userList.add(usersFront.getId().toString());
-//                    String result = JiGuangPushUtil.push(userList,noPassReason,null,tuisong);
-//
-//                    LOG.info("userId:"+usersFront.getId()+"url:"+url+"result:"+result);
-//
-//                    //记录消息
-//                    passStudentBase(noPassReason,usersFront.getId());
+        	 RiseSchoolInfoVo schoolInfoVo = riseStudentServiceF.getSchoolName(Integer.valueOf(schoolId));
+        	//通知内容
+        	String noPassReason = noticeTemplatVo.getNoticeContent();
+        	noPassReason = noPassReason.replace("(hh)",schoolInfoVo.getSchoolName());
+                Map<String,String>tuisong = new HashMap<String,String>();
+                	//发送短信
+	            	SMSHandler.send(usersFront.getMobile(), PASS, new String[]{noPassReason});
+                	//调用极光接口发送消息
+                    List<String> userList = new ArrayList<String>();
+                    userList.add(usersFront.getId().toString());
+                    String result = JiGuangPushUtil.push(userList,noPassReason,null,tuisong);
+
+                    LOG.info("userId:"+usersFront.getId()+"url:"+url+"result:"+result);
+
+                    //记录消息
+                    passStudentBase(noPassReason,usersFront.getId());
         	
         	//更新学生编号
         	riseStudentServiceF.passStudent(map);
@@ -189,7 +194,7 @@ public class RiseStudentSchoolTagController {
             //拿到当前通知模板
         	NoticeTemplatVo noticeTemplatVo = riseStudentServiceF.queryNoticeTemplateByUrl(paramsMap);
         	//查询当期申请的学校名称
-        	/*RiseSchoolInfoVo schoolInfoVo = riseStudentServiceF.getSchoolName(reason.getId());
+        	RiseSchoolInfoVo schoolInfoVo = riseStudentServiceF.getSchoolName(Integer.valueOf(reason.getSchoolId()));
         	//通知内容
         	String noPassReason = noticeTemplatVo.getNoticeContent();
         	noPassReason = noPassReason.replace("(hh)",schoolInfoVo.getSchoolName());
@@ -208,10 +213,10 @@ public class RiseStudentSchoolTagController {
                      //记录信息
                      passStudentBase(noPassReason,usersFront.getId());
                      //更新通过状态,保存为不通过原因
+                     riseStudentServiceF.updateIsCheckNoPass(reason);
                      return "success";
                  }
-             }*/
-    	riseStudentServiceF.updateIsCheckNoPass(reason);
+             }
              return "false";
     	} catch (Exception e) {
     		return "false";

@@ -20,9 +20,9 @@
 
 	
 	<update id="passStudent" parameterType="map">
-		update rise_student set
+		update rise_signup_info set
 		student_no = #{studentNo},update_time = NOW()
-		where id = #{id}
+		where student_id = #{id} and school_id = #{schoolId}
 	</update>
 	
 	<update id="updateIsCheck" parameterType="map">
@@ -44,7 +44,7 @@
 		rs.sex as sex,
 		rs.birthday as birthday,
 		rs.census_det_address as census_det_address,
-		rs.student_no as student_no,
+		rsi.student_no as student_no,
 		ree.school_name as school_tag,
 		uf3.mobile as mobile,
 		rsi.create_time as create_time,
@@ -92,8 +92,8 @@
     </select>
     
 	<select id="queryAllSchool" resultType="com.yuxin.wx.model.riseschool.RiseSchoolManageVo">
-        select id as id ,school_name as schoolName from rise_school_info 
-		where is_shalve = 1
+        select rs.id as id ,rs.school_name as schoolName from rise_school_info rs
+		INNER JOIN rise_signup_info rsi ON rs.id = rsi.school_id
     </select>
     
 	<select id="findStudentGrade" resultType="String" parameterType="map">
@@ -105,6 +105,11 @@
 		  group by tue.exercise_id
     </select>
     
+	<select id="passCount" resultType="Integer" parameterType="String">
+       select count(id) from rise_signup_info
+		where is_check = 2 and student_id = #{id}
+    </select>
+    
 	<select id="findUserByStudentId" resultType="com.yuxin.wx.model.user.UsersFront" parameterType="Integer">
         SELECT uf.id as id,uf.username as username ,uf.mobile as mobile
 		from users_front uf
@@ -113,16 +118,19 @@
     </select>
     
 	<select id="getSchoolName" resultType="com.yuxin.wx.model.riseschool.RiseSchoolInfoVo" parameterType="Integer">
-        select rs.school_name as schoolName from rise_school_info rs 
-		INNER JOIN rise_signup_info rsi ON rs.id = rsi.school_id
-		where rsi.student_id = #{id}
+        select school_name as schoolName from rise_school_info
+        where id = #{schoolId}
     </select>
     
 	<select id="findStudentCount" resultType="String">
-        SELECT student_no from rise_student rs
-		INNER JOIN rise_signup_info rsi ON rs.id = rsi.student_id
-		where rsi.is_check =2
-		GROUP BY rsi.update_time desc
+       SELECT
+		student_no
+		FROM
+			rise_signup_info
+		WHERE
+			is_check = 2
+		GROUP BY
+			update_time DESC
 		LIMIT 0,1
     </select>
     

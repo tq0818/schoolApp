@@ -126,4 +126,10 @@ public class RiseStudentServiceFImpl implements IRiseStudentServiceF{
 		return grade;
 	}
 
+	@Override
+	public Integer passCount(String id) {
+		Integer passCount = riseStudentServiceFMapper.passCount(id);
+		return passCount;
+	}
+
 }
