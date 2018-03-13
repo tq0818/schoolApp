@@ -109,6 +109,10 @@
         <a href="javascript:noPass()" class="btn btn-sm btn-primary hidePopup">确定</a>
     </div>
 </div>
+<form id='watchStudentDetails' action="/riseStudentSchoolTag/studentDetails" method=post name=formx1 style='display:none'>
+<input type='hidden' id='studentId' name='studentId' value=''>
+<input type='hidden' id='schoolId' name='schoolId' value=''>
+</form>
 </body>
 </html>
 <script>

@@ -228,12 +228,13 @@ public class RiseStudentSchoolTagController {
      */
     @SuppressWarnings("unchecked")
 	@RequestMapping(value = "/studentDetails")
-    public String studentDetails(HttpServletRequest request,Model model,String id,String schoolId){
+    public String studentDetails(HttpServletRequest request,Model model,String studentId,String schoolId){
     	//学生信息和家长信息
-    	if (id == null || id == "") {
+    	if (studentId == null || studentId == "") {
 			return null;
 		}
     	try {
+    		String id = studentId;
     		Map mapIdCard = new HashMap();
         	mapIdCard.put("id", id);
         	mapIdCard.put("schoolId", schoolId);

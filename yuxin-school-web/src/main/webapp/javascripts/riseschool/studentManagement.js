@@ -175,12 +175,15 @@ function noPass() {
 //查看
 function watch(id,schoolId) {
 	//post跳转，目前无法传参数
-	/*document.write("<form action="+rootPath + "/riseStudentSchoolTag/studentDetails method=post name=formx1 style='display:none'>");
-	document.write("<input type='hidden' name='id' value='"+id+"'");
-	document.write("<input type='hidden' name='schoolId' value='"+schoolId+"'");
-	document.write("</form>");
-	document.formx1.submit();*/
-	window.location.href = rootPath + "/riseStudentSchoolTag/studentDetails?id="+id+"&schoolId="+schoolId;
+/*	document.write("<form id='kkk' action="+rootPath + "/riseStudentSchoolTag/studentDetails method=post name=formx1 style='display:none'>");
+	document.write("<input type='hidden' id='studentId' name='studentId' value='"+id+"'>");
+	document.write("<input type='hidden' id='schoolId' name='schoolId' value='"+schoolId+"'>");
+	document.write("</form>");*/
+	$("#studentId").val(id);
+	$("#schoolId").val(schoolId);
+	$("#watchStudentDetails").submit();
+	//window.location.href = rootPath + "/riseStudentSchoolTag/studentDetails?id="+id+"&schoolId="+schoolId;
+	
 }
 
 
