@@ -21,7 +21,8 @@ public class RiseStudentVo extends BaseEntity {
 
     private String idNo;
 
-    private String censusAddress;
+    private String censusAddress;//户籍地址
+    private String censusDetAddress;//详细地址
 
     private String censusUrl;
 
@@ -31,27 +32,52 @@ public class RiseStudentVo extends BaseEntity {
 
     private String curator;
 
-    private String mobile;
+    private String mobile;//电话
+    private String curatorMobile;//家长电话
 
     private String studentNo;
     
-    private String curatorRelation;
+
+//    private String curatorRelation;
 
     private Date createTime;
 
     private Date updateTime;
     
-    private String censusDetAddress;
+//    private String censusDetAddress;
     
     private String curatorRelationName;
+
+    private String schoolName;//申请学校
+    
+    private String schoolTag;//毕业学校
+    
+//    private String createTime;//创建时间
+    private Date putTime;//提交时间
+    
+    private String endTime;//结束时间
+    private String startTime;//开始时间
+    
+    private String isCheck;//审核状态
+    
+    private String timeOrder;//是否按照提交时间排序，1不是，2是
+    private String curatorRelation;//监护人状态(0父子，1父女，2母子，3母女，4其他)
 
     public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+	public void setUserId(Integer userId) {
         this.userId = userId;
     }
+	
+	public String getSchoolName() {
+		return schoolName;
+	}
+	
+	public void setSchoolName(String schoolName) {
+		this.schoolName = schoolName;
+	}
 
     public String getStudentName() {
         return studentName;
@@ -180,5 +206,84 @@ public class RiseStudentVo extends BaseEntity {
 	public void setCuratorRelationName(String curatorRelationName) {
 		this.curatorRelationName = curatorRelationName;
 	}
+//	public String getCreateTime() {
+//		return createTime;
+//	}
+//
+//	public void setCreateTime(String createTime) {
+//		this.createTime = createTime;
+//	}
+
+	public String getIsCheck() {
+		return isCheck;
+	}
+
+	public void setIsCheck(String isCheck) {
+		this.isCheck = isCheck;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+ 
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getTimeOrder() {
+		return timeOrder;
+	}
+
+	public void setTimeOrder(String timeOrder) {
+		this.timeOrder = timeOrder;
+	}
+
+	public String getSchoolTag() {
+		return schoolTag;
+	}
+
+	public void setSchoolTag(String schoolTag) {
+		this.schoolTag = schoolTag;
+	}
+
+	public Date getPutTime() {
+		return putTime;
+	}
+
+	public void setPutTime(Date putTime) {
+		this.putTime = putTime;
+	}
+
+//	public String getCensusDetAddress() {
+//		return censusDetAddress;
+//	}
+//
+//	public void setCensusDetAddress(String censusDetAddress) {
+//		this.censusDetAddress = censusDetAddress;
+//	}
+
+	public String getCuratorMobile() {
+		return curatorMobile;
+	}
+
+	public void setCuratorMobile(String curatorMobile) {
+		this.curatorMobile = curatorMobile;
+	}
+
+//	public String getCuratorRelation() {
+//		return curatorRelation;
+//	}
+//
+//	public void setCuratorRelation(String curatorRelation) {
+//		this.curatorRelation = curatorRelation;
+//	}
     
 }

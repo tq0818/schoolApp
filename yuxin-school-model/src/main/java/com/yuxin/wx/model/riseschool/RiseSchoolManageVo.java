@@ -30,6 +30,7 @@ public class RiseSchoolManageVo extends BaseModel{
     private String provinceName;//用户名
     private String cityName;//用户名
     private String districtName;//用户名
+    private String schoolNo;//学校编号
     public Integer getId() {
         return id;
     }
@@ -205,4 +206,13 @@ public class RiseSchoolManageVo extends BaseModel{
     public void setDistrictName(String districtName) {
         this.districtName = districtName;
     }
+
+	public String getSchoolNo() {
+		return schoolNo;
+	}
+
+	public void setSchoolNo(String schoolNo) {
+		this.schoolNo = schoolNo;
+	}
+    
 }

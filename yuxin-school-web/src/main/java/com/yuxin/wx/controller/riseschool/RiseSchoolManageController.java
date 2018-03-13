@@ -58,6 +58,25 @@ public class RiseSchoolManageController {
         users.setCompanyId(WebUtils.getCurrentCompanyId());
         users.setStatus(1);
         users.setUserType("RISE_SCHOOL_MANAGER");
+        //获取学校编号
+        try {
+        	String schoolNumber = "";
+        	String schoolNo = riseSchoolManageServiceImpl.findSchoolNo();
+        	if(schoolNo == null || schoolNo == ""){
+        		schoolNumber = "01";
+        	}else{
+        		Integer num = Integer.valueOf(schoolNo);
+        		schoolNumber = String.valueOf(num+1);
+        		if(schoolNumber.length() == 1){
+        			schoolNumber = "0"+schoolNumber;
+        		}
+        	}
+        	riseSchoolManageVo.setSchoolNo(schoolNumber);
+		} catch (Exception e) {
+			json.put("flag","0");
+            json.put("msg","添加学校信息失败");
+            return json;
+		}
         map.put("riseSchoolManageVo",riseSchoolManageVo);
         map.put("users",users);
         map.put("curUserId",curUserId);
@@ -115,6 +134,28 @@ public class RiseSchoolManageController {
             json.put("msg","添加学校信息失败");
         }
         return json;
+    }
+    /**
+     * 检查学校名称是否重复
+     * @param request
+     * @param riseSchoolManageVo
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/checkSchoolName",method = RequestMethod.POST)
+    public JSONObject checkSchoolName(HttpServletRequest request, String schoolName){
+    	JSONObject json = new JSONObject();
+    	try {
+    		Integer count = riseSchoolManageServiceImpl.checkSchoolName(schoolName);
+    		if(count > 0){
+    			json.put("flag","1");//重复
+    			json.put("msg","学校名称重复");
+    		}
+    	}catch (Exception e){
+    		json.put("flag","0");
+    		json.put("msg","通过");
+    	}
+    	return json;
     }
 
     /**

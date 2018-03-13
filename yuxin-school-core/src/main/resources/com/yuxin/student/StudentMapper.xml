@@ -182,6 +182,8 @@
 		<result property="eduStep" column="edu_step"/>
 		<result property="eduYear" column="edu_year"/>
 		<result property="eduClass" column="edu_class"/>
+		
+		<result property="nickName" column="nickName"/>
 	</resultMap>
 
 	<resultMap type="com.yuxin.wx.vo.user.UsersFrontVo" id="usersFrontVoResultMap">
@@ -1092,7 +1094,7 @@
 		s.create_time,s.creator,s.delete_flag,681 as school_id,18113 as company_id,s.province,s.city,s.county,s.address_detail,u.id as userId,u.username,u.mobile,u.email,
 		u.status,u.regist_time,u.vip_flag,u.regist_type,u.user_sign,u.vip_flag as paymaterCount,u.member_id,u.member_level,u.member_buy_length,u.member_status,
 		null as proxyOrgName,s.edu_identity,d.item_value as edu_area,d1.item_value as edu_school,d2.item_value as edu_step,s.edu_year,
-		s.edu_class,u.teacher_flag as teacherFlag
+		s.edu_class,u.teacher_flag as teacherFlag,u.nick_name as nickName
 		from student s
 		/*	inner join company c on c.is_area=0
 		inner join sys_config_school scs on scs.company_id=c.id*/

@@ -42,7 +42,8 @@
         bus_road,
         user_id,
         collect_num,
-        base_num
+        base_num,
+        school_no
     </sql>
     <sql id="table_properties">
         #{id},
@@ -61,7 +62,8 @@
         #{busRoad},
         #{userId},
         #{collectNum},
-        #{baseNum}
+        #{baseNum},
+        #{schoolNo}
     </sql>
 
     <sql id="page_where">
@@ -104,6 +106,8 @@
             <if test="userId != null">user_id =#{userId},</if>
             <if test="collectNum != null">collect_num =#{collectNum},</if>
             <if test="baseNum != null">base_num =#{baseNum},</if>
+            <if test="isTop == 1">top_time =NOW(),</if>
+            <if test="isTop == 0">top_time =null,</if>
         </trim>
         <where>id = #{id}</where>
     </update>
@@ -183,11 +187,20 @@
           where 1=1
         <include refid="page_where" />
     </select>
+    <select id="findSchoolNo" resultType="String">
+        SELECT school_no from rise_school_info 
+		ORDER BY school_no desc 
+		LIMIT 0,1
+    </select>
     <select id="queryRiseSchoolDict" parameterType="Map" resultType="com.yuxin.wx.model.riseschool.SysDictVo">
         SELECT id,item_code AS itemCode,item_name AS itemName,item_type AS itemType
           FROM sys_rise_school_dict
          WHERE item_type = #{itemType}
          <if test="parentCode != null and parentCode != ''"> AND parent_code = #{parentCode}</if>
+    </select>
+    <select id="checkSchoolName" parameterType="String" resultType="Integer">
+        select count(id) from rise_school_info
+		where school_name = #{schoolName}
     </select>
     <select id="queryDimRiseSchoolInfo" parameterType="com.yuxin.wx.model.riseschool.SearchRiseSchoolVo" resultMap="riseSchoolInfoMap">
         SELECT rsi.id             AS id,

@@ -25,11 +25,21 @@
                 <div class="essentialInfoContent">
                     <div style="width: 800px;">
                         <label for="" class="noMargin">学校名称：</label>
-                        <span id="schoolName">${result.schoolName}</span>
+                        <input type="hidden" id="oldSchoolName" value="${result.schoolName}">
+                        <input type="text" id="schoolName" value="${result.schoolName}">
                     </div>
                     <div>
                         <label for="" class="noMargin">招生方式：</label>
-                        <span id="enRollMent" value="${result.enrollmentType}">${result.enrollmentName}</span>
+                        <select name="enRollMent" id="enRollMent">
+                        	<c:if test="${result.enrollmentType eq 0101}">
+	                        	<option value="0101">自主招生</option>
+								<option value="0102">按片划分</option>
+                        	</c:if>
+                        	<c:if test="${result.enrollmentType eq 0102}">
+							<option value="0102">按片划分</option>
+                        	<option value="0101">自主招生</option>
+                        	</c:if>
+						</select>
                     </div>
                     <div class="schoolSite">
                         <label for="" class="noMargin">学校地址：</label>

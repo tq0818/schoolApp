@@ -55,4 +55,8 @@ public interface RiseSchoolManageMapper {
 
     RiseSchoolManageVo queryCurrentRiseSchoolInfo(Map<String, Object> params);
     RiseSchoolManageVo findSchoolById(Integer schoolId);
+    //查询当前最大的学校编号
+    String findSchoolNo();
+    //判断学校名称是否重复
+    Integer checkSchoolName(String schoolName);
 }

@@ -87,6 +87,7 @@ $(function () {
 
 //新增学校请求接口 2018-2-7 zj
 function addRiseSchoolInfo() {
+	var check = true;
     var schoolName = $("#schoolName").val();
     var userName = $("#userName").val();
     var enRollMent = $("#enRollMent").val();
@@ -101,7 +102,24 @@ function addRiseSchoolInfo() {
     if (schoolName == null || schoolName == ''){
         $.msg("未输入学校名称");
         return ;
+    }else{
+    	$.ajax({
+	        type:"POST",
+	        url : rootPath +"/riseSchoolManage/checkSchoolName",
+	        data : {"schoolName":schoolName},
+	        async: false,
+	        dataType:"json",
+	        success : function(data) {
+	            if (data.flag == 1){
+	                $.msg(data.msg);
+	                check = false;
+	            }
+	        }
+	    });
     }
+    if(check == false){
+		return;
+	}
     if (userName == null || userName == ''){
         $.msg("学校账号未输入");
         return ;

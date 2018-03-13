@@ -106,6 +106,7 @@
 					<th width="3%"><input type="checkbox" class="checkboxAll"></th>
 					<th width="8%">手机号</th>
 					<th width="8%">用户名</th>
+					<th width="8%">昵称</th>
 					<th width="8%">姓名</th>
 					<th width="5%">身份</th>
 					<th width="8%">区域</th>
