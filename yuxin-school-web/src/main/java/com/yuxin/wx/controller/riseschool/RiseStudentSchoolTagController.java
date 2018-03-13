@@ -93,6 +93,7 @@ public class RiseStudentSchoolTagController {
     @RequestMapping(value = "/passStudent",method=RequestMethod.POST)
     public String passStudent(HttpServletRequest request,Model model){
     	String id = request.getParameter("id");
+    	String schoolId = request.getParameter("schoolId");
     	String studentNo = "";//学生编号11位：年份+学校编号+人数+身份证后两位
     	//年份
     	String format = new SimpleDateFormat("yy",Locale.CHINESE).format(new Date());
@@ -101,9 +102,12 @@ public class RiseStudentSchoolTagController {
     		//拿到当前用户
     		UsersFront usersFront = riseStudentServiceF.findUserByStudentId(Integer.valueOf(id));
     		//学校编号
-        	String schoolNo = riseStudentServiceF.findSchoolNo(id);
+        	String schoolNo = riseStudentServiceF.findSchoolNo(schoolId);
         	//身份证后两位
-        	RiseStudentVo riseStudentVo = riseStudentServiceF.findById(id);
+        	Map mapIdCard = new HashMap();
+        	mapIdCard.put("id", id);
+        	mapIdCard.put("schoolId", schoolId);
+        	RiseStudentVo riseStudentVo = riseStudentServiceF.findById(mapIdCard);
         	String idCardNo = riseStudentVo.getIdNo();
         	String idNo = idCardNo.substring(idCardNo.length()-2, idCardNo.length());
         	//人数
@@ -133,6 +137,7 @@ public class RiseStudentSchoolTagController {
         	Map map = new HashMap<>();
         	map.put("id", id);
         	map.put("studentNo", studentNo);
+        	map.put("schoolId", schoolId);
         	//当前接口地址
         	String url = request.getRequestURI().replace(request.getContextPath(),"");
         	Map<String,Object>paramsMap = new HashMap<String,Object>();
@@ -140,27 +145,27 @@ public class RiseStudentSchoolTagController {
             //拿到当前通知模板
         	NoticeTemplatVo noticeTemplatVo = riseStudentServiceF.queryNoticeTemplateByUrl(paramsMap);
         	//查询当期申请的学校名称
-        	RiseSchoolInfoVo schoolInfoVo = riseStudentServiceF.getSchoolName(Integer.valueOf(id));
-        	//通知内容
-        	String noPassReason = noticeTemplatVo.getNoticeContent();
-        	noPassReason = noPassReason.replace("(hh)",schoolInfoVo.getSchoolName());
-                Map<String,String>tuisong = new HashMap<String,String>();
-                	//发送短信
-	            	SMSHandler.send(usersFront.getMobile(), PASS, new String[]{noPassReason});
-                	//调用极光接口发送消息
-                    List<String> userList = new ArrayList<String>();
-                    userList.add(usersFront.getId().toString());
-                    String result = JiGuangPushUtil.push(userList,noPassReason,null,tuisong);
-
-                    LOG.info("userId:"+usersFront.getId()+"url:"+url+"result:"+result);
-
-                    //记录消息
-                    passStudentBase(noPassReason,usersFront.getId());
+//        	 RiseSchoolInfoVo schoolInfoVo = riseStudentServiceF.getSchoolName(Integer.valueOf(id));
+//        	//通知内容
+//        	String noPassReason = noticeTemplatVo.getNoticeContent();
+//        	noPassReason = noPassReason.replace("(hh)",schoolInfoVo.getSchoolName());
+//                Map<String,String>tuisong = new HashMap<String,String>();
+//                	//发送短信
+//	            	SMSHandler.send(usersFront.getMobile(), PASS, new String[]{noPassReason});
+//                	//调用极光接口发送消息
+//                    List<String> userList = new ArrayList<String>();
+//                    userList.add(usersFront.getId().toString());
+//                    String result = JiGuangPushUtil.push(userList,noPassReason,null,tuisong);
+//
+//                    LOG.info("userId:"+usersFront.getId()+"url:"+url+"result:"+result);
+//
+//                    //记录消息
+//                    passStudentBase(noPassReason,usersFront.getId());
         	
         	//更新学生编号
         	riseStudentServiceF.passStudent(map);
         	//更新通过状态
-        	riseStudentServiceF.updateIsCheck(id);
+        	riseStudentServiceF.updateIsCheck(map);
         	return "success";
 		} catch (Exception e) {
 			return "false";
@@ -184,7 +189,7 @@ public class RiseStudentSchoolTagController {
             //拿到当前通知模板
         	NoticeTemplatVo noticeTemplatVo = riseStudentServiceF.queryNoticeTemplateByUrl(paramsMap);
         	//查询当期申请的学校名称
-        	RiseSchoolInfoVo schoolInfoVo = riseStudentServiceF.getSchoolName(reason.getId());
+        	/*RiseSchoolInfoVo schoolInfoVo = riseStudentServiceF.getSchoolName(reason.getId());
         	//通知内容
         	String noPassReason = noticeTemplatVo.getNoticeContent();
         	noPassReason = noPassReason.replace("(hh)",schoolInfoVo.getSchoolName());
@@ -203,10 +208,10 @@ public class RiseStudentSchoolTagController {
                      //记录信息
                      passStudentBase(noPassReason,usersFront.getId());
                      //更新通过状态,保存为不通过原因
-             		riseStudentServiceF.updateIsCheckNoPass(reason);
                      return "success";
                  }
-             }
+             }*/
+    	riseStudentServiceF.updateIsCheckNoPass(reason);
              return "false";
     	} catch (Exception e) {
     		return "false";
@@ -218,13 +223,16 @@ public class RiseStudentSchoolTagController {
      */
     @SuppressWarnings("unchecked")
 	@RequestMapping(value = "/studentDetails")
-    public String studentDetails(HttpServletRequest request,Model model,String id){
+    public String studentDetails(HttpServletRequest request,Model model,String id,String schoolId){
     	//学生信息和家长信息
     	if (id == null || id == "") {
 			return null;
 		}
     	try {
-    		RiseStudentVo riseStudentVo = riseStudentServiceF.findById(id);
+    		Map mapIdCard = new HashMap();
+        	mapIdCard.put("id", id);
+        	mapIdCard.put("schoolId", schoolId);
+    		RiseStudentVo riseStudentVo = riseStudentServiceF.findById(mapIdCard);
         	String url = "http://"+propertiesUtil.getProjectImageUrl()+"/";
     		//处理图片
         	riseStudentVo.setCensusUrl(url+riseStudentVo.getCensusUrl());
@@ -246,12 +254,13 @@ public class RiseStudentSchoolTagController {
         	if(grade == null || grade == ""){
         		grade = "-1";
         	}
-        	model.addAttribute( "riseStudentVo", riseStudentVo);
-        	model.addAttribute( "experienceList", experienceList);
-        	model.addAttribute( "honorList", honorList);
-        	model.addAttribute( "noPassList", noPassList);
-        	model.addAttribute( "id", id);
-        	model.addAttribute( "grade", grade);
+        	model.addAttribute("riseStudentVo", riseStudentVo);
+        	model.addAttribute("experienceList", experienceList);
+        	model.addAttribute("honorList", honorList);
+        	model.addAttribute("noPassList", noPassList);
+        	model.addAttribute("id", id);
+        	model.addAttribute("schoolId",schoolId);
+        	model.addAttribute("grade", grade);
             return "/riseschool/studentDetails";
 		} catch (Exception e) {
 			return null;

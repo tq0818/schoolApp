@@ -33,14 +33,14 @@ public interface IRiseStudentServiceF {
 	
 	void passStudent(Map map);
 	//查询学生信息
-	RiseStudentVo findById(String id);
+	RiseStudentVo findById(Map map);
 	//学校编号
 	String findSchoolNo(String id);
 	//学生人数
 	String findStudentCount();
 	String findStudentGrade(Map map);
 	//通过更新状态
-	void updateIsCheck(String id);
+	void updateIsCheck(Map map);
 	void updateIsCheckNoPass(RiseNopassReason reason);
 	//查询教育经历
 	List<RiseEduExperience> findExperience(String id);

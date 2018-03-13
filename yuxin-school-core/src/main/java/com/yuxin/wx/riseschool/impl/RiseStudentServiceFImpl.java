@@ -55,8 +55,8 @@ public class RiseStudentServiceFImpl implements IRiseStudentServiceF{
 	}
 
 	@Override
-	public RiseStudentVo findById(String id) {
-		RiseStudentVo riseStudentVo = riseStudentServiceFMapper.findById(id);
+	public RiseStudentVo findById(Map map) {
+		RiseStudentVo riseStudentVo = riseStudentServiceFMapper.findById(map);
 		return riseStudentVo;
 	}
 
@@ -73,8 +73,8 @@ public class RiseStudentServiceFImpl implements IRiseStudentServiceF{
 	}
 
 	@Override
-	public void updateIsCheck(String id) {
-		riseStudentServiceFMapper.updateIsCheck(id);
+	public void updateIsCheck(Map map) {
+		riseStudentServiceFMapper.updateIsCheck(map);
 		
 	}
 

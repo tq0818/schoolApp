@@ -33,12 +33,12 @@ public interface RiseStudentServiceFMapper extends BaseMapper<RiseSchoolDynamicV
 	 */
 	Integer queryAllStudentCount(RiseStudentVo riseStudent);
 	void passStudent(Map map);
-	RiseStudentVo findById(String id);
+	RiseStudentVo findById(Map map);
 	String findSchoolNo(String id);
 	//学生人数
 	String findStudentCount();
 	//通过更新状态
-	void updateIsCheck(String id);
+	void updateIsCheck(Map map);
 	void updateIsCheckNoPass(RiseNopassReason reason);
 	//查询教育经历
 	List<RiseEduExperience> findExperience(String id);

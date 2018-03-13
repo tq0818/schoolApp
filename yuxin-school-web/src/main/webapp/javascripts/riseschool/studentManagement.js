@@ -8,6 +8,7 @@ $(function () {
         $(this).addClass('btn-primary').removeClass('btn-default');
         $(this).siblings('a').addClass('btn-default').removeClass('btn-primary');
         $('#isCheckBtn').val($(this).attr('data-value'));
+        queryStudentApply(1);
     });
     $(".exportexcleStudent").on(
             'click',
@@ -104,11 +105,12 @@ function queryStudentApply(pageNo) {
 //通过
 function pass() {
 	var id = passId;
+	var schoolNoId = schoolId;
 	var passPageNo = $("#passPageNo").val();
 	$.ajax({
     	type:"POST",
         url: rootPath + "/riseStudentSchoolTag/passStudent",
-        data: {"id":id},
+        data: {"id":id,"schoolId":schoolNoId},
         beforeSend: function(){
                $('.loading').show();
                $('.loading-bg').show();
@@ -129,6 +131,7 @@ function pass() {
 function noPass() {
 	var passPageNo = $("#passPageNo").val();
 	var otherReason = $("#otherReason").val();
+	var schoolNoId = schoolId;
 	obj = document.getElementsByName("noPassReason");
     check_val = [];
     for(k in obj){
@@ -152,7 +155,7 @@ function noPass() {
     $.ajax({
     	type:"POST",
         url: rootPath + "/riseStudentSchoolTag/NopassStudent",
-        data: {"id":noPassId,"reason":reason},
+        data: {"id":noPassId,"reason":reason,"schoolId":schoolNoId},
         beforeSend: function(){
                $('.loading').show();
                $('.loading-bg').show();
@@ -170,13 +173,14 @@ function noPass() {
     });
 }
 //查看
-function watch(id) {
+function watch(id,schoolId) {
 	//post跳转，目前无法传参数
 	/*document.write("<form action="+rootPath + "/riseStudentSchoolTag/studentDetails method=post name=formx1 style='display:none'>");
 	document.write("<input type='hidden' name='id' value='"+id+"'");
+	document.write("<input type='hidden' name='schoolId' value='"+schoolId+"'");
 	document.write("</form>");
 	document.formx1.submit();*/
-	window.location.href = rootPath + "/riseStudentSchoolTag/studentDetails?id="+id;
+	window.location.href = rootPath + "/riseStudentSchoolTag/studentDetails?id="+id+"&schoolId="+schoolId;
 }
 
 

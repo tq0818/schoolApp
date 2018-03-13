@@ -97,7 +97,26 @@
 			</div>
         </form>
         <div class="user-list earlyLitreDetail">
-
+			<table class="table table-center" id="tableList">
+			<tr data-buy="true">
+				<th width="4%">序号</th>
+				<th width="7%">姓名</th>
+				<th width="5%">性别</th>
+				<th width="11%">毕业学校</th>
+				<c:if test="${userType ne 'RISE_SCHOOL_MANAGER'}">
+				<th width="11%">申请学校</th>
+				</c:if>
+				<th width="8%">手机号</th>
+				<th width="8%">出生日期</th>
+				<th width="10%">户籍详细地址</th>
+				<th width="10%" class="btn-sort">
+					提交时间
+				</th>
+				<th width="6%">审核状态</th>
+				<th width="9%">学生编号</th>
+				<th width="20%">操作</th>
+			</tr>
+		</table>
         </div>
     </div>
 </div>

@@ -68,12 +68,12 @@
 			<td>
 				<c:choose>
 					<c:when test="${list.isCheck eq 1}">
-					<a href="javascript:void(0)" class="pass" id="${list.id}">通过</a>|
-					<a href="javascript:void(0)" class="noPass" id="${list.id}">不通过</a>|
-					<a href="javascript:watch(${list.id})">查看</a>
+					<a href="javascript:void(0)" class="pass" id="${list.id}" data-id="${list.schoolId}">通过</a>|
+					<a href="javascript:void(0)" class="noPass" id="${list.id}" data-id="${list.schoolId}">不通过</a>|
+					<a href="javascript:watch(${list.id},${list.schoolId})">查看</a>
 					</c:when>
 					<c:otherwise>
-					<a href="javascript:watch(${list.id})">查看</a>
+					<a href="javascript:watch(${list.id},${list.schoolId})">查看</a>
 					</c:otherwise>
 				</c:choose>
 			</td>
@@ -142,8 +142,10 @@
   //点击通过显示弹窗
   var passId;
   var noPassId;
+  var schoolId;
      $('.pass').click(function () {
     	 passId = $(this).attr('id'); 
+    	 schoolId = $(this).attr('data-id'); 
         $('.confirmPopup').fadeIn();
         $('.opacityPopup').fadeIn();
     });
@@ -157,6 +159,7 @@
     //点击不通过弹出弹窗
     $('.noPass').click(function () {
     	noPassId = $(this).attr('id') 
+    	schoolId = $(this).attr('data-id'); 
         $('.reason').fadeIn();
         $('.opacityPopup').fadeIn();
         $("input:checkbox").removeAttr("checked");

@@ -15,6 +15,7 @@
 		<result property="putTime" column="create_time" />
 		<result property="isCheck" column="is_check" />
 		<result property="studentNo" column="student_no" />
+		<result property="schoolId" column="school_id" />
 	</resultMap>
 
 	
@@ -24,16 +25,16 @@
 		where id = #{id}
 	</update>
 	
-	<update id="updateIsCheck" parameterType="String">
+	<update id="updateIsCheck" parameterType="map">
 		update rise_signup_info set
 		is_check = 2,update_time = NOW()
-		where student_id = #{id}
+		where student_id = #{id} and school_id = #{schoolId}
 	</update>
 	
 	<update id="updateIsCheckNoPass" parameterType="com.yuxin.wx.model.riseschool.RiseNopassReason">
 		update rise_signup_info set
 		is_check = 0,update_time = NOW(),no_pass_reason=#{reason}
-		where student_id = #{id}
+		where student_id = #{id} and school_id = #{schoolId}
 	</update>
 	
 	<select id="queryAllStudent" resultMap="riseStudentMap" parameterType="com.yuxin.wx.model.riseschool.RiseStudentVo">
@@ -48,7 +49,8 @@
 		uf3.mobile as mobile,
 		rsi.create_time as create_time,
 		rsi.is_check as is_check,
-		rsii.school_name as school_name
+		rsii.school_name as school_name,
+		rsii.id as school_id
 		from rise_student rs
 		INNER JOIN users_front uf3 ON rs.user_id = uf3.id
 		INNER JOIN rise_signup_info rsi ON rs.id = rsi.student_id
@@ -129,10 +131,8 @@
     </select>
     
 	<select id="findSchoolNo" resultType="String" parameterType="String">
-        select school_no from rise_school_info rs
-		INNER JOIN rise_signup_info rsi ON rs.id = rsi.school_id
-		INNER JOIN rise_student r ON r.id = rsi.student_id
-		where r.id = #{id}
+        select school_no from rise_school_info
+        where id = #{schoolId}
     </select>
     
 	<select id="findExperience" resultType="com.yuxin.wx.model.riseschool.RiseEduExperience" parameterType="String">
@@ -156,7 +156,7 @@
 		where student_id = 1
     </select>
     
-	<select id="findById" resultType="com.yuxin.wx.model.riseschool.RiseStudentVo" parameterType="String">
+	<select id="findById" resultType="com.yuxin.wx.model.riseschool.RiseStudentVo" parameterType="Map">
        	select 
 		rs.id as id,
 		rs.student_name as studentName,
@@ -177,7 +177,7 @@
 		from rise_student rs
 		INNER JOIN users_front uf ON rs.user_id = uf.id
 		INNER JOIN rise_signup_info rsi ON rs.id = rsi.student_id
-		where rs.id = #{id}
+		where rs.id = #{id} and rsi.school_id = #{schoolId}
     </select>
 
 </mapper>

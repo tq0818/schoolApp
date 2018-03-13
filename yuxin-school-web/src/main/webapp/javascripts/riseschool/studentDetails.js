@@ -19,11 +19,12 @@ $('.noPass').click(function () {
     return false;
 });
 var id = $("#stuId").val();
+var schoolId = $("#schoolId").val();
 $('.studentDetailPass').click(function () {
 	$.ajax({
     	type:"POST",
         url: rootPath + "/riseStudentSchoolTag/passStudent",
-        data: {"id":id},
+        data: {"id":id,"schoolId":schoolId},
         beforeSend: function(){
                $('.loading').show();
                $('.loading-bg').show();
@@ -66,7 +67,7 @@ $('.studentDetailNoPass').click(function () {
     $.ajax({
     	type:"POST",
         url: rootPath + "/riseStudentSchoolTag/NopassStudent",
-        data: {"id":id,"reason":reason},
+        data: {"id":id,"reason":reason,"schoolId":schoolId},
         beforeSend: function(){
                $('.loading').show();
                $('.loading-bg').show();

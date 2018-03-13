@@ -16,6 +16,8 @@ public class RiseNopassReason extends BaseEntity {
     private String createTime;
     
     private String updateTime;
+    private String schoolId;
+    
 
 	public String getReason() {
 		return reason;
@@ -40,4 +42,13 @@ public class RiseNopassReason extends BaseEntity {
 	public void setUpdateTime(String updateTime) {
 		this.updateTime = updateTime;
 	}
+
+	public String getSchoolId() {
+		return schoolId;
+	}
+
+	public void setSchoolId(String schoolId) {
+		this.schoolId = schoolId;
+	}
+	
 }

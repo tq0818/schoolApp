@@ -31,9 +31,11 @@
 			white-space: nowrap;
 		}
 		.experienceList:nth-of-type(n+2){margin-left: 228px !important;}
-		.household{overflow: hidden;
+		.household{
+		   /*  overflow: hidden;
 			text-overflow:ellipsis;
-			white-space: nowrap;
+			white-space: nowrap; */
+			word-break: break-all;
 			display: inline-block;
 			width: 350px;
 		}
@@ -47,6 +49,7 @@
 <input type="hidden" value="${address }" id="addreSet"/>
 <input type="hidden" value="${proxyOrgRole }" id="proxyOrgRole"/>
 <input type="hidden" value="${id}" id="stuId"/>
+<input type="hidden" value="${schoolId}" id="schoolId"/>
 <jsp:include page="/WEB-INF/jsp/menu/menu_earlyLitre.jsp"/>
 <div class="u-wrap set-system">
     <div class="mainbackground nopadding ">
