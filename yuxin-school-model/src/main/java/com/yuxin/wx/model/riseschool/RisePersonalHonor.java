@@ -1,5 +1,7 @@
 package com.yuxin.wx.model.riseschool;
 
+import java.util.Date;
+
 import com.yuxin.wx.common.BaseEntity;
 
 /**
@@ -10,6 +12,10 @@ public class RisePersonalHonor extends BaseEntity {
     private Integer studentId;
 
     private String honorContent;
+    
+    private Date createTime;
+
+    private Date updateTime;
 
     public Integer getStudentId() {
         return studentId;
@@ -26,4 +32,21 @@ public class RisePersonalHonor extends BaseEntity {
     public void setHonorContent(String honorContent) {
         this.honorContent = honorContent;
     }
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+    
 }
