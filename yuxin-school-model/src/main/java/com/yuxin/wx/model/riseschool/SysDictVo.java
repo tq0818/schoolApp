@@ -23,8 +23,20 @@ public class SysDictVo{
      */
     private String itemType;
 
+    /**
+     * 父节点code
+     */
+    private String parentCode;
+
     private Integer id;
 
+    public String getParentCode() {
+        return parentCode;
+    }
+
+    public void setParentCode(String parentCode) {
+        this.parentCode = parentCode;
+    }
 
     public String getItemName() {
         return itemName;

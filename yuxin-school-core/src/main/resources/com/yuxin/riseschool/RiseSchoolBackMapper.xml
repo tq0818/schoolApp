@@ -5,6 +5,7 @@
 		<result property="itemName" column="item_name" />
 		<result property="itemCode" column="item_code" />
 		<result property="itemType" column="item_type" />
+		<result property="parentCode" column="parent_code"/>
 	</resultMap>
 
 

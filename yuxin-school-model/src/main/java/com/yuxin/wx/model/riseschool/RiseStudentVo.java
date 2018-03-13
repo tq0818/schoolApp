@@ -24,10 +24,6 @@ public class RiseStudentVo extends BaseEntity {
     private String censusAddress;//户籍地址
     private String censusDetAddress;//详细地址
 
-    private String province;
-
-    private String city;
-
     private String censusUrl;
 
     private String headUrl;
@@ -41,11 +37,22 @@ public class RiseStudentVo extends BaseEntity {
 
     private String studentNo;
     
+
+//    private String curatorRelation;
+
+    private Date createTime;
+
+    private Date updateTime;
+    
+//    private String censusDetAddress;
+    
+    private String curatorRelationName;
+
     private String schoolName;//申请学校
     
     private String schoolTag;//毕业学校
     
-    private String createTime;//创建时间
+//    private String createTime;//创建时间
     private Date putTime;//提交时间
     
     private String endTime;//结束时间
@@ -112,22 +119,6 @@ public class RiseStudentVo extends BaseEntity {
         this.censusAddress = censusAddress;
     }
 
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getCensusUrl() {
         return censusUrl;
     }
@@ -176,13 +167,52 @@ public class RiseStudentVo extends BaseEntity {
         this.studentNo = studentNo;
     }
 
-	public String getCreateTime() {
+	public String getCuratorRelation() {
+		return curatorRelation;
+	}
+
+	public void setCuratorRelation(String curatorRelation) {
+		this.curatorRelation = curatorRelation;
+	}
+
+	public Date getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(String createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public String getCensusDetAddress() {
+		return censusDetAddress;
+	}
+
+	public void setCensusDetAddress(String censusDetAddress) {
+		this.censusDetAddress = censusDetAddress;
+	}
+
+	public String getCuratorRelationName() {
+		return curatorRelationName;
+	}
+
+	public void setCuratorRelationName(String curatorRelationName) {
+		this.curatorRelationName = curatorRelationName;
+	}
+//	public String getCreateTime() {
+//		return createTime;
+//	}
+//
+//	public void setCreateTime(String createTime) {
+//		this.createTime = createTime;
+//	}
 
 	public String getIsCheck() {
 		return isCheck;
@@ -232,13 +262,13 @@ public class RiseStudentVo extends BaseEntity {
 		this.putTime = putTime;
 	}
 
-	public String getCensusDetAddress() {
-		return censusDetAddress;
-	}
-
-	public void setCensusDetAddress(String censusDetAddress) {
-		this.censusDetAddress = censusDetAddress;
-	}
+//	public String getCensusDetAddress() {
+//		return censusDetAddress;
+//	}
+//
+//	public void setCensusDetAddress(String censusDetAddress) {
+//		this.censusDetAddress = censusDetAddress;
+//	}
 
 	public String getCuratorMobile() {
 		return curatorMobile;
@@ -248,12 +278,12 @@ public class RiseStudentVo extends BaseEntity {
 		this.curatorMobile = curatorMobile;
 	}
 
-	public String getCuratorRelation() {
-		return curatorRelation;
-	}
-
-	public void setCuratorRelation(String curatorRelation) {
-		this.curatorRelation = curatorRelation;
-	}
+//	public String getCuratorRelation() {
+//		return curatorRelation;
+//	}
+//
+//	public void setCuratorRelation(String curatorRelation) {
+//		this.curatorRelation = curatorRelation;
+//	}
     
 }
