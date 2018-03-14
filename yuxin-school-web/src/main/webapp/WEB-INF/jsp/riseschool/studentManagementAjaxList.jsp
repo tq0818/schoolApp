@@ -70,10 +70,10 @@
 					<c:when test="${list.isCheck eq 1}">
 					<a href="javascript:void(0)" class="pass" id="${list.id}" data-id="${list.schoolId}">通过</a>|
 					<a href="javascript:void(0)" class="noPass" id="${list.id}" data-id="${list.schoolId}">不通过</a>|
-					<a href="javascript:watch(${list.id},${list.schoolId})">查看</a>
+					<a href="javascript:watch(${list.id},${list.schoolId},${list.isCheck})">查看</a>
 					</c:when>
 					<c:otherwise>
-					<a href="javascript:watch(${list.id},${list.schoolId})">查看</a>
+					<a href="javascript:watch(${list.id},${list.schoolId},${list.isCheck})">查看</a>
 					</c:otherwise>
 				</c:choose>
 			</td>
@@ -112,6 +112,7 @@
 <form id='watchStudentDetails' action="/riseStudentSchoolTag/studentDetails" method=post name=formx1 style='display:none'>
 <input type='hidden' id='studentId' name='studentId' value=''>
 <input type='hidden' id='schoolId' name='schoolId' value=''>
+<input type='hidden' id='isCheck' name='isCheck' value=''>
 </form>
 </body>
 </html>

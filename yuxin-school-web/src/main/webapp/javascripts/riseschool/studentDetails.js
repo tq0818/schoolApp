@@ -33,8 +33,10 @@ $('.studentDetailPass').click(function () {
             $('.loading').hide();
             $('.loading-bg').hide();
             if(data=="success"){
+	        	$(function(){
+	        		history.go(-1);
+	        	});
 	        	$.msg("保存成功");
-	        	window.location.reload();
         	}else{
         		$.msg("保存失败");
         	}
@@ -76,8 +78,10 @@ $('.studentDetailNoPass').click(function () {
             $('.loading').hide();
             $('.loading-bg').hide();
             if(data=="success"){
+            	$(function(){
+	        		history.go(-1);
+	        	});
 	        	$.msg("保存成功");
-	        	window.location.reload();
         	}else{
         		$.msg("保存失败");
         	}

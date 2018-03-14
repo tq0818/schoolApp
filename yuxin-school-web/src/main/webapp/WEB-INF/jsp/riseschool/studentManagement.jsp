@@ -53,8 +53,8 @@
         	<input type="hidden"  id="isCheckBtn" name="isCheck" value=""/>
 			<div class="searchFormArea">
 				<div class="isCheck">
-					<label for="">审核状态</label>
-					<a href="javascript:void(0)"  class="btn btn-primary btn-sm" data-value="" >全部</a>
+					<label for="" id="xxxxx">审核状态</label>
+					<a href="javascript:void(0)"  class="btn btn-default btn-sm" data-value="" >全部</a>
 					<a href="javascript:void(0)"  class="btn btn-default btn-sm" data-value="1" >待审核</a>
 					<a href="javascript:void(0)"  class="btn btn-default btn-sm" data-value="2" >已通过</a>
 					<a href="javascript:void(0)"  class="btn btn-default btn-sm" data-value="0" >未通过</a>

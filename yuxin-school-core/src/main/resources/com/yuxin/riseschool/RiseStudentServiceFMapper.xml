@@ -63,7 +63,7 @@
 		<if test="schoolName != null and schoolName != '' and schoolName != 0"> AND rsii.id = #{schoolName}</if>
 		<if test="studentName != null and studentName != '' "> AND rs.student_name = #{studentName}</if>
 		<if test="mobile != null and mobile != ''"> AND uf3.mobile = #{mobile}</if>
-		<if test="studentNo != null and studentNo != ''"> AND rs.student_no = #{studentNo}</if>
+		<if test="studentNo != null and studentNo != ''"> AND rsi.student_no = #{studentNo}</if>
 		<if test="schoolTag != null and schoolTag != ''"> AND ree.school_name LIKE "%${schoolTag}%"</if>
 		<if test="startTime != null and startTime != '' and endTime == ''">AND DATE_FORMAT(rsi.create_time,"%Y-%m-%d") = STR_TO_DATE(#{startTime},"%Y-%m-%d")</if>
         <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(rsi.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
@@ -163,7 +163,7 @@
         select 
         honor_content as honorContent 
         from rise_personal_honor 
-		where student_id = 1
+		where student_id = #{id}
     </select>
     
 	<select id="findById" resultType="com.yuxin.wx.model.riseschool.RiseStudentVo" parameterType="Map">
@@ -188,6 +188,7 @@
 		INNER JOIN users_front uf ON rs.user_id = uf.id
 		INNER JOIN rise_signup_info rsi ON rs.id = rsi.student_id
 		where rs.id = #{id} and rsi.school_id = #{schoolId}
+		<if test="isCheck != null and isCheck != ''" >AND rsi.is_check=#{isCheck}</if>
 		LIMIT 0,1
     </select>
 

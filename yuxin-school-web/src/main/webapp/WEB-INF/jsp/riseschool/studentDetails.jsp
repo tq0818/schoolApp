@@ -183,7 +183,7 @@
 					</ul>
 				</div>
 				<c:if test="${riseStudentVo.isCheck eq 1}">
-					<div class="infoBox5">
+					<div class="infoBox5" style="display: block">
 						<a href="javascript:void(0)" class="btn btn-mb btn-primary pass">通过</a>
 						<a href="javascript:void(0)" class="btn btn-mb btn-default noPass">不通过</a>
 					</div>
