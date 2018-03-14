@@ -121,9 +121,6 @@
     </div>
 </div>
 <!-- ajax加载中div开始 -->
-<form action="rootPath+/riseStudentSchoolTag/studentDetails" method=post name=formx1 style='display:none'>
-
-</form>
 <div class="loading lp-units-loading" style="display:none">
 	<p><i></i>加载中,请稍后...</p>
 </div>
