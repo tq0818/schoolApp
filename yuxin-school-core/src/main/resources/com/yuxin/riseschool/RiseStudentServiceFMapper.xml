@@ -27,14 +27,16 @@
 	
 	<update id="updateIsCheck" parameterType="map">
 		update rise_signup_info set
-		is_check = 2,update_time = NOW()
+		is_check = 2,update_time = NOW(),student_no = #{studentNo}
 		where student_id = #{id} and school_id = #{schoolId}
+		and is_check = 1
 	</update>
 	
 	<update id="updateIsCheckNoPass" parameterType="com.yuxin.wx.model.riseschool.RiseNopassReason">
 		update rise_signup_info set
 		is_check = 0,update_time = NOW(),no_pass_reason=#{reason}
 		where student_id = #{id} and school_id = #{schoolId}
+		and is_check = 1
 	</update>
 	
 	<select id="queryAllStudent" resultMap="riseStudentMap" parameterType="com.yuxin.wx.model.riseschool.RiseStudentVo">
@@ -186,6 +188,7 @@
 		INNER JOIN users_front uf ON rs.user_id = uf.id
 		INNER JOIN rise_signup_info rsi ON rs.id = rsi.student_id
 		where rs.id = #{id} and rsi.school_id = #{schoolId}
+		LIMIT 0,1
     </select>
 
 </mapper>

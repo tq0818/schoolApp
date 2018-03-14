@@ -167,9 +167,7 @@ public class RiseStudentSchoolTagController {
                     //记录消息
                     passStudentBase(noPassReason,usersFront.getId());
         	
-        	//更新学生编号
-        	riseStudentServiceF.passStudent(map);
-        	//更新通过状态
+        	//更新通过状态,更新学生编号
         	riseStudentServiceF.updateIsCheck(map);
         	return "success";
 		} catch (Exception e) {
