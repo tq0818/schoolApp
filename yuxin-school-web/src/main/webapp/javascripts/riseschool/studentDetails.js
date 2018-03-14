@@ -87,16 +87,24 @@ $('.studentDetailNoPass').click(function () {
 
 //点击图片放大
 $('.clickImg img').click(function () {
-	console.log($(this).attr('src'));
-	$('#bigImage').attr('src',$(this).attr('src'));
-    $('.bigImage').show();
+    var image = new Image();
+    image.src = $(this).attr('src');
+    image.onload = function(){
+        if(image.width>image.height){
+            $('.bigImage').css('width','100%');
+        }else {
+            $('.bigImage').css('height','100%');
+        }
+    };
+    $('.bigImage').attr('src',$(this).attr('src'));
+    $('#bigImage').show();
     $('.opacityPopup').show();
     return false;
 });
 //点击其他地方关闭大图
 $(document).click(function () {
-    if($('.bigImage').css('display')=='block'){
-        $('.bigImage').hide();
+    if($('#bigImage').css('display')=='block'){
+        $('#bigImage').hide();
         $('.opacityPopup').hide();
     }
 });
