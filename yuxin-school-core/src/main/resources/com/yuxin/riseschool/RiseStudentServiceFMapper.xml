@@ -57,8 +57,8 @@
 		INNER JOIN users_front uf3 ON rs.user_id = uf3.id
 		INNER JOIN rise_signup_info rsi ON rs.id = rsi.student_id
 		INNER JOIN rise_school_info rsii ON rsi.school_id = rsii.id
-		INNER JOIN rise_edu_experience ree ON rs.id = ree.student_id
-		where ree.is_graduate = 1
+		INNER JOIN rise_edu_experience ree ON uf3.id = ree.user_id and ree.is_graduate = 1
+		where 1 = 1
 		<if test="isCheck != null and isCheck != ''"> AND rsi.is_check = #{isCheck}</if>
 		<if test="schoolName != null and schoolName != '' and schoolName != 0"> AND rsii.id = #{schoolName}</if>
 		<if test="studentName != null and studentName != '' "> AND rs.student_name = #{studentName}</if>
@@ -80,8 +80,8 @@
 		INNER JOIN users_front uf3 ON rs.user_id = uf3.id
 		INNER JOIN rise_signup_info rsi ON rs.id = rsi.student_id
 		INNER JOIN rise_school_info rsii ON rsi.school_id = rsii.id
-		INNER JOIN rise_edu_experience ree ON rs.id = ree.student_id
-		where ree.is_graduate = 1
+		INNER JOIN rise_edu_experience ree ON uf3.id = ree.user_id and ree.is_graduate = 1
+		where 1 = 1
 		<if test="isCheck != null and isCheck != ''"> AND rsi.is_check = #{isCheck}</if>
 		<if test="schoolName != null and schoolName != '' and schoolName != 0 "> AND rsii.id = #{schoolName}</if>
 		<if test="studentName != null and studentName != ''"> AND rs.student_name = #{studentName}</if>
@@ -145,7 +145,7 @@
         where id = #{schoolId}
     </select>
     
-	<select id="findExperience" resultType="com.yuxin.wx.model.riseschool.RiseEduExperience" parameterType="String">
+	<select id="findExperience" resultType="com.yuxin.wx.model.riseschool.RiseEduExperience" parameterType="Integer">
         select 
         srsd1.item_name as provinceName,
         srsd2.item_name as cityName,
@@ -155,15 +155,15 @@
 		LEFT JOIN sys_rise_school_dict srsd1 ON ree.province = srsd1.item_code
 		LEFT JOIN sys_rise_school_dict srsd2 ON ree.city = srsd2.item_code
 		LEFT JOIN sys_rise_school_dict srsd3 ON ree.district = srsd3.item_code
-		where student_id = #{id}
+		where ree.user_id = #{userId}
 		ORDER BY ree.is_graduate desc
     </select>
     
-	<select id="findHonor" resultType="com.yuxin.wx.model.riseschool.RisePersonalHonor" parameterType="String">
+	<select id="findHonor" resultType="com.yuxin.wx.model.riseschool.RisePersonalHonor" parameterType="Integer">
         select 
         honor_content as honorContent 
         from rise_personal_honor 
-		where student_id = #{id}
+		where user_id = #{userId}
     </select>
     
 	<select id="findById" resultType="com.yuxin.wx.model.riseschool.RiseStudentVo" parameterType="Map">

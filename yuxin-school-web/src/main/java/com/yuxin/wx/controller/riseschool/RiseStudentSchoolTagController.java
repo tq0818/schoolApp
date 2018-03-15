@@ -246,17 +246,20 @@ public class RiseStudentSchoolTagController {
         	riseStudentVo.setCensusUrl(url+riseStudentVo.getCensusUrl());
         	riseStudentVo.setHeadUrl(url+riseStudentVo.getHeadUrl());
         	riseStudentVo.setSelfUrl(url+riseStudentVo.getSelfUrl());
-        	//教育经历
-        	List<RiseEduExperience> experienceList = riseStudentServiceF.findExperience(id);
-        	//个人荣誉
-        	List<RisePersonalHonor> honorList = riseStudentServiceF.findHonor(id);
         	//不通过原因
         	List<RiseNopassReason> noPassList = riseStudentServiceF.queryNoPass();
         	//拿到当前用户
     		UsersFront usersFront = riseStudentServiceF.findUserByStudentId(Integer.valueOf(id));
-        	Map map = new HashMap<>();
+    		//拿到用户id查询教育经历和个人荣誉
+    		Integer userId = usersFront.getId();
+    		//教育经历
+    		List<RiseEduExperience> experienceList = riseStudentServiceF.findExperience(userId);
+    		//个人荣誉
+    		List<RisePersonalHonor> honorList = riseStudentServiceF.findHonor(userId);
+        	
+    		Map map = new HashMap<>();
         	String classTypeId = propertiesUtil.getClassTypeId();
-        	map.put("userId", usersFront.getId());
+        	map.put("userId", userId);
         	map.put("classTypeId", classTypeId);
         	String grade = riseStudentServiceF.findStudentGrade(map);
         	if(StringUtils.isBlank(grade)){

@@ -79,14 +79,14 @@ public class RiseStudentServiceFImpl implements IRiseStudentServiceF{
 	}
 
 	@Override
-	public List<RiseEduExperience> findExperience(String id) {
-		List<RiseEduExperience> experience = riseStudentServiceFMapper.findExperience(id);
+	public List<RiseEduExperience> findExperience(Integer userId) {
+		List<RiseEduExperience> experience = riseStudentServiceFMapper.findExperience(userId);
 		return experience;
 	}
 
 	@Override
-	public List<RisePersonalHonor> findHonor(String id) {
-		List<RisePersonalHonor> findHonor = riseStudentServiceFMapper.findHonor(id);
+	public List<RisePersonalHonor> findHonor(Integer userId) {
+		List<RisePersonalHonor> findHonor = riseStudentServiceFMapper.findHonor(userId);
 		return findHonor;
 	}
 
