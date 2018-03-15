@@ -94,8 +94,11 @@
     </select>
     
 	<select id="queryAllSchool" resultType="com.yuxin.wx.model.riseschool.RiseSchoolManageVo">
-        select rs.id as id ,rs.school_name as schoolName from rise_school_info rs
+        select distinct
+        rs.id as id ,rs.school_name as schoolName 
+        from rise_school_info rs
 		INNER JOIN rise_signup_info rsi ON rs.id = rsi.school_id
+		ORDER BY rs.create_time desc
     </select>
     
 	<select id="findStudentGrade" resultType="String" parameterType="map">
