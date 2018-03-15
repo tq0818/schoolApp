@@ -101,7 +101,7 @@
 	<select id="findStudentGrade" resultType="String" parameterType="map">
        select max(tue.exercise_score)
 		  from course_exercise ce
-		  inner join tiku_user_exercise tue on ce.id  = tue.exercise_id 
+		  inner join tiku_user_exercise tue on ce.paper_id  = tue.exercise_id 
 		  and tue.user_id = #{userId} 
 		  and ce.class_type_id = #{classTypeId}
 		  group by tue.exercise_id
