@@ -157,7 +157,7 @@ public class RiseStudentSchoolTagController {
         	noPassReason = noPassReason.replace("(hh)",schoolInfoVo.getSchoolName());
                 Map<String,String>tuisong = new HashMap<String,String>();
                 	//发送短信
-	            	SMSHandler.send(usersFront.getMobile(), PASS, new String[]{noPassReason});
+	            	//SMSHandler.send(usersFront.getMobile(), PASS, new String[]{noPassReason});
                 	//调用极光接口发送消息
                     List<String> userList = new ArrayList<String>();
                     userList.add(usersFront.getId().toString());
@@ -202,7 +202,7 @@ public class RiseStudentSchoolTagController {
              if(null!=usersFront){
                  Map<String,String>tuisong = new HashMap<String,String>();
                  //发送短信
-                 SMSHandler.send(usersFront.getMobile(), NO_PASS, new String[]{noPassReason});
+                 //SMSHandler.send(usersFront.getMobile(), NO_PASS, new String[]{noPassReason});
                  //调用极光接口发送消息
                  if(reason.getId() != null){
                      List<String> userList = new ArrayList<String>();
@@ -256,7 +256,12 @@ public class RiseStudentSchoolTagController {
     		List<RiseEduExperience> experienceList = riseStudentServiceF.findExperience(userId);
     		//个人荣誉
     		List<RisePersonalHonor> honorList = riseStudentServiceF.findHonor(userId);
-        	
+        	if(null!=honorList&&honorList.size()>0){
+        		RisePersonalHonor honor = honorList.get(0);
+        		if(StringUtils.isNotBlank(honor.getHonorContent())){
+        			honor.setHonorContent(honor.getHonorContent().replace("\n", "</br>"));
+        		}
+        	}
     		Map map = new HashMap<>();
         	String classTypeId = propertiesUtil.getClassTypeId();
         	map.put("userId", userId);

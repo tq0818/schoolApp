@@ -104,7 +104,7 @@
 			</div>
 			<div>
 				<div class="studentDetails">
-					<ul>
+					<ul style='width: 100%;'>
 						<li>
 							<label for="">毕业学校</label>
 							<c:forEach items="${experienceList}" var="list">
@@ -174,7 +174,7 @@
 			</div>
 			<div style="display: inline-block;width: 100%;">
 				<div class="studentDetails" style="display: inline-block;width: 100%;">
-					<ul>
+					<ul style='width: 100%;'>
 					<c:forEach items="${honorList}" var="list">
 						<li>
 							<span>${list.honorContent}</span>

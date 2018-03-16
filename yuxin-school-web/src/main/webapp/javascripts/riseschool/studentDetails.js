@@ -48,6 +48,7 @@ $('.studentDetailNoPass').click(function () {
 	var otherReason = $("#otherReason").val();
 	obj = document.getElementsByName("noPassReason");
     check_val = [];
+    var otherCheck = false;
     for(k in obj){
         if(obj[k].checked)
             
@@ -61,6 +62,21 @@ $('.studentDetailNoPass').click(function () {
     		check_val.push(obj[k].value);
     	}
     }
+    
+    
+    if(otherReason != ''){
+    	for(k in obj){
+        	if(obj[k].checked)
+        		if(obj[k].value == "其他"){
+        			otherCheck = true;
+        		}
+        }
+    }
+    if(!otherCheck){
+    	$.msg("请勾选其他");
+		return;
+    }
+    
     var reason = check_val.join("@");
     if(reason == ''){
     	$.msg("请选择不通过原因");

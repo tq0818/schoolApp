@@ -161,6 +161,21 @@ function noPass() {
         		check_val.push(obj[k].value);
         	}
     }
+    
+    var otherCheck = false;
+    if(otherReason != ''){
+    	for(k in obj){
+        	if(obj[k].checked)
+        		if(obj[k].value == "其他"){
+        			otherCheck = true;
+        		}
+        }
+    }
+    if(!otherCheck){
+    	$.msg("请勾选其他");
+		return;
+    }
+    
     var reason = check_val.join("@");
     if(reason == ''){
     	$.msg("请选择不通过原因");
