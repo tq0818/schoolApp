@@ -73,7 +73,7 @@ public class RiseStudentSchoolTagController {
      */
     @RequestMapping(value = "/queryStudentSchoolTag",method=RequestMethod.POST)
     public String queryRiseSchoolInfo(HttpServletRequest request,Model model,RiseStudentVo riseStudent){
-    	riseStudent.setPageSize(10);
+    	//riseStudent.setPageSize(10);
     	//查询所有申请的学生
     	List<RiseStudentVo> list = riseStudentServiceF.queryAllStudent(riseStudent);
     	Integer count = riseStudentServiceF.queryAllStudentCount(riseStudent);
@@ -157,7 +157,7 @@ public class RiseStudentSchoolTagController {
         	noPassReason = noPassReason.replace("(hh)",schoolInfoVo.getSchoolName());
                 Map<String,String>tuisong = new HashMap<String,String>();
                 	//发送短信
-	            	SMSHandler.send(usersFront.getMobile(), PASS, new String[]{noPassReason});
+	            	//SMSHandler.send(usersFront.getMobile(), PASS, new String[]{noPassReason});
                 	//调用极光接口发送消息
                     List<String> userList = new ArrayList<String>();
                     userList.add(usersFront.getId().toString());
@@ -202,7 +202,7 @@ public class RiseStudentSchoolTagController {
              if(null!=usersFront){
                  Map<String,String>tuisong = new HashMap<String,String>();
                  //发送短信
-                 SMSHandler.send(usersFront.getMobile(), NO_PASS, new String[]{noPassReason});
+                // SMSHandler.send(usersFront.getMobile(), NO_PASS, new String[]{noPassReason});
                  //调用极光接口发送消息
                  if(reason.getId() != null){
                      List<String> userList = new ArrayList<String>();

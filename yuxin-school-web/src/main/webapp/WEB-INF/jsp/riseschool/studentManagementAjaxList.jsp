@@ -125,7 +125,7 @@
             current_page: '${data.pageNo - 1}',
             link_to: "javascript:void(0)",
             num_display_entries: 8,
-            items_per_page: 10,
+            items_per_page: '${data.pageSize}',
             num_edge_entries: 1,
             callback: function (page, jq) {
                 var pageNo = page + 1;
@@ -134,6 +134,15 @@
             }
         }
     );
+    $(".pagination").find("li:first").css("background-color","#fff").css("border","1px solid #999").css('cursor','default');
+    $(".pagination").find("li:first").before('每页：<select id="selectCount" onchange="javascript:pagesizeSearch()" >'+
+        ' <option value="10">10</option>'+
+        ' <option value="20">20</option>'+
+        ' <option value="30">30</option>'+
+        ' <option value="50">50</option>'+
+        ' <option value="100">100</option>'+
+        ' </select> 条   ');
+    $("#selectCount").val($("#selectCounts").val());
   //提交时间排序
     $('table').on('click','.btn-sort',function () {
     	var timeOrder = $("#timeOrder").val();

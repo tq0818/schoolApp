@@ -85,10 +85,12 @@ function queryStudentApply(pageNo) {
     var SchoolTag = $("#SchoolTag").val();
     //提交时间排序
     var timeOrder = $("#timeOrder").val();
+    var pageSize = $("#selectCounts").val() || 10;
     $.ajax({
     	type:"POST",
         url: rootPath + "/riseStudentSchoolTag/queryStudentSchoolTag",
         data: {"page":pageNo,
+        	   "pageSize":pageSize,
         	   "isCheck":isCheck,
                "schoolName":schoolName,
                 "startTime":from,
@@ -218,6 +220,8 @@ function reloadStudentApply() {
     //申请学校
     var schoolName = $("#schoolName").val();
     if(schoolName == -1){
+    	sessionStorage.removeItem('checkNum');
+    	sessionStorage.removeItem('pagesize');
     	return;
     }
     //提交时间
@@ -239,12 +243,16 @@ function reloadStudentApply() {
     var SchoolTag = $("#SchoolTag").val();
     //提交时间排序
     var timeOrder = $("#timeOrder").val();
+    var reloadpagesize = sessionStorage.getItem('pagesize')
+    $("#selectCounts").val(reloadpagesize || 10)
+    var pageSize = reloadpagesize || 10;
     $.ajax({
     	type:"POST",
         url: rootPath + "/riseStudentSchoolTag/queryStudentSchoolTag",
         data: {"page":pageNo,
-        	   "isCheck":isCheck,
-               "schoolName":schoolName,
+        		"pageSize":pageSize,   
+        		"isCheck":isCheck,
+                "schoolName":schoolName,
                 "startTime":from,
                 "endTime":to,
                 "studentName":studentName,
@@ -264,10 +272,17 @@ function reloadStudentApply() {
             $('.loading-bg').hide();
             $(".user-list").html("").html(data);
             sessionStorage.removeItem('checkNum');
+            $("#selectCount").val(reloadpagesize || 10)
         }
     });
     
 }
-
+function pagesizeSearch(){
+	//每页多少条数据
+	var pagesize = $("#selectCount").val();
+	$("#selectCounts").val(pagesize);
+    sessionStorage.setItem('pagesize',pagesize);
+	queryStudentApply(1);
+}
 
 
