@@ -20,11 +20,12 @@ $('.noPass').click(function () {
 });
 var id = $("#stuId").val();
 var schoolId = $("#schoolId").val();
+var studentName = $("#studentName").val();
 $('.studentDetailPass').click(function () {
 	$.ajax({
     	type:"POST",
         url: rootPath + "/riseStudentSchoolTag/passStudent",
-        data: {"id":id,"schoolId":schoolId},
+        data: {"id":id,"schoolId":schoolId,"studentName":studentName},
         beforeSend: function(){
                $('.loading').show();
                $('.loading-bg').show();
@@ -48,7 +49,7 @@ $('.studentDetailNoPass').click(function () {
 	var otherReason = $("#otherReason").val();
 	obj = document.getElementsByName("noPassReason");
     check_val = [];
-    var otherCheck = false;
+    //var otherCheck = false;
     for(k in obj){
         if(obj[k].checked)
             
@@ -64,7 +65,7 @@ $('.studentDetailNoPass').click(function () {
     }
     
     
-    if(otherReason != ''){
+    /*if(otherReason != ''){
     	for(k in obj){
         	if(obj[k].checked)
         		if(obj[k].value == "其他"){
@@ -75,7 +76,7 @@ $('.studentDetailNoPass').click(function () {
     if(!otherCheck){
     	$.msg("请勾选其他");
 		return;
-    }
+    }*/
     
     var reason = check_val.join("@");
     if(reason == ''){
@@ -85,7 +86,7 @@ $('.studentDetailNoPass').click(function () {
     $.ajax({
     	type:"POST",
         url: rootPath + "/riseStudentSchoolTag/NopassStudent",
-        data: {"id":id,"reason":reason,"schoolId":schoolId},
+        data: {"id":id,"reason":reason,"schoolId":schoolId,"studentName":studentName},
         beforeSend: function(){
                $('.loading').show();
                $('.loading-bg').show();
@@ -127,4 +128,12 @@ $(document).click(function () {
         $('#bigImage').hide();
         $('.opacityPopup').hide();
     }
+});
+//点击其他，可编辑
+$('#otherReasonBtn').click(function(){
+	if($(this).prop('checked')){
+		$('#otherReason').attr('disabled',false);
+	}else{
+		$('#otherReason').attr('disabled',true).val('');
+	}
 });

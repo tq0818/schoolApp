@@ -68,8 +68,8 @@
 			<td>
 				<c:choose>
 					<c:when test="${list.isCheck eq 1}">
-					<a href="javascript:void(0)" class="pass" id="${list.id}" data-id="${list.schoolId}">通过</a>|
-					<a href="javascript:void(0)" class="noPass" id="${list.id}" data-id="${list.schoolId}">不通过</a>|
+					<a href="javascript:void(0)" class="pass" id="${list.id}" data-id="${list.schoolId}" data-value="${list.studentName}">通过</a>|
+					<a href="javascript:void(0)" class="noPass" id="${list.id}" data-id="${list.schoolId}" data-value="${list.studentName}">不通过</a>|
 					<a href="javascript:watch(${list.id},${list.schoolId},${list.isCheck})">查看</a>
 					</c:when>
 					<c:otherwise>
@@ -100,10 +100,10 @@
 				<li><input type="checkbox" name="noPassReason" value="${list.reason}"><span>${list.reason}</span></li>
 			</li>
 		</c:forEach>
-        <li><input type="checkbox" name="noPassReason" value="其他"><span>其他</span></li>
+        <li><input type="checkbox" name="noPassReason" value="其他" id='otherReasonBtn'><span>其他</span></li>
     </ul>
     <textarea name="" id="otherReason" cols="30" rows="10" class="descriptWord"placeholder="请输入原因，最多60个字。"
-    maxlength="60"></textarea>
+    maxlength="60" disabled='true'></textarea>
     <div class="btnGroup">
         <a href="javascript:void(0)" class="btn btn-sm btn-default hidePopup">取消</a>
         <a href="javascript:noPass()" class="btn btn-sm btn-primary hidePopup">确定</a>
@@ -157,9 +157,11 @@
   var passId;
   var noPassId;
   var schoolId;
+  var studentName;
      $('.pass').click(function () {
     	 passId = $(this).attr('id'); 
     	 schoolId = $(this).attr('data-id'); 
+    	 studentName = $(this).attr('data-value'); 
         $('.confirmPopup').fadeIn();
         $('.opacityPopup').fadeIn();
     });
@@ -174,9 +176,20 @@
     $('.noPass').click(function () {
     	noPassId = $(this).attr('id') 
     	schoolId = $(this).attr('data-id'); 
+    	studentName = $(this).attr('data-value'); 
         $('.reason').fadeIn();
         $('.opacityPopup').fadeIn();
         $("input:checkbox").removeAttr("checked");
         $("#otherReason").val('');
     });
+    
+  //点击其他，可编辑
+    $('#otherReasonBtn').click(function(){
+    	if($(this).prop('checked')){
+    		$('#otherReason').attr('disabled',false);
+    	}else{
+    		$('#otherReason').attr('disabled',true).val('');
+    	}
+    });
+
 </script>

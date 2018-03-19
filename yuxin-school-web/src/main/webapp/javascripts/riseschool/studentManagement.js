@@ -121,10 +121,11 @@ function pass() {
 	var id = passId;
 	var schoolNoId = schoolId;
 	var passPageNo = $("#passPageNo").val();
+	var newStudentName = studentName;
 	$.ajax({
     	type:"POST",
         url: rootPath + "/riseStudentSchoolTag/passStudent",
-        data: {"id":id,"schoolId":schoolNoId},
+        data: {"id":id,"schoolId":schoolNoId,"studentName":newStudentName},
         beforeSend: function(){
                $('.loading').show();
                $('.loading-bg').show();
@@ -146,6 +147,7 @@ function noPass() {
 	var passPageNo = $("#passPageNo").val();
 	var otherReason = $("#otherReason").val();
 	var schoolNoId = schoolId;
+	var newStudentName = studentName;
 	obj = document.getElementsByName("noPassReason");
     check_val = [];
     for(k in obj){
@@ -162,19 +164,19 @@ function noPass() {
         	}
     }
     
-    var otherCheck = false;
+    /*var otherCheck = true;
     if(otherReason != ''){
     	for(k in obj){
         	if(obj[k].checked)
         		if(obj[k].value == "其他"){
-        			otherCheck = true;
+        			otherCheck = false;
         		}
         }
     }
-    if(!otherCheck){
+    if(otherCheck){
     	$.msg("请勾选其他");
 		return;
-    }
+    }*/
     
     var reason = check_val.join("@");
     if(reason == ''){
@@ -184,7 +186,7 @@ function noPass() {
     $.ajax({
     	type:"POST",
         url: rootPath + "/riseStudentSchoolTag/NopassStudent",
-        data: {"id":noPassId,"reason":reason,"schoolId":schoolNoId},
+        data: {"id":noPassId,"reason":reason,"schoolId":schoolNoId,"studentName":newStudentName},
         beforeSend: function(){
                $('.loading').show();
                $('.loading-bg').show();
@@ -299,5 +301,11 @@ function pagesizeSearch(){
     sessionStorage.setItem('pagesize',pagesize);
 	queryStudentApply(1);
 }
+
+
+
+
+
+
 
 

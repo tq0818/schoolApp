@@ -50,6 +50,7 @@
 <input type="hidden" value="${proxyOrgRole }" id="proxyOrgRole"/>
 <input type="hidden" value="${id}" id="stuId"/>
 <input type="hidden" value="${schoolId}" id="schoolId"/>
+<input type="hidden" value="${riseStudentVo.studentName }" id="studentName"/>
 <jsp:include page="/WEB-INF/jsp/menu/menu_earlyLitre.jsp"/>
 <div class="u-wrap set-system">
     <div class="mainbackground nopadding ">
@@ -218,10 +219,10 @@
 				<li><label for=""><input type="checkbox" name="noPassReason" value="${list.reason}"><span>${list.reason}</span></label></li>
 			</li>
 		</c:forEach>
-        <li><label for=""><input type="checkbox" name="noPassReason" value="其他"><span>其他</span></label></li>
+        <li><label for=""><input type="checkbox" name="noPassReason" value="其他" id='otherReasonBtn'><span>其他</span></label></li>
     </ul>
     <textarea name="" id="otherReason" cols="30" rows="10" class="descriptWord"placeholder="请输入原因，最多60个字。"
-    maxlength="60"></textarea>
+    maxlength="60" disabled='true'></textarea>
     <div class="btnGroup">
         <a href="javascript:void(0)" class="btn btn-sm btn-default hidePopup">取消</a>
         <a href="javascript:void(0)" class="btn btn-sm btn-primary hidePopup studentDetailNoPass">确定</a>
