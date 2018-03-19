@@ -38,6 +38,8 @@ public class RiseEduExperience extends BaseEntity {
     private int schoolNo;
     
     private String schoolNoName;
+    
+    private Integer userId;
 
     public Integer getStudentId() {
         return studentId;
@@ -149,6 +151,14 @@ public class RiseEduExperience extends BaseEntity {
 
 	public void setSchoolNoName(String schoolNoName) {
 		this.schoolNoName = schoolNoName;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 	
 }

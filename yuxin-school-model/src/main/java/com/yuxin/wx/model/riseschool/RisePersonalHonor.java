@@ -16,6 +16,8 @@ public class RisePersonalHonor extends BaseEntity {
     private Date createTime;
 
     private Date updateTime;
+    
+    private Integer userId;
 
     public Integer getStudentId() {
         return studentId;
@@ -47,6 +49,14 @@ public class RisePersonalHonor extends BaseEntity {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
     
 }

@@ -84,6 +84,7 @@ public class ClassModuleLesson extends BaseEntity {
     private String beforeStudyUrl;
     private String afterStudyUrl;
     private String ccApiKey;
+    private Integer befLectureId;
     
     private String hccId;//回放的ccId
     private String hccUserId;
@@ -673,5 +674,13 @@ public class ClassModuleLesson extends BaseEntity {
 	public void setLectureId(Integer lectureId) {
 		this.lectureId = lectureId;
 	}
-	
+
+	public Integer getBefLectureId() {
+		return befLectureId;
+	}
+
+	public void setBefLectureId(Integer befLectureId) {
+		this.befLectureId = befLectureId;
+	}
+
 }
