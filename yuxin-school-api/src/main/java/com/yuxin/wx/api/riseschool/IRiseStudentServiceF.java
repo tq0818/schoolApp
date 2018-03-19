@@ -43,9 +43,9 @@ public interface IRiseStudentServiceF {
 	void updateIsCheck(Map map);
 	void updateIsCheckNoPass(RiseNopassReason reason);
 	//查询教育经历
-	List<RiseEduExperience> findExperience(String id);
+	List<RiseEduExperience> findExperience(Integer userId);
 	//查询个人荣誉
-	List<RisePersonalHonor> findHonor(String id);
+	List<RisePersonalHonor> findHonor(Integer userId);
 	//不通过原因
 	List<RiseNopassReason> queryNoPass();
 	UsersFront findUserByStudentId(Integer id);

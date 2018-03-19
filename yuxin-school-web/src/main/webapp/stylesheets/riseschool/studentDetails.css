@@ -4,8 +4,8 @@
 .confirmPopup div{height: 60px;line-height: 60px;text-align: center;border-bottom: 1px solid #797979;}
 .confirmPopup a{display: inline-block;width: 49%;text-align: center;height: 40px;line-height: 40px;}
 .confirmPopup a.cancel{border-right:1px solid #797979;}
-.reason{display: none;position: fixed;background: #fff;left: 50%;top: 50%;width: 446px;height: 390px;
-    margin-left: -243px;margin-top: -195px;border: 1px solid #797979;padding: 0 20px;}
+.reason{display: none;position: fixed;background: #fff;left: 50%;top: 50%;width: 446px;height: 520px;
+    margin-left: -243px;margin-top: -250px;border: 1px solid #797979;padding: 0 20px;}
 .reason h5{height: 40px;line-height: 40px;text-align: center;color: #333;font-size: 16px;}
 .reason li{line-height: 28px;}
 .reason input{margin-top: -2px;vertical-align: middle;margin-right: 2px;}
@@ -18,8 +18,11 @@
 .studentDetails ul li{line-height: 40px;}
 .infoBox1{height: 300px;}
 .infoBox2{height: auto;}
-.infoBox3{height: 180px;}
+.infoBox3{height: auto;}
 .infoBox4{height: auto;}
 .infoBox5{height: 150px;text-align: center;line-height: 150px;width: 100%;display: inline-block;}
 .infoBox5 a{margin: 0 30px;}
-.bigImage{position: absolute;left: 50%;top: 25%;width: 400px;margin-left: -200px;display: none;}
+#bigImage{position: absolute;left: 50%;top: 50%;width: 500px;margin-left: -250px;display: none;height: 500px;
+margin-top: -250px;text-align: center;}
+body{min-width: 1366px;}
+body label,body span{color: #333;}

@@ -33,8 +33,10 @@ $('.studentDetailPass').click(function () {
             $('.loading').hide();
             $('.loading-bg').hide();
             if(data=="success"){
+	        	$(function(){
+	        		history.go(-1);
+	        	});
 	        	$.msg("保存成功");
-	        	window.location.reload();
         	}else{
         		$.msg("保存失败");
         	}
@@ -46,6 +48,7 @@ $('.studentDetailNoPass').click(function () {
 	var otherReason = $("#otherReason").val();
 	obj = document.getElementsByName("noPassReason");
     check_val = [];
+    var otherCheck = false;
     for(k in obj){
         if(obj[k].checked)
             
@@ -59,6 +62,21 @@ $('.studentDetailNoPass').click(function () {
     		check_val.push(obj[k].value);
     	}
     }
+    
+    
+    if(otherReason != ''){
+    	for(k in obj){
+        	if(obj[k].checked)
+        		if(obj[k].value == "其他"){
+        			otherCheck = true;
+        		}
+        }
+    }
+    if(!otherCheck){
+    	$.msg("请勾选其他");
+		return;
+    }
+    
     var reason = check_val.join("@");
     if(reason == ''){
     	$.msg("请选择不通过原因");
@@ -76,8 +94,10 @@ $('.studentDetailNoPass').click(function () {
             $('.loading').hide();
             $('.loading-bg').hide();
             if(data=="success"){
+            	$(function(){
+	        		history.go(-1);
+	        	});
 	        	$.msg("保存成功");
-	        	window.location.reload();
         	}else{
         		$.msg("保存失败");
         	}
@@ -87,16 +107,24 @@ $('.studentDetailNoPass').click(function () {
 
 //点击图片放大
 $('.clickImg img').click(function () {
-	console.log($(this).attr('src'));
-	$('#bigImage').attr('src',$(this).attr('src'));
-    $('.bigImage').show();
+    var image = new Image();
+    image.src = $(this).attr('src');
+    image.onload = function(){
+        if(image.width>image.height){
+            $('.bigImage').css('width','100%');
+        }else {
+            $('.bigImage').css('height','100%');
+        }
+    };
+    $('.bigImage').attr('src',$(this).attr('src'));
+    $('#bigImage').show();
     $('.opacityPopup').show();
     return false;
 });
 //点击其他地方关闭大图
 $(document).click(function () {
-    if($('.bigImage').css('display')=='block'){
-        $('.bigImage').hide();
+    if($('#bigImage').css('display')=='block'){
+        $('#bigImage').hide();
         $('.opacityPopup').hide();
     }
 });

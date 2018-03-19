@@ -104,7 +104,7 @@
 			</div>
 			<div>
 				<div class="studentDetails">
-					<ul>
+					<ul style='width: 100%;'>
 						<li>
 							<label for="">毕业学校</label>
 							<c:forEach items="${experienceList}" var="list">
@@ -174,7 +174,7 @@
 			</div>
 			<div style="display: inline-block;width: 100%;">
 				<div class="studentDetails" style="display: inline-block;width: 100%;">
-					<ul>
+					<ul style='width: 100%;'>
 					<c:forEach items="${honorList}" var="list">
 						<li>
 							<span>${list.honorContent}</span>
@@ -183,7 +183,7 @@
 					</ul>
 				</div>
 				<c:if test="${riseStudentVo.isCheck eq 1}">
-					<div class="infoBox5">
+					<div class="infoBox5" style="display: block">
 						<a href="javascript:void(0)" class="btn btn-mb btn-primary pass">通过</a>
 						<a href="javascript:void(0)" class="btn btn-mb btn-default noPass">不通过</a>
 					</div>
@@ -229,7 +229,10 @@
 </div>
 
 <%--点击户籍图片弹出大图--%>
-<img src="" alt="" class="bigImage" id='bigImage'>
+<div id='bigImage'>
+	<img src="" alt="" class="bigImage" >
+</div>
+
 
 <input type="hidden" id="selectCounts" value="10">
 <script type="text/javascript" src="<%=rootPath %>/javascripts/riseschool/studentlist.js"></script>

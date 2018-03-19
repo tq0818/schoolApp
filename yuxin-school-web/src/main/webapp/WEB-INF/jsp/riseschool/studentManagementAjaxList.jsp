@@ -70,10 +70,10 @@
 					<c:when test="${list.isCheck eq 1}">
 					<a href="javascript:void(0)" class="pass" id="${list.id}" data-id="${list.schoolId}">通过</a>|
 					<a href="javascript:void(0)" class="noPass" id="${list.id}" data-id="${list.schoolId}">不通过</a>|
-					<a href="javascript:watch(${list.id},${list.schoolId})">查看</a>
+					<a href="javascript:watch(${list.id},${list.schoolId},${list.isCheck})">查看</a>
 					</c:when>
 					<c:otherwise>
-					<a href="javascript:watch(${list.id},${list.schoolId})">查看</a>
+					<a href="javascript:watch(${list.id},${list.schoolId},${list.isCheck})">查看</a>
 					</c:otherwise>
 				</c:choose>
 			</td>
@@ -112,6 +112,7 @@
 <form id='watchStudentDetails' action="/riseStudentSchoolTag/studentDetails" method=post name=formx1 style='display:none'>
 <input type='hidden' id='studentId' name='studentId' value=''>
 <input type='hidden' id='schoolId' name='schoolId' value=''>
+<input type='hidden' id='isCheck' name='isCheck' value=''>
 </form>
 </body>
 </html>
@@ -124,7 +125,7 @@
             current_page: '${data.pageNo - 1}',
             link_to: "javascript:void(0)",
             num_display_entries: 8,
-            items_per_page: 10,
+            items_per_page: '${data.pageSize}',
             num_edge_entries: 1,
             callback: function (page, jq) {
                 var pageNo = page + 1;
@@ -133,6 +134,15 @@
             }
         }
     );
+    $(".pagination").find("li:first").css("background-color","#fff").css("border","1px solid #999").css('cursor','default');
+    $(".pagination").find("li:first").before('每页：<select id="selectCount" onchange="javascript:pagesizeSearch()" >'+
+        ' <option value="10">10</option>'+
+        ' <option value="20">20</option>'+
+        ' <option value="30">30</option>'+
+        ' <option value="50">50</option>'+
+        ' <option value="100">100</option>'+
+        ' </select> 条   ');
+    $("#selectCount").val($("#selectCounts").val());
   //提交时间排序
     $('table').on('click','.btn-sort',function () {
     	var timeOrder = $("#timeOrder").val();

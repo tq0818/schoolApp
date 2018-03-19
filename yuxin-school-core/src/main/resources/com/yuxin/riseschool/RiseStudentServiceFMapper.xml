@@ -27,14 +27,16 @@
 	
 	<update id="updateIsCheck" parameterType="map">
 		update rise_signup_info set
-		is_check = 2,update_time = NOW()
+		is_check = 2,update_time = NOW(),student_no = #{studentNo}
 		where student_id = #{id} and school_id = #{schoolId}
+		and is_check = 1
 	</update>
 	
 	<update id="updateIsCheckNoPass" parameterType="com.yuxin.wx.model.riseschool.RiseNopassReason">
 		update rise_signup_info set
 		is_check = 0,update_time = NOW(),no_pass_reason=#{reason}
 		where student_id = #{id} and school_id = #{schoolId}
+		and is_check = 1
 	</update>
 	
 	<select id="queryAllStudent" resultMap="riseStudentMap" parameterType="com.yuxin.wx.model.riseschool.RiseStudentVo">
@@ -55,13 +57,13 @@
 		INNER JOIN users_front uf3 ON rs.user_id = uf3.id
 		INNER JOIN rise_signup_info rsi ON rs.id = rsi.student_id
 		INNER JOIN rise_school_info rsii ON rsi.school_id = rsii.id
-		INNER JOIN rise_edu_experience ree ON rs.id = ree.student_id
-		where ree.is_graduate = 1
+		INNER JOIN rise_edu_experience ree ON uf3.id = ree.user_id and ree.is_graduate = 1
+		where 1 = 1
 		<if test="isCheck != null and isCheck != ''"> AND rsi.is_check = #{isCheck}</if>
 		<if test="schoolName != null and schoolName != '' and schoolName != 0"> AND rsii.id = #{schoolName}</if>
 		<if test="studentName != null and studentName != '' "> AND rs.student_name = #{studentName}</if>
 		<if test="mobile != null and mobile != ''"> AND uf3.mobile = #{mobile}</if>
-		<if test="studentNo != null and studentNo != ''"> AND rs.student_no = #{studentNo}</if>
+		<if test="studentNo != null and studentNo != ''"> AND rsi.student_no = #{studentNo}</if>
 		<if test="schoolTag != null and schoolTag != ''"> AND ree.school_name LIKE "%${schoolTag}%"</if>
 		<if test="startTime != null and startTime != '' and endTime == ''">AND DATE_FORMAT(rsi.create_time,"%Y-%m-%d") = STR_TO_DATE(#{startTime},"%Y-%m-%d")</if>
         <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(rsi.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
@@ -78,8 +80,8 @@
 		INNER JOIN users_front uf3 ON rs.user_id = uf3.id
 		INNER JOIN rise_signup_info rsi ON rs.id = rsi.student_id
 		INNER JOIN rise_school_info rsii ON rsi.school_id = rsii.id
-		INNER JOIN rise_edu_experience ree ON rs.id = ree.student_id
-		where ree.is_graduate = 1
+		INNER JOIN rise_edu_experience ree ON uf3.id = ree.user_id and ree.is_graduate = 1
+		where 1 = 1
 		<if test="isCheck != null and isCheck != ''"> AND rsi.is_check = #{isCheck}</if>
 		<if test="schoolName != null and schoolName != '' and schoolName != 0 "> AND rsii.id = #{schoolName}</if>
 		<if test="studentName != null and studentName != ''"> AND rs.student_name = #{studentName}</if>
@@ -92,14 +94,17 @@
     </select>
     
 	<select id="queryAllSchool" resultType="com.yuxin.wx.model.riseschool.RiseSchoolManageVo">
-        select rs.id as id ,rs.school_name as schoolName from rise_school_info rs
+        select distinct
+        rs.id as id ,rs.school_name as schoolName 
+        from rise_school_info rs
 		INNER JOIN rise_signup_info rsi ON rs.id = rsi.school_id
+		ORDER BY rs.create_time desc
     </select>
     
 	<select id="findStudentGrade" resultType="String" parameterType="map">
        select max(tue.exercise_score)
 		  from course_exercise ce
-		  inner join tiku_user_exercise tue on ce.id  = tue.exercise_id 
+		  inner join tiku_user_exercise tue on ce.paper_id  = tue.exercise_id 
 		  and tue.user_id = #{userId} 
 		  and ce.class_type_id = #{classTypeId}
 		  group by tue.exercise_id
@@ -143,7 +148,7 @@
         where id = #{schoolId}
     </select>
     
-	<select id="findExperience" resultType="com.yuxin.wx.model.riseschool.RiseEduExperience" parameterType="String">
+	<select id="findExperience" resultType="com.yuxin.wx.model.riseschool.RiseEduExperience" parameterType="Integer">
         select 
         srsd1.item_name as provinceName,
         srsd2.item_name as cityName,
@@ -153,15 +158,15 @@
 		LEFT JOIN sys_rise_school_dict srsd1 ON ree.province = srsd1.item_code
 		LEFT JOIN sys_rise_school_dict srsd2 ON ree.city = srsd2.item_code
 		LEFT JOIN sys_rise_school_dict srsd3 ON ree.district = srsd3.item_code
-		where student_id = #{id}
+		where ree.user_id = #{userId}
 		ORDER BY ree.is_graduate desc
     </select>
     
-	<select id="findHonor" resultType="com.yuxin.wx.model.riseschool.RisePersonalHonor" parameterType="String">
+	<select id="findHonor" resultType="com.yuxin.wx.model.riseschool.RisePersonalHonor" parameterType="Integer">
         select 
         honor_content as honorContent 
         from rise_personal_honor 
-		where student_id = 1
+		where user_id = #{userId}
     </select>
     
 	<select id="findById" resultType="com.yuxin.wx.model.riseschool.RiseStudentVo" parameterType="Map">
@@ -186,6 +191,8 @@
 		INNER JOIN users_front uf ON rs.user_id = uf.id
 		INNER JOIN rise_signup_info rsi ON rs.id = rsi.student_id
 		where rs.id = #{id} and rsi.school_id = #{schoolId}
+		<if test="isCheck != null and isCheck != ''" >AND rsi.is_check=#{isCheck}</if>
+		LIMIT 0,1
     </select>
 
 </mapper>

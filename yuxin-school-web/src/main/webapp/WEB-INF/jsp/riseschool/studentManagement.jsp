@@ -42,6 +42,7 @@
 <input type="hidden" value="${userorg_roleopenflag }" id="userorg_roleopenflag"/>
 <input type="hidden" value="${rowCount }" id="rowCount"/>
 <input type="hidden" value="${pageNo}" id="pageNo"/>
+<input type="hidden" id="selectCounts" value="10">
 <jsp:include page="/WEB-INF/jsp/menu/menu_earlyLitre.jsp"/>
 <div class="u-wrap set-system">
     <div class="mainbackground nopadding ">
@@ -53,8 +54,8 @@
         	<input type="hidden"  id="isCheckBtn" name="isCheck" value=""/>
 			<div class="searchFormArea">
 				<div class="isCheck">
-					<label for="">审核状态</label>
-					<a href="javascript:void(0)"  class="btn btn-primary btn-sm" data-value="" >全部</a>
+					<label for="" id="xxxxx">审核状态</label>
+					<a href="javascript:void(0)"  class="btn btn-default btn-sm" data-value="" >全部</a>
 					<a href="javascript:void(0)"  class="btn btn-default btn-sm" data-value="1" >待审核</a>
 					<a href="javascript:void(0)"  class="btn btn-default btn-sm" data-value="2" >已通过</a>
 					<a href="javascript:void(0)"  class="btn btn-default btn-sm" data-value="0" >未通过</a>
@@ -121,9 +122,6 @@
     </div>
 </div>
 <!-- ajax加载中div开始 -->
-<form action="rootPath+/riseStudentSchoolTag/studentDetails" method=post name=formx1 style='display:none'>
-
-</form>
 <div class="loading lp-units-loading" style="display:none">
 	<p><i></i>加载中,请稍后...</p>
 </div>

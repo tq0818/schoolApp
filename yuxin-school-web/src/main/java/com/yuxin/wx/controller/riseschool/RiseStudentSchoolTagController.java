@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,7 +73,7 @@ public class RiseStudentSchoolTagController {
      */
     @RequestMapping(value = "/queryStudentSchoolTag",method=RequestMethod.POST)
     public String queryRiseSchoolInfo(HttpServletRequest request,Model model,RiseStudentVo riseStudent){
-    	riseStudent.setPageSize(10);
+    	//riseStudent.setPageSize(10);
     	//查询所有申请的学生
     	List<RiseStudentVo> list = riseStudentServiceF.queryAllStudent(riseStudent);
     	Integer count = riseStudentServiceF.queryAllStudentCount(riseStudent);
@@ -118,7 +119,7 @@ public class RiseStudentSchoolTagController {
         	//人数
         	String count = "";
         	String studentCount = riseStudentServiceF.findStudentCount();
-        	if(studentCount == null || studentCount == ""){
+        	if(StringUtils.isBlank(studentCount)){
         		count = "00001";
         	}else{
         		Integer num = Integer.valueOf(studentCount.substring(4, 9));
@@ -156,7 +157,7 @@ public class RiseStudentSchoolTagController {
         	noPassReason = noPassReason.replace("(hh)",schoolInfoVo.getSchoolName());
                 Map<String,String>tuisong = new HashMap<String,String>();
                 	//发送短信
-	            	SMSHandler.send(usersFront.getMobile(), PASS, new String[]{noPassReason});
+	            	//SMSHandler.send(usersFront.getMobile(), PASS, new String[]{noPassReason});
                 	//调用极光接口发送消息
                     List<String> userList = new ArrayList<String>();
                     userList.add(usersFront.getId().toString());
@@ -167,12 +168,11 @@ public class RiseStudentSchoolTagController {
                     //记录消息
                     passStudentBase(noPassReason,usersFront.getId());
         	
-        	//更新学生编号
-        	riseStudentServiceF.passStudent(map);
-        	//更新通过状态
+        	//更新通过状态,更新学生编号
         	riseStudentServiceF.updateIsCheck(map);
         	return "success";
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "false";
 		}
     	
@@ -202,7 +202,7 @@ public class RiseStudentSchoolTagController {
              if(null!=usersFront){
                  Map<String,String>tuisong = new HashMap<String,String>();
                  //发送短信
-                 SMSHandler.send(usersFront.getMobile(), NO_PASS, new String[]{noPassReason});
+                 //SMSHandler.send(usersFront.getMobile(), NO_PASS, new String[]{noPassReason});
                  //调用极光接口发送消息
                  if(reason.getId() != null){
                      List<String> userList = new ArrayList<String>();
@@ -219,6 +219,7 @@ public class RiseStudentSchoolTagController {
              }
              return "false";
     	} catch (Exception e) {
+    		e.printStackTrace();
     		return "false";
     	}
     	
@@ -228,9 +229,9 @@ public class RiseStudentSchoolTagController {
      */
     @SuppressWarnings("unchecked")
 	@RequestMapping(value = "/studentDetails")
-    public String studentDetails(HttpServletRequest request,Model model,String studentId,String schoolId){
+    public String studentDetails(HttpServletRequest request,Model model,String studentId,String schoolId,String isCheck){
     	//学生信息和家长信息
-    	if (studentId == null || studentId == "") {
+    	if (StringUtils.isBlank(studentId)) {
 			return null;
 		}
     	try {
@@ -238,26 +239,35 @@ public class RiseStudentSchoolTagController {
     		Map mapIdCard = new HashMap();
         	mapIdCard.put("id", id);
         	mapIdCard.put("schoolId", schoolId);
+        	mapIdCard.put("isCheck", isCheck);
     		RiseStudentVo riseStudentVo = riseStudentServiceF.findById(mapIdCard);
         	String url = "http://"+propertiesUtil.getProjectImageUrl()+"/";
     		//处理图片
         	riseStudentVo.setCensusUrl(url+riseStudentVo.getCensusUrl());
         	riseStudentVo.setHeadUrl(url+riseStudentVo.getHeadUrl());
         	riseStudentVo.setSelfUrl(url+riseStudentVo.getSelfUrl());
-        	//教育经历
-        	List<RiseEduExperience> experienceList = riseStudentServiceF.findExperience(id);
-        	//个人荣誉
-        	List<RisePersonalHonor> honorList = riseStudentServiceF.findHonor(id);
         	//不通过原因
         	List<RiseNopassReason> noPassList = riseStudentServiceF.queryNoPass();
         	//拿到当前用户
     		UsersFront usersFront = riseStudentServiceF.findUserByStudentId(Integer.valueOf(id));
-        	Map map = new HashMap<>();
+    		//拿到用户id查询教育经历和个人荣誉
+    		Integer userId = usersFront.getId();
+    		//教育经历
+    		List<RiseEduExperience> experienceList = riseStudentServiceF.findExperience(userId);
+    		//个人荣誉
+    		List<RisePersonalHonor> honorList = riseStudentServiceF.findHonor(userId);
+        	if(null!=honorList&&honorList.size()>0){
+        		RisePersonalHonor honor = honorList.get(0);
+        		if(StringUtils.isNotBlank(honor.getHonorContent())){
+        			honor.setHonorContent(honor.getHonorContent().replace("\n", "</br>"));
+        		}
+        	}
+    		Map map = new HashMap<>();
         	String classTypeId = propertiesUtil.getClassTypeId();
-        	map.put("userId", usersFront.getId());
+        	map.put("userId", userId);
         	map.put("classTypeId", classTypeId);
         	String grade = riseStudentServiceF.findStudentGrade(map);
-        	if(grade == null || grade == ""){
+        	if(StringUtils.isBlank(grade)){
         		grade = "-1";
         	}
         	model.addAttribute("riseStudentVo", riseStudentVo);
@@ -269,6 +279,7 @@ public class RiseStudentSchoolTagController {
         	model.addAttribute("grade", grade);
             return "/riseschool/studentDetails";
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
     	
