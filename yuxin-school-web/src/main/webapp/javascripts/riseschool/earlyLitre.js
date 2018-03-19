@@ -62,6 +62,13 @@ $(function () {
         $('#schoolBtn').find(".countPopupSave").attr("id","schoolSave");
         //执行查询的省份 2018-2-7 zj
         addQueryRiseSchoolDict(0);
+        console.log($("#userName").attr("onblur"));
+        if(!$("#userName").attr("onblur")){
+            $("#userName").blur(function(){
+                judgeAccountName();
+            });
+        }
+
     });
     //招生类型选择
     $('.enrolment').children('a').click(function () {

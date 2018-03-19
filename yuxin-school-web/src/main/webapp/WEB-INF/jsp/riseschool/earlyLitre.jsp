@@ -211,7 +211,7 @@
 	<div class="schoolCount">
 		<i class="icon iconfont star">&#xe605;</i>
 		<label for="" class="noMargin">学校账号：</label>
-		<input type="text" id="userName" placeholder="请输入学校管理员账号" onblur="judgeAccountName()">
+		<input type="text" id="userName" placeholder="请输入学校管理员账号">
 		<span>初始密码为：111111</span>
 	</div>
 	<div>
