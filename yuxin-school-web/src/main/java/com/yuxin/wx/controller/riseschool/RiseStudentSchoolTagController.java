@@ -328,7 +328,7 @@ public class RiseStudentSchoolTagController {
     		map.put("schoolTag",riseStudentVo.getSchoolTag());
     		map.put("mobile",riseStudentVo.getMobile());
     		map.put("birthday",riseStudentVo.getBirthday());
-    		map.put("censusDetAddress",riseStudentVo.getCensusDetAddress());
+    		map.put("censusDetAddress",riseStudentVo.getCensusAddress()+riseStudentVo.getCensusDetAddress());
     		map.put("putTime",dateFormater.format(riseStudentVo.getPutTime()));
     		if(riseStudentVo.getIsCheck().equals("0")){
     			map.put("isCheck","审核不通过");

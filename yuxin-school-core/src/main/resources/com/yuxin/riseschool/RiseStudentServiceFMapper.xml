@@ -45,6 +45,7 @@
 		rs.student_name as student_name,
 		rs.sex as sex,
 		rs.birthday as birthday,
+		rs.census_address as census_address,
 		rs.census_det_address as census_det_address,
 		rsi.student_no as student_no,
 		ree.school_name as school_tag,
