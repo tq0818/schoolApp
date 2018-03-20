@@ -50,13 +50,14 @@ import com.yuxin.wx.utils.PropertiesUtil;
 @RequestMapping(value = "/riseStudentSchoolTag")
 public class RiseStudentSchoolTagController {
 	/**
-	 * 不通过审核短信模板
+	 * 不通过审核短信模板ID:239251   小升初审核不通过
+	 * 验证码id:178572
 	 */
-	public static final String NO_PASS="178572";
+	public static final String NO_PASS="239251";
 	/**
-	 * 通过审核短信模板
+	 * 通过审核短信模板ID:239253   小升初审核通过
 	 */
-	public static final String PASS="178572";
+	public static final String PASS="239253";
 	protected static final Logger LOG = LoggerFactory.getLogger(INoticeAndScoreService.class);
 	@Autowired
 	private IRiseStudentServiceF riseStudentServiceF ;
@@ -95,11 +96,11 @@ public class RiseStudentSchoolTagController {
     public String passStudent(HttpServletRequest request,Model model){
     	//学生id
     	String id = request.getParameter("id");
-    	//当前简历的学校姓名
-    	String studentName = request.getParameter("studentName");
+    	//当前简历的学生姓名
+    	/*String studentName = request.getParameter("studentName");
     	if(StringUtils.isBlank(studentName)){
     		studentName = "";
-    	}
+    	}*/
     	String schoolId = request.getParameter("schoolId");
     	String studentNo = "";//学生编号11位：年份+学校编号+人数+身份证后两位
     	//年份
@@ -160,11 +161,11 @@ public class RiseStudentSchoolTagController {
         	 RiseSchoolInfoVo schoolInfoVo = riseStudentServiceF.getSchoolName(Integer.valueOf(schoolId));
         	//通知内容
         	String noPassReason = noticeTemplatVo.getNoticeContent();
-        	noPassReason = noPassReason.replace("(aa)",studentName);
+        	//noPassReason = noPassReason.replace("(aa)",studentName);
         	noPassReason = noPassReason.replace("(hh)",schoolInfoVo.getSchoolName());
                 Map<String,String>tuisong = new HashMap<String,String>();
                 	//发送短信
-	            	SMSHandler.send(usersFront.getMobile(), PASS, new String[]{noPassReason});
+	            	SMSHandler.sendApp(usersFront.getMobile(), PASS, new String[]{""});
                 	//调用极光接口发送消息
                     List<String> userList = new ArrayList<String>();
                     userList.add(usersFront.getId().toString());
@@ -193,21 +194,22 @@ public class RiseStudentSchoolTagController {
     @ResponseBody
     @RequestMapping(value = "/NopassStudent",method=RequestMethod.POST)
     public String NopassStudent(HttpServletRequest request,Model model,RiseNopassReason reason){
-    	//当前简历的学校姓名
-    	String studentName = request.getParameter("studentName");
+    	//当前简历的学生姓名
+    	/*String studentName = request.getParameter("studentName");
     	if(StringUtils.isBlank(studentName)){
     		studentName = "";
-    	}
-    	String reason2 = reason.getReason();
-        String[] countReason = reason2.split("\\@");
-        String finalReason = "";
-        for (int i = 0; i < countReason.length; i++) {
+    	}*/
+       // String[] countReason = reason2.split("\\@");
+        /*for (int i = 0; i < countReason.length; i++) {
         	if(i == countReason.length-1){
-        		finalReason = finalReason+(i+1)+"、"+countReason[i]+"。";
+        		finalReason = finalReason+countReason[i]+"。";
         	}else{
-        		finalReason = finalReason+(i+1)+"、"+countReason[i]+";";
+        		finalReason = finalReason+countReason[i]+";";
         	}
-		}
+		}*/
+    	//不通过的原因
+    	String reason2 = reason.getReason();
+    	String finalReason = reason2.replaceAll("@", ";")+"。";
     	try {
     		UsersFront usersFront = riseStudentServiceF.findUserByStudentId(reason.getId());
     		String url = request.getRequestURI().replace(request.getContextPath(),"");
@@ -219,13 +221,13 @@ public class RiseStudentSchoolTagController {
         	RiseSchoolInfoVo schoolInfoVo = riseStudentServiceF.getSchoolName(Integer.valueOf(reason.getSchoolId()));
         	//通知内容
         	String noPassReason = noticeTemplatVo.getNoticeContent();
-        	noPassReason = noPassReason.replace("(aa)",studentName);
+        	//noPassReason = noPassReason.replace("(aa)",studentName);
         	noPassReason = noPassReason.replace("(hh)",schoolInfoVo.getSchoolName());
         	noPassReason = noPassReason.replace("(kk)",finalReason);
              if(null!=usersFront){
                  Map<String,String>tuisong = new HashMap<String,String>();
                  //发送短信
-                 SMSHandler.send(usersFront.getMobile(), NO_PASS, new String[]{noPassReason});
+                 SMSHandler.sendApp(usersFront.getMobile(), NO_PASS, new String[]{""});
                  //调用极光接口发送消息
                  if(reason.getId() != null){
                      List<String> userList = new ArrayList<String>();
