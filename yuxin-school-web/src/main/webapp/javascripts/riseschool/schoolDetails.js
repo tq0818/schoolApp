@@ -129,6 +129,15 @@ function updateRiseSchoolInfo() {
         $.msg("未输入学校名称");
         return ;
     }
+	//2018-3-20 zj xiugai
+	var schoolWeb = $("#schoolWeb").val();
+    if (schoolWeb != ""){
+        if (!reg.test(schoolWeb)){
+            //$.msg("请输入有效的网址!",1000);
+            $("#schoolWeb").val("")
+            return ;
+        }
+    }
 	var oldSchoolName = $("#oldSchoolName").val();
 	if(schoolName ==  oldSchoolName){
 		schoolName = null;
@@ -210,7 +219,7 @@ function judgeSchoolWeb() {
     if (schoolWeb != null || schoolWeb != ""){
         if (!reg.test(schoolWeb)){
             $.msg("请输入有效的网址!",1000);
-            $("#schoolWeb").val("")
+//            $("#schoolWeb").val("")
             return ;
         }
     }
