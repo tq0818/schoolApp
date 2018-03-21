@@ -41,7 +41,7 @@
 		<c:forEach items="${data.data}" var="list" varStatus="status">
 		<tr>
 			<td>${status.index+1}</td>
-			<td>${list.studentName}</td>
+			<td>${fn:replace(list.studentName,' ','&nbsp;')}</td>
 			<td>${list.sex}</td>
 			<td>${list.schoolTag}</td>
 			<c:if test="${userType ne 'RISE_SCHOOL_MANAGER'}">
@@ -106,7 +106,7 @@
     maxlength="60" disabled='true'></textarea>
     <div class="btnGroup">
         <a href="javascript:void(0)" class="btn btn-sm btn-default hidePopup">取消</a>
-        <a href="javascript:noPass()" class="btn btn-sm btn-primary hidePopup">确定</a>
+        <a href="javascript:noPass()" class="btn btn-sm btn-primary hidePopup1">确定</a>
     </div>
 </div>
 <form id='watchStudentDetails' action="/riseStudentSchoolTag/studentDetails" method=post name=formx1 style='display:none'>
