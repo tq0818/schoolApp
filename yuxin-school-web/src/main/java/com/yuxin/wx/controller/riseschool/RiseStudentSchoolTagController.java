@@ -53,11 +53,11 @@ public class RiseStudentSchoolTagController {
 	 * 不通过审核短信模板ID:239251   小升初审核不通过
 	 * 验证码id:178572
 	 */
-	public static final String NO_PASS="239251";
+	public static final String NO_PASS="239724";
 	/**
 	 * 通过审核短信模板ID:239253   小升初审核通过
 	 */
-	public static final String PASS="239253";
+	public static final String PASS="239720";
 	protected static final Logger LOG = LoggerFactory.getLogger(INoticeAndScoreService.class);
 	@Autowired
 	private IRiseStudentServiceF riseStudentServiceF ;
