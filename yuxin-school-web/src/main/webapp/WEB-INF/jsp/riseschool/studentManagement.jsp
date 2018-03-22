@@ -42,6 +42,7 @@
 <input type="hidden" value="${userorg_roleopenflag }" id="userorg_roleopenflag"/>
 <input type="hidden" value="${rowCount }" id="rowCount"/>
 <input type="hidden" value="${pageNo}" id="pageNo"/>
+<input type="hidden" value="1" id="firstIn"/>
 <input type="hidden" id="selectCounts" value="10">
 <jsp:include page="/WEB-INF/jsp/menu/menu_earlyLitre.jsp"/>
 <div class="u-wrap set-system">
