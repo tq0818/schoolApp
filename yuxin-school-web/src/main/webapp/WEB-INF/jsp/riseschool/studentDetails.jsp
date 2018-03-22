@@ -225,7 +225,7 @@
     maxlength="60" disabled='true'></textarea>
     <div class="btnGroup">
         <a href="javascript:void(0)" class="btn btn-sm btn-default hidePopup">取消</a>
-        <a href="javascript:void(0)" class="btn btn-sm btn-primary hidePopup studentDetailNoPass">确定</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-primary hidePopup1 studentDetailNoPass">确定</a>
     </div>
 </div>
 
