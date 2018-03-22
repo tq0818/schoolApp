@@ -4,7 +4,7 @@
 .confirmPopup div{height: 60px;line-height: 60px;text-align: center;border-bottom: 1px solid #797979;}
 .confirmPopup a{display: inline-block;width: 49%;text-align: center;height: 40px;line-height: 40px;}
 .confirmPopup a.cancel{border-right:1px solid #797979;}
-.reason{display: none;position: fixed;background: #fff;left: 50%;top: 50%;width: 446px;height: 520px;
+.reason{display: none;position: fixed;background: #fff;left: 50%;top: 50%;width: 446px;height: auto;
     margin-left: -243px;margin-top: -250px;border: 1px solid #797979;padding: 0 20px;}
 .reason h5{height: 40px;line-height: 40px;text-align: center;color: #333;font-size: 16px;}
 .reason li{line-height: 28px;}

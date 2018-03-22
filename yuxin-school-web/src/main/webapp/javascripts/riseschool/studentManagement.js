@@ -207,6 +207,7 @@ function noPass() {
 function watch(id,schoolId,isCheck) {
 	var page = $("#passPageNo").val();
 	sessionStorage.setItem('page', page);
+	sessionStorage.setItem('firstIn', 2);
 	var checkNum = $('.isCheck').children('a')
 	for(var i=0;i<checkNum.length;i++){
 		if(checkNum.eq(i).hasClass('btn-primary')){
@@ -229,6 +230,7 @@ function watch(id,schoolId,isCheck) {
 
 reloadStudentApply();
 function reloadStudentApply() {
+	$("#firstIn").val(sessionStorage.getItem('firstIn') || 1);
 	var pageNo = JSON.parse(sessionStorage.getItem('page'));
 	sessionStorage.removeItem('page');
 	//审核状态
@@ -239,6 +241,18 @@ function reloadStudentApply() {
     if(schoolName == -1){
     	sessionStorage.removeItem('checkNum');
     	sessionStorage.removeItem('pagesize');
+    	sessionStorage.removeItem('firstIn');
+    	sessionStorage.removeItem('reloadCheckNum');
+    	sessionStorage.removeItem('page');
+    	return;
+    }
+    var firstIn = $("#firstIn").val();
+    if(firstIn == 1){
+    	sessionStorage.removeItem('checkNum');
+    	sessionStorage.removeItem('pagesize');
+    	sessionStorage.removeItem('firstIn');
+    	sessionStorage.removeItem('reloadCheckNum');
+    	sessionStorage.removeItem('page');
     	return;
     }
     //提交时间
@@ -289,6 +303,7 @@ function reloadStudentApply() {
             $('.loading-bg').hide();
             $(".user-list").html("").html(data);
             sessionStorage.removeItem('checkNum');
+            sessionStorage.removeItem('firstIn');
             $("#selectCount").val(reloadpagesize || 10)
         }
     });
