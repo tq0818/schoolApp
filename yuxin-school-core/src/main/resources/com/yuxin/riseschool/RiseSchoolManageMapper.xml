@@ -224,7 +224,8 @@
                 srsdo.item_name AS enrollmentName,
                 srsdp.item_name AS provinceName,
                 srsdq.item_name AS cityName,
-                srsdr.item_name AS districtName
+                srsdr.item_name AS districtName,
+                case when rsi.top_time is null then 0 else rsi.top_time end as top_time
           FROM rise_school_info rsi
           INNER JOIN users uss ON uss.id = rsi.user_id
           INNER JOIN sys_rise_school_dict srsdo ON srsdo.item_code = rsi.enrollment_type
@@ -242,7 +243,7 @@
         <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(rsi.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
         <if test="isTop != null and isTop != 0">AND rsi.is_top = #{isTop}</if>
         <if test="enrollmentType != null and enrollmentType != 0">AND rsi.enrollment_type = #{enrollmentType}</if>
-        ORDER BY rsi.is_top DESC ,rsi.update_time DESC
+        ORDER BY rsi.is_top DESC,top_time desc ,rsi.update_time DESC
         limit #{firstIndex},#{pageSize}
     </select>
     <select id="queryDimRiseSchoolCount" parameterType="com.yuxin.wx.model.riseschool.SearchRiseSchoolVo" resultType="java.lang.Integer">
