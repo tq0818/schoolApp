@@ -25,8 +25,8 @@
                 <div class="essentialInfoContent">
                     <div style="width: 800px;">
                         <label for="" class="noMargin">学校名称：</label>
-                        <input type="hidden" id="oldSchoolName" value="${result.schoolName}">
-                        <input type="text" id="schoolName" value="${result.schoolName}">
+                        <input type="hidden" id="oldSchoolName" value="${result.schoolName}" maxlength="60">
+                        <input type="text" id="schoolName" value="${result.schoolName}" maxlength="60">
                     </div>
                     <div>
                         <label for="" class="noMargin">招生方式：</label>
