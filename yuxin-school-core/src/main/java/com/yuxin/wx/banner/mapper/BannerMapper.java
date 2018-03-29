@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.yuxin.wx.common.BaseMapper;
 import com.yuxin.wx.model.banner.Banner;
+import com.yuxin.wx.model.classes.ClassType;
 
 /**
  * 
@@ -68,4 +69,5 @@ public interface BannerMapper extends BaseMapper<Banner> {
 	Integer searchMaxNum();
 	//禁用banner
 	void forbiddenBanner();
+	List<ClassType> findClassByName(String calssName);
 }

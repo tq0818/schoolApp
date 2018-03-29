@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -32,6 +33,7 @@ import com.yuxin.wx.common.BaseWebController;
 import com.yuxin.wx.common.JsonMsg;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.banner.Banner;
+import com.yuxin.wx.model.classes.ClassType;
 import com.yuxin.wx.util.ImageUtils;
 import com.yuxin.wx.utils.FileUtil;
 import com.yuxin.wx.utils.PropertiesUtil;
@@ -538,4 +540,17 @@ public class BannerConfigController extends BaseWebController{
     	pw.close();//关闭流
 	    return rtUrl;
 	}
+	@ResponseBody
+    @RequestMapping("/queryClass")
+    public List<ClassType> queryClass(HttpServletRequest request, String className) {
+        try {
+        	List<ClassType> listClass = bannerService.findClassByName(className);
+            return listClass;
+        } catch (Exception e) {
+            log.error("qa：查询课程异常:" + e.getMessage(), e);
+            e.printStackTrace();
+            List<ClassType> listClass = new ArrayList<ClassType>();
+            return listClass;
+        }
+    }
 }

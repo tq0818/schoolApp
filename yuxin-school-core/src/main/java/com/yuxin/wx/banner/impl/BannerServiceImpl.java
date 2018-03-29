@@ -11,6 +11,7 @@ import com.yuxin.wx.banner.mapper.BannerMapper;
 import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.banner.Banner;
+import com.yuxin.wx.model.classes.ClassType;
 
 /**
  * Service Implementation:QuestionAnswer
@@ -93,6 +94,12 @@ public class BannerServiceImpl extends BaseServiceImpl implements IBannerService
 	public void forbiddenBanner() {
 		BannerMapper.forbiddenBanner();
 		
+	}
+
+	@Override
+	public List<ClassType> findClassByName(String calssName) {
+		List<ClassType> list = BannerMapper.findClassByName(calssName);
+		return list;
 	}
     
     
