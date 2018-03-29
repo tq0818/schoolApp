@@ -108,6 +108,11 @@ padding-top: 40px;
 	}
 #accountBtn{margin: -115px  0 0 -90px;}
 #details p{margin:10px auto;}
+
+/*隐藏自带弹窗*/
+     .cke_editor_newsContents_dialog{display: none;}
+
+
 </style>
 </head>
 <body style="position:relative;">
@@ -140,8 +145,16 @@ padding-top: 40px;
                     <span>描述:</span>
                     <input type="text" name="bannerDescribe" id="bannerDescribe" value="${msgPage.bannerDescribe }" class="bannerInput" maxlength="255" placeholder="最长可输入255个字符">
                 </div>
+                <div class="checkBoxBtn">
+                    <span><input type='radio' name="only" value="0">目标地址:</span>
+                    <select name="" id="" style="margin-left: 48px;width: 200px;">
+                        <option value="">活动</option>
+                        <option value="">课程</option>
+                    </select>
+                    <input type="text" name="bannerDescribe" id="" value=""  maxlength="255" placeholder="请输入活动页面链接" style="width: 200px;">
+                </div>
                 <div class="contentBox">
-                    <span>内容:</span>
+                    <span><input type='radio' name="only" value="1">内容:</span>
                         <textarea id="newsContents" id="bannerContent"  name="bannerContent" class="msg-content">${msgPage.bannerContent }</textarea>
                     </div>
                 </div>
@@ -216,6 +229,11 @@ padding-top: 40px;
         <p><i></i>加载中,请稍后...</p>
     </div>
     <div class="loading-bg lp-units-loading-bg" style="display:none"></div>
+<%--新弹窗begin--%>
+
+<%--新弹窗end--%>
+
+
 <script type="text/javascript" src="<%=rootPath%>/plugins/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/ajaxfileupload.js"></script>
      <script type="text/javascript" src="<%=rootPath %>/plugins/jcrop/js/jquery.Jcrop.js"></script>
@@ -445,6 +463,34 @@ padding-top: 40px;
 		
 		
 	</script>
+<%--<script>--%>
+    <%--//弹窗变化--%>
+    <%--$('body').on('click','#cke_31',function(){--%>
+        <%--var _html = `--%>
+                <%--<a class="cke_dialog_tab newAdd cke_dialog_tab_selected"  title="活动"  href="javascript:void(0)" tabindex="-1" hidefocus="true" role="tab">活动</a>--%>
+                <%--<a class="cke_dialog_tab newAdd"  title="课程"  href="javascript:void(0)" tabindex="-1" hidefocus="true" role="tab">课程</a>--%>
+               <%--`;--%>
+        <%--$('body').find('.newAdd').remove();--%>
+
+        <%--if($('#cke_dialog_tabs_59')){--%>
+            <%--setTimeout(function () {--%>
+                <%--$('#cke_dialog_tabs_59').append(_html);--%>
+            <%--},1000);--%>
+        <%--}--%>
+
+
+        <%--$('body').find('.newAdd').click(function(){--%>
+            <%--console.log("点击了");--%>
+            <%--$(this).addClass('cke_dialog_tab_selected');--%>
+            <%--$(this).siblings('a').removeClass('cke_dialog_tab_selected');--%>
+        <%--});--%>
+
+    <%--});--%>
+
+
+
+<%--</script>--%>
+
 <script>
     //        二级菜单加active
     $(function () {
