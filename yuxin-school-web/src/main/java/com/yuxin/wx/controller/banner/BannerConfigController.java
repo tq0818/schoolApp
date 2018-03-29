@@ -549,7 +549,8 @@ public class BannerConfigController extends BaseWebController{
         } catch (Exception e) {
             log.error("qa：查询课程异常:" + e.getMessage(), e);
             e.printStackTrace();
-            return new ArrayList<ClassType>();
+            List<ClassType> listClass = new ArrayList<ClassType>();
+            return listClass;
         }
     }
 }
