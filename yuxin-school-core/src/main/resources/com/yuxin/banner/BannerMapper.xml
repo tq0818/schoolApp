@@ -49,8 +49,16 @@
 		from banner_app where is_state = #{isState} and banner_type = #{bannerType}
 		order by order_by_num DESC,update_time  DESC
 	</select>
+	<select id="findAcrcoBanner" resultMap="BannerResultMap" parameterType="com.yuxin.wx.model.banner.Banner">
+		select <include refid="table_columns" />
+		from banner_app where banner_type = #{bannerType}
+		order by is_state desc,update_time  DESC
+	</select>
 	<select id="queryMessageCount"  parameterType="com.yuxin.wx.model.banner.Banner" resultType="int">
 		select count(id) from banner_app where is_state = #{isState} and banner_type = #{bannerType}
+	</select>
+	<select id="countAcrcoBanner"  parameterType="com.yuxin.wx.model.banner.Banner" resultType="int">
+		select count(id) from banner_app where banner_type = #{bannerType}
 	</select>
 	<!-- 适用于主键自增类型 -->
 	<insert id="insertBanner" parameterType="com.yuxin.wx.model.banner.Banner" useGeneratedKeys="true" keyProperty="id">
@@ -90,6 +98,11 @@
 			<if test="orderByNum != null ">order_by_num =  #{orderByNum},</if>
 		</trim>
 		<where>id = #{id}</where>
+	</update>
+	<update id="forbiddenBanner">
+		UPDATE banner_app SET
+		is_state = 0 
+		where banner_type = 2
 	</update>
 	
 	<!-- 降序 -->

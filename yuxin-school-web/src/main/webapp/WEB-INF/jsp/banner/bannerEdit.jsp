@@ -3,6 +3,7 @@
          pageEncoding="UTF-8"%>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <%@include file="/decorators/import.jsp" %>
     <title>首页banner图设置</title>
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/manage.css">
@@ -10,6 +11,9 @@
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/operate.css" />
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/plugins/jcrop/css/jquery.Jcrop.css"/>
  <style type="text/css">
+ #details::-webkit-scrollbar {
+		display: none;
+	}
 .p1 {
 	display: block;
 	position: absolute;
@@ -81,6 +85,27 @@
 #cke_newsContents{width: 900px !important;margin-left: 150px;}
 #cke_1_top,#cke_1_bottom{margin-right: 0 !important;}
 .contentBox{height: auto !important;}
+.opacityPopup{display: none;width: 100%;height: 100%;position: fixed;left: 0;top: 0;background: rgba(0,0,0,.5);}
+.countPopup{
+display: none;width: 360px;height: 600px;z-index:9997;
+padding: 0 30px;position: fixed;left: 50%;top: 50%;
+margin-left: -180px;margin-top: -300px;
+background: url(../../../images/yulaniphone.png)  0 0 no-repeat;
+background-size: 80%;border: 1px solid #797979;
+padding-top: 40px;
+}
+#details{
+		overflow-x: hidden;
+		background: #fff;
+		width : 950px;
+		height : 667px;
+		margin: -47px  0 0 -350px;
+		over-flow-y : auto;
+		padding: 0 3px;
+		transform: scale(0.3,0.74);
+	}
+#accountBtn{margin: -115px  0 0 -90px;}
+#details p{margin:10px auto;}
 </style>
 </head>
 <body style="position:relative;">
@@ -132,6 +157,15 @@
 <form method="post" id="hiddenForm" target="_blank" >
 	<input type="hidden" id="hiddenBannerContent" name="bannerContent">
 </form>
+<div class="opacityPopup"></div>
+<div class="countPopup">
+	<div  id="details">
+	
+	</div>
+	<div class="countPopupBtn" id="accountBtn">
+		<a href="##" class="btn btn-sm btn-primary countPopupCancel">关闭</a>
+	</div>
+</div>
 <div class="upload-layer none" id="chooseDiv" style="width:1080px;height: 550px;">
     <div class="upload-title">
         <h2 class="h5">上传封面</h2>
@@ -191,16 +225,45 @@
    	 CKupdate();
    	 var bannerContent=editor.document.getBody().getHtml();
    	 if(null!=bannerContent && '<p><br></p>'!=bannerContent){
-   		 
-				$("#hiddenBannerContent").val(bannerContent);
-				$("#hiddenForm").attr("action",rootPath+"/Banner/yulan").submit();
+   		$('.opacityPopup').fadeIn();
+        $('.countPopup').fadeIn();
+        $('#details').append(bannerContent);
+				/* $("#hiddenBannerContent").val(bannerContent);
+				$("#hiddenForm").attr("action",rootPath+"/Banner/yulan").submit(); */
 				
-   	 }else{
-   		 alert("预览内容不能为空");
-   	 }
+	   	 }else{
+	   		 alert("预览内容不能为空");
+	   	 }
+	   //基础宽度为1000px，小于1000设置比例
+	 	var imgList = $('#details').find('img');
+	 	var imgScaleWidth;
+	 	var imgScaleHeight;
+	 	if(imgList.length>0){
+	 		for(var i=0;i<imgList.length;i++){
+	 			var imgWidth = imgList.eq(i).css('width').split('px')[0];
+	 			var imgHeight = imgList.eq(i).css('height').split('px')[0];
+					//宽度
+		    		if(imgWidth<1000){
+		    			imgScale = imgWidth/10
+		    			imgList.eq(i).css('width',imgScale+'%');
+		    		}else{
+		    			imgList.eq(i).css('width','100%');
+		    		}
+					//高度
+		    		 if(imgHeight>250){
+		    			imgScaleHeight = imgHeight/665;
+		    			imgList.eq(i).css('height',imgHeight*250/665);
+		    		} 
+		    	}
+	 	}
    }
 	
 	$(function(){
+		$('.countPopupCancel').click(function () {
+	        $('.opacityPopup').fadeOut();
+	        $('.countPopup').fadeOut();
+	        $('#details').html('');
+	    });
 		$(".btn-upload").on('click',function(){
 			$("#chooseDiv").css("display", "block");
 			$("#stopDiv").css("display", "block");
@@ -284,8 +347,10 @@
 	 	 					alert("保存成功");
 	 	 					if(bannerType == 0){
 	 	 						window.location.href = "<%=rootPath %>/Banner/comBannerIndex";
-	 	 					}else{
+	 	 					}else if(bannerType == 1){
 	 	 						window.location.href = "<%=rootPath %>/Banner/riseBannerIndex";
+	 	 					}else{
+	 	 						window.location.href = "<%=rootPath %>/Banner/acrcoBannerIndex";
 	 	 					}
 	 	 				}
 	 	 			}

@@ -37,11 +37,23 @@
 						</c:choose>
 	                	<%--<td>${m.bannerName }</td>
 	                	<td>${m.bannerDescribe }</td>--%>
-	                	<td width="5%">禁用</td>
+	                	<c:if test="${m.isState eq 0}">
+	                		<td width="5%">禁用</td>
+	                	</c:if>
+	                	<c:if test="${m.isState eq 1}">
+	                		<td width="5%">启用</td>
+	                	</c:if>
+	                	
+	                	
 	                	<td width="27%">
-	                		<a href='javascript:;' onclick="confirmPopup('确定启用该banner？',${m.id})" class='btn btn-danger forbidBanner'>启用</a>
+	                	<c:if test="${m.isState eq 1}">
+	                		<a href='javascript:;' onclick="confirmPopup('确定禁用该banner？',${m.id},1)" class='btn btn-danger forbidBanner'>禁用</a>
+	                   	</c:if>
+	                	<c:if test="${m.isState eq 0}">
+	                		<a href='javascript:;' onclick="confirmPopup('确定启用该banner，并替换当前banner？',${m.id},0)" class='btn btn-danger forbidBanner'>启用</a>
+	                   	</c:if>
 	                   		<a href='<%=rootPath %>/Banner/editBanner/${m.id}'  class='btn btn-warning'>修改</a>
-	                   		<a href='##' class='btn btn-success'>查看</a>
+	                   		<a href='<%=rootPath %>/Banner/seachDetail/${m.id}' target="_blank" class='btn btn-success'>查看</a>
                    		</td>
 	                </tr>
                </c:forEach>
@@ -67,17 +79,16 @@
 		
 		
 	});
-	function confirmPopup(str,id){
+	function confirmPopup(str,id,biaoshi){
 		$.confirm(str,function(b){
 			if(b==true){
 				$.ajax({
-					url: rootPath + "/Banner/changeStatu",
+					url: rootPath + "/Banner/changeStatuAcrco",
 					type:"post",
-					data:{"id":id,"biaoshi": 0},
 					dataType:"html",
+					data:{"id":id,"biaoshi": biaoshi},
 					success:function(data){
-						/* $('#tableList1').html(data); */
-						window.location.reload();
+						 window.location.reload(); 
 					}
 				});
 			}else{

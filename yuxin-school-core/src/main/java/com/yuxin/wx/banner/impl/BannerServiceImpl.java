@@ -40,6 +40,14 @@ public class BannerServiceImpl extends BaseServiceImpl implements IBannerService
 		PageFinder<Banner> pageFinder=new PageFinder<Banner>(banner.getPage(), banner.getPageSize(), count, data);
 		return pageFinder;
 	}
+	@Override
+	public PageFinder<Banner> findAcrcoBanner(Banner banner) {
+		
+		List<Banner> data=BannerMapper.findAcrcoBanner(banner);
+		int count=BannerMapper.countAcrcoBanner(banner);
+		PageFinder<Banner> pageFinder=new PageFinder<Banner>(banner.getPage(), banner.getPageSize(), count, data);
+		return pageFinder;
+	}
 
 	@Override
 	public Integer addBanner(Banner banner) {
@@ -78,6 +86,12 @@ public class BannerServiceImpl extends BaseServiceImpl implements IBannerService
 		BannerMapper.update(banner); 
 		bannervo.setOrderByNum(num);
 		BannerMapper.update(bannervo);  
+		
+	}
+
+	@Override
+	public void forbiddenBanner() {
+		BannerMapper.forbiddenBanner();
 		
 	}
     

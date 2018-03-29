@@ -33,6 +33,7 @@ public interface IBannerService  {
 	 * @throws
 	 */
 	PageFinder <Banner> findBannerPage(Banner banner);
+	PageFinder <Banner> findAcrcoBanner(Banner banner);
 	/**
 	 * 
 	 * @author jishangyang 2017年12月2日 上午1:05:08
@@ -72,4 +73,6 @@ public interface IBannerService  {
 	 * @throws
 	 */
 	void sort(Banner banner,Integer biaoshi);
+	//禁用banner
+	void forbiddenBanner();
 }
