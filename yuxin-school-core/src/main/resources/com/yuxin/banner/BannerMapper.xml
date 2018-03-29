@@ -60,6 +60,10 @@
 	<select id="countAcrcoBanner"  parameterType="com.yuxin.wx.model.banner.Banner" resultType="int">
 		select count(id) from banner_app where banner_type = #{bannerType}
 	</select>
+	<select id="findClassByName"  parameterType="String" resultType="com.yuxin.wx.model.classes.ClassType">
+		select name as name from class_type where 
+		name like '%${className}%'
+	</select>
 	<!-- 适用于主键自增类型 -->
 	<insert id="insertBanner" parameterType="com.yuxin.wx.model.banner.Banner" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO banner_app  (

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.banner.Banner;
+import com.yuxin.wx.model.classes.ClassType;
 
 /**
  * 
@@ -75,4 +76,5 @@ public interface IBannerService  {
 	void sort(Banner banner,Integer biaoshi);
 	//禁用banner
 	void forbiddenBanner();
+	List<ClassType> findClassByName(String calssName);
 }
