@@ -110,8 +110,7 @@ padding-top: 40px;
 #details p{margin:10px auto;}
 
 /*隐藏自带弹窗*/
-     .cke_editor_newsContents_dialog{display: none;}
-
+     .cke_editor_newsContents_dialog,table{display: none;}
 
 </style>
 </head>
@@ -146,7 +145,7 @@ padding-top: 40px;
                     <input type="text" name="bannerDescribe" id="bannerDescribe" value="${msgPage.bannerDescribe }" class="bannerInput" maxlength="255" placeholder="最长可输入255个字符">
                 </div>
                 <div class="checkBoxBtn">
-                    <span><input type='radio' name="only" value="0">目标地址:</span>
+                    <span><input type='radio' name="only" value="0" checked>目标地址:</span>
                     <select name="" id="" style="margin-left: 48px;width: 200px;">
                         <option value="">活动</option>
                         <option value="">课程</option>
@@ -230,7 +229,94 @@ padding-top: 40px;
     </div>
     <div class="loading-bg lp-units-loading-bg" style="display:none"></div>
 <%--新弹窗begin--%>
+<style>
+    .linkPopup{display: none;z-index: 20100;width: 370px;height: 360px;background: #fff;position: fixed;left: 50%;top: 50%;
+        margin-left: -185px;margin-top: -180px;font-size: 14px;color: #474747;border: 2px solid #e1e1e1;}
+    .linkHeader{height: 30px;line-height: 30px;border-bottom: 1px solid #e1e1e1;}
+    .linkHeader span{margin-left: 10px;}
+    .linkHeader i{float: right;margin-right: 9px;}
+    .linkTitle{height: 30px;border-bottom: 1px solid #e1e1e1;position: relative;}
+    .linkTitle span{cursor: pointer;position: absolute;top: 5px;display: inline-block;width: 76px;height: 24px;text-align: center;line-height: 24px;color: #333333;
+        border: 1px solid #e1e1e1;border-top-left-radius:3px;border-top-right-radius: 3px;vertical-align: bottom;}
+    .linkTitle span:first-child{left: 9px;}
+    .linkTitle span:last-child{left: 100px;}
+    .linkTitle span.active{border-bottom: 1px solid #fff;}
+    .linkContent{height: 250px;border-bottom: 1px solid #e1e1e1;}
+    .linkContent input{margin-top: 37px;margin-left: 10px;border: 1px solid #707070;width: 180px;height: 20px;
+        line-height: 20px;border-radius: 0;}
+    .linkNameList{width: 196px;border: 1px solid #707070;margin-left: 10px;border-top: none;
+    display: none;}
+    .linkNameList li{cursor: pointer;padding-left: 3px;}
+    .linkNameList li.active{background: #0e90d2;color: #fff;}
+    .link-btn{height: 48px;line-height: 48px;text-align: right;}
+    .link-btn button:last-child{margin-right: 20px;background: #8acb11;border: 1px solid #8acb11;}
+    .linkName{display: none;}
+</style>
+    <div class="linkPopup">
+        <div class="linkHeader">
+            <span>超链接</span>
+            <i class="icon iconfont closePopup">&#xe610;</i>
+        </div>
+        <div class="linkTitle">
+            <span class="active">活动</span>
+            <span>课程</span>
+        </div>
+        <div class="linkContent">
+            <input type="text" placeholder="请输入活动页面链接" class="linkLink">
+            <input type="text" placeholder="请输入课程名称" class="linkName">
+            <ul class="linkNameList">
+                <li class="active">1</li>
+                <li>2</li>
+                <li>3</li>
+            </ul>
+        </div>
+        <div  class="link-btn">
+            <button class="btn btn-mb btn-default closePopup">取消</button>
+            <button class="btn btn-mb btn-success closePopup">确定</button>
+        </div>
+    </div>
+<script>
+    $('.linkTitle span').click(function () {
+        $(this).addClass('active');
+        $(this).siblings('span').removeClass('active');
+        if($(this).index()){
+            $('.linkName').show();
+            $('.linkLink').hide();
 
+        }else{
+            $('.linkName').hide();
+            $('.linkLink').show();
+
+        }
+    });
+    //课程名称模糊搜索
+    $('.linkName').keyup(function () {
+        console.log('按下键了');
+        console.log($(this).val().length);
+        if($(this).val().length>0){
+            $('.linkNameList').show();
+        }else {
+            $('.linkNameList').hide();
+        }
+    });
+    //移入和移除鼠标，li样式变化
+    $('.linkNameList').on('mouseenter','li',function(){
+        $(this).addClass('active');
+        $(this).siblings('li').removeClass('active');
+    }).on('click','li',function(){
+        $('.linkName').val($(this).html());
+        $('.linkNameList').hide();
+    });
+    //打开和关闭弹窗
+    $('.closePopup').click(function(){
+       $('.linkPopup').hide();
+       $('.cke_dialog_background_cover').hide();
+    });
+    $('body').on('click','#cke_31',function(){
+        $('.linkPopup').show();
+    });
+
+</script>
 <%--新弹窗end--%>
 
 
