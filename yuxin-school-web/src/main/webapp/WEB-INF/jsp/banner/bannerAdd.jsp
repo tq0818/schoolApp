@@ -182,7 +182,7 @@ padding-top: 40px;
                         <option value="1">课程</option>
                     </select>
 
-                    <input type="text" name="bannerDescribe" id="linkHref" value=""  maxlength="255" placeholder="请输入活动页面链接" style="width: 200px;" class="checkLink">
+                    <input type="text" name="bannerDescribe" id="linkHref" value=""  maxlength="255" placeholder="示例:http://www.cdds365.com" style="width: 200px;" class="checkLink">
                     <input type="text" name="bannerDescribe" id="searchClass" value="" data-value="" maxlength="255" placeholder="请输入课程名称" style="width: 200px;" class="checkName">
                     <ul class="selectName">
 
@@ -276,7 +276,7 @@ padding-top: 40px;
             <span>课程</span>
         </div>
         <div class="linkContent">
-            <input type="text" placeholder="请输入活动页面链接" class="linkLink">
+            <input type="text" placeholder="示例:http://www.cdds365.com" class="linkLink">
             <input type="text" placeholder="请输入活动名称" class="linkLink" id="activeName" maxlength="20">
             <input type="text" placeholder="请输入课程名称" class="linkName" data-value="">
             <ul class="linkNameList">
@@ -285,7 +285,7 @@ padding-top: 40px;
         </div>
         <div  class="link-btn">
             <button class="btn btn-mb btn-default closePopup">取消</button>
-            <button class="btn btn-mb btn-success closePopup addLink sureLink">确定</button>
+            <button class="btn btn-mb btn-success addLink sureLink">确定</button>
         </div>
     </div>
 <script>
@@ -476,24 +476,110 @@ padding-top: 40px;
     $('.sureLink').click(function () {
         if($('.linkTitle').children('span').eq(0).hasClass('active')){
             linkValue = $('.linkLink').val();
+            activeName = $('#activeName').val();
+          //检验网址
+            var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
+            var regTwo=(/[\u4e00-\u9fa5]/g);
+            
+          	if(!reg.test(linkValue)){
+                $.msg("请输入有效的网址!",1000);
+                return ;
+            }
+          	if(!regTwo.test(activeName)){
+                $.msg("只能输入纯文本",1000);
+                return ;
+            }
             console.log(editor.document.getBody());
-            editor.document.getBody().innerHTML = "<p><a href='"+linkValue+"'></a></p>";
+           // editor.document.getBody().innerHTML = "<p><a href='"+linkValue+"'></a></p>";
+           $('.linkPopup').hide();
+            $('.cke_dialog_background_cover').hide();
+            $('.cke_dialog').css('visibility','hidden');
 //            editor.document.getBody().append("<p><a href='"+linkValue+"'></a></p>");
             /*$('.cke_editable cke_editable_themed cke_contents_ltr cke_show_borders').html("<p><a herf="+linkValue+"></a></p>");*/
         }else{
             linkValue = $('.linkName').val();
             $('.cke_editable').append("<button type=\"button\" onclick=\"buttonClick('asdasd,asdasd,wdad')\">buttonClick</button>");
         }
+        $('.linkPopup').hide();
+        $('.cke_dialog_background_cover').hide();
+        $('.cke_dialog').css('visibility','hidden');
     });
 		/* function goback(){
 			window.location.href = "comBannerIndex";
 		} */
     var radioList = $("input[type='radio']");
+		
     $('#saveBtn').click(function () {
         for(var i = 0;i< radioList.length;i++){
             if(radioList.eq(i).prop('checked')){
-                console.log(i);
-                    var bannerImgUrl=$("#commdotityPic").attr("realPath");
+            	//i等于0就是选择的目标地址
+                if(i == 0){
+                	var selectOption = $('#selectOption').val();
+                	//selectOption为0则是活动
+                	if(selectOption == 0){
+                		var linkHref = $('#linkHref').val();
+                		var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
+                		if (!reg.test(linkHref)){
+                            $.msg("请输入有效的网址!",1000);
+                            return ;
+                        }
+                		$.ajax({
+                            url: rootPath + "/Banner/addBanner",
+                            type:"post",
+                            data:{"bannerName":bannerName,
+                                "linkHref" : linkHref,
+                                "bannerDescribe":bannerDescribe,
+                                "bannerImgUrl" :bannerImgUrl,
+                                "bannerType" :bannerType,
+                                "number" :0
+                            },
+                            dataType:"json",
+                            success:function(data){
+                                if(data.msg == 'success0'){
+                                    alert("保存成功");
+                                    window.location.href = "/Banner/comBannerIndex";
+                                }
+                                if(data.msg == 'success1'){
+                                    alert("保存成功");
+                                    window.location.href = "/Banner/riseBannerIndex";
+                                }
+                                if(data.msg == 'success2'){
+                                    alert("保存成功");
+                                    window.location.href = "/Banner/acrcoBannerIndex";
+                                }
+                            }
+                        });
+                	}else{
+                		var searchClass = $('#searchClass').val();
+                		$.ajax({
+                            url: rootPath + "/Banner/addBanner",
+                            type:"post",
+                            data:{"bannerName":bannerName,
+                                "searchClass" : searchClass,
+                                "bannerDescribe":bannerDescribe,
+                                "bannerImgUrl" :bannerImgUrl,
+                                "bannerType" :bannerType,
+                                "number" :1
+                            },
+                            dataType:"json",
+                            success:function(data){
+                                if(data.msg == 'success0'){
+                                    alert("保存成功");
+                                    window.location.href = "/Banner/comBannerIndex";
+                                }
+                                if(data.msg == 'success1'){
+                                    alert("保存成功");
+                                    window.location.href = "/Banner/riseBannerIndex";
+                                }
+                                if(data.msg == 'success2'){
+                                    alert("保存成功");
+                                    window.location.href = "/Banner/acrcoBannerIndex";
+                                }
+                            }
+                        });
+                	}
+                }else{
+                	var bannerImgUrl=$("#commdotityPic").attr("realPath");
                     if(null==bannerImgUrl || ''==bannerImgUrl){
                         alert("banner图不能为空");
                         return;
@@ -511,7 +597,8 @@ padding-top: 40px;
                                 "bannerContent" : bannerContent,
                                 "bannerDescribe":bannerDescribe,
                                 "bannerImgUrl" :bannerImgUrl,
-                                "bannerType" :bannerType
+                                "bannerType" :bannerType,
+                                "number" :2
                             },
                             dataType:"json",
                             success:function(data){
@@ -531,8 +618,9 @@ padding-top: 40px;
                         });
                     }else{
                         alert("内容不能为空");
-                    }
-
+                    }	
+                }
+                    
                 }
             }
     });
