@@ -208,8 +208,11 @@ public class BannerConfigController extends BaseWebController{
         	if (file.exists()) {
                 file.delete();
             }
-			String htmlUrl=writeHtml(banner.getBannerContent());
-			banner.setBannerContentUrl(htmlUrl);
+        	if(banner.getNumber() == 2){
+        		String htmlUrl=writeHtml(banner.getBannerContent());
+    			banner.setBannerContentUrl(htmlUrl);
+        	}
+			
 		} catch (Exception e) {
 			log.error("修改保存失败", e);
 			e.printStackTrace();
@@ -342,11 +345,17 @@ public class BannerConfigController extends BaseWebController{
 	 */
 	@ResponseBody
     @RequestMapping("/addBanner")
-    public JSONObject addBanner(HttpServletRequest request, String bannerName,String bannerContent,String bannerDescribe,String bannerImgUrl,Integer bannerType) {
+    public JSONObject addBanner(HttpServletRequest request, String bannerName,String bannerContent,String bannerDescribe,String bannerImgUrl,Integer bannerType,Integer number,String linkHref,String searchClass) {
         JSONObject json = new JSONObject();
         try {
         	Banner banner =new Banner();
-        	if(StringUtils.isBlank(bannerContent)){
+        	if(number == 0){
+        		banner.setLinkHref(linkHref);
+        	}
+        	if(number == 1){
+        		banner.setSearchClass(searchClass);
+        	}
+        	if(number == 2){
         		String htmlUrl=writeHtml(bannerContent);
         		banner.setBannerContentUrl(htmlUrl);
         	}
@@ -355,6 +364,7 @@ public class BannerConfigController extends BaseWebController{
         	banner.setBannerContent(bannerContent);
         	banner.setBannerDescribe(bannerDescribe);
         	banner.setUpdateTime(new Date());
+        	banner.setNumber(number);
         	if(bannerType == 2){
         		banner.setIsState(0);
         	}else{
@@ -545,7 +555,7 @@ public class BannerConfigController extends BaseWebController{
 	@ResponseBody
     @RequestMapping("/queryClass")
     public List<ClassType> queryClass(HttpServletRequest request, String className) {
-        try {
+        try { 
         	List<ClassType> listClass = bannerService.findClassByName(className);
             return listClass;
         } catch (Exception e) {

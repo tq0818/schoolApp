@@ -307,6 +307,7 @@ padding-top: 40px;
     $('.linkName').keyup(function () {
         if($(this).val().length>0){
             var className = $(this).val();
+            console.log(className);
             $.ajax({
                 url: rootPath + "/Banner/queryClass",
                 type:"post",

@@ -65,7 +65,7 @@
 		INNER JOIN commodity_product_realtion cpr ON ct.id = cpr.product_id
 		INNER JOIN commodity com ON com.id = cpr.com_id
 		where 
-		ct.name like '%#{className}%'
+		ct.name like concat('%',#{className},'%')
 	</select>
 	<!-- 适用于主键自增类型 -->
 	<insert id="insertBanner" parameterType="com.yuxin.wx.model.banner.Banner" useGeneratedKeys="true" keyProperty="id">
@@ -78,11 +78,14 @@
 	is_state,
 	update_time,
 	order_by_num,
-	banner_type
+	banner_type,
+	banner_number,
+	banner_linkHref,
+	banner_classContent
 	)
 	VALUES
 	(#{bannerName},#{bannerDescribe},#{bannerContent},#{bannerContentUrl},
-	#{bannerImgUrl},#{isState},#{updateTime},#{orderByNum},#{bannerType})
+	#{bannerImgUrl},#{isState},#{updateTime},#{orderByNum},#{bannerType},#{number},#{linkHref},#{searchClass})
 	</insert>
 	
 	<select id="findById" resultMap="BannerResultMap" parameterType="String" >
@@ -103,6 +106,9 @@
 			<if test="updateTime != null">update_time = #{updateTime},</if>
 			<if test="orderByNum == null ">order_by_num = (select t2.num from (select (max(t1.order_by_num)+1) as num  from banner_app t1) t2),</if>
 			<if test="orderByNum != null ">order_by_num =  #{orderByNum},</if>
+			<if test="number != null ">banner_number =  #{number},</if>
+			<if test="linkHref != null ">banner_linkHref =  #{linkHref},</if>
+			<if test="searchClass != null ">banner_classContent =  #{searchClass},</if>
 		</trim>
 		<where>id = #{id}</where>
 	</update>
