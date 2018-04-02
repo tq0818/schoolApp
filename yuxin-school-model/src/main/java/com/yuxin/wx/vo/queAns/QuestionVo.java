@@ -65,6 +65,7 @@ public class QuestionVo extends BaseEntity {
 	private String headImg;//头像
 	private Integer isChecke;//是否需要审核标识  1 不需要  2需要
 	private String labelContent;
+	private Integer contentType;//问答类型 。  
 	// Constructor
 	public QuestionVo() {
 	}
@@ -490,6 +491,14 @@ public class QuestionVo extends BaseEntity {
 
 	public void setLabelContent(String labelContent) {
 		this.labelContent = labelContent;
+	}
+	
+	public Integer getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(Integer contentType) {
+		this.contentType = contentType;
 	}
 
 	@Override

@@ -1,10 +1,11 @@
 package com.yuxin.wx.model.queAns;
 
 import java.util.Date;
+
 import org.codehaus.jackson.map.annotate.JsonSerialize;
-import com.yuxin.wx.util.ShortDateSerializer;
 
 import com.yuxin.wx.common.BaseEntity;
+import com.yuxin.wx.util.LongDateSerializer;
 
 /**
  * POJO:QuestionAnswer
@@ -158,7 +159,7 @@ public class QuestionAnswer extends BaseEntity {
 		return this;
 	}
 	
-	@JsonSerialize(using = ShortDateSerializer.class)
+	@JsonSerialize(using = LongDateSerializer.class)
 	public Date getCreateTime() {
 		return createTime;
 	}
