@@ -182,12 +182,10 @@ padding-top: 40px;
                         <option value="1">课程</option>
                     </select>
 
-                    <input type="text" name="bannerDescribe" id="" value=""  maxlength="255" placeholder="请输入活动页面链接" style="width: 200px;" class="checkLink">
-                    <input type="text" name="bannerDescribe" id="" value=""  maxlength="255" placeholder="请输入课程名称" style="width: 200px;" class="checkName">
+                    <input type="text" name="bannerDescribe" id="linkHref" value=""  maxlength="255" placeholder="请输入活动页面链接" style="width: 200px;" class="checkLink">
+                    <input type="text" name="bannerDescribe" id="searchClass" value="" data-value="" maxlength="255" placeholder="请输入课程名称" style="width: 200px;" class="checkName">
                     <ul class="selectName">
-                        <li class="active">2</li>
-                        <li>3</li>
-                        <li>4</li>
+
                     </ul>
                 </div>
                 <div class="contentBox">
@@ -198,7 +196,7 @@ padding-top: 40px;
 
                 <div class="putQuestion bannerBtnGroup">
                 	<a href='#' onclick="yulan()"  id="yulan" class='btn btn-success'>预览</a>
-                    <button  onclick="save()" type="button" class="btn btn-success"  >保存</button>
+                    <button  type="button" class="btn btn-success" id="saveBtn" >保存</button>
                     <button onclick="history.go(-1)" type="button"  class="btn btn-danger"  >取消</button>
                 </div>
             </div>
@@ -279,16 +277,15 @@ padding-top: 40px;
         </div>
         <div class="linkContent">
             <input type="text" placeholder="请输入活动页面链接" class="linkLink">
-            <input type="text" placeholder="请输入课程名称" class="linkName">
+            <input type="text" placeholder="请输入活动名称" class="linkLink" id="activeName" maxlength="20">
+            <input type="text" placeholder="请输入课程名称" class="linkName" data-value="">
             <ul class="linkNameList">
-                <li class="active">1</li>
-                <li>2</li>
-                <li>3</li>
+
             </ul>
         </div>
         <div  class="link-btn">
             <button class="btn btn-mb btn-default closePopup">取消</button>
-            <button class="btn btn-mb btn-success closePopup">确定</button>
+            <button class="btn btn-mb btn-success closePopup addLink sureLink">确定</button>
         </div>
     </div>
 <script>
@@ -305,9 +302,25 @@ padding-top: 40px;
 
         }
     });
+
     //课程名称模糊搜索
     $('.linkName').keyup(function () {
         if($(this).val().length>0){
+            var className = $(this).val();
+            $.ajax({
+                url: rootPath + "/Banner/queryClass",
+                type:"post",
+                data:{"className":className
+                },
+                success:function(data){
+                    var html = '';
+                    for (var i=0;i<data.length;i++)
+                    {
+                        html = html + '<li data-value='+data[i].id+','+data[i].name+','+data[i].liveFlag+','+   data[i].commodityId+' >'+data[i].name+'</li>';
+                    }
+                    $('.linkNameList').html('').html(html);
+                }
+            });
             $('.linkNameList').show();
         }else {
             $('.linkNameList').hide();
@@ -319,6 +332,7 @@ padding-top: 40px;
         $(this).siblings('li').removeClass('active');
     }).on('click','li',function(){
         $('.linkName').val($(this).html());
+        $('.linkName').attr('data-value',$(this).attr('data-value'));
         $('.linkNameList').hide();
     });
     //打开和关闭弹窗
@@ -352,6 +366,22 @@ padding-top: 40px;
     //课程li下拉
     $('.checkName').keyup(function () {
         if($(this).val().length>0){
+            var className = $(this).val();
+            $.ajax({
+                url: rootPath + "/Banner/queryClass",
+                type:"post",
+                data:{"className":className
+                },
+                success:function(data){
+                    var html = '';
+                    for (var i=0;i<data.length;i++)
+                    {
+                        html = html + '<li data-value='+data[i].id+','+data[i].name+','+data[i].liveFlag+','+data[i].commodityId+' >'+data[i].name+'</li>';
+                    }
+                    $('.selectName').html('').html(html);
+                }
+            });
+
             $('.selectName').show();
         }else {
             $('.selectName').hide();
@@ -363,9 +393,13 @@ padding-top: 40px;
         $(this).siblings('li').removeClass('active');
     }).on('click','li',function(){
         $('.checkName').val($(this).html());
+        $('.checkName').attr('data-value',$(this).attr('data-value'));
         $('.selectName').hide();
     });
 </script>
+
+<%--判断单选按钮--%>
+
 
 <script type="text/javascript" src="<%=rootPath%>/plugins/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/ajaxfileupload.js"></script>
@@ -435,51 +469,73 @@ padding-top: 40px;
 				_checkbox.attr('checked',false);
 			}
 		});
+    //添加超链接
+    //点击确定
+    var linkValue;
+
+    $('.sureLink').click(function () {
+        if($('.linkTitle').children('span').eq(0).hasClass('active')){
+            linkValue = $('.linkLink').val();
+            console.log(editor.document.getBody());
+            editor.document.getBody().innerHTML = "<p><a href='"+linkValue+"'></a></p>";
+//            editor.document.getBody().append("<p><a href='"+linkValue+"'></a></p>");
+            /*$('.cke_editable cke_editable_themed cke_contents_ltr cke_show_borders').html("<p><a herf="+linkValue+"></a></p>");*/
+        }else{
+            linkValue = $('.linkName').val();
+            $('.cke_editable').append("<button type=\"button\" onclick=\"buttonClick('asdasd,asdasd,wdad')\">buttonClick</button>");
+        }
+    });
 		/* function goback(){
 			window.location.href = "comBannerIndex";
 		} */
-		function save(){
-			 var bannerImgUrl=$("#commdotityPic").attr("realPath");
-			 if(null==bannerImgUrl || ''==bannerImgUrl){
-				 alert("banner图不能为空");
-				 return;
-			 }
-	    	 var bannerName=$("#bannerName").val();
-	    	 var bannerDescribe=$("#bannerDescribe").val();
-	    	 CKupdate();
-	    	 var bannerContent=editor.document.getBody().getHtml();
-	    	 var bannerType = $("#bannerType").val();
-	    	 if(null!=bannerContent && '<p><br></p>'!=bannerContent){
-	    		 $.ajax({
-	 	 			url: rootPath + "/Banner/addBanner",
-	 	 			type:"post",
-	 	 			data:{"bannerName":bannerName,
-	 	 				"bannerContent" : bannerContent,
-	 	 				"bannerDescribe":bannerDescribe,
-	 	 				"bannerImgUrl" :bannerImgUrl,
-	 	 				"bannerType" :bannerType
-	 	 				},
-	 	 			dataType:"json",
-	 	 			success:function(data){
-	 	 				if(data.msg == 'success0'){
-	 	 					alert("保存成功");
-	 	 					window.location.href = "/Banner/comBannerIndex";
-	 	 				}
-	 	 				if(data.msg == 'success1'){
-	 	 					alert("保存成功");
-	 	 					window.location.href = "/Banner/riseBannerIndex";
-	 	 				}
-	 	 				if(data.msg == 'success2'){
-	 	 					alert("保存成功");
-	 	 					window.location.href = "/Banner/acrcoBannerIndex";
-	 	 				}
-	 	 			}
-	 	 		});
-	    	 }else{
-	    		 alert("内容不能为空");
-	    	 }
-	    	
-	    } 
+    var radioList = $("input[type='radio']");
+    $('#saveBtn').click(function () {
+        for(var i = 0;i< radioList.length;i++){
+            if(radioList.eq(i).prop('checked')){
+                console.log(i);
+                    var bannerImgUrl=$("#commdotityPic").attr("realPath");
+                    if(null==bannerImgUrl || ''==bannerImgUrl){
+                        alert("banner图不能为空");
+                        return;
+                    }
+                    var bannerName=$("#bannerName").val();
+                    var bannerDescribe=$("#bannerDescribe").val();
+                    CKupdate();
+                    var bannerContent=editor.document.getBody().getHtml();
+                    var bannerType = $("#bannerType").val();
+                    if(null!=bannerContent && '<p><br></p>'!=bannerContent){
+                        $.ajax({
+                            url: rootPath + "/Banner/addBanner",
+                            type:"post",
+                            data:{"bannerName":bannerName,
+                                "bannerContent" : bannerContent,
+                                "bannerDescribe":bannerDescribe,
+                                "bannerImgUrl" :bannerImgUrl,
+                                "bannerType" :bannerType
+                            },
+                            dataType:"json",
+                            success:function(data){
+                                if(data.msg == 'success0'){
+                                    alert("保存成功");
+                                    window.location.href = "/Banner/comBannerIndex";
+                                }
+                                if(data.msg == 'success1'){
+                                    alert("保存成功");
+                                    window.location.href = "/Banner/riseBannerIndex";
+                                }
+                                if(data.msg == 'success2'){
+                                    alert("保存成功");
+                                    window.location.href = "/Banner/acrcoBannerIndex";
+                                }
+                            }
+                        });
+                    }else{
+                        alert("内容不能为空");
+                    }
+
+                }
+            }
+    });
 		//预览
 		function yulan(){
 		
