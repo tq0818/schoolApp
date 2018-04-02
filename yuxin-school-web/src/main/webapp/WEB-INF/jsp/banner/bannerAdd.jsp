@@ -111,6 +111,7 @@ padding-top: 40px;
 
 /*隐藏自带弹窗*/
      .cke_editor_newsContents_dialog,table{display: none;}
+     .checkName{display: none;}
 
 </style>
 </head>
@@ -144,13 +145,29 @@ padding-top: 40px;
                     <span>描述:</span>
                     <input type="text" name="bannerDescribe" id="bannerDescribe" value="${msgPage.bannerDescribe }" class="bannerInput" maxlength="255" placeholder="最长可输入255个字符">
                 </div>
-                <div class="checkBoxBtn">
+                <div class="checkBoxBtn targetSite">
                     <span><input type='radio' name="only" value="0" checked>目标地址:</span>
-                    <select name="" id="" style="margin-left: 48px;width: 200px;">
-                        <option value="">活动</option>
-                        <option value="">课程</option>
+                    <select name="" id="selectOption" style="margin-left: 48px;width: 200px;">
+                        <option value="0">活动</option>
+                        <option value="1">课程</option>
                     </select>
-                    <input type="text" name="bannerDescribe" id="" value=""  maxlength="255" placeholder="请输入活动页面链接" style="width: 200px;">
+                    <style>
+                        .selectName{width: 216px;border: 1px solid #ddd;margin-left: 354px;border-top: none;margin-top: -2px;}
+                        .selectName li{padding-left: 3px;}
+                        .checkName{border-radius: 0 !important;}
+                        .targetSite{height: 60px;}
+                        .selectName{display: none;}
+                        .selectName li{cursor: pointer;}
+                        .selectName li.active{background: #0e90d2;color: #fff;}
+
+                    </style>
+                    <input type="text" name="bannerDescribe" id="" value=""  maxlength="255" placeholder="请输入活动页面链接" style="width: 200px;" class="checkLink">
+                    <input type="text" name="bannerDescribe" id="" value=""  maxlength="255" placeholder="请输入课程名称" style="width: 200px;" class="checkName">
+                    <ul class="selectName">
+                        <li class="active">2</li>
+                        <li>3</li>
+                        <li>4</li>
+                    </ul>
                 </div>
                 <div class="contentBox">
                     <span><input type='radio' name="only" value="1">内容:</span>
@@ -291,8 +308,6 @@ padding-top: 40px;
     });
     //课程名称模糊搜索
     $('.linkName').keyup(function () {
-        console.log('按下键了');
-        console.log($(this).val().length);
         if($(this).val().length>0){
             $('.linkNameList').show();
         }else {
@@ -319,6 +334,34 @@ padding-top: 40px;
 </script>
 <%--新弹窗end--%>
 
+<script>
+    //课程和链接相互切换
+    $('#selectOption').change(function(){
+        if(Number($(this).val())){
+            $('.checkLink').hide();
+            $('.checkName').show();
+        }else{
+            $('.checkLink').show();
+            $('.checkName').hide();
+        }
+    });
+    //课程li下拉
+    $('.checkName').keyup(function () {
+        if($(this).val().length>0){
+            $('.selectName').show();
+        }else {
+            $('.selectName').hide();
+        }
+    });
+    //移入和移除鼠标，li样式变化
+    $('.selectName').on('mouseenter','li',function(){
+        $(this).addClass('active');
+        $(this).siblings('li').removeClass('active');
+    }).on('click','li',function(){
+        $('.checkName').val($(this).html());
+        $('.selectName').hide();
+    });
+</script>
 
 <script type="text/javascript" src="<%=rootPath%>/plugins/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/ajaxfileupload.js"></script>
