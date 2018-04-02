@@ -65,7 +65,7 @@
 		INNER JOIN commodity_product_realtion cpr ON ct.id = cpr.product_id
 		INNER JOIN commodity com ON com.id = cpr.com_id
 		where 
-		ct.name like '%测%'
+		ct.name like '%#{className}%'
 	</select>
 	<!-- 适用于主键自增类型 -->
 	<insert id="insertBanner" parameterType="com.yuxin.wx.model.banner.Banner" useGeneratedKeys="true" keyProperty="id">

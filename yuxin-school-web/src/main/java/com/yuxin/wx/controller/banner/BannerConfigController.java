@@ -345,12 +345,14 @@ public class BannerConfigController extends BaseWebController{
     public JSONObject addBanner(HttpServletRequest request, String bannerName,String bannerContent,String bannerDescribe,String bannerImgUrl,Integer bannerType) {
         JSONObject json = new JSONObject();
         try {
-            String htmlUrl=writeHtml(bannerContent);
         	Banner banner =new Banner();
+        	if(StringUtils.isBlank(bannerContent)){
+        		String htmlUrl=writeHtml(bannerContent);
+        		banner.setBannerContentUrl(htmlUrl);
+        	}
         	banner.setBannerImgUrl(bannerImgUrl);
         	banner.setBannerName(bannerName);
         	banner.setBannerContent(bannerContent);
-        	banner.setBannerContentUrl(htmlUrl);
         	banner.setBannerDescribe(bannerDescribe);
         	banner.setUpdateTime(new Date());
         	if(bannerType == 2){
@@ -520,7 +522,7 @@ public class BannerConfigController extends BaseWebController{
 			"<body>"+
 				"<div id=\"details\">"+content+
 				"</div>";
-		content+="<script src= https://cdn.bootcss.com/jquery/1.12.3/jquery.min.js></script><script> $('a').attr('href','##') ;$('a').attr('target',' ')</script></body>" +
+		content+="<script src= https://cdn.bootcss.com/jquery/1.12.3/jquery.min.js></script><script> $('a').attr('href','##') ;$('a').attr('target',' ');function buttonClick(content){window.webkit.messageHandlers.buttonClick.postMessage(content);}</script></body>" +
 				"</html>";
 		OutputStreamWriter pw = null;
     	SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhss");
