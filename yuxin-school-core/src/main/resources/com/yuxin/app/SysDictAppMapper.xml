@@ -20,6 +20,9 @@
 			<when test="parentId ==null or parentId ==''">and parent_id is null </when>
 			<when test="parentId !=null and parentId !=''">and parent_id = #{parentId}</when>
 		</choose>
+		<if test="type !=null and type !=''">
+			and type ='TUIJIAN'
+		</if>
 		ORDER BY sort
 	</select>
 

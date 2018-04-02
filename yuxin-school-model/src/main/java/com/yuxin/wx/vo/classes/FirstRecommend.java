@@ -16,6 +16,16 @@ public class FirstRecommend extends BaseEntity {
     //推荐学段排序
     private String sort;
 
+    private String categoryId;
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
     public String getAppShelvesId() {
         return appShelvesId;
     }

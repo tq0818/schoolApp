@@ -305,7 +305,7 @@ public class SimpleclassTypeController {
 			firstMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
 			if("1".equals(zhiboFlag)){
 				for(SysDictApp first : firstMenus){
-					if("ZHIBO".equals(first.getCode())){
+					if("ZHIBO".equals(first.getCode())||"JIAZHANGJIANGZUO".equals(first.getCode())){
 						firstMenus.clear();
 						firstMenus.add(first);
 						break;
@@ -314,7 +314,7 @@ public class SimpleclassTypeController {
 			}else{
 				List<SysDictApp>feizhibo = new ArrayList<SysDictApp>();
 				for(SysDictApp first : firstMenus){
-					if(!"ZHIBO".equals(first.getCode())){
+					if(!"ZHIBO".equals(first.getCode()) && !"FIRSTRECOMMEND".equals(first.getType())){
 						feizhibo.add(first);
 					}
 				}

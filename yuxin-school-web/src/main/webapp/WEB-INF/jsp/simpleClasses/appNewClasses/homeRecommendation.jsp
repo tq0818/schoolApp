@@ -81,7 +81,16 @@
     <div>
         <div>
             <label for="">推荐位置</label>
-            <a href="javascript:void(0)" class="btn btn-default recommendLocation btn-success">${firstMenu.name}</a>
+            <c:forEach items="${firstMenu}" var="recSite">
+                <c:choose>
+                    <c:when test="${recomSite.categoryId eq recSite.id}">
+                        <a href="javascript:void(0)" id="${recSite.id}" class="btn btn-default recommendLocation btn-success">${recSite.name}</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="javascript:void(0)" id="${recSite.id}" class="btn btn-default recommendLocation">${recSite.name}</a>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
         </div>
         <div class="recommendationSection">
             <label for="">推荐学段</label>
@@ -172,6 +181,15 @@
             }
         }
     });
+    $(".recommendLocation").click(function(){
+        if($(this).hasClass("btn-success")){
+            $(this).removeClass("btn-success");
+        }else{
+            $(".recommendLocation").removeClass("btn-success");
+            $(this).addClass("btn-success");
+        }
+
+    });
 
     function saveRecommond(appId) {
         var ids = "";
@@ -181,7 +199,16 @@
                 ids += $(this).attr("id") + ",";
             }
         });
-        console.log(ids);
+        var categoryId = '';
+        $(".recommendLocation").each(function(){
+            if($(this).hasClass("btn-success")){
+                categoryId = $(this).attr("id");
+            }
+        });
+        if(!categoryId){
+            alert("请选择推荐位置");
+            return;
+        }
         if (ids == "") {
             alert("请选择推荐学段");
             return;
@@ -195,7 +222,7 @@
                 return;
             }
         }
-//请求状态为请求中则返回
+        //请求状态为请求中则返回
         if(isLoading){
             alert("网络繁忙，请稍等！");
             return;
@@ -205,7 +232,7 @@
         $.ajax({
             url: rootPath + "/appNewClasses/insertRcommondInfo",
             type: "post",
-            data: {"ids": ids, "sort": sort, "appId": appId},
+            data: {"ids": ids, "sort": sort, "appId": appId,"categoryId":categoryId},
             success: function (result) {
                 if ("1" == result) {
                     alert("推荐成功")

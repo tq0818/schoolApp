@@ -368,6 +368,8 @@
 			},
 			showAllShelvesClssType : function(id,typeStr){
 
+				console.log("params:"+id+"--"+typeStr);
+
 				var datas = {};
 				datas.typeStr=typeStr;
 				datas.typeId=id;

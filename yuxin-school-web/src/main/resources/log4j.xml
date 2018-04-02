@@ -10,14 +10,14 @@
 	</appender>
 
 	<appender name="log" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="/data/applogs/schoolmanage/school.log" />
+		<param name="File" value="/Users/lym_gxm/data/applogs/schoolmanage/school.log" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH\:mm\:ss} [%-5p] [%c] %m%n" />
 		</layout>
 	</appender>
 
 	<appender name="error" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="/data/applogs/schoolmanage/school_error.log" />
+		<param name="File" value="/Users/lym_gxm/data/applogs/schoolmanage/school_error.log" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH\:mm\:ss} [%-5p] [%c] %m%n" />
 		</layout>
@@ -28,14 +28,14 @@
 	</appender>
 
 	<appender name="payFile_Info" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="/data/applogs/schoolmanage/school_pay.log" />
+		<param name="File" value="/Users/lym_gxm/data/applogs/schoolmanage/school_pay.log" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH\:mm\:ss} [%-5p] [%c] %m%n" />
 		</layout>
 	</appender>
 
 	<appender name="payFile_Error" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="/data/applogs/schoolmanage/school_pay_error.log" />
+		<param name="File" value="/Users/lym_gxm/data/applogs/schoolmanage/school_pay_error.log" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH\:mm\:ss} [%-5p] [%c] %m%n" />
 		</layout>
@@ -46,14 +46,14 @@
 	</appender>
 
 	<appender name="studentFile_Info" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="/data/applogs/schoolmanage/school_student.log" />
+		<param name="File" value="/Users/lym_gxm/data/applogs/schoolmanage/school_student.log" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH\:mm\:ss} [%-5p] [%c] %m%n" />
 		</layout>
 	</appender>
 
 	<appender name="studentFile_Error" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="/data/applogs/schoolmanage/school_student_error.log" />
+		<param name="File" value="/Users/lym_gxm/data/applogs/schoolmanage/school_student_error.log" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH\:mm\:ss} [%-5p] [%c] %m%n" />
 		</layout>

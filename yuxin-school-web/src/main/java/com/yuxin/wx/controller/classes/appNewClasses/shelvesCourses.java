@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,14 @@ public class shelvesCourses {
         //获取一级菜单
         SysDictApp search = new SysDictApp();
         List<SysDictApp> slibMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
+/*        if(null!=slibMenus && slibMenus.size()>0){
+            for(SysDictApp sda : slibMenus){
+                if("FIRSTRECOMMEND".equals(sda.getType())){
+                    slibMenus.remove(sda);
+                    break;
+                }
+            }
+        }*/
         model.addAttribute("firstMenus", slibMenus);
         return "simpleClasses/appNewClasses/shelvesCourses";
     }
@@ -98,8 +107,11 @@ public class shelvesCourses {
             modelIds = Integer.valueOf(modelId.split("_")[0]);
             modelCode = modelId.split("_")[1];
         }
+        SysDictApp search = new SysDictApp();
+        List<SysDictApp> slibMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
+        model.addAttribute("firstMenu",slibMenus);
         //获取二级菜单
-        List<SysDictApp> menusList = sysDictAppServiceImpl.getStudySectionById(modelIds);
+        /*List<SysDictApp> menusList = sysDictAppServiceImpl.getStudySectionById(modelIds);
 
         //获取课程分类名称
         List<SysDictApp> grades = new ArrayList<SysDictApp>();
@@ -113,10 +125,10 @@ public class shelvesCourses {
             } else {
                 grades.add(s);
             }
-        }
-        model.addAttribute("grades", grades);
+        }*/
+       /* model.addAttribute("grades", grades);
         model.addAttribute("stages", stages);
-        model.addAttribute("types", types);
+        model.addAttribute("types", types);*/
 
         String mokelName = sysDictAppServiceImpl.getModelById(modelIds);
         model.addAttribute("modelName", mokelName);
@@ -152,15 +164,23 @@ public class shelvesCourses {
         String commodityId = request.getParameter("commodityId");
 
         SysDictApp search = new SysDictApp();
+        search.setType("TUIJIAN");
+        search.setParentId(-1);
         List<SysDictApp> slibMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
-        if (null != slibMenus && slibMenus.size() > 0) {
+        model.addAttribute("firstMenu",slibMenus);
+/*        if (null != slibMenus && slibMenus.size() > 0) {
+            List <SysDictApp> recoSite = new ArrayList<SysDictApp>();
             for (SysDictApp sda : slibMenus) {
-                if (String.valueOf(sda.getId()).equals(categerorId)) {
-                    model.addAttribute("firstMenu", sda);
+                //获取首页推荐位置信息
+                if (String.valueOf(sda.getId()).equals(categerorId) || "FIRSTRECOMMEND".equals(sda.getType())) {
+                    recoSite.add(sda);
+                }
+                if(recoSite.size()==2){
+                    model.addAttribute("firstMenu",recoSite);
                     break;
                 }
             }
-        }
+        }*/
         ClassTypeVo searchAndResult = new ClassTypeVo();
         List<ClassTypeVo> gardeIdList = new ArrayList<>();
         if ("1".equals(zhiboFlag)) {
@@ -177,7 +197,7 @@ public class shelvesCourses {
             gardeIdList = classTypeServiceImpl.getGardeIdList(searchAndResult);
         }
 
-
+        model.addAttribute("recomSite",gardeIdList.size()>0?gardeIdList.get(0):null);
         model.addAttribute("searchAndResult", searchAndResult);
         model.addAttribute("gardeIdList", gardeIdList);
         String commodityPicUrl = "http://" + propertiesUtil.getProjectImageUrl() + "/";
@@ -192,6 +212,10 @@ public class shelvesCourses {
 
         try {
             List<FirstRecommend> frs = new ArrayList<>();
+            String categoryId = request.getParameter("categoryId");
+            if(StringUtils.isBlank(categoryId)){
+                return "0";
+            }
             if (null != ids && !"".equals(ids)) {
                 String[] idStrs = ids.split(",");
                 for (String idStr : idStrs) {
@@ -204,9 +228,12 @@ public class shelvesCourses {
                     } else {
                         fr.setSort(sort);
                     }
+                    fr.setCategoryId(categoryId);
                     frs.add(fr);
                 }
                 classTypeServiceImpl.insertAndUpdateFirstRecommond(frs, sort, appId);
+            }else{
+                return "0";
             }
             return "1";
         } catch (Exception e) {
