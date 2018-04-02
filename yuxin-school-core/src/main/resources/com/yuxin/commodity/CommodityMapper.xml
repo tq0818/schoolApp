@@ -472,7 +472,7 @@
     </select>
 
     <select id="getModelList" resultMap="commodityVoResultMap">
-		select id,name,code as item_one_code from sys_dict_app WHERE type = 'CATEGORY'
+		select id,name,code as item_one_code from sys_dict_app WHERE type = 'TUIJIAN'
 	</select>
 
 
