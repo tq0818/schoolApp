@@ -11,6 +11,7 @@ import com.yuxin.wx.banner.mapper.BannerMapper;
 import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.banner.Banner;
+import com.yuxin.wx.model.classes.ClassType;
 
 /**
  * Service Implementation:QuestionAnswer
@@ -37,6 +38,14 @@ public class BannerServiceImpl extends BaseServiceImpl implements IBannerService
 		
 		List<Banner> data=BannerMapper.queryMessageList(banner);
 		int count=BannerMapper.queryMessageCount(banner);
+		PageFinder<Banner> pageFinder=new PageFinder<Banner>(banner.getPage(), banner.getPageSize(), count, data);
+		return pageFinder;
+	}
+	@Override
+	public PageFinder<Banner> findAcrcoBanner(Banner banner) {
+		
+		List<Banner> data=BannerMapper.findAcrcoBanner(banner);
+		int count=BannerMapper.countAcrcoBanner(banner);
 		PageFinder<Banner> pageFinder=new PageFinder<Banner>(banner.getPage(), banner.getPageSize(), count, data);
 		return pageFinder;
 	}
@@ -79,6 +88,18 @@ public class BannerServiceImpl extends BaseServiceImpl implements IBannerService
 		bannervo.setOrderByNum(num);
 		BannerMapper.update(bannervo);  
 		
+	}
+
+	@Override
+	public void forbiddenBanner() {
+		BannerMapper.forbiddenBanner();
+		
+	}
+
+	@Override
+	public List<ClassType> findClassByName(String calssName) {
+		List<ClassType> list = BannerMapper.findClassByName(calssName);
+		return list;
 	}
     
     

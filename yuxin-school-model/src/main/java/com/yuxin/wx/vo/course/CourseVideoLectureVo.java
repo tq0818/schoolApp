@@ -50,6 +50,8 @@ public class CourseVideoLectureVo extends BaseEntity {
 	private String ccId;//video表中的video_cc_id
 	private String ccUserId;//
 	private String ccApiKey;
+	//上次观看时长
+	private long preTime;
 	// Constructor
 	public CourseVideoLectureVo() {
 	}
@@ -74,7 +76,16 @@ public class CourseVideoLectureVo extends BaseEntity {
 
 	// getter && setter
 	// 在setter方法最后加上"return this;"并把返回参数改为CourseVideoLectureVo可以实现连缀设置属性
-	
+
+
+	public long getPreTime() {
+		return preTime;
+	}
+
+	public void setPreTime(long preTime) {
+		this.preTime = preTime;
+	}
+
 	public Integer getChapterOrder() {
 		return chapterOrder;
 	}

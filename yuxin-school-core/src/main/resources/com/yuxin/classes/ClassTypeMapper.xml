@@ -142,12 +142,14 @@
 	<sql id="table_columns_first">
 		app_shelves_id,
 		grade_id,
-		sort
+		sort,
+		category_id
 	</sql>
 	<sql id="batch_entity_properties_first">
 		#{item.appShelvesId},
 		#{item.gradeNo},
-		#{item.sort}
+		#{item.sort},
+		#{item.categoryId}
 	</sql>
 	
 	<sql id="table_columns">
@@ -1112,7 +1114,7 @@
 	</select>
 
 	<select id="getGardeIdList" parameterType="com.yuxin.wx.vo.classes.ClassTypeVo"  resultMap="classTypeVoResultMap">
-		select grade_id  from first_recommend  where app_shelves_id = #{appId}
+		select grade_id,category_id  from first_recommend  where app_shelves_id = #{appId}
 	</select>
 	
 	 <select id="queryNeedPushLiveClass" resultMap="classTypeVoResultMap">

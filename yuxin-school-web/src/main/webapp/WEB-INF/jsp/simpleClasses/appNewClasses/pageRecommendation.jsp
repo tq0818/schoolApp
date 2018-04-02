@@ -18,18 +18,27 @@
     <div class="mainbackground nopadding">
         <div class="classes-type">
             <p class="c">
+                <span class="t-title">推荐位置</span>
+                <span class="t-content" id="recommentId">
+                     <a href="javascript:void(0);" data-code="${modelId}" class="btn btn-mini btn-default  btn-success">${modelName}</a>
+                </span>
+            </p>
+            <p class="c">
                 <span class="t-title">课程分类</span>
                 <span class="t-content" id="courseCaId">
-                     <a href="javascript:Form.showAllShelvesClssType('${modelId}','courseCaId');" data-code="${modelId}" class="btn btn-mini btn-default  btn-success">${modelName}</a>
+                    <a href="javascript:Form.showAllShelvesClssType('all','courseCaId');"  data-code="all" class="btn btn-mini btn-default btn-success">全部</a>
+                    <c:forEach items="${firstMenu}" var="menu">
+                        <a href="javascript:Form.showAllShelvesClssType('${menu.id}','courseCaId');" data-code="${menu.id}" class="btn btn-mini btn-default">${menu.name}</a>
+                    </c:forEach>
                 </span>
             </p>
             <p class="c">
                 <span class="t-title">学段</span>
                 <span class="t-content" id="gradeId">
                      <a href="javascript:Form.showAllShelvesClssType('all','gradeId');"  data-code="all" class="btn btn-mini btn-default btn-success">全部</a>
-                    <c:forEach items="${grades}" var="grade">
+                   <%-- <c:forEach items="${grades}" var="grade">
                                <a href="javascript:Form.showAllShelvesClssType('${grade.id}','gradeId');" data-code="${grade.id}" class="btn btn-mini btn-default">${grade.name}</a>
-                    </c:forEach>
+                    </c:forEach>--%>
                 </span>
             </p>
             <p class="c">

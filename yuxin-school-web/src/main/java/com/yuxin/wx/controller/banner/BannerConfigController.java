@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -32,6 +33,7 @@ import com.yuxin.wx.common.BaseWebController;
 import com.yuxin.wx.common.JsonMsg;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.banner.Banner;
+import com.yuxin.wx.model.classes.ClassType;
 import com.yuxin.wx.util.ImageUtils;
 import com.yuxin.wx.utils.FileUtil;
 import com.yuxin.wx.utils.PropertiesUtil;
@@ -68,6 +70,12 @@ public class BannerConfigController extends BaseWebController{
 		
 		return "riseschool/riseSchoolBanner";
 	}
+	//跳转首页通栏Banner
+	@RequestMapping(value="/acrcoBannerIndex", method = RequestMethod.GET)
+	public String acrcoBannerIndex(HttpServletRequest request,Model model,Banner banner) {
+		
+		return "riseschool/acrcoBannerIndex";
+	}
 	
 	/**
 	 * 
@@ -87,6 +95,13 @@ public class BannerConfigController extends BaseWebController{
 		model.addAttribute("msgPage", qiyongList);
 		model.addAttribute("bannerType", banner.getBannerType());
 		return "banner/qiyong/qiyong";
+    }
+    @RequestMapping("/acrcoQiyong")
+    public String acrcoQiyong(HttpServletRequest request,Model model,Banner banner) {
+    	PageFinder <Banner> acrcoList=bannerService.findAcrcoBanner(banner);
+		model.addAttribute("msgPage", acrcoList);
+    	model.addAttribute("bannerType", banner.getBannerType());
+    	return "banner/qiyong/acrcoQiyong";
     }
 	/**
 	 * 
@@ -141,6 +156,32 @@ public class BannerConfigController extends BaseWebController{
 			return "banner/jinyong/jinyong";
 		}
     	
+    }
+    @ResponseBody
+    @RequestMapping(value="/changeStatuAcrco", method = RequestMethod.POST)
+    public String changeStatuAcrco(HttpServletRequest request,Model model,Banner banner,Integer id,Integer biaoshi) {
+    	banner.setId(id);
+    	banner.setUpdateTime(new Date());
+    	if(biaoshi==1){
+    		//已启用状态  修改为禁用
+    		banner.setIsState(0);
+    		bannerService.update(banner);
+    		/*banner.setIsState(1);
+    		List <Banner> qiyongList=bannerService.findBannerAll(banner);
+    		model.addAttribute("msgPage", qiyongList);
+    		return "banner/qiyong/qiyong";*/
+    	}else{
+    		//先禁用原来的banner
+    		bannerService.forbiddenBanner();
+    		//禁用状态 修改为启用
+    		banner.setIsState(1);
+    		bannerService.update(banner);
+    		/*banner.setIsState(0);
+    		PageFinder <Banner> jinyongList=bannerService.findBannerPage(banner);
+    		model.addAttribute("msgPage", jinyongList);
+    		return "banner/jinyong/jinyong";*/
+    	}
+    	return "banner/qiyong/acrcoQiyong";
     }
     /**
      * 
@@ -304,15 +345,21 @@ public class BannerConfigController extends BaseWebController{
     public JSONObject addBanner(HttpServletRequest request, String bannerName,String bannerContent,String bannerDescribe,String bannerImgUrl,Integer bannerType) {
         JSONObject json = new JSONObject();
         try {
-            String htmlUrl=writeHtml(bannerContent);
         	Banner banner =new Banner();
+        	if(StringUtils.isBlank(bannerContent)){
+        		String htmlUrl=writeHtml(bannerContent);
+        		banner.setBannerContentUrl(htmlUrl);
+        	}
         	banner.setBannerImgUrl(bannerImgUrl);
         	banner.setBannerName(bannerName);
         	banner.setBannerContent(bannerContent);
-        	banner.setBannerContentUrl(htmlUrl);
         	banner.setBannerDescribe(bannerDescribe);
         	banner.setUpdateTime(new Date());
-        	banner.setIsState(1);
+        	if(bannerType == 2){
+        		banner.setIsState(0);
+        	}else{
+        		banner.setIsState(1);
+        	}
         	banner.setBannerType(bannerType);
         	bannerService.addBanner(banner);
         	if(bannerType == 0){
@@ -320,6 +367,9 @@ public class BannerConfigController extends BaseWebController{
         	}
         	if(bannerType == 1){
         		json.put(JsonMsg.MSG, "success1");
+        	}
+        	if(bannerType == 2){
+        		json.put(JsonMsg.MSG, "success2");
         	}
             return json;
             
@@ -460,15 +510,19 @@ public class BannerConfigController extends BaseWebController{
 	}
 	
 	public String writeHtml(String content) throws Exception{
-		content="<!doctype html>" +
-				"<html lang=\"zh-cn\">" +
-				"<meta charset=\"GBK\"/>"+
-				"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=GBK\" />"+
-				"<head>" +
-				"    <title></title>" +
-				"</head>" +
-				"<body>"+content;
-		content+="<script src= https://cdn.bootcss.com/jquery/1.12.3/jquery.min.js></script><script> $('a').attr('href','##') ;$('a').attr('target',' ')</script></body>" +
+		content="<html>" +
+				//"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\">"+
+				"<style>"+
+				"img{ max-width:100% !important;} "+
+				".loading{height: 100%;position: relative;}"+
+				".loading img{width: 50%;position: fixed;top: 50%;left: 50%;margin-left: -25%;margin-top: -25%;}"+
+				"#details{overflow-x: hidden;}"+
+				"#details::-webkit-scrollbar {display: none;}"+
+			"</style>"+
+			"<body>"+
+				"<div id=\"details\">"+content+
+				"</div>";
+		content+="<script src= https://cdn.bootcss.com/jquery/1.12.3/jquery.min.js></script><script> $('a').attr('href','##') ;$('a').attr('target',' ');function buttonClick(content){window.webkit.messageHandlers.buttonClick.postMessage(content);}</script></body>" +
 				"</html>";
 		OutputStreamWriter pw = null;
     	SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhss");
@@ -488,4 +542,17 @@ public class BannerConfigController extends BaseWebController{
     	pw.close();//关闭流
 	    return rtUrl;
 	}
+	@ResponseBody
+    @RequestMapping("/queryClass")
+    public List<ClassType> queryClass(HttpServletRequest request, String className) {
+        try {
+        	List<ClassType> listClass = bannerService.findClassByName(className);
+            return listClass;
+        } catch (Exception e) {
+            log.error("qa：查询课程异常:" + e.getMessage(), e);
+            e.printStackTrace();
+            List<ClassType> listClass = new ArrayList<ClassType>();
+            return listClass;
+        }
+    }
 }
