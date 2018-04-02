@@ -61,8 +61,11 @@
 		select count(id) from banner_app where banner_type = #{bannerType}
 	</select>
 	<select id="findClassByName"  parameterType="String" resultType="com.yuxin.wx.model.classes.ClassType">
-		select name as name from class_type where 
-		name like '%${className}%'
+		select ct.id as id,ct.name as name,ct.live_flag as liveFlag,com.id as commodityId from class_type ct
+		INNER JOIN commodity_product_realtion cpr ON ct.id = cpr.product_id
+		INNER JOIN commodity com ON com.id = cpr.com_id
+		where 
+		ct.name like '%测%'
 	</select>
 	<!-- 适用于主键自增类型 -->
 	<insert id="insertBanner" parameterType="com.yuxin.wx.model.banner.Banner" useGeneratedKeys="true" keyProperty="id">
