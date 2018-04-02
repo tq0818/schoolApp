@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.yuxin.wx.common.BaseMapper;
 import com.yuxin.wx.model.banner.Banner;
+import com.yuxin.wx.model.classes.ClassType;
 
 /**
  * 
@@ -34,6 +35,8 @@ public interface BannerMapper extends BaseMapper<Banner> {
 	 */
 	List<Banner>queryMessageList(Banner banner);
 	int queryMessageCount(Banner banner);
+	List<Banner>findAcrcoBanner(Banner banner);
+	int countAcrcoBanner(Banner banner);
 	/**
 	 * 
 	 * @author jishangyang 2017年12月2日 上午1:07:01
@@ -64,4 +67,7 @@ public interface BannerMapper extends BaseMapper<Banner> {
 	 * 查询最大排序
 	 */
 	Integer searchMaxNum();
+	//禁用banner
+	void forbiddenBanner();
+	List<ClassType> findClassByName(String calssName);
 }

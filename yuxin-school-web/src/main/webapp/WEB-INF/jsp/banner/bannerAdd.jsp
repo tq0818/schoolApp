@@ -3,6 +3,7 @@
          pageEncoding="UTF-8"%>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <%@include file="/decorators/import.jsp" %>
     <title>banner图设置</title>
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/manage.css">
@@ -10,6 +11,10 @@
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/operate.css" />
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/plugins/jcrop/css/jquery.Jcrop.css"/>
  <style type="text/css">
+ 
+#details::-webkit-scrollbar {
+		display: none;
+	}
 .p1 {
 	display: block;
 	position: absolute;
@@ -78,9 +83,65 @@
 	height: 96px;
 	overflow: hidden;
 }
+
      #cke_newsContents{width: 900px !important;margin-left: 150px;}
      #cke_1_top,#cke_1_bottom{margin-right: 0 !important;}
     .contentBox{height: auto !important;}
+.opacityPopup{display: none;width: 100%;height: 100%;position: fixed;left: 0;top: 0;background: rgba(0,0,0,.5);}
+.countPopup{
+display: none;width: 360px;height: 600px;z-index:9997;
+padding: 0 30px;position: fixed;left: 50%;top: 50%;
+margin-left: -180px;margin-top: -300px;
+background: url(../../../images/yulaniphone.png)  0 0 no-repeat;
+background-size: 80%;border: 1px solid #797979;
+padding-top: 40px;
+}
+#details{
+		overflow-x: hidden;
+		background: #fff;
+		width : 950px;
+		height : 667px;
+		margin: -47px  0 0 -350px;
+		over-flow-y : auto;
+		padding: 0 3px;
+		transform: scale(0.3,0.74);
+	}
+#accountBtn{margin: -115px  0 0 -90px;}
+#details p{margin:10px auto;}
+
+/*隐藏自带弹窗*/
+    /*.cke_dialog_body{display: none;}*/
+     .checkName{display: none;}
+
+.selectName{width: 216px;border: 1px solid #ddd;margin-left: 354px;border-top: none;margin-top: -2px;}
+.selectName li{padding-left: 3px;}
+.checkName{border-radius: 0 !important;}
+.targetSite{height: 60px;}
+.selectName{display: none;}
+.selectName li{cursor: pointer;}
+.selectName li.active{background: #0e90d2;color: #fff;}
+
+.linkPopup{display: none;z-index: 20100;width: 370px;height: 360px;background: #fff;position: fixed;left: 50%;top: 50%;
+    margin-left: -185px;margin-top: -180px;font-size: 14px;color: #474747;border: 2px solid #e1e1e1;}
+.linkHeader{height: 30px;line-height: 30px;border-bottom: 1px solid #e1e1e1;}
+.linkHeader span{margin-left: 10px;}
+.linkHeader i{float: right;margin-right: 9px;}
+.linkTitle{height: 30px;border-bottom: 1px solid #e1e1e1;position: relative;}
+.linkTitle span{cursor: pointer;position: absolute;top: 5px;display: inline-block;width: 76px;height: 24px;text-align: center;line-height: 24px;color: #333333;
+    border: 1px solid #e1e1e1;border-top-left-radius:3px;border-top-right-radius: 3px;vertical-align: bottom;}
+.linkTitle span:first-child{left: 9px;}
+.linkTitle span:last-child{left: 100px;}
+.linkTitle span.active{border-bottom: 1px solid #fff;}
+.linkContent{height: 250px;border-bottom: 1px solid #e1e1e1;}
+.linkContent input{margin-top: 37px;margin-left: 10px;border: 1px solid #707070;width: 180px;height: 20px;
+    line-height: 20px;border-radius: 0;}
+.linkNameList{width: 196px;border: 1px solid #707070;margin-left: 10px;border-top: none;
+    display: none;}
+.linkNameList li{cursor: pointer;padding-left: 3px;}
+.linkNameList li.active{background: #0e90d2;color: #fff;}
+.link-btn{height: 48px;line-height: 48px;text-align: right;}
+.link-btn button:last-child{margin-right: 20px;background: #8acb11;border: 1px solid #8acb11;}
+.linkName{display: none;}
 
 </style>
 </head>
@@ -114,15 +175,28 @@
                     <span>描述:</span>
                     <input type="text" name="bannerDescribe" id="bannerDescribe" value="${msgPage.bannerDescribe }" class="bannerInput" maxlength="255" placeholder="最长可输入255个字符">
                 </div>
+                <div class="checkBoxBtn targetSite">
+                    <span><input type='radio' name="only" value="0" checked>目标地址:</span>
+                    <select name="" id="selectOption" style="margin-left: 48px;width: 200px;">
+                        <option value="0">活动</option>
+                        <option value="1">课程</option>
+                    </select>
+
+                    <input type="text" name="bannerDescribe" id="linkHref" value=""  maxlength="255" placeholder="请输入活动页面链接" style="width: 200px;" class="checkLink">
+                    <input type="text" name="bannerDescribe" id="searchClass" value="" data-value="" maxlength="255" placeholder="请输入课程名称" style="width: 200px;" class="checkName">
+                    <ul class="selectName">
+
+                    </ul>
+                </div>
                 <div class="contentBox">
-                    <span>内容:</span>
+                    <span><input type='radio' name="only" value="1">内容:</span>
                         <textarea id="newsContents" id="bannerContent"  name="bannerContent" class="msg-content">${msgPage.bannerContent }</textarea>
                     </div>
                 </div>
 
                 <div class="putQuestion bannerBtnGroup">
                 	<a href='#' onclick="yulan()"  id="yulan" class='btn btn-success'>预览</a>
-                    <button  onclick="save()" type="button" class="btn btn-success"  >保存</button>
+                    <button  type="button" class="btn btn-success" id="saveBtn" >保存</button>
                     <button onclick="history.go(-1)" type="button"  class="btn btn-danger"  >取消</button>
                 </div>
             </div>
@@ -132,6 +206,15 @@
 <form method="post" id="hiddenForm" target="_blank" >
 	<input type="hidden" id="hiddenBannerContent" name="bannerContent">
 </form>
+<div class="opacityPopup"></div>
+<div class="countPopup">
+	<div  id="details">
+	
+	</div>
+	<div class="countPopupBtn" id="accountBtn">
+		<a href="##" class="btn btn-sm btn-primary countPopupCancel">关闭</a>
+	</div>
+</div>
 <div class="upload-layer none" id="chooseDiv" style="width:1080px;height: 550px;">
     <div class="upload-title">
         <h2 class="h5">上传封面</h2>
@@ -181,12 +264,154 @@
         <p><i></i>加载中,请稍后...</p>
     </div>
     <div class="loading-bg lp-units-loading-bg" style="display:none"></div>
+<%--新弹窗begin--%>
+
+    <div class="linkPopup">
+        <div class="linkHeader">
+            <span>超链接</span>
+            <i class="icon iconfont closePopup">&#xe610;</i>
+        </div>
+        <div class="linkTitle">
+            <span class="active">活动</span>
+            <span>课程</span>
+        </div>
+        <div class="linkContent">
+            <input type="text" placeholder="请输入活动页面链接" class="linkLink">
+            <input type="text" placeholder="请输入活动名称" class="linkLink" id="activeName" maxlength="20">
+            <input type="text" placeholder="请输入课程名称" class="linkName" data-value="">
+            <ul class="linkNameList">
+
+            </ul>
+        </div>
+        <div  class="link-btn">
+            <button class="btn btn-mb btn-default closePopup">取消</button>
+            <button class="btn btn-mb btn-success closePopup addLink sureLink">确定</button>
+        </div>
+    </div>
+<script>
+    $('.linkTitle span').click(function () {
+        $(this).addClass('active');
+        $(this).siblings('span').removeClass('active');
+        if($(this).index()){
+            $('.linkName').show();
+            $('.linkLink').hide();
+
+        }else{
+            $('.linkName').hide();
+            $('.linkLink').show();
+
+        }
+    });
+
+    //课程名称模糊搜索
+    $('.linkName').keyup(function () {
+        if($(this).val().length>0){
+            var className = $(this).val();
+            $.ajax({
+                url: rootPath + "/Banner/queryClass",
+                type:"post",
+                data:{"className":className
+                },
+                success:function(data){
+                    var html = '';
+                    for (var i=0;i<data.length;i++)
+                    {
+                        html = html + '<li data-value='+data[i].id+','+data[i].name+','+data[i].liveFlag+','+   data[i].commodityId+' >'+data[i].name+'</li>';
+                    }
+                    $('.linkNameList').html('').html(html);
+                }
+            });
+            $('.linkNameList').show();
+        }else {
+            $('.linkNameList').hide();
+        }
+    });
+    //移入和移除鼠标，li样式变化
+    $('.linkNameList').on('mouseenter','li',function(){
+        $(this).addClass('active');
+        $(this).siblings('li').removeClass('active');
+    }).on('click','li',function(){
+        $('.linkName').val($(this).html());
+        $('.linkName').attr('data-value',$(this).attr('data-value'));
+        $('.linkNameList').hide();
+    });
+    //打开和关闭弹窗
+    $('.closePopup').click(function(){
+       $('.linkPopup').hide();
+       $('.cke_dialog_background_cover').hide();
+       $('.cke_dialog').css('visibility','hidden');
+    });
+
+    $('body').on('click','#cke_31',function(){
+        $('.linkPopup').show();
+    });
+
+    $('body').on('click','.cke_toolgroup',function(){
+        $('.cke_dialog').css('visibility','visible');
+    })
+</script>
+<%--新弹窗end--%>
+
+<script>
+    //课程和链接相互切换
+    $('#selectOption').change(function(){
+        if(Number($(this).val())){
+            $('.checkLink').hide();
+            $('.checkName').show();
+        }else{
+            $('.checkLink').show();
+            $('.checkName').hide();
+        }
+    });
+    //课程li下拉
+    $('.checkName').keyup(function () {
+        if($(this).val().length>0){
+            var className = $(this).val();
+            $.ajax({
+                url: rootPath + "/Banner/queryClass",
+                type:"post",
+                data:{"className":className
+                },
+                success:function(data){
+                    var html = '';
+                    for (var i=0;i<data.length;i++)
+                    {
+                        html = html + '<li data-value='+data[i].id+','+data[i].name+','+data[i].liveFlag+','+data[i].commodityId+' >'+data[i].name+'</li>';
+                    }
+                    $('.selectName').html('').html(html);
+                }
+            });
+
+            $('.selectName').show();
+        }else {
+            $('.selectName').hide();
+        }
+    });
+    //移入和移除鼠标，li样式变化
+    $('.selectName').on('mouseenter','li',function(){
+        $(this).addClass('active');
+        $(this).siblings('li').removeClass('active');
+    }).on('click','li',function(){
+        $('.checkName').val($(this).html());
+        $('.checkName').attr('data-value',$(this).attr('data-value'));
+        $('.selectName').hide();
+    });
+</script>
+
+<%--判断单选按钮--%>
+
+
 <script type="text/javascript" src="<%=rootPath%>/plugins/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/ajaxfileupload.js"></script>
      <script type="text/javascript" src="<%=rootPath %>/plugins/jcrop/js/jquery.Jcrop.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/riseschool/addClassTypeOnsale.js"></script>
 	<script type="text/javascript">
 	$(function(){
+		$('.countPopupCancel').click(function () {
+	        $('.opacityPopup').fadeOut();
+	        $('.countPopup').fadeOut();
+	        $('#details').html('');
+	    });
 		$(".btn-upload").on('click',function(){
 			$("#chooseDiv").css("display", "block");
 			$("#stopDiv").css("display", "block");
@@ -244,58 +469,111 @@
 				_checkbox.attr('checked',false);
 			}
 		});
+    //添加超链接
+    //点击确定
+    var linkValue;
+
+    $('.sureLink').click(function () {
+        if($('.linkTitle').children('span').eq(0).hasClass('active')){
+            linkValue = $('.linkLink').val();
+            console.log(editor.document.getBody());
+            editor.document.getBody().innerHTML = "<p><a href='"+linkValue+"'></a></p>";
+//            editor.document.getBody().append("<p><a href='"+linkValue+"'></a></p>");
+            /*$('.cke_editable cke_editable_themed cke_contents_ltr cke_show_borders').html("<p><a herf="+linkValue+"></a></p>");*/
+        }else{
+            linkValue = $('.linkName').val();
+            $('.cke_editable').append("<button type=\"button\" onclick=\"buttonClick('asdasd,asdasd,wdad')\">buttonClick</button>");
+        }
+    });
 		/* function goback(){
 			window.location.href = "comBannerIndex";
 		} */
-		function save(){
-			 var bannerImgUrl=$("#commdotityPic").attr("realPath");
-			 if(null==bannerImgUrl || ''==bannerImgUrl){
-				 alert("banner图不能为空");
-				 return;
-			 }
-	    	 var bannerName=$("#bannerName").val();
-	    	 var bannerDescribe=$("#bannerDescribe").val();
-	    	 CKupdate();
-	    	 var bannerContent=editor.document.getBody().getHtml();
-	    	 var bannerType = $("#bannerType").val();
-	    	 if(null!=bannerContent && '<p><br></p>'!=bannerContent){
-	    		 $.ajax({
-	 	 			url: rootPath + "/Banner/addBanner",
-	 	 			type:"post",
-	 	 			data:{"bannerName":bannerName,
-	 	 				"bannerContent" : bannerContent,
-	 	 				"bannerDescribe":bannerDescribe,
-	 	 				"bannerImgUrl" :bannerImgUrl,
-	 	 				"bannerType" :bannerType
-	 	 				},
-	 	 			dataType:"json",
-	 	 			success:function(data){
-	 	 				if(data.msg == 'success0'){
-	 	 					alert("保存成功");
-	 	 					window.location.href = "/Banner/comBannerIndex";
-	 	 				}
-	 	 				if(data.msg == 'success1'){
-	 	 					alert("保存成功");
-	 	 					window.location.href = "/Banner/riseBannerIndex";
-	 	 				}
-	 	 			}
-	 	 		});
-	    	 }else{
-	    		 alert("内容不能为空");
-	    	 }
-	    	 
-	    } 
+    var radioList = $("input[type='radio']");
+    $('#saveBtn').click(function () {
+        for(var i = 0;i< radioList.length;i++){
+            if(radioList.eq(i).prop('checked')){
+                console.log(i);
+                    var bannerImgUrl=$("#commdotityPic").attr("realPath");
+                    if(null==bannerImgUrl || ''==bannerImgUrl){
+                        alert("banner图不能为空");
+                        return;
+                    }
+                    var bannerName=$("#bannerName").val();
+                    var bannerDescribe=$("#bannerDescribe").val();
+                    CKupdate();
+                    var bannerContent=editor.document.getBody().getHtml();
+                    var bannerType = $("#bannerType").val();
+                    if(null!=bannerContent && '<p><br></p>'!=bannerContent){
+                        $.ajax({
+                            url: rootPath + "/Banner/addBanner",
+                            type:"post",
+                            data:{"bannerName":bannerName,
+                                "bannerContent" : bannerContent,
+                                "bannerDescribe":bannerDescribe,
+                                "bannerImgUrl" :bannerImgUrl,
+                                "bannerType" :bannerType
+                            },
+                            dataType:"json",
+                            success:function(data){
+                                if(data.msg == 'success0'){
+                                    alert("保存成功");
+                                    window.location.href = "/Banner/comBannerIndex";
+                                }
+                                if(data.msg == 'success1'){
+                                    alert("保存成功");
+                                    window.location.href = "/Banner/riseBannerIndex";
+                                }
+                                if(data.msg == 'success2'){
+                                    alert("保存成功");
+                                    window.location.href = "/Banner/acrcoBannerIndex";
+                                }
+                            }
+                        });
+                    }else{
+                        alert("内容不能为空");
+                    }
+
+                }
+            }
+    });
+		//预览
 		function yulan(){
+		
 	    	 CKupdate();
 	    	 var bannerContent=editor.document.getBody().getHtml();
 	    	 if(null!=bannerContent && '<p><br></p>'!=bannerContent){
-	    		 
-   				$("#hiddenBannerContent").val(bannerContent);
-   				$("#hiddenForm").attr("action",rootPath+"/Banner/yulan").submit();
+	    		 $('.opacityPopup').fadeIn();
+	    	        $('.countPopup').fadeIn();
+	    	        $('#details').append(bannerContent);
+   				/* $("#hiddenBannerContent").val(bannerContent);
+   				$("#hiddenForm").attr("action",rootPath+"/Banner/yulan").submit(); */
    				
 	    	 }else{
 	    		 alert("预览内容不能为空");
 	    	 }
+	    	 
+	    	//基础宽度为1000px，小于1000设置比例
+	    	var imgList = $('#details').find('img');
+	    	var imgScaleWidth;
+	    	var imgScaleHeight;
+	    	if(imgList.length>0){
+	    		for(var i=0;i<imgList.length;i++){
+	    			var imgWidth = imgList.eq(i).css('width').split('px')[0];
+	    			var imgHeight = imgList.eq(i).css('height').split('px')[0];
+					//宽度
+		    		if(imgWidth<1000){
+		    			imgScale = imgWidth/10
+		    			imgList.eq(i).css('width',imgScale+'%');
+		    		}else{
+		    			imgList.eq(i).css('width','100%');
+		    		}
+					//高度
+		    		 if(imgHeight>250){
+		    			imgScaleHeight = imgHeight/665;
+		    			imgList.eq(i).css('height',imgHeight*250/665);
+		    		} 
+		    	}
+	    	}
 	    } 
 		//上传截取后的图片
 		function classTypePic() {
@@ -370,7 +648,38 @@
 //				fileName: 'imgData'
 			});
 		}
+		
+		
+		
 	</script>
+<%--<script>--%>
+    <%--//弹窗变化--%>
+    <%--$('body').on('click','#cke_31',function(){--%>
+        <%--var _html = `--%>
+                <%--<a class="cke_dialog_tab newAdd cke_dialog_tab_selected"  title="活动"  href="javascript:void(0)" tabindex="-1" hidefocus="true" role="tab">活动</a>--%>
+                <%--<a class="cke_dialog_tab newAdd"  title="课程"  href="javascript:void(0)" tabindex="-1" hidefocus="true" role="tab">课程</a>--%>
+               <%--`;--%>
+        <%--$('body').find('.newAdd').remove();--%>
+
+        <%--if($('#cke_dialog_tabs_59')){--%>
+            <%--setTimeout(function () {--%>
+                <%--$('#cke_dialog_tabs_59').append(_html);--%>
+            <%--},1000);--%>
+        <%--}--%>
+
+
+        <%--$('body').find('.newAdd').click(function(){--%>
+            <%--console.log("点击了");--%>
+            <%--$(this).addClass('cke_dialog_tab_selected');--%>
+            <%--$(this).siblings('a').removeClass('cke_dialog_tab_selected');--%>
+        <%--});--%>
+
+    <%--});--%>
+
+
+
+<%--</script>--%>
+
 <script>
     //        二级菜单加active
     $(function () {

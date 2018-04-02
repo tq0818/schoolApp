@@ -43,7 +43,7 @@
 	                	<%--<td width="35%">${m.bannerDescribe }</td>--%>
 	                	<td width="5%">启用</td>
 	                	<td width="27%">
-	                		<a href='javascript:;' onclick="changeStatu(${m.id})" class='btn btn-danger forbidBanner'>禁用</a>
+	                		<a href='javascript:;' onclick="confirmPopup('确定禁用该banner？',${m.id})" class='btn btn-danger forbidBanner'>禁用</a>
 	                   		<a href='<%=rootPath %>/Banner/editBanner/${m.id}'  class='btn btn-warning'>修改</a>
 	                   		<a href='<%=rootPath %>/Banner/seachDetail/${m.id}' target="_blank" class='btn btn-success'>查看</a>
                    		</td>
@@ -54,18 +54,28 @@
    </ul>
    <input type="hidden" value="${bannerType }" id="bannerType"/>
 <script type="text/javascript">
-	function changeStatu(id){
-		$.ajax({
-			url: rootPath + "/Banner/changeStatu",
-			type:"post",
-			data:{"id":id,"biaoshi": 1},
-			dataType:"html",
-			success:function(data){
-				/* $('#tableList').html(data); */
-				window.location.reload();
+ function confirmPopup(str,id){
+	 $.confirm(str,function(b){
+			if(b==true){
+				/* function changeStatu(id){ */
+					$.ajax({
+						url: rootPath + "/Banner/changeStatu",
+						type:"post",
+						data:{"id":id,"biaoshi": 1},
+						dataType:"html",
+						success:function(data){
+							/* $('#tableList').html(data); */
+							window.location.reload();
+						}
+					});
+			/* 	} */
+			}else{
+				return; 
 			}
 		});
-	}
+ }
+	
+
 	function desc(id,orderNum,paixu){
 		var bannerType = $("#bannerType").val();
 		$.ajax({

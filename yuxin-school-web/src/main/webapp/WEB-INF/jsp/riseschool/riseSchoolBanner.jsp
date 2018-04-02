@@ -22,7 +22,7 @@
     <jsp:include page="/WEB-INF/jsp/menu/menu_bannerLeft.jsp"></jsp:include>
     <div class="mainbackground nopadding bannerManage ">
         <div class="heading">
-            <h2 class="h5" style="display: inline-block;margin: 10px 0;">banner管理</h2>
+            <h2 class="h5" style="display: inline-block;margin: 10px 0;">小升初Banner</h2>
             <div class="bannerButton">
                 <span><button onclick="qiyong()" class="btn btn-primary " >启用</button></span>
                 <span><button onclick="jinyong()" class="btn btn-primary " >禁用</button></span>

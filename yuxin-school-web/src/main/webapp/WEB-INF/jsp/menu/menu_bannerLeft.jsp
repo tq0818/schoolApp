@@ -11,6 +11,7 @@
     <ul id="course_manage" class="system_managelist">
         <li class="subentry" code="comBannerIndex" mark="/Banner/comBannerIndex">首页Banner</li>
         <li class="subentry" code="riseSchoolBanner" mark="/Banner/riseBannerIndex">小升初Banner</li>
+        <li class="subentry" code="acrcoBanner" mark="/Banner/acrcoBannerIndex">首页通栏Banner</li>
     </ul>
 </div>
 <script>

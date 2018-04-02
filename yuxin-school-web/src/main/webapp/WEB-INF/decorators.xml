@@ -578,7 +578,9 @@
         <pattern>/riseschoolback/studentManagement</pattern>
         <!--学员详情-->
         <pattern>/riseStudentSchoolTag/studentDetails</pattern>
-
+        
+        <!--首页通栏banner-->
+        <pattern>/Banner/acrcoBannerIndex</pattern>
 
     </decorator>
 
