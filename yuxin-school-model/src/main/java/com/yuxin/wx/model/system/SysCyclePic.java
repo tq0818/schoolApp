@@ -41,6 +41,17 @@ public class SysCyclePic extends BaseEntity {
 	private Integer isState;          
 	private Integer orderByNum; 
 	private String bannerContentUrl;
+	//2018-4-3,fengxl添加，前台判断banner内容。
+	private Integer detailType; //0表示活动，1表示课程，2表示内容
+	private String linkHref;//活动链接
+	private String searchClass;//课程参数
+	
+	private String classtypeId;//课程id
+	private String name;//课程名称
+	private String liveFlag;//课程类型
+	private String comId;//商品id
+	private String teacherName;//老师姓名
+	
 	// Constructor
 	public SysCyclePic() {
 	}
@@ -271,4 +282,69 @@ public class SysCyclePic extends BaseEntity {
 	public String toString() {
 		return "SysCyclePic [" + "id=" + getId() + ", picTitle=" + picTitle + ", picDesc=" + picDesc + ", picUrl=" + picUrl + ", clickUrl=" + clickUrl + ", validFlag=" + validFlag + ", picType=" + picType + ", companyId=" + companyId + ", schoolId=" + schoolId + ", creator=" + creator + ", createTime=" + createTime + ", updator=" + updator + ", updateTime=" + updateTime +  "]";
 	}
+
+	public Integer getDetailType() {
+		return detailType;
+	}
+
+	public void setDetailType(Integer detailType) {
+		this.detailType = detailType;
+	}
+
+	public String getLinkHref() {
+		return linkHref;
+	}
+
+	public void setLinkHref(String linkHref) {
+		this.linkHref = linkHref;
+	}
+
+	public String getSearchClass() {
+		return searchClass;
+	}
+
+	public void setSearchClass(String searchClass) {
+		this.searchClass = searchClass;
+	}
+
+	public String getClasstypeId() {
+		return classtypeId;
+	}
+
+	public void setClasstypeId(String classtypeId) {
+		this.classtypeId = classtypeId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getLiveFlag() {
+		return liveFlag;
+	}
+
+	public void setLiveFlag(String liveFlag) {
+		this.liveFlag = liveFlag;
+	}
+
+	public String getComId() {
+		return comId;
+	}
+
+	public void setComId(String comId) {
+		this.comId = comId;
+	}
+
+	public String getTeacherName() {
+		return teacherName;
+	}
+
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
+	}
+	
 }

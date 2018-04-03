@@ -61,9 +61,17 @@
 		select count(id) from banner_app where banner_type = #{bannerType}
 	</select>
 	<select id="findClassByName"  parameterType="String" resultType="com.yuxin.wx.model.classes.ClassType">
-		select ct.id as id,ct.name as name,ct.live_flag as liveFlag,com.id as commodityId from class_type ct
+		select 
+		ct.id as id,
+		ct.name as name,
+		ct.live_flag as liveFlag,
+		com.id as commodityId,
+		sct.name as teacherName,
+		ct.cover as cover
+		from class_type ct
 		INNER JOIN commodity_product_realtion cpr ON ct.id = cpr.product_id
 		INNER JOIN commodity com ON com.id = cpr.com_id
+		INNER JOIN sys_config_teacher sct ON ct.teacher_id = sct.id 
 		where 
 		ct.name like concat('%',#{className},'%')
 	</select>

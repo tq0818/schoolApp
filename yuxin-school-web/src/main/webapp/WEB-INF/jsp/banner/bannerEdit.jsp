@@ -315,7 +315,7 @@ padding-top: 40px;
                     var html = '';
                     for (var i=0;i<data.length;i++)
                     {
-                        html = html + '<li data-value='+data[i].id+','+data[i].name+','+data[i].liveFlag+','+   data[i].commodityId+' >'+data[i].name+'</li>';
+                        html = html + '<li data-value='+data[i].id+','+data[i].name+','+data[i].liveFlag+','+data[i].commodityId+','+data[i].teacherName+','+data[i].cover+' >'+data[i].name+'</li>';
                     }
                     $('.linkNameList').html('').html(html);
                 }
@@ -374,7 +374,7 @@ padding-top: 40px;
                     var html = '';
                     for (var i=0;i<data.length;i++)
                     {
-                        html = html + '<li data-value='+data[i].id+','+data[i].name+','+data[i].liveFlag+','+data[i].commodityId+' >'+data[i].name+'</li>';
+                        html = html + '<li data-value='+data[i].id+','+data[i].name+','+data[i].liveFlag+','+data[i].commodityId+','+data[i].teacherName+','+data[i].cover+' >'+data[i].name+'</li>';
                     }
                     $('.selectName').html('').html(html);
                 }

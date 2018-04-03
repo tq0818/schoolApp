@@ -45,6 +45,7 @@ public class ClassType extends BaseEntity {
     private Integer baseNum; /* 购买基数 */
     private String lableType; /* 班型标签 */
     private String teacherId; /* 授课老师 */
+    private String teacherName; /* 授课老师 */
     private Integer faceFlag; /* 是否属于面授 */
     private Integer liveFlag; /* 是否属于直播 */
     private Integer videoFlag; /* 是否属于视频 */
@@ -710,4 +711,13 @@ public class ClassType extends BaseEntity {
     public void setHasShelves(String hasShelves) {
         this.hasShelves = hasShelves;
     }
+
+	public String getTeacherName() {
+		return teacherName;
+	}
+
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
+	}
+    
 }
