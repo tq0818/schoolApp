@@ -106,7 +106,7 @@
 			<if test="updateTime != null">update_time = #{updateTime},</if>
 			<if test="orderByNum == null ">order_by_num = (select t2.num from (select (max(t1.order_by_num)+1) as num  from banner_app t1) t2),</if>
 			<if test="orderByNum != null ">order_by_num =  #{orderByNum},</if>
-			<if test="number != null ">banner_number =  #{number},</if>
+			<if test="number != null ">detail_type =  #{number},</if>
 			<if test="linkHref != null ">banner_linkHref =  #{linkHref},</if>
 			<if test="searchClass != null ">banner_classContent =  #{searchClass},</if>
 		</trim>

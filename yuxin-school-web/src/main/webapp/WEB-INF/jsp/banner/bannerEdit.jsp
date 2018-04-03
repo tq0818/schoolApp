@@ -547,6 +547,15 @@ padding-top: 40px;
 	$('#saveBtn').click(function () {
 		for(var i = 0;i< radioList.length;i++){
             if(radioList.eq(i).prop('checked')){
+            	var bannerImgUrl=$("#commdotityPic").attr("realPath");
+      			 if(null==bannerImgUrl || ''==bannerImgUrl){
+      				 alert("banner图不能为空");
+      				 return;
+      			 }
+      	    	 var bannerName=$("#bannerName").val();
+      	    	 var id=$("#bannerId").val();
+      	    	 var bannerDescribe=$("#bannerDescribe").val();
+      	    	 var bannerType = $("#bannerType").val();
             	//i等于0就是选择的目标地址
                 if(i == 0){
                 	var selectOption = $('#selectOption').val();
@@ -561,7 +570,7 @@ padding-top: 40px;
                 		$.ajax({
             	 	 			url: rootPath + "/Banner/update",
             	 	 			type:"post",
-            	 	 			data:{"id":id,"bannerName":bannerName,"linkHref" : linkHref,"bannerDescribe":bannerDescribe,"bannerImgUrl" :bannerImgUrl,"number" :0},
+            	 	 			data:{"id":id,"bannerName":bannerName,"linkHref" : linkHref,"bannerDescribe":bannerDescribe,"bannerImgUrl" :bannerImgUrl,"detailType" :0},
             	 	 			dataType:"json",
             	 	 			success:function(data){
             	 	 				if(data.msg == 'success'){
@@ -581,7 +590,7 @@ padding-top: 40px;
                 		$.ajax({
             	 	 			url: rootPath + "/Banner/update",
             	 	 			type:"post",
-            	 	 			data:{"id":id,"bannerName":bannerName,"searchClass" : searchClass,"bannerDescribe":bannerDescribe,"bannerImgUrl" :bannerImgUrl,"number" :1},
+            	 	 			data:{"id":id,"bannerName":bannerName,"searchClass" : searchClass,"bannerDescribe":bannerDescribe,"bannerImgUrl" :bannerImgUrl,"detailType" :1},
             	 	 			dataType:"json",
             	 	 			success:function(data){
             	 	 				if(data.msg == 'success'){
@@ -598,22 +607,13 @@ padding-top: 40px;
             	 	 		});
                 	}
                 }else{
-                	var bannerImgUrl=$("#commdotityPic").attr("realPath");
-       			 if(null==bannerImgUrl || ''==bannerImgUrl){
-       				 alert("banner图不能为空");
-       				 return;
-       			 }
-       	    	 var bannerName=$("#bannerName").val();
-       	    	 var id=$("#bannerId").val();
-       	    	 var bannerDescribe=$("#bannerDescribe").val();
        	    	 CKupdate();
        	    	 var bannerContent=editor.document.getBody().getHtml();
-       	    	 var bannerType = $("#bannerType").val();
        	    	 if(null!=bannerContent && '<p><br></p>'!=bannerContent){
        	    		 $.ajax({
        	 	 			url: rootPath + "/Banner/update",
        	 	 			type:"post",
-       	 	 			data:{"id":id,"bannerName":bannerName,"bannerContent" : bannerContent,"bannerDescribe":bannerDescribe,"bannerImgUrl" :bannerImgUrl,"number" :2},
+       	 	 			data:{"id":id,"bannerName":bannerName,"bannerContent" : bannerContent,"bannerDescribe":bannerDescribe,"bannerImgUrl" :bannerImgUrl,"detailType" :2},
        	 	 			dataType:"json",
        	 	 			success:function(data){
        	 	 				if(data.msg == 'success'){

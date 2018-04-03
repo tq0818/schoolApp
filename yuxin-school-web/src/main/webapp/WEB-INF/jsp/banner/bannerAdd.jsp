@@ -513,6 +513,14 @@ padding-top: 40px;
     $('#saveBtn').click(function () {
         for(var i = 0;i< radioList.length;i++){
             if(radioList.eq(i).prop('checked')){
+            	var bannerImgUrl=$("#commdotityPic").attr("realPath");
+                if(null==bannerImgUrl || ''==bannerImgUrl){
+                    alert("banner图不能为空");
+                    return;
+                }
+                var bannerName=$("#bannerName").val();
+                var bannerDescribe=$("#bannerDescribe").val();
+                var bannerType = $("#bannerType").val();
             	//i等于0就是选择的目标地址
                 if(i == 0){
                 	var selectOption = $('#selectOption').val();
@@ -532,7 +540,7 @@ padding-top: 40px;
                                 "bannerDescribe":bannerDescribe,
                                 "bannerImgUrl" :bannerImgUrl,
                                 "bannerType" :bannerType,
-                                "number" :0
+                                "detailType" :0
                             },
                             dataType:"json",
                             success:function(data){
@@ -560,7 +568,7 @@ padding-top: 40px;
                                 "bannerDescribe":bannerDescribe,
                                 "bannerImgUrl" :bannerImgUrl,
                                 "bannerType" :bannerType,
-                                "number" :1
+                                "detailType" :1
                             },
                             dataType:"json",
                             success:function(data){
@@ -580,16 +588,8 @@ padding-top: 40px;
                         });
                 	}
                 }else{
-                	var bannerImgUrl=$("#commdotityPic").attr("realPath");
-                    if(null==bannerImgUrl || ''==bannerImgUrl){
-                        alert("banner图不能为空");
-                        return;
-                    }
-                    var bannerName=$("#bannerName").val();
-                    var bannerDescribe=$("#bannerDescribe").val();
                     CKupdate();
                     var bannerContent=editor.document.getBody().getHtml();
-                    var bannerType = $("#bannerType").val();
                     if(null!=bannerContent && '<p><br></p>'!=bannerContent){
                         $.ajax({
                             url: rootPath + "/Banner/addBanner",
@@ -599,7 +599,7 @@ padding-top: 40px;
                                 "bannerDescribe":bannerDescribe,
                                 "bannerImgUrl" :bannerImgUrl,
                                 "bannerType" :bannerType,
-                                "number" :2
+                                "detailType" :2
                             },
                             dataType:"json",
                             success:function(data){

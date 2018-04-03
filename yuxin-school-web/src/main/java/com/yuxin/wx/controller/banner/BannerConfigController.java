@@ -208,7 +208,7 @@ public class BannerConfigController extends BaseWebController{
         	if (file.exists()) {
                 file.delete();
             }
-        	if(banner.getNumber() == 2){
+        	if(banner.getDetailType() == 2){
         		String htmlUrl=writeHtml(banner.getBannerContent());
     			banner.setBannerContentUrl(htmlUrl);
         	}
@@ -345,17 +345,17 @@ public class BannerConfigController extends BaseWebController{
 	 */
 	@ResponseBody
     @RequestMapping("/addBanner")
-    public JSONObject addBanner(HttpServletRequest request, String bannerName,String bannerContent,String bannerDescribe,String bannerImgUrl,Integer bannerType,Integer number,String linkHref,String searchClass) {
+    public JSONObject addBanner(HttpServletRequest request, String bannerName,String bannerContent,String bannerDescribe,String bannerImgUrl,Integer bannerType,Integer detailType,String linkHref,String searchClass) {
         JSONObject json = new JSONObject();
         try {
         	Banner banner =new Banner();
-        	if(number == 0){
+        	if(detailType == 0){
         		banner.setLinkHref(linkHref);
         	}
-        	if(number == 1){
+        	if(detailType == 1){
         		banner.setSearchClass(searchClass);
         	}
-        	if(number == 2){
+        	if(detailType == 2){
         		String htmlUrl=writeHtml(bannerContent);
         		banner.setBannerContentUrl(htmlUrl);
         	}
@@ -364,7 +364,7 @@ public class BannerConfigController extends BaseWebController{
         	banner.setBannerContent(bannerContent);
         	banner.setBannerDescribe(bannerDescribe);
         	banner.setUpdateTime(new Date());
-        	banner.setNumber(number);
+        	banner.setDetailType(detailType);
         	if(bannerType == 2){
         		banner.setIsState(0);
         	}else{
