@@ -478,6 +478,8 @@ padding-top: 40px;
         if($('.linkTitle').children('span').eq(0).hasClass('active')){
             linkValue = $('.linkLink').val();
             activeName = $('#activeName').val();
+            console.log(linkValue);
+            console.log(activeName);
           //检验网址
             var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
             var regTwo=(/[\u4e00-\u9fa5]/g);
@@ -490,7 +492,8 @@ padding-top: 40px;
                 $.msg("只能输入纯文本",1000);
                 return ;
             }
-            console.log(editor.document.getBody());
+          	var body = editor.document.getBody().getHtml();
+          	editor.document.getBody().setHtml(body+"<p><a href='"+linkValue+"'>"+activeName+"</a></p>");
            // editor.document.getBody().innerHTML = "<p><a href='"+linkValue+"'></a></p>";
            $('.linkPopup').hide();
             $('.cke_dialog_background_cover').hide();
@@ -498,8 +501,9 @@ padding-top: 40px;
 //            editor.document.getBody().append("<p><a href='"+linkValue+"'></a></p>");
             /*$('.cke_editable cke_editable_themed cke_contents_ltr cke_show_borders').html("<p><a herf="+linkValue+"></a></p>");*/
         }else{
-            linkValue = $('.linkName').val();
-            $('.cke_editable').append("<button type=\"button\" onclick=\"buttonClick('asdasd,asdasd,wdad')\">buttonClick</button>");
+            linkValue = $('.linkName').attr('data-value');
+            var body = editor.document.getBody().getHtml();
+            editor.document.getBody().setHtml(body+"<button type=\"button\" onclick=\"buttonClick('"+linkValue+"')\">buttonClick</button>");
         }
         $('.linkPopup').hide();
         $('.cke_dialog_background_cover').hide();
