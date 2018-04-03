@@ -586,7 +586,7 @@ padding-top: 40px;
             	 	 			}
             	 	 		});
                 	}else{
-                		var searchClass = $('#searchClass').val();
+                		var searchClass = $('#searchClass').attr('data-value');
                 		$.ajax({
             	 	 			url: rootPath + "/Banner/update",
             	 	 			type:"post",
