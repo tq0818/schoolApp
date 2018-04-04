@@ -10,6 +10,7 @@ import com.yuxin.wx.model.riseschool.RiseSchoolManageVo;
 import com.yuxin.wx.model.riseschool.SearchRiseSchoolVo;
 import com.yuxin.wx.model.riseschool.SysDictVo;
 import com.yuxin.wx.model.user.Users;
+import com.yuxin.wx.model.user.UsersFront;
 import com.yuxin.wx.riseschool.mapper.RiseSchoolManageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -120,5 +121,11 @@ public class RiseSchoolManageServiceImpl implements RiseSchoolManageService {
 	public List<SysDictVo> querySchoolName(Map map) {
 		List<SysDictVo> list = riseSchoolManageMapper.querySchoolName(map);
 		return list;
+	}
+
+	@Override
+	public List<UsersFront> searchUsers(Map map) {
+		List<UsersFront> users = riseSchoolManageMapper.searchUsers(map);
+		return users;
 	}
 }

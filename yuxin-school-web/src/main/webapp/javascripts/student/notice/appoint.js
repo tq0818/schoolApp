@@ -8,17 +8,29 @@ $(function () {
     $('#userListInput').keyup(function () {
         if(Number($(this).val().length)>0){
         	var searchCondition = $(this).val();
+        	console.log(searchCondition.length);
+        	if(searchCondition.length != 11){
+        		return;
+        	}
         	$.ajax({
                 url: rootPath + "/riseSchoolManage/searchUsers",
                 type:"post",
                 data:{"searchCondition":searchCondition},
+                dataType:"json",
+                beforeSend: function (XMLHttpRequest) {
+                    $(".loading").show();
+                    $(".loading-bg").show();
+                },
                 success:function(data){
-                    var html = '';
-                    for (var i=0;i<data.length;i++)
-                    {
-                        html = html + '<li data-value='+data[i].mobile+'data-user='+data[i].username+','+data[i].mobile+' >'+data[i].username+','+data[i].mobile+'</li>';
+                	$(".loading").hide();
+                    $(".loading-bg").hide();
+                    if (data.flag == 1){
+                        var html = '';
+                        for (var i in data.dictList){
+                        	html = html + '<li data-value='+data.dictList[i].mobile+'data-user='+data.dictList[i].nickName+','+data.dictList[i].mobile+' >'+data.dictList[i].nickName+','+data.dictList[i].mobile+'</li>';
+                        }
+                        $('.userList').html('').html(html);
                     }
-                    $('.userList').html('').html(html);
                 }
             });
             $('.userList').show();

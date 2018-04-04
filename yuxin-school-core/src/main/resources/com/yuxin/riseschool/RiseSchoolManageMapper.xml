@@ -206,6 +206,10 @@
 		where dict_code = 'EDU_SCHOOL'
 		and parent_item_id = (select id from sys_config_dict where item_code = #{registStatus})
     </select>
+    <select id="searchUsers" parameterType="Map" resultType="com.yuxin.wx.model.user.UsersFront">
+        SELECT nick_name as nickName,mobile as mobile from users_front
+		where mobile like concat('%',#{mobile},'%')
+    </select>
     <select id="checkSchoolName" parameterType="String" resultType="Integer">
         select count(id) from rise_school_info
 		where school_name = #{schoolName}

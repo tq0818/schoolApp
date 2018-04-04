@@ -3,6 +3,7 @@ package com.yuxin.wx.riseschool.mapper;
 import com.yuxin.wx.model.riseschool.RiseSchoolManageVo;
 import com.yuxin.wx.model.riseschool.SearchRiseSchoolVo;
 import com.yuxin.wx.model.riseschool.SysDictVo;
+import com.yuxin.wx.model.user.UsersFront;
 
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,7 @@ public interface RiseSchoolManageMapper {
      */
     List<SysDictVo> queryRiseSchoolDict(Map map);
     List<SysDictVo> querySchoolName(Map map);
+    List<UsersFront> searchUsers(Map map);
 
     List<RiseSchoolManageVo> queryDimRiseSchoolInfo(SearchRiseSchoolVo serchRiseSchoolVo);
 

@@ -281,9 +281,7 @@
 						<span class="c-content">
 							<input type="text" style="width: 348px;border-radius: 0;" id="userListInput">
 							<ul class="userList">
-								<li class="active"  data-user="张三,1">张三   158298354854</li>
-								<li data-user="李四,2">李四   158298548524</li>
-								<li data-user="王五,3">王五   15829854254</li>
+								
 							</ul>
 						</span>
 					</p>

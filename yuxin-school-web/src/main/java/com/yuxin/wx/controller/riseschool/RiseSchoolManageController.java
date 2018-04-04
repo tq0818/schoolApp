@@ -8,6 +8,7 @@ import com.yuxin.wx.model.riseschool.RiseSchoolManageVo;
 import com.yuxin.wx.model.riseschool.SearchRiseSchoolVo;
 import com.yuxin.wx.model.riseschool.SysDictVo;
 import com.yuxin.wx.model.user.Users;
+import com.yuxin.wx.model.user.UsersFront;
 import com.yuxin.wx.utils.WebUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -323,6 +324,33 @@ public class RiseSchoolManageController {
             json.put("dictList",list);
         }
         return json;
+    }
+    /**
+     * 通知返回指定发送的用户
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/searchUsers")
+    public JSONObject searchUsers(HttpServletRequest request){
+    	JSONObject json = new JSONObject();
+    	Map map = new HashMap();
+    	//区
+    	String searchCondition = request.getParameter("searchCondition");
+    	if (StringUtils.isEmpty(searchCondition)){
+    		json.put("flag","0");
+    		json.put("msg","未获取区县");
+    		return json;
+    	}
+    	map.put("mobile",searchCondition);
+    	List<UsersFront> list = riseSchoolManageServiceImpl.searchUsers(map);
+    	if (list == null){
+    		json.put("flag","0");
+    	}else{
+    		json.put("flag","1");
+    		json.put("dictList",list);
+    	}
+    	return json;
     }
 
 }
