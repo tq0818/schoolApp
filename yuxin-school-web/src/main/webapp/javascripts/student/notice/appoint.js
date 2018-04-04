@@ -52,23 +52,27 @@ $(function () {
         var userInfoListAll = $('.userInfoListAll');
 
         if(userInfoListAll.length >0 ){
-
+            var onOff = true;
             for(var i =0 ;i<userInfoListAll.length;i++){
-                if(userInfo[1]==userInfoListAll.eq(i).html()){
+                if(Number(userInfo[1])==Number(userInfoListAll.eq(i).html())){
                     $.msg("该条数据已有");
+                    onOff = false;
                     break;
-                }else {
-                    console.log(userInfoListAll.eq(i).html());
-                    var _html = `
+                }
+            }
+            if(onOff){
+                var _html = `
                     <span class="c-content">
 								<label for="" class="nameTitle">`+userInfo[0]+`</label>
 								<span class="userInfoListAll">`+userInfo[1]+`</span>
 								<i class="icon iconfont iconDelete">&#xe610;</i>
 							</span>
                     `;
-                    $('.userListInfo').append(_html);
-                }
+                $('.userListInfo').append(_html);
             }
+
+
+
 
         }else {
             var _html = `
@@ -97,6 +101,17 @@ $(function () {
         $('.templete').hide();
     });
 
+    //点击发送通知，弹窗提示
+
+    $('.btn-send').click(function () {
+        $.confirm('是否确认发送信息给选定用户？',function (data) {
+            if(data){
+                console.log("点击了确定");
+            }else {
+                console.log("点击了取消");
+            }
+        })
+    });
 
 
 });
