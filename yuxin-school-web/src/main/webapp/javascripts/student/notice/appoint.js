@@ -1,4 +1,6 @@
 
+
+
 $(function () {
 	//初始化小学学年
 	queryRiseSchoolYear();
@@ -8,12 +10,11 @@ $(function () {
     $('#userListInput').keyup(function () {
         if(Number($(this).val().length)>0){
         	var searchCondition = $(this).val();
-        	console.log(searchCondition.length);
         	if(searchCondition.length != 11){
         		return;
         	}
-        	$.ajax({
-                url: rootPath + "/riseSchoolManage/searchUsers",
+            $.ajax({
+                url: rootPath+"/riseSchoolManage/searchUsers",
                 type:"post",
                 data:{"searchCondition":searchCondition},
                 dataType:"json",
@@ -27,7 +28,7 @@ $(function () {
                     if (data.flag == 1){
                         var html = '';
                         for (var i in data.dictList){
-                        	html = html + '<li data-value='+data.dictList[i].mobile+'data-user='+data.dictList[i].nickName+','+data.dictList[i].mobile+' >'+data.dictList[i].nickName+','+data.dictList[i].mobile+'</li>';
+                        	html = html + '<li data-value='+data.dictList[i].mobile+' '+'data-user='+data.dictList[i].nickName+','+data.dictList[i].mobile+' >'+data.dictList[i].nickName+','+data.dictList[i].mobile+'</li>';
                         }
                         $('.userList').html('').html(html);
                     }
@@ -96,9 +97,11 @@ $(function () {
     // 点击站内信隐藏发送模板
     $('.font-style').children('a').eq(0).click(function () {
         $('.templete').show();
+        $('.userType').hide();
     });
     $('.font-style').children('a').eq(1).click(function () {
         $('.templete').hide();
+        $('.userType').show();
     });
 
     //点击发送通知，弹窗提示
@@ -113,6 +116,16 @@ $(function () {
         })
     });
 
+    //短信通知页面，点击radio,发送模板编辑模式切换
+    $("input[type='radio']").click(function () {
+        if(Number($(this).val())!=0){
+            console.log("可编辑");
+            $('#messageId').attr('disabled',false);
+        }else{
+            console.log("不可编辑");
+            $('#messageId').attr('disabled',true);
+        }
+    });
 
 });
 

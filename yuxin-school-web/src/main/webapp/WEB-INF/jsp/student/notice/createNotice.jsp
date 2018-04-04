@@ -107,10 +107,11 @@
 }
 		 .nameTitle{display: inline-block;}
 		 .icon{color: red;}
-		 .userList{width: 366px;position: absolute;left: 153px;top: 398px;display: none;}
+		 .userList{width: 366px;position: absolute;left: 153px;top: 395px;display: none;}
 		 .userList li{height: 30px;line-height: 30px;background: #fff;padding-left: 10px;}
 		 .userList li.active{background: #0e90d2;color: #fff;}
 		 .student .notice-main{position: relative;}
+		 .userType{display: none;}
 </style>
 </head>
 <body>
@@ -185,7 +186,7 @@
 					<p class="c templete" >
 						<span class="c-title" >发送模板：</span>
 						<span class="c-content">
-							<input type="text" style="width: 150px;border-radius: 0;" id="messageId">
+							<input type="text" style="width: 150px;border-radius: 0;" id="messageId" disabled>
 						</span>
 
 					</p>
@@ -294,8 +295,14 @@
 								<%--<i class="icon iconfont iconDelete">&#xe610;</i>--%>
 							<%--</span>--%>
 						</span>
-
-
+					</p>
+					<p class="c userType">
+						<input type="radio" name="chooseBtn" value="3" style="margin-left: 35px;">
+						<span class="c-title" style="width: 55px;">用户类型:</span>
+						<span style="display: inline-block;">
+							<input type="checkbox" name="userRegister" value="0">注册用户
+							<input type="checkbox" name="userRegister" value="0">非注册用户
+						</span>
 					</p>
 
 
