@@ -185,197 +185,206 @@ var msgCount;
  		$("#write").html(0);
  		$("#SurootPathlus").html(msgCount + "条");
  		
- 		$(".btn-send").click(function(){
- 			var title = $.trim($("#title").val());
- 			var method = $.trim($(".btn-method.btn-primary").attr("data-type"));
- 			var types = $.trim($(".btn-type.btn-primary").attr("data-type"));
- 			var msgcount = "";
- 			var msgcounttext = "";			
- 			var emailTitle = '';
- 			var oneItemId = null;
- 			var twoItemId = null;
- 			var classId = null;
- 			var groupOneId = null;
- 			var groupTwoId = null;
- 			var oneItemCode = null;
- 			var twoItemCode = null;
- 			var threeItemCode =null;
- 			var phone = null;
- 			var email = null;
- 			if($(".btn-type.btn-primary").attr("data-type")=='STUDENT_MESSAGE_CLASSTYPE' && $(".btn-method.btn-primary").attr("data-type")!='STUDENT_MESSAGE_MOBILE'){
- 				if(title == ""){
- 					$("#title").focus();
- 					$("#title").select();
- 					return false;
- 				}
- 			}
- 			
- 			if(method == 'STUDENT_MESSAGE_MOBILE' && types == "STUDENT_MESSAGE_SPECIAL"){
- 				phone = $.trim($("#phone").val());
- 				if(phone == ""){
- 					$("#phone").focus();
- 					$("#phone").select();
- 					return false;
- 				}
- 				phone = phone.replace(/，/g,",");
- 				var reg = /^0?(13[0-9]|15[0-9]|17[0-9]|18[0-9]|14[0-9])[0-9]{8}$/;
- 				if(phone.indexOf(",") < 0){
- 	 				if(!reg.test($.trim(phone))){
- 	 					$("#phone").focus();
- 	 					$('<div class="c-fa">'+ "手机号" + phone + "格式不正确！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
- 	 						$(this).remove();}
- 	 					);
+ 		/*$(".btn-send").click(function(){
+ 			$.confirm('是否确认发送信息给选定用户？',function (data) {
+ 				var radioList = $("input[type='radio']");
+ 	 			for(var i = 0;i< radioList.length;i++){
+ 	 	            if(radioList.eq(i).prop('checked')){
+ 	 	            	console.log(i);
+ 	 	            	}
+ 	 	            }
+ 	 			return;
+ 	 			var title = $.trim($("#title").val());
+ 	 			var method = $.trim($(".btn-method.btn-primary").attr("data-type"));
+ 	 			var types = $.trim($(".btn-type.btn-primary").attr("data-type"));
+ 	 			var msgcount = "";
+ 	 			var msgcounttext = "";			
+ 	 			var emailTitle = '';
+ 	 			var oneItemId = null;
+ 	 			var twoItemId = null;
+ 	 			var classId = null;
+ 	 			var groupOneId = null;
+ 	 			var groupTwoId = null;
+ 	 			var oneItemCode = null;
+ 	 			var twoItemCode = null;
+ 	 			var threeItemCode =null;
+ 	 			var phone = null;
+ 	 			var email = null;
+ 	 			if($(".btn-type.btn-primary").attr("data-type")=='STUDENT_MESSAGE_CLASSTYPE' && $(".btn-method.btn-primary").attr("data-type")!='STUDENT_MESSAGE_MOBILE'){
+ 	 				if(title == ""){
+ 	 					$("#title").focus();
+ 	 					$("#title").select();
  	 					return false;
  	 				}
- 				}else{
- 					var array = phone.split(",");
- 					for(var i = 0 ; i < array.length ; i++){
- 	 	 				if(!reg.test($.trim(array[i]))){
+ 	 			}
+ 	 			
+ 	 			if(method == 'STUDENT_MESSAGE_MOBILE' && types == "STUDENT_MESSAGE_SPECIAL"){
+ 	 				phone = $.trim($("#phone").val());
+ 	 				if(phone == ""){
+ 	 					$("#phone").focus();
+ 	 					$("#phone").select();
+ 	 					return false;
+ 	 				}
+ 	 				phone = phone.replace(/，/g,",");
+ 	 				var reg = /^0?(13[0-9]|15[0-9]|17[0-9]|18[0-9]|14[0-9])[0-9]{8}$/;
+ 	 				if(phone.indexOf(",") < 0){
+ 	 	 				if(!reg.test($.trim(phone))){
  	 	 					$("#phone").focus();
- 	 	 					$('<div class="c-fa">'+ "手机号" + array[i] + "格式不正确！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+ 	 	 					$('<div class="c-fa">'+ "手机号" + phone + "格式不正确！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
  	 	 						$(this).remove();}
  	 	 					);
  	 	 					return false;
  	 	 				}
- 					}
- 				}
- 			}
- 			if(method == 'STUDENT_MESSAGE_EMAIL'){
- 				emailTitle = $.trim($('#email_title').val());
- 				if(!emailTitle){
- 					$('#emailTitle').focus();
- 					$('<div class="c-fa">'+ "请填写邮件标题！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
-	 						$(this).remove();}
-	 					);
- 					return;
- 				}
- 			}
- 			if(method == 'STUDENT_MESSAGE_EMAIL' && types == "STUDENT_MESSAGE_SPECIAL"){
- 				email = $.trim($('#email').val());
- 				if(!email){
- 					$("#email").focus();
- 					$("#email").select();
- 					return false;
- 				}
- 				email = email.replace(/，/g,",");
- 				var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
- 				if(email.indexOf(',') < 0){
- 					if(!reg.test(email)){
- 						$('#email').focus();
- 						$('<div class="c-fa">'+ "邮箱" + email + "格式不正确！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
- 	 						$(this).remove();}
- 	 					);
+ 	 				}else{
+ 	 					var array = phone.split(",");
+ 	 					for(var i = 0 ; i < array.length ; i++){
+ 	 	 	 				if(!reg.test($.trim(array[i]))){
+ 	 	 	 					$("#phone").focus();
+ 	 	 	 					$('<div class="c-fa">'+ "手机号" + array[i] + "格式不正确！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+ 	 	 	 						$(this).remove();}
+ 	 	 	 					);
+ 	 	 	 					return false;
+ 	 	 	 				}
+ 	 					}
+ 	 				}
+ 	 			}
+ 	 			if(method == 'STUDENT_MESSAGE_EMAIL'){
+ 	 				emailTitle = $.trim($('#email_title').val());
+ 	 				if(!emailTitle){
+ 	 					$('#emailTitle').focus();
+ 	 					$('<div class="c-fa">'+ "请填写邮件标题！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+ 		 						$(this).remove();}
+ 		 					);
+ 	 					return;
+ 	 				}
+ 	 			}
+ 	 			if(method == 'STUDENT_MESSAGE_EMAIL' && types == "STUDENT_MESSAGE_SPECIAL"){
+ 	 				email = $.trim($('#email').val());
+ 	 				if(!email){
+ 	 					$("#email").focus();
+ 	 					$("#email").select();
  	 					return false;
- 					}
- 				}else{
- 					var arr = email.split(',');
- 					for(var i=0;i<arr.length;i++){
- 						if(!reg.test($.trim(arr[i]))){
- 							$('<div class="c-fa">'+ "邮箱" + arr[i] + "格式不正确！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+ 	 				}
+ 	 				email = email.replace(/，/g,",");
+ 	 				var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+ 	 				if(email.indexOf(',') < 0){
+ 	 					if(!reg.test(email)){
+ 	 						$('#email').focus();
+ 	 						$('<div class="c-fa">'+ "邮箱" + email + "格式不正确！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
  	 	 						$(this).remove();}
  	 	 					);
  	 	 					return false;
- 						}
- 					}
- 				}
- 			}
- 			if(types == 'STUDENT_MESSAGE_CLASSTYPE' || types == 'STUDENT_MESSAGE_MODULENO'){
- 				oneItemId = $.trim($("#one").val());
- 				twoItemId = $.trim($("#two").val());
-                oneItemCode = $("#one").find("option:selected") .attr("data-code");
-                twoItemCode = $("#two").find("option:selected").attr("data-code");
-                threeItemCode = $("#three").find("option:selected").attr("data-code");
- 				classId = $.trim($("#class").val());
- 			}
- 			if(types == 'STUDENT_MESSAGE_GROUP'){
- 				groupOneId = $.trim($('#studentG1_edit').val());
- 				groupTwoId = $.trim($('#studentG2_edit').val());
- 			}
- 			
- 			if(method == "STUDENT_MESSAGE_WEB"){
- 				CKupdate();
- 				msgcount = $("#newsContents").val();
- 				msgcounttext=editor.document.getBody().getText();
- 			/*	msgcount = msgcount.replace(/<p>/g, "<span>");
- 				msgcount = msgcount.replace(/<p /g, "<span ");
- 				msgcount = msgcount.replace(/<\/p>/g, "</span><br>");*/
- 			}else if(method == 'STUDENT_MESSAGE_EMAIL'){
- 				CKupdate();
- 				msgcount = $("#email_newsContents").val();
-// 				msgcount = msgcount.replace(/<p>/g, "<span>");
-// 				msgcount = msgcount.replace(/<p /g, "<span ");
-// 				msgcount = msgcount.replace(/<\/p>/g, "</span><br>");
- 			}else{
- 				msgcount = $("#msgcount").val();
- 			}
- 			if($(".btn-type.btn-primary").attr("data-type")=='STUDENT_MESSAGE_CLASSTYPE' && $(".btn-method.btn-primary").attr("data-type")!='STUDENT_MESSAGE_MOBILE'){
-	 			if(!msgcount){
-	// 				if(!reg.test($.trim(arr[i]))){
-						$('<div class="c-fa">'+ "发送内容不能为空！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
-	 						$(this).remove();}
-	 					);
-	 					return false;
-	//				}
-	 			}
- 			}
+ 	 					}
+ 	 				}else{
+ 	 					var arr = email.split(',');
+ 	 					for(var i=0;i<arr.length;i++){
+ 	 						if(!reg.test($.trim(arr[i]))){
+ 	 							$('<div class="c-fa">'+ "邮箱" + arr[i] + "格式不正确！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+ 	 	 	 						$(this).remove();}
+ 	 	 	 					);
+ 	 	 	 					return false;
+ 	 						}
+ 	 					}
+ 	 				}
+ 	 			}
+ 	 			if(types == 'STUDENT_MESSAGE_CLASSTYPE' || types == 'STUDENT_MESSAGE_MODULENO'){
+ 	 				oneItemId = $.trim($("#one").val());
+ 	 				twoItemId = $.trim($("#two").val());
+ 	                oneItemCode = $("#one").find("option:selected") .attr("data-code");
+ 	                twoItemCode = $("#two").find("option:selected").attr("data-code");
+ 	                threeItemCode = $("#three").find("option:selected").attr("data-code");
+ 	 				classId = $.trim($("#class").val());
+ 	 			}
+ 	 			if(types == 'STUDENT_MESSAGE_GROUP'){
+ 	 				groupOneId = $.trim($('#studentG1_edit').val());
+ 	 				groupTwoId = $.trim($('#studentG2_edit').val());
+ 	 			}
+ 	 			
+ 	 			if(method == "STUDENT_MESSAGE_WEB"){
+ 	 				CKupdate();
+ 	 				msgcount = $("#newsContents").val();
+ 	 				msgcounttext=editor.document.getBody().getText();
+ 	 				msgcount = msgcount.replace(/<p>/g, "<span>");
+ 	 				msgcount = msgcount.replace(/<p /g, "<span ");
+ 	 				msgcount = msgcount.replace(/<\/p>/g, "</span><br>");
+ 	 			}else if(method == 'STUDENT_MESSAGE_EMAIL'){
+ 	 				CKupdate();
+ 	 				msgcount = $("#email_newsContents").val();
+// 	 				msgcount = msgcount.replace(/<p>/g, "<span>");
+// 	 				msgcount = msgcount.replace(/<p /g, "<span ");
+// 	 				msgcount = msgcount.replace(/<\/p>/g, "</span><br>");
+ 	 			}else{
+ 	 				msgcount = $("#msgcount").val();
+ 	 			}
+ 	 			if($(".btn-type.btn-primary").attr("data-type")=='STUDENT_MESSAGE_CLASSTYPE' && $(".btn-method.btn-primary").attr("data-type")!='STUDENT_MESSAGE_MOBILE'){
+ 		 			if(!msgcount){
+ 		// 				if(!reg.test($.trim(arr[i]))){
+ 							$('<div class="c-fa">'+ "发送内容不能为空！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+ 		 						$(this).remove();}
+ 		 					);
+ 		 					return false;
+ 		//				}
+ 		 			}
+ 	 			}
 
-			var sendStuNum=$("#sendStu").text();
-			if(null==sendStuNum||''==sendStuNum||parseInt(sendStuNum)<1){
-	    		$('<div class="c-fa">'+ "可发送学员人数为0!" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
-					$(this).remove();}
-				);
-				return;
-	    	}
-			
- 			var isHurry = $('.hurryNotice:checked').val();
- 			var lessonId = $('#classLesson').val();
- 			if($.trim(lessonId) ==""){
- 				 $('<div class="c-fa">'+ "您还没选择课次" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
-			        	$(this).remove();
-			      });
- 				 return;
- 			}
- 			$.ajax({
- 				url:rootPath + "/classModule/sendMsg",
- 				type:"post",
- 				data:{"title":title,"content":msgcount,"messageType":types,"messageMethod":method,
- 					"itemOneCode":oneItemCode,"itemSecondCode":twoItemCode,"itemThirdCode":threeItemCode,
- 					"classTypeId":classId,'groupOneId':groupOneId,'groupTwoId':groupTwoId,'email':email,
- 					'emailTitle':emailTitle,"phone":phone,"moduleNoId":classId,"isHurry":isHurry,"lessonId":lessonId,
- 	 				"contentText":msgcounttext},
- 				dataType:"json",
-				beforeSend:function(XMLHttpRequest){
-		              $(".loading").show();
-		              $(".loading-bg").show();
-		         },
- 				success:function(data){
- 					if(data.result == "success"){
- 						$(".loading").hide();
-				        $('<div class="c-fa">'+ "消息已发送！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
-				        	$(this).remove();
-		 					location.href = rootPath + "/student/notice";
-		 					$(".loading").show();
-				        });
- 					}else{
-			            $(".loading").hide();
-			            $(".loading-bg").hide();
-			            if(data.result == "stuno"){
-					        $('<div class="c-fa">'+ "当前没有学员！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
-					        	$(this).remove();
-					        });
-			            }else if(data.result == "msgNotCount"){
-					        $('<div class="c-fa">'+ "短信量不足，请购买后再发送" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
-					        	$(this).remove();
-					        });
-			            }else{
-					        $('<div class="c-fa">'+ "消息发送失败！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
-					        	$(this).remove();
-					        });
-			            }
- 					}
- 				}
- 			});
- 		});
+ 				var sendStuNum=$("#sendStu").text();
+ 				if(null==sendStuNum||''==sendStuNum||parseInt(sendStuNum)<1){
+ 		    		$('<div class="c-fa">'+ "可发送学员人数为0!" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+ 						$(this).remove();}
+ 					);
+ 					return;
+ 		    	}
+ 				
+ 	 			var isHurry = $('.hurryNotice:checked').val();
+ 	 			var lessonId = $('#classLesson').val();
+ 	 			if($.trim(lessonId) ==""){
+ 	 				 $('<div class="c-fa">'+ "您还没选择课次" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+ 				        	$(this).remove();
+ 				      });
+ 	 				 return;
+ 	 			}
+ 	 			$.ajax({
+ 	 				url:rootPath + "/classModule/sendMsg",
+ 	 				type:"post",
+ 	 				data:{"title":title,"content":msgcount,"messageType":types,"messageMethod":method,
+ 	 					"itemOneCode":oneItemCode,"itemSecondCode":twoItemCode,"itemThirdCode":threeItemCode,
+ 	 					"classTypeId":classId,'groupOneId':groupOneId,'groupTwoId':groupTwoId,'email':email,
+ 	 					'emailTitle':emailTitle,"phone":phone,"moduleNoId":classId,"isHurry":isHurry,"lessonId":lessonId,
+ 	 	 				"contentText":msgcounttext},
+ 	 				dataType:"json",
+ 					beforeSend:function(XMLHttpRequest){
+ 			              $(".loading").show();
+ 			              $(".loading-bg").show();
+ 			         },
+ 	 				success:function(data){
+ 	 					if(data.result == "success"){
+ 	 						$(".loading").hide();
+ 					        $('<div class="c-fa">'+ "消息已发送！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+ 					        	$(this).remove();
+ 			 					location.href = rootPath + "/student/notice";
+ 			 					$(".loading").show();
+ 					        });
+ 	 					}else{
+ 				            $(".loading").hide();
+ 				            $(".loading-bg").hide();
+ 				            if(data.result == "stuno"){
+ 						        $('<div class="c-fa">'+ "当前没有学员！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+ 						        	$(this).remove();
+ 						        });
+ 				            }else if(data.result == "msgNotCount"){
+ 						        $('<div class="c-fa">'+ "短信量不足，请购买后再发送" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+ 						        	$(this).remove();
+ 						        });
+ 				            }else{
+ 						        $('<div class="c-fa">'+ "消息发送失败！" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+ 						        	$(this).remove();
+ 						        });
+ 				            }
+ 	 					}
+ 	 				}
+ 	 			});
+ 			 })
+ 		});*/
  		//订阅文章
  		$(".btn-publish").click(function(){
 			var title = $.trim($("#title").val());
