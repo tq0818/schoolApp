@@ -331,7 +331,7 @@ public class RiseSchoolManageController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/searchUsers")
+    @RequestMapping(value = "/searchUsers",method = RequestMethod.POST)
     public JSONObject searchUsers(HttpServletRequest request){
     	JSONObject json = new JSONObject();
     	Map map = new HashMap();
