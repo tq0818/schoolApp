@@ -185,10 +185,7 @@
 					<p class="c templete" >
 						<span class="c-title" >发送模板：</span>
 						<span class="c-content">
-							<select >
-								<option value="">239784</option>
-								<option value="">239576</option>
-							</select>
+							<input type="text" style="width: 150px;border-radius: 0;" id="messageId">
 						</span>
 
 					</p>
@@ -237,36 +234,43 @@
 					<p class="c">
 						<span class="c-title" >省份：</span>
 						<span class="c-content">
-							<select>
+							<select name="eduArea" id="eduArea" onchange="queryRiseSchoolDict(1)">
+							<option value="">请选择省份</option>
 							</select>
 						</span>
 						<span>市 :</span>
 						<span class="c-content">
-							<select >
+							<select name="eduSchool" id="eduSchool" onchange="queryRiseSchoolDict(2)">
+							<option value="">请选择市</option>
 							</select>
 						</span>
 						<span>地区 :</span>
 						<span class="c-content">
-							<select >
+							<select id="registStatus" name="status" onchange="querySchoolName()">
+							<option value="">请选择区</option>
 							</select>
 						</span>
 					</p>
 					<p class="c">
 						<span class="c-title">学校 :</span>
 						<span class="c-content">
-							<select  style="width: 400px;">
+							<select id="schoolName" style="width: 400px;">
+							<option value="">请选择学校</option>
 							</select>
 						</span>
 					</p>
 					<p class="c">
 						<span class="c-title">学段 :</span>
 						<span class="c-content">
-							<select >
+							<select id="step" onchange="queryRiseSchoolYear()">
+								<option value="STEP_01">小学</option>
+								<option value="STEP_02">初中</option>
+								<option value="STEP_03">高中</option>
 							</select>
 						</span>
 						<span class="c-title">入学年份 :</span>
 						<span class="c-content">
-							<select >
+							<select id="stepYear">
 							</select>
 						</span>
 					</p>

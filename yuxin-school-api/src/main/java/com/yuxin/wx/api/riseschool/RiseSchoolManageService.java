@@ -50,6 +50,7 @@ public interface RiseSchoolManageService {
      * @return
      */
     List<SysDictVo> queryRiseSchoolDict(Map map);
+    List<SysDictVo> querySchoolName(Map map);
 
     /**
      * 根据不同条件查询学校信息

@@ -115,4 +115,10 @@ public class RiseSchoolManageServiceImpl implements RiseSchoolManageService {
 		Integer count = riseSchoolManageMapper.checkSchoolName(schoolName);
 		return count;
 	}
+
+	@Override
+	public List<SysDictVo> querySchoolName(Map map) {
+		List<SysDictVo> list = riseSchoolManageMapper.querySchoolName(map);
+		return list;
+	}
 }

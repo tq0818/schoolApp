@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -250,6 +253,76 @@ public class RiseSchoolManageController {
         json.put("count",u.intValue());
         return json;
     }
-
+    /**
+     * 返回学年
+     * @param request
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+	@ResponseBody
+    @RequestMapping(value = "/queryRiseSchoolYear")
+    public JSONObject queryRiseSchoolYear(HttpServletRequest request){
+        JSONObject json = new JSONObject();
+        String step = request.getParameter("step");
+        if (StringUtils.isEmpty(step)){
+            json.put("flag","0");
+            json.put("msg","未获取到学段");
+            return json;
+        }
+        List list = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        //小学
+        if(step.equals("STEP_01")){
+        	list.add(year);
+			list.add(year-1);
+			list.add(year-2);
+			list.add(year-3);
+			list.add(year-4);
+			list.add(year-5);
+        }else if (step.equals("STEP_02")) {//初中
+        	list.add(year);
+			list.add(year-1);
+			list.add(year-2);
+		}else{//高中
+			list.add(year);
+			list.add(year-1);
+			list.add(year-2);
+		}
+        if (list == null){
+            json.put("flag","0");
+        }else{
+            json.put("flag","1");
+            json.put("dictList",list);
+        }
+        return json;
+    }
+    /**
+     * 返回学校
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/querySchoolName")
+    public JSONObject querySchoolName(HttpServletRequest request){
+        JSONObject json = new JSONObject();
+        Map map = new HashMap();
+        //区
+        String registStatus = request.getParameter("registStatus");
+        if (StringUtils.isEmpty(registStatus)){
+            json.put("flag","0");
+            json.put("msg","未获取区县");
+            return json;
+        }
+        map.put("registStatus",registStatus);
+        List<SysDictVo> list = riseSchoolManageServiceImpl.querySchoolName(map);
+        if (list == null){
+            json.put("flag","0");
+        }else{
+            json.put("flag","1");
+            json.put("dictList",list);
+        }
+        return json;
+    }
 
 }

@@ -1,8 +1,26 @@
 
 $(function () {
+	//初始化小学学年
+	queryRiseSchoolYear();
+	//选择所属省份 初始化身份
+    queryRiseSchoolDict(0);
     //发送到指定用户下拉列表
     $('#userListInput').keyup(function () {
         if(Number($(this).val().length)>0){
+        	var searchCondition = $(this).val();
+        	$.ajax({
+                url: rootPath + "/riseSchoolManage/searchUsers",
+                type:"post",
+                data:{"searchCondition":searchCondition},
+                success:function(data){
+                    var html = '';
+                    for (var i=0;i<data.length;i++)
+                    {
+                        html = html + '<li data-value='+data[i].mobile+'data-user='+data[i].username+','+data[i].mobile+' >'+data[i].username+','+data[i].mobile+'</li>';
+                    }
+                    $('.userList').html('').html(html);
+                }
+            });
             $('.userList').show();
         }else{
             $('.userList').hide();
@@ -70,3 +88,115 @@ $(function () {
 
 
 });
+
+function queryRiseSchoolYear(){
+    var step = $("#step").val();
+    $.ajax({
+        url:rootPath +"/riseSchoolManage/queryRiseSchoolYear",
+        data:{"step":step},
+        dataType:"json",
+        beforeSend: function (XMLHttpRequest) {
+            $(".loading").show();
+            $(".loading-bg").show();
+        },
+        success:function (data) {
+            $(".loading").hide();
+            $(".loading-bg").hide();
+            //拼接下拉值
+            if (data.flag == 1){
+                var html = '';
+                for (var i in data.dictList){
+                    html = html + "<option value=\""+data.dictList[i]+"\">"+data.dictList[i]+"</option>"
+                }
+                $("#stepYear").html("").html(html);
+            }
+        }
+    });
+}
+//查询省份，城市，区域等下拉信息 2018-2-7
+function queryRiseSchoolDict(areaFlag) {
+    var itemType = '';
+    var itemCode = '';
+    var eduAreaNew = $("#eduArea").val();
+    if (areaFlag == 0){
+        itemType = 'PROVINCE';
+    }else if (areaFlag == 1){
+        itemType = 'CITY';
+        itemCode = $("#eduArea").val();
+    }else if (areaFlag == 2){
+        itemType = 'DISTRICT';
+        itemCode = $("#eduSchool").val();
+    }
+    $.ajax({
+        url:rootPath +"/riseSchoolManage/queryRiseSchoolDict",
+        data:{"itemType":itemType,
+              "itemCode":itemCode},
+        dataType:"json",
+        beforeSend: function (XMLHttpRequest) {
+            $(".loading").show();
+            $(".loading-bg").show();
+        },
+        success:function (data) {
+            $(".loading").hide();
+            $(".loading-bg").hide();
+            //拼接下拉值
+            if (data.flag == 1){
+                var html = '';
+                for (var i in data.dictList){
+                    html = html + "<option value=\""+data.dictList[i].itemCode+"\">"+data.dictList[i].itemName+"</option>"
+                }
+                if (areaFlag == 0){
+                    html = "<option value=\"\">请选择省份</option>" + html;
+                    $("#eduArea").html("").html(html);
+                }else if (areaFlag == 1){
+                	if(eduAreaNew == ""){
+                		html = "<option value=\"\">请选择市</option>";
+                	}else{
+                		html = "<option value=\"\">请选择市</option>" + html;
+                	}
+                    $("#eduSchool").html("").html(html);
+                    html2 = "<option value=\"\">请选择区</option>";
+                    $("#registStatus").html("").html(html2);
+                }else if (areaFlag == 2){
+                	var eduSchool = $("#eduSchool").val();
+                	if(eduSchool == ""){
+                		html = "<option value=\"\">请选择区</option>";
+                	}else{
+                		html = "<option value=\"\">请选择区</option>" + html;
+                	}
+                    $("#registStatus").html("").html(html);
+                }
+            }
+        }
+    });
+}
+function querySchoolName() {
+	var registStatus = $("#registStatus").val();
+	if(registStatus == ""){
+		 var html = "<option value=\"\">请选择学校</option>";
+        $("#schoolName").html("").html(html);
+		return;
+	}
+	$.ajax({
+        url:rootPath +"/riseSchoolManage/querySchoolName",
+        data:{"registStatus":registStatus},
+        dataType:"json",
+        beforeSend: function (XMLHttpRequest) {
+            $(".loading").show();
+            $(".loading-bg").show();
+        },
+        success:function (data) {
+            $(".loading").hide();
+            $(".loading-bg").hide();
+            //拼接下拉值
+            if (data.flag == 1){
+                var html = '';
+                for (var i in data.dictList){
+                    html = html + "<option value=\""+data.dictList[i].itemCode+"\">"+data.dictList[i].itemName+"</option>"
+                }
+                html = "<option value=\"\">请选择学校</option>" + html;
+                $("#schoolName").html("").html(html);
+            }
+        }
+    });
+}

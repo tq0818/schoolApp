@@ -48,6 +48,7 @@ public interface RiseSchoolManageMapper {
      * @return
      */
     List<SysDictVo> queryRiseSchoolDict(Map map);
+    List<SysDictVo> querySchoolName(Map map);
 
     List<RiseSchoolManageVo> queryDimRiseSchoolInfo(SearchRiseSchoolVo serchRiseSchoolVo);
 
