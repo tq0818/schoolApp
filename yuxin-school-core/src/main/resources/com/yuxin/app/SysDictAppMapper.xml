@@ -77,4 +77,9 @@
 	<select id="getModelById" parameterType="Integer" resultType="String" >
 		select name from sys_dict_app where  id = #{modelId}
 	</select>
+
+	<!--查询appTags列表-->
+	<select id="queryAppTagList" parameterType="Integer" resultType="com.yuxin.wx.model.app.AppTagVo" >
+		select type,name,is_open as isOpen from sys_config_app_set
+	</select>
 </mapper>

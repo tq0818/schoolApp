@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.yuxin.wx.model.app.AppTagVo;
 import com.yuxin.wx.model.classes.ClassType;
 
 import org.aspectj.lang.annotation.Around;
@@ -43,5 +44,10 @@ public class SysDictAppServiceImpl extends BaseServiceImpl implements ISysDictAp
 		Map<String,Object> params=new HashMap<String,Object>();
 		params.put("code",code);
 		return sysDictAppMapper.findSysDictAppByCode(params);
+	}
+
+	@Override
+	public List<AppTagVo> queryAppTagList() {
+		return sysDictAppMapper.queryAppTagList();
 	}
 }

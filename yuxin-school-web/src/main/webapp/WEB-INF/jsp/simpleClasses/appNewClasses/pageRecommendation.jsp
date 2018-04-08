@@ -28,7 +28,7 @@
                 <span class="t-content" id="courseCaId">
                     <a href="javascript:Form.showAllShelvesClssType('all','courseCaId');"  data-code="all" class="btn btn-mini btn-default btn-success">全部</a>
                     <c:forEach items="${firstMenu}" var="menu">
-                        <a href="javascript:Form.showAllShelvesClssType('${menu.id}','courseCaId');" data-code="${menu.id}" class="btn btn-mini btn-default">${menu.name}</a>
+                        <a href="javascript:Form.showAllShelvesClssType('${menu.id}','courseCaId');" data-code="${menu.id}" courseCode="${menu.code}" class="btn btn-mini btn-default">${menu.name}</a>
                     </c:forEach>
                 </span>
             </p>
@@ -145,8 +145,8 @@
 <div class="loading-bg lp-units-loading-bg" style="display:none"></div>
 <!--  ajax加载中div结束 -->
 <input type="hidden" id="selectCounts" value="8">
-<input type="hidden" id="modelCode" name="modelCode" value="${modelCode}">
-<input type="hidden" id="modelId" name="modelId" value="${modelId}">
+<%--<input type="hidden" id="modelCode" name="modelCode" value="${modelCode}">
+<input type="hidden" id="modelId" name="modelId" value="${modelId}">--%>
 <script type="text/javascript">
     $('#batchRecommendation').click(function () {
             //判断哪些复选框被选中

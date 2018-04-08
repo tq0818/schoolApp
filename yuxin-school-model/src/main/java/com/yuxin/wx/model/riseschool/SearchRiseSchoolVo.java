@@ -18,6 +18,18 @@ public class SearchRiseSchoolVo extends BaseModel implements Serializable {
     private String endTime;           //结束时间 
     private Integer isTop;           //置顶状态0未置顶，1置顶
     private String enrollmentType;   //招生类型
+    /**
+     * 学校报名是否开启
+     */
+    private String isHidden;
+
+    public String getIsHidden() {
+        return isHidden;
+    }
+
+    public void setIsHidden(String isHidden) {
+        this.isHidden = isHidden;
+    }
 
     public String getSchoolName() {
         return schoolName;

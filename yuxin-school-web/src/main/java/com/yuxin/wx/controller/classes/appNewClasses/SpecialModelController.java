@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,9 +69,14 @@ public class SpecialModelController {
     public PageFinder2<CommodityDto> getModelListByIds(Model model,CommoditySearchDto search) {
         //根据传入的各个ID查询课程list
         Map<String, Object> param = new HashMap<>();
-        if (search.getCategoryid()!= null && search.getCategoryid()!= "") {
-            param.put("categoryid", search.getCategoryid());
-        }
+        param.put("recommendId",search.getRecommentId());
+        /*if (search.getCategoryid()!= null && search.getCategoryid()!= "") {
+            if("all".equals(search.getCategoryid())){
+                param.put("categoryid", null);
+            }else{
+                param.put("categoryid", search.getCategoryid());
+            }
+        }*/
         if (search.getGradeid() != null && search.getGradeid() != "") {
             param.put("studySectionId", search.getGradeid());
         }
@@ -90,9 +96,10 @@ public class SpecialModelController {
             param.put("stageId", search.getStageid());
         }
         param.put("modelCode",search.getModelCode());
-        param.put("categoryid",search.getModelId());
+        param.put("categoryid", StringUtils.isBlank(search.getModelId())||"all".equals(search.getModelId())?null:search.getModelId());
         param.put("page",search.getPage());
         param.put("pageSize",search.getPageSize());
+
         //limit #{firstIndex},#{pageSize}
         param.put("firstIndex", search.getFirstIndex());
         PageFinder2<CommodityDto> commList = commodityServiceImpl.getModelListByIds(param);

@@ -49,6 +49,14 @@
                 <c:if test="${detail.isShalve == 0}">
                     <a class="upShelf"  href="javaScript:updateRiseSchool('${detail.id}',1,'');" data-value="1">上架</a>|
                 </c:if>
+                <c:if test="${detail.isHidden == 0}">
+                    <!--3 开启报名-->
+                    <a class="upShelf"  href="javaScript:updateRiseSchool('${detail.id}',3,'');" data-value="1">开启报名</a>|
+                </c:if>
+                <c:if test="${detail.isHidden == 1}">
+                    <!--4 关闭报名-->
+                    <a class="upShelf"  href="javaScript:updateRiseSchool('${detail.id}',4,'');" data-value="1">关闭报名</a>|
+                </c:if>
                 <c:if test="${detail.isTop == 0}">
                     <a class="top"  href="javaScript:updateRiseSchool('${detail.id}','',1);" data-value="1">置顶</a>|
                 </c:if>

@@ -184,7 +184,7 @@ public class RiseSchoolManageController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/queryDimRiseSchoolInfo")
+    @RequestMapping(value = "/queryDimRiseSchoolInfo",method=RequestMethod.POST)
     public String queryDimRiseSchoolInfo(HttpServletRequest request, SearchRiseSchoolVo serchRiseSchoolVo, Model model){
     	serchRiseSchoolVo.setPageSize(10);
     	PageFinder<RiseSchoolManageVo> pageFinder = riseSchoolManageServiceImpl.queryDimRiseSchoolInfo(serchRiseSchoolVo);

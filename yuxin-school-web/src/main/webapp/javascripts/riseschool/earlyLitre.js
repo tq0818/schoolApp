@@ -392,6 +392,7 @@ function queryDimRiseSchoolInfo(pageNo) {
     }
     var schoolShortName = $("#schoolShortName").val();
     $.ajax({
+        type:"POST",
         url: rootPath + "/riseSchoolManage/queryDimRiseSchoolInfo",
         data: {"page":pageNo,
             "pagesize":12,

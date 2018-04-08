@@ -135,18 +135,16 @@
     //        复写数据到页面
     var gradeIdArray = [];
     var grade = $(".gradeId");
-    var allChildren = $('#gradeList').children('a');
+    var allChildren = $('#gradeList').find('a');
     if (grade.length > 0) {
         if (grade.length == 12) {
             //如果全部有active则删除全部的选中，否则全部选中
-            for (var i = 0; i < allChildren.length; i++) {
-                allChildren.eq(i).addClass('active');
-            }
+            $('#gradeList').find('a').addClass("active");
         } else {
-            for (var i = 1; i <= grade.length; i++) {
-               /* allChildren.eq(i).addClass('active');*/
+            for (var i = 0; i < grade.length; i++) {
                 allChildren.each(function(){
-                    if($(grade[0]).val()==$(this).attr("id")){
+                   // console.log($(grade[i]).val()+"--"+$(this).attr("id")+"===="+($(grade[i]).val()==$(this).attr("id")));
+                    if($(grade[i]).val()==$(this).attr("id")){
                         $(this).addClass('active');
                     }
                 });

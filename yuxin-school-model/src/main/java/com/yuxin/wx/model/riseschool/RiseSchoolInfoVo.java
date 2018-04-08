@@ -37,6 +37,11 @@ public class RiseSchoolInfoVo extends BaseEntity {
 
     private String imgUrl;
 
+    /**
+     * 学校报名是否开启
+     */
+    private String isHidden;
+
 
     /**
      * 学校升学和详情
@@ -53,6 +58,14 @@ public class RiseSchoolInfoVo extends BaseEntity {
     private String tittle;
 
     private String content;
+
+    public String getIsHidden() {
+        return isHidden;
+    }
+
+    public void setIsHidden(String isHidden) {
+        this.isHidden = isHidden;
+    }
 
     public String getTittle() {
         return tittle;

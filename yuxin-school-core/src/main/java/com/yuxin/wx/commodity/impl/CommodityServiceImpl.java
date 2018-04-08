@@ -270,13 +270,13 @@ public class CommodityServiceImpl extends BaseServiceImpl implements ICommodityS
         List<CommodityDto> datas = new ArrayList<CommodityDto>();
         Integer count = 0;
         String modelCode = (String) param.get("modelCode");
-        if (("ZHIBO").equals(modelCode)) {
+//        if (("ZHIBO").equals(modelCode)) {
             datas = commodityMapper.getZhiBoModelListByIds(param);
             count = commodityMapper.getZhiBoModelListByIdsCount(param);
-        } else if (modelCode != null && modelCode != "") {
-            datas = commodityMapper.getModelListByIds(param);
-            count = commodityMapper.getModelListByIdsCount(param);
-        }
+//        } else if (modelCode != null && modelCode != "") {
+//            datas = commodityMapper.getModelListByIds(param);
+//            count = commodityMapper.getModelListByIdsCount(param);
+//        }
         return new PageFinder2<CommodityDto>((Integer) param.get("page"), (Integer) param.get("pageSize"), count, datas);
     }
     
