@@ -28,4 +28,6 @@ public interface QuestionMapper extends BaseMapper<QueQuestion> {
 	 */
 	Integer  insertQuestion(QueQuestion queQuestion);
 	
+	String queryLabelName(String systemTagId);
+	
 }

@@ -275,16 +275,12 @@
 	<select id="findQuestionVoByPage" resultMap="QuestionVoResultMap" parameterType="com.yuxin.wx.model.queAns.QueQuestion">
 		select <include refid="table_columns_app" />
 		from question_app t1
-		<if test="systemTagId != null">
+	<!-- 	<if test="systemTagId != null">
 		INNER JOIN question_lab_relations t2 ON t2.question_id=t1.id
 		JOIN question_lab_app t3 ON t3.id=t2.label_id and t3.lab_type=0 and t3.id = #{systemTagId}
-		</if>
-		<!--<if test="userDefuledId != null">
-		INNER JOIN question_lab_relations t4 ON t4.question_id=t1.id
-		JOIN question_lab_app t5 ON t5.id=t4.label_id and t5.lab_type=2 and t5.id = #{userDefuledId}
 		</if> -->
 		where 1=1 
-		<if test="systemTagId != null">and t3.id = #{systemTagId}</if>
+		<if test="systemTagId != null">and t1.label_content like '%${labelContent}%'</if>
 		<if test="userDefuledId != null">and t1.is_checke = #{userDefuledId}</if>
 		<if test="topFlag != null and topFlag != ''">and t1.top_flag = #{topFlag}</if>
 		<if test="essenceFlag != null and essenceFlag != ''">and t1.essence_flag = #{essenceFlag}</if>
@@ -338,4 +334,10 @@
 		insert into question_app( <include refid="table_columns" /> ) 
 		values ( <include refid="entity_properties" /> )
 	</insert>
+	
+	<select id="queryLabelName" parameterType="String" resultType="java.lang.String">
+		select lab_name
+		  from question_lab_app
+		 where id = #{systemTagId}
+	</select>
 </mapper>

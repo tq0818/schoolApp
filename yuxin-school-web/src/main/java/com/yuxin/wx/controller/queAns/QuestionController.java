@@ -7,10 +7,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
@@ -329,7 +332,9 @@ public class QuestionController {
         }
         String imgUrl = "http://" + properties.getProjectImageUrl() + "/";
         model.addAttribute("imgUrl", imgUrl);
-
+        if (StringUtils.isNotEmpty(question.getSystemTagId())) {
+			question.setLabelContent(questionServiceImpl.queryLabelName(question.getSystemTagId()));
+		}
         PageFinder<QuestionVo> pageFinder = questionServiceImpl.findVoByPage(question);
         List<QuestionVo> questionList=new ArrayList<QuestionVo>();
         if(pageFinder.getRowCount()>0){
@@ -342,7 +347,7 @@ public class QuestionController {
         			JSONObject job = array.getJSONObject(i);
         			if(job.containsKey("type")){
                         if("0".equals(job.get("type").toString())){
-                            img+="<span style='text-align: center;'>"+job.get("content");
+                            img+="<span style='text-align: center;'>"+unicodeToString(job.get("content").toString());
                         }else{
                             img+=" <img alt=\'\' src=\'"+job.get("content")+"\' style=\'border-style:solid; border-width:2px; height:120px; width:120px \' /></span>";
                         }
@@ -888,7 +893,7 @@ public class QuestionController {
 						}else{
 							queQuestion.setIsChecke(0);
 						}
-						jsonObject.put("content", b[i].replace("&nbsp;", ""));
+						jsonObject.put("content",stringToUnicode(b[i].replace("&nbsp;", "")) );
 						jsonObject.put("type", 0);
 						a+=jsonObject.toString();
 						a+=",";	
@@ -905,7 +910,7 @@ public class QuestionController {
 						}else{
 							queQuestion.setIsChecke(0);
 						}
-						jsonObject.put("content", d);
+						jsonObject.put("content",stringToUnicode(d));
 						jsonObject.put("type", 0);
 						a+=jsonObject.toString();
 						a+=",";
@@ -1084,5 +1089,34 @@ public class QuestionController {
     		log.error("toAddSpecialPage is error :", e);
     	}
     	return "erro";
+    }
+    
+	/**
+     * 把十六进制Unicode编码字符串转换为中文字符串
+     */
+    public static String unicodeToString(String str) {
+        Pattern pattern = Pattern.compile("(\\\\u(\\p{XDigit}{2,4}))");
+        Matcher matcher = pattern.matcher(str);
+        char ch;
+        while (matcher.find()) {
+            ch = (char) Integer.parseInt(matcher.group(2), 16);
+            str = str.replace(matcher.group(1), ch + "");
+        }
+        return str;
+    }
+    
+    /**
+     * 把中文字符串转换为十六进制Unicode编码字符串
+     */
+    public static String stringToUnicode(String s) {
+        String str = "";
+        for (int i = 0; i < s.length(); i++) {
+            int ch = (int) s.charAt(i);
+            if (ch > 255)
+                str += "\\u" + Integer.toHexString(ch);
+            else
+                str += String.valueOf(s.charAt(i));
+        }
+        return str;
     }
 }
