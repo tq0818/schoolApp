@@ -5,6 +5,7 @@ import com.yuxin.wx.model.riseschool.RiseSchoolInfoVo;
 import com.yuxin.wx.model.riseschool.RiseSchoolManageVo;
 import com.yuxin.wx.model.riseschool.SearchRiseSchoolVo;
 import com.yuxin.wx.model.riseschool.SysDictVo;
+import com.yuxin.wx.model.user.UsersFront;
 
 import java.util.List;
 import java.util.Map;
@@ -50,6 +51,8 @@ public interface RiseSchoolManageService {
      * @return
      */
     List<SysDictVo> queryRiseSchoolDict(Map map);
+    List<SysDictVo> querySchoolName(Map map);
+    List<UsersFront> searchUsers(Map map);
 
     /**
      * 根据不同条件查询学校信息

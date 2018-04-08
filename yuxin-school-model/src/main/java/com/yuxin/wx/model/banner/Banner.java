@@ -25,6 +25,9 @@ public class Banner extends BaseEntity {
 	private Integer isState; /* 状态( 0： 禁用 1：启用) */
 	private Integer orderByNum;//排序号
 	private Integer bannerType;//排序号
+	private String linkHref;//活动链接
+	private String searchClass;//课程参数
+	private Integer detailType;//0表示活动，1表示课程，2表示内容
 	
 	
 	
@@ -162,6 +165,30 @@ public class Banner extends BaseEntity {
 
 	public void setBannerType(Integer bannerType) {
 		this.bannerType = bannerType;
+	}
+
+	public String getLinkHref() {
+		return linkHref;
+	}
+
+	public void setLinkHref(String linkHref) {
+		this.linkHref = linkHref;
+	}
+
+	public String getSearchClass() {
+		return searchClass;
+	}
+
+	public void setSearchClass(String searchClass) {
+		this.searchClass = searchClass;
+	}
+
+	public Integer getDetailType() {
+		return detailType;
+	}
+
+	public void setDetailType(Integer detailType) {
+		this.detailType = detailType;
 	}
 
 	

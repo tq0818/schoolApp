@@ -142,7 +142,9 @@ padding-top: 40px;
 .link-btn{height: 48px;line-height: 48px;text-align: right;}
 .link-btn button:last-child{margin-right: 20px;background: #8acb11;border: 1px solid #8acb11;}
 .linkName{display: none;}
-
+.wrongTips{color: orangered;position: absolute;font-size: 14px;display: inline-block;margin-left: 5px;left: 210px;}
+.wrongTipsF{top: 105px;}
+.wrongTipsS{top: 173px;}
 </style>
 </head>
 <body style="position:relative;">
@@ -277,7 +279,9 @@ padding-top: 40px;
         </div>
         <div class="linkContent">
             <input type="text" placeholder="示例:http://www.cdds365.com" class="linkLink">
+            <span class="wrongTips wrongTipsF"></span>
             <input type="text" placeholder="请输入活动名称" class="linkLink" id="activeName" maxlength="20">
+            <span class="wrongTips wrongTipsS"></span>
             <input type="text" placeholder="请输入课程名称" class="linkName" data-value="">
             <ul class="linkNameList">
 
@@ -294,11 +298,17 @@ padding-top: 40px;
         $(this).siblings('span').removeClass('active');
         if($(this).index()){
             $('.linkName').show();
-            $('.linkLink').hide();
+            $('.linkLink').hide().val("");
+
+            $('.wrongTips').hide();
+
+
 
         }else{
-            $('.linkName').hide();
+            $('.linkName').hide().val("");
             $('.linkLink').show();
+
+            $('.wrongTips').show();
 
         }
     });
@@ -307,6 +317,7 @@ padding-top: 40px;
     $('.linkName').keyup(function () {
         if($(this).val().length>0){
             var className = $(this).val();
+            console.log(className);
             $.ajax({
                 url: rootPath + "/Banner/queryClass",
                 type:"post",
@@ -316,7 +327,7 @@ padding-top: 40px;
                     var html = '';
                     for (var i=0;i<data.length;i++)
                     {
-                        html = html + '<li data-value='+data[i].id+','+data[i].name+','+data[i].liveFlag+','+   data[i].commodityId+' >'+data[i].name+'</li>';
+                        html = html + '<li data-value='+data[i].id+','+data[i].name+','+data[i].liveFlag+','+data[i].commodityId+','+data[i].teacherName+','+data[i].cover+' >'+data[i].name+'</li>';
                     }
                     $('.linkNameList').html('').html(html);
                 }
@@ -340,6 +351,10 @@ padding-top: 40px;
        $('.linkPopup').hide();
        $('.cke_dialog_background_cover').hide();
        $('.cke_dialog').css('visibility','hidden');
+
+       $('.linkLink').val(" ");
+       $('.linkName').val(" ");
+
     });
 
     $('body').on('click','#cke_31',function(){
@@ -376,7 +391,7 @@ padding-top: 40px;
                     var html = '';
                     for (var i=0;i<data.length;i++)
                     {
-                        html = html + '<li data-value='+data[i].id+','+data[i].name+','+data[i].liveFlag+','+data[i].commodityId+' >'+data[i].name+'</li>';
+                        html = html + '<li data-value='+data[i].id+','+data[i].name+','+data[i].liveFlag+','+data[i].commodityId+','+data[i].teacherName+','+data[i].cover+' >'+data[i].name+'</li>';
                     }
                     $('.selectName').html('').html(html);
                 }
@@ -482,14 +497,17 @@ padding-top: 40px;
             var regTwo=(/[\u4e00-\u9fa5]/g);
             
           	if(!reg.test(linkValue)){
-                $.msg("请输入有效的网址!",1000);
+//                $.msg("请输入有效的网址!",1000);
+                $('.wrongTipsF').html("请输入有效的网址!");
                 return ;
             }
           	if(!regTwo.test(activeName)){
-                $.msg("只能输入纯文本",1000);
+//                $.msg("只能输入纯文本",1000);
+                $('.wrongTipsS').html("只能输入纯文本!");
                 return ;
             }
-            console.log(editor.document.getBody());
+          	var body = editor.document.getBody().getHtml();
+          	editor.document.getBody().setHtml(body+"<p><a href='"+linkValue+"'>"+activeName+"</a></p>");
            // editor.document.getBody().innerHTML = "<p><a href='"+linkValue+"'></a></p>";
            $('.linkPopup').hide();
             $('.cke_dialog_background_cover').hide();
@@ -497,8 +515,9 @@ padding-top: 40px;
 //            editor.document.getBody().append("<p><a href='"+linkValue+"'></a></p>");
             /*$('.cke_editable cke_editable_themed cke_contents_ltr cke_show_borders').html("<p><a herf="+linkValue+"></a></p>");*/
         }else{
-            linkValue = $('.linkName').val();
-            $('.cke_editable').append("<button type=\"button\" onclick=\"buttonClick('asdasd,asdasd,wdad')\">buttonClick</button>");
+            linkValue = $('.linkName').attr('data-value');
+            var body = editor.document.getBody().getHtml();
+            editor.document.getBody().setHtml(body+"<button type=\"button\" onclick=\"buttonClick('"+linkValue+"')\">buttonClick</button>");
         }
         $('.linkPopup').hide();
         $('.cke_dialog_background_cover').hide();
@@ -512,6 +531,14 @@ padding-top: 40px;
     $('#saveBtn').click(function () {
         for(var i = 0;i< radioList.length;i++){
             if(radioList.eq(i).prop('checked')){
+            	var bannerImgUrl=$("#commdotityPic").attr("realPath");
+                if(null==bannerImgUrl || ''==bannerImgUrl){
+                    alert("banner图不能为空");
+                    return;
+                }
+                var bannerName=$("#bannerName").val();
+                var bannerDescribe=$("#bannerDescribe").val();
+                var bannerType = $("#bannerType").val();
             	//i等于0就是选择的目标地址
                 if(i == 0){
                 	var selectOption = $('#selectOption').val();
@@ -531,7 +558,7 @@ padding-top: 40px;
                                 "bannerDescribe":bannerDescribe,
                                 "bannerImgUrl" :bannerImgUrl,
                                 "bannerType" :bannerType,
-                                "number" :0
+                                "detailType" :0
                             },
                             dataType:"json",
                             success:function(data){
@@ -550,7 +577,7 @@ padding-top: 40px;
                             }
                         });
                 	}else{
-                		var searchClass = $('#searchClass').val();
+                		var searchClass = $('#searchClass').attr('data-value');
                 		$.ajax({
                             url: rootPath + "/Banner/addBanner",
                             type:"post",
@@ -559,7 +586,7 @@ padding-top: 40px;
                                 "bannerDescribe":bannerDescribe,
                                 "bannerImgUrl" :bannerImgUrl,
                                 "bannerType" :bannerType,
-                                "number" :1
+                                "detailType" :1
                             },
                             dataType:"json",
                             success:function(data){
@@ -579,16 +606,8 @@ padding-top: 40px;
                         });
                 	}
                 }else{
-                	var bannerImgUrl=$("#commdotityPic").attr("realPath");
-                    if(null==bannerImgUrl || ''==bannerImgUrl){
-                        alert("banner图不能为空");
-                        return;
-                    }
-                    var bannerName=$("#bannerName").val();
-                    var bannerDescribe=$("#bannerDescribe").val();
                     CKupdate();
                     var bannerContent=editor.document.getBody().getHtml();
-                    var bannerType = $("#bannerType").val();
                     if(null!=bannerContent && '<p><br></p>'!=bannerContent){
                         $.ajax({
                             url: rootPath + "/Banner/addBanner",
@@ -598,7 +617,7 @@ padding-top: 40px;
                                 "bannerDescribe":bannerDescribe,
                                 "bannerImgUrl" :bannerImgUrl,
                                 "bannerType" :bannerType,
-                                "number" :2
+                                "detailType" :2
                             },
                             dataType:"json",
                             success:function(data){

@@ -12,6 +12,7 @@
 	<script type="text/javascript" src="<%=rootPath%>/javascripts/student.js"></script>
 	<script type="text/javascript" src="<%=rootPath%>/javascripts/select2.full.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/student/notice/createNotice.js"></script>
+    <script type="text/javascript" src="<%=rootPath %>/javascripts/student/notice/appoint.js"></script>
     <style type="text/css">
     	.font-style{
     		font-size:0;
@@ -104,6 +105,13 @@
 	height: 96px;
 	overflow: hidden;
 }
+		 .nameTitle{display: inline-block;}
+		 .icon{color: red;}
+		 .userList{width: 366px;position: absolute;left: 153px;top: 395px;display: none;}
+		 .userList li{height: 30px;line-height: 30px;background: #fff;padding-left: 10px;}
+		 .userList li.active{background: #0e90d2;color: #fff;}
+		 .student .notice-main{position: relative;}
+		 .userType{display: none;}
 </style>
 </head>
 <body>
@@ -146,10 +154,10 @@
 						</span>
 					</p>
 					<p class="c sendMsgType">
-						<span class="c-title">通知类型：</span> <span class="c-content font-style">
+						<span class="c-title">通知类型：</span>
+						<span class="c-content font-style">
 							<a href="javascript:;" class="btn btn-mini btn-type btn-primary"
-							data-type="STUDENT_MESSAGE_CLASSTYPE">课程通知</a> 
-							
+							data-type="STUDENT_MESSAGE_CLASSTYPE">指定通知</a>
 	                        <%-- <c:if test="${classMoreStatus == 1 }">
 								<a
 								href="javascript:;" class="btn btn-mini btn-type btn-default"
@@ -171,10 +179,22 @@
 							<button class="btn btn-mini btn-grade btn-default"	data-type="${grade.code }">${grade.name }</button>
 						</c:forEach>
 					</p>
-					
+
+
+					<%--短信-指定通知--%>
 					<!-- 课程或者班号 -->
-					<p class="c sendStuMsg">
-						<span class="c-title">分类：</span> <span class="c-content"> <select
+					<p class="c templete" >
+						<span class="c-title" >发送模板：</span>
+						<span class="c-content">
+							<input type="text" style="width: 150px;border-radius: 0;" id="messageId" disabled>
+						</span>
+
+					</p>
+
+					<p class="c sendStuMsg ">
+						<input type="radio" name="chooseBtn" value="0" style="margin-left: 35px;" checked>
+						<span class="c-title" style="width: 36px;">分类：</span>
+						<span class="c-content"> <select
 							id="one" style="width: 100px;">
 								<c:forEach var="o" items="${oneItem }">
 									<option value="${o.id }" data-code="${o.itemCode}">${o.itemName }</option>
@@ -190,7 +210,8 @@
 						</span>
 
 					</p>
-					<p class="c sendStuMsg">
+					<p class="c sendStuMsg ">
+
 						<span class="c-title" id="classTitle">课程：</span> <span
 							class="c-content"> <select id="class"
 							class="js-example-basic-single">
@@ -199,9 +220,102 @@
 						<span>课次 :</span>
 							<span class="c-content"> <select id="classLesson">
 						</select>
-						<span class="c-title">学员数量：</span> <span class="c-content btn-view">
+						<%--<span class="c-title">学员数量：</span> <span class="c-content btn-view">--%>
+						<%--</span>--%>
+								<%--</span>--%>
+					</p>
+
+
+
+					<%--发送给部分用户--%>
+					<p class="c">
+						<input type="radio" name="chooseBtn" value="1" style="margin-left: 35px;">
+						<span class="c-title">发送给部分用户</span>
+					</p>
+					<p class="c">
+						<span class="c-title" >省份：</span>
+						<span class="c-content">
+							<select name="eduArea" id="eduArea" onchange="queryRiseSchoolDict(1)">
+							<option value="">请选择省份</option>
+							</select>
+						</span>
+						<span>市 :</span>
+						<span class="c-content">
+							<select name="eduSchool" id="eduSchool" onchange="queryRiseSchoolDict(2)">
+							<option value="">请选择市</option>
+							</select>
+						</span>
+						<span>地区 :</span>
+						<span class="c-content">
+							<select id="registStatus" name="status" onchange="querySchoolName()">
+							<option value="">请选择区</option>
+							</select>
 						</span>
 					</p>
+					<p class="c">
+						<span class="c-title">学校 :</span>
+						<span class="c-content">
+							<select id="schoolName" style="width: 400px;">
+							<option value="">请选择学校</option>
+							</select>
+						</span>
+					</p>
+					<p class="c">
+						<span class="c-title">学段 :</span>
+						<span class="c-content">
+							<select id="step" onchange="queryRiseSchoolYear()">
+								<option value="">请选择</option>
+								<option value="STEP_01">小学</option>
+								<option value="STEP_02">初中</option>
+								<option value="STEP_03">高中</option>
+							</select>
+						</span>
+						<span class="c-title">入学年份 :</span>
+						<span class="c-content">
+							<select id="stepYear">
+							</select>
+						</span>
+					</p>
+					<%--发送到指定用户--%>
+					<p class="c">
+						<input type="radio" name="chooseBtn" value="2" style="margin-left: 35px;">
+						<span class="c-title">发送到指定用户</span>
+						<span class="c-content">
+							<input type="text" style="width: 348px;border-radius: 0;" id="userListInput" maxlength="11">
+							<ul class="userList">
+								
+							</ul>
+						</span>
+					</p>
+					<p class="c">
+						<span class="c-title">已选用户:</span><br/>
+						<span style="display: inline-block;margin-left: 95px;" class="userListInfo" >
+							<%--<span class="c-content">--%>
+								<%--<label for="" class="nameTitle">张三</label>--%>
+								<%--<span>15829854854</span>--%>
+								<%--<i class="icon iconfont iconDelete">&#xe610;</i>--%>
+							<%--</span>--%>
+						</span>
+					</p>
+					<p class="c userType">
+						<input type="radio" name="chooseBtn" value="3" style="margin-left: 35px;">
+						<span class="c-title" style="width: 55px;">用户类型:</span>
+						<span style="display: inline-block;">
+							<input type="checkbox" name="userRegister" value="0">注册用户
+							<input type="checkbox" name="userRegister" value="0">非注册用户
+						</span>
+					</p>
+
+
+
+
+
+
+
+
+
+
+
 					<p class="c sendStuMsg sendStuNum">
 						<span class="c-title">发送学员：</span> <span class="c-content"
 							id="sendStu"></span>人
@@ -271,11 +385,11 @@
 							id="useMsg"></span> <em style="font-size: inherit;color: #999;padding-right:20px;padding-left:20px;">剩余短信：<span id="Surplus">${!empty count?count:0 } 条</span></em><span
 							style="color: red; float: right;" class="tips-txt">已输入<span id="write"></span>个字符，单条短信70个字符
 						</span></span>&nbsp;<span style="color:red;" class="tips-txt">* 最多140个字</span>
-						<span class="hurry-Notice">
-							<label class="lj-tops"><input value="1" class="hurryNotice" type="checkbox">直播口令通知</label>
-						
-						<label class="lj-tops"><input value="2" class="hurryNotice" type="checkbox">故障通知</label>
-						</span>
+						<%--<span class="hurry-Notice">--%>
+							<%--<label class="lj-tops"><input value="1" class="hurryNotice" type="checkbox">直播口令通知</label>--%>
+						<%----%>
+						<%--<label class="lj-tops"><input value="2" class="hurryNotice" type="checkbox">故障通知</label>--%>
+						<%--</span>--%>
 						
 					</p>
 					<p class="c use_email" style="display:none;">
