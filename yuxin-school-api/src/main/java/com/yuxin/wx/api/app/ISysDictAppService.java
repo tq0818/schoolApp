@@ -1,6 +1,7 @@
 package com.yuxin.wx.api.app;
 
 import java.util.List;
+import java.util.Map;
 
 
 import com.yuxin.wx.model.app.AppTagVo;
@@ -28,4 +29,10 @@ public interface ISysDictAppService {
 	 * @return
      */
 	List<AppTagVo> queryAppTagList();
+
+	/**
+	 * 改变开关状态
+	 * @param params
+     */
+	void changeTheSwith(Map<String, Object> params);
 }
