@@ -142,7 +142,9 @@ padding-top: 40px;
 .link-btn{height: 48px;line-height: 48px;text-align: right;}
 .link-btn button:last-child{margin-right: 20px;background: #8acb11;border: 1px solid #8acb11;}
 .linkName{display: none;}
-
+.wrongTips{color: orangered;position: absolute;font-size: 14px;display: inline-block;margin-left: 5px;left: 210px;}
+.wrongTipsF{top: 105px;}
+.wrongTipsS{top: 173px;}
 </style>
 </head>
 <body style="position:relative;">
@@ -277,7 +279,9 @@ padding-top: 40px;
         </div>
         <div class="linkContent">
             <input type="text" placeholder="示例:http://www.cdds365.com" class="linkLink">
+            <span class="wrongTips wrongTipsF"></span>
             <input type="text" placeholder="请输入活动名称" class="linkLink" id="activeName" maxlength="20">
+            <span class="wrongTips wrongTipsS"></span>
             <input type="text" placeholder="请输入课程名称" class="linkName" data-value="">
             <ul class="linkNameList">
 
@@ -294,11 +298,17 @@ padding-top: 40px;
         $(this).siblings('span').removeClass('active');
         if($(this).index()){
             $('.linkName').show();
-            $('.linkLink').hide();
+            $('.linkLink').hide().val("");
+
+            $('.wrongTips').hide();
+
+
 
         }else{
-            $('.linkName').hide();
+            $('.linkName').hide().val("");
             $('.linkLink').show();
+
+            $('.wrongTips').show();
 
         }
     });
@@ -341,6 +351,10 @@ padding-top: 40px;
        $('.linkPopup').hide();
        $('.cke_dialog_background_cover').hide();
        $('.cke_dialog').css('visibility','hidden');
+
+       $('.linkLink').val(" ");
+       $('.linkName').val(" ");
+
     });
 
     $('body').on('click','#cke_31',function(){
@@ -478,18 +492,18 @@ padding-top: 40px;
         if($('.linkTitle').children('span').eq(0).hasClass('active')){
             linkValue = $('.linkLink').val();
             activeName = $('#activeName').val();
-            console.log(linkValue);
-            console.log(activeName);
           //检验网址
             var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
             var regTwo=(/[\u4e00-\u9fa5]/g);
             
           	if(!reg.test(linkValue)){
-                $.msg("请输入有效的网址!",1000);
+//                $.msg("请输入有效的网址!",1000);
+                $('.wrongTipsF').html("请输入有效的网址!");
                 return ;
             }
           	if(!regTwo.test(activeName)){
-                $.msg("只能输入纯文本",1000);
+//                $.msg("只能输入纯文本",1000);
+                $('.wrongTipsS').html("只能输入纯文本!");
                 return ;
             }
           	var body = editor.document.getBody().getHtml();
