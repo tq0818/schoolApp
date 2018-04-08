@@ -264,6 +264,7 @@
 						<span class="c-title">学段 :</span>
 						<span class="c-content">
 							<select id="step" onchange="queryRiseSchoolYear()">
+								<option value="">请选择</option>
 								<option value="STEP_01">小学</option>
 								<option value="STEP_02">初中</option>
 								<option value="STEP_03">高中</option>
@@ -280,7 +281,7 @@
 						<input type="radio" name="chooseBtn" value="2" style="margin-left: 35px;">
 						<span class="c-title">发送到指定用户</span>
 						<span class="c-content">
-							<input type="text" style="width: 348px;border-radius: 0;" id="userListInput">
+							<input type="text" style="width: 348px;border-radius: 0;" id="userListInput" maxlength="11">
 							<ul class="userList">
 								
 							</ul>
