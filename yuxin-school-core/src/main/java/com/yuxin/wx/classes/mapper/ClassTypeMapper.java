@@ -157,4 +157,5 @@ public interface ClassTypeMapper extends BaseMapper<ClassType> {
 	 */
 	List<ClassTypeVo> queryNeedPushLiveClass();
 
+	List<ClassType> queryRecordVideo(Map<String, Object> params);
 }

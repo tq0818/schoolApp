@@ -642,6 +642,11 @@ public class ClassTypeServiceImpl extends BaseServiceImpl implements IClassTypeS
 		List<ClassTypeVo> list=classTypeMapper.queryNeedPushLiveClass();
 		return list;
 	}
+
+	@Override
+	public List<ClassType> queryRecordVideo(Map<String, Object> params) {
+		return classTypeMapper.queryRecordVideo(params);
+	}
 }
 
 
