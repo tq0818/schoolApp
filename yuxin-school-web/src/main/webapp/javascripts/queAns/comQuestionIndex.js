@@ -353,7 +353,8 @@ $(function(){
 							var id = $(this).attr("ids");
 							$.confirm("确认删除该问答吗？",function(result){
 								if(result){
-									Form.delQue(id);
+									var pageNo = (".pagination").find(".active").find("a").text();
+									Form.delQue(id,pageNo);
 								}
 							});
 						});
@@ -435,13 +436,13 @@ $(function(){
 			        }
 				});
 			},
-			delQue : function(id){
+			delQue : function(id,pageNo){
 				$.ajax({
 					url : rootPath + "/Question/del/"+id,
 					type : "post",
 					success : function(data) {
 						if(data == 'success'){
-							Form.findQuestion(1,oneId,twoId,jz);
+							Form.findQuestion(pageNo,oneId,twoId,jz);
 						}
 					}
 				});

@@ -109,5 +109,10 @@ public interface QuestionAnswerMapper extends BaseMapper<QuestionAnswer> {
 	Integer inserTotalScore(TotalScoreVo vo);
 	Integer updateTotalScore(TotalScoreVo vo);
 	Integer insertScoreDetailsApp(ScoreDetailsAppVo vo);
-	
+	/**
+	 * 查询回答数量
+	 * @param questionId
+	 * @return
+	 */
+	Integer queryAnswerCount(Integer questionId);
 }

@@ -16,6 +16,7 @@ public class SysDictAppVO implements Serializable {
 	private String sysDictAppName;//四大分类、学段、学科、知识点的意思
 	private String sysDictAppCode;
 	private String sysDictAppType;
+	private String imgUrl;
 	public Integer getSysDictAppId() {
 		return sysDictAppId;
 	}
@@ -39,6 +40,12 @@ public class SysDictAppVO implements Serializable {
 	}
 	public void setSysDictAppType(String sysDictAppType) {
 		this.sysDictAppType = sysDictAppType;
+	}
+	public String getImgUrl() {
+		return imgUrl;
+	}
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 	
 }

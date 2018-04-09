@@ -180,5 +180,4 @@ public interface IQuestionAnswerService  {
 	 */
 	boolean updateQAndA(QuestionAnswer ans,QueQuestion que);
 	
-	
 }

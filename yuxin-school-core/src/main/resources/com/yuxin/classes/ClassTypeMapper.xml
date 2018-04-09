@@ -992,6 +992,14 @@
 		<if test="itemOneId != null and itemOneId != ''">and ct.item_one_id = #{itemOneId}</if>
 		<if test="itemSecondId != null and itemSecondId != ''">and ct.item_second_id = #{itemSecondId}</if>
 		<if test="createSchoolId != null and createSchoolId != ''">and ct.create_school_id = #{createSchoolId}</if>
+		<!--<if test="name != null and name != ''">and ct.name like '%${name}%' and ct.live_flag=0</if>-->
+	</select>
+
+	<select id="queryRecordVideo" resultMap="classTypeResultMap" parameterType="map" >
+		select ct.*,c.id as commodityId from commodity c  join commodity_product_realtion pr on
+		c.id=pr.com_id  join class_type ct on ct.id=pr.product_id and ct.del_flag=0 and pr.product_type=1 and c.type='COMMODITY_CLASS' and ct.live_flag=0
+		where ct.company_id=#{companyId}
+		and ct.name like '%${name}%'
 	</select>
 	
 	<select id="findClassTypeBycompanyId" parameterType="Integer" resultMap="classTypeResultMap">

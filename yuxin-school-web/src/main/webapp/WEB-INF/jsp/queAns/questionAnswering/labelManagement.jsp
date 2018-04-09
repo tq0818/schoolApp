@@ -29,7 +29,7 @@
                     </c:forEach>
                     
                     <li class="labelInputContent">
-                        <input type="text" class="labelInput" id="systemLab" name="systemLab">
+                        <input type="text" class="labelInput" id="systemLab" name="systemLab" maxlength="5">
                         <button class="btn btn-success labelInputContentSave">保存</button>
                         <button class="btn btn-warning labelInputContentCancel">取消</button>
                     </li>
