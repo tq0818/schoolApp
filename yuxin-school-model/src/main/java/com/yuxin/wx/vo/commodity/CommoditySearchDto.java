@@ -12,6 +12,16 @@ public class CommoditySearchDto extends BaseEntity {
     private String categoryid;
     private String modelCode;
     private String modelId;
+	private String recommentId;
+
+	public String getRecommentId() {
+		return recommentId;
+	}
+
+	public void setRecommentId(String recommentId) {
+		this.recommentId = recommentId;
+	}
+
 	public String getModelId() {
 		return modelId;
 	}

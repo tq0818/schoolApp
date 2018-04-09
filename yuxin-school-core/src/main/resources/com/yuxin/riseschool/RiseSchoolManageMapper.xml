@@ -96,7 +96,9 @@
             <if test="cityCode != null and cityCode != ''">city_code=#{cityCode},</if>
             <if test="district != null and district != ''">district=#{district},</if>
             <if test="isTop != null">is_top=#{isTop},</if>
-            <if test="isShalve != null">is_shalve=#{isShalve},</if>
+            <if test="isShalve == 1 or isShalve== 0">is_shalve=#{isShalve},</if>
+            <if test="isShalve == 3">isHidden=1,</if>
+            <if test="isShalve == 4">isHidden=0,</if>
             <if test="createTime != null and createTime != ''">create_time=#{createTime},</if>
             <if test="updateTime != null and updateTime != ''">update_time=#{updateTime},</if>
             <if test="detailAddress != null and detailAddress != ''">detail_address=#{detailAddress},</if>
@@ -155,7 +157,8 @@
                 srsdo.item_name AS enrollmentName,
                 srsdp.item_name AS provinceName,
                 srsdq.item_name AS cityName,
-                srsdr.item_name AS districtName
+                srsdr.item_name AS districtName,
+                rsi.isHidden
           FROM rise_school_info rsi
           INNER JOIN users uss ON uss.id = rsi.user_id
           INNER JOIN sys_rise_school_dict srsdo ON srsdo.item_code = rsi.enrollment_type
@@ -178,7 +181,7 @@
             <if test="busRoad != null and busRoad != ''">and rsi.bus_road=#{busRoad}</if>
             <if test="userId != null">and rsi.user_id =#{userId}</if>
             <if test="id != null">and rsi.id =#{id}</if>
-        ORDER BY rsi.is_top DESC ,rsi.update_time DESC
+        ORDER BY rsi.is_top DESC ,top_time desc,rsi.update_time DESC
         limit #{firstIndex},#{pageSize}
     </select>
     <select id="queryRiseSchoolCount" parameterType="com.yuxin.wx.model.riseschool.RiseSchoolManageVo" resultType="java.lang.Integer">
@@ -237,7 +240,8 @@
                 srsdp.item_name AS provinceName,
                 srsdq.item_name AS cityName,
                 srsdr.item_name AS districtName,
-                case when rsi.top_time is null then 0 else rsi.top_time end as top_time
+                case when rsi.top_time is null then 0 else rsi.top_time end as top_time,
+                rsi.isHidden
           FROM rise_school_info rsi
           INNER JOIN users uss ON uss.id = rsi.user_id
           INNER JOIN sys_rise_school_dict srsdo ON srsdo.item_code = rsi.enrollment_type

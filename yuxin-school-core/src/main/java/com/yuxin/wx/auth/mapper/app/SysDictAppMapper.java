@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.yuxin.wx.common.BaseMapper;
+import com.yuxin.wx.model.app.AppTagVo;
 import com.yuxin.wx.model.app.SysDictApp;
 
 
@@ -21,4 +22,8 @@ public interface SysDictAppMapper extends BaseMapper<SysDictApp>{
 	String  getModelById(Integer modelId);
 	
 	List<SysDictApp> findSysDictAppByCode(Map<String,Object>code);
+
+	List<AppTagVo> queryAppTagList();
+
+	void changeTheSwith(Map<String, Object> params);
 }

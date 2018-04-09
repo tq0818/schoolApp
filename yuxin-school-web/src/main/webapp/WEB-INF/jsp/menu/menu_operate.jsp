@@ -30,8 +30,11 @@
             <shiro:hasPermission name="financial">
             <li code="financial"><a href="<%=request.getContextPath() %>/payOrder/toOrder">财  务</a></li>
             </shiro:hasPermission>
-       
-         	<shiro:hasAnyRoles name="机构管理员,分校管理员,运营,课程顾问,客服,直播老师,助教">
+            <shiro:hasPermission name="financial">
+                <li code="queryAppTagList"><a href="<%=request.getContextPath() %>/appTagManage/queryAppTagList">APP标识管理</a></li>
+            </shiro:hasPermission>
+
+                <shiro:hasAnyRoles name="机构管理员,分校管理员,运营,课程顾问,客服,直播老师,助教">
             <shiro:hasPermission name="query_statistics">
             <%--<li code="query_statistics"><a href="<%=request.getContextPath() %>/query/page/student" id="chaxuntongji">查询统计</a></li>--%>
             </shiro:hasPermission>

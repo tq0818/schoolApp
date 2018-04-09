@@ -199,17 +199,21 @@
 			queryshelvesCoursesApp : function(page){
 
 	            var datas = {};
-	            var categoryName = '',
+				datas.recommentId = $("#recommentId").find("a").attr("data-code");
+				console.log($("#recommentId").find("a").attr("data-code"));
+				var categoryName = '',
 	                gradeName = '',
 	                subjectName = '',
 	                knowledgeName = '',
 	                knowledgeProName = '',
 	                stageName = '',
-	                typeCode = '';
+	                typeCode = '',
+					courseCode='';
 
 	            $("#courseCaId").find("a").each(function (i) {
 	                if ($(this).hasClass('btn-success')) {
 	                    categoryName = $(this).attr("data-code");
+						courseCode = $(this).attr("courseCode");
 	                }
 	            });
 	            if (categoryName != 'all') {
@@ -265,8 +269,8 @@
 	            }
 	            datas.page = page ? page : 1;
 	            datas.pageSize=$("#selectCounts").val() || 10;
-	            datas.modelCode=$("#modelCode").val();
-	            datas.modelId=$("#modelId").val();
+	            datas.modelCode=courseCode;
+	            datas.modelId=categoryName;
 	            $(".user-list").find("table").find("tr:gt(0)").remove();
 
                 //请求状态为请求中则返回

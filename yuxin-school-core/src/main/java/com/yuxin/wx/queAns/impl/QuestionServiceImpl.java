@@ -319,4 +319,9 @@ public class QuestionServiceImpl extends BaseServiceImpl implements IQuestionSer
 		}
 		return false;
 	}
+
+	@Override
+	public String queryLabelName(String systemTagId) {
+		return questionMapper.queryLabelName(systemTagId);
+	}
 }

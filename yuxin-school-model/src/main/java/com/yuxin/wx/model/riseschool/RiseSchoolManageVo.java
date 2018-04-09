@@ -31,6 +31,19 @@ public class RiseSchoolManageVo extends BaseModel{
     private String cityName;//用户名
     private String districtName;//用户名
     private String schoolNo;//学校编号
+    /**
+     * 学校报名是否开启
+     */
+    private String isHidden;
+
+    public String getIsHidden() {
+        return isHidden;
+    }
+
+    public void setIsHidden(String isHidden) {
+        this.isHidden = isHidden;
+    }
+
     public Integer getId() {
         return id;
     }

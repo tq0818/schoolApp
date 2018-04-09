@@ -158,4 +158,6 @@ public interface IQuestionService  {
 	 * @throws
 	 */
 	boolean  check(QuestionClassify questionClassify);
+	
+	String queryLabelName(String systemTagId);
 }

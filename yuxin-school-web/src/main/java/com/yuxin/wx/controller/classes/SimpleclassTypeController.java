@@ -304,17 +304,18 @@ public class SimpleclassTypeController {
 			SysDictApp search = new SysDictApp();
 			firstMenus = sysDictAppServiceImpl.findSysDictAppByParentId(search);
 			if("1".equals(zhiboFlag)){
+				List<SysDictApp>zhibo = new ArrayList<SysDictApp>();
 				for(SysDictApp first : firstMenus){
 					if("ZHIBO".equals(first.getCode())||"JIAZHANGJIANGZUO".equals(first.getCode())){
-						firstMenus.clear();
-						firstMenus.add(first);
-						break;
+						zhibo.add(first);
 					}
 				}
+				firstMenus.clear();
+				firstMenus.addAll(zhibo);
 			}else{
 				List<SysDictApp>feizhibo = new ArrayList<SysDictApp>();
 				for(SysDictApp first : firstMenus){
-					if(!"ZHIBO".equals(first.getCode()) && !"FIRSTRECOMMEND".equals(first.getType())){
+					if(!"ZHIBO".equals(first.getCode())){
 						feizhibo.add(first);
 					}
 				}
