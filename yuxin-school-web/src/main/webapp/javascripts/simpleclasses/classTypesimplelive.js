@@ -1435,3 +1435,48 @@ var originType = null;
 
     window.Form = Form;
 })(jQuery)
+
+function alertPosition(obj){
+    var courseName = obj.val();
+    var idStr = obj.attr("id");
+    if(!courseName){
+        $("#beforeChoose").empty().hide();
+        return;
+    }
+    $("#beforeChoose").css("left",obj.offset().left-289).css("top",obj.offset().top-113);
+    $("#beforeChoose").empty();
+    $.ajax({
+        type:"post",
+        url:rootPath+"/simpleClasses/queryRecordVideo",
+        data:{"name":courseName},
+        success:function(data){
+
+            if(data && data.retValues){
+
+                var ulHtml="<ul>";
+                for(var i=0;i<data.retValues.length;i++){
+                    ulHtml+="<li id='"+data.retValues[i].id+"' onclick='chooseCourse($(this))' needStr = '"+idStr+"'>"+data.retValues[i].name+"</li>";
+                }
+                ulHtml+="</ul>";
+                $("#beforeChoose").html(ulHtml);
+                if(data.retValues.length>=12){
+                    $("#beforeChoose").find("ul").css("height","200px");
+                }
+                $("#beforeChoose").show();
+
+            }
+            else
+                $("#beforeChoose").hide();
+        }
+    });
+}
+
+function chooseCourse(currentObj){
+    var courseId = currentObj.attr("id");
+    $("#beforeChoose").empty().hide();
+    $("#"+currentObj.attr("needStr")).val("http://www.cdds365.com/sysConfigItem/selectDetail/"+courseId);
+}
+
+function clearData(){
+    $("#beforeChoose").empty().hide();
+}

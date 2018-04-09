@@ -50,4 +50,9 @@ public class SysDictAppServiceImpl extends BaseServiceImpl implements ISysDictAp
 	public List<AppTagVo> queryAppTagList() {
 		return sysDictAppMapper.queryAppTagList();
 	}
+
+	@Override
+	public void changeTheSwith(Map<String, Object> params) {
+		sysDictAppMapper.changeTheSwith(params);
+	}
 }

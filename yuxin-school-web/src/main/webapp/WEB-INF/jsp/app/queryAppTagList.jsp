@@ -14,8 +14,8 @@
 </head>
 
 <body>
-<jsp:include page="/WEB-INF/jsp/menu/menu_class.jsp"></jsp:include>
-
+<%--<jsp:include page="/WEB-INF/jsp/menu/menu_class.jsp"></jsp:include>--%>
+<jsp:include page="/WEB-INF/jsp/menu/menu_operate.jsp"></jsp:include>
 <div class="u-wrap set-system">
     <div class="Y_background">
         <div class="Y_head Y_clear">
@@ -31,17 +31,11 @@
                     <th>状态</th>
                     <th>操作</th>
                 </tr>
-                </tbody>
-            </table>
-        </div>
-        <div id="specialList">
-            <table class="table table-center">
-                <tbody>
                 <c:forEach items="${appTags}" var="appTag" varStatus="vs">
                     <tr>
                         <th>${vs.count}</th>
                         <th>${appTag.name}</th>
-                        <th>
+                        <th id="${appTag.id}">
                             <c:choose>
                                 <c:when test="${appTag.isOpen eq 1}">已开启</c:when>
                                 <c:when test="${appTag.isOpen eq 0}">已关闭</c:when>
@@ -49,16 +43,27 @@
                         </th>
                         <th>
                             <c:choose>
-                                <c:when test="${appTag.isOpen eq 1}">关闭</c:when>
-                                <c:when test="${appTag.isOpen eq 0}">开启</c:when>
+                                <c:when test="${appTag.isOpen eq 1}">
+                                    <a href="javaScript:changeStatus(${appTag.id});" id="switch_${appTag.id}" switchId="${appTag.id}" isOpen="${appTag.isOpen}" class="btn btn-mini btn-primary eidtRecommondList">关闭</a>
+                                </c:when>
+                                <c:when test="${appTag.isOpen eq 0}">
+                                    <a href="javaScript:changeStatus(${appTag.id});" id="switch_${appTag.id}" switchId="${appTag.id}" isOpen="${appTag.isOpen}" class="btn btn-mini btn-primary eidtRecommondList">开启</a>
+                                </c:when>
                             </c:choose>
                         </th>
                     </tr>
                 </c:forEach>
-
                 </tbody>
             </table>
         </div>
+        <%--<div id="specialList">
+            <table class="table table-center">
+                <tbody>
+
+
+                </tbody>
+            </table>
+        </div>--%>
     </div>
 </div>
 <!-- ajax加载中div开始 -->
@@ -72,6 +77,39 @@
     $(function () {
         $selectSubMenu('queryAppTagList');
     });
+
+    function changeStatus(swithId){
+        var isOpen = $("#switch_"+swithId).attr("isOpen");
+        var switchId = $("#switch_"+swithId).attr("switchId");
+        console.log(isOpen+"--"+switchId);
+        $.ajax({
+            type:"post",
+            url:rootPath+"/appTagManage/changeTagSwitch",
+            data:{"isOpen":isOpen,"id":switchId},
+            dataType:"json",
+            success:function(data){
+                if(data=="OK"){
+                    if(0==isOpen){
+                        alert("开启成功");
+                        $("#switch_"+swithId).attr("isOpen","1");
+                        $("#switch_"+swithId).html("关闭");
+                        $("#"+switchId).html("已开启");
+                    }else{
+                        alert("关闭成功");
+                        $("#switch_"+swithId).attr("isOpen","0");
+                        $("#switch_"+swithId).html("开启");
+                        $("#"+switchId).html("已关闭");
+                    }
+                }else{
+                    if(0==isOpen){
+                        alert("开启失败");
+                    }else{
+                        alert("关闭失败");
+                    }
+                }
+            }
+        });
+    }
 </script>
 </body>
 </html>

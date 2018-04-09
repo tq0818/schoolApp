@@ -559,9 +559,26 @@ public class SimpleclassTypeController {
 		model.addAttribute("originType", search.getOriginType());
 		return "simpleClasses/classIndexAjaxList";
 	}
+
+	@ResponseBody
+	@RequestMapping(value="/queryRecordVideo",method=RequestMethod.POST)
+	public JSONObject queryRecordVideo(ClassType search,Model model){
+		JSONObject json = new JSONObject();
+		Map<String,Object>params = new HashMap<String,Object>();
+		params.put("name",search.getName());
+		params.put("companyId",18113);
+		List<ClassType> classType = classTypeServiceImpl.queryRecordVideo(params);
+		if(null!=classType && classType.size()>0){
+			for(ClassType ct : classType){
+				ct.setName(ct.getName().replaceAll(" ","&nbsp;"));
+			}
+		}
+		json.put("retValues",classType);
+		return json;
+	}
 	
 	/**
-	 * 
+	 *
 	 * Class Name: ClassTypeController.java
 	 * @Description: 跳转到添加班型页面
 	 * @author zhang.zx

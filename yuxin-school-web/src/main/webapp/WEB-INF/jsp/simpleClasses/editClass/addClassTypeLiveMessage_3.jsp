@@ -94,7 +94,7 @@
 <div class="popupwin popuwinback add-fix" data-pupwin="modal" style="top:15%;left:18%;width:55%;height:auto;">
 	<div class="popupwin-title">
 		<h2 class="h5">关联课程</h2>
-		<i class="close iconfont"></i>
+		<i class="close iconfont" onclick="clearData();"></i>
 	</div>
 	<div class="main form-horizontal">
 		<div class="form-body">
@@ -102,20 +102,31 @@
 			<div class="form-group">
 				<label class="col-md-2 control-label">直播预习</label>
 				<div class="col-md-8" >
-					<input type="text" class="form-control" id="beforeStudyUrl" maxlength="200" name="beforeStudyUrl" />
+					<input type="text" class="form-control" id="beforeStudyUrl" maxlength="200" name="beforeStudyUrl" onfocus="alertPosition($(this));" onkeyup="alertPosition($(this));"/>
 				</div>
+
 			</div>
 			<div class="form-group">
 				<label class="col-md-2 control-label">直播回放</label>
 				<div class="col-md-8" >
-					<input type="text" class="form-control" id="afterStudyUrl" maxlength="200" name="afterStudyUrl" />
+					<input type="text" class="form-control" id="afterStudyUrl" maxlength="200" name="afterStudyUrl"  onfocus="alertPosition($(this));" onkeyup="alertPosition($(this));" />
 				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-md-3 col-md-offset-5">
 					<a class="btn btn-default btn-primary addclassInfo"  href="javascript:;">保&nbsp;&nbsp;存</a>
-					&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-default" data-pupwin-btn="cancle" href="javascript:;">取&nbsp;&nbsp;消</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-default" data-pupwin-btn="cancle" href="javascript:clearData();">取&nbsp;&nbsp;消</a>
 				</div>
+			</div>
+			<style>
+					#beforeChoose ul{background: #fff;width: 491px;overflow-y: auto;}
+					#beforeChoose ul li{cursor: pointer;}
+					#beforeChoose ul li:hover{background: cornflowerblue;color: #fff;}
+
+			</style>
+
+			<div id="beforeChoose" style="position: absolute;display: none;">
+
 			</div>
 		</div>
 	</div>
@@ -389,6 +400,8 @@ function guid() {
         return v.toString(16);
     });
 }
+
+
 </script>
 	<script type="text/javascript" src="<%=rootPath %>/javascripts/simpleclasses/classTypesimplelive.js"></script>
 	<script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>

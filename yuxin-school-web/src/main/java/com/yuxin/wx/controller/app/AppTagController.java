@@ -7,10 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lym_gxm on 18/4/8.
@@ -42,8 +45,17 @@ public class AppTagController {
      * @param model
      * @return
      */
+    @ResponseBody
     @RequestMapping(value = "/changeTagSwitch",method = RequestMethod.POST)
     public Object changeTagSwitch(HttpServletRequest request, HttpServletResponse response, Model model){
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("isOpen","0".equals(request.getParameter("isOpen"))?"1":"0");
+        params.put("id",request.getParameter("id"));
+        try{
+            sysDictAppService.changeTheSwith(params);
+        }catch (Exception e){
+            return "no";
+        }
 
         return "OK";
     }

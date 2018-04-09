@@ -24,4 +24,6 @@ public interface SysDictAppMapper extends BaseMapper<SysDictApp>{
 	List<SysDictApp> findSysDictAppByCode(Map<String,Object>code);
 
 	List<AppTagVo> queryAppTagList();
+
+	void changeTheSwith(Map<String, Object> params);
 }

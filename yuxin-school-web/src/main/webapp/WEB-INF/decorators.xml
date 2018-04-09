@@ -582,6 +582,9 @@
         <!--首页通栏banner-->
         <pattern>/Banner/acrcoBannerIndex</pattern>
 
+        <!--appTag-->
+        <pattern>/appTagManage/queryAppTagList</pattern>
+
     </decorator>
 
 </decorators>
