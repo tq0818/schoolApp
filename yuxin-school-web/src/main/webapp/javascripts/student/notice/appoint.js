@@ -27,8 +27,15 @@ $(function () {
                     $(".loading-bg").hide();
                     if (data.flag == 1){
                         var html = '';
+                        var v ;
                         for (var i in data.dictList){
-                        	html = html + '<li data-value='+data.dictList[i].mobile+' '+'data-user='+data.dictList[i].nickName+','+data.dictList[i].mobile+' >'+data.dictList[i].nickName+','+data.dictList[i].mobile+'</li>';
+                        	if(data.dictList[i].nickName==null){
+                        		v = '无'
+                        	}else{
+                        		v = data.dictList[i].nickName;
+                        	}
+
+                        	html = html + '<li data-value='+data.dictList[i].mobile+' '+'data-user='+v+','+data.dictList[i].mobile+' >'+v+','+data.dictList[i].mobile+'</li>';
                         }
                         $('.userList').html('').html(html);
                     }
@@ -132,8 +139,15 @@ $(function () {
  	 			for(var i = 0;i< radioList.length;i++){
  	 	            if(radioList.eq(i).prop('checked')){
  	 	            	checkChoose = i;
- 	 	            	}
  	 	            }
+ 	 	        }
+ 	 			var msgTemplateId = $("#messageId").val();
+ 	 			if(checkChoose == 1 || checkChoose == 2){
+ 	 				if(msgTemplateId == null || msgTemplateId == ''){
+ 	 					$.msg("模板id不能为空");
+ 	 					return ;
+ 	 				}
+ 	 			}
  	 			//拿到指定用户里面的电话号码
  	 			var usersMobile = ''
  	 			for(var i = 0;i< $('.userInfoListAll').length;i++ ){
@@ -326,6 +340,7 @@ $(function () {
  	 	 				"step":step,
  	 	 				"stepYear":stepYear,
  	 	 				"registeredUser":registeredUser,
+ 	 	 				"msgTemplateId":msgTemplateId,
  	 	 				"noRegisteredUser":noRegisteredUser},
  	 				dataType:"json",
  					beforeSend:function(XMLHttpRequest){

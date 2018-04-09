@@ -2342,7 +2342,7 @@ public class ClassModuleController {
 
 		Integer messageCost = companyStudentMessage.getContent().length() % 70 == 0 ? companyStudentMessage.getContent().length() / 70 : (companyStudentMessage.getContent().length() / 70) +1;
 		ClassType ct = new ClassType();
-		if(companyStudentMessage.getMessageType().equals("STUDENT_MESSAGE_CLASSTYPE")){
+		if(companyStudentMessage.getMessageType().equals("STUDENT_MESSAGE_CLASSTYPE") && checkChoose == 0){
 			ct = classTypeServiceImpl.findClassTypeById(companyStudentMessage.getClassTypeId());
 			companyStudentMessage.setClassTypeName(ct.getName());
 		}
@@ -2368,7 +2368,22 @@ public class ClassModuleController {
 				return json;
 			}
 			if(companyStudentMessage.getMessageType().equals("STUDENT_MESSAGE_CLASSTYPE")){
-				stuList = studentServiceImpl.findByPayMaster1(companyStudentMessage);
+				if (checkChoose == 0) {//课程通知
+					stuList = studentServiceImpl.findByPayMaster1(companyStudentMessage);
+				}
+				if (checkChoose == 1) {//学校通知
+					//根据省市区拿到用户电话
+					stuList = studentServiceImpl.findByProvince(companyStudentMessage);
+				}
+				if (checkChoose == 2) {//指定通知
+					String[] mobiles = usersMobile.split(",");
+					for (String mobile : mobiles) {
+						Student stu = new Student();
+						stu.setMobile(mobile);
+						stuList.add(stu);
+					}
+				}
+				
 				if(stuList.size() == 0){
 					json.put(JsonMsg.RESULT, "stuno");
 					return json;
@@ -2395,7 +2410,11 @@ public class ClassModuleController {
 				Integer sendcounts=0;
 				//课程通知
 				messageCost = 1;
-				companyStudentMessage.setTitle("课程开课通知");
+				if(checkChoose == 0){
+					companyStudentMessage.setTitle("课程开课通知");
+				}else{
+					companyStudentMessage.setTitle("系统通知");
+				}
 				int isFlag =0;
 				if(isHurry!=null)
 				isFlag = Integer.parseInt(isHurry);
@@ -2403,8 +2422,13 @@ public class ClassModuleController {
 					if(isFlag>0){
 						sendcounts = sendHurryLessonMessage(request, companyStudentMessage, content, companyId, schoolId, user, messageCost, sList, sendcounts,isFlag);
 					}else{
-						sendcounts = sendPhoneLessonMessage(request, companyStudentMessage, content, companyId, schoolId, user,
+						if(checkChoose == 0){
+							sendcounts = sendPhoneLessonMessage(request, companyStudentMessage, content, companyId, schoolId, user,
 								messageCost, sList, sendcounts);
+						}else{
+							sendcounts = sendSchoolOrUserMessage(request, companyStudentMessage, content, companyId, schoolId, user,
+									messageCost, sList, sendcounts);
+						}
 						if(sendcounts ==0){
 							throw new Exception("sendcounts is zero");
 						}
@@ -2769,10 +2793,9 @@ public class ClassModuleController {
 					params.put("message_method", companyStudentMessage.getMessageMethod());
 					params.put("message_id", String.valueOf(companyStudentMessage.getId()));
 					List<String> userList = new ArrayList<>();
-					/*for (Student Student : stuList) {
+					for (Student Student : stuList) {
 						userList.add(Student.getMobileSign());
-					}*/
-					userList.add("BF1B101618274401810721BC9058BB03");
+					}
 					String josnResult=JiGuangPushUtil.push(userList , companyStudentMessage.getTitle(), companyStudentMessage.getTitle(),params);
 					json.put(JsonMsg.RESULT, JsonMsg.SUCCESS);
 					
@@ -3151,6 +3174,85 @@ public class ClassModuleController {
 				}
 				companyMessageHistoryServiceImpl.batchInsert(cmhList);
 				
+		}
+		return sendcounts;
+	}
+	/***
+	 * 指定学校和用户发送短信
+	 * @param request
+	 * @param companyStudentMessage
+	 * @param content
+	 * @param companyId
+	 * @param schoolId
+	 * @param user
+	 * @param messageCost
+	 * @param sList
+	 * @param sendcounts
+	 * @return
+	 */
+	public Integer sendSchoolOrUserMessage(HttpServletRequest request, CompanyStudentMessage companyStudentMessage,
+			String content, Integer companyId, Integer schoolId, Users user, Integer messageCost, List<List<Student>> sList,
+			Integer sendcounts) {
+		String result;
+		String status;
+		String message;
+		
+		List<ClassModule> modules  =  classModuleServiceImpl.findByClassTypeId(companyStudentMessage.getClassTypeId());
+		
+		List<ClassModuleNo> moduleNos = classModuleNoServiceImpl.queryClassModuleNoById(modules.get(0).getId());
+		String msgTemplateId = request.getParameter("msgTemplateId");
+		companyStudentMessage.setContent(msgTemplateId);
+		companyStudentMessageServiceImpl.insert(companyStudentMessage);
+		
+		for (List<Student> ssList : sList) {
+			String num = "";
+			for(int n = 0 ; n < ssList.size() ; n++){
+				Student s = ssList.get(n);
+				if(null!=s && null!=s.getMobile() && !"".equals(s.getMobile())){
+					if(n==ssList.size()-1){
+						num+=s.getMobile();
+					}else{
+						num+=s.getMobile()+",";
+					}
+				}
+			}
+			
+			//发送短信
+			//result = SMSUtil.sendLessonNotic(request, num, className, date);
+			try {
+				SMSHandler.sendApp(num, msgTemplateId, new String[]{""});
+				result = "发送成功";
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				result = "发送失败";
+			}
+			
+			List<CompanyMessageHistory> cmhList=new ArrayList<CompanyMessageHistory>();
+			for(Student s : ssList){
+				if(null!=s && null!=s.getMobile() && !"".equals(s.getMobile())){//2016/7/7  手机为空则不发短信
+					CompanyMessageHistory cmh = new CompanyMessageHistory();
+					cmh.setReceiverUserId(""+s.getUserId());
+					cmh.setReceiverMobile(s.getMobile().trim());
+					cmh.setContent("模板id");
+					cmh.setSendTime(new Date());
+					if(result.equals("发送成功")){
+						cmh.setSendStatus(1);
+					}else{
+						cmh.setSendStatus(0);
+					}
+					cmh.setSendResult(result);
+					cmh.setBusinessType("BUSINESS_STUDENT_MESSAGE");
+					cmh.setCompanyId(companyId);
+					cmh.setSchoolId(schoolId);
+					cmh.setCostNum(messageCost);
+					cmh.setMessageId(companyStudentMessage.getId());
+					cmhList.add(cmh);
+					sendcounts++;
+				}
+			}
+			companyMessageHistoryServiceImpl.batchInsert(cmhList);
+			
 		}
 		return sendcounts;
 	}
