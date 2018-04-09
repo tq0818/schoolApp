@@ -255,7 +255,7 @@
 					<p class="c">
 						<span class="c-title">学校 :</span>
 						<span class="c-content">
-							<select id="schoolName" style="width: 400px;">
+							<select id="schoolName" onchange="provinceMsgCount()" style="width: 400px;">
 							<option value="">请选择学校</option>
 							</select>
 						</span>
@@ -272,7 +272,8 @@
 						</span>
 						<span class="c-title">入学年份 :</span>
 						<span class="c-content">
-							<select id="stepYear">
+							<select id="stepYear" onchange="provinceMsgCount()">
+							<option value="">请选择</option>
 							</select>
 						</span>
 					</p>
@@ -301,8 +302,8 @@
 						<input type="radio" name="chooseBtn" value="3" style="margin-left: 35px;">
 						<span class="c-title" style="width: 55px;">用户类型:</span>
 						<span style="display: inline-block;">
-							<input type="checkbox" name="userRegister" value="0">注册用户
-							<input type="checkbox" name="userRegister" value="0">非注册用户
+							<input type="checkbox" name="userRegister" value="0" class='checkNew' onchange="registered()">注册用户
+							<input type="checkbox" name="userRegister" value="1" class='checkNew' onchange="registered()">非注册用户
 						</span>
 					</p>
 

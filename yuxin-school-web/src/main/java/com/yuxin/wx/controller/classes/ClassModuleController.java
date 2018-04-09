@@ -2320,7 +2320,7 @@ public class ClassModuleController {
 	 */
 	@ResponseBody
 	@RequestMapping("/sendMsg")
-	public JSONObject sendMsg(HttpServletRequest request,CompanyStudentMessage companyStudentMessage,String phone,String email,String isHurry){
+	public JSONObject sendMsg(HttpServletRequest request,CompanyStudentMessage companyStudentMessage,String phone,String email,String isHurry,Integer checkChoose,String usersMobile){
 		String result = "";
 		String status = "";
 		String message = "";
@@ -2726,11 +2726,63 @@ public class ClassModuleController {
 			// 查询 用户id
 			List<String> userIdList=new ArrayList<String>();
 			if(companyStudentMessage.getMessageType().equals("STUDENT_MESSAGE_CLASSTYPE")){
-				stuList = studentServiceImpl.findByPayMaster1(companyStudentMessage);
+				if(checkChoose == null){
+					json.put(JsonMsg.RESULT, "未获取到当前选中发送类型");
+					return json;
+				}
+				if (checkChoose == 0) {//分类
+					stuList = studentServiceImpl.findByPayMaster1(companyStudentMessage);
+				}
+				if (checkChoose == 1) {//发送给部分用户
+					//根据省市区拿到用户Id
+					stuList = studentServiceImpl.findByProvince(companyStudentMessage);
+				}
+				
+				if (checkChoose == 2) {//发送到指定用户
+					stuList = studentServiceImpl.findByusersMobile(usersMobile);
+				}
+				if (checkChoose == 3) {//用户类型
+					//登录和未登录参数,值为0表示未选中，1表示选中
+			    	String registeredUser = request.getParameter("registeredUser");
+			    	String noRegisteredUser = request.getParameter("noRegisteredUser");
+			    	Map loginUserMap = new HashMap();
+			    	loginUserMap.put("registeredUser",registeredUser);
+			    	loginUserMap.put("noRegisteredUser",noRegisteredUser);
+					stuList = studentServiceImpl.queryMobileSign(loginUserMap);
+					//保存表company_student_message_app
+					companyStudentMessageServiceImpl.insert(companyStudentMessage);
+					//保存表user_message_app
+					List<UserMessage> umList=new ArrayList<UserMessage>();
+					for (Student s : stuList) {
+						UserMessage um = new UserMessage();
+						um.setMobileSign(s.getMobileSign());
+						um.setMessageId(companyStudentMessage.getId());
+						um.setReadFlag(0);
+						umList.add(um);
+					}
+					//companyStudentMessageServiceImpl.batchInsertUserMessage(umList);
+					//极光推送
+					companyStudentMessage.setSendNum(stuList.size());
+					companyStudentMessage.setMessageStatus("STUDENT_MESSAGE_FINISH");
+					companyStudentMessageServiceImpl.update(companyStudentMessage);
+					Map<String, String> params=new HashMap<String, String>();
+					params.put("message_method", companyStudentMessage.getMessageMethod());
+					params.put("message_id", String.valueOf(companyStudentMessage.getId()));
+					List<String> userList = new ArrayList<>();
+					/*for (Student Student : stuList) {
+						userList.add(Student.getMobileSign());
+					}*/
+					userList.add("BF1B101618274401810721BC9058BB03");
+					String josnResult=JiGuangPushUtil.push(userList , companyStudentMessage.getTitle(), companyStudentMessage.getTitle(),params);
+					json.put(JsonMsg.RESULT, JsonMsg.SUCCESS);
+					
+					return json;
+				}
 				if(stuList.size() == 0){
 					json.put(JsonMsg.RESULT, "stuno");
 					return json;
 				}
+				//保存表company_student_message_app
 				companyStudentMessageServiceImpl.insert(companyStudentMessage);
 				List<UserMessage> umList=new ArrayList<UserMessage>();
 				for (Student s : stuList) {
@@ -2742,6 +2794,7 @@ public class ClassModuleController {
 					userIdList.add(String.valueOf(s.getUserId()));
 //					companyStudentMessageServiceImpl.insertUserMessage(um);
 				}
+				//保存表user_message_app
 				companyStudentMessageServiceImpl.batchInsertUserMessage(umList);
 			}else if(companyStudentMessage.getMessageType().equals("STUDENT_MESSAGE_MODULENO")){
 				stuList = studentServiceImpl.findByPaySlave(companyStudentMessage);

@@ -314,6 +314,19 @@ public interface IStudentService  {
 	List<Student> findByPayMaster(CompanyStudentMessage companyStudentMessage);
 	
 	List<Student> findByPayMaster1(CompanyStudentMessage companyStudentMessage);
+	/**
+	 * 根据省市区学校查找用户id
+	 * @param companyStudentMessage
+	 * @return
+	 */
+	List<Student> findByProvince(CompanyStudentMessage companyStudentMessage);
+	/**
+	 * 根据电话查找用户id
+	 * @param companyStudentMessage
+	 * @return
+	 */
+	List<Student> findByusersMobile(String usersMobile);
+	List<Student> queryMobileSign(Map map);
 	
 	/**
 	 * 
@@ -717,6 +730,8 @@ public interface IStudentService  {
 	UsersFrontVo findUserFrontvoByStuId(Integer sId);
 	
 	Integer findStudentCountOnlyByMobile(SelectStudentOrUsersfrontVo search);
+	Integer schoolMsgCount(Map map);
+	Integer loginUserCount(Map map);
 	
 	List<StudentImportVo> queryAllStudentsByCompanyId(Integer companyId);
 	

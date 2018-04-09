@@ -16,6 +16,7 @@ public class UserMessage extends BaseEntity {
 	private Integer	userId;		 /* 用户表id */ 
 	private Integer	messageId;		 /* 学员通知表id */ 
 	private Integer	readFlag;		 /* 阅读标记（1：已读；0：未读） */ 
+	private String	mobileSign;		 //电话序列号 
 	
 	private String content;/*信息内容*/
 
@@ -26,11 +27,12 @@ public class UserMessage extends BaseEntity {
 	/**
 	 * full Constructor
 	 */
-	public UserMessage(Integer id, Integer userId, Integer messageId, Integer readFlag) {
+	public UserMessage(Integer id, Integer userId, Integer messageId, Integer readFlag,String mobileSign) {
 		setId(id);
 		this.userId = userId;
 		this.messageId = messageId;
 		this.readFlag = readFlag;
+		this.mobileSign = mobileSign;
 	}
 
 	// getter && setter
@@ -77,4 +79,13 @@ public class UserMessage extends BaseEntity {
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	public String getMobileSign() {
+		return mobileSign;
+	}
+
+	public void setMobileSign(String mobileSign) {
+		this.mobileSign = mobileSign;
+	}
+	
 }

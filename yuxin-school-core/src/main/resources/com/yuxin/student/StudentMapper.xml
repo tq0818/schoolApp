@@ -43,6 +43,7 @@
 		<result property="eduStep" column="edu_step"/>
 		<result property="eduYear" column="edu_year"/>
 		<result property="eduClass" column="edu_class"/>
+		<result property="mobileSign" column="mobile_sign"/>
 	</resultMap>
 
 	<resultMap type="com.yuxin.wx.vo.student.StudentVo" id="studentResultMap2">
@@ -1006,6 +1007,34 @@
 		and (m.pay_status_code='ORDER_PAID' or m.pay_status_code='ORDER_PART_PAY' or m.pay_status_code='ORDER_FINISHED' or m.pay_status_code='ORDER_PAID_NO_COURSE')
 		group by s.id
 		) c
+	</select>
+	<select id="findByProvince" resultMap="studentResultMap" parameterType="com.yuxin.wx.model.company.CompanyStudentMessage">
+		SELECT id,name,mobile,user_id,email
+		from student
+		where 1=1
+		<if test="province != null and province != ''">and 1=1</if>
+		<if test="city != null and city != ''">and 1= 1</if>
+		<if test="district != null and district != ''">and edu_area=#{district}</if>
+		<if test="schoolCode != null and schoolCode != ''">and edu_school=#{schoolCode}</if>
+		<if test="step != null and step != ''">and edu_step=#{step}</if>
+		<if test="stepYear != null and stepYear != ''">and edu_year=#{stepYear}</if>
+	</select>
+	<select id="findByusersMobile" resultMap="studentResultMap">
+		SELECT id as user_id,nick_name as name
+		from users_front
+		where 
+		mobile in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">  
+		#{item}  
+		</foreach>
+	</select>
+	<select id="queryMobileSign" resultMap="studentResultMap" parameterType="map">
+		SELECT mobile_sign as mobile_sign from mobile_sequence_app
+		where 1 = 1
+		<if test="registeredUser == 1 and noRegisteredUser == 0">and is_login = 1</if>
+		<if test="registeredUser == 0 and noRegisteredUser == 1">and is_login = 0</if>
+		<if test="registeredUser == 0 and noRegisteredUser == 0">and is_login = 2</if>
+		<if test="registeredUser == 1 and noRegisteredUser == 1">and 2 = 2</if>
 	</select>
 
 	<select id="findByPaySlave" resultMap="studentResultMap" parameterType="com.yuxin.wx.model.company.CompanyStudentMessage">
@@ -3497,7 +3526,7 @@
 
 
 	<select id="findByGroupId"  resultType="int"  parameterType="map">
-		select count(id)
+		select count(s.id)
 		from student s
 		inner join company c on (s.edu_area=c.edu_area_school and c.is_area=1 or c.edu_area_school=s.edu_school and c.is_area=2)  and c.id=#{companyId}
 		where  s.delete_flag=0
@@ -3507,7 +3536,7 @@
 			<otherwise>and( s.group_one_id is not null or s.group_two_id is not null)</otherwise>
 		</choose>
 		union
-		select count(id)
+		select count(s.id)
 		from student s
 		inner join company c on c.is_area=0  and c.id=#{companyId}
 		where  s.delete_flag=0
@@ -3744,5 +3773,24 @@
 		where s.id=spm.stu_id and spm.delete_flag = 0 and s.is_login_app=1
 		and spm.pay_status_code in ('ORDER_PAID','ORDER_PART_PAY','ORDER_FINISHED','ORDER_PAID_NO_COURSE')
 		and commodity_id=#{classTypeId}
+	</select>
+	<select id="schoolMsgCount" parameterType="map" resultType="Integer">
+		SELECT count(id)
+		from student
+		where 1=1
+		<if test="province != null and province != ''">and 1=1</if>
+		<if test="city != null and city != ''">and 1= 1</if>
+		<if test="district != null and district != ''">and edu_area=#{district}</if>
+		<if test="schoolCode != null and schoolCode != ''">and edu_school=#{schoolCode}</if>
+		<if test="step != null and step != ''">and edu_step=#{step}</if>
+		<if test="stepYear != null and stepYear != ''">and edu_year=#{stepYear}</if>
+	</select>
+	<select id="loginUserCount" parameterType="map" resultType="Integer">
+		SELECT count(id) from mobile_sequence_app
+		where 1 = 1
+		<if test="registeredUser == 1 and noRegisteredUser == 0">and is_login = 1</if>
+		<if test="registeredUser == 0 and noRegisteredUser == 1">and is_login = 0</if>
+		<if test="registeredUser == 0 and noRegisteredUser == 0">and is_login = 2</if>
+		<if test="registeredUser == 1 and noRegisteredUser == 1">and 2 = 2</if>
 	</select>
 </mapper>

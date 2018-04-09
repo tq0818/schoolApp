@@ -74,6 +74,13 @@ public class CompanyStudentMessage extends BaseEntity {
 	private String lessonStartTime;
 
 	private String lessonDate;
+	
+	private String province;//省
+	private String city;//市
+	private String district;//区
+	private String schoolCode;//学校
+	private String step;//学段
+	private String stepYear;//学年
 
 	public String getLessonDate() {
 		return lessonDate;
@@ -489,6 +496,54 @@ public class CompanyStudentMessage extends BaseEntity {
 
 	public void setContentText(String contentText) {
 		this.contentText = contentText;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+
+	public String getSchoolCode() {
+		return schoolCode;
+	}
+
+	public void setSchoolCode(String schoolCode) {
+		this.schoolCode = schoolCode;
+	}
+
+	public String getStep() {
+		return step;
+	}
+
+	public void setStep(String step) {
+		this.step = step;
+	}
+
+	public String getStepYear() {
+		return stepYear;
+	}
+
+	public void setStepYear(String stepYear) {
+		this.stepYear = stepYear;
 	}
 	
 }

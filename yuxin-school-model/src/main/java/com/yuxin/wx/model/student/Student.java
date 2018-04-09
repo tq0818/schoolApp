@@ -77,6 +77,7 @@ public class Student extends BaseEntity {
 	private Integer eduAreaId;
 	private String eduSchoolName;
 	private String eduStepName;
+	private String mobileSign;//电话序列号
 	public Integer getTeacherFlag() {
 		return teacherFlag;
 	}
@@ -680,5 +681,13 @@ public class Student extends BaseEntity {
 		this.eduAreaId = eduAreaId;
 	}
 
+	public String getMobileSign() {
+		return mobileSign;
+	}
+
+	public void setMobileSign(String mobileSign) {
+		this.mobileSign = mobileSign;
+	}
+	
 	
 }
