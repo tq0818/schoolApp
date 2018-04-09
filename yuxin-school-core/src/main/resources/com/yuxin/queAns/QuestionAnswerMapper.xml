@@ -295,4 +295,10 @@
 	<update id="updateAnswerAccept" parameterType="com.yuxin.wx.model.queAns.QuestionAnswer">
 		update question_answer_app  set is_accept=1 where id=#{id} 
 	</update>
+	<select id="queryAnswerCount" parameterType="Integer" resultType="java.lang.Integer">
+		select count(1)
+		  from question_answer_app
+		 where question_id = #{questionId}
+		   and del_flag = 1
+	</select>
 </mapper>

@@ -17,6 +17,7 @@ import com.yuxin.wx.model.queAns.QueQuestion;
 import com.yuxin.wx.model.queAns.QuestionClassify;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.model.user.UsersFront;
+import com.yuxin.wx.queAns.mapper.QuestionAnswerMapper;
 import com.yuxin.wx.queAns.mapper.QuestionClassifyMapper;
 import com.yuxin.wx.queAns.mapper.QuestionMapper;
 import com.yuxin.wx.user.mapper.UsersFrontMapper;
@@ -44,6 +45,9 @@ public class QuestionServiceImpl extends BaseServiceImpl implements IQuestionSer
 	
 	@Autowired
 	private QuestionClassifyMapper questionClassifyMapper;
+	
+	@Autowired
+	private QuestionAnswerMapper questionAnswerMapper;
 	
 	/**
 	 * 
@@ -188,7 +192,8 @@ public class QuestionServiceImpl extends BaseServiceImpl implements IQuestionSer
 				String diffTime = secToTime(create);
 				qv.setTiwenTime(diffTime);	
 			}
-			
+			Integer i = questionAnswerMapper.queryAnswerCount(qv.getId());
+			qv.setAnswerCount(i);
 		}
 		Integer count = questionMapper.pageCount(search);
 		PageFinder<QuestionVo> pageFinder=new PageFinder<QuestionVo>(search.getPage(), search.getPageSize(), count, list);

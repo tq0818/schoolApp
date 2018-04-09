@@ -1145,8 +1145,9 @@
 		<if test="isMember != null and isMember==1">
 			and u.member_status=1 and (u.member_buy_length>0 || u.member_buy_length=-1)
 		</if>
-		<if test="startTime != null and startTime != ''">and date_format(s.create_time,"%Y-%m-%d") <![CDATA[>=]]> '${startTime}'</if>
-		<if test="endTime != null and endTime != ''">and date_format(s.create_time,"%Y-%m-%d") <![CDATA[<=]]> '${endTime}'</if>
+		<if test="startTime != null and startTime != '' and endTime == ''">and date_format(s.create_time,"%Y-%m-%d") <![CDATA[>=]]> '${startTime}'</if>
+		<if test="endTime != null and endTime != '' and startTime == ''">and date_format(s.create_time,"%Y-%m-%d") = '${endTime}'</if>
+		<if test="endTime != null and endTime != '' and startTime != '' and startTime != null">and date_format(s.create_time,"%Y-%m-%d") between '${startTime}' and '${endTime}'</if>
 		<if test="province != null and province != ''">and province='${province}'</if>
 		<if test="city != null and city != ''">and city= '${city}'</if>
 		<if test="county != null and county != ''">and county= '${county}'</if>
@@ -1213,8 +1214,9 @@
 		<if test="isMember != null and isMember==1">
 			and u.member_status=1 and (u.member_buy_length>0 || u.member_buy_length=-1)
 		</if>
-		<if test="startTime != null and startTime != ''">and date_format(s.create_time,"%Y-%m-%d") <![CDATA[>=]]> '${startTime}'</if>
-		<if test="endTime != null and endTime != ''">and date_format(s.create_time,"%Y-%m-%d") <![CDATA[<=]]> '${endTime}'</if>
+		<if test="startTime != null and startTime != '' and endTime == ''">and date_format(s.create_time,"%Y-%m-%d") <![CDATA[>=]]> '${startTime}'</if>
+		<if test="endTime != null and endTime != '' and startTime == ''">and date_format(s.create_time,"%Y-%m-%d") = '${endTime}'</if>
+		<if test="endTime != null and endTime != '' and startTime != '' and startTime != null">and date_format(s.create_time,"%Y-%m-%d") between '${startTime}' and '${endTime}'</if>
 		<if test="province != null and province != ''">and province='${province}'</if>
 		<if test="city != null and city != ''">and city= '${city}'</if>
 		<if test="county != null and county != ''">and county= '${county}'</if>
@@ -1500,8 +1502,9 @@
 				</otherwise>
 			</choose>
 		</if>
-		<if test="startTime != null and startTime != ''">and date_format(s.create_time,"%Y-%m-%d") <![CDATA[>=]]> '${startTime}'</if>
-		<if test="endTime != null and endTime != ''">and date_format(s.create_time,"%Y-%m-%d") <![CDATA[<=]]> '${endTime}'</if>
+		<if test="startTime != null and startTime != '' and endTime == ''">and date_format(s.create_time,"%Y-%m-%d") <![CDATA[>=]]> '${startTime}'</if>
+		<if test="endTime != null and endTime != '' and startTime == ''">and date_format(s.create_time,"%Y-%m-%d") = '${endTime}'</if>
+		<if test="endTime != null and endTime != '' and startTime != '' and startTime != null">and date_format(s.create_time,"%Y-%m-%d") between '${startTime}' and '${endTime}'</if>
 		union
 		select DISTINCT(s.id),s.name,s.sex,s.identity_type_code,s.identity_id,s.age,s.birthday,s.education_code,s.hk_address,<if test="protocolConfig == 1">cpur.potocol_id as protocol_id,</if>
 		s.mobile,s.email,s.qq,s.home_phone,s.office_phone,s.weixin_id,s.emergency_contact,s.emergency_phone,
@@ -1605,8 +1608,9 @@
 				</otherwise>
 			</choose>
 		</if>
-		<if test="startTime != null and startTime != ''">and date_format(s.create_time,"%Y-%m-%d") <![CDATA[>=]]> '${startTime}'</if>
-		<if test="endTime != null and endTime != ''">and date_format(s.create_time,"%Y-%m-%d") <![CDATA[<=]]> '${endTime}'</if>
+		<if test="startTime != null and startTime != '' and endTime == ''">and date_format(s.create_time,"%Y-%m-%d") <![CDATA[>=]]> '${startTime}'</if>
+		<if test="endTime != null and endTime != '' and startTime == ''">and date_format(s.create_time,"%Y-%m-%d") = '${endTime}'</if>
+		<if test="endTime != null and endTime != '' and startTime != '' and startTime != null">and date_format(s.create_time,"%Y-%m-%d") between '${startTime}' and '${endTime}'</if>
 		union
 		select count(DISTINCT(s.id))
 		from student s
