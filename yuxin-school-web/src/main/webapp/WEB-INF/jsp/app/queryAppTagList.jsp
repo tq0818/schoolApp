@@ -14,8 +14,8 @@
 </head>
 
 <body>
-<jsp:include page="/WEB-INF/jsp/menu/menu_class.jsp"></jsp:include>
-
+<%--<jsp:include page="/WEB-INF/jsp/menu/menu_class.jsp"></jsp:include>--%>
+<jsp:include page="/WEB-INF/jsp/menu/menu_operate.jsp"></jsp:include>
 <div class="u-wrap set-system">
     <div class="Y_background">
         <div class="Y_head Y_clear">
@@ -31,12 +31,6 @@
                     <th>状态</th>
                     <th>操作</th>
                 </tr>
-                </tbody>
-            </table>
-        </div>
-        <div id="specialList">
-            <table class="table table-center">
-                <tbody>
                 <c:forEach items="${appTags}" var="appTag" varStatus="vs">
                     <tr>
                         <th>${vs.count}</th>
@@ -59,10 +53,17 @@
                         </th>
                     </tr>
                 </c:forEach>
-
                 </tbody>
             </table>
         </div>
+        <%--<div id="specialList">
+            <table class="table table-center">
+                <tbody>
+
+
+                </tbody>
+            </table>
+        </div>--%>
     </div>
 </div>
 <!-- ajax加载中div开始 -->
