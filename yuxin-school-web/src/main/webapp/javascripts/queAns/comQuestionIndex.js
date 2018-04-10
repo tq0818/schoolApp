@@ -353,7 +353,7 @@ $(function(){
 							var id = $(this).attr("ids");
 							$.confirm("确认删除该问答吗？",function(result){
 								if(result){
-									var pageNo = (".pagination").find(".active").find("a").text();
+									var pageNo = $(".pagination").find(".active").find("a").html();
 									Form.delQue(id,pageNo);
 								}
 							});
