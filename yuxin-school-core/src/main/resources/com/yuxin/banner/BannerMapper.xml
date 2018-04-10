@@ -12,6 +12,10 @@
 		<result property="updateTime" column="update_time" />
 		<result property="orderByNum" column="order_by_num" />
 		<result property="bannerType" column="banner_type" />
+		<result property="detailType" column="detail_type" />
+		<result property="linkHref" column="banner_linkHref" />
+		<result property="searchClass" column="banner_classContent" />
+		<result property="searchClassName" column="banner_className" />
 	</resultMap>
 	
 	<sql id="table_columns">
@@ -24,7 +28,11 @@
 		is_state,
 		update_time,
 		order_by_num,
-		banner_type
+		banner_type,
+		detail_type,
+		banner_linkHref,
+		banner_classContent,
+		banner_className
    	</sql>
 	<sql id="entity_properties">
 		#{id},
@@ -89,11 +97,13 @@
 	banner_type,
 	detail_type,
 	banner_linkHref,
-	banner_classContent
+	banner_classContent,
+	banner_className
 	)
 	VALUES
 	(#{bannerName},#{bannerDescribe},#{bannerContent},#{bannerContentUrl},
-	#{bannerImgUrl},#{isState},#{updateTime},#{orderByNum},#{bannerType},#{detailType},#{linkHref},#{searchClass})
+	#{bannerImgUrl},#{isState},#{updateTime},#{orderByNum},#{bannerType},
+	#{detailType},#{linkHref},#{searchClass},#{searchClassName})
 	</insert>
 	
 	<select id="findById" resultMap="BannerResultMap" parameterType="String" >

@@ -217,6 +217,22 @@ public class BannerConfigController extends BaseWebController{
 			log.error("修改保存失败", e);
 			e.printStackTrace();
 		}
+    	if(banner.getDetailType() == 0){
+    		banner.setSearchClass("");
+    		banner.setSearchClassName("");
+    		banner.setBannerContentUrl("");
+    		banner.setBannerContent("");
+    	}
+    	if(banner.getDetailType() == 1){
+    		banner.setLinkHref("");
+    		banner.setBannerContentUrl("");
+    		banner.setBannerContent("");
+    	}
+    	if(banner.getDetailType() == 2){
+    		banner.setLinkHref("");
+    		banner.setSearchClass("");
+    		banner.setSearchClassName("");
+    	}
     	banner.setUpdateTime(new Date());
     		bannerService.update(banner);
     	json.put(JsonMsg.MSG, JsonMsg.SUCCESS);
@@ -268,6 +284,7 @@ public class BannerConfigController extends BaseWebController{
 		}
 		model.addAttribute("msgPage", bannerVo);
 		model.addAttribute("bannerType", bannerVo.getBannerType());
+		model.addAttribute("detailType", bannerVo.getDetailType());
 		return "banner/bannerEdit";
 	}
 	/**
@@ -345,7 +362,7 @@ public class BannerConfigController extends BaseWebController{
 	 */
 	@ResponseBody
     @RequestMapping("/addBanner")
-    public JSONObject addBanner(HttpServletRequest request, String bannerName,String bannerContent,String bannerDescribe,String bannerImgUrl,Integer bannerType,Integer detailType,String linkHref,String searchClass) {
+    public JSONObject addBanner(HttpServletRequest request, String bannerName,String bannerContent,String bannerDescribe,String bannerImgUrl,Integer bannerType,Integer detailType,String linkHref,String searchClass,String searchClassName) {
         JSONObject json = new JSONObject();
         try {
         	Banner banner =new Banner();
@@ -354,6 +371,7 @@ public class BannerConfigController extends BaseWebController{
         	}
         	if(detailType == 1){
         		banner.setSearchClass(searchClass);
+        		banner.setSearchClassName(searchClassName);
         	}
         	if(detailType == 2){
         		String htmlUrl=writeHtml(bannerContent);

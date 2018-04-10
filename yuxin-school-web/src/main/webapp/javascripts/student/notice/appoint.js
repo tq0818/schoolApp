@@ -53,6 +53,10 @@ $(function () {
     });
     //点击li赋值给input
     $('.userList').on('click','li',function () {
+    	if($('.userInfoListAll').length == 50){
+    		$.msg("最多只能添加50个用户");
+    		return;
+    	}
         $('#userListInput').val('');
         $('.userList').hide();
         var userInfo = $(this).attr('data-user').split(",");
@@ -108,6 +112,7 @@ $(function () {
     $('.font-style').children('a').eq(0).click(function () {
         $('.templete').show();
         $('.userType').hide();
+        
     });
     $('.font-style').children('a').eq(1).click(function () {
         $('.templete').hide();
@@ -141,13 +146,7 @@ $(function () {
  	 	            	checkChoose = i;
  	 	            }
  	 	        }
- 	 			var msgTemplateId = $("#messageId").val();
- 	 			if(checkChoose == 1 || checkChoose == 2){
- 	 				if(msgTemplateId == null || msgTemplateId == ''){
- 	 					$.msg("模板id不能为空");
- 	 					return ;
- 	 				}
- 	 			}
+ 	 			
  	 			//拿到指定用户里面的电话号码
  	 			var usersMobile = ''
  	 			for(var i = 0;i< $('.userInfoListAll').length;i++ ){
@@ -168,6 +167,15 @@ $(function () {
  	 			
  	 			var title = $.trim($("#title").val());
  	 			var method = $.trim($(".btn-method.btn-primary").attr("data-type"));
+ 	 			var msgTemplateId = $("#messageId").val();
+ 	 			if(method == 'STUDENT_MESSAGE_MOBILE'){
+ 	 				if(checkChoose == 1 || checkChoose == 2){
+ 	 	 				if(msgTemplateId == null || msgTemplateId == ''){
+ 	 	 					$.msg("模板id不能为空");
+ 	 	 					return ;
+ 	 	 				}
+ 	 	 			}
+ 	 			}
  	 			var types = $.trim($(".btn-type.btn-primary").attr("data-type"));
  	 			var msgcount = "";
  	 			var msgcounttext = "";			
@@ -389,7 +397,7 @@ $(function () {
             $('#messageId').attr('disabled',true);
             $('#messageId').val('');
             whichChoose = checkNmuber;
-            selPerson();
+            selPersonNew();
         }
         if(checkNmuber == 1){
         	$('#messageId').attr('disabled',false);
@@ -578,7 +586,7 @@ function provinceMsgCount() {
     });
 }
 //选中课程时发送短信数量
-function selPerson(){
+function selPersonNew(){
 	if(whichChoose != 0){
 		return ;
 	}
@@ -594,6 +602,7 @@ function selPerson(){
             data:{"messageType":messageType,"id":classTypeId},
             dataType:"json",
             beforeSend:function(XMLHttpRequest){
+            	
                 $(".loading").show();
                 $(".loading-bg").show();
                 $("#classLesson").empty();

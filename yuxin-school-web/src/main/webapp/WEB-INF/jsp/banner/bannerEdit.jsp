@@ -111,7 +111,7 @@ padding-top: 40px;
     /*.cke_dialog_body{display: none;}*/
      .checkName{display: none;}
 
-.selectName{width: 216px;border: 1px solid #ddd;margin-left: 354px;border-top: none;margin-top: -2px;}
+.selectName{z-index: 100000000;position: absolute;background : #fff;height: 200px;overflow-y: auto;width: 216px;border: 1px solid #ddd;margin-left: 354px;border-top: none;margin-top: -2px;}
 .selectName li{padding-left: 3px;}
 .checkName{border-radius: 0 !important;}
 .targetSite{height: 60px;}
@@ -133,7 +133,7 @@ padding-top: 40px;
 .linkContent{height: 250px;border-bottom: 1px solid #e1e1e1;}
 .linkContent input{margin-top: 37px;margin-left: 10px;border: 1px solid #707070;width: 180px;height: 20px;
     line-height: 20px;border-radius: 0;}
-.linkNameList{width: 196px;border: 1px solid #707070;margin-left: 10px;border-top: none;
+.linkNameList{height: 200px;position: absolute;overflow-y : auto;width: 196px;border: 1px solid #707070;margin-left: 10px;border-top: none;
     display: none;}
 .linkNameList li{cursor: pointer;padding-left: 3px;}
 .linkNameList li.active{background: #0e90d2;color: #fff;}
@@ -149,6 +149,7 @@ padding-top: 40px;
 </head>
 <body style="position:relative;">
 <input type="hidden" value="${bannerType }" id="bannerType"/>
+<input type="hidden" value="${detailType }" id="detailType"/>
 <!-- 二级导航 -->
 <jsp:include page="/WEB-INF/jsp/menu/menu_operate.jsp"></jsp:include>
 <%--已上架课程列表--%>
@@ -179,20 +180,20 @@ padding-top: 40px;
                     <input type="text" name="bannerDescribe" id="bannerDescribe" value="${msgPage.bannerDescribe }" class="bannerInput" maxlength="255" placeholder="最长可输入255个字符">
                 </div>
                 <div class="checkBoxBtn targetSite">
-                    <span><input type='radio' name="only" value="0" checked>目标地址:</span>
+                    <span><input type='radio' name="only" value="0" id='targetSiteInput' >目标地址:</span>
                     <select name="" id="selectOption" style="margin-left: 48px;width: 200px;">
                         <option value="0">活动</option>
                         <option value="1">课程</option>
                     </select>
 
-                    <input type="text" name="bannerDescribe" id="linkHref" value=""  maxlength="255" placeholder="示例:http://www.cdds365.com" style="width: 200px;" class="checkLink">
+                    <input type="text" name="bannerDescribe" id="linkHref" value=""  maxlength="255" placeholder="示例:http(https)://www.cdds365.com" style="width: 200px;" class="checkLink">
                     <input type="text" name="bannerDescribe" id="searchClass" value="" data-value="" maxlength="255" placeholder="请输入课程名称" style="width: 200px;" class="checkName">
                     <ul class="selectName">
 
                     </ul>
                 </div>
                 <div class="contentBox">
-                    <span><input type='radio' name="only" value="1">内容:</span>
+                    <span><input type='radio' name="only" value="1" id='contentInput'>内容:</span>
                         <textarea id="newsContents" id="bannerContent"  name="bannerContent" class="msg-content">${msgPage.bannerContent }</textarea>
                     </div>
                 </div>
@@ -279,7 +280,7 @@ padding-top: 40px;
         <span>课程</span>
     </div>
     <div class="linkContent">
-        <input type="text" placeholder="示例:http://www.cdds365.com" class="linkLink">
+        <input type="text" placeholder="示例:http(https)://www.cdds365.com" class="linkLink">
         <span class="wrongTips wrongTipsF"></span>
         <input type="text" placeholder="请输入活动名称" class="linkLink" id="activeName" maxlength="20">
         <span class="wrongTips wrongTipsS"></span>
@@ -328,6 +329,11 @@ padding-top: 40px;
                     {
                         html = html + '<li data-value='+data[i].id+','+data[i].name+','+data[i].liveFlag+','+data[i].commodityId+','+data[i].teacherName+','+data[i].cover+' >'+data[i].name+'</li>';
                     }
+                    if(data.length == 0){
+                    	$('.linkNameList').hide();
+                	}else{
+                		$('.linkNameList').show();
+                	}
                     $('.linkNameList').html('').html(html);
                 }
             });
@@ -351,8 +357,9 @@ padding-top: 40px;
        $('.cke_dialog_background_cover').hide();
        $('.cke_dialog').css('visibility','hidden');
 
-        $('.linkLink').val(" ");
-        $('.linkName').val(" ");
+        $('.linkLink').val("");
+        $('.linkName').val("");
+        $('.linkNameList').hide();
     });
 
     $('body').on('click','#cke_31',function(){
@@ -390,6 +397,11 @@ padding-top: 40px;
                     {
                         html = html + '<li data-value='+data[i].id+','+data[i].name+','+data[i].liveFlag+','+data[i].commodityId+','+data[i].teacherName+','+data[i].cover+' >'+data[i].name+'</li>';
                     }
+                    if(data.length == 0){
+                    	$('.selectName').hide();
+                	}else{
+                		$('.selectName').show();
+                	}
                     $('.selectName').html('').html(html);
                 }
             });
@@ -507,7 +519,6 @@ padding-top: 40px;
 				[ 'TextColor', 'BGColor' ], [ 'Maximize' ], [ '-' ]];
 		editor.config.baseFloatZIndex = 10100;
 		editor.config.customConfig = 'config.js';
-		
 		$(".lj-tops").bind("click",function(){
 			
 			var _checkbox= $(this).siblings().find("input");
@@ -540,7 +551,8 @@ padding-top: 40px;
                     $('.wrongTipsS').html("只能输入纯文本!");
 	                return ;
 	            }
-	            console.log(editor.document.getBody());
+	          	var body = editor.document.getBody().getHtml();
+	          	editor.document.getBody().setHtml(body+"<p><a href='"+linkValue+"'>"+activeName+"</a></p>");
 	           // editor.document.getBody().innerHTML = "<p><a href='"+linkValue+"'></a></p>";
 	           $('.linkPopup').hide();
 	            $('.cke_dialog_background_cover').hide();
@@ -548,8 +560,10 @@ padding-top: 40px;
 //	            editor.document.getBody().append("<p><a href='"+linkValue+"'></a></p>");
 	            /*$('.cke_editable cke_editable_themed cke_contents_ltr cke_show_borders').html("<p><a herf="+linkValue+"></a></p>");*/
 	        }else{
-	            linkValue = $('.linkName').val();
-	            $('.cke_editable').append("<button type=\"button\" onclick=\"buttonClick('asdasd,asdasd,wdad')\">buttonClick</button>");
+	            linkValue = $('.linkName').attr('data-value');
+	            var linkClassName = $('.linkName').val();
+	            var body = editor.document.getBody().getHtml();
+	            editor.document.getBody().setHtml(body+"<p onclick=\"buttonClick('"+linkValue+"')\">"+linkClassName+"</p>");
 	        }
 	        $('.linkPopup').hide();
 	        $('.cke_dialog_background_cover').hide();
@@ -603,6 +617,7 @@ padding-top: 40px;
             	 	 		});
                 	}else{
                 		var searchClass = $('#searchClass').attr('data-value');
+                		var searchClassName = $('#searchClass').val();
                 		$.ajax({
             	 	 			url: rootPath + "/Banner/update",
             	 	 			type:"post",
@@ -723,6 +738,29 @@ padding-top: 40px;
 //				fileName: 'imgData'
 			});
 		}
+		
+		//回显数据
+		console.log($('#detailType').val());
+		if(Number($('#detailType').val())==0||Number($('#detailType').val())==1){
+			$('#targetSiteInput').prop('checked',true);
+			if(Number($('#detailType').val())==0){
+				$('#linkHref').val('${msgPage.linkHref}');
+				$('#selectOption').children('option').eq(0).attr('selected',"selected");
+				$('#linkHref').show();
+				$('#searchClass').hide();
+			}else{
+				$('#searchClass').val('${msgPage.searchClassName}');
+				$('#searchClass').attr('data-value','${msgPage.searchClass}');
+				$('#selectOption').children('option').eq(1).attr('selected',"selected");
+				$('#linkHref').hide();
+				$('#searchClass').show();
+				
+			}
+		
+		}else if(Number($('#detailType').val())==2){
+			$('#contentInput').prop('checked',true);
+		}
+		
 	</script>
 <script>
     //        二级菜单加active
