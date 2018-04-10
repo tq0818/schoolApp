@@ -21,7 +21,7 @@
 	                       <span class="t-title">通知类型：</span>
 	                       <span class="t-content">
 	                       		<c:if test="${m.messageType == 'STUDENT_MESSAGE_CLASSTYPE' }">
-	                       			课程通知
+	                       			指定通知
 	                       		</c:if>
 	                       		<c:if test="${m.messageType == 'STUDENT_MESSAGE_MODULENO' }">
 	                       			班号通知

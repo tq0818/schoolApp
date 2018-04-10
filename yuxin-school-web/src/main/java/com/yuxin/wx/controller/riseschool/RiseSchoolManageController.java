@@ -2,6 +2,7 @@ package com.yuxin.wx.controller.riseschool;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yuxin.wx.api.riseschool.RiseSchoolManageService;
+import com.yuxin.wx.api.student.IStudentService;
 import com.yuxin.wx.api.user.IUsersService;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.riseschool.RiseSchoolManageVo;
@@ -39,6 +40,8 @@ public class RiseSchoolManageController {
     private RiseSchoolManageService riseSchoolManageServiceImpl;
     @Autowired
     private IUsersService usersServiceImpl;
+    @Autowired
+	private IStudentService studentServiceImpl;
     /**
      * 添加学校信息及用户信息
      * @param request
@@ -352,5 +355,52 @@ public class RiseSchoolManageController {
     	}
     	return json;
     }
-
+    /**
+     * 返回当前学校需要发送多少条短信
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/provinceMsgCount")
+    public JSONObject provinceMsgCount(HttpServletRequest request){
+        JSONObject json = new JSONObject();
+        Map map = new HashMap();
+        //省，市，区，学校，学段，年份
+        String province = request.getParameter("province");
+        String city = request.getParameter("city");
+        String district = request.getParameter("district");
+        String schoolCode = request.getParameter("schoolCode");
+        String step = request.getParameter("step");
+        String stepYear = request.getParameter("stepYear");
+        map.put("province",province);
+        map.put("city",city);
+        map.put("district",district);
+        map.put("schoolCode",schoolCode);
+        map.put("step",step);
+        map.put("stepYear",stepYear);
+        Integer count = studentServiceImpl.schoolMsgCount(map);
+        json.put("flag","1");
+        json.put("count",count);
+        return json;
+    }
+    /**
+     * 返回当前登录或未登录用户有多少
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/loginUserCount")
+    public JSONObject loginUserCount(HttpServletRequest request){
+    	JSONObject json = new JSONObject();
+    	Map map = new HashMap();
+    	//登录和未登录参数,值为0表示未选中，1表示选中
+    	String registeredUser = request.getParameter("registeredUser");
+    	String noRegisteredUser = request.getParameter("noRegisteredUser");
+    	map.put("registeredUser",registeredUser);
+    	map.put("noRegisteredUser",noRegisteredUser);
+    	Integer count = studentServiceImpl.loginUserCount(map);
+    	json.put("flag","1");
+    	json.put("count",count);
+    	return json;
+    }
 }

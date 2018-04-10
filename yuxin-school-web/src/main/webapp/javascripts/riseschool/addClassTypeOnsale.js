@@ -18,13 +18,26 @@
 			ysize = $pcnt.height();
 			ysize2 = $pcnt2.height();
 			ysize3 = $pcnt3.height();
-			// 为1 是小升初，反之则不是
-             if (bannerType == "0"){
-                 minHeight = 50;
+			// 为2 是通栏banner，反之则不是
+             if (bannerType == "2"){
+            	 if (initW > initH){//横图
+                     minHeight = 18;
+                     maxHeight = 123.84;
+                     minWidth = 75;
+                     maxWidth = 516;
+                     $scale = 516 / 123.84;
+ 				}else{
+                     minHeight = 18;
+                     maxHeight = 282;
+                     minWidth = 75;
+                     maxWidth = 1175;
+                     $scale = 1175 / 282;
+ 				}
+                 /*minHeight = 50;
                  maxHeight = 282;
                  minWidth = 120;
                  maxWidth = 516;
-                 $scale = 516 / 282;
+                 $scale = 516 / 282;*/
 			 }else{
 			 	if (initW > initH){//横图
                     minHeight = 30;
@@ -71,8 +84,8 @@
 				boundy = bounds[1];
 				var scale = parseInt(sourceWidth) / parseInt(sourceHeight);// 长宽比例
 				var size = resizePic();
-                if (bannerType == "0"){
-                    jcrop_api.setSelect([100,100,200,200]);
+                if (bannerType == "2"){
+                    jcrop_api.setSelect([0,0,75,18]);
 				}else {
                     jcrop_api.setSelect([0,0,75,30]);
 				}

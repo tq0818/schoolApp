@@ -1804,5 +1804,36 @@ public class StudentServiceImpl extends BaseServiceImpl implements IStudentServi
 	public List<Student> queryStudentListByClassTypeId(Integer classTypeId){
 		return studentMapper.queryStudentListByClassTypeId(classTypeId);
 	}
+
+	@Override
+	public List<Student> findByProvince(CompanyStudentMessage companyStudentMessage) {
+		List<Student> list = studentMapper.findByProvince(companyStudentMessage);
+		return list;
+	}
+
+	@Override
+	public List<Student> findByusersMobile(String usersMobile) {
+		String[] userMobiles = usersMobile.split(",");
+		List<Student> list = studentMapper.findByusersMobile(userMobiles);
+		return list;
+	}
+
+	@Override
+	public Integer schoolMsgCount(Map map) {
+		Integer count = studentMapper.schoolMsgCount(map);
+		return count;
+	}
+
+	@Override
+	public Integer loginUserCount(Map map) {
+		Integer userCount = studentMapper.loginUserCount(map);
+		return userCount;
+	}
+
+	@Override
+	public List<Student> queryMobileSign(Map map) {
+		List<Student> mobileSignList = studentMapper.queryMobileSign(map);
+		return mobileSignList;
+	}
 	
 }

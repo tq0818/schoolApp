@@ -28,11 +28,11 @@ function test(){
                     <span class="t-title">通知类型</span>
                     <span class="t-content">
                     	<a href="javascript:;" class="btn btn-mini btn-notice btn-success" data-type="all">全部</a>
-                        <a href="javascript:;" class="btn btn-mini btn-notice" data-type="STUDENT_MESSAGE_CLASSTYPE">课程通知</a>
+                        <a href="javascript:;" class="btn btn-mini btn-notice" data-type="STUDENT_MESSAGE_CLASSTYPE">指定通知</a>
                         <c:if test="${classMoreStatus == 1 }">
                         	<a href="javascript:;" class="btn btn-mini btn-notice" data-type="STUDENT_MESSAGE_MODULENO">班号通知</a>
                         </c:if>
-                        <a href="javascript:;" class="btn btn-mini btn-notice" data-type="STUDENT_MESSAGE_SPECIAL">指定通知</a>
+                        <!-- <a href="javascript:;" class="btn btn-mini btn-notice" data-type="STUDENT_MESSAGE_SPECIAL">指定通知</a> -->
                         <a href="javascript:;" class="btn btn-mini btn-notice" data-type="STUDENT_MESSAGE_GROUP">分组通知</a>
                         <a id="affiche" href="javascript:;" class="btn btn-mini btn-notice" data-type="STUDENT_MESSAGE_AFFICHE">公告</a>
                         <a href="javascript:;" class="btn btn-mini btn-notice" data-type="STUDENT_MESSAGE_SYSTEM">系统通知</a>

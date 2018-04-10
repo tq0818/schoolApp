@@ -37,7 +37,7 @@
 	                       <span class="t-title">通知类型：</span>
 	                       <span class="t-content">
 	                       		<c:choose>
-	                       			<c:when test="${msg.messageType == 'STUDENT_MESSAGE_CLASSTYPE' }">课程通知</c:when>
+	                       			<c:when test="${msg.messageType == 'STUDENT_MESSAGE_CLASSTYPE' }">指定通知</c:when>
 	                       			<c:when test="${msg.messageType == 'STUDENT_MESSAGE_MODULENO' }">班号通知</c:when>
 	                       			<c:when test="${msg.messageType == 'STUDENT_MESSAGE_SPECIAL' }">指定通知</c:when>
 	                       			<c:when test="${msg.messageType == 'STUDENT_MESSAGE_GROUP' }">分组通知</c:when>

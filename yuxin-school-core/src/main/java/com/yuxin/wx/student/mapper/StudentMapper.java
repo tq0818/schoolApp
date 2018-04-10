@@ -42,9 +42,12 @@ public interface StudentMapper extends BaseMapper<Student> {
 	Integer pageCount2(StudentVo search);
 	Integer pageCount3(StudentVo search);
 	Integer pageCount4(StudentVo search);
+	Integer schoolMsgCount(Map map);
+	Integer loginUserCount(Map map);
 	Student findMessageByMobile(Map<String, Object> map);
 	Student queryByMobile(Student search);
 	Student queryByMobilea(Student search);
+	List<Student> queryMobileSign(Map map);
 	
 	/**
 	 * 
@@ -370,4 +373,16 @@ public interface StudentMapper extends BaseMapper<Student> {
 	List<Student> queryStudentListByClassTypeId(Integer classTypeId);
 
 	Integer studyTime(StudentClassLeanDetailVo codition);
+	/**
+	 * 根据省市区学校查找用户id
+	 * @param companyStudentMessage
+	 * @return
+	 */
+	List<Student> findByProvince(CompanyStudentMessage companyStudentMessage);
+	/**
+	 * 根据电话查找用户id
+	 * @param companyStudentMessage
+	 * @return
+	 */
+	List<Student> findByusersMobile(String[] usersMobile);
 }

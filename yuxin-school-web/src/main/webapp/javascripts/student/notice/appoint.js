@@ -1,9 +1,9 @@
-
+var whichChoose = 0;
 
 
 $(function () {
 	//初始化小学学年
-	queryRiseSchoolYear();
+	//queryRiseSchoolYear();
 	//选择所属省份 初始化身份
     queryRiseSchoolDict(0);
     //发送到指定用户下拉列表
@@ -27,8 +27,15 @@ $(function () {
                     $(".loading-bg").hide();
                     if (data.flag == 1){
                         var html = '';
+                        var v ;
                         for (var i in data.dictList){
-                        	html = html + '<li data-value='+data.dictList[i].mobile+' '+'data-user='+data.dictList[i].nickName+','+data.dictList[i].mobile+' >'+data.dictList[i].nickName+','+data.dictList[i].mobile+'</li>';
+                        	if(data.dictList[i].nickName==null){
+                        		v = '无'
+                        	}else{
+                        		v = data.dictList[i].nickName;
+                        	}
+
+                        	html = html + '<li data-value='+data.dictList[i].mobile+' '+'data-user='+v+','+data.dictList[i].mobile+' >'+v+','+data.dictList[i].mobile+'</li>';
                         }
                         $('.userList').html('').html(html);
                     }
@@ -112,13 +119,53 @@ $(function () {
     $('.btn-send').click(function () {
         $.confirm('是否确认发送信息给选定用户？',function (data) {
             if(data){
+       
+            	var registeredUser = 0;//注册用户
+            	var noRegisteredUser = 0;//非注册用户
+            	for(var i=0;i<$('.checkNew').length;i++){
+	            	if($('.checkNew').eq(i).prop('checked')){
+	            		if(i == 0){
+	            			registeredUser = 1;
+	            		}
+	            		if(i == 1){
+	            			noRegisteredUser = 1;
+	            		}
+	            	}
+            	}
+            	
+            	//判断当前选中的是第几项
             	var radioList = $("input[type='radio']");
+            	var checkChoose = '';
  	 			for(var i = 0;i< radioList.length;i++){
  	 	            if(radioList.eq(i).prop('checked')){
- 	 	            	console.log(i);
- 	 	            	}
+ 	 	            	checkChoose = i;
  	 	            }
+ 	 	        }
+ 	 			var msgTemplateId = $("#messageId").val();
+ 	 			if(checkChoose == 1 || checkChoose == 2){
+ 	 				if(msgTemplateId == null || msgTemplateId == ''){
+ 	 					$.msg("模板id不能为空");
+ 	 					return ;
+ 	 				}
+ 	 			}
+ 	 			//拿到指定用户里面的电话号码
+ 	 			var usersMobile = ''
+ 	 			for(var i = 0;i< $('.userInfoListAll').length;i++ ){
+ 	 				if(i == $('.userInfoListAll').length - 1){
+ 	 					usersMobile = usersMobile + $('.userInfoListAll').eq(i).html();
+ 	 				}else{
+ 	 					usersMobile = usersMobile + $('.userInfoListAll').eq(i).html()+',';
+ 	 				}
+ 	 	        }
  	 			//return;
+ 	 			//省，市，区，学校，学段，年份
+ 	 			var province = $("#eduArea").val();
+ 	 			var city = $("#eduSchool").val();
+ 	 			var district = $("#registStatus").val();
+ 	 			var schoolCode = $("#schoolName").val();
+ 	 			var step = $("#step").val();
+ 	 			var stepYear = $("#stepYear").val();
+ 	 			
  	 			var title = $.trim($("#title").val());
  	 			var method = $.trim($(".btn-method.btn-primary").attr("data-type"));
  	 			var types = $.trim($(".btn-type.btn-primary").attr("data-type"));
@@ -266,11 +313,35 @@ $(function () {
  	 			$.ajax({
  	 				url:rootPath + "/classModule/sendMsg",
  	 				type:"post",
- 	 				data:{"title":title,"content":msgcount,"messageType":types,"messageMethod":method,
- 	 					"itemOneCode":oneItemCode,"itemSecondCode":twoItemCode,"itemThirdCode":threeItemCode,
- 	 					"classTypeId":classId,'groupOneId':groupOneId,'groupTwoId':groupTwoId,'email':email,
- 	 					'emailTitle':emailTitle,"phone":phone,"moduleNoId":classId,"isHurry":isHurry,"lessonId":lessonId,
- 	 	 				"contentText":msgcounttext},
+ 	 				data:{
+ 	 					"title":title,
+ 	 					"content":msgcount,
+ 	 					"messageType":types,
+ 	 					"messageMethod":method,
+ 	 					"itemOneCode":oneItemCode,
+ 	 					"itemSecondCode":twoItemCode,
+ 	 					"itemThirdCode":threeItemCode,
+ 	 					"classTypeId":classId,
+ 	 					'groupOneId':groupOneId,
+ 	 					'groupTwoId':groupTwoId,
+ 	 					'email':email,
+ 	 					'emailTitle':emailTitle,
+ 	 					"phone":phone,
+ 	 					"moduleNoId":classId,
+ 	 					"isHurry":isHurry,
+ 	 					"lessonId":lessonId,
+ 	 	 				"contentText":msgcounttext,
+ 	 	 				"checkChoose":checkChoose,
+ 	 	 				"usersMobile":usersMobile,
+ 	 	 				"province":province,
+ 	 	 				"city":city,
+ 	 	 				"district":district,
+ 	 	 				"schoolCode":schoolCode,
+ 	 	 				"step":step,
+ 	 	 				"stepYear":stepYear,
+ 	 	 				"registeredUser":registeredUser,
+ 	 	 				"msgTemplateId":msgTemplateId,
+ 	 	 				"noRegisteredUser":noRegisteredUser},
  	 				dataType:"json",
  					beforeSend:function(XMLHttpRequest){
  			              $(".loading").show();
@@ -311,17 +382,34 @@ $(function () {
 
     //短信通知页面，点击radio,发送模板编辑模式切换
     $("input[type='radio']").click(function () {
-        if(Number($(this).val())!=0){
-            console.log("可编辑");
-            $('#messageId').attr('disabled',false);
-        }else{
-            console.log("不可编辑");
+    	//当前选中的是第几项
+    	var checkNmuber = Number($(this).val());
+    	//选中第几项则加载当前项所需发送的短信数和人数
+        if(checkNmuber == 0){
             $('#messageId').attr('disabled',true);
+            $('#messageId').val('');
+            whichChoose = checkNmuber;
+            selPerson();
+        }
+        if(checkNmuber == 1){
+        	$('#messageId').attr('disabled',false);
+        	whichChoose = checkNmuber;
+        	provinceMsgCount();
+        }
+        if(checkNmuber == 2){
+        	$('#messageId').attr('disabled',false);
+        	whichChoose = checkNmuber;
+        	sendMsgCount();
+        }
+        if(checkNmuber == 3){
+        	$('#messageId').attr('disabled',false);
+        	whichChoose = checkNmuber;
+        	registered();
         }
     });
 
 });
-
+//加载学年
 function queryRiseSchoolYear(){
     var step = $("#step").val();
     if(step == ""){
@@ -350,6 +438,7 @@ function queryRiseSchoolYear(){
             }
         }
     });
+    provinceMsgCount();
 }
 //查询省份，城市，区域等下拉信息 2018-2-7
 function queryRiseSchoolDict(areaFlag) {
@@ -407,7 +496,11 @@ function queryRiseSchoolDict(areaFlag) {
             }
         }
     });
+    if (areaFlag != 0){
+    	provinceMsgCount();
+    }
 }
+//加载学校
 function querySchoolName() {
 	var registStatus = $("#registStatus").val();
 	if(registStatus == ""){
@@ -437,18 +530,138 @@ function querySchoolName() {
             }
         }
     });
+	provinceMsgCount();
 }
+//选中指定用户时发送短信数量
 function sendMsgCount() {
+	if(whichChoose != 2){
+		return ;
+	}
 	var count = $('.userInfoListAll').length;
 	$("#useMsg").html(count+"条");
 	$("#sendStu,#useEmailMsg").html(count);
-	var mobile = '';
-	for(var i = 0;i< $('.userInfoListAll').length;i++ ){
-		if(i == $('.userInfoListAll').length-1){
-			mobile = mobile+$('.userInfoListAll').eq(i).html();
-		}else{
-			mobile = mobile+$('.userInfoListAll').eq(i).html()+",";
-		}
-    }
-	console.log(mobile);
 }
+//选中学校时发送短信数量
+function provinceMsgCount() {
+	if(whichChoose != 1){
+		return ;
+	}
+	//省，市，区，学校，学段，年份
+	var province = $("#eduArea").val();
+	var city = $("#eduSchool").val();
+	var district = $("#registStatus").val();
+	var schoolCode = $("#schoolName").val();
+	var step = $("#step").val();
+	var stepYear = $("#stepYear").val();
+	$.ajax({
+        url:rootPath +"/riseSchoolManage/provinceMsgCount",
+        data:{"province":province,
+        	"city":city,
+        	"district":district,
+        	"schoolCode":schoolCode,
+        	"step":step,
+        	"stepYear":stepYear},
+        dataType:"json",
+        beforeSend: function (XMLHttpRequest) {
+            $(".loading").show();
+            $(".loading-bg").show();
+        },
+        success:function (data) {
+            $(".loading").hide();
+            $(".loading-bg").hide();
+            //拼接下拉值
+            if (data.flag == 1){
+            	$("#useMsg").html(data.count+"条");
+            	$("#sendStu,#useEmailMsg").html(data.count);
+            }
+        }
+    });
+}
+//选中课程时发送短信数量
+function selPerson(){
+	if(whichChoose != 0){
+		return ;
+	}
+	 //查询人数
+	 var messageType = $(".btn-type.btn-primary").attr("data-type");
+	 var classTypeId = $("#class").val();
+	 var itemOneId = $("#one").val();
+	 var itemSecondId = $("#two").val();
+	 if(classTypeId !=null  && classTypeId.length > 0){
+        $.ajax({
+            url:rootPath + "/classModule/selPerson",
+            type:"post",
+            data:{"messageType":messageType,"id":classTypeId},
+            dataType:"json",
+            beforeSend:function(XMLHttpRequest){
+                $(".loading").show();
+                $(".loading-bg").show();
+                $("#classLesson").empty();
+                $(".btn-view").empty();
+            },
+            success:function(data){
+                $(".btn-view").html(data.count + "人");
+                $("#sendStu,#useEmailMsg").html(data.count);
+                $("#useMsg").html(data.count+"条");
+                $.each( data.lessons, function(index, lesson){
+                    if(index == 0){
+                        $("#classLesson").append("<option  selected = 'selected' value='"+lesson.id+"'>"+lesson.lessonName+"</option>");
+                    }else{
+                        $("#classLesson").append("<option  value='"+lesson.id+"'>"+lesson.lessonName+"</option>");
+                    }
+
+                });
+            },
+            complete:function(XMLHttpRequest,textStatus){
+
+                $(".loading").hide();
+                $(".loading-bg").hide();
+            }
+        });
+	 }else{
+        $("#classLesson").empty();
+        $(".btn-view").html(0 + "人");
+        $("#sendStu,#useEmailMsg").html(0);
+        $("#useMsg").html(0+"条");
+        $(".loading").hide();
+        $(".loading-bg").hide();
+	 }
+
+}
+//选中注册用户时发送站内信数量
+function registered(){
+	if(whichChoose != 3){
+		return ;
+	}
+	var registeredUser = 0;//注册用户
+	var noRegisteredUser = 0;//非注册用户
+	for(var i=0;i<$('.checkNew').length;i++){
+    	if($('.checkNew').eq(i).prop('checked')){
+    		if(i == 0){
+    			registeredUser = 1;
+    		}
+    		if(i == 1){
+    			noRegisteredUser = 1;
+    		}
+    	}
+	}
+	$.ajax({
+        url:rootPath +"/riseSchoolManage/loginUserCount",
+        data:{"registeredUser":registeredUser,
+        	"noRegisteredUser":noRegisteredUser},
+        dataType:"json",
+        beforeSend: function (XMLHttpRequest) {
+            $(".loading").show();
+            $(".loading-bg").show();
+        },
+        success:function (data) {
+            $(".loading").hide();
+            $(".loading-bg").hide();
+            //拼接下拉值
+            if (data.flag == 1){
+            	$("#useMsg").html(data.count+"条");
+            	$("#sendStu,#useEmailMsg").html(data.count);
+            }
+        }
+    });
+}	

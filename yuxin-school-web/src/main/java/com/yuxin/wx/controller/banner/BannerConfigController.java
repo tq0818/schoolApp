@@ -450,9 +450,33 @@ public class BannerConfigController extends BaseWebController{
 		//示例图尺寸
 		double slW=0;
 		double slH=0;
-		if(!StringUtils.isEmpty(bannerType)&&"1".equals(bannerType)){
+		// 为2 是通栏banner，反之则不是
+		if(!StringUtils.isEmpty(bannerType)&&"2".equals(bannerType)){
 			if(realW > realH){//横图
-				if(realW/realH>516.00/206.4){
+				if(realW/realH>516/123.84){
+					//过宽
+					slH=516 * realH/realW;
+					slW=516;
+				}else{
+					//过高
+					slH=123.84;
+					slW=123.84 * realW/realH;
+				}
+			}else{
+				if(realW/realH>1175/282){
+					//过宽
+					slH=1175 * realH/realW;
+					slW=1175;
+				}else{
+					//过高
+					slH=282;
+					slW=282 * realW/realH;
+				}
+			}
+
+		}else{
+			if(realW > realH){//横图
+				if(realW/realH>516/206.4){
 					//过宽
 					slH=516 * realH/realW;
 					slW=516;
@@ -471,17 +495,6 @@ public class BannerConfigController extends BaseWebController{
 					slH=282;
 					slW=282 * realW/realH;
 				}
-			}
-
-		}else{
-			if(realW/realH>516.00/282.00){
-				//过宽
-				slH=516 * realH/realW;
-				slW=516;
-			}else{
-				//过高
-				slH=282;
-				slW=282 * realW/realH;
 			}
 		}
 
