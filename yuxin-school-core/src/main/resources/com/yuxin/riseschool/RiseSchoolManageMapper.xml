@@ -271,9 +271,9 @@
         <if test="cityCode != null and cityCode != ''"> AND city_code = #{cityCode}</if>
         <if test="district != null and district != ''">AND district = #{district}</if>
         <if test="isShalve != null">AND is_shalve = #{isShalve}</if>
-        <if test="startTime != null and startTime != '' and endTime == ''"><![CDATA[AND DATE_FORMAT(rsi.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
-        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(rsi.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
-        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(rsi.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime == ''"><![CDATA[AND DATE_FORMAT(create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
+        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
     	<if test="isTop != null and isTop != 0">AND is_top = #{isTop}</if>
         <if test="enrollmentType != null and enrollmentType != 0">AND enrollment_type = #{enrollmentType}</if>
     </select>
