@@ -4,17 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.yuxin.wx.common.PageFinder;
-import com.yuxin.wx.model.classes.ClassType;
 import com.yuxin.wx.model.company.Company;
-
-import com.yuxin.wx.model.company.CompanyMemberService;
-import com.yuxin.wx.model.company.CompanyPayConfig;
-import com.yuxin.wx.model.company.CompanyServiceStatic;
-import com.yuxin.wx.model.system.SysCcAccount;
 import com.yuxin.wx.model.system.SysConfigSchool;
-import com.yuxin.wx.model.system.SysCyclePic;
-import com.yuxin.wx.model.system.SysNews;
-import com.yuxin.wx.model.system.SysPageHeadFoot;
 import com.yuxin.wx.model.user.UserLoginSession;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.vo.privilege.RoleVo;
@@ -397,4 +388,11 @@ public interface IUsersService  {
 	Integer queryByNameCount(String userName);
 
 	void insertUserCompanyRalation(Integer userId,Integer companyId);
+	
+	/**
+	 * 查询后台登录用户是否是小升初的用户
+	 * @param userId
+	 * @return
+	 */
+	Integer queryUserOrRiseSchool(Integer userId);
 }

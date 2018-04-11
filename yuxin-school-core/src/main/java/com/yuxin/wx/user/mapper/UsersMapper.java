@@ -10,7 +10,6 @@ import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.vo.privilege.RoleVo;
 import com.yuxin.wx.vo.privilege.UserRoleVo;
 import com.yuxin.wx.vo.user.UsersAreaRelation;
-import com.yuxin.wx.vo.user.UsersVo;
 /**
  * Service Interface:Users
  * @author wang.zx
@@ -134,4 +133,10 @@ public interface UsersMapper extends BaseMapper<Users> {
 	void insertSchoolManage(Users users);
 	Integer queryByNameCount(String userName);
 	void insertUserCompanyRalation(Map<String,Object> params);
+	/**
+	 * 查询后台登录用户是否是小升初的用户
+	 * @param userId
+	 * @return
+	 */
+	Integer queryUserOrRiseSchool(Integer userId);
 }

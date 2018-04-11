@@ -616,4 +616,11 @@
 		insert into users_comany_relation(user_id,company_id,is_used)
 		values(#{userId},#{companyId},1)
 	</insert>
+	
+	<select id="queryUserOrRiseSchool" parameterType="Integer" resultType="java.lang.Integer">
+		select count(1)
+		  from users
+		 where id = #{userId}
+		   and user_type = 'RISE_SCHOOL_MANAGER'
+	</select>
 </mapper>

@@ -9,8 +9,8 @@ public class ClassTypeInfoVO implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private Integer commodityId;
+	private Integer id;//商品id
+	private Integer commodityId;//商品id
 	private String commodityName;
 	private String coverUrl;
 	private Integer classTypeId;
@@ -128,6 +128,12 @@ public class ClassTypeInfoVO implements Serializable{
 	}
 	public void setIsNew(Integer isNew) {
 		this.isNew = isNew;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 }
