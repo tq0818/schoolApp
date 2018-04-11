@@ -27,6 +27,7 @@ public class Banner extends BaseEntity {
 	private Integer bannerType;//排序号
 	private String linkHref;//活动链接
 	private String searchClass;//课程参数
+	private String searchClassName;//课程名称
 	private Integer detailType;//0表示活动，1表示课程，2表示内容
 	
 	
@@ -191,6 +192,14 @@ public class Banner extends BaseEntity {
 		this.detailType = detailType;
 	}
 
+	public String getSearchClassName() {
+		return searchClassName;
+	}
+
+	public void setSearchClassName(String searchClassName) {
+		this.searchClassName = searchClassName;
+	}
+	
 	
 	
 }

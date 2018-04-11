@@ -192,7 +192,7 @@
 					</p>
 
 					<p class="c sendStuMsg ">
-						<input type="radio" name="chooseBtn" value="0" style="margin-left: 35px;" checked>
+						<input type="radio" name="chooseBtn" value="0" style="margin-left: 35px;" checked id='chooseBtnDefault'>
 						<span class="c-title" style="width: 36px;">分类：</span>
 						<span class="c-content"> <select
 							id="one" style="width: 100px;">

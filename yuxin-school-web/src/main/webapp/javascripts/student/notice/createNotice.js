@@ -77,7 +77,8 @@ var msgCount;
 			if(type != 'STUDENT_MESSAGE_DINGYUE'){
 				selItem();
 			}
-			
+			$('#chooseBtnDefault').prop('checked',true);
+		
 			//短信通知
 			if(type == 'STUDENT_MESSAGE_MOBILE'){
 				//	$(".btn-type").last().prev().show();//指定通知
@@ -109,6 +110,7 @@ var msgCount;
 				$(".sendGrade,.con-coverimg,.sendStuNum,#dingyue_ckecktor,.dingyueChooseBtn,.dingyueSendBtn").show();
 				selPersonOfDingyue();
 			}
+			
 			
  		});
  		

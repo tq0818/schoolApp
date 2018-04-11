@@ -113,7 +113,7 @@ padding-top: 40px;
     /*.cke_dialog_body{display: none;}*/
      .checkName{display: none;}
 
-.selectName{width: 216px;border: 1px solid #ddd;margin-left: 354px;border-top: none;margin-top: -2px;}
+.selectName{z-index: 100000000;position: absolute;background : #fff;height: 200px;overflow-y: auto;width: 216px;border: 1px solid #ddd;margin-left: 354px;border-top: none;margin-top: -2px;}
 .selectName li{padding-left: 3px;}
 .checkName{border-radius: 0 !important;}
 .targetSite{height: 60px;}
@@ -135,7 +135,7 @@ padding-top: 40px;
 .linkContent{height: 250px;border-bottom: 1px solid #e1e1e1;}
 .linkContent input{margin-top: 37px;margin-left: 10px;border: 1px solid #707070;width: 180px;height: 20px;
     line-height: 20px;border-radius: 0;}
-.linkNameList{width: 196px;border: 1px solid #707070;margin-left: 10px;border-top: none;
+.linkNameList{height: 200px;position: absolute;overflow-y : auto;width: 196px;border: 1px solid #707070;margin-left: 10px;border-top: none;
     display: none;}
 .linkNameList li{cursor: pointer;padding-left: 3px;}
 .linkNameList li.active{background: #0e90d2;color: #fff;}
@@ -184,7 +184,7 @@ padding-top: 40px;
                         <option value="1">课程</option>
                     </select>
 
-                    <input type="text" name="bannerDescribe" id="linkHref" value=""  maxlength="255" placeholder="示例:http://www.cdds365.com" style="width: 200px;" class="checkLink">
+                    <input type="text" name="bannerDescribe" id="linkHref" value=""  maxlength="255" placeholder="示例:http(https)://www.cdds365.com" style="width: 200px;" class="checkLink">
                     <input type="text" name="bannerDescribe" id="searchClass" value="" data-value="" maxlength="255" placeholder="请输入课程名称" style="width: 200px;" class="checkName">
                     <ul class="selectName">
 
@@ -278,7 +278,7 @@ padding-top: 40px;
             <span>课程</span>
         </div>
         <div class="linkContent">
-            <input type="text" placeholder="示例:http://www.cdds365.com" class="linkLink">
+            <input type="text" placeholder="示例:http(https)://www.cdds365.com" class="linkLink">
             <span class="wrongTips wrongTipsF"></span>
             <input type="text" placeholder="请输入活动名称" class="linkLink" id="activeName" maxlength="20">
             <span class="wrongTips wrongTipsS"></span>
@@ -316,8 +316,7 @@ padding-top: 40px;
     //课程名称模糊搜索
     $('.linkName').keyup(function () {
         if($(this).val().length>0){
-            var className = $(this).val();
-            console.log(className);
+            var className = $(this).val();       
             $.ajax({
                 url: rootPath + "/Banner/queryClass",
                 type:"post",
@@ -325,10 +324,16 @@ padding-top: 40px;
                 },
                 success:function(data){
                     var html = '';
-                    for (var i=0;i<data.length;i++)
-                    {
-                        html = html + '<li data-value='+data[i].id+','+data[i].name+','+data[i].liveFlag+','+data[i].commodityId+','+data[i].teacherName+','+data[i].cover+' >'+data[i].name+'</li>';
-                    }
+                    
+	                    for (var i=0;i<data.length;i++)
+	                    {
+	                        html = html + '<li data-value='+data[i].id+','+data[i].name.replace(/ /g,"&&")+','+data[i].liveFlag+','+data[i].commodityId+','+data[i].teacherName+','+data[i].cover+' >'+data[i].name+'</li>';
+	                    }
+	                    if(data.length == 0){
+	                    	$('.linkNameList').hide();
+                    	}else{
+                    		$('.linkNameList').show();
+                    	}
                     $('.linkNameList').html('').html(html);
                 }
             });
@@ -389,10 +394,16 @@ padding-top: 40px;
                 },
                 success:function(data){
                     var html = '';
+                    console.log(data);
                     for (var i=0;i<data.length;i++)
                     {
-                        html = html + '<li data-value='+data[i].id+','+data[i].name+','+data[i].liveFlag+','+data[i].commodityId+','+data[i].teacherName+','+data[i].cover+' >'+data[i].name+'</li>';
+                        html = html + '<li data-value='+data[i].id+','+data[i].name.replace(/ /g,"&&")+','+data[i].liveFlag+','+data[i].commodityId+','+data[i].teacherName+','+data[i].cover+' >'+data[i].name+'</li>';
                     }
+                    if(data.length == 0){
+                    	$('.selectName').hide();
+                	}else{
+                		$('.selectName').show();
+                	}
                     $('.selectName').html('').html(html);
                 }
             });
@@ -516,8 +527,9 @@ padding-top: 40px;
             /*$('.cke_editable cke_editable_themed cke_contents_ltr cke_show_borders').html("<p><a herf="+linkValue+"></a></p>");*/
         }else{
             linkValue = $('.linkName').attr('data-value');
+            var linkClassName = $('.linkName').val();
             var body = editor.document.getBody().getHtml();
-            editor.document.getBody().setHtml(body+"<button type=\"button\" onclick=\"buttonClick('"+linkValue+"')\">buttonClick</button>");
+            editor.document.getBody().setHtml(body+"<p onclick=\"buttonClick('"+linkValue+"')\">"+linkClassName+"</button>");
         }
         $('.linkPopup').hide();
         $('.cke_dialog_background_cover').hide();
@@ -578,11 +590,14 @@ padding-top: 40px;
                         });
                 	}else{
                 		var searchClass = $('#searchClass').attr('data-value');
+                		var searchClassName = $('#searchClass').val();
+                		return;
                 		$.ajax({
                             url: rootPath + "/Banner/addBanner",
                             type:"post",
                             data:{"bannerName":bannerName,
                                 "searchClass" : searchClass,
+                                "searchClassName" : searchClassName,
                                 "bannerDescribe":bannerDescribe,
                                 "bannerImgUrl" :bannerImgUrl,
                                 "bannerType" :bannerType,
