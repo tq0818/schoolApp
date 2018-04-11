@@ -167,7 +167,34 @@
             <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
         </property>
     </bean>
-    
+    <mvc:interceptors>
+    	<!-- 用户行为 -->
+    	<mvc:interceptor>
+    		<mvc:mapping path="/simpleClasses/showClassTypePage"/>
+			<mvc:mapping path="/appNewClasses/shelvesCourses"/>
+			<mvc:mapping path="/specialModel/getModelList"/>
+			<mvc:mapping path="/appNewClasses/pageRecommendation"/>
+			<mvc:mapping path="/student/studentList"/>
+			<mvc:mapping path="/student/notice"/>
+			<mvc:mapping path="/student/notificationTemplate"/>
+			<mvc:mapping path="/integralRule"/>
+			<mvc:mapping path="/classModule/show"/>
+			<mvc:mapping path="/Question/comQuestionIndex"/>
+			<mvc:mapping path="/Banner/comBannerIndex"/>
+			<mvc:mapping path="/Banner/riseBannerIndex"/>
+			<mvc:mapping path="/Banner/acrcoBannerIndex"/>
+			<mvc:mapping path="/Banner/editBanner"/>
+			<mvc:mapping path="/classModule/comment"/>
+			<mvc:mapping path="/payOrder/toOrder"/>
+			<mvc:mapping path="/query/page/fee"/>
+			<mvc:mapping path="/appTagManage/queryAppTagList"/>
+			<mvc:mapping path="/tikuCategory/toTiku"/>
+			<mvc:mapping path="/question/show"/>
+			<mvc:mapping path="/sysConfigItem/project"/>
+			<mvc:mapping path="/query/statistics/userVideoList"/>
+    		 <bean id="userHandler" class="com.yuxin.wx.common.UserHandler"></bean>
+    	</mvc:interceptor>
+    </mvc:interceptors>
     <bean id="parameterRequestHandler" class="com.yuxin.wx.common.ParameterRequestHandler">
     	<property name="maxLevelUrl">
     		<list></list>
