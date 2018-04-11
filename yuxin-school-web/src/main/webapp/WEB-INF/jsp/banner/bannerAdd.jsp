@@ -99,14 +99,17 @@ padding-top: 40px;
 #details{
 		overflow-x: hidden;
 		background: #fff;
-		width : 950px;
-		height : 667px;
-		margin: -47px  0 0 -350px;
-		over-flow-y : auto;
+		width : 939px;
+		height : 1660px;
+	/* 	margin: -47px  0 0 -350px; */
+		overflow-y : auto;
 		padding: 0 3px;
-		transform: scale(0.3,0.74);
+		transform: scale(0.3);
+		position: absolute;
+		left: -316px;
+		top: -506px;
 	}
-#accountBtn{margin: -115px  0 0 -90px;}
+#accountBtn{position: absolute;left: -60px;top: 550px;}
 #details p{margin:10px auto;}
 
 /*隐藏自带弹窗*/
@@ -327,7 +330,7 @@ padding-top: 40px;
                     
 	                    for (var i=0;i<data.length;i++)
 	                    {
-	                        html = html + '<li data-value='+data[i].id+','+data[i].name.replace(/ /g,"&&")+','+data[i].liveFlag+','+data[i].commodityId+','+data[i].teacherName+','+data[i].cover+' >'+data[i].name+'</li>';
+	                        html = html + "<li data-value=\""+data[i].id+","+data[i].name+","+data[i].liveFlag+","+data[i].commodityId+","+data[i].teacherName+","+data[i].cover+"\" >"+data[i].name+"</li>";
 	                    }
 	                    if(data.length == 0){
 	                    	$('.linkNameList').hide();
@@ -357,8 +360,9 @@ padding-top: 40px;
        $('.cke_dialog_background_cover').hide();
        $('.cke_dialog').css('visibility','hidden');
 
-       $('.linkLink').val(" ");
-       $('.linkName').val(" ");
+       $('.linkLink').val("");
+       $('.linkName').val("");
+       $('.linkNameList').hide();
 
     });
 
@@ -394,10 +398,9 @@ padding-top: 40px;
                 },
                 success:function(data){
                     var html = '';
-                    console.log(data);
                     for (var i=0;i<data.length;i++)
                     {
-                        html = html + '<li data-value='+data[i].id+','+data[i].name.replace(/ /g,"&&")+','+data[i].liveFlag+','+data[i].commodityId+','+data[i].teacherName+','+data[i].cover+' >'+data[i].name+'</li>';
+                    	html = html + "<li data-value=\""+data[i].id+","+data[i].name+","+data[i].liveFlag+","+data[i].commodityId+","+data[i].teacherName+","+data[i].cover+"\" >"+data[i].name+"</li>";
                     }
                     if(data.length == 0){
                     	$('.selectName').hide();
@@ -518,8 +521,8 @@ padding-top: 40px;
                 return ;
             }
           	var body = editor.document.getBody().getHtml();
-          	editor.document.getBody().setHtml(body+"<p><a href='"+linkValue+"'>"+activeName+"</a></p>");
-           // editor.document.getBody().innerHTML = "<p><a href='"+linkValue+"'></a></p>";
+          	editor.document.getBody().setHtml(body+"<p><a href='"+linkValue+"' onclick=\"hrefClassName('"+activeName+"')\">"+activeName+"</a></p>");
+           // editor.document.getBody().innerHTML = "<p><a href='"+linkValue+"'></a></p>";hrefClassName
            $('.linkPopup').hide();
             $('.cke_dialog_background_cover').hide();
             $('.cke_dialog').css('visibility','hidden');
@@ -529,11 +532,14 @@ padding-top: 40px;
             linkValue = $('.linkName').attr('data-value');
             var linkClassName = $('.linkName').val();
             var body = editor.document.getBody().getHtml();
-            editor.document.getBody().setHtml(body+"<p onclick=\"buttonClick('"+linkValue+"')\">"+linkClassName+"</button>");
+            editor.document.getBody().setHtml(body+"<p><a href='javascript:void(0)' onclick=\"buttonClick('"+linkValue+"')\">"+linkClassName+"</a></p>");
         }
         $('.linkPopup').hide();
         $('.cke_dialog_background_cover').hide();
         $('.cke_dialog').css('visibility','hidden');
+        $('.linkLink').val("");
+        $('.linkName').val("");
+        $('.linkNameList').hide();
     });
 		/* function goback(){
 			window.location.href = "comBannerIndex";
@@ -591,7 +597,6 @@ padding-top: 40px;
                 	}else{
                 		var searchClass = $('#searchClass').attr('data-value');
                 		var searchClassName = $('#searchClass').val();
-                		return;
                 		$.ajax({
                             url: rootPath + "/Banner/addBanner",
                             type:"post",
