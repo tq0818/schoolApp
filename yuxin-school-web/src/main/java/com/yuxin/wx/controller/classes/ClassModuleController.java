@@ -2772,31 +2772,52 @@ public class ClassModuleController {
 			    	Map loginUserMap = new HashMap();
 			    	loginUserMap.put("registeredUser",registeredUser);
 			    	loginUserMap.put("noRegisteredUser",noRegisteredUser);
-					stuList = studentServiceImpl.queryMobileSign(loginUserMap);
-					//保存表company_student_message_app
+			    	//保存表company_student_message_app
 					companyStudentMessageServiceImpl.insert(companyStudentMessage);
-					//保存表user_message_app
-					List<UserMessage> umList=new ArrayList<UserMessage>();
-					for (Student s : stuList) {
-						UserMessage um = new UserMessage();
-						um.setMobileSign(s.getMobileSign());
-						um.setMessageId(companyStudentMessage.getId());
-						um.setReadFlag(0);
-						umList.add(um);
-					}
-					//companyStudentMessageServiceImpl.batchInsertUserMessage(umList);
-					//极光推送
-					companyStudentMessage.setSendNum(stuList.size());
+					Integer sendNum = 0;
+			    	if(Integer.valueOf(registeredUser) == 1){
+			    		//拿到用户id
+			    		List<Student> stuListUserId = new ArrayList<Student>();
+						stuListUserId = studentServiceImpl.queryUserId();
+						//保存表user_message_app
+						List<UserMessage> umList=new ArrayList<UserMessage>();
+						for (Student s : stuListUserId) {
+							UserMessage um = new UserMessage();
+							um.setUserId(s.getUserId());
+							um.setMessageId(companyStudentMessage.getId());
+							um.setReadFlag(0);
+							umList.add(um);
+						}
+						companyStudentMessageServiceImpl.batchInsertUserMessage(umList);
+						
+						//极光推送
+						Map<String, String> params=new HashMap<String, String>();
+						params.put("message_method", companyStudentMessage.getMessageMethod());
+						params.put("message_id", String.valueOf(companyStudentMessage.getId()));
+						List<String> userList = new ArrayList<>();
+						for (Student Student : stuListUserId) {
+							userList.add(String.valueOf(Student.getUserId()));
+						}
+						String josnResult=JiGuangPushUtil.push(userList , companyStudentMessage.getTitle(), companyStudentMessage.getTitle(),params);
+						sendNum = sendNum + stuListUserId.size();
+			    	}
+			    	if(Integer.valueOf(noRegisteredUser) == 1){
+			    		stuList = studentServiceImpl.queryMobileSign(loginUserMap);
+			    		//极光推送
+			    		Map<String, String> params=new HashMap<String, String>();
+						params.put("message_method", companyStudentMessage.getMessageMethod());
+						params.put("message_id", String.valueOf(companyStudentMessage.getId()));
+						List<String> userList = new ArrayList<>();
+						for (Student Student : stuList) {
+							userList.add(Student.getMobileSign());
+						}
+						String josnResult=JiGuangPushUtil.push(userList , companyStudentMessage.getTitle(), companyStudentMessage.getTitle(),params);
+			    		sendNum = sendNum + stuList.size();
+			    	}
+			    	//修改发送情况
+					companyStudentMessage.setSendNum(sendNum);
 					companyStudentMessage.setMessageStatus("STUDENT_MESSAGE_FINISH");
 					companyStudentMessageServiceImpl.update(companyStudentMessage);
-					Map<String, String> params=new HashMap<String, String>();
-					params.put("message_method", companyStudentMessage.getMessageMethod());
-					params.put("message_id", String.valueOf(companyStudentMessage.getId()));
-					List<String> userList = new ArrayList<>();
-					for (Student Student : stuList) {
-						userList.add(Student.getMobileSign());
-					}
-					String josnResult=JiGuangPushUtil.push(userList , companyStudentMessage.getTitle(), companyStudentMessage.getTitle(),params);
 					json.put(JsonMsg.RESULT, JsonMsg.SUCCESS);
 					
 					return json;

@@ -660,18 +660,17 @@ function registered(){
 	}
 	var registeredUser = 0;//注册用户
 	var noRegisteredUser = 0;//非注册用户
+	var count = 0;
 	for(var i=0;i<$('.checkNew').length;i++){
     	if($('.checkNew').eq(i).prop('checked')){
     		if(i == 0){
     			registeredUser = 1;
-    		}
-    		if(i == 1){
-    			noRegisteredUser = 1;
     			$.ajax({
     		        url:rootPath +"/riseSchoolManage/loginUserCount",
     		        data:{"registeredUser":registeredUser,
     		        	"noRegisteredUser":noRegisteredUser},
     		        dataType:"json",
+    		        async: false,
     		        beforeSend: function (XMLHttpRequest) {
     		            $(".loading").show();
     		            $(".loading-bg").show();
@@ -681,13 +680,38 @@ function registered(){
     		            $(".loading-bg").hide();
     		            //拼接下拉值
     		            if (data.flag == 1){
+    		            	console.log(data.count);
+    		            	count = count + data.count;
+    		            }
+    		        }
+    		    });
+    		}
+    		if(i == 1){
+    			noRegisteredUser = 1;
+    			$.ajax({
+    		        url:rootPath +"/riseSchoolManage/noLoginUserCount",
+    		        data:{"registeredUser":registeredUser,
+    		        	"noRegisteredUser":noRegisteredUser},
+    		        dataType:"json",
+    		        async: false,
+    		        beforeSend: function (XMLHttpRequest) {
+    		            $(".loading").show();
+    		            $(".loading-bg").show();
+    		        },
+    		        success:function (data) {
+    		            $(".loading").hide();
+    		            $(".loading-bg").hide();
+    		            //拼接下拉值
+    		            if (data.flag == 1){
+    		            	console.log(data.count);
+    		            	count = count + data.count;
     		            }
     		        }
     		    });
     		}
     	}
 	}
-	$("#useMsg").html(data.count+"条");
-	$("#sendStu,#useEmailMsg").html(data.count);
+	$("#useMsg").html(count+"条");
+	$("#sendStu,#useEmailMsg").html(count);
 	
 }	

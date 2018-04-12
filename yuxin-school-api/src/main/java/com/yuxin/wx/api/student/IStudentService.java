@@ -327,6 +327,7 @@ public interface IStudentService  {
 	 */
 	List<Student> findByusersMobile(String usersMobile);
 	List<Student> queryMobileSign(Map map);
+	List<Student> queryUserId();
 	
 	/**
 	 * 
@@ -732,6 +733,7 @@ public interface IStudentService  {
 	Integer findStudentCountOnlyByMobile(SelectStudentOrUsersfrontVo search);
 	Integer schoolMsgCount(Map map);
 	Integer loginUserCount(Map map);
+	Integer loginAppUserCount(Map map);
 	
 	List<StudentImportVo> queryAllStudentsByCompanyId(Integer companyId);
 	

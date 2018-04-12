@@ -1835,5 +1835,17 @@ public class StudentServiceImpl extends BaseServiceImpl implements IStudentServi
 		List<Student> mobileSignList = studentMapper.queryMobileSign(map);
 		return mobileSignList;
 	}
+
+	@Override
+	public Integer loginAppUserCount(Map map) {
+		Integer count = studentMapper.loginAppUserCount(map);
+		return count;
+	}
+
+	@Override
+	public List<Student> queryUserId() {
+		List<Student> list = studentMapper.queryUserId();
+		return list;
+	}
 	
 }
