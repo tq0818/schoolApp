@@ -167,7 +167,13 @@ $(function () {
  	 			
  	 			var title = $.trim($("#title").val());
  	 			var method = $.trim($(".btn-method.btn-primary").attr("data-type"));
- 	 			var msgTemplateId = $("#messageId").val();
+ 	 			//模板id
+ 	 			var msgTemplateId = $("#messageId").val().replace(/\s+/g,"");
+ 	 			var reg = /^[0-9]*$/;
+ 	 			if (!reg.test(msgTemplateId)) {
+ 	 				$.msg("模板id不能有非数字");
+ 	 			    return;
+ 	 			 }
  	 			if(method == 'STUDENT_MESSAGE_MOBILE'){
  	 				if(checkChoose == 1 || checkChoose == 2){
  	 	 				if(msgTemplateId == null || msgTemplateId == ''){

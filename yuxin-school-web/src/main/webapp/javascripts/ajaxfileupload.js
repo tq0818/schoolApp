@@ -122,7 +122,7 @@ jQuery.extend({
 
                             var file1 = e.target.files[0];
                             var url1 = window.URL.createObjectURL(file1);
-                            imgEle.src = url1;
+                            //imgEle.src = url1;
                             savePic();
                         }
 

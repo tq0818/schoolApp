@@ -127,6 +127,7 @@
 			<if test="detailType != null ">detail_type =  #{detailType},</if>
 			<if test="linkHref != null ">banner_linkHref =  #{linkHref},</if>
 			<if test="searchClass != null ">banner_classContent =  #{searchClass},</if>
+			<if test="searchClassName != null ">banner_className =  #{searchClassName},</if>
 		</trim>
 		<where>id = #{id}</where>
 	</update>
