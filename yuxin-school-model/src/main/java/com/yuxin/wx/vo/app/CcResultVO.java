@@ -18,6 +18,8 @@ public class CcResultVO implements Serializable {
 	private String ccApiKey;
 	private Integer videoClassTypeId;//录播课程Id
 	private Integer lectureId;
+	//上次观看时长
+	private long preTime;
 	public String getCcId() {
 		return ccId;
 	}
@@ -47,6 +49,12 @@ public class CcResultVO implements Serializable {
 	}
 	public void setLectureId(Integer lectureId) {
 		this.lectureId = lectureId;
+	}
+	public long getPreTime() {
+		return preTime;
+	}
+	public void setPreTime(long preTime) {
+		this.preTime = preTime;
 	}
 	
 }
