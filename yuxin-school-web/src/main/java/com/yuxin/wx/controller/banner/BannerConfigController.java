@@ -551,6 +551,7 @@ public class BannerConfigController extends BaseWebController{
 	}
 	
 	public String writeHtml(String content) throws Exception{
+		String picUrl=propertiesUtil.getProjectImageUrl();
 		content="<html>" +
 				//"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\">"+
 				"<style>"+
@@ -566,13 +567,12 @@ public class BannerConfigController extends BaseWebController{
 		content+="<script src= https://cdn.bootcss.com/jquery/1.12.3/jquery.min.js></script><script>"
 				+ "function buttonClick(content){var u = navigator.userAgent;var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;"
 				+ "var isiOS = !!u.match(/"+"\\"+"(i[^;]+;( U;)? CPU.+Mac OS X/);var x = content.split(\",\");"
-				+ "var josn = '{\"classtypeId\":'+x[0]+',\"name\":\"'+x[1]+'\",\"liveFlag\":'+x[2]+',\"comId\":'+x[3]+',\"teacherName\":\"'+x[4]+'\",\"picUrl\":\"'+x[5]+'\"}'"
+				+ "var josn = '{\"classTypeId\":'+x[0]+',\"commodityName\":\"'+x[1]+'\",\"liveFlag\":'+x[2]+',\"commodityId\":'+x[3]+',\"teacherName\":\"'+x[4]+'\",\"coverUrl\":\"http://"+picUrl+"/'+x[5]+'\"}'"
 				+ ";if (isiOS) {window.webkit.messageHandlers.openCourseDetail.postMessage(josn);}else{window.android.openCourseDetail(josn);}}"
 				+ "function hrefClassName(content){var u = navigator.userAgent;"
 				+ "var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;"
 				+ "var isiOS = !!u.match(/"+"\\"+"(i[^;]+;( U;)? CPU.+Mac OS X/);var x = content.split(\",\");"
-				+ "var josn = '{\"classtypeId\":'+x[0]+',\"name\":\"'+x[1]+'\",\"liveFlag\":'+x[2]+',\"comId\":'+x[3]+',\"teacherName\":\"'+x[4]+'\",\"picUrl\":\"'+x[5]+'\"}'"
-				+ ";if (isiOS) {window.webkit.messageHandlers.classNameCourse.postMessage(josn);}else{window.android.classNameCourse(josn);}}</script></body>" +
+				+ ";if (isiOS) {window.webkit.messageHandlers.classNameCourse.postMessage(content);}else{window.android.classNameCourse(content);}}</script></body>" +
 				"</html>";
 		OutputStreamWriter pw = null;
     	SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhss");

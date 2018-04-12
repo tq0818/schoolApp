@@ -338,11 +338,11 @@ public class RiseSchoolManageController {
     public JSONObject searchUsers(HttpServletRequest request){
     	JSONObject json = new JSONObject();
     	Map map = new HashMap();
-    	//区
+    	//电话
     	String searchCondition = request.getParameter("searchCondition");
     	if (StringUtils.isEmpty(searchCondition)){
     		json.put("flag","0");
-    		json.put("msg","未获取区县");
+    		json.put("msg","未获到电话");
     		return json;
     	}
     	map.put("mobile",searchCondition);

@@ -204,7 +204,7 @@ padding-top: 40px;
                 </div>
 
                 <div class="putQuestion bannerBtnGroup">
-                	<a href='#' onclick="yulan()"  id="yulan" class='btn btn-success'>预览</a>
+                	<a href='#' onclick="yulan()"  id="yulan" class='btn btn-success' style="display:none">预览</a>
                     <button type="button" class="btn btn-success" id="saveBtn"  >保存</button>
                     <button onclick="history.go(-1)" type="button"  class="btn btn-danger"  >取消</button>
                 </div>
@@ -293,6 +293,7 @@ padding-top: 40px;
         <input type="text" placeholder="请输入活动名称" class="linkLink" id="activeName" maxlength="20">
         <span class="wrongTips wrongTipsS"></span>
         <input type="text" placeholder="请输入课程名称" class="linkName" data-value="">
+        <span class="wrongTips wrongTipsC"></span>
         <ul class="linkNameList">
 
         </ul>
@@ -303,6 +304,15 @@ padding-top: 40px;
     </div>
 </div>
 <script>
+$("input[type='radio']").click(function () {
+	var checkNmuber = Number($(this).val());
+	if(checkNmuber == 0){
+		document.getElementById("yulan").style.display = "none";
+	}
+	if(checkNmuber == 1){
+		document.getElementById("yulan").style.display = "block";
+	}
+});
     $('.linkTitle span').click(function () {
         $(this).addClass('active');
         $(this).siblings('span').removeClass('active');
@@ -323,6 +333,7 @@ padding-top: 40px;
 
     //课程名称模糊搜索
     $('.linkName').keyup(function () {
+    	$('.linkName').attr('data-value','');
         if($(this).val().length>0){
             var className = $(this).val();
             console.log(className);
@@ -392,6 +403,7 @@ padding-top: 40px;
     });
     //课程li下拉
     $('.checkName').keyup(function () {
+    	$('.checkName').attr('data-value','');
         if($(this).val().length>0){
             var className = $(this).val();
             $.ajax({
@@ -547,18 +559,20 @@ padding-top: 40px;
 	            activeName = $('#activeName').val();
 	          //检验网址
 	            var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
-	            var regTwo=(/[\u4e00-\u9fa5]/g);
+	            var regTwo=/^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
 	            
 	          	if(!reg.test(linkValue)){
 //	                $.msg("请输入有效的网址!",1000);
                     $('.wrongTipsF').html("请输入有效的网址!");
 	                return ;
 	            }
+	          	$('.wrongTipsF').html("");
 	          	if(!regTwo.test(activeName)){
 //	                $.msg("只能输入纯文本",1000);
                     $('.wrongTipsS').html("只能输入纯文本!");
 	                return ;
 	            }
+	          	$('.wrongTipsS').html("");
 	          	var body = editor.document.getBody().getHtml();
 	          	editor.document.getBody().setHtml(body+"<p><a href='"+linkValue+"' onclick=\"hrefClassName('"+activeName+"')\">"+activeName+"</a></p>");
 	           // editor.document.getBody().innerHTML = "<p><a href='"+linkValue+"'></a></p>";
@@ -570,6 +584,14 @@ padding-top: 40px;
 	        }else{
 	            linkValue = $('.linkName').attr('data-value');
 	            var linkClassName = $('.linkName').val();
+	            if(linkClassName == '' || linkClassName == null){
+	            	$('.wrongTipsC').html("请输入课程名称!");
+	    			return;
+	    		}
+	    		if(linkValue == '' || linkValue == null){
+	    			$('.wrongTipsC').html("请输入有效课程!");
+	    			return;
+	    		}
 	            var body = editor.document.getBody().getHtml();
 	            editor.document.getBody().setHtml(body+"<p><a href='javascript:void(0)' onclick=\"buttonClick('"+linkValue+"')\">"+linkClassName+"</a></p>");
 	        }
@@ -594,8 +616,16 @@ padding-top: 40px;
       				 return;
       			 }
       	    	 var bannerName=$("#bannerName").val();
+      	    	if(null==bannerName || ''==bannerName){
+                    alert("banner名称不能为空");
+                    return;
+                }
       	    	 var id=$("#bannerId").val();
       	    	 var bannerDescribe=$("#bannerDescribe").val();
+      	    	if(null==bannerDescribe || ''==bannerDescribe){
+                    alert("banner描述不能为空");
+                    return;
+                }
       	    	 var bannerType = $("#bannerType").val();
             	//i等于0就是选择的目标地址
                 if(i == 0){
@@ -629,6 +659,14 @@ padding-top: 40px;
                 	}else{
                 		var searchClass = $('#searchClass').attr('data-value');
                 		var searchClassName = $('#searchClass').val();
+                		if(searchClassName == '' || searchClassName == null){
+                			$.msg("请输入课程名称!",1000);
+                			return;
+                		}
+                		if(searchClass == '' || searchClass == null){
+                			$.msg("请输入有效课程!",1000);
+                			return;
+                		}
                 		$.ajax({
             	 	 			url: rootPath + "/Banner/update",
             	 	 			type:"post",

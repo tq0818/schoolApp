@@ -53,7 +53,7 @@
 	                		<a href='javascript:;' onclick="confirmPopup('确定启用该banner，并替换当前banner？',${m.id},0)" class='btn btn-danger forbidBanner'>启用</a>
 	                   	</c:if>
 	                   		<a href='<%=rootPath %>/Banner/editBanner/${m.id}'  class='btn btn-warning'>修改</a>
-	                   		<a href='<%=rootPath %>/Banner/seachDetail/${m.id}' target="_blank" class='btn btn-success'>查看</a>
+	                   		<%-- <a href='<%=rootPath %>/Banner/seachDetail/${m.id}' target="_blank" class='btn btn-success'>查看</a> --%>
                    		</td>
 	                </tr>
                </c:forEach>

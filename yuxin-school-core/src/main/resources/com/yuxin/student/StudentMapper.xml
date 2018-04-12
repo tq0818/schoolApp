@@ -1009,9 +1009,10 @@
 		) c
 	</select>
 	<select id="findByProvince" resultMap="studentResultMap" parameterType="com.yuxin.wx.model.company.CompanyStudentMessage">
-		SELECT id,name,mobile,user_id,email
-		from student
-		where 1=1
+		SELECT s.id,s.name,s.mobile,s.user_id,s.email
+		from student s
+		LEFT JOIN users_front uf ON s.user_id = uf.id
+		where (s.is_login_app = 1 or uf.regist_type = 4)
 		<if test="province != null and province != ''">and 1=1</if>
 		<if test="city != null and city != ''">and 1= 1</if>
 		<if test="district != null and district != ''">and edu_area=#{district}</if>
@@ -3781,9 +3782,10 @@
 		and commodity_id=#{classTypeId}
 	</select>
 	<select id="schoolMsgCount" parameterType="map" resultType="Integer">
-		SELECT count(id)
-		from student
-		where 1=1
+		SELECT count(s.id)
+		from student s
+		LEFT JOIN users_front uf ON s.user_id = uf.id
+		where (s.is_login_app = 1 or uf.regist_type = 4)
 		<if test="province != null and province != ''">and 1=1</if>
 		<if test="city != null and city != ''">and 1= 1</if>
 		<if test="district != null and district != ''">and edu_area=#{district}</if>
