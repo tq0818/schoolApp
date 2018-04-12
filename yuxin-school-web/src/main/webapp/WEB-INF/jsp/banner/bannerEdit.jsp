@@ -204,7 +204,12 @@ padding-top: 40px;
                 </div>
 
                 <div class="putQuestion bannerBtnGroup">
+                	<c:if test="${detailType eq 2}">
+                	<a href='#' onclick="yulan()"  id="yulan" class='btn btn-success' style="display:block">预览</a>
+                	</c:if>
+                	<c:if test="${detailType ne 2}">
                 	<a href='#' onclick="yulan()"  id="yulan" class='btn btn-success' style="display:none">预览</a>
+                	</c:if>
                     <button type="button" class="btn btn-success" id="saveBtn"  >保存</button>
                     <button onclick="history.go(-1)" type="button"  class="btn btn-danger"  >取消</button>
                 </div>
@@ -304,6 +309,15 @@ padding-top: 40px;
     </div>
 </div>
 <script>
+/* query();
+function query(){
+	var detaiType = $('#detailType').val();
+	console.log(detaiType+detaiType);
+	if(detailType == 2){
+		document.getElementById("yulan").style.display = "block";
+	}
+} */
+
 $("input[type='radio']").click(function () {
 	var checkNmuber = Number($(this).val());
 	if(checkNmuber == 0){
