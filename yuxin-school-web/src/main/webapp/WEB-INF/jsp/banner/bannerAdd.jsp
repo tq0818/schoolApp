@@ -522,11 +522,11 @@ $("input[type='radio']").click(function () {
             var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
             var regTwo=/^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
             
-          	if(!reg.test(linkValue)){
+          	/* if(!reg.test(linkValue)){
 //                $.msg("请输入有效的网址!",1000);
                 $('.wrongTipsF').html("请输入有效的网址!");
                 return ;
-            }
+            } */
           	$('.wrongTipsF').html("");
           	if(!regTwo.test(activeName)){
 //                $.msg("只能输入纯文本",1000);
@@ -594,10 +594,10 @@ $("input[type='radio']").click(function () {
                 	if(selectOption == 0){
                 		var linkHref = $('#linkHref').val();
                 		var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
-                		if (!reg.test(linkHref)){
+                		/* if (!reg.test(linkHref)){
                             $.msg("请输入有效的网址!",1000);
                             return ;
-                        }
+                        } */
                 		$.ajax({
                             url: rootPath + "/Banner/addBanner",
                             type:"post",
