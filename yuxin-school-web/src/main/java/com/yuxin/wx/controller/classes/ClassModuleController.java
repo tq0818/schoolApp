@@ -2439,9 +2439,8 @@ public class ClassModuleController {
 				}
 				//SMSUtil.sendLessonNotic(request, "13880918056", "测试课程", "2017-06-06");
 			//	companyStudentMessage.setMessageCost(stuList.size() * (messageCost));
-				companyStudentMessage.setMessageCost(sendcounts * (messageCost));//2016/7/7  发送条数更改
-				css.setMessageSend(css.getMessageSend()+companyStudentMessage.getMessageCost());
-				companyServiceStaticServiceImpl.update(css);
+				//companyStudentMessage.setMessageCost(sendcounts * (messageCost));//2016/7/7  发送条数更改
+				
 			}else if(companyStudentMessage.getMessageType().equals("STUDENT_MESSAGE_MODULENO")){
 
 				if(((cms.getMessageTotal() + cms.getGiveMessage()) - css.getMessageSend()) <= 0){
@@ -2632,6 +2631,9 @@ public class ClassModuleController {
 			companyStudentMessage.setSendNum(sendCount);
 			companyStudentMessage.setMessageStatus("STUDENT_MESSAGE_FINISH");
 			companyStudentMessageServiceImpl.update(companyStudentMessage);
+			//修改剩余短信条数
+			css.setMessageSend(css.getMessageSend()+(sendCount-failCount));
+			companyServiceStaticServiceImpl.update(css);
 			json.put(JsonMsg.RESULT, JsonMsg.SUCCESS);
 		}else if(companyStudentMessage.getMessageMethod().equals("STUDENT_MESSAGE_EMAIL")){///发送邮件
 			int count = 0;
