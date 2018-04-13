@@ -148,6 +148,7 @@ padding-top: 40px;
 .wrongTips{color: orangered;position: absolute;font-size: 14px;display: inline-block;margin-left: 5px;left: 210px;}
 .wrongTipsF{top: 105px;}
 .wrongTipsS{top: 173px;}
+.wrongTipsC{top: 104px;}
 </style>
 </head>
 <body style="position:relative;">
@@ -200,7 +201,7 @@ padding-top: 40px;
                 </div>
 
                 <div class="putQuestion bannerBtnGroup">
-                	<a href='#' onclick="yulan()"  id="yulan" class='btn btn-success' style="display:none">预览</a>
+                	<button href='#' onclick="yulan()"  id="yulan" class='btn btn-success' style="display:none">预览</button>
                     <button  type="button" class="btn btn-success" id="saveBtn" >保存</button>
                     <button onclick="history.go(-1)" type="button"  class="btn btn-danger"  >取消</button>
                 </div>
@@ -300,10 +301,12 @@ padding-top: 40px;
 $("input[type='radio']").click(function () {
 	var checkNmuber = Number($(this).val());
 	if(checkNmuber == 0){
-		document.getElementById("yulan").style.display = "none";
+//		document.getElementById("yulan").style.display = "none";
+		$('#yulan').css('display',"none");
 	}
 	if(checkNmuber == 1){
-		document.getElementById("yulan").style.display = "block";
+//		document.getElementById("yulan").style.display = "inline-block";
+        $('#yulan').css('display',"inline-block");
 	}
 });
     $('.linkTitle span').click(function () {
@@ -313,7 +316,10 @@ $("input[type='radio']").click(function () {
             $('.linkName').show();
             $('.linkLink').hide().val("");
 
-            $('.wrongTips').hide();
+
+            $(' .wrongTipsF').hide();
+            $(' .wrongTipsS').hide();
+            $(' .wrongTipsC').show();
 
 
 
@@ -321,7 +327,9 @@ $("input[type='radio']").click(function () {
             $('.linkName').hide().val("");
             $('.linkLink').show();
 
-            $('.wrongTips').show();
+            $(' .wrongTipsF').show();
+            $(' .wrongTipsS').show();
+            $(' .wrongTipsC').hide();
 
         }
     });
@@ -442,7 +450,7 @@ $("input[type='radio']").click(function () {
 <%--判断单选按钮--%>
 
 
-<script type="text/javascript" src="<%=rootPath%>/plugins/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="<%=rootPath%>/plugins/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/ajaxfileupload.js"></script>
      <script type="text/javascript" src="<%=rootPath %>/plugins/jcrop/js/jquery.Jcrop.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/riseschool/addClassTypeOnsale.js"></script>

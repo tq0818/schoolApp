@@ -147,6 +147,7 @@ padding-top: 40px;
  .wrongTips{color: orangered;position: absolute;font-size: 14px;display: inline-block;margin-left: 5px;left: 210px;}
  .wrongTipsF{top: 105px;}
  .wrongTipsS{top: 173px;}
+ .wrongTipsC{top: 104px;}
  /*.detailsBg{background: #fff;width: 950px;height: 667px;margin: -47px  0 0 -350px;
  transform:scale(0.3,0.74);position: relative;}*/
 
@@ -205,10 +206,10 @@ padding-top: 40px;
 
                 <div class="putQuestion bannerBtnGroup">
                 	<c:if test="${detailType eq 2}">
-                	<a href='#' onclick="yulan()"  id="yulan" class='btn btn-success' style="display:block">预览</a>
+                	<button href='#' onclick="yulan()"  id="yulan" class='btn btn-success' style="display:inline-block">预览</button>
                 	</c:if>
                 	<c:if test="${detailType ne 2}">
-                	<a href='#' onclick="yulan()"  id="yulan" class='btn btn-success' style="display:none">预览</a>
+                	<button href='#' onclick="yulan()"  id="yulan" class='btn btn-success' style="display:none">预览</button>
                 	</c:if>
                     <button type="button" class="btn btn-success" id="saveBtn"  >保存</button>
                     <button onclick="history.go(-1)" type="button"  class="btn btn-danger"  >取消</button>
@@ -321,10 +322,12 @@ function query(){
 $("input[type='radio']").click(function () {
 	var checkNmuber = Number($(this).val());
 	if(checkNmuber == 0){
-		document.getElementById("yulan").style.display = "none";
+//		document.getElementById("yulan").style.display = "none";
+		$('#yulan').css('display',"none");
 	}
 	if(checkNmuber == 1){
-		document.getElementById("yulan").style.display = "block";
+//		document.getElementById("yulan").style.display = "block";
+        $('#yulan').css('display',"inline-block");
 	}
 });
     $('.linkTitle span').click(function () {
@@ -334,13 +337,17 @@ $("input[type='radio']").click(function () {
             $('.linkName').show();
             $('.linkLink').hide().val("");
 
-            $('.wrongTips').hide();
+            $(' .wrongTipsF').hide();
+            $(' .wrongTipsS').hide();
+            $(' .wrongTipsC').show();
 
         }else{
             $('.linkName').hide().val("");
             $('.linkLink').show();
 
-            $('.wrongTips').show();
+            $(' .wrongTipsF').show();
+            $(' .wrongTipsS').show();
+            $(' .wrongTipsC').hide();
 
         }
     });
