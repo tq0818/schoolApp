@@ -36,6 +36,8 @@ public class CourseResultVO implements Serializable{
 	private String courseTime;//课程开始时间结束时间，格式是 2011-01-01 11:02:02
 	private Integer buyNumMax;//最大购买数
 	private String teacherLevel;//教师级别
+    private Integer isNew;//是否是最新课程 0 否 1 是
+    private Date shelvesTime;//上架时间
 	public Integer getCommodityId() {
 		return commodityId;
 	}
@@ -173,6 +175,18 @@ public class CourseResultVO implements Serializable{
 	}
 	public void setTeacherLevel(String teacherLevel) {
 		this.teacherLevel = teacherLevel;
+	}
+	public Integer getIsNew() {
+		return isNew;
+	}
+	public void setIsNew(Integer isNew) {
+		this.isNew = isNew;
+	}
+	public Date getShelvesTime() {
+		return shelvesTime;
+	}
+	public void setShelvesTime(Date shelvesTime) {
+		this.shelvesTime = shelvesTime;
 	}
 	
 }

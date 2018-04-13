@@ -91,7 +91,7 @@ public class ClassModuleLesson extends BaseEntity {
     private String hccApiKey;
     private Integer videoClassTypeId;
     private Integer lectureId;
-
+    private Long preTime;
 
 
 	private CourseVideoLectureVo beforeVideo;
@@ -683,4 +683,12 @@ public class ClassModuleLesson extends BaseEntity {
 		this.befLectureId = befLectureId;
 	}
 
+	public Long getPreTime() {
+		return preTime;
+	}
+
+	public void setPreTime(Long preTime) {
+		this.preTime = preTime;
+	}
+	
 }
