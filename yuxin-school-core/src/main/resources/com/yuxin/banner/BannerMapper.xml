@@ -80,8 +80,10 @@
 		INNER JOIN commodity_product_realtion cpr ON ct.id = cpr.product_id
 		INNER JOIN commodity com ON com.id = cpr.com_id
 		INNER JOIN sys_config_teacher sct ON ct.teacher_id = sct.id 
+		LEFT JOIN app_shelves ash ON com.id = ash.comdity_id
 		where 
-		ct.name like concat('%',#{className},'%')
+		ash.is_shelves = 1
+		and ct.name like concat('%',#{className},'%')
 	</select>
 	<!-- 适用于主键自增类型 -->
 	<insert id="insertBanner" parameterType="com.yuxin.wx.model.banner.Banner" useGeneratedKeys="true" keyProperty="id">

@@ -338,11 +338,11 @@ public class RiseSchoolManageController {
     public JSONObject searchUsers(HttpServletRequest request){
     	JSONObject json = new JSONObject();
     	Map map = new HashMap();
-    	//区
+    	//电话
     	String searchCondition = request.getParameter("searchCondition");
     	if (StringUtils.isEmpty(searchCondition)){
     		json.put("flag","0");
-    		json.put("msg","未获取区县");
+    		json.put("msg","未获到电话");
     		return json;
     	}
     	map.put("mobile",searchCondition);
@@ -391,6 +391,21 @@ public class RiseSchoolManageController {
     @ResponseBody
     @RequestMapping(value = "/loginUserCount")
     public JSONObject loginUserCount(HttpServletRequest request){
+    	JSONObject json = new JSONObject();
+    	Map map = new HashMap();
+    	//登录和未登录参数,值为0表示未选中，1表示选中
+    	String registeredUser = request.getParameter("registeredUser");
+    	String noRegisteredUser = request.getParameter("noRegisteredUser");
+    	map.put("registeredUser",registeredUser);
+    	map.put("noRegisteredUser",noRegisteredUser);
+    	Integer count = studentServiceImpl.loginAppUserCount(map);
+    	json.put("flag","1");
+    	json.put("count",count);
+    	return json;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/noLoginUserCount")
+    public JSONObject noLoginUserCount(HttpServletRequest request){
     	JSONObject json = new JSONObject();
     	Map map = new HashMap();
     	//登录和未登录参数,值为0表示未选中，1表示选中

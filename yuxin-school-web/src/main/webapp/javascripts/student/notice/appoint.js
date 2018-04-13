@@ -67,7 +67,7 @@ $(function () {
             var onOff = true;
             for(var i =0 ;i<userInfoListAll.length;i++){
                 if(Number(userInfo[1])==Number(userInfoListAll.eq(i).html())){
-                    $.msg("该条数据已有");
+                    $.msg("已选择该用户");
                     onOff = false;
                     break;
                 }
@@ -117,6 +117,16 @@ $(function () {
     $('.font-style').children('a').eq(1).click(function () {
         $('.templete').hide();
         $('.userType').show();
+    });
+    $('.font-style').children('a').eq(2).click(function () {
+    	$('.templete').hide();
+    	$('.userType').hide();
+    	$('.chooseSubscriptionHide1').hide();
+    	$('.chooseSubscriptionHide2').hide();
+    	$('.chooseSubscriptionHide3').hide();
+    	$('.chooseSubscriptionHide4').hide();
+    	$('.chooseSubscriptionHide5').hide();
+    	$('.chooseSubscriptionHide6').hide();
     });
 
     //点击发送通知，弹窗提示
@@ -650,33 +660,58 @@ function registered(){
 	}
 	var registeredUser = 0;//注册用户
 	var noRegisteredUser = 0;//非注册用户
+	var count = 0;
 	for(var i=0;i<$('.checkNew').length;i++){
     	if($('.checkNew').eq(i).prop('checked')){
     		if(i == 0){
     			registeredUser = 1;
+    			$.ajax({
+    		        url:rootPath +"/riseSchoolManage/loginUserCount",
+    		        data:{"registeredUser":registeredUser,
+    		        	"noRegisteredUser":noRegisteredUser},
+    		        dataType:"json",
+    		        async: false,
+    		        beforeSend: function (XMLHttpRequest) {
+    		            $(".loading").show();
+    		            $(".loading-bg").show();
+    		        },
+    		        success:function (data) {
+    		            $(".loading").hide();
+    		            $(".loading-bg").hide();
+    		            //拼接下拉值
+    		            if (data.flag == 1){
+    		            	console.log(data.count);
+    		            	count = count + data.count;
+    		            }
+    		        }
+    		    });
     		}
     		if(i == 1){
     			noRegisteredUser = 1;
+    			$.ajax({
+    		        url:rootPath +"/riseSchoolManage/noLoginUserCount",
+    		        data:{"registeredUser":registeredUser,
+    		        	"noRegisteredUser":noRegisteredUser},
+    		        dataType:"json",
+    		        async: false,
+    		        beforeSend: function (XMLHttpRequest) {
+    		            $(".loading").show();
+    		            $(".loading-bg").show();
+    		        },
+    		        success:function (data) {
+    		            $(".loading").hide();
+    		            $(".loading-bg").hide();
+    		            //拼接下拉值
+    		            if (data.flag == 1){
+    		            	console.log(data.count);
+    		            	count = count + data.count;
+    		            }
+    		        }
+    		    });
     		}
     	}
 	}
-	$.ajax({
-        url:rootPath +"/riseSchoolManage/loginUserCount",
-        data:{"registeredUser":registeredUser,
-        	"noRegisteredUser":noRegisteredUser},
-        dataType:"json",
-        beforeSend: function (XMLHttpRequest) {
-            $(".loading").show();
-            $(".loading-bg").show();
-        },
-        success:function (data) {
-            $(".loading").hide();
-            $(".loading-bg").hide();
-            //拼接下拉值
-            if (data.flag == 1){
-            	$("#useMsg").html(data.count+"条");
-            	$("#sendStu,#useEmailMsg").html(data.count);
-            }
-        }
-    });
+	$("#useMsg").html(count+"条");
+	$("#sendStu,#useEmailMsg").html(count);
+	
 }	

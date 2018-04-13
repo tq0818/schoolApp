@@ -41,7 +41,7 @@
 	                	<td width="27%">
 	                		<a href='javascript:;' onclick="confirmPopup('确定启用该banner？',${m.id})" class='btn btn-danger forbidBanner'>启用</a>
 	                   		<a href='<%=rootPath %>/Banner/editBanner/${m.id}'  class='btn btn-warning'>修改</a>
-	                   		<a href='<%=rootPath %>/Banner/seachDetail/${m.id}' target="_blank" class='btn btn-success'>查看</a>
+	                   		<%-- <a href='<%=rootPath %>/Banner/seachDetail/${m.id}' target="_blank" class='btn btn-success'>查看</a> --%>
                    		</td>
 	                </tr>
                </c:forEach>

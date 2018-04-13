@@ -228,11 +228,11 @@
 
 
 					<%--发送给部分用户--%>
-					<p class="c">
+					<p class="c chooseSubscriptionHide1">
 						<input type="radio" name="chooseBtn" value="1" style="margin-left: 35px;">
 						<span class="c-title">发送给部分用户</span>
 					</p>
-					<p class="c">
+					<p class="c chooseSubscriptionHide2">
 						<span class="c-title" >省份：</span>
 						<span class="c-content">
 							<select name="eduArea" id="eduArea" onchange="queryRiseSchoolDict(1)">
@@ -252,7 +252,7 @@
 							</select>
 						</span>
 					</p>
-					<p class="c">
+					<p class="c chooseSubscriptionHide3">
 						<span class="c-title">学校 :</span>
 						<span class="c-content">
 							<select id="schoolName" onchange="provinceMsgCount()" style="width: 400px;">
@@ -260,7 +260,7 @@
 							</select>
 						</span>
 					</p>
-					<p class="c">
+					<p class="c chooseSubscriptionHide4">
 						<span class="c-title">学段 :</span>
 						<span class="c-content">
 							<select id="step" onchange="queryRiseSchoolYear()">
@@ -278,7 +278,7 @@
 						</span>
 					</p>
 					<%--发送到指定用户--%>
-					<p class="c">
+					<p class="c chooseSubscriptionHide5">
 						<input type="radio" name="chooseBtn" value="2" style="margin-left: 35px;">
 						<span class="c-title">发送到指定用户</span>
 						<span class="c-content">
@@ -288,7 +288,7 @@
 							</ul>
 						</span>
 					</p>
-					<p class="c">
+					<p class="c chooseSubscriptionHide6">
 						<span class="c-title">已选用户:</span><br/>
 						<span style="display: inline-block;margin-left: 95px;" class="userListInfo" >
 							<%--<span class="c-content">--%>
