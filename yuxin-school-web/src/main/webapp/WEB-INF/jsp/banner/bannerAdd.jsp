@@ -149,6 +149,7 @@ padding-top: 40px;
 .wrongTipsF{top: 105px;}
 .wrongTipsS{top: 173px;}
 .wrongTipsC{top: 104px;}
+div[aria-labelledby*="cke_dialog_title_59"]{display: none;}
 </style>
 </head>
 <body style="position:relative;">

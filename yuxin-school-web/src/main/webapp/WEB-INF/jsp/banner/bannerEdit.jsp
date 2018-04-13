@@ -150,6 +150,7 @@ padding-top: 40px;
  .wrongTipsC{top: 104px;}
  /*.detailsBg{background: #fff;width: 950px;height: 667px;margin: -47px  0 0 -350px;
  transform:scale(0.3,0.74);position: relative;}*/
+ div[aria-labelledby*="cke_dialog_title_59"]{display: none;}
 
 </style>
 </head>
@@ -357,7 +358,6 @@ $("input[type='radio']").click(function () {
     	$('.linkName').attr('data-value','');
         if($(this).val().length>0){
             var className = $(this).val();
-            console.log(className);
             $.ajax({
                 url: rootPath + "/Banner/queryClass",
                 type:"post",
@@ -406,9 +406,9 @@ $("input[type='radio']").click(function () {
         $('.linkPopup').show();
     });
 
-    $('body').on('click','.cke_toolgroup',function(){
-        $('.cke_dialog').css('visibility','visible');
-    })
+//    $('body').on('click','.cke_toolgroup',function(){
+//        $('.cke_dialog').css('visibility','visible');
+//    })
 </script>
 <%--新弹窗end--%>
 <script>
