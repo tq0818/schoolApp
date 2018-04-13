@@ -149,7 +149,9 @@ padding-top: 40px;
 .wrongTipsF{top: 105px;}
 .wrongTipsS{top: 173px;}
 .wrongTipsC{top: 104px;}
-div[aria-labelledby*="cke_dialog_title_59"]{display: none;}
+div[aria-labelledby*="cke_dialog_title_59"],#cke_newsContents{display: none;}
+#cke_32{display: none;}
+#cke_35{display: none;}
 </style>
 </head>
 <body style="position:relative;">
@@ -184,16 +186,18 @@ div[aria-labelledby*="cke_dialog_title_59"]{display: none;}
                 </div>
                 <div class="checkBoxBtn targetSite">
                     <span><input type='radio' name="only" value="0" checked>目标地址:</span>
-                    <select name="" id="selectOption" style="margin-left: 48px;width: 200px;">
-                        <option value="0">活动</option>
-                        <option value="1">课程</option>
-                    </select>
-
-                    <input type="text" name="bannerDescribe" id="linkHref" value=""  maxlength="255" placeholder="示例:http(https)://www.cdds365.com" style="width: 200px;" class="checkLink">
-                    <input type="text" name="bannerDescribe" id="searchClass" value="" data-value="" maxlength="255" placeholder="请输入课程名称" style="width: 200px;" class="checkName">
-                    <ul class="selectName">
-
-                    </ul>
+                    <div style='display:inline-block;' class='targetSiteContent'>
+	                    <select name="" id="selectOption" style="margin-left: 48px;width: 200px;">
+	                        <option value="0">活动</option>
+	                        <option value="1">课程</option>
+	                    </select>
+	
+	                    <input type="text" name="bannerDescribe" id="linkHref" value=""  maxlength="255" placeholder="示例:http(https)://www.cdds365.com" style="width: 200px;" class="checkLink">
+	                    <input type="text" name="bannerDescribe" id="searchClass" value="" data-value="" maxlength="255" placeholder="请输入课程名称" style="width: 200px;" class="checkName">
+	                    <ul class="selectName">
+	
+	                    </ul>
+	                </div>    
                 </div>
                 <div class="contentBox">
                     <span><input type='radio' name="only" value="1">内容:</span>
@@ -304,10 +308,18 @@ $("input[type='radio']").click(function () {
 	if(checkNmuber == 0){
 //		document.getElementById("yulan").style.display = "none";
 		$('#yulan').css('display',"none");
+		
+		$('#cke_newsContents').css('display',"none");
+		
+		$('.targetSiteContent').css('display',"inline-block");
 	}
 	if(checkNmuber == 1){
 //		document.getElementById("yulan").style.display = "inline-block";
         $('#yulan').css('display',"inline-block");
+        
+		$('#cke_newsContents').css('display',"block");
+        
+        $('.targetSiteContent').css('display',"none");
 	}
 });
     $('.linkTitle span').click(function () {
