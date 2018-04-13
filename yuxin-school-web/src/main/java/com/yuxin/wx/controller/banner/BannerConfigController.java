@@ -141,6 +141,7 @@ public class BannerConfigController extends BaseWebController{
     	if(biaoshi==1){
 			//已启用状态  修改为禁用
 			banner.setIsState(0);
+			banner.setBannerContent(banner.getBannerContent().replaceAll("data-cke-pa-onclick", "onclick"));
 			bannerService.update(banner);
 			banner.setIsState(1);
 			List <Banner> qiyongList=bannerService.findBannerAll(banner);
@@ -379,7 +380,11 @@ public class BannerConfigController extends BaseWebController{
         	}
         	banner.setBannerImgUrl(bannerImgUrl);
         	banner.setBannerName(bannerName);
-        	banner.setBannerContent(bannerContent);
+        	/*if (1==1) {
+        		String s = bannerContent;
+        		return json;
+			}*/
+        	banner.setBannerContent(bannerContent.replaceAll("data-cke-pa-onclick", "onclick"));
         	banner.setBannerDescribe(bannerDescribe);
         	banner.setUpdateTime(new Date());
         	banner.setDetailType(detailType);
