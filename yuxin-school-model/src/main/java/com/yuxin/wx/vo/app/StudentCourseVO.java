@@ -29,6 +29,9 @@ public class StudentCourseVO extends BaseEntity{
 	private String schoolShortName;//学校简称
 	private Integer isOver;//是否结束  0即将开始,1是直播中,2是已完结
 	private Integer isToday;//是否是今天的课程 0当天之后的，1则是当天，2则是当天桌子前的
+	private String afterStudyUrl;
+	private String beforeStudyUrl;
+	private Integer showFlag;//显示状态 0课程详情，1观看回放,
 	public Integer getTeacherId() {
 		return teacherId;
 	}
@@ -148,6 +151,24 @@ public class StudentCourseVO extends BaseEntity{
 	}
 	public void setIsToday(Integer isToday) {
 		this.isToday = isToday;
+	}
+	public String getAfterStudyUrl() {
+		return afterStudyUrl;
+	}
+	public void setAfterStudyUrl(String afterStudyUrl) {
+		this.afterStudyUrl = afterStudyUrl;
+	}
+	public String getBeforeStudyUrl() {
+		return beforeStudyUrl;
+	}
+	public void setBeforeStudyUrl(String beforeStudyUrl) {
+		this.beforeStudyUrl = beforeStudyUrl;
+	}
+	public Integer getShowFlag() {
+		return showFlag;
+	}
+	public void setShowFlag(Integer showFlag) {
+		this.showFlag = showFlag;
 	}
 	
 }
