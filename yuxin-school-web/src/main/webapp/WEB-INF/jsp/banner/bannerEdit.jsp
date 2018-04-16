@@ -147,9 +147,12 @@ padding-top: 40px;
  .wrongTips{color: orangered;position: absolute;font-size: 14px;display: inline-block;margin-left: 5px;left: 210px;}
  .wrongTipsF{top: 105px;}
  .wrongTipsS{top: 173px;}
+ .wrongTipsC{top: 104px;}
  /*.detailsBg{background: #fff;width: 950px;height: 667px;margin: -47px  0 0 -350px;
  transform:scale(0.3,0.74);position: relative;}*/
-
+ div[aria-labelledby*="cke_dialog_title_59"]{display: none;}
+#cke_32{display: none;}
+#cke_35{display: none;}
 </style>
 </head>
 <body style="position:relative;">
@@ -186,16 +189,19 @@ padding-top: 40px;
                 </div>
                 <div class="checkBoxBtn targetSite">
                     <span><input type='radio' name="only" value="0" id='targetSiteInput' >目标地址:</span>
-                    <select name="" id="selectOption" style="margin-left: 48px;width: 200px;">
-                        <option value="0">活动</option>
-                        <option value="1">课程</option>
-                    </select>
-
-                    <input type="text" name="bannerDescribe" id="linkHref" value=""  maxlength="255" placeholder="示例:http(https)://www.cdds365.com" style="width: 200px;" class="checkLink">
-                    <input type="text" name="bannerDescribe" id="searchClass" value="" data-value="" maxlength="255" placeholder="请输入课程名称" style="width: 200px;" class="checkName">
-                    <ul class="selectName">
-
-                    </ul>
+                    <div style='display:inline-block;' class='targetSiteContent'>
+	                    <select name="" id="selectOption" style="margin-left: 48px;width: 200px;">
+	                        <option value="0">活动</option>
+	                        <option value="1">课程</option>
+	                    </select>
+	
+	                    <input type="text" name="bannerDescribe" id="linkHref" value=""  maxlength="255" placeholder="示例:http(https)://www.cdds365.com" style="width: 200px;" class="checkLink">
+	                    <input type="text" name="bannerDescribe" id="searchClass" value="" data-value="" maxlength="255" placeholder="请输入课程名称" style="width: 200px;" class="checkName">
+	                    <ul class="selectName">
+	
+	                    </ul>
+                    </div>	
+                    
                 </div>
                 <div class="contentBox">
                     <span><input type='radio' name="only" value="1" id='contentInput'>内容:</span>
@@ -205,10 +211,10 @@ padding-top: 40px;
 
                 <div class="putQuestion bannerBtnGroup">
                 	<c:if test="${detailType eq 2}">
-                	<a href='#' onclick="yulan()"  id="yulan" class='btn btn-success' style="display:block">预览</a>
+                	<button href='#' onclick="yulan()"  id="yulan" class='btn btn-success' style="display:inline-block">预览</button>
                 	</c:if>
                 	<c:if test="${detailType ne 2}">
-                	<a href='#' onclick="yulan()"  id="yulan" class='btn btn-success' style="display:none">预览</a>
+                	<button href='#' onclick="yulan()"  id="yulan" class='btn btn-success' style="display:none">预览</button>
                 	</c:if>
                     <button type="button" class="btn btn-success" id="saveBtn"  >保存</button>
                     <button onclick="history.go(-1)" type="button"  class="btn btn-danger"  >取消</button>
@@ -321,10 +327,26 @@ function query(){
 $("input[type='radio']").click(function () {
 	var checkNmuber = Number($(this).val());
 	if(checkNmuber == 0){
-		document.getElementById("yulan").style.display = "none";
+//		document.getElementById("yulan").style.display = "none";
+		$('#yulan').css('display',"none");
+		$('#cke_newsContents').css('display',"none");
+		
+		$('.targetSiteContent').css('display',"inline-block");
+		
+		
+		
 	}
 	if(checkNmuber == 1){
-		document.getElementById("yulan").style.display = "block";
+//		document.getElementById("yulan").style.display = "block";
+        $('#yulan').css('display',"inline-block");
+        $('#cke_newsContents').css('display',"block");
+        
+        $('.targetSiteContent').css('display',"none");
+        
+
+        
+        
+        
 	}
 });
     $('.linkTitle span').click(function () {
@@ -334,13 +356,17 @@ $("input[type='radio']").click(function () {
             $('.linkName').show();
             $('.linkLink').hide().val("");
 
-            $('.wrongTips').hide();
+            $(' .wrongTipsF').hide();
+            $(' .wrongTipsS').hide();
+            $(' .wrongTipsC').show();
 
         }else{
             $('.linkName').hide().val("");
             $('.linkLink').show();
 
-            $('.wrongTips').show();
+            $(' .wrongTipsF').show();
+            $(' .wrongTipsS').show();
+            $(' .wrongTipsC').hide();
 
         }
     });
@@ -350,7 +376,6 @@ $("input[type='radio']").click(function () {
     	$('.linkName').attr('data-value','');
         if($(this).val().length>0){
             var className = $(this).val();
-            console.log(className);
             $.ajax({
                 url: rootPath + "/Banner/queryClass",
                 type:"post",
@@ -399,9 +424,9 @@ $("input[type='radio']").click(function () {
         $('.linkPopup').show();
     });
 
-    $('body').on('click','.cke_toolgroup',function(){
-        $('.cke_dialog').css('visibility','visible');
-    })
+//    $('body').on('click','.cke_toolgroup',function(){
+//        $('.cke_dialog').css('visibility','visible');
+//    })
 </script>
 <%--新弹窗end--%>
 <script>
@@ -803,7 +828,6 @@ $("input[type='radio']").click(function () {
 		}
 		
 		//回显数据
-		console.log($('#detailType').val());
 		if(Number($('#detailType').val())==0||Number($('#detailType').val())==1){
 			$('#targetSiteInput').prop('checked',true);
 			if(Number($('#detailType').val())==0){
@@ -811,6 +835,9 @@ $("input[type='radio']").click(function () {
 				$('#selectOption').children('option').eq(0).attr('selected',"selected");
 				$('#linkHref').show();
 				$('#searchClass').hide();
+		        
+				
+				
 			}else{
 				$('#searchClass').val('${msgPage.searchClassName}');
 				$('#searchClass').attr('data-value','${msgPage.searchClass}');
@@ -819,9 +846,21 @@ $("input[type='radio']").click(function () {
 				$('#searchClass').show();
 				
 			}
+			
+			setTimeout(function(){
+				$('#cke_newsContents').css('display',"none");
+				$('.targetSiteContent').css('display',"inline-block");
+			},200);
+			
+			
 		
 		}else if(Number($('#detailType').val())==2){
+			
 			$('#contentInput').prop('checked',true);
+			
+			$('#cke_newsContents').css('display',"block");
+	        
+	        $('.targetSiteContent').css('display',"none");
 		}
 		
 	</script>

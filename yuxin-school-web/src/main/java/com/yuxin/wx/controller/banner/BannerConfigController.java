@@ -229,6 +229,7 @@ public class BannerConfigController extends BaseWebController{
     		banner.setBannerContent("");
     	}
     	if(banner.getDetailType() == 2){
+    		banner.setBannerContent(banner.getBannerContent().replaceAll("data-cke-pa-onclick", "onclick"));
     		banner.setLinkHref("");
     		banner.setSearchClass("");
     		banner.setSearchClassName("");
@@ -379,7 +380,11 @@ public class BannerConfigController extends BaseWebController{
         	}
         	banner.setBannerImgUrl(bannerImgUrl);
         	banner.setBannerName(bannerName);
-        	banner.setBannerContent(bannerContent);
+        	/*if (1==1) {
+        		String s = bannerContent;
+        		return json;
+			}*/
+        	banner.setBannerContent(bannerContent.replaceAll("data-cke-pa-onclick", "onclick"));
         	banner.setBannerDescribe(bannerDescribe);
         	banner.setUpdateTime(new Date());
         	banner.setDetailType(detailType);

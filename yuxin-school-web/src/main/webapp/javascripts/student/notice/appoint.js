@@ -112,11 +112,23 @@ $(function () {
     $('.font-style').children('a').eq(0).click(function () {
         $('.templete').show();
         $('.userType').hide();
+        $('.chooseSubscriptionHide1').show();
+    	$('.chooseSubscriptionHide2').show();
+    	$('.chooseSubscriptionHide3').show();
+    	$('.chooseSubscriptionHide4').show();
+    	$('.chooseSubscriptionHide5').show();
+    	$('.chooseSubscriptionHide6').show();
         
     });
     $('.font-style').children('a').eq(1).click(function () {
         $('.templete').hide();
         $('.userType').show();
+        $('.chooseSubscriptionHide1').show();
+    	$('.chooseSubscriptionHide2').show();
+    	$('.chooseSubscriptionHide3').show();
+    	$('.chooseSubscriptionHide4').show();
+    	$('.chooseSubscriptionHide5').show();
+    	$('.chooseSubscriptionHide6').show();
     });
     $('.font-style').children('a').eq(2).click(function () {
     	$('.templete').hide();

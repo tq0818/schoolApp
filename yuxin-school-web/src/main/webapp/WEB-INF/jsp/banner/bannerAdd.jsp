@@ -148,6 +148,10 @@ padding-top: 40px;
 .wrongTips{color: orangered;position: absolute;font-size: 14px;display: inline-block;margin-left: 5px;left: 210px;}
 .wrongTipsF{top: 105px;}
 .wrongTipsS{top: 173px;}
+.wrongTipsC{top: 104px;}
+div[aria-labelledby*="cke_dialog_title_59"],#cke_newsContents{display: none;}
+#cke_32{display: none;}
+#cke_35{display: none;}
 </style>
 </head>
 <body style="position:relative;">
@@ -182,16 +186,18 @@ padding-top: 40px;
                 </div>
                 <div class="checkBoxBtn targetSite">
                     <span><input type='radio' name="only" value="0" checked>目标地址:</span>
-                    <select name="" id="selectOption" style="margin-left: 48px;width: 200px;">
-                        <option value="0">活动</option>
-                        <option value="1">课程</option>
-                    </select>
-
-                    <input type="text" name="bannerDescribe" id="linkHref" value=""  maxlength="255" placeholder="示例:http(https)://www.cdds365.com" style="width: 200px;" class="checkLink">
-                    <input type="text" name="bannerDescribe" id="searchClass" value="" data-value="" maxlength="255" placeholder="请输入课程名称" style="width: 200px;" class="checkName">
-                    <ul class="selectName">
-
-                    </ul>
+                    <div style='display:inline-block;' class='targetSiteContent'>
+	                    <select name="" id="selectOption" style="margin-left: 48px;width: 200px;">
+	                        <option value="0">活动</option>
+	                        <option value="1">课程</option>
+	                    </select>
+	
+	                    <input type="text" name="bannerDescribe" id="linkHref" value=""  maxlength="255" placeholder="示例:http(https)://www.cdds365.com" style="width: 200px;" class="checkLink">
+	                    <input type="text" name="bannerDescribe" id="searchClass" value="" data-value="" maxlength="255" placeholder="请输入课程名称" style="width: 200px;" class="checkName">
+	                    <ul class="selectName">
+	
+	                    </ul>
+	                </div>    
                 </div>
                 <div class="contentBox">
                     <span><input type='radio' name="only" value="1">内容:</span>
@@ -200,7 +206,7 @@ padding-top: 40px;
                 </div>
 
                 <div class="putQuestion bannerBtnGroup">
-                	<a href='#' onclick="yulan()"  id="yulan" class='btn btn-success' style="display:none">预览</a>
+                	<button href='#' onclick="yulan()"  id="yulan" class='btn btn-success' style="display:none">预览</button>
                     <button  type="button" class="btn btn-success" id="saveBtn" >保存</button>
                     <button onclick="history.go(-1)" type="button"  class="btn btn-danger"  >取消</button>
                 </div>
@@ -300,10 +306,20 @@ padding-top: 40px;
 $("input[type='radio']").click(function () {
 	var checkNmuber = Number($(this).val());
 	if(checkNmuber == 0){
-		document.getElementById("yulan").style.display = "none";
+//		document.getElementById("yulan").style.display = "none";
+		$('#yulan').css('display',"none");
+		
+		$('#cke_newsContents').css('display',"none");
+		
+		$('.targetSiteContent').css('display',"inline-block");
 	}
 	if(checkNmuber == 1){
-		document.getElementById("yulan").style.display = "block";
+//		document.getElementById("yulan").style.display = "inline-block";
+        $('#yulan').css('display',"inline-block");
+        
+		$('#cke_newsContents').css('display',"block");
+        
+        $('.targetSiteContent').css('display',"none");
 	}
 });
     $('.linkTitle span').click(function () {
@@ -313,7 +329,10 @@ $("input[type='radio']").click(function () {
             $('.linkName').show();
             $('.linkLink').hide().val("");
 
-            $('.wrongTips').hide();
+
+            $(' .wrongTipsF').hide();
+            $(' .wrongTipsS').hide();
+            $(' .wrongTipsC').show();
 
 
 
@@ -321,7 +340,9 @@ $("input[type='radio']").click(function () {
             $('.linkName').hide().val("");
             $('.linkLink').show();
 
-            $('.wrongTips').show();
+            $(' .wrongTipsF').show();
+            $(' .wrongTipsS').show();
+            $(' .wrongTipsC').hide();
 
         }
     });
@@ -442,7 +463,7 @@ $("input[type='radio']").click(function () {
 <%--判断单选按钮--%>
 
 
-<script type="text/javascript" src="<%=rootPath%>/plugins/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="<%=rootPath%>/plugins/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/ajaxfileupload.js"></script>
      <script type="text/javascript" src="<%=rootPath %>/plugins/jcrop/js/jquery.Jcrop.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/riseschool/addClassTypeOnsale.js"></script>

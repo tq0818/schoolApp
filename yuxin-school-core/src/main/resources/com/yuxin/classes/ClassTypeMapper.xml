@@ -996,10 +996,21 @@
 	</select>
 
 	<select id="queryRecordVideo" resultMap="classTypeResultMap" parameterType="map" >
-		select ct.*,c.id as commodityId from commodity c  join commodity_product_realtion pr on
-		c.id=pr.com_id  join class_type ct on ct.id=pr.product_id and ct.del_flag=0 and pr.product_type=1 and c.type='COMMODITY_CLASS' and ct.live_flag=0
-		where ct.company_id=#{companyId}
-		and ct.name like '%${name}%'
+		SELECT
+			ct.*, c.id AS commodityId
+		FROM
+			commodity c
+		JOIN commodity_product_realtion pr ON c.id = pr.com_id
+		JOIN class_type ct ON ct.id = pr.product_id
+		join app_shelves app on app.comdity_id=ct.id
+		and ((app.is_shelves = 1 AND app.reserve_time IS NULL )OR (app.is_shelves = 1 AND now() <![CDATA[>=]]> app.reserve_time))
+		AND ct.del_flag = 0
+		AND pr.product_type = 1
+		AND c.type = 'COMMODITY_CLASS'
+		AND ct.live_flag = 0
+		WHERE
+			ct.company_id = #{companyId}
+		AND ct. NAME LIKE '%${name}%'
 	</select>
 	
 	<select id="findClassTypeBycompanyId" parameterType="Integer" resultMap="classTypeResultMap">
