@@ -28,10 +28,10 @@
                      $scale = 516 / 123.84;
  				}else{
                      minHeight = 18;
-                     maxHeight = 282;
+                     maxHeight = 200;
                      minWidth = 75;
-                     maxWidth = 1175;
-                     $scale = 1175 / 282;
+                     maxWidth = 833.34;
+                     $scale = 833.34 / 200;
  				}
                  /*minHeight = 50;
                  maxHeight = 282;

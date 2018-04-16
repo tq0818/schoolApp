@@ -140,6 +140,12 @@ $(function () {
     	$('.chooseSubscriptionHide5').hide();
     	$('.chooseSubscriptionHide6').hide();
     });
+    //点击通知方式，回复默认值
+    $(".btn-method").on('click',function(){
+    	whichChoose = 0;
+    	$('#messageId').attr('disabled',true);
+        $('#messageId').val('');
+    });
 
     //点击发送通知，弹窗提示
 
@@ -520,6 +526,8 @@ function queryRiseSchoolDict(areaFlag) {
                     $("#eduSchool").html("").html(html);
                     html2 = "<option value=\"\">请选择区</option>";
                     $("#registStatus").html("").html(html2);
+                    var html3 = "<option value=\"\">请选择学校</option>";
+                    $("#schoolName").html("").html(html3);
                 }else if (areaFlag == 2){
                 	var eduSchool = $("#eduSchool").val();
                 	if(eduSchool == ""){
@@ -528,13 +536,13 @@ function queryRiseSchoolDict(areaFlag) {
                 		html = "<option value=\"\">请选择区</option>" + html;
                 	}
                     $("#registStatus").html("").html(html);
+                    var html2 = "<option value=\"\">请选择学校</option>";
+                    $("#schoolName").html("").html(html2);
                 }
             }
+            provinceMsgCount();
         }
     });
-    if (areaFlag != 0){
-    	provinceMsgCount();
-    }
 }
 //加载学校
 function querySchoolName() {
@@ -542,6 +550,7 @@ function querySchoolName() {
 	if(registStatus == ""){
 		 var html = "<option value=\"\">请选择学校</option>";
         $("#schoolName").html("").html(html);
+        provinceMsgCount();
 		return;
 	}
 	$.ajax({

@@ -1,4 +1,5 @@
 var msgCount;
+var creatNoticeCheckNumber = 0;
      $(function(){
 		$(".sendStuMsg").show();
 		$(".phoneHint").hide();
@@ -45,6 +46,12 @@ var msgCount;
 			$("#chooseDiv").css("display", "block");
 			$("#stopDiv").css("display", "block");
 		});
+ 		$("input[type='radio']").click(function () {
+ 	    	//当前选中的是第几项
+ 	    	var checkNmuber = Number($(this).val());
+ 	    	//选中第几项则加载当前项所需发送的短信数和人数
+ 	    	creatNoticeCheckNumber = checkNmuber;
+ 	    });
  		// 弹层处理
  	      $('.upload-layer')
  	          .on('click','i.close',function(){
@@ -67,6 +74,7 @@ var msgCount;
  	          });
  		
  		$(".btn-method").on('click',function(){
+ 			creatNoticeCheckNumber = 0;
  			$(".con-tzbt,.con-fsnr,.tips-txt").show();
  			$(".notice-main").css({'margin':'0 auto'});
  			var type = $(this).data("type");
@@ -590,6 +598,7 @@ var msgCount;
      }
      
      function selPerson(){
+    	 
     	 //查询人数
     	 var messageType = $(".btn-type.btn-primary").attr("data-type");
     	 var classTypeId = $("#class").val();
@@ -608,9 +617,11 @@ var msgCount;
                      $(".btn-view").empty();
                  },
                  success:function(data){
-                     $(".btn-view").html(data.count + "人");
-                     $("#sendStu,#useEmailMsg").html(data.count);
-                     $("#useMsg").html(data.count+"条");
+                	 if(creatNoticeCheckNumber == 0){
+                		 $(".btn-view").html(data.count + "人");
+                		 $("#sendStu,#useEmailMsg").html(data.count);
+                		 $("#useMsg").html(data.count+"条");
+                	 }
                      $.each( data.lessons, function(index, lesson){
                          if(index == 0){
                              $("#classLesson").append("<option  selected = 'selected' value='"+lesson.id+"'>"+lesson.lessonName+"</option>");
@@ -627,10 +638,12 @@ var msgCount;
                  }
              });
 		 }else{
+			 if(creatNoticeCheckNumber == 0){
+	             $(".btn-view").html(0 + "人");
+	             $("#sendStu,#useEmailMsg").html(0);
+	             $("#useMsg").html(0+"条");
+			 }
              $("#classLesson").empty();
-             $(".btn-view").html(0 + "人");
-             $("#sendStu,#useEmailMsg").html(0);
-             $("#useMsg").html(0+"条");
              $(".loading").hide();
              $(".loading-bg").hide();
 		 }

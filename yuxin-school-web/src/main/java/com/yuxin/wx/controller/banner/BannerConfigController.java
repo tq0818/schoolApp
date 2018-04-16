@@ -384,7 +384,9 @@ public class BannerConfigController extends BaseWebController{
         		String s = bannerContent;
         		return json;
 			}*/
-        	banner.setBannerContent(bannerContent.replaceAll("data-cke-pa-onclick", "onclick"));
+        	if(StringUtils.isNotEmpty(bannerContent)){
+        		banner.setBannerContent(bannerContent.replaceAll("data-cke-pa-onclick", "onclick"));
+        	}
         	banner.setBannerDescribe(bannerDescribe);
         	banner.setUpdateTime(new Date());
         	banner.setDetailType(detailType);

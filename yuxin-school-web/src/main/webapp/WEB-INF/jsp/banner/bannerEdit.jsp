@@ -118,7 +118,7 @@ padding-top: 40px;
 .selectName li{padding-left: 3px;}
 .checkName{border-radius: 0 !important;}
 .targetSite{height: 60px;}
-.selectName{display: none;}
+.selectName{display: none;left: 120px;}
 .selectName li{cursor: pointer;}
 .selectName li.active{background: #0e90d2;color: #fff;}
 

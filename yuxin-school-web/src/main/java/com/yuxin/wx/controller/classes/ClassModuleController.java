@@ -2,6 +2,7 @@ package com.yuxin.wx.controller.classes;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Lists;
 import com.yuxin.wx.api.app.INoticeAndScoreService;
 import com.yuxin.wx.api.auth.IAuthRoleService;
 import com.yuxin.wx.api.auth.IAuthUserRoleService;
@@ -3118,7 +3119,7 @@ public class ClassModuleController {
 	public Integer sendPhoneLessonMessage(HttpServletRequest request, CompanyStudentMessage companyStudentMessage,
 			String content, Integer companyId, Integer schoolId, Users user, Integer messageCost, List<List<Student>> sList,
 			Integer sendcounts) {
-		String result;
+		String result = "发送失败";
 		String status;
 		String message;
 		String lessonStr = request.getParameter("lessonId");
@@ -3147,19 +3148,23 @@ public class ClassModuleController {
 		
 		for (List<Student> ssList : sList) {
 			String num = "";
-			for(int n = 0 ; n < ssList.size() ; n++){
-				Student s = ssList.get(n);
-				if(null!=s && null!=s.getMobile() && !"".equals(s.getMobile())){
-					if(n==ssList.size()-1){
-						num+=s.getMobile();
-					}else{
-						num+=s.getMobile()+",";
+			List<List<Student>> partition = Lists.partition(ssList,200);
+			for (List<Student> list : partition) {
+				for(int n = 0 ; n < list.size() ; n++){
+					Student s = list.get(n);
+					if(null!=s && null!=s.getMobile() && !"".equals(s.getMobile())){
+						if(n==list.size()-1){
+							num+=s.getMobile();
+						}else{
+							num+=s.getMobile()+",";
+						}
 					}
 				}
+				result = SMSUtil.sendLessonNotic(request, num, className, date);
+				num = "";
 			}
 			//if(null!=s && null!=s.getMobile() && !"".equals(s.getMobile())){//2016/7/7  手机为空则不发短信
 				
-				result = SMSUtil.sendLessonNotic(request, num, className, date);
 				
 //				result = SmsClientSend.sendSmsTwo(request
 //						,s.getMobile().trim(), content + "【在线网校】"
@@ -3216,7 +3221,7 @@ public class ClassModuleController {
 	public Integer sendSchoolOrUserMessage(HttpServletRequest request, CompanyStudentMessage companyStudentMessage,
 			String content, Integer companyId, Integer schoolId, Users user, Integer messageCost, List<List<Student>> sList,
 			Integer sendcounts) {
-		String result;
+		String result = "发送失败";
 		String status;
 		String message;
 		
@@ -3226,31 +3231,36 @@ public class ClassModuleController {
 		String msgTemplateId = request.getParameter("msgTemplateId");
 		companyStudentMessage.setContent(msgTemplateId);
 		companyStudentMessageServiceImpl.insert(companyStudentMessage);
-		
+		//List<List<List<Student>>> partition = Lists.partition(sList, 200);
 		for (List<Student> ssList : sList) {
-			String num = "";
-			for(int n = 0 ; n < ssList.size() ; n++){
-				Student s = ssList.get(n);
-				if(null!=s && null!=s.getMobile() && !"".equals(s.getMobile())){
-					if(n==ssList.size()-1){
-						num+=s.getMobile();
-					}else{
-						num+=s.getMobile()+",";
+			//将电话号码分组（一次只能发送两百个）
+			List<List<Student>> partition = Lists.partition(ssList, 200);
+			//将分组的短信依次发送
+			for (List<Student> list : partition) {
+				String num = "";
+				for(int n = 0 ; n < list.size() ; n++){
+					Student s = list.get(n);
+					if(null!=s && null!=s.getMobile() && !"".equals(s.getMobile())){
+						if(n==list.size()-1){
+							num+=s.getMobile();
+						}else{
+							num+=s.getMobile()+",";
+						}
 					}
 				}
+				//发送短信
+				//result = SMSUtil.sendLessonNotic(request, num, className, date);
+				try {
+					SMSHandler.sendApp(num, msgTemplateId, new String[]{""});
+					result = "发送成功";
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					result = "发送失败";
+				}
+				num = "";
 			}
-			
-			//发送短信
-			//result = SMSUtil.sendLessonNotic(request, num, className, date);
-			try {
-				SMSHandler.sendApp(num, msgTemplateId, new String[]{""});
-				result = "发送成功";
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				result = "发送失败";
-			}
-			
+			//记录
 			List<CompanyMessageHistory> cmhList=new ArrayList<CompanyMessageHistory>();
 			for(Student s : ssList){
 				if(null!=s && null!=s.getMobile() && !"".equals(s.getMobile())){//2016/7/7  手机为空则不发短信
