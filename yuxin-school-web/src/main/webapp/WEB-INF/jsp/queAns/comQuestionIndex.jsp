@@ -58,6 +58,10 @@ i.close {
 .cke {
 	visibility: hidden;
 }
+.btnSign {
+	position: absolute;
+    top: -23px;
+}
 </style>
 </head>
 <body style="position:relative;">
@@ -73,8 +77,8 @@ i.close {
 		                   	<a href="javascript:void(0);" ids="${stag.id }" class="btn zdy btn-mini btn-default">${stag.labName }</a>
                    	</c:forEach>
                 </span>
-               	<a href="<%=rootPath %>/Question/toAddQuestione" class="comQuestionPut btn btn-success"><em class="iconfont">&#xe606;</em>提问</a>
-               	<a href="<%=rootPath %>/Question/labelManagement" class="comQuestionLabel btn btn-success"><em class="iconfont">&#xe606;</em>标签管理</a>
+               	<a href="<%=rootPath %>/Question/toAddQuestione" class="comQuestionPut btn btn-success btnSign"><em class="iconfont">&#xe606;</em>提问</a>
+               	<a href="<%=rootPath %>/Question/labelManagement" class="comQuestionLabel btn btn-success btnSign"><em class="iconfont">&#xe606;</em>标签管理</a>
                 
             </p>
            
