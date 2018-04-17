@@ -359,6 +359,35 @@ public class RiseSchoolManageController {
     	return json;
     }
     /**
+     * 通知返回指定发送的用户
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/searchSchools",method = RequestMethod.POST)
+    public JSONObject searchSchools(HttpServletRequest request){
+    	JSONObject json = new JSONObject();
+    	Map map = new HashMap();
+    	//电话
+    	String schoolName = request.getParameter("schoolName");
+    	String registStatus = request.getParameter("registStatus");
+    	if (StringUtils.isEmpty(schoolName)){
+    		json.put("flag","0");
+    		json.put("msg","未获取到学校名称");
+    		return json;
+    	}
+    	map.put("schoolName",schoolName);
+    	map.put("registStatus",registStatus);
+    	List<SysDictVo> list = riseSchoolManageServiceImpl.querySchoolName(map);
+    	if (list == null){
+    		json.put("flag","0");
+    	}else{
+    		json.put("flag","1");
+    		json.put("dictList",list);
+    	}
+    	return json;
+    }
+    /**
      * 返回当前学校需要发送多少条短信
      * @param request
      * @return

@@ -110,8 +110,13 @@
 		 .userList{width: 366px;position: absolute;left: 153px;top: 395px;display: none;}
 		 .userList li{height: 30px;line-height: 30px;background: #fff;padding-left: 10px;}
 		 .userList li.active{background: #0e90d2;color: #fff;}
+		 .schoolList{width: 366px;position: absolute;left: 100px;top: 309px;display: none;
+		 height: 300px;overflow-y:auto;}
+		 .schoolList li{height: 30px;line-height: 30px;background: #fff;padding-left: 10px;}
+		 .schoolList li.active{background: #0e90d2;color: #fff;}
 		 .student .notice-main{position: relative;}
 		 .userType{display: none;}
+		 #msgContents{resize: none;width: 200px;height: 100px;max-width: 200px;max-height: 100px;top: 309px}
 </style>
 </head>
 <body>
@@ -255,9 +260,10 @@
 					<p class="c chooseSubscriptionHide3">
 						<span class="c-title">学校 :</span>
 						<span class="c-content">
-							<select id="schoolName" onchange="provinceMsgCount()" style="width: 400px;">
-							<option value="">请选择学校</option>
-							</select>
+							<input type="text" style="width: 348px;border-radius: 0;" id="schoolListInput" disabled>
+							<ul class="schoolList">
+								
+							</ul>
 						</span>
 					</p>
 					<p class="c chooseSubscriptionHide4">
@@ -371,6 +377,9 @@
 					<!-- 站内信 --> 
 					<div id="ckecktor" style="padding-left: 100px;margin-bottom: 20px;"> 
 						<textarea id="newsContents" class="msg-content"></textarea>
+					</div>
+					<div id="contentExit"> 
+						<textarea id="msgContents" class="msg-content" maxlength="500"></textarea>
 					</div>
 					<!-- 邮件 -->
 					 <div id="email_ckecktor" style="display:none;padding-left: 100px;margin-bottom: 20px;"> 

@@ -208,6 +208,7 @@
         from sys_config_dict
 		where dict_code = 'EDU_SCHOOL'
 		and parent_item_id = (select id from sys_config_dict where item_code = #{registStatus})
+		and item_value like concat('%',#{schoolName},'%')
     </select>
     <select id="searchUsers" parameterType="Map" resultType="com.yuxin.wx.model.user.UsersFront">
         SELECT uf.nick_name as nickName,uf.mobile as mobile 
