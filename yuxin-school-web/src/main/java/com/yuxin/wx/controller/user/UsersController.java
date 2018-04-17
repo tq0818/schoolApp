@@ -353,6 +353,8 @@ public class UsersController {
 	@ResponseBody
 	@RequestMapping(value = "/updateAccountInfo")
 	public String updateAccountInfo(Users users) {
+		//20180417 zj 修改， 因为前台查询中并没有查出companyId，所以这里直接处理
+		users.setCompanyId(WebUtils.getCurrentCompanyId());
 		iUsersService.updateUserByCompanyIdAndUserType(users);
 		return "success";
 	}

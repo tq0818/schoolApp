@@ -25,6 +25,7 @@ import com.yuxin.wx.model.user.UsersFront;
 import com.yuxin.wx.student.mapper.StudentMapper;
 import com.yuxin.wx.system.mapper.SysConfigTeacherMapper;
 import com.yuxin.wx.user.mapper.UsersFrontMapper;
+import com.yuxin.wx.util.StringUtil;
 import com.yuxin.wx.vo.system.TeacherCommentVo;
 
 
@@ -237,6 +238,9 @@ public class VideoCourseCommentServiceImpl extends BaseServiceImpl implements IV
 						 teacherCommentVo2.setVideoLecture(courseVideoLecture.getLectureName());
 					}
 				}
+				//20180417 zj 修改 讲内容进行转码
+				teacherCommentVo2.setComment(StringUtil.unicodeToString(teacherCommentVo2.getComment()));
+				
 			}
 			Integer count=videoCourseCommentMapper.commentCount(teacherCommentVo);
 			PageFinder<TeacherCommentVo> pageFinder= new PageFinder<TeacherCommentVo>(teacherCommentVo.getPage(), teacherCommentVo.getPageSize(), count, teahcerCommentList);	

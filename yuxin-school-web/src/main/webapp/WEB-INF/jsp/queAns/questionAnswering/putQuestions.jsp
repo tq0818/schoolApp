@@ -89,6 +89,7 @@
 </div>
 
 <script>
+var countAdd = 0;
 //点击增加增加一个输入框
 		$('.labelAdd').click(function () {
 			var btns = $("button[name='panduan']");  
@@ -178,8 +179,14 @@
         }
 		}
     });
+	
+
 
      function addQuestion(){
+    	 if(countAdd != 0){
+    		 alert("请勿重复提交");
+    		 return ;
+    	 }
     	 var questionTitle=$("#questionTitle").val();
     	 if(null==questionTitle  || ''==questionTitle.replace(/(^\s*)|(\s*$)/g, "")){
     		 alert("标题不能为空");
@@ -198,6 +205,10 @@
     	 
     	 var questionDescTP=editor.document.getBody().getHtml(); //取得纯文本
     	 var questionDesc=editor.document.getBody().getText(); //取得纯文本
+    	 if(questionDesc.length > 2000){
+    		 alert("字数不能超过2000");
+    		 return; 
+    	 }
     	 var labelContentSys = $('.labelContent');
     	 var labelContentMy = $('.labelContentMy');
     	 var labelContentMyString="";    	 
@@ -249,6 +260,7 @@
     		  alert("必须选择一个标签");
     		  return;
     	  }
+    	  countAdd++;
     	  $.ajax({
  			url: rootPath + "/Question/addQuestione",
  			type:"post",
