@@ -2,6 +2,7 @@ var whichChoose = 0;
 
 
 $(function () {
+	$('#contentExit').hide();
 	//初始化小学学年
 	//queryRiseSchoolYear();
 	//选择所属省份 初始化身份
@@ -46,10 +47,57 @@ $(function () {
             $('.userList').hide();
         }
     });
+    $('#schoolListInput').keyup(function () {
+    	if(Number($(this).val().length)>0){
+    		var schoolName = $(this).val();
+    		var registStatus = $('#registStatus').val();
+    		$.ajax({
+    			url: rootPath+"/riseSchoolManage/searchSchools",
+    			type:"post",
+    			data:{"schoolName":schoolName,"registStatus":registStatus},
+    			dataType:"json",
+    			beforeSend: function (XMLHttpRequest) {
+    				$(".loading").show();
+    				$(".loading-bg").show();
+    			},
+    			success:function(data){
+    				$(".loading").hide();
+    				$(".loading-bg").hide();
+    				if (data.flag == 1){
+    					var html = '';
+    					var v ;
+    					for (var i in data.dictList){
+    						
+    						html = html + '<li data-value='+data.dictList[i].itemCode+' >'+data.dictList[i].itemName+'</li>';
+    					}
+    					$('.schoolList').html('').html(html);
+    				}
+    			}
+    		});
+    		$('.schoolList').show();
+    	}else{
+    		$('.schoolList').hide();
+    		$('#schoolListInput').attr('data-value','');
+    		provinceMsgCount();
+    	}
+    	
+    });
     //点击选择
-    $('.userList').on('mouseenter','li',function () {
+    $('.schoolList').on('mouseenter','li',function () {
         $(this).addClass('active');
         $(this).siblings('li').removeClass('active');
+    });
+    //点击li赋值给input
+    $('.schoolList').on('click','li',function () {
+    	var code = $(this).attr('data-value');
+    	$('#schoolListInput').val($(this).html());
+    	$('#schoolListInput').attr('data-value',code);
+    	$('.schoolList').html('');
+    	provinceMsgCount();
+    });
+    $('.userList').on('mouseenter','li',function () {
+    	$(this).addClass('active');
+    	$(this).siblings('li').removeClass('active');
     });
     //点击li赋值给input
     $('.userList').on('click','li',function () {
@@ -118,6 +166,7 @@ $(function () {
     	$('.chooseSubscriptionHide4').show();
     	$('.chooseSubscriptionHide5').show();
     	$('.chooseSubscriptionHide6').show();
+    	$('#contentExit').hide();
         
     });
     $('.font-style').children('a').eq(1).click(function () {
@@ -129,6 +178,8 @@ $(function () {
     	$('.chooseSubscriptionHide4').show();
     	$('.chooseSubscriptionHide5').show();
     	$('.chooseSubscriptionHide6').show();
+    	$('#ckecktor').hide();
+    	$('#contentExit').show();
     });
     $('.font-style').children('a').eq(2).click(function () {
     	$('.templete').hide();
@@ -139,10 +190,15 @@ $(function () {
     	$('.chooseSubscriptionHide4').hide();
     	$('.chooseSubscriptionHide5').hide();
     	$('.chooseSubscriptionHide6').hide();
+    	$('#contentExit').hide();
     });
     //点击通知方式，回复默认值
     $(".btn-method").on('click',function(){
     	whichChoose = 0;
+    	var registStatus = $("#registStatus").val();
+     	if(registStatus == ""){
+     		$('#schoolListInput').attr('disabled',true);
+     	}
     	$('#messageId').attr('disabled',true);
         $('#messageId').val('');
     });
@@ -189,7 +245,7 @@ $(function () {
  	 			var province = $("#eduArea").val();
  	 			var city = $("#eduSchool").val();
  	 			var district = $("#registStatus").val();
- 	 			var schoolCode = $("#schoolName").val();
+ 	 			var schoolCode = $("#schoolListInput").attr('data-value');
  	 			var step = $("#step").val();
  	 			var stepYear = $("#stepYear").val();
  	 			
@@ -316,8 +372,9 @@ $(function () {
  	 			
  	 			if(method == "STUDENT_MESSAGE_WEB"){
  	 				CKupdate();
- 	 				msgcount = $("#newsContents").val();
- 	 				msgcounttext=editor.document.getBody().getText();
+ 	 				msgcount = $("#msgContents").val();
+ 	 				//msgcounttext=editor.document.getBody().getText();
+ 	 				msgcounttext=$("#msgContents").val();
  	 				msgcount = msgcount.replace(/<p>/g, "<span>");
  	 				msgcount = msgcount.replace(/<p /g, "<span ");
  	 				msgcount = msgcount.replace(/<\/p>/g, "</span><br>");
@@ -346,11 +403,13 @@ $(function () {
  				
  	 			var isHurry = $('.hurryNotice:checked').val();
  	 			var lessonId = $('#classLesson').val();
- 	 			if($.trim(lessonId) ==""){
- 	 				 $('<div class="c-fa">'+ "您还没选择课次" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
- 				        	$(this).remove();
- 				      });
- 	 				 return;
+ 	 			if(checkChoose == 0){
+	 	 			if($.trim(lessonId) ==""){
+	 	 				 $('<div class="c-fa">'+ "您还没选择课次" +'</div>').appendTo('body').fadeIn(100).delay(2000).fadeOut(200,function(){
+	 				        	$(this).remove();
+	 				      });
+	 	 				 return;
+	 	 			}
  	 			}
  	 			$.ajax({
  	 				url:rootPath + "/classModule/sendMsg",
@@ -431,21 +490,37 @@ $(function () {
             $('#messageId').attr('disabled',true);
             $('#messageId').val('');
             whichChoose = checkNmuber;
+            var registStatus = $("#registStatus").val();
+        	if(registStatus == ""){
+        		$('#schoolListInput').attr('disabled',true);
+        	}
             selPersonNew();
         }
         if(checkNmuber == 1){
         	$('#messageId').attr('disabled',false);
         	whichChoose = checkNmuber;
+        	 var registStatus = $("#registStatus").val();
+         	if(registStatus == ""){
+         		$('#schoolListInput').attr('disabled',true);
+         	}
         	provinceMsgCount();
         }
         if(checkNmuber == 2){
         	$('#messageId').attr('disabled',false);
         	whichChoose = checkNmuber;
+        	 var registStatus = $("#registStatus").val();
+         	if(registStatus == ""){
+         		$('#schoolListInput').attr('disabled',true);
+         	}
         	sendMsgCount();
         }
         if(checkNmuber == 3){
         	$('#messageId').attr('disabled',false);
         	whichChoose = checkNmuber;
+        	 var registStatus = $("#registStatus").val();
+         	if(registStatus == ""){
+         		$('#schoolListInput').attr('disabled',true);
+         	}
         	registered();
         }
     });
@@ -526,8 +601,8 @@ function queryRiseSchoolDict(areaFlag) {
                     $("#eduSchool").html("").html(html);
                     html2 = "<option value=\"\">请选择区</option>";
                     $("#registStatus").html("").html(html2);
-                    var html3 = "<option value=\"\">请选择学校</option>";
-                    $("#schoolName").html("").html(html3);
+                   // var html3 = "<option value=\"\">请选择学校</option>";
+                   // $("#schoolName").html("").html(html3);
                 }else if (areaFlag == 2){
                 	var eduSchool = $("#eduSchool").val();
                 	if(eduSchool == ""){
@@ -536,8 +611,8 @@ function queryRiseSchoolDict(areaFlag) {
                 		html = "<option value=\"\">请选择区</option>" + html;
                 	}
                     $("#registStatus").html("").html(html);
-                    var html2 = "<option value=\"\">请选择学校</option>";
-                    $("#schoolName").html("").html(html2);
+                   // var html2 = "<option value=\"\">请选择学校</option>";
+                   // $("#schoolName").html("").html(html2);
                 }
             }
             provinceMsgCount();
@@ -548,33 +623,11 @@ function queryRiseSchoolDict(areaFlag) {
 function querySchoolName() {
 	var registStatus = $("#registStatus").val();
 	if(registStatus == ""){
-		 var html = "<option value=\"\">请选择学校</option>";
-        $("#schoolName").html("").html(html);
+		$('#schoolListInput').attr('disabled',true);
         provinceMsgCount();
 		return;
 	}
-	$.ajax({
-        url:rootPath +"/riseSchoolManage/querySchoolName",
-        data:{"registStatus":registStatus},
-        dataType:"json",
-        beforeSend: function (XMLHttpRequest) {
-            $(".loading").show();
-            $(".loading-bg").show();
-        },
-        success:function (data) {
-            $(".loading").hide();
-            $(".loading-bg").hide();
-            //拼接下拉值
-            if (data.flag == 1){
-                var html = '';
-                for (var i in data.dictList){
-                    html = html + "<option value=\""+data.dictList[i].itemCode+"\">"+data.dictList[i].itemName+"</option>"
-                }
-                html = "<option value=\"\">请选择学校</option>" + html;
-                $("#schoolName").html("").html(html);
-            }
-        }
-    });
+	$('#schoolListInput').attr('disabled',false);
 	provinceMsgCount();
 }
 //选中指定用户时发送短信数量
@@ -595,7 +648,7 @@ function provinceMsgCount() {
 	var province = $("#eduArea").val();
 	var city = $("#eduSchool").val();
 	var district = $("#registStatus").val();
-	var schoolCode = $("#schoolName").val();
+	var schoolCode = $("#schoolListInput").attr('data-value');
 	var step = $("#step").val();
 	var stepYear = $("#stepYear").val();
 	$.ajax({

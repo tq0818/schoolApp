@@ -138,7 +138,7 @@ padding-top: 40px;
 .linkTitle span:last-child{left: 100px;}
 .linkTitle span.active{border-bottom: 1px solid #fff;}
 .linkContent{height: 250px;border-bottom: 1px solid #e1e1e1;}
-.linkContent input{margin-top: 37px;margin-left: 10px;border: 1px solid #707070;width: 180px;height: 20px;
+.linkContent input{margin-top: 37px;margin-left: 10px;border: 1px solid #707070;width: 220px;height: 20px;
     line-height: 20px;border-radius: 0;}
 .linkNameList{height: 200px;position: absolute;overflow-y : auto;width: 196px;border: 1px solid #707070;margin-left: 10px;border-top: none;
     display: none;}
@@ -154,6 +154,7 @@ padding-top: 40px;
 div[aria-labelledby*="cke_dialog_title_59"],#cke_newsContents{display: none;}
 #cke_32{display: none;}
 #cke_35{display: none;}
+.linkLinkSpan{margin-top: 43px;display: inline-block;float: left;margin-left:5px;}
 </style>
 </head>
 <body style="position:relative;">
@@ -289,10 +290,13 @@ div[aria-labelledby*="cke_dialog_title_59"],#cke_newsContents{display: none;}
             <span>课程</span>
         </div>
         <div class="linkContent">
-            <input type="text" placeholder="示例:http(https)://www.cdds365.com" class="linkLink">
-            <span class="wrongTips wrongTipsF"></span>
+        	<span class="linkLinkSpan">活动名称：</span>
             <input type="text" placeholder="请输入活动名称" class="linkLink" id="activeName" maxlength="20">
             <span class="wrongTips wrongTipsS"></span>
+            <br/>
+            <span class="linkLinkSpan">活动链接：</span>	
+            <input type="text" placeholder="示例:http(https)://www.cdds365.com" class="linkLink" id="linkLinkHerf">
+            <span class="wrongTips wrongTipsF"></span>
             <input type="text" placeholder="请输入课程名称" class="linkName" data-value="">
             <span class="wrongTips wrongTipsC"></span>
             <ul class="linkNameList">
@@ -539,24 +543,34 @@ $("input[type='radio']").click(function () {
 
     $('.sureLink').click(function () {
         if($('.linkTitle').children('span').eq(0).hasClass('active')){
-            linkValue = $('.linkLink').val();
+            linkValue = $('#linkLinkHerf').val();
             activeName = $('#activeName').val();
+            if(activeName == ''){
+              $('.wrongTipsF').html("请输入活动名称!");
+              return ;
+          	}
+            $('.wrongTipsF').html("");
+            if(linkValue == ''){
+              $('.wrongTipsS').html("请输入活动链接!");
+              return ;
+          	}
+            $('.wrongTipsS').html("");
           //检验网址
             var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
-            var regTwo=/^[\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+            var regTwo=/[@#\$%\^&\*]+/g;
             
           	/* if(!reg.test(linkValue)){
 //                $.msg("请输入有效的网址!",1000);
                 $('.wrongTipsF').html("请输入有效的网址!");
                 return ;
             } */
-          	$('.wrongTipsF').html("");
-          	if(!regTwo.test(activeName)){
+          	
+          	/* if(regTwo.test(activeName)){
 //                $.msg("只能输入纯文本",1000);
-                $('.wrongTipsS').html("只能输入纯文本!");
+                $('.wrongTipsF').html("只能输入纯文本!");
                 return ;
             }
-          	$('.wrongTipsS').html("");
+          	$('.wrongTipsF').html(""); */
           	var body = editor.document.getBody().getHtml();
           	editor.document.getBody().setHtml(body+"<p><a href='"+linkValue+"' onclick=\"hrefClassName('"+activeName+"')\">"+activeName+"</a></p>");
            // editor.document.getBody().innerHTML = "<p><a href='"+linkValue+"'></a></p>";hrefClassName
