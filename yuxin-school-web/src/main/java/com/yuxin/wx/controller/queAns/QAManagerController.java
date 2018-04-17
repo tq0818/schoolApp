@@ -31,6 +31,7 @@ import com.yuxin.wx.model.queAns.QuestionAnswer;
 import com.yuxin.wx.model.system.SysConfigTeacher;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.model.user.UsersFront;
+import com.yuxin.wx.util.StringUtil;
 import com.yuxin.wx.utils.PropertiesUtil;
 import com.yuxin.wx.utils.WebUtils;
 
@@ -101,7 +102,7 @@ public class QAManagerController {
                         }
                     }
                 }
-                String content = a.getAnswerDesc();
+                String content = StringUtil.unicodeToString(a.getAnswerDesc());
                 String newcon = "";
                 String u = "";
                 while (content.indexOf("style") > 0) {

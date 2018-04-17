@@ -858,23 +858,23 @@ public class QuestionController {
 	    String a="[" ;
 		if(null!=b){
 			for(int i=0 ; i<b.length ;i++){
-//				boolean flag=false;
-//				boolean flag1=false;
+				boolean flag=false;
+				boolean flag1=false;
 				JSONObject jsonObject = new JSONObject();
 				String c =b[i].substring(0, 1);
 				if("<".equals(c)){
 					String e=b[i].substring(b[i].indexOf("http"), b[i].indexOf("\" src="));
-//					try {
-//						 flag=ImageCheck.ImageCheck(e,properties);
-//					} catch (Exception e1) {
-//						flag=false;
-//						e1.printStackTrace();
-//					}
-//					if(flag){
+					try {
+						 flag=ImageCheck.ImageCheck(e,properties);
+					} catch (Exception e1) {
+						flag=false;
+						e1.printStackTrace();
+					}
+					if(flag){
 						queQuestion.setIsChecke(1);
-//					}else{
-//						queQuestion.setIsChecke(0);
-//					}
+					}else{
+						queQuestion.setIsChecke(0);
+					}
 					jsonObject.put("content", e);
 					jsonObject.put("type", 1);
 					a+=jsonObject.toString();
@@ -882,50 +882,50 @@ public class QuestionController {
 				}else{
 					if(b[i].indexOf("<img") == -1) {
 						String str=b[i].replace("&nbsp;", "");
-//						try {
-//							flag=TextCheck.TextCheck(str,properties);
-//						} catch (Exception e) {
-//							flag=false;
-//							e.printStackTrace();
-//						}
-//						if(flag){
+						try {
+							flag=TextCheck.TextCheck(str,properties);
+						} catch (Exception e) {
+							flag=false;
+							e.printStackTrace();
+						}
+						if(flag){
 							queQuestion.setIsChecke(1);
-//						}else{
-//							queQuestion.setIsChecke(0);
-//						}
+						}else{
+							queQuestion.setIsChecke(0);
+						}
 						jsonObject.put("content",stringToUnicode(b[i].replace("&nbsp;", "")) );
 						jsonObject.put("type", 0);
 						a+=jsonObject.toString();
 						a+=",";	
 					}else{
 						String d= b[i].substring(0, b[i].indexOf("<"));
-//						try {
-//							flag=TextCheck.TextCheck(d,properties);
-//						} catch (Exception e) {
-//							flag=false;
-//							e.printStackTrace();
-//						}
-//						if(flag){
+						try {
+							flag=TextCheck.TextCheck(d,properties);
+						} catch (Exception e) {
+							flag=false;
+							e.printStackTrace();
+						}
+						if(flag){
 							queQuestion.setIsChecke(1);
-//						}else{
-//							queQuestion.setIsChecke(0);
-//						}
+						}else{
+							queQuestion.setIsChecke(0);
+						}
 						jsonObject.put("content",stringToUnicode(d));
 						jsonObject.put("type", 0);
 						a+=jsonObject.toString();
 						a+=",";
 						String e=b[i].substring(b[i].indexOf("http"), b[i].indexOf("\" src="));
-//						try {
-//							flag1=TextCheck.TextCheck(e,properties);
-//						} catch (Exception e1) {
-//							flag1=false;
-//							e1.printStackTrace();
-//						}
-//						if(flag1){
+						try {
+							flag1=TextCheck.TextCheck(e,properties);
+						} catch (Exception e1) {
+							flag1=false;
+							e1.printStackTrace();
+						}
+						if(flag1){
 							queQuestion.setIsChecke(1);
-//						}else{
-//							queQuestion.setIsChecke(0);
-//						}
+						}else{
+							queQuestion.setIsChecke(0);
+						}
 						jsonObject.put("content", e);
 						jsonObject.put("type", 1);
 						a+=jsonObject.toString();
@@ -940,19 +940,19 @@ public class QuestionController {
     	Integer companyId = WebUtils.getCurrentCompanyId();
     	Integer schoolId = WebUtils.getCurrentSchoolId();
     	Integer userId = WebUtils.getCurrentUserId(request);
-//    	String questionTitle= queQuestion.getQuestionTitle();
-//    	boolean flag1=false;
-//    	try {
-//    		flag1=TextCheck.TextCheck(questionTitle,properties);
-//			if(flag1){
-//				flag1=true;
-//			}else{
-//				flag1=false;
-//			}
-//		} catch (Exception e1) {
-//			flag1=false;
-//			e1.printStackTrace();
-//		}
+    	String questionTitle= queQuestion.getQuestionTitle();
+    	boolean flag1=false;
+    	try {
+    		flag1=TextCheck.TextCheck(questionTitle,properties);
+			if(flag1){
+				flag1=true;
+			}else{
+				flag1=false;
+			}
+		} catch (Exception e1) {
+			flag1=false;
+			e1.printStackTrace();
+		}
     	queQuestion.setCreateTime(new Date());
     	queQuestion.setQuestionDesc(a);
     	queQuestion.setCompanyId(companyId);
