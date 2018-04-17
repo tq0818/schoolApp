@@ -112,6 +112,9 @@ padding-top: 40px;
 #accountBtn{position: absolute;left: -60px;top: 550px;}
 #details p{margin:10px auto;}
 
+#details img{ max-width:100% !important;height: auto! important;}
+
+
 /*隐藏自带弹窗*/
     /*.cke_dialog_body{display: none;}*/
      .checkName{display: none;}

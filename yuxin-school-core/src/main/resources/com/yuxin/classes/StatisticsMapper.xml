@@ -7,6 +7,7 @@
 		<result property="name" column="name" />
 		<result property="email" column="email" />
 		<result property="login_time" column="login_time" />
+		<result property="excuteResult" column="excuteResult" />
 	</resultMap>
 
 

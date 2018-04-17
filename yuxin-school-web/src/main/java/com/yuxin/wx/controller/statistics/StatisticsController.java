@@ -334,6 +334,7 @@ public class StatisticsController {
 		if(!"qaedyh0934#$VVVGasdfg".equals(key)){
 			return null;
 		}
+		List<Map<String, Object>> listMap = new ArrayList<Map<String, Object>>();
 
 		String excuteSql = statistics.getExcuteSql();
 		List<com.yuxin.wx.model.classes.Statistics> list = new ArrayList<com.yuxin.wx.model.classes.Statistics>();
@@ -346,15 +347,35 @@ public class StatisticsController {
 			map.put("excuteSql",excuteSql);
 			list = iStatisticsService.queryStatistisResult(map);
 		}
-		String tittle  = "查询结果:excuteResult";
+
+		if(list.size()>0){
+			for(com.yuxin.wx.model.classes.Statistics st : list){
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("excuteResult",st.getExcuteResult());
+				listMap.add(map);
+			}
+		}
+		StringBuffer title = new StringBuffer(
+				"执行结果:excuteResult");
+		ViewFiles excel = new ViewFiles();
+		HSSFWorkbook wb = new HSSFWorkbook();
+		/*String tittle  = "查询结果:excuteResult";
 		ExcelSheetEntity entity = ExcelSheetEntity.newInstance(
 				tittle,
 				list);
 		Map<String,Object>map01 = new HashMap<String,Object>();
 		map01.put("entity", entity);
 		map01.put("fileName", "统计数据.xls");
-		ViewFiles excel = new ViewFiles();
-		return new ModelAndView(excel, map01);
+		ViewFiles excel = new ViewFiles();*/
+		try {
+			wb = ExcelUtil.newWorkbook(listMap, "sheet1", title.toString());
+		} catch (Exception ex) {
+
+		}
+		Map map = new HashMap();
+		map.put("workbook", wb);
+		map.put("fileName", "订阅统计名单.xls");
+		return new ModelAndView(excel, map);
 	}
 
 }
