@@ -154,7 +154,7 @@
                             <c:if test="${msg.messageMethod == 'STUDENT_MESSAGE_MOBILE' }">
 								<span class="c-title">消耗短信：</span>
 								<span class="c-content">
-									${msg.messageCost }条
+									${msg.sendNum - msg.failNum }条
 								</span>
 							</c:if>
                             <c:if test="${msg.messageMethod == 'STUDENT_MESSAGE_EMAIL' }">

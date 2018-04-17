@@ -3225,9 +3225,9 @@ public class ClassModuleController {
 		String status;
 		String message;
 		
-		List<ClassModule> modules  =  classModuleServiceImpl.findByClassTypeId(companyStudentMessage.getClassTypeId());
+		//List<ClassModule> modules  =  classModuleServiceImpl.findByClassTypeId(companyStudentMessage.getClassTypeId());
 		
-		List<ClassModuleNo> moduleNos = classModuleNoServiceImpl.queryClassModuleNoById(modules.get(0).getId());
+		//List<ClassModuleNo> moduleNos = classModuleNoServiceImpl.queryClassModuleNoById(modules.get(0).getId());
 		String msgTemplateId = request.getParameter("msgTemplateId");
 		companyStudentMessage.setContent(msgTemplateId);
 		companyStudentMessageServiceImpl.insert(companyStudentMessage);
