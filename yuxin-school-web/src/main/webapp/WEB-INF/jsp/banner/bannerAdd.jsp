@@ -97,18 +97,17 @@ background-size: 80%;border: 1px solid #797979;
 padding-top: 40px;
 }
 #details{
-		overflow-x: hidden;
-		background: #fff;
-		width : 939px;
-		height : 1660px;
-	/* 	margin: -47px  0 0 -350px; */
-		overflow-y : auto;
-		padding: 0 3px;
-		transform: scale(0.3);
-		position: absolute;
-		left: -316px;
-		top: -506px;
-	}
+    overflow-x: hidden;
+    background: #fff;
+    width: 350px;
+    height: 640px;
+    overflow-y: auto;
+    padding: 0 3px;
+    position: absolute;
+    left: -20px;
+    top: 0px;
+    transform: scale(0.8);
+}
 #accountBtn{position: absolute;left: -60px;top: 550px;}
 #details p{margin:10px auto;}
 
@@ -745,7 +744,7 @@ $("input[type='radio']").click(function () {
 	    	var imgList = $('#details').find('img');
 	    	var imgScaleWidth;
 	    	var imgScaleHeight;
-	    	if(imgList.length>0){
+/*	    	if(imgList.length>0){
 	    		for(var i=0;i<imgList.length;i++){
 	    			var imgWidth = imgList.eq(i).css('width').split('px')[0];
 	    			var imgHeight = imgList.eq(i).css('height').split('px')[0];
@@ -762,7 +761,7 @@ $("input[type='radio']").click(function () {
 		    			imgList.eq(i).css('height',imgHeight*250/665);
 		    		} 
 		    	}
-	    	}
+	    	}*/
 	    } 
 		//上传截取后的图片
 		function classTypePic() {
