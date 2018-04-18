@@ -49,6 +49,7 @@ $(function () {
     });
     $('#schoolListInput').keyup(function () {
     	if(Number($(this).val().length)>0){
+    		$('#schoolListInput').attr('data-value','');
     		var schoolName = $(this).val();
     		var registStatus = $('#registStatus').val();
     		$.ajax({
@@ -75,6 +76,7 @@ $(function () {
     			}
     		});
     		$('.schoolList').show();
+    		provinceMsgCount();
     	}else{
     		$('.schoolList').hide();
     		$('#schoolListInput').attr('data-value','');
@@ -92,7 +94,7 @@ $(function () {
     	var code = $(this).attr('data-value');
     	$('#schoolListInput').val($(this).html());
     	$('#schoolListInput').attr('data-value',code);
-    	$('.schoolList').html('');
+    	$('.schoolList').html('').hide();
     	provinceMsgCount();
     });
     $('.userList').on('mouseenter','li',function () {
@@ -248,7 +250,6 @@ $(function () {
  	 			var schoolCode = $("#schoolListInput").attr('data-value');
  	 			var step = $("#step").val();
  	 			var stepYear = $("#stepYear").val();
- 	 			
  	 			var title = $.trim($("#title").val());
  	 			var method = $.trim($(".btn-method.btn-primary").attr("data-type"));
  	 			//模板id
@@ -373,6 +374,7 @@ $(function () {
  	 			if(method == "STUDENT_MESSAGE_WEB"){
  	 				CKupdate();
  	 				msgcount = $("#msgContents").val();
+ 	 				console.log(msgcount);
  	 				//msgcounttext=editor.document.getBody().getText();
  	 				msgcounttext=$("#msgContents").val();
  	 				msgcount = msgcount.replace(/<p>/g, "<span>");
