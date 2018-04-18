@@ -116,7 +116,8 @@
 		 .schoolList li.active{background: #0e90d2;color: #fff;}
 		 .student .notice-main{position: relative;}
 		 .userType{display: none;}
-		 #msgContents{resize: none;width: 200px;height: 100px;max-width: 200px;max-height: 100px;top: 309px}
+		 #msgContents{resize: none;width: 570px;height: 200px;top: 309px}
+		 #contentExit{margin-left: 100px;margin-top: -30px;}
 </style>
 </head>
 <body>
