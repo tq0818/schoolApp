@@ -339,6 +339,7 @@ $("input[type='radio']").click(function () {
             $(' .wrongTipsF').hide();
             $(' .wrongTipsS').hide();
             $(' .wrongTipsC').show();
+            $(' .linkLinkSpan').hide();
 
 
 
@@ -349,6 +350,7 @@ $("input[type='radio']").click(function () {
             $(' .wrongTipsF').show();
             $(' .wrongTipsS').show();
             $(' .wrongTipsC').hide();
+            $(' .linkLinkSpan').show();
 
         }
     });

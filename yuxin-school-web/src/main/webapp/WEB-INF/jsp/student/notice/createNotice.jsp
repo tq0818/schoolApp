@@ -111,7 +111,7 @@
 		 .userList li{height: 30px;line-height: 30px;background: #fff;padding-left: 10px;}
 		 .userList li.active{background: #0e90d2;color: #fff;}
 		 .schoolList{width: 366px;position: absolute;left: 100px;top: 309px;display: none;
-		 height: 220px;overflow-y:auto;}
+		 height: 230px;overflow-y:auto;}
 		 .schoolList li{height: 30px;line-height: 30px;background: #fff;padding-left: 10px;}
 		 .schoolList li.active{background: #0e90d2;color: #fff;}
 		 .student .notice-main{position: relative;}

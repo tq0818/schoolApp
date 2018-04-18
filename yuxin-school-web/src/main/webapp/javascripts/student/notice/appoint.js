@@ -94,7 +94,7 @@ $(function () {
     	var code = $(this).attr('data-value');
     	$('#schoolListInput').val($(this).html());
     	$('#schoolListInput').attr('data-value',code);
-    	$('.schoolList').html('');
+    	$('.schoolList').html('').hide();
     	provinceMsgCount();
     });
     $('.userList').on('mouseenter','li',function () {
@@ -374,6 +374,7 @@ $(function () {
  	 			if(method == "STUDENT_MESSAGE_WEB"){
  	 				CKupdate();
  	 				msgcount = $("#msgContents").val();
+ 	 				console.log(msgcount);
  	 				//msgcounttext=editor.document.getBody().getText();
  	 				msgcounttext=$("#msgContents").val();
  	 				msgcount = msgcount.replace(/<p>/g, "<span>");
