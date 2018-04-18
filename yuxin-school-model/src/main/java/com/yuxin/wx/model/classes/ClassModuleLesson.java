@@ -92,7 +92,7 @@ public class ClassModuleLesson extends BaseEntity {
     private Integer videoClassTypeId;
     private Integer lectureId;
     private Long preTime;
-
+    private Integer studyStatus;//学习状态 1未学习,2是未学习完,3是学习完成
 
 	private CourseVideoLectureVo beforeVideo;
 
@@ -689,6 +689,14 @@ public class ClassModuleLesson extends BaseEntity {
 
 	public void setPreTime(Long preTime) {
 		this.preTime = preTime;
+	}
+
+	public Integer getStudyStatus() {
+		return studyStatus;
+	}
+
+	public void setStudyStatus(Integer studyStatus) {
+		this.studyStatus = studyStatus;
 	}
 	
 }

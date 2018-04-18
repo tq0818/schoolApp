@@ -484,6 +484,10 @@ $(function(){
 				}
 			},
 			addAns : function(queId,ansDesc,userT){
+				if(ansDesc.length > 2000){
+					alert("回答字数不能超过2000字");
+					return ;
+				}
 				$.ajax({
 					url : rootPath + "/QuestionAnswer/add",
 					type : "post",
