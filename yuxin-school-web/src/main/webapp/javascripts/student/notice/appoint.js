@@ -49,6 +49,7 @@ $(function () {
     });
     $('#schoolListInput').keyup(function () {
     	if(Number($(this).val().length)>0){
+    		$('#schoolListInput').attr('data-value','');
     		var schoolName = $(this).val();
     		var registStatus = $('#registStatus').val();
     		$.ajax({
@@ -75,6 +76,7 @@ $(function () {
     			}
     		});
     		$('.schoolList').show();
+    		provinceMsgCount();
     	}else{
     		$('.schoolList').hide();
     		$('#schoolListInput').attr('data-value','');
@@ -248,7 +250,6 @@ $(function () {
  	 			var schoolCode = $("#schoolListInput").attr('data-value');
  	 			var step = $("#step").val();
  	 			var stepYear = $("#stepYear").val();
- 	 			
  	 			var title = $.trim($("#title").val());
  	 			var method = $.trim($(".btn-method.btn-primary").attr("data-type"));
  	 			//模板id
