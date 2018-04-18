@@ -374,7 +374,6 @@ $(function () {
  	 			if(method == "STUDENT_MESSAGE_WEB"){
  	 				CKupdate();
  	 				msgcount = $("#msgContents").val();
- 	 				console.log(msgcount);
  	 				//msgcounttext=editor.document.getBody().getText();
  	 				msgcounttext=$("#msgContents").val();
  	 				msgcount = msgcount.replace(/<p>/g, "<span>");
