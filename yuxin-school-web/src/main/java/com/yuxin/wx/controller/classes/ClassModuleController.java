@@ -2414,7 +2414,7 @@ public class ClassModuleController {
 				if(checkChoose == 0){
 					companyStudentMessage.setTitle("课程开课通知");
 				}else{
-					companyStudentMessage.setTitle("系统通知");
+					companyStudentMessage.setTitle("指定通知");
 				}
 				int isFlag =0;
 				if(isHurry!=null)

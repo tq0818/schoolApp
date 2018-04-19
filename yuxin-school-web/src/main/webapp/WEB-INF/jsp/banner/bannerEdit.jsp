@@ -108,11 +108,11 @@ padding-top: 40px;
 	}
 #accountBtn{position: absolute;left: -60px;top: 550px;}
 #details p{margin:10px auto;}
-
+#details em{font-style:oblique;}
 
 
 #details img{ max-width:100% !important;height: auto! important;}
-
+#cke_Link_115 {display: none;}
 /*隐藏自带弹窗*/
     /*.cke_dialog_body{display: none;}*/
      .checkName{display: none;}
@@ -350,10 +350,6 @@ $("input[type='radio']").click(function () {
         
         $('.targetSiteContent').css('display',"none");
         
-
-        
-        
-        
 	}
 });
     $('.linkTitle span').click(function () {
@@ -379,7 +375,11 @@ $("input[type='radio']").click(function () {
 
         }
     });
-
+  	//隐藏超链接
+	$(document).click(function(){
+		$("[aria-labelledby='cke_dialog_title_59']").hide(); 
+		$("[title='链接']").hide();
+	});
     //课程名称模糊搜索
     $('.linkName').keyup(function () {
     	$('.linkName').attr('data-value','');
@@ -782,7 +782,8 @@ $("input[type='radio']").click(function () {
 							y : $("#y").val(),
 							w : $("#w").val(),
 							h : $("#h").val(),
-							itemOneid : $("#itemOneid").val()
+							itemOneid : $("#itemOneid").val(),
+							bannerType:$("#bannerType").val()
 						},
 						type : "post",
 						dataType : "json",

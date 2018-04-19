@@ -616,6 +616,9 @@ function queryRiseSchoolDict(areaFlag) {
                    // $("#schoolName").html("").html(html2);
                 }
             }
+            $('#schoolListInput').attr('disabled',true);
+        	$('#schoolListInput').attr('data-value','');
+        	$('#schoolListInput').val('');
             provinceMsgCount();
         }
     });
@@ -629,6 +632,8 @@ function querySchoolName() {
 		return;
 	}
 	$('#schoolListInput').attr('disabled',false);
+	$('#schoolListInput').attr('data-value','');
+	$('#schoolListInput').val('');
 	provinceMsgCount();
 }
 //选中指定用户时发送短信数量

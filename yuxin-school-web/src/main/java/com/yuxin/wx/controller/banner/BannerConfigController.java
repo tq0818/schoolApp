@@ -488,14 +488,14 @@ public class BannerConfigController extends BaseWebController{
 					slW=123.84 * realW/realH;
 				}
 			}else{
-				if(realW/realH>1175/282){
+				if(realW/realH>833.34/200){
 					//过宽
-					slH=1175 * realH/realW;
-					slW=1175;
+					slH=833.34 * realH/realW;
+					slW=833.34;
 				}else{
 					//过高
-					slH=282;
-					slW=282 * realW/realH;
+					slH=200;
+					slW=200 * realW/realH;
 				}
 			}
 
