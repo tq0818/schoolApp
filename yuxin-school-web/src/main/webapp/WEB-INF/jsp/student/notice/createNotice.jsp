@@ -118,6 +118,7 @@
 		 .userType{display: none;}
 		 #msgContents{resize: none;width: 570px;height: 200px;top: 309px}
 		 #contentExit{margin-left: 100px;margin-top: -30px;}
+		 .sendBtn{margin-left: 200px;}
 </style>
 </head>
 <body>
