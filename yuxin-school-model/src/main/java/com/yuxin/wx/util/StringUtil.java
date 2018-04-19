@@ -9,6 +9,9 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
+
+
 public class StringUtil {
 	
 	/********************************************************
@@ -1813,4 +1816,5 @@ public static String chiDeUTF8(String str) {
         }
         return str;
     }
+    
 }

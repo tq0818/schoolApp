@@ -285,6 +285,7 @@
 		<if test="topFlag != null and topFlag != ''">and t1.top_flag = #{topFlag}</if>
 		<if test="essenceFlag != null and essenceFlag != ''">and t1.essence_flag = #{essenceFlag}</if>
 		order by t1.top_flag desc,
+		t1.essence_flag desc,
 		t1.update_time desc
 		limit #{firstIndex},#{pageSize}
 	</select>

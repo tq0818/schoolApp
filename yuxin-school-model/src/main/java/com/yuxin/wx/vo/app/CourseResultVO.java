@@ -38,6 +38,7 @@ public class CourseResultVO implements Serializable{
 	private String teacherLevel;//教师级别
     private Integer isNew;//是否是最新课程 0 否 1 是
     private Date shelvesTime;//上架时间
+    private Date maxCmlCreateTime;//课次最大的创建时间
 	public Integer getCommodityId() {
 		return commodityId;
 	}
@@ -187,6 +188,12 @@ public class CourseResultVO implements Serializable{
 	}
 	public void setShelvesTime(Date shelvesTime) {
 		this.shelvesTime = shelvesTime;
+	}
+	public Date getMaxCmlCreateTime() {
+		return maxCmlCreateTime;
+	}
+	public void setMaxCmlCreateTime(Date maxCmlCreateTime) {
+		this.maxCmlCreateTime = maxCmlCreateTime;
 	}
 	
 }

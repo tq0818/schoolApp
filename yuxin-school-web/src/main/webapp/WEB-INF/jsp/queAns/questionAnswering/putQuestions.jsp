@@ -28,6 +28,9 @@
 		#cke_38{display : none !important;}
 		#cke_39{display : none !important;}
 		#cke_37{display : none !important;}
+	/* 	#cke_37{display : none !important;} */
+		#cke_36{display : none !important;}
+		#cke_14{display : none !important;}
 		.findQuestion span{margin-right:2px !important;}
 	</style>	
 </head>

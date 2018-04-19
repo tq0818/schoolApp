@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.poi.ss.formula.functions.Count;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -63,8 +64,10 @@ import com.yuxin.wx.model.system.SysConfigService;
 import com.yuxin.wx.model.system.SysConfigTeacher;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.model.user.UsersFront;
+import com.yuxin.wx.util.AppUtils;
 import com.yuxin.wx.utils.DateUtil;
 import com.yuxin.wx.utils.PropertiesUtil;
+import com.yuxin.wx.utils.QuestionUtils;
 import com.yuxin.wx.utils.WebUtils;
 import com.yuxin.wx.vo.queAns.QuestionVo;
 import com.yuxin.wx.vo.system.SysServiceDredgeVo;
@@ -341,7 +344,8 @@ public class QuestionController {
         	 questionList=pageFinder.getData();
         	for(QuestionVo vo :questionList){
         		String answerDesc=vo.getQuestionDesc();
-            	JSONArray array = JSONArray.fromObject(answerDesc);
+        		String s = QuestionUtils.dealQuestionDesc(answerDesc);
+            	JSONArray array = JSONArray.fromObject(s);
         		String img="";
         		for(int i=0 ;i<array.size();i++){
         			JSONObject job = array.getJSONObject(i);
@@ -848,113 +852,181 @@ public class QuestionController {
      */
     @ResponseBody
     @RequestMapping(value = "/addQuestione")
-   	public String addQuestione(HttpServletRequest request,QueQuestion queQuestion){
+   	public String addQuestione(HttpServletRequest request,QueQuestion queQuestion) throws Exception{
     	String [] arrTagId=request.getParameterValues("systemTagIds[]");
     	String [] arrTagName=request.getParameterValues("userDefuledNames[]");
-    	String questionDescTP=request.getParameter("questionDescTP");
-    	
-		questionDescTP=questionDescTP.substring(3, questionDescTP.lastIndexOf("<"));
-		String [] b=questionDescTP.split(";;");
-	    String a="[" ;
-		if(null!=b){
-			for(int i=0 ; i<b.length ;i++){
-				boolean flag=false;
-				boolean flag1=false;
-				JSONObject jsonObject = new JSONObject();
-				String c =b[i].substring(0, 1);
-				if("<".equals(c)){
-					String e=b[i].substring(b[i].indexOf("http"), b[i].indexOf("\" src="));
-					try {
-						 flag=ImageCheck.ImageCheck(e,properties);
-					} catch (Exception e1) {
-						flag=false;
-						e1.printStackTrace();
-					}
-					if(flag){
-						queQuestion.setIsChecke(1);
-					}else{
-						queQuestion.setIsChecke(0);
-					}
-					jsonObject.put("content", e);
-					jsonObject.put("type", 1);
-					a+=jsonObject.toString();
-					a+=",";
-				}else{
-					if(b[i].indexOf("<img") == -1) {
-						String str=b[i].replace("&nbsp;", "");
-						try {
-							flag=TextCheck.TextCheck(str,properties);
-						} catch (Exception e) {
-							flag=false;
-							e.printStackTrace();
-						}
-						if(flag){
-							queQuestion.setIsChecke(1);
-						}else{
-							queQuestion.setIsChecke(0);
-						}
-						jsonObject.put("content",stringToUnicode(b[i].replace("&nbsp;", "")) );
-						jsonObject.put("type", 0);
-						a+=jsonObject.toString();
-						a+=",";	
-					}else{
-						String d= b[i].substring(0, b[i].indexOf("<"));
-						try {
-							flag=TextCheck.TextCheck(d,properties);
-						} catch (Exception e) {
-							flag=false;
-							e.printStackTrace();
-						}
-						if(flag){
-							queQuestion.setIsChecke(1);
-						}else{
-							queQuestion.setIsChecke(0);
-						}
-						jsonObject.put("content",stringToUnicode(d));
-						jsonObject.put("type", 0);
-						a+=jsonObject.toString();
-						a+=",";
-						String e=b[i].substring(b[i].indexOf("http"), b[i].indexOf("\" src="));
-						try {
-							flag1=TextCheck.TextCheck(e,properties);
-						} catch (Exception e1) {
-							flag1=false;
-							e1.printStackTrace();
-						}
-						if(flag1){
-							queQuestion.setIsChecke(1);
-						}else{
-							queQuestion.setIsChecke(0);
-						}
-						jsonObject.put("content", e);
-						jsonObject.put("type", 1);
-						a+=jsonObject.toString();
-						a+=",";	
-					}
-					
+    	//先将<p>标签替换成空，将</p>和<br>替换成\n
+    	String questionDescTP=request.getParameter("questionDescTP").replace("<p>", "").replace("</p>", "<br>").replace("&nbsp;", " ").replace("\n", "<br>");
+    	//将问答内容按Img进行劈开
+    	String[] contentArray = questionDescTP.split("<img");
+    	String contentSign = "\"content\":\"";
+    	String typeSign = "\",\"type\":";
+    	String beforeSign = "{";
+    	String afterSign = "},";
+    	StringBuffer stringBuffer = new StringBuffer().append("[");
+    	int falseCount = 0;//用于记录网易云盾检测不通过的个数,如果大于0，则最后设置为不通过，反之则是通过​
+    	for(int i = 0 ;i < contentArray.length ; i++){
+    		String s = contentArray[i];
+    		boolean flag = true;
+    		if(StringUtils.isBlank(s)){
+    			continue;
+    		}
+    		//判断这次字符串中是否存在图片
+    		if (s.indexOf("data-cke-saved-src") != -1) {
+				//取出图片，然后进行过滤标签,在进行相应的判断
+    			String img = s.substring(s.indexOf("http"), s.lastIndexOf("src")).replace("\"", "").replace(" ", "");
+    			try {
+					 flag=ImageCheck.ImageCheck(img,properties);
+				} catch (Exception e1) {
+					flag=false;
+					e1.printStackTrace();
 				}
+    			//为false则+1
+				if (!flag) {
+					falseCount++;
+				}
+    			stringBuffer.append(beforeSign).append(contentSign).append(img).append(typeSign).append(1).append(afterSign);
+    			//图片处理完成后，需要判断图片后是否有文字
+    			//过滤图片
+    			String content = s.substring(s.indexOf(">")+1,s.length());
+    			if (StringUtils.isNotBlank(content)) {
+    				try {
+    					flag=TextCheck.TextCheck(s,properties);
+    				} catch (Exception e) {
+    					flag=false;
+    					e.printStackTrace();
+    				}
+    				//为false则+1
+    				if (!flag) {
+    					falseCount++;
+    				}
+    				stringBuffer.append(beforeSign).append(contentSign).append(content).append(typeSign).append(0).append(afterSign);
+				}
+			}else{
+				try {
+					flag=TextCheck.TextCheck(s,properties);
+				} catch (Exception e) {
+					flag=false;
+					e.printStackTrace();
+				}
+				//为false则+1
+				if (!flag) {
+					falseCount++;
+				}
+				stringBuffer.append(beforeSign).append(contentSign).append(s).append(typeSign).append(0).append(afterSign);
 			}
-		}
-		a=a.substring(0, a.lastIndexOf(","));
-		a+="]";
+    	}
+    	//处理最后一个拼接},的逗号
+    	int lastComma = stringBuffer.lastIndexOf(",");
+    	stringBuffer.replace(lastComma, lastComma+1,"");
+    	stringBuffer.append("]");
+//    	String questionDesc = request.getParameter("questionDesc");
+//		questionDescTP=questionDescTP.substring(3, questionDescTP.lastIndexOf("<"));
+//		String [] b=questionDescTP.split(";;");
+//	    String a="[" ;
+//		if(null!=b){
+//			for(int i=0 ; i<b.length ;i++){
+//				boolean flag=false;
+//				boolean flag1=false;
+//				JSONObject jsonObject = new JSONObject();
+//				String c =b[i].substring(0, 1);
+//				if("<".equals(c)){
+//					String e=b[i].substring(b[i].indexOf("http"), b[i].indexOf("\" src="));
+//					try {
+//						 flag=ImageCheck.ImageCheck(e,properties);
+//					} catch (Exception e1) {
+//						flag=false;
+//						e1.printStackTrace();
+//					}
+//					if(flag){
+//						queQuestion.setIsChecke(1);
+//					}else{
+//						queQuestion.setIsChecke(0);
+//					}
+//					jsonObject.put("content", e);
+//					jsonObject.put("type", 1);
+//					a+=jsonObject.toString();
+//					a+=",";
+//				}else{
+//					if(b[i].indexOf("<img") == -1) {
+//						String str=b[i].replace("&nbsp;", "");
+//						try {
+//							flag=TextCheck.TextCheck(str,properties);
+//						} catch (Exception e) {
+//							flag=false;
+//							e.printStackTrace();
+//						}
+//						if(flag){
+//							queQuestion.setIsChecke(1);
+//						}else{
+//							queQuestion.setIsChecke(0);
+//						}
+//						jsonObject.put("content",stringToUnicode(b[i].replace("&nbsp;", "")) );
+//						jsonObject.put("type", 0);
+//						a+=jsonObject.toString();
+//						a+=",";	
+//					}else{
+//						String d= b[i].substring(0, b[i].indexOf("<"));
+//						try {
+//							flag=TextCheck.TextCheck(d,properties);
+//						} catch (Exception e) {
+//							flag=false;
+//							e.printStackTrace();
+//						}
+//						if(flag){
+//							queQuestion.setIsChecke(1);
+//						}else{
+//							queQuestion.setIsChecke(0);
+//						}
+//						jsonObject.put("content",stringToUnicode(d));
+//						jsonObject.put("type", 0);
+//						a+=jsonObject.toString();
+//						a+=",";
+//						String e=b[i].substring(b[i].indexOf("http"), b[i].indexOf("\" src="));
+//						try {
+//							flag1=TextCheck.TextCheck(e,properties);
+//						} catch (Exception e1) {
+//							flag1=false;
+//							e1.printStackTrace();
+//						}
+//						if(flag1){
+//							queQuestion.setIsChecke(1);
+//						}else{
+//							queQuestion.setIsChecke(0);
+//						}
+//						jsonObject.put("content", e);
+//						jsonObject.put("type", 1);
+//						a+=jsonObject.toString();
+//						a+=",";	
+//					}
+//					
+//				}
+//			}
+//		}
+//		a=a.substring(0, a.lastIndexOf(","));
+//		a+="]";
     	Integer companyId = WebUtils.getCurrentCompanyId();
     	Integer schoolId = WebUtils.getCurrentSchoolId();
     	Integer userId = WebUtils.getCurrentUserId(request);
     	String questionTitle= queQuestion.getQuestionTitle();
-    	boolean flag1=false;
     	try {
-    		flag1=TextCheck.TextCheck(questionTitle,properties);
-			if(flag1){
-				flag1=true;
-			}else{
-				flag1=false;
+    		boolean flag =TextCheck.TextCheck(questionTitle,properties);
+    		//为false则+1
+			if (!flag) {
+				falseCount++;
 			}
 		} catch (Exception e1) {
-			flag1=false;
+			falseCount++;
 			e1.printStackTrace();
 		}
+    	//大于0则不通过,反之则是通过
+    	if (falseCount > 0) {
+			queQuestion.setIsChecke(0);
+		} else {
+			queQuestion.setIsChecke(1);
+		}
     	queQuestion.setCreateTime(new Date());
-    	queQuestion.setQuestionDesc(a);
+    	queQuestion.setQuestionDesc(stringBuffer.toString());
     	queQuestion.setCompanyId(companyId);
     	queQuestion.setSchoolId(schoolId);
     	queQuestion.setUserId(userId);

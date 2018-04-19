@@ -163,9 +163,11 @@ public class CourseVideoLectureController {
 				}
 			}
 		}
+		lecture.setUpdateTime(new Date());
 		if(lecture.getId()!=null){
 			courseVideoLectureServiceImpl.update(lecture);
 		}else{
+			lecture.setCreateTime(new Date());
 			courseVideoLectureServiceImpl.insert(lecture);
 		}
 		result.put("flag", true);
