@@ -32,6 +32,7 @@ public class StudentCourseVO extends BaseEntity{
 	private String afterStudyUrl;
 	private String beforeStudyUrl;
 	private Integer showFlag;//显示状态 0课程详情，1观看回放,
+	private java.util.Date courseStartTime;//课程开始日期,作为课程表同一天排序的标志
 	public Integer getTeacherId() {
 		return teacherId;
 	}
@@ -169,6 +170,12 @@ public class StudentCourseVO extends BaseEntity{
 	}
 	public void setShowFlag(Integer showFlag) {
 		this.showFlag = showFlag;
+	}
+	public java.util.Date getCourseStartTime() {
+		return courseStartTime;
+	}
+	public void setCourseStartTime(java.util.Date courseStartTime) {
+		this.courseStartTime = courseStartTime;
 	}
 	
 }

@@ -227,7 +227,8 @@ public class QAManagerController {
             que.setQuestionscore(questionscore);
             que.setUserId(userId);//回答人ID
             questionAnswerServiceImpl.updateQAndA(one,que);
-
+            Map<String,String>map = new HashMap<String,String>();
+            noticeAndScoreServiceImpl.sendMsg(request.getRequestURI().replace(request.getContextPath(),""),anaswerUserId.toString(),map);
             json.put(JsonMsg.MSG, JsonMsg.SUCCESS);
             return json;
             
