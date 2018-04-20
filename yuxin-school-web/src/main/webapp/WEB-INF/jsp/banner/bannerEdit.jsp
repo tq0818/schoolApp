@@ -113,6 +113,18 @@ padding-top: 40px;
 
 #details img{ max-width:100% !important;height: auto! important;}
 #cke_Link_115 {display: none;}
+#cke_Link_116 {display: none;}
+#cke_Link_118 {display: none;}
+#cke_Link_119 {display: none;}
+#cke_Link_131 {display: none;}
+#cke_Link_121 {display: none;}
+#cke_Link_123 {display: none;}
+#cke_Link_124 {display: none;}
+#cke_Link_129 {display: none;}
+#cke_Link_133 {display: none;}
+#cke_Link_132 {display: none;}
+#cke_Link_148 {display: none;}
+#cke_Link_287 {display: none;}
 /*隐藏自带弹窗*/
     /*.cke_dialog_body{display: none;}*/
      .checkName{display: none;}
@@ -377,8 +389,21 @@ $("input[type='radio']").click(function () {
     });
   	//隐藏超链接
 	$(document).click(function(){
+		$("[aria-labelledby='cke_dialog_title_75']").hide(); 
+		$("[aria-labelledby='cke_dialog_title_65']").hide(); 
+		$("[aria-labelledby='cke_dialog_title_60']").hide(); 
+		$("[aria-labelledby='cke_dialog_title_63']").hide(); 
+		$("[aria-labelledby='cke_dialog_title_64']").hide(); 
+		$("[aria-labelledby='cke_dialog_title_162']").hide(); 
+		$("[aria-labelledby='cke_dialog_title_92']").hide(); 
+		$("[aria-labelledby='cke_dialog_title_73']").hide(); 
+		$("[aria-labelledby='cke_dialog_title_77']").hide(); 
+		$("[aria-labelledby='cke_dialog_title_76']").hide(); 
+		$("[aria-labelledby='cke_dialog_title_67']").hide(); 
+		$("[aria-labelledby='cke_dialog_title_68']").hide(); 
 		$("[aria-labelledby='cke_dialog_title_59']").hide(); 
 		$("[title='链接']").hide();
+		$(".cke_dialog_title").hide();
 	});
     //课程名称模糊搜索
     $('.linkName').keyup(function () {
@@ -690,6 +715,10 @@ $("input[type='radio']").click(function () {
                 	//selectOption为0则是活动
                 	if(selectOption == 0){
                 		var linkHref = $('#linkHref').val();
+                		if(linkHref == '' || linkHref == null){
+                			$.msg("请输入活动地址!",1000);
+                			return;
+                		}
                 		var reg=/^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/;
                 		/* if (!reg.test(linkHref)){
                             $.msg("请输入有效的网址!",1000);
