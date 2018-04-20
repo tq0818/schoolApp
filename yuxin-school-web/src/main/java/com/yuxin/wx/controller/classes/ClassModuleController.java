@@ -2801,7 +2801,11 @@ public class ClassModuleController {
 						for (Student Student : stuListUserId) {
 							userList.add(String.valueOf(Student.getUserId()));
 						}
-						String josnResult=JiGuangPushUtil.push(userList , companyStudentMessage.getTitle(), companyStudentMessage.getTitle(),params);
+						//极光推送每次发送个数最多一千个（分组发送）
+						List<List<String>> partition = Lists.partition(userList,1000);
+						for (List<String> list : partition) {
+							String josnResult=JiGuangPushUtil.push(list , companyStudentMessage.getTitle(), companyStudentMessage.getTitle(),params);
+						}
 						sendNum = sendNum + stuListUserId.size();
 			    	}
 			    	if(Integer.valueOf(noRegisteredUser) == 1){
@@ -2814,7 +2818,11 @@ public class ClassModuleController {
 						for (Student Student : stuList) {
 							userList.add(Student.getMobileSign());
 						}
-						String josnResult=JiGuangPushUtil.push(userList , companyStudentMessage.getTitle(), companyStudentMessage.getTitle(),params);
+						//极光推送每次发送个数最多一千个（分组发送）
+						List<List<String>> partition = Lists.partition(userList,1000);
+						for (List<String> list : partition) {
+							String josnResult=JiGuangPushUtil.push(list , companyStudentMessage.getTitle(), companyStudentMessage.getTitle(),params);
+						}
 			    		sendNum = sendNum + stuList.size();
 			    	}
 			    	//修改发送情况
@@ -2894,7 +2902,11 @@ public class ClassModuleController {
 				}
 			}
 			for(List<String> userList:sList){
-				String josnResult=JiGuangPushUtil.push(userList , companyStudentMessage.getTitle(), companyStudentMessage.getTitle(),params);
+				//极光推送每次发送个数最多一千个（分组发送）
+				List<List<String>> partition = Lists.partition(userList,1000);
+				for (List<String> list : partition) {
+					String josnResult=JiGuangPushUtil.push(list , companyStudentMessage.getTitle(), companyStudentMessage.getTitle(),params);
+				}
 			}
 			json.put(JsonMsg.RESULT, JsonMsg.SUCCESS);
 		}
