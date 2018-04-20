@@ -512,11 +512,36 @@
 						originType = $(this).attr("ids");
 					}
 				});
+				var publishStatus = "";
+				$("#statusList").find("a").each(function(){
+					if($(this).hasClass('btn-success')){
+						publishStatus = $(this).attr("ids");
+					}
+				});
+				console.log(publishStatus);
+				var faceFlag = "";
+				var liveFlag = "";
+				var videoFlag = "";
+				var remoteFlag = "";
+				var flag;
+				$("#flagList").find("a").each(function(i){
+					if($(this).hasClass('btn-success')){
+						flag=$(this).attr("ids");
+						switch(flag){
+							case "IS_LIVE":liveFlag = 1;break;
+							case "IS_VIDEO":videoFlag = 1;break;
+							case "IS_FACE":faceFlag = 1;break;
+							case "IS_REMOTE":remoteFlag = 1;break;
+							default:break;
+						}
+					}
+				});
 				var name=$("#classTypeName").val();
 				$.ajax({
 					url : rootPath + "/simpleClasses/showAllclassType",
 					type : "post",
-					data : {"page" : page,"name":name,"originType":originType},
+					data : {"page" : page,"name":name,"originType":originType,"publishStatus":publishStatus,
+						"faceFlag":faceFlag,"liveFlag":liveFlag,"videoFlag":videoFlag,"remoteFlag":remoteFlag},
 					beforeSend:function(XMLHttpRequest){
 			            $(".loading").show();
 			            $(".loading-bg").show();
