@@ -102,7 +102,7 @@ public class QAManagerController {
                         }
                     }
                 }
-                String content = StringUtil.unicodeToString(a.getAnswerDesc());
+                String content = StringUtil.dealQuestionAnswer(StringUtil.unicodeToString(a.getAnswerDesc()));
                 String newcon = "";
                 String u = "";
                 while (content.indexOf("style") > 0) {

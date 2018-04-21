@@ -239,7 +239,7 @@ public class VideoCourseCommentServiceImpl extends BaseServiceImpl implements IV
 					}
 				}
 				//20180417 zj 修改 讲内容进行转码
-				teacherCommentVo2.setComment(StringUtil.unicodeToString(teacherCommentVo2.getComment()));
+				teacherCommentVo2.setComment(StringUtil.dealQuestionAnswer(StringUtil.unicodeToString(teacherCommentVo2.getComment())));
 				
 			}
 			Integer count=videoCourseCommentMapper.commentCount(teacherCommentVo);

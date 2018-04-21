@@ -1817,4 +1817,16 @@ public static String chiDeUTF8(String str) {
         return str;
     }
     
+    /**
+     * 处理回答中的换行符
+     * @param content
+     * @return
+     */
+    public static String dealQuestionAnswer(String content){
+    	if (StringUtils.isNotBlank(content)) {
+			return content.replace("\\ua", "\n");
+		}
+    	return content;
+    }
+    
 }
