@@ -140,6 +140,7 @@ public class QAManagerController {
             model.addAttribute("types", types);
             model.addAttribute("anPage", anPage);
             model.addAttribute("imgpath", propertiesUtil.getProjectImageUrl());
+            model.addAttribute("questionUserId",request.getParameter("questionUserId"));
         } catch (Exception e) {
             log.error("aq：出错了：" + e.getMessage(), e);
             e.printStackTrace();

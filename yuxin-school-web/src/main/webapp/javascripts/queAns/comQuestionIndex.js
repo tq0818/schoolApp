@@ -9,12 +9,13 @@ var jz = "";
 var questionName ="";
 var queId = "";//问题id（加载评论用）
 var types = "";//是老师，还是管理员（加载评论用）
+var questionUserId="";
 function selOneAns (pageNo){
 	console.log(queId+"==="+types);
 	$.ajax({
 		url : rootPath + "/questionanswermanager/selAns",
 		type : "post",
-		data : {"questionId":queId,"types":types,"page":pageNo,"pageSize":"5"},
+		data : {"questionId":queId,"types":types,"page":pageNo,"pageSize":"5","questionUserId":questionUserId},
 		beforeSend:function(XMLHttpRequest){
             $(".loading").show();
             $(".loading-bg").show();
@@ -370,6 +371,7 @@ $(function(){
 						//显示全部点击
 						$(".showAll").click(function(){
 							var id = $(this).attr("ids");
+							questionUserId = $(this).attr("questionUserId");
 							queId = id;
 							var html = $(this).html();
 							var isMan = $("#isMan").val();
