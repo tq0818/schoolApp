@@ -112,8 +112,8 @@ padding-top: 40px;
 
 
 #details img{ max-width:100% !important;height: auto! important;}
-#cke_Link_115 {display: none;}
-#cke_Link_116 {display: none;}
+
+/* #cke_Link_116 {display: none;}
 #cke_Link_118 {display: none;}
 #cke_Link_119 {display: none;}
 #cke_Link_131 {display: none;}
@@ -124,7 +124,7 @@ padding-top: 40px;
 #cke_Link_133 {display: none;}
 #cke_Link_132 {display: none;}
 #cke_Link_148 {display: none;}
-#cke_Link_287 {display: none;}
+#cke_Link_287 {display: none;} */
 /*隐藏自带弹窗*/
     /*.cke_dialog_body{display: none;}*/
      .checkName{display: none;}
@@ -169,6 +169,8 @@ padding-top: 40px;
 #cke_32{display: none;}
 #cke_35{display: none;}
 .linkLinkSpan{margin-top: 43px;display: inline-block;float: left;margin-left:5px;}
+ .cke_dialog_tab[title*='链接']{display: none;}
+
 </style>
 </head>
 <body style="position:relative;">
@@ -387,13 +389,13 @@ $("input[type='radio']").click(function () {
 
         }
     });
-  	//隐藏超链接
-	$(document).click(function(){
-		$("[aria-labelledby='cke_dialog_title_75']").hide(); 
+  //隐藏超链接
+	 $(document).click(function(){
+		/* $("[aria-labelledby='cke_dialog_title_75']").hide(); 
 		$("[aria-labelledby='cke_dialog_title_65']").hide(); 
 		$("[aria-labelledby='cke_dialog_title_60']").hide(); 
 		$("[aria-labelledby='cke_dialog_title_63']").hide(); 
-		$("[aria-labelledby='cke_dialog_title_64']").hide(); 
+		//$("[aria-labelledby='cke_dialog_title_64']").hide(); 
 		$("[aria-labelledby='cke_dialog_title_162']").hide(); 
 		$("[aria-labelledby='cke_dialog_title_92']").hide(); 
 		$("[aria-labelledby='cke_dialog_title_73']").hide(); 
@@ -401,9 +403,21 @@ $("input[type='radio']").click(function () {
 		$("[aria-labelledby='cke_dialog_title_76']").hide(); 
 		$("[aria-labelledby='cke_dialog_title_67']").hide(); 
 		$("[aria-labelledby='cke_dialog_title_68']").hide(); 
-		$("[aria-labelledby='cke_dialog_title_59']").hide(); 
-		$("[title='链接']").hide();
-		$(".cke_dialog_title").hide();
+		$("[aria-labelledby='cke_dialog_title_59']").hide();  */
+		//$("[title='链接']").hide();
+		
+		$('.cke_dialog_body').hide(); 
+		
+		
+	}); 
+	//图像按钮阻止冒泡
+	$('body').on('click','#cke_34',function(){
+		$('.cke_dialog_body').show(); 
+		return false;
+	});
+	//弹窗阻止冒泡
+	$('body').on('click','.cke_dialog_body',function(){
+		return false;
 	});
     //课程名称模糊搜索
     $('.linkName').keyup(function () {
