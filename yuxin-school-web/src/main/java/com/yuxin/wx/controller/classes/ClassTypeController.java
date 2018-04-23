@@ -1782,6 +1782,31 @@ public class ClassTypeController {
 		if(imgFile == null){
 			return null;
 		}
+
+		String callback = request.getParameter("CKEditorFuncNum");
+		String uploadContentType = imgFile.getContentType();
+		String expandedName = null;
+		if (uploadContentType.equals("image/pjpeg")
+				|| uploadContentType.equals("image/jpeg")) {
+			// IE6上传jpg图片的headimageContentType是image/pjpeg，而IE9以及火狐上传的jpg图片是image/jpeg
+			expandedName = ".jpg";
+		} else if (uploadContentType.equals("image/png")
+				|| uploadContentType.equals("image/x-png")) {
+			// IE6上传的png图片的headimageContentType是"image/x-png"
+			expandedName = ".png";
+		} else if (uploadContentType.equals("image/gif")) {
+			expandedName = ".gif";
+		} else if (uploadContentType.equals("image/bmp")) {
+			expandedName = ".bmp";
+		} else {
+			out.println("<script type=\"text/javascript\">");
+			out.println("window.parent.CKEDITOR.tools.callFunction(" + callback
+					+ ",''," + "'文件格式不正确（必须为.jpg/.gif/.bmp/.png文件）');");
+			out.println("</script>");
+			return null;
+		}
+
+
 		log.info("文件开始上传：");
 		String realPath=null;
 		try {
@@ -1795,7 +1820,7 @@ public class ClassTypeController {
 		//图片回显路径
 		String callUrl="http://"+propertiesUtil.getProjectImageUrl()+"/"+realPath;
 		// 将上传的图片的url返回给ckeditor
-        String callback = request.getParameter("CKEditorFuncNum");
+//        String callback = request.getParameter("CKEditorFuncNum");
         out.println("<script type=\"text/javascript\">");
         out.println("window.parent.CKEDITOR.tools.callFunction("
                 + callback + ",'" + callUrl + "',''" + ")");

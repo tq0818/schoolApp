@@ -75,7 +75,8 @@ i.alert_close {
   top: 50%;
   margin-left: -210px;
   margin-top: -100px;
-  z-index: 999;
+  z-index: 999999;
+  border: 1px solid;
   background-color: #fff;
 }
 /*寮瑰嚭鍧楁爣棰樻牱寮�*/
