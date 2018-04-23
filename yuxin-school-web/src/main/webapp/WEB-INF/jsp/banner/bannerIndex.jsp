@@ -12,6 +12,8 @@
     <script src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
     <style>
         .bannerManage{width: 80%;float: right;}
+        .btn-primary {background-color: #999;}
+        #qiyong {background-color:#78cdf4;}
     </style>
 </head>
 <body style="position:relative;">
@@ -24,8 +26,8 @@
         <div class="heading">
             <h2 class="h5" style="display: inline-block;margin: 10px 0;">首页Banner</h2>
             <div class="bannerButton">
-                <span><button onclick="qiyong()" class="btn btn-primary " >启用</button></span>
-                <span><button onclick="jinyong()" class="btn btn-primary " >禁用</button></span>
+                <span><button onclick="qiyong()" class="btn btn-primary " id="qiyong">启用</button></span>
+                <span><button onclick="jinyong()" class="btn btn-primary "  id="forbidden">禁用</button></span>
                 <!-- <span><a href="##" class="btn btn-primary changeOrder" >更改排序</a></span> -->
                 <span><a href="<%=rootPath %>/Banner/addBanner/0" class="btn btn-primary " >添加banner</a></span>
             </div>
@@ -67,6 +69,8 @@
     });
 
 	function jinyong(){
+		$("#forbidden").attr("style","background-color:#78cdf4;");
+		$("#qiyong").attr("style","background-color: #999;");
 		$.ajax({
 			url: rootPath + "/Banner/jinYong",
 			type:"post",
@@ -83,6 +87,8 @@
 		
 	}
 	function qiyong(){
+		$("#qiyong").attr("style","background-color:#78cdf4;");
+		$("#forbidden").attr("style","background-color: #999;");
 		$.ajax({
 			url: rootPath + "/Banner/qiYong",
 			type:"post",

@@ -101,6 +101,12 @@ public class BannerServiceImpl extends BaseServiceImpl implements IBannerService
 		List<ClassType> list = BannerMapper.findClassByName(calssName);
 		return list;
 	}
+
+	@Override
+	public Integer querHomeBannerCount() {
+		// TODO Auto-generated method stub
+		return BannerMapper.querHomeBannerCount();
+	}
     
     
    

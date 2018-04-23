@@ -83,6 +83,7 @@
 		LEFT JOIN app_shelves ash ON com.id = ash.comdity_id
 		where 
 		ash.is_shelves = 1
+		and ct.del_flag = 0
 		and ct.name like concat('%',#{className},'%')
 	</select>
 	<!-- 适用于主键自增类型 -->
@@ -155,5 +156,12 @@
 	<select id="searchMaxNum" resultType="int">
 		select max(order_by_num)
 		from banner_app
+	</select>
+	
+	<select id="querHomeBannerCount" resultType="java.lang.Integer">
+		SELECT COUNT(1) 
+		  FROM banner_app 
+		 WHERE banner_type = 2 
+		   AND is_state = 1
 	</select>
 </mapper>
