@@ -114,7 +114,7 @@
                             <span class="pr50">提问时间：${que.tiwenTime}</span>
                             <span class="pr50">
 										<i class="iconfont" style="font-size: 12px;cursor: default;" ids="${que.id}">&#xe669;</i>
-										<span class="showAll showAlls${que.id}" ids="${que.id}"
+										<span class="showAll showAlls${que.id}" ids="${que.id}" questionUserId="${que.userId}"
                                               style="cursor: pointer;">显示全部</span>
                                      </span>
                             <span class="pr50">

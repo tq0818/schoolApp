@@ -414,8 +414,8 @@
 		update app_shelves 
 		<trim prefix="set" suffixOverrides=",">
 			<if test="isShelves != null and isShelves != ''">is_shelves = #{isShelves},</if>
-			<if test="appPrice != null and appPrice != ''">price = #{appPrice},</if>
-			<if test="salePrice != null and salePrice != ''">sale_price = #{salePrice},</if>
+			<if test="appPrice != null">price = #{appPrice},</if>
+			<if test="salePrice != null">sale_price = #{salePrice},</if>
 			<if test="shelvesTime != null and shelvesTime != ''">shelves_time = #{shelvesTime},</if>
 			reserve_time = #{reserveTime},
 			<if test="courseCaId != null and courseCaId != ''">category_id = #{courseCaId},</if>

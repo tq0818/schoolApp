@@ -222,7 +222,7 @@
             <li>
                 <label>价格：</label>
                 <c:choose>
-                    <c:when test="${searchAndResult.appPrice eq ''}">
+                    <c:when test="${searchAndResult.appPrice == null}">
                        <input type="text" id="appPrice" value="${searchAndResult.originalPrice}">
                     </c:when>
                     <c:otherwise>
@@ -233,7 +233,7 @@
             <li>
                 <label>实际价格：</label>
                  <c:choose>
-                    <c:when test="${searchAndResult.salePrice eq ''}">
+                    <c:when test="${searchAndResult.salePrice == null}">
                         <input type="text" id="salePrice" value="${searchAndResult.realPrice}">
                     </c:when>
                     <c:otherwise>

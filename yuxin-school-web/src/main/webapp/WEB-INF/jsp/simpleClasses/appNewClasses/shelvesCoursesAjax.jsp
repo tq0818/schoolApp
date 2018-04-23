@@ -62,7 +62,7 @@
                     <%--<td>${course.lessonDate}${course.lessonTimeStart}</td>--%>
                 <td class="overflowHide" title="${course.actualNum}">${course.actualNum}</td>
                 <c:choose>
-                    <c:when test="${course.appPrice eq ''}">
+                    <c:when test="${course.appPrice == null}">
                         <td class="overflowHide" title="${course.originalPrice}">${course.originalPrice}</td>
                     </c:when>
                     <c:otherwise>
@@ -70,7 +70,7 @@
                     </c:otherwise>
                 </c:choose>
                 <c:choose>
-                    <c:when test="${course.salePrice eq ''}">
+                    <c:when test="${course.salePrice == null}">
                         <td class="overflowHide" title="${course.realPrice}">${course.realPrice}</td>
                     </c:when>
                     <c:otherwise>

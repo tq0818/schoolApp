@@ -1,3 +1,4 @@
+var countAdd = 0;
 //学校风采
 $(function () {
 
@@ -218,6 +219,14 @@ function saveCutPic(saveFlag) {
         if (!$("#targetStyle").attr("src")){
             $.msg("未选择图片");
             return ;
+        }
+        //处理重复提交
+        if(!id){
+        	if(countAdd != 0){
+        		alert("请勿重复提交");
+        		return ;
+        	}
+        	countAdd++;
         }
     }
 
