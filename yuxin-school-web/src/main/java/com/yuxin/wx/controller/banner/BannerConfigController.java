@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
@@ -99,6 +100,7 @@ public class BannerConfigController extends BaseWebController{
     @RequestMapping("/acrcoQiyong")
     public String acrcoQiyong(HttpServletRequest request,Model model,Banner banner) {
     	PageFinder <Banner> acrcoList=bannerService.findAcrcoBanner(banner);
+    	model.addAttribute("qiyongCount", bannerService.querHomeBannerCount());
 		model.addAttribute("msgPage", acrcoList);
     	model.addAttribute("bannerType", banner.getBannerType());
     	return "banner/qiyong/acrcoQiyong";

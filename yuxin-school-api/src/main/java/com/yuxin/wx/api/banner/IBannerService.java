@@ -77,4 +77,9 @@ public interface IBannerService  {
 	//禁用banner
 	void forbiddenBanner();
 	List<ClassType> findClassByName(String calssName);
+	/**
+	 * 查询首页通用banner的启用数
+	 * @return
+	 */
+	Integer querHomeBannerCount();
 }

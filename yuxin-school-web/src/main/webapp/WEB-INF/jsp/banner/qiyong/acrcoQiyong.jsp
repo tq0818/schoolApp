@@ -49,8 +49,11 @@
 	                	<c:if test="${m.isState eq 1}">
 	                		<a href='javascript:;' onclick="confirmPopup('确定禁用该banner？',${m.id},1)" class='btn btn-danger forbidBanner'>禁用</a>
 	                   	</c:if>
-	                	<c:if test="${m.isState eq 0}">
+	                	<c:if test="${m.isState eq 0 and qiyongCount == 1}">
 	                		<a href='javascript:;' onclick="confirmPopup('确定启用该banner，并替换当前banner？',${m.id},0)" class='btn btn-danger forbidBanner'>启用</a>
+	                   	</c:if>
+	                   	<c:if test="${m.isState eq 0 and qiyongCount == 0}">
+	                		<a href='javascript:;' onclick="confirmPopup('确定启用该banner？',${m.id},0)" class='btn btn-danger forbidBanner'>启用</a>
 	                   	</c:if>
 	                   		<a href='<%=rootPath %>/Banner/editBanner/${m.id}'  class='btn btn-warning'>修改</a>
 	                   		<%-- <a href='<%=rootPath %>/Banner/seachDetail/${m.id}' target="_blank" class='btn btn-success'>查看</a> --%>
