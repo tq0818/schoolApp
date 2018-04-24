@@ -19,6 +19,7 @@
 		.up-input{position:relative;width:160px;height:32px;opacity:0;filter:alpha(opacity=0);z-index:1}
 		.upfile{position:relative;display:inline-block}
 		.upfile .btn-up{position:absolute;top:0;left:0;}
+		 ul.item-panel .item .content .action{width: 20%;}
     </style>
 	<script type="text/javascript" src="<%=rootPath%>/javascripts/ajaxfileupload.js"></script>
 	<script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/plupload.full.min.js"></script>
