@@ -169,7 +169,14 @@ div[aria-labelledby*="cke_dialog_title_59"],#cke_newsContents{display: none;}
 #cke_32{display: none;}
 #cke_35{display: none;}
 .linkLinkSpan{margin-top: 43px;display: inline-block;float: left;margin-left:5px;}
-
+a:link {
+    color: -webkit-link;
+    text-decoration: underline;
+}
+#modelList a:link {
+    color: #333;
+    text-decoration: none;
+}
 
 </style>
 </head>
