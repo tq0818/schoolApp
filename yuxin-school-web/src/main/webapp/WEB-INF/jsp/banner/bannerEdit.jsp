@@ -170,6 +170,14 @@ padding-top: 40px;
 #cke_35{display: none;}
 .linkLinkSpan{margin-top: 43px;display: inline-block;float: left;margin-left:5px;}
  .cke_dialog_tab[title*='链接']{display: none;}
+ a:link {
+     color: -webkit-link;
+     text-decoration: underline;
+ }
+     #modelList a:link {
+         color: #333;
+         text-decoration: none;
+     }
 
 </style>
 </head>
