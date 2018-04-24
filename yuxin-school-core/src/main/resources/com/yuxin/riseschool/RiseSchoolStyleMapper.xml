@@ -87,5 +87,6 @@
         <if test="schoolId != null" > and rise_school_id = #{schoolId}</if>
         <if test="isCover != null" >    AND is_cover = #{isCover}</if>
         <if test="id != null" > AND id=#{id}</if>
+        LIMIT 1
     </select>
 </mapper>
