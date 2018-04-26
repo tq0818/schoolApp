@@ -74,7 +74,7 @@
                                 </c:if>
                             </c:forEach>
                         </select>
-                         <c:if test="${empty typeItems }">
+                         <c:if test="${empty typeItems or not empty classType.id}">
                              <input type="text" class="readonly" id="itemOneName" marks="${classType.itemOneCode }" value="${classType.itemOneName }" readonly>
                          </c:if>
                     </span>
@@ -85,7 +85,7 @@
                         <select name="itemSecondCode" id="itemSecondCodeList" onchange="Form.queryItemThird()">
                             <option  value="" data-id="">请选择</option>
                         </select>
-                        <c:if test="${empty typeItems }">
+                        <c:if test="${empty typeItems or not empty classType.id}">
                             <input type="text" class="readonly" id="itemSecondName" marks="${classType.itemSecondCode }" value="${classType.itemSecondName}" readonly/>
                         </c:if>
                     </span>
@@ -96,7 +96,7 @@
                         <select name="itemThirdCode" id="itemThirdCodeList" onchange="Form.queryTagsList()">
                             <option  value="" data-id="">请选择</option>
                         </select>
-                        <c:if test="${empty typeItems }">
+                        <c:if test="${empty typeItems or not empty classType.id}">
                             <input type="text" class="readonly" id="itemThirdName" marks="${classType.itemThirdCode }" value="${classType.itemThirdName}" readonly/>
                         </c:if>
                     </span>
@@ -107,7 +107,7 @@
                         <select name="itemFourthCode" id="itemFourthCodeList" >
                             <option  value="" data-id="">请选择</option>
                         </select>
-                        <c:if test="${empty typeItems }">
+                        <c:if test="${empty typeItems or not empty classType.id}">
                             <input type="text" class="readonly" id="itemFourthName" marks="${classType.itemFourthCode }" value="${classType.itemFourthName}" readonly/>
                         </c:if>
                     </span>

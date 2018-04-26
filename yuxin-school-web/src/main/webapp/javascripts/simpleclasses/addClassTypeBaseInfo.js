@@ -267,7 +267,7 @@
 					dataType : "json",
 					success : function(result) {
 						if(result.length>0){
-							$("#itemSecondCodeList").css("display","block");
+							$("#itemSecondCodeList").show();
 							$.each(result,function(i,item){
 								if(item.id==$("#twoSecItemCode").val()){
 									$("#itemSecondCodeList").append("<option selected='selected' value='"+item.itemCode+"' data-id='"+item.id+"'>"+item.itemName+"</option>");
@@ -304,7 +304,7 @@
                     dataType : "json",
                     success : function(result) {
                         if(result.length>0){
-                            $("#itemThirdCodeList").css("display","block");
+                            $("#itemThirdCodeList").show();
                             $.each(result,function(i,item){
                                 if(item.id==$("#itemThirdCode").val()){
                                     $("#itemThirdCodeList").append("<option selected='selected' value='"+item.itemCode+"' data-id='"+item.id+"'>"+item.itemName+"</option>");
@@ -338,7 +338,7 @@
                     dataType : "json",
                     success : function(result) {
                         if(result.length>0){
-                            $("#itemFourthCodeList").css("display","block");
+                            $("#itemFourthCodeList").show();
                             $.each(result,function(i,item){
                                 if(item.id==$("#itemFourthCode").val()){
                                     $("#itemFourthCodeList").append("<option selected='selected' value='"+item.itemCode+"' data-id='"+item.id+"'>"+item.itemName+"</option>");

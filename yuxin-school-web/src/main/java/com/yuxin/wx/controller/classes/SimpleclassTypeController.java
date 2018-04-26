@@ -653,6 +653,33 @@ public class SimpleclassTypeController {
 		}else{
 			model.addAttribute("type", "update");
 		}
+
+		SysConfigItemRelation relation = new SysConfigItemRelation();
+		relation.setId(null);
+		//relation.setCompanyId(WebUtils.getCurrentCompanyId());
+		List<SysConfigItemRelation> relations1 = sysConfigItemRelationServiceImpl.findItemFront(relation);
+		SysConfigItem item = new SysConfigItem();
+		item.setCompanyId(WebUtils.getCurrentCompanyId());
+		item.setSchoolId( WebUtils.getCurrentUserSchoolId(request));
+		item.setItemType("2");
+		item.setParentCode("TYPE");
+		List<SysConfigItem> names = sysConfigItemServiceImpl.findByParentCode(item);
+		for(SysConfigItemRelation re : relations1){
+			for(SysConfigItem name :names){
+				if(re.getItemCode().equals(name.getItemCode())){
+					re.setItemName(name.getItemName());
+					break;
+				}
+			}
+		}
+		List<SysConfigItemRelation> relations =new ArrayList<SysConfigItemRelation>();
+		for (SysConfigItemRelation re:relations1) {
+			if(""!=re.getItemName()&& null!=re.getItemName()){
+				relations.add(re);}
+		}
+
+		model.addAttribute("typeItems", relations);
+
  		if(lable.contains(",")){
  			String[] strs=lable.split(",");
  	 		String fla=strs[0];
@@ -712,7 +739,7 @@ public class SimpleclassTypeController {
 	 * @return
 	 */
 	@RequestMapping(value="/updateClassTypeMessage",method=RequestMethod.POST)
-	public String updateBaseMessage(Model model,HttpServletRequest request,Integer oneId,Integer twoId,String type1,ClassType ct,String mark,String lable,String ltype,Integer courseNum){
+	public String updateBaseMessage(Model model,HttpServletRequest request,String oneId,String twoId,String type1,ClassType ct,String mark,String lable,String ltype,Integer courseNum){
 		//协议id有变化时更新协议记录表
 		ClassType oldCt = classTypeServiceImpl.findClassTypeById(ct.getId());
 		Integer oldProtocolId = oldCt.getProtocolId();
@@ -767,8 +794,8 @@ public class SimpleclassTypeController {
 				ct.setRemoteFlag(0);
 			}
 		}
-		ct.setItemOneId(oneId);
-		ct.setItemSecondId(twoId);
+/*		ct.setItemOneId(oneId);
+		ct.setItemSecondId(twoId);*/
 		ct.setUpdateTime(new Date());
 		ct.setUpdator(WebUtils.getCurrentUserId(request));
 		//如果开启标签库则将标签存库
