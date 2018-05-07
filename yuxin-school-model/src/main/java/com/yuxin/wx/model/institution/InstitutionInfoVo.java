@@ -4,6 +4,7 @@ import com.yuxin.wx.common.BaseEntity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class InstitutionInfoVo extends BaseEntity {
     private String name; //机构名称
@@ -23,6 +24,8 @@ public class InstitutionInfoVo extends BaseEntity {
     private Date createTime;//创建时间
     private Date updateTime;//修改时间
     private String codeName;//分类名称
+    private List<String> firstcodeName;//一级分类名称
+    private List<String> secondcodeName;//二级分类名称
 
 
     public String getName() {
@@ -161,4 +164,19 @@ public class InstitutionInfoVo extends BaseEntity {
         this.codeName = codeName;
     }
 
+    public List<String> getFirstcodeName() {
+        return firstcodeName;
+    }
+
+    public void setFirstcodeName(List<String> firstcodeName) {
+        this.firstcodeName = firstcodeName;
+    }
+
+    public List<String> getSecondcodeName() {
+        return secondcodeName;
+    }
+
+    public void setSecondcodeName(List<String> secondcodeName) {
+        this.secondcodeName = secondcodeName;
+    }
 }

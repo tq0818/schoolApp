@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yuxin.wx.institution.mapper.InstitutionCategoryMapper">
-    <resultMap type="com.yuxin.wx.model.institution.InstitutionCategoryVo" id="institutionCategoryMap">
+    <resultMap type="com.yuxin.wx.model.institution.InstitutionInfoVo" id="institutionInfoMap">
         <result property="id" column="id" />
         <result property="name" column="name" />
         <result property="province" column="province" />
@@ -19,6 +19,8 @@
         <result property="isCertified" column="is_certified" />
         <result property="createTime" column="create_time" />
         <result property="updateTime" column="update_time" />
+        <result property="firstcodeName" column="firstcodeName" />
+        <result property="secondcodeName" column="secondcodeName" />
     </resultMap>
     <sql id="table_columns">
         id,
@@ -37,7 +39,9 @@
         is_shelves,
         is_certified,
         create_time,
-        update_time
+        update_time,
+        secondcodeName,
+        firstcodeName
     </sql>
 
     <sql id="entity_properties">
@@ -60,12 +64,12 @@
         #{updateTime}
     </sql>
 
-    <insert id="insert" parameterType="com.yuxin.wx.model.institution.InstitutionCategoryVo" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="com.yuxin.wx.model.institution.InstitutionInfoVo" useGeneratedKeys="true" keyProperty="id">
         insert into institution_category( <include refid="table_columns" /> )
         values ( <include refid="entity_properties" /> )
     </insert>
 
-    <update id="update" parameterType="com.yuxin.wx.model.institution.InstitutionCategoryVo">
+    <update id="update" parameterType="com.yuxin.wx.model.institution.InstitutionInfoVo">
         update institution_category
         <trim prefix="set" suffixOverrides=",">
             <if test="name != null and name != ''">name = #{name},</if>
@@ -88,24 +92,13 @@
         <where>id = #{id}</where>
     </update>
 
-    <delete id="deleteInstitutionCategoryById">
-        delete from institution_category
-        where id = #{id}
-    </delete>
-
-    <select id="findInstitutionCategoryByParentId" parameterType="Integer" resultMap="institutionCategoryMap">
+    <select id="findInstitutionInfoById" parameterType="Integer" resultMap="institutionInfoMap">
         select <include refid="table_columns" />
         from institution_category
         where id  =#{id}
     </select>
 
-    <select id="findInstitutionCategoryById" parameterType="Integer" resultMap="institutionCategoryMap">
-        select <include refid="table_columns" />
-        from institution_category
-        where id  =#{id}
-    </select>
-
-    <select id="findInstitutionCategorys" resultMap="institutionCategoryMap">
+    <select id="findInstitutionInfos" resultMap="institutionInfoMap">
         select <include refid="table_columns" />
         from institution_category
     </select>
