@@ -4,13 +4,12 @@ import com.yuxin.wx.common.BaseEntity;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 public class InstitutionInfoVo extends BaseEntity {
     private String name; //机构名称
     private String province;//省
     private String city;//市
-    private String aera;//区
+    private String area;//区
     private String address;//地址
     private String mobile;//电话
     private Integer isChain;//是否是连锁机构(1是0否)
@@ -20,12 +19,35 @@ public class InstitutionInfoVo extends BaseEntity {
     private BigDecimal latitude;//纬度
     private String reservService;//预约服务
     private Integer isShelves;//是否上架(1 是 0否)
-    private Integer getCertified;//是否认证(1是 0否)
+    private Integer isCertified;//是否认证(1是 0否)
     private Date createTime;//创建时间
     private Date updateTime;//修改时间
     private String codeName;//分类名称
-    private List<String> firstcodeName;//一级分类名称
-    private List<String> secondcodeName;//二级分类名称
+    private String firstcodeName;//一级分类名称
+    private String secondcodeName;//二级分类名称
+    private String oneLevelId;//一级分类id
+    private String twoLevelId;//二级分类id
+
+    private String sysLabelIds;//系统标签id(在机构基本信息页修改的标签)
+    private String customLabelIds;//自定义标签id(在机构基本信息页修改的标签)
+    private String specialServiceIds;//特殊服务id(在机构基本信息页修改的标签)
+
+    private String sysLabel;//系统标签
+    private String customLabel;//自定义标签
+    private String specialService;//特殊服务
+
+    private String sysLabelNew;//系统标签(在机构基本信息页新增的标签)
+    private String customLabelNew;//自定义标签(在机构基本信息页新增的标签)
+    private String specialServiceNew;//特殊服务(在机构基本信息页新增的标签)
+
+    private String imgUrl;//修改的特殊服务图片路径
+    private String imgUrlNew;//新增的特殊服务图片路径
+    private Integer page;
+    private Integer pageSize;
+    private Date startTime;
+    private Date endTime;
+
+
 
 
     public String getName() {
@@ -52,12 +74,12 @@ public class InstitutionInfoVo extends BaseEntity {
         this.city = city;
     }
 
-    public String getAera() {
-        return aera;
+    public String getArea() {
+        return area;
     }
 
-    public void setAera(String aera) {
-        this.aera = aera;
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public String getAddress() {
@@ -132,12 +154,12 @@ public class InstitutionInfoVo extends BaseEntity {
         this.isShelves = isShelves;
     }
 
-    public Integer getGetCertified() {
-        return getCertified;
+    public Integer getIsCertified() {
+        return isCertified;
     }
 
-    public void setGetCertified(Integer getCertified) {
-        this.getCertified = getCertified;
+    public void setIsCertified(Integer isCertified) {
+        this.isCertified = isCertified;
     }
 
     public Date getCreateTime() {
@@ -164,19 +186,159 @@ public class InstitutionInfoVo extends BaseEntity {
         this.codeName = codeName;
     }
 
-    public List<String> getFirstcodeName() {
+    public String getFirstcodeName() {
         return firstcodeName;
     }
 
-    public void setFirstcodeName(List<String> firstcodeName) {
+    public void setFirstcodeName(String firstcodeName) {
         this.firstcodeName = firstcodeName;
     }
 
-    public List<String> getSecondcodeName() {
+    public String getSecondcodeName() {
         return secondcodeName;
     }
 
-    public void setSecondcodeName(List<String> secondcodeName) {
+    public void setSecondcodeName(String secondcodeName) {
         this.secondcodeName = secondcodeName;
+    }
+
+    public String getOneLevelId() {
+        return oneLevelId;
+    }
+
+    public void setOneLevelId(String oneLevelId) {
+        this.oneLevelId = oneLevelId;
+    }
+
+    public String getTwoLevelId() {
+        return twoLevelId;
+    }
+
+    public void setTwoLevelId(String twoLevelId) {
+        this.twoLevelId = twoLevelId;
+    }
+
+    public String getSysLabel() {
+        return sysLabel;
+    }
+
+    public void setSysLabel(String sysLabel) {
+        this.sysLabel = sysLabel;
+    }
+
+    public String getCustomLabel() {
+        return customLabel;
+    }
+
+    public void setCustomLabel(String customLabel) {
+        this.customLabel = customLabel;
+    }
+
+    @Override
+    public Integer getPage() {
+        return page;
+    }
+
+    @Override
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    @Override
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    @Override
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public String getSysLabelIds() {
+        return sysLabelIds;
+    }
+
+    public void setSysLabelIds(String sysLabelIds) {
+        this.sysLabelIds = sysLabelIds;
+    }
+
+    public String getCustomLabelIds() {
+        return customLabelIds;
+    }
+
+    public void setCustomLabelIds(String customLabelIds) {
+        this.customLabelIds = customLabelIds;
+    }
+
+    public String getSpecialServiceIds() {
+        return specialServiceIds;
+    }
+
+    public void setSpecialServiceIds(String specialServiceIds) {
+        this.specialServiceIds = specialServiceIds;
+    }
+
+    public String getSpecialService() {
+        return specialService;
+    }
+
+    public void setSpecialService(String specialService) {
+        this.specialService = specialService;
+    }
+
+    public String getSysLabelNew() {
+        return sysLabelNew;
+    }
+
+    public void setSysLabelNew(String sysLabelNew) {
+        this.sysLabelNew = sysLabelNew;
+    }
+
+    public String getCustomLabelNew() {
+        return customLabelNew;
+    }
+
+    public void setCustomLabelNew(String customLabelNew) {
+        this.customLabelNew = customLabelNew;
+    }
+
+    public String getSpecialServiceNew() {
+        return specialServiceNew;
+    }
+
+    public void setSpecialServiceNew(String specialServiceNew) {
+        this.specialServiceNew = specialServiceNew;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public String getImgUrlNew() {
+        return imgUrlNew;
+    }
+
+    public void setImgUrlNew(String imgUrlNew) {
+        this.imgUrlNew = imgUrlNew;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 }

@@ -1,10 +1,10 @@
-package com.yuxin.wx.api.institution;
+package com.yuxin.wx.institution.mapper;
 
 import com.yuxin.wx.model.institution.InstitutionLabelVo;
 
 import java.util.List;
 
-public interface InstitutionLabelService {
+public interface InstitutionLabelMapper {
 
     /**
      * 标签
@@ -45,9 +45,4 @@ public interface InstitutionLabelService {
      */
     List<InstitutionLabelVo> findSpecialServiceByInsId(Integer id);
     Integer findSpecialServiceByInsIdCount(Integer id);
-
-
-
-
-
 }
