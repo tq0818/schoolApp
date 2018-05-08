@@ -44,7 +44,7 @@
                             <span class="imgInfo">学校建筑内部图</span>
                             <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">取消推荐</a>
                             <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm ">删除</a>
+                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
                                 <a href="javascript:void(0)" class="btn btn-success btn-sm ">下架</a>
                                 <a href="javascript:void(0)" class="btn btn-success btn-sm " >管理</a>
                             </div>
@@ -54,7 +54,7 @@
                             <span class="imgInfo">学校建筑内部图</span>
                             <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">取消推荐</a>
                             <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm ">删除</a>
+                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
                                 <a href="javascript:void(0)" class="btn btn-success btn-sm ">下架</a>
                                 <a href="javascript:void(0)" class="btn btn-success btn-sm " >管理</a>
                             </div>
@@ -64,37 +64,7 @@
                             <span class="imgInfo">学校建筑内部图</span>
                             <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">推荐</a>
                             <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm ">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">下架</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm " >管理</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">取消推荐</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm ">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">下架</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm " >管理</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">取消推荐</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm ">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">下架</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm " >管理</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">推荐</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm ">删除</a>
+                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
                                 <a href="javascript:void(0)" class="btn btn-success btn-sm ">下架</a>
                                 <a href="javascript:void(0)" class="btn btn-success btn-sm " >管理</a>
                             </div>

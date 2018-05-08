@@ -31,4 +31,12 @@ $(function () {
             $(this).addClass('btn-primary').siblings('a').removeClass('btn-primary');
         }
     });
+    //删除弹窗
+    $('body').on('click','.deleteBtn',function () {
+        $.confirm('是否确定删除该课程?',function (data) {
+            if(data){
+                console.log('点击了确定');
+            }
+        })
+    });
 });
