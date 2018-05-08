@@ -536,7 +536,7 @@ public class BannerConfigController extends BaseWebController{
 		String cutImgPath=ImageUtils.cutImage(tempPath,target,xx,yy,ww,hh);
 		//切好的图缩放到规定比例
 //		ImageUtils.scale2(target,target,241,446,true);
-		ImageUtils.resize(target, target, 446);
+//		ImageUtils.resize(target, target, 446);
 		log.info("截图完成");
 		log.info("上传图片开始：");
 		String realPath=null;
