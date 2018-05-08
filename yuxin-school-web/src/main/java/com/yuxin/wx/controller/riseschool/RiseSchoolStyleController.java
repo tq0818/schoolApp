@@ -313,7 +313,7 @@ public class RiseSchoolStyleController {
             //在原图中切图
             String cutImgPath= ImageUtils.cutImage(tempPath,target,xx,yy,ww,hh);
             //切好的图缩放到规定比例
-            ImageUtils.resize(target, target, 446);
+//            ImageUtils.resize(target, target, 446);
             try {
                 realPath=FileUtil.upload(cutImgPath,"riseSchoolStyle", WebUtils.getCurrentCompanyId()+"");
             } catch (Exception e) {

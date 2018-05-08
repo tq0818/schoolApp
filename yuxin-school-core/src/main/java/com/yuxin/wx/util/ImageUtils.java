@@ -1,5 +1,7 @@
 package com.yuxin.wx.util;
 
+import cn.jpush.api.utils.StringUtils;
+
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
@@ -20,6 +22,8 @@ import java.awt.image.Kernel;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.Iterator;
 
 import javax.imageio.IIOImage;
@@ -522,35 +526,49 @@ public class ImageUtils {
      * @param w 目标切片  宽度
      * @param h 目标切片 高度
      */
-     public static  String cutImage(String imagePath,String targetPath,int x,int y,int w,int h){
-      Image img;
-      ImageFilter cropFilter;
-      
-      try {
-       //读取源图像
-       BufferedImage bi=ImageIO.read(new File(imagePath));
-       int srcWidth=bi.getWidth();//原图宽度
-       int srcHeight=bi.getHeight();//原图高度
-       //若原图大小大于大于切片大小，则进行切割
-       if(srcWidth>=w&&srcHeight>=h){
-        Image image=bi.getScaledInstance(srcWidth, srcHeight, Image.SCALE_DEFAULT);
+    public static  String cutImage(String imagePath,String targetPath,int x,int y,int w,int h){
+        Image img;
+        ImageFilter cropFilter;
+        // 获取图片后缀
+        String suffix = null;
+
+        try {
+            //读取源图像
+            BufferedImage bi=ImageIO.read(new File(imagePath));
+
+            // ImageIO 支持的图片类型 : [BMP, bmp, jpg, JPG, wbmp, jpeg, png, PNG, JPEG, WBMP, GIF, gif]
+            String types = Arrays.toString(ImageIO.getReaderFormatNames()).replace("]", ",");
+
+            if(imagePath.indexOf(".") > -1) {
+                suffix = imagePath.substring(imagePath.lastIndexOf(".") + 1);
+            }// 类型和图片后缀全部小写，然后判断后缀是否合法
+            if(suffix == null || types.toLowerCase().indexOf(suffix.toLowerCase()+",") < 0){
+                //  log.error("Sorry, the image suffix is illegal. the standard image suffix is {}." + types);
+                return targetPath;
+            }
+
+            int srcWidth=bi.getWidth();//原图宽度
+            int srcHeight=bi.getHeight();//原图高度
+            //若原图大小大于大于切片大小，则进行切割
+            if(srcWidth>=w&&srcHeight>=h){
+                Image image=bi.getScaledInstance(srcWidth, srcHeight, Image.SCALE_DEFAULT);
 //        int x1=x*srcWidth/400;
 //        int y1=y*srcHeight/270;
 //        int w1=w*srcWidth/400;
 //        int h1=h*srcHeight/270;
-        int x1=x;
-        int y1=y;
-        int w1=w;
-        int h1=h;
-        
-        cropFilter=new CropImageFilter(x1,y1,w1,h1);
-        img=Toolkit.getDefaultToolkit().createImage(
-          new FilteredImageSource(image.getSource(),cropFilter));
-        BufferedImage tag=new BufferedImage(w1,h1,BufferedImage.TYPE_INT_BGR);
-        Graphics g=tag.getGraphics();
-        g.drawImage(img, 0, 0, null);
-        g.dispose();
-        
+                int x1=x;
+                int y1=y;
+                int w1=w;
+                int h1=h;
+
+                cropFilter=new CropImageFilter(x1,y1,w1,h1);
+                img=Toolkit.getDefaultToolkit().createImage(
+                        new FilteredImageSource(image.getSource(),cropFilter));
+                BufferedImage tag=new BufferedImage(w1,h1,BufferedImage.TYPE_INT_BGR);
+                Graphics g=tag.getGraphics();
+                g.drawImage(img, 0, 0, null);
+                g.dispose();
+
 //        String url=imagePath.substring(0,imagePath.lastIndexOf("\\")+1);
 //        String name=imagePath.substring(imagePath.lastIndexOf("\\")+1);
 //        System.out.println(name);
@@ -558,18 +576,20 @@ public class ImageUtils {
 //        imagePath=src[0].concat("cut.").concat(src[1]);
 //        url=url.concat(imagePath);
 //        System.out.println(imagePath);
-        
-        ImageIO.write(tag, "JPEG",new File(targetPath) );
-        
-       }
-       
-      } catch (IOException e) {
-       // TODO Auto-generated catch block
-       e.printStackTrace();
-      }
-      return targetPath;
-     }
-    
+
+                ImageIO.write(tag, suffix,new File(targetPath) );
+//                ImageIO.write(tag, "JPEG",new File(targetPath) );
+
+            }
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return targetPath;
+    }
+
+
     /**
      * 程序入口：用于测试
      * @param args
