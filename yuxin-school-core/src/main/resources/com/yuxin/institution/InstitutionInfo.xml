@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuxin.wx.institution.mapper.InstitutionCategoryMapper">
+    <resultMap type="com.yuxin.wx.model.institution.InstitutionInfoVo" id="institutionInfoMap">
+        <result property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="province" column="province" />
+        <result property="city" column="city" />
+        <result property="area" column="area" />
+        <result property="address" column="address" />
+        <result property="mobile" column="mobile" />
+        <result property="isChain" column="is_chain" />
+        <result property="chainId" column="chain_id" />
+        <result property="chaiName" column="chain_name" />
+        <result property="longitude" column="longitude" />
+        <result property="latitude" column="latitude" />
+        <result property="reservService" column="reserv_service" />
+        <result property="isShelves" column="is_shelves" />
+        <result property="isCertified" column="is_certified" />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+        <result property="firstcodeName" column="firstcodeName" />
+        <result property="secondcodeName" column="secondcodeName" />
+    </resultMap>
+    <sql id="table_columns">
+        id,
+        name,
+        province,
+        city,
+        area,
+        address,
+        mobile,
+        is_chain,
+        chain_id,
+        chain_name,
+        longitude,
+        latitude,
+        reserv_service,
+        is_shelves,
+        is_certified,
+        create_time,
+        update_time,
+        secondcodeName,
+        firstcodeName
+    </sql>
+
+    <sql id="entity_properties">
+        #{id},
+        #{name},
+        #{province},
+        #{city},
+        #{area},
+        #{address},
+        #{mobile},
+        #{isChain},
+        #{chainId},
+        #{chainName},
+        #{longitude},
+        #{latitude},
+        #{reservService},
+        #{isShelves},
+        #{isCertified},
+        #{createTime},
+        #{updateTime}
+    </sql>
+
+    <insert id="insert" parameterType="com.yuxin.wx.model.institution.InstitutionInfoVo" useGeneratedKeys="true" keyProperty="id">
+        insert into institution_category( <include refid="table_columns" /> )
+        values ( <include refid="entity_properties" /> )
+    </insert>
+
+    <update id="update" parameterType="com.yuxin.wx.model.institution.InstitutionInfoVo">
+        update institution_category
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="province != null and province != ''">province = #{province},</if>
+            <if test="city != null and city != ''">city = #{city},</if>
+            <if test="area != null and area != ''">area = #{area},</if>
+            <if test="address != null and address != ''">address = #{address},</if>
+            <if test="mobile != null and mobile != ''">mobile = #{mobile},</if>
+            <if test="isChain != null and isChain != ''">is_chain = #{isChain},</if>
+            <if test="chainId != null and chainId != ''">chain_id = #{chainId},</if>
+            <if test="chainName != null and chainName != ''">chain_name = #{chainName},</if>
+            <if test="longitude != null and longitude != ''">longitude = #{longitude},</if>
+            <if test="latitude != null and latitude != ''">latitude = #{latitude},</if>
+            <if test="reservService != null and reservService != ''">reserv_service = #{reservService},</if>
+            <if test="isShelves != null and isShelves != ''">is_shelves = #{isShelves},</if>
+            <if test="isCertified != null and isCertified != ''">is_certified = #{isCertified},</if>
+            <if test="createTime != null and createTime != ''">create_time = #{createTime},</if>
+            <if test="updateTime != null and updateTime != ''">update_time = #{updateTime},</if>
+        </trim>
+        <where>id = #{id}</where>
+    </update>
+
+    <select id="findInstitutionInfoById" parameterType="Integer" resultMap="institutionInfoMap">
+        select <include refid="table_columns" />
+        from institution_category
+        where id  =#{id}
+    </select>
+
+    <select id="findInstitutionInfos" resultMap="institutionInfoMap">
+        select <include refid="table_columns" />
+        from institution_category
+    </select>
+
+</mapper>

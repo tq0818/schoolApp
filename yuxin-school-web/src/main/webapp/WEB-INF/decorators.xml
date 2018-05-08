@@ -585,6 +585,10 @@
         <!--appTag-->
         <pattern>/appTagManage/queryAppTagList</pattern>
 
+        <!--机构管理首页-->
+        <pattern>/InsInfo/organizationIndex</pattern>
+
+
     </decorator>
 
 </decorators>

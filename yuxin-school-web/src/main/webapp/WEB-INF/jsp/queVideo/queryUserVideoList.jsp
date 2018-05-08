@@ -10,7 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>用户点播统计</title>
 	<link rel="stylesheet" type="text/css"
-		  href="<%=rootPath%>/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" />
+		  href="<%=rootPath%>/stylesheets/bootstrap-datetimepicker.css" />
 	<link rel="stylesheet"  type="text/css" href="<%=rootPath %>/stylesheets/system.css"/>
 	<link href="<%=rootPath%>/stylesheets/query.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/splitscreen.css"/>
@@ -73,7 +73,8 @@
 				<div class="screen-info margin10" style="margin-top: 10px;">
 					<span class="date" style="margin-left: 0;">
 						<i class="text" style="background: #f6f6f6;">日期</i>
-						<span><input type="text" name="startTime" class="date-picker from" value="${startTime}"/><em>至</em><input type="text" name="endTime" class="date-picker to" value="${endTime}"/></span>
+						<span><input type="text" name="startTime" class="date-picker from" value="${startTime}" readonly/>
+							<em>至</em><input type="text" name="endTime" class="date-picker to" value="${endTime}" readonly/></span>
 					</span>
 					<input type="text" id="username" name="username" placeholder="学员手机号/用户名查询"
 						   style="width: 180px;height: 23px;"/>
