@@ -587,6 +587,8 @@
 
         <!--机构管理首页-->
         <pattern>/InsInfo/organizationIndex</pattern>
+        <!--课程管理-->
+        <pattern>/InsInfo/course</pattern>
 
 
     </decorator>

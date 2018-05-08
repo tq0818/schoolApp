@@ -11,7 +11,6 @@
     <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/plugins/jcrop/css/jquery.Jcrop.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/mbox.css">
-
     <style>
         .gobal-progress{display: none !important;} 
         /*.uploadImage .jcrop-holder{margin-top: 0!important;width: 400px !important;height: 300px !important; }*/

@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/InsInfo")
 public class InstitutionBaseController {
-
+    //机构管理首页
     @RequestMapping(value = "/organizationIndex")
-    public String findInsInfoList(){
+    public String organizationIndex(){
         return "institution/organizationIndex";
     }
-
-
+    //课程管理
+    @RequestMapping(value = "/course")
+    public String course(){
+        return "institution/course";
+    }
 }
