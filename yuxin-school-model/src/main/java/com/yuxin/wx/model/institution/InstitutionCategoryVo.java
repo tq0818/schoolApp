@@ -17,6 +17,15 @@ public class InstitutionCategoryVo extends BaseEntity{
     private Integer thirdRecommend;//移动端第三项项推荐(1是 0否)
     private Date createTime;//创建时间
     private Date updateTime;//修改时间
+    private String secondCate;//二级分类组装
+
+    public String getSecondCate() {
+        return secondCate;
+    }
+
+    public void setSecondCate(String secondCate) {
+        this.secondCate = secondCate;
+    }
 
     public String getCodeName() {
         return codeName;
