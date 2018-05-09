@@ -301,7 +301,7 @@
     <script type="text/javascript" src="<%=rootPath%>/javascripts/common/DateUtils.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 
-    <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/organizationIndex.js"></script>
+    <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/classification.js"></script>
 
 </body>
 </html>
