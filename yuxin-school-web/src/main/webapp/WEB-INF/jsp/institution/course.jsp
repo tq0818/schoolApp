@@ -92,16 +92,23 @@
                         <tr data-buy="true">
                             <th width="3%">序号</th>
                             <th width="12%">课程名称</th>
-                            <th width="5%">上架状态</th>
+                            <th width="5%">关联状态</th>
                             <th width="5%">排序</th>
                             <th width="5%">操作</th>
                         </tr>
                         <tr>
                             <td>1</td>
                             <td>如何写好作文</td>
-                            <td>已上架</td>
+                            <td class="relationResult">已关联</td>
                             <td>1</td>
-                            <td>上架</td>
+                            <td class="relation">取消关联</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>如何写好作文</td>
+                            <td class="relationResult">未关联</td>
+                            <td>1</td>
+                            <td class="relation">关联</td>
                         </tr>
                         </tbody>
                     </table>

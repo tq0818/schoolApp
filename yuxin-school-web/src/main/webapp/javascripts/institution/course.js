@@ -82,6 +82,16 @@ $(function () {
     $('.closeCoursePopup').click(function () {
         $('.addClassPopup').hide();
     });
+    //关联
+    $('.relation').click(function () {
+            if($(this).html()=='关联'){
+                $(this).html("取消关联");
+                $(this).siblings('.relationResult').html("已关联");
+            }else{
+                $(this).html("关联");
+                $(this).siblings('.relationResult').html("未关联");
+            }
+    });
 
 
 });
