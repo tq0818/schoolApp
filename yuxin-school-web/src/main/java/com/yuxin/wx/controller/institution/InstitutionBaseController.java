@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by lym_gxm on 18/5/6.
  */
 @Controller
-@RequestMapping("/InsInfo")
+@RequestMapping("/InsInfoBase")
 public class InstitutionBaseController {
     //机构管理首页
     @RequestMapping(value = "/organizationIndex")
@@ -19,4 +19,10 @@ public class InstitutionBaseController {
     public String course(){
         return "institution/course";
     }
+    //机构分类管理
+    @RequestMapping(value = "/classification")
+    public String classification(){
+        return "institution/classification";
+    }
+
 }

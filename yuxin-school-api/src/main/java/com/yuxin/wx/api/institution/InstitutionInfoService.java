@@ -1,5 +1,6 @@
 package com.yuxin.wx.api.institution;
 
+import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
 
 import java.util.List;
@@ -35,5 +36,9 @@ public interface InstitutionInfoService {
      * 查询所有机构
      * @return
      */
-    List<InstitutionInfoVo> findInstitutionInfos();
+    PageFinder<InstitutionInfoVo> findInstitutionInfos(InstitutionInfoVo insInfoVo);
+
+    void updateInsById (InstitutionInfoVo institutionInfoVo);
+
+
 }

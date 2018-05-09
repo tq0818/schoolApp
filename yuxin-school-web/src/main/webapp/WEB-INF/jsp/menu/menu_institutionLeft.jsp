@@ -14,7 +14,7 @@
     <ul id="course_manage" class="system_managelist">
         <li class="subentry" code="essential" mark="">基本信息管理</li>
         <li class="subentry" code="elegantDemeano" mark="">风采管理</li>
-        <li class="subentry" code="course" mark="/InsInfo/course">课程管理</li>
+        <li class="subentry" code="course" mark="/InsInfoBase/course">课程管理</li>
         <li class="subentry" code="teacherFamous " mark="">名师管理</li>
         <li class="subentry" code="evaluate" mark="">评价管理</li>
     </ul>

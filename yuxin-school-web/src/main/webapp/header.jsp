@@ -332,7 +332,7 @@ button.cloze {
                 <li code="earlyLitre"><a href="<%=rootPath %>/riseschoolback/earlyLitre" >小升初</a></li>
             <%--</shiro:hasPermission>--%>
 
-                <li code="mechanism"><a href="<%=rootPath %>/InsInfo/organizationIndex" >机构</a></li>
+                <li code="mechanism"><a href="<%=rootPath %>/InsInfoBase/classification" >机构</a></li>
 
             <shiro:hasPermission name="statistics_all">
                 <li code="statistics_all"><a href="<%=rootPath %>/company/statistics/firstTransferStation" >总览</a></li>

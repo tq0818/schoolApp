@@ -1,9 +1,11 @@
 package com.yuxin.wx.model.institution;
 
+import com.yuxin.wx.common.BaseEntity;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class InstitutionLabelVo {
+public class InstitutionLabelVo extends BaseEntity{
 
     private Integer relationId;//机构主键或者课程主键或者教师主键
     private String labelName;//标签名称

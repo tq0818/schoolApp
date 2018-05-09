@@ -34,5 +34,9 @@ public interface InstitutionInfoMapper {
      * 查询所有机构
      * @return
      */
-    List<InstitutionInfoVo> findInstitutionInfos();
+    List<InstitutionInfoVo> findInstitutionInfos(InstitutionInfoVo institutionInfoVo);
+
+    Integer findInstitutionInfosCount(InstitutionInfoVo institutionInfoVo);
+
+    Integer updateInsById (InstitutionInfoVo institutionInfoVo);
 }

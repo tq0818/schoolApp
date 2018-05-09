@@ -343,6 +343,9 @@
 		<mapper resource="com/yuxin/riseschool/RiseSchoolStyleMapper.xml"/>
 		<mapper resource="com/yuxin/riseschool/RiseSchoolDynamicMapper.xml"/>
 		<mapper resource="com/yuxin/riseschool/RiseStudentServiceFMapper.xml"/>
+
+		<!--机构第一期-->
+		<mapper resource="com/yuxin/institution/InstitutionInfoMapper.xml"/>
 	</mappers>
 
 </configuration>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yuxin.wx.institution.mapper.InstitutionCategoryMapper">
+<mapper namespace="com.yuxin.wx.institution.mapper.InstitutionInfoMapper">
     <resultMap type="com.yuxin.wx.model.institution.InstitutionInfoVo" id="institutionInfoMap">
         <result property="id" column="id" />
         <result property="name" column="name" />
@@ -21,6 +21,8 @@
         <result property="updateTime" column="update_time" />
         <result property="firstcodeName" column="firstcodeName" />
         <result property="secondcodeName" column="secondcodeName" />
+        <result property="oneLevelId" column="oneLevelId" />
+        <result property="twoLevelId" column="twoLevelId" />
     </resultMap>
     <sql id="table_columns">
         id,
@@ -65,12 +67,12 @@
     </sql>
 
     <insert id="insert" parameterType="com.yuxin.wx.model.institution.InstitutionInfoVo" useGeneratedKeys="true" keyProperty="id">
-        insert into institution_category( <include refid="table_columns" /> )
+        insert into institution_info( <include refid="table_columns" /> )
         values ( <include refid="entity_properties" /> )
     </insert>
 
     <update id="update" parameterType="com.yuxin.wx.model.institution.InstitutionInfoVo">
-        update institution_category
+        update institution_info
         <trim prefix="set" suffixOverrides=",">
             <if test="name != null and name != ''">name = #{name},</if>
             <if test="province != null and province != ''">province = #{province},</if>
@@ -94,13 +96,56 @@
 
     <select id="findInstitutionInfoById" parameterType="Integer" resultMap="institutionInfoMap">
         select <include refid="table_columns" />
-        from institution_category
+        from institution_info
         where id  =#{id}
     </select>
 
-    <select id="findInstitutionInfos" resultMap="institutionInfoMap">
-        select <include refid="table_columns" />
-        from institution_category
+    <select id="findInstitutionInfos" resultMap="institutionInfoMap" parameterType="com.yuxin.wx.model.institution.InstitutionInfoVo">
+        select ii.id,ii.name,s.item_name as province,s1.item_name as city,s2.item_name as area,ii.is_shelves,ii.is_certified,ii.create_time,
+        GROUP_CONCAT(ic.code_name) firstcodeName,GROUP_CONCAT(ic1.code_name) secondcodeName,GROUP_CONCAT(ic.id) oneLevelId,GROUP_CONCAT(ic1.id) twoLevelId
+        from institution_info ii
+		left JOIN sys_rise_school_dict s on s.item_code = ii.province
+        left JOIN sys_rise_school_dict s1 on s1.item_code = ii.city
+        left JOIN sys_rise_school_dict s2 on s2.item_code = ii.area
+        JOIN institution_relation ir on ir.ins_id = ii.id
+		JOIN institution_category ic on ic.id = ir.one_level_id
+		JOIN institution_category ic1 on ic1.id = ir.two_level_id
+        where 1=1 and ic.code_type = 0
+        <if test="name != null and name != ''">and ii.name = #{name}</if>
+        <if test="province != null and province != ''">and s.item_code = #{province}</if>
+        <if test="city != null and city != ''">and s1.item_code = #{city}</if>
+        <if test="area != null and area != ''">and s2.item_code = #{area}</if>
+        <if test="isShelves != null and isShelves != ''">ii.is_shelves = #{isShelves}</if>
+        <if test="isCertified != null and isCertified != ''">ii.is_certified = #{isCertified}</if>
+        <if test="oneLevelId != null and oneLevelId != ''">ir.one_level_id = #{oneLevelId}</if>
+        <if test="twoLevelId != null and twoLevelId != ''">ir.two_level_id = #{twoLevelId}</if>
+        <if test="startTime != null and startTime != ''">and date_format(ii.create_time, "%Y-%m-%d") <![CDATA[>=]]> '${startTime}'</if>
+        <if test="endTime != null and endTime != ''"> and date_format(ii.create_time, "%Y-%m-%d") <![CDATA[<=]]> '${endTime}'</if>
+        GROUP BY  ii.id
+        order by ii.is_shelves,ii.create_time desc
     </select>
 
+
+    <select id="findInstitutionInfosCount" resultType="Integer" parameterType="com.yuxin.wx.model.institution.InstitutionInfoVo">
+        select count(1)
+        from institution_info ii
+        left JOIN sys_rise_school_dict s on s.item_code = ii.province
+        left JOIN sys_rise_school_dict s1 on s1.item_code = ii.city
+        left JOIN sys_rise_school_dict s2 on s2.item_code = ii.area
+        JOIN institution_relation ir on ir.ins_id = ii.id
+        JOIN institution_category ic on ic.id = ir.one_level_id
+        JOIN institution_category ic1 on ic1.id = ir.two_level_id
+        where 1=1 and ic.code_type = 0
+        <if test="name != null and name != ''">and ii.name = #{name}</if>
+        <if test="province != null and province != ''">and s.item_code = #{province}</if>
+        <if test="city != null and city != ''">and s1.item_code = #{city}</if>
+        <if test="area != null and area != ''">and s2.item_code = #{area}</if>
+        <if test="isShelves != null and isShelves != ''">ii.is_shelves = #{isShelves}</if>
+        <if test="isCertified != null and isCertified != ''">ii.is_certified = #{isCertified}</if>
+        <if test="oneLevelId != null and oneLevelId != ''">ir.one_level_id = #{oneLevelId}</if>
+        <if test="twoLevelId != null and twoLevelId != ''">ir.two_level_id = #{twoLevelId}</if>
+        <if test="startTime != null and startTime != ''">and date_format(ii.create_time, "%Y-%m-%d") <![CDATA[>=]]> '${startTime}'</if>
+        <if test="endTime != null and endTime != ''"> and date_format(ii.create_time, "%Y-%m-%d") <![CDATA[<=]]> '${endTime}'</if>
+        GROUP BY  ii.id
+    </select>
 </mapper>
