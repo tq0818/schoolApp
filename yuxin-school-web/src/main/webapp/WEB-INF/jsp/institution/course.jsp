@@ -11,6 +11,7 @@
     <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/plugins/jcrop/css/jquery.Jcrop.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/mbox.css">
+    <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/fatstyle.css">
     <style>
         .gobal-progress{display: none !important;} 
     </style>
@@ -24,10 +25,11 @@
     <div class="right-side">
         <div class="mainbackground nopadding">
             <div class="heading">
-                <h2 class="h5">课程管理</h2>
+                <h2 class="h5 courseLine active" style="display: inline-block;cursor: pointer;">线下课程管理</h2>
+                <span class="courseLine" style="font-size: 18px;color: #333;cursor: pointer;">在线课程管理</span>
                 <span class="line"></span>
             </div>
-            <div>
+            <div class="courseUnderLine">
                 <div class="chooseBtn">
                     <span>上下架状态</span>
                     <a href="##" class="btn btn-default btn-primary btn-mb">全部</a>
@@ -71,12 +73,45 @@
                         </li>
                     </ul>
                 </div>
+                <div class="pages pagination" style="padding-top: 10px;">
+
+                </div>
+            </div>
+            <div class="courseOnLine">
+                <span style="color: #a1a1a1;">功能说明：该功能用将卓鹿的“在线课程”和当前机构进行关联，便于用户查看属于该机构的在线视频课程</span>
+                <div class="chooseBtn">
+                    <span>上下架状态</span>
+                    <a href="##" class="btn btn-default btn-primary btn-mb">全部</a>
+                    <a href="##" class="btn btn-default  btn-mb">已上架</a>
+                    <a href="##" class="btn btn-default  btn-mb">已下架</a>
+                </div>
+                <a href="##" class="btn btn-primary btn-mb addCourse" style="float: right;margin-right: 200px;margin-bottom: 10px;">添加课程</a>
+                <div style="width: 80%;margin: auto;">
+                    <table class="table table-center" id="tableList">
+                        <tbody>
+                        <tr data-buy="true">
+                            <th width="3%">序号</th>
+                            <th width="12%">课程名称</th>
+                            <th width="5%">上架状态</th>
+                            <th width="5%">排序</th>
+                            <th width="5%">操作</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>如何写好作文</td>
+                            <td>已上架</td>
+                            <td>1</td>
+                            <td>上架</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pages pagination paginationOnLine" style="padding-top: 10px;">
+                </div>
             </div>
         </div>
 
-        <div class="pages pagination" style="padding-top: 10px;">
 
-        </div>
     </div>
 </div>
 <!-- ajax加载中div开始 -->
@@ -86,7 +121,44 @@
     </p>
 </div>
 <div class="loading-bg lp-units-loading-bg" style="display: none"></div>
+<%--添加课程弹窗--%>
+<div class="addClassPopup">
+    <h5>
+        添加课程
+        <a href="##" class="btn btn-primary btn-xs closeCoursePopup">关闭</a>
+    </h5>
+    <div style="text-align: center;margin: 10px;">
+        <span>课程名称：</span>
+        <input type="text" placeholder="请输入课程名称" style="width: 300px;height: 25px;margin-right: 5px;">
+        <a href="##" class="btn btn-sm btn-primary">搜索</a>
+    </div>
+    <div>
 
+        <div style="width: 80%;margin: auto;">
+            <span style="color: #868686;">搜索结果：</span>
+                <table class="table table-center" >
+                    <tbody>
+                    <tr>
+                        <th width="3%">序号</th>
+                        <th width="12%">课程名称</th>
+                        <th width="12%">学科</th>
+                        <th width="15%">所属学校</th>
+                        <th width="5%">操作</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>行程问题</td>
+                        <td>物理</td>
+                        <td>成都芳草附属小学</td>
+                        <td><a href="##" class="btn btn-primary btn-xs addConfirm">添加</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+    </div>
+
+</div>
 
 
 

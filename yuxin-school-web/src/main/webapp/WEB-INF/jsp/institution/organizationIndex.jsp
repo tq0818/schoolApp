@@ -122,7 +122,7 @@
                             <ul class="none box" style="display: none;">
                                 <li><a href="">基本信息</a></li>
                                 <li><a href="">风采管理</a></li>
-                                <li><a href="">课程管理</a></li>
+                                <li><a href="/InsInfoBase/course">课程管理</a></li>
                                 <li><a href="">名师管理</a></li>
                                 <li><a href="">评论管理</a></li>
                             </ul>
@@ -152,7 +152,7 @@
                             <ul class="none box" style="display: none;">
                                 <li><a href="">基本信息</a></li>
                                 <li><a href="">风采管理</a></li>
-                                <li><a href="">课程管理</a></li>
+                                <li><a href="/InsInfoBase/course">课程管理</a></li>
                                 <li><a href="">名师管理</a></li>
                                 <li><a href="">评论管理</a></li>
                             </ul>
