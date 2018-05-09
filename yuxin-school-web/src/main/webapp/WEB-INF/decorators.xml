@@ -585,6 +585,14 @@
         <!--appTag-->
         <pattern>/appTagManage/queryAppTagList</pattern>
 
+        <!--机构管理首页-->
+        <pattern>/InsInfoBase/organizationIndex</pattern>
+        <!--课程管理-->
+        <pattern>/InsInfoBase/course</pattern>
+        <!--机构分类管理-->
+        <pattern>/InsInfoBase/classification</pattern>
+
+
     </decorator>
 
 </decorators>
