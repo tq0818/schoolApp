@@ -33,7 +33,7 @@
         });
 //        $selectSubMenu("org_service");
         //        二级菜单加active
-        $selectSubMenu('classification');
+        $selectSubMenu('organizationIndex');
     });
     function $selectSubMenus(code) {
         $(".overflow").find(".system_managelist").find("li").each(function() {

@@ -885,4 +885,12 @@
 			}
 		});
 	}
+	//弹幕
+	$.commonPopup = function () {
+		var _html = `
+			<div class="commonPopup" style="position: fixed;left: 0;top: 0;
+			background: rgba(0,0,0,0.5);width: 100%;height: 100%;    "></div>
+		`;
+		$('body').append(_html);
+    }
 })(jQuery);

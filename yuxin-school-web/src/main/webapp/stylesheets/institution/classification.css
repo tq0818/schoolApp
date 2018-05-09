@@ -1,0 +1,11 @@
+.addType{padding: 0 30px;width: 440px;height: 240px;background: #fff;position: fixed;left: 50%;top: 50%;
+    margin-left: -250px;margin-top: -120px;border: 1px solid #797979;display: none;z-index: 1000;}
+.addType img{width: 85px;height: 60px;}
+.addType h5{height: 36px;line-height: 36px;text-align: center;}
+.addType>div{margin-bottom: 15px;}
+.addTypeBtn{text-align: center;}
+.addTypeBtn a{margin :0 20px}
+.btnFile{position: relative;width: 60px;height: 24px;line-height: 24px;text-align: center;
+    background: #e4e4e4;display: inline-block;overflow: hidden;border-radius:3px;border: 1px solid #c9c9c9;color: #c9c9c9;
+font-size: 12px;text-decoration: none;margin-left: 55px;margin-top: 5px;}
+.btnFile input{opacity: 0;position: absolute;left: 0;top: 0;width: 60px;height: 24px;}
