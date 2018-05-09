@@ -120,7 +120,7 @@
                             <a href="##" class="countManage">账号管理</a>|
                             <a href="##" class="manageBtn">管理</a>
                             <ul class="none box" style="display: none;">
-                                <li><a href="">基本信息</a></li>
+                                <li><a href="/InsInfoBase/basicInformation">基本信息</a></li>
                                 <li><a href="">风采管理</a></li>
                                 <li><a href="/InsInfoBase/course">课程管理</a></li>
                                 <li><a href="">名师管理</a></li>
@@ -150,7 +150,7 @@
                             <a href="##" class="countManage">账号管理</a>|
                             <a href="##" class="manageBtn">管理</a>
                             <ul class="none box" style="display: none;">
-                                <li><a href="">基本信息</a></li>
+                                <li><a href="/InsInfoBase/basicInformation">基本信息</a></li>
                                 <li><a href="">风采管理</a></li>
                                 <li><a href="/InsInfoBase/course">课程管理</a></li>
                                 <li><a href="">名师管理</a></li>

@@ -24,5 +24,9 @@ public class InstitutionBaseController {
     public String classification(){
         return "institution/classification";
     }
-
+    //基本信息管理
+    @RequestMapping(value = "/basicInformation")
+    public String basicInformation(){
+        return "institution/basicInformation";
+    }
 }
