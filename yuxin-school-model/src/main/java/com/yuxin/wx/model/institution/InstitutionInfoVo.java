@@ -13,6 +13,7 @@ public class InstitutionInfoVo extends BaseEntity {
     private String address;//地址
     private String mobile;//电话
     private Integer isChain;//是否是连锁机构(1是0否)
+    private String isChains;//是否是连锁机构(1是0否)
     private Integer chainId;//连锁id
     private String chainName;//连锁机构名称
     private BigDecimal longitude;//经度
@@ -43,12 +44,62 @@ public class InstitutionInfoVo extends BaseEntity {
     private String imgUrl;//修改的特殊服务图片路径
     private String imgUrlNew;//新增的特殊服务图片路径
     private Integer page;
+    private Integer firstPage;
     private Integer pageSize;
-    private Date startTime;
-    private Date endTime;
+    private String startTime;
+    private String endTime;
+    private Integer sort;
+    private String userName;//管理员账号
+    private String pwd;
+    private Integer userId;
 
+    public String getPwd() {
+        return pwd;
+    }
 
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getIsChains() {
+        return isChains;
+    }
+
+    public void setIsChains(String isChains) {
+        this.isChains = isChains;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    public Integer getFirstPage() {
+        return firstPage;
+    }
+
+    public void setFirstPage(Integer firstPage) {
+        this.firstPage = firstPage;
+    }
 
     public String getName() {
         return name;
@@ -326,19 +377,19 @@ public class InstitutionInfoVo extends BaseEntity {
         this.imgUrlNew = imgUrlNew;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 }

@@ -43,4 +43,10 @@ public interface InstitutionCategoryMapper {
      * @return
      */
     List<InstitutionCategoryVo> findInstitutionCategorys();
+
+    /**
+     * 查询所有一级分类
+     * @return
+     */
+    List<InstitutionCategoryVo> findFistCategorys();
 }

@@ -592,7 +592,7 @@
         <!--机构分类管理-->
         <pattern>/InsInfoBase/classification</pattern>
         <!--基本信息管理-->
-        <pattern>/InsInfoBase/basicInformation</pattern>
+        <pattern>/InsInfoBase/findInsById</pattern>
 
     </decorator>
 

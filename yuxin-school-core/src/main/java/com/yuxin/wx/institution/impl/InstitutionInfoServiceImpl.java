@@ -1,5 +1,6 @@
 package com.yuxin.wx.institution.impl;
 
+import com.google.common.io.ByteSource;
 import com.yuxin.wx.api.institution.InstitutionInfoService;
 import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.common.PageFinder;
@@ -7,6 +8,8 @@ import com.yuxin.wx.institution.mapper.InstitutionInfoMapper;
 import com.yuxin.wx.institution.mapper.InstitutionLabelMapper;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
 import com.yuxin.wx.model.institution.InstitutionLabelVo;
+import com.yuxin.wx.model.user.Users;
+import com.yuxin.wx.user.mapper.UsersMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,27 +25,53 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
 
     @Autowired
     private InstitutionLabelMapper institutionLabelMapper;
+    @Autowired
+    private UsersMapper usersMapper;
 
     @Override
     public void insert(InstitutionInfoVo institutionInfoVo) {
-        String labels = institutionInfoVo.getSysLabel().substring(0,institutionInfoVo.getSysLabel().lastIndexOf(","));
-        String[] labelArr = labels.split(",");//标签数组
-
-        //插入机构表
-        institutionInfoMapper.insert(institutionInfoVo);
-        InstitutionLabelVo institutionLabelVo = new InstitutionLabelVo();
-        for(int i =0;i<labelArr.length;i++){
+        try{
+            Users users = new Users();
+            if(null != institutionInfoVo.getUserName() && !"".equals(institutionInfoVo.getUserName())){
+                users.setId(null);
+                users.setUsername(institutionInfoVo.getUserName());
+                users.setPassword(institutionInfoVo.getPwd());
+                users.setUserType("3");
+                usersMapper.insertA(users);
+            }
+            String labels = institutionInfoVo.getSysLabel().substring(0,institutionInfoVo.getSysLabel().lastIndexOf(","));
+            String[] labelArr = labels.split(",");//标签数组
+            institutionInfoVo.setIsChain(Integer.parseInt(institutionInfoVo.getIsChains()));
+            //插入机构表
             Date date = new Date();
-            institutionLabelVo.setCreateTime(date);
-            institutionLabelVo.setUpdateTime(date);
-            institutionLabelVo.setLabelType("0");
-            institutionLabelVo.setLabelName(labelArr[i]);
-            institutionLabelVo.setSourceFlag(0);
-            institutionLabelVo.setRelationId(institutionInfoVo.getId());//机构主键
+            institutionInfoVo.setId(null);
+            institutionInfoVo.setChainId(null);
+            institutionInfoVo.setLongitude(null);
+            institutionInfoVo.setLatitude(null);
+            institutionInfoVo.setReservService(null);
+            institutionInfoVo.setIsShelves(0);
+            institutionInfoVo.setIsCertified(0);
+            institutionInfoVo.setCreateTime(date);
+            institutionInfoVo.setUpdateTime(date);
+            institutionInfoVo.setUserId(users.getId());
+            institutionInfoMapper.insert(institutionInfoVo);
+            InstitutionLabelVo institutionLabelVo = new InstitutionLabelVo();
+            for(int i =0;i<labelArr.length;i++){
+                institutionLabelVo.setId(null);
+                institutionLabelVo.setCreateTime(date);
+                institutionLabelVo.setUpdateTime(date);
+                institutionLabelVo.setLabelType("0");
+                institutionLabelVo.setLabelName(labelArr[i]);
+                institutionLabelVo.setSourceFlag(0);
+                institutionLabelVo.setRelationId(institutionInfoVo.getId());//机构主键
 
-            //插入关系表
-            institutionLabelMapper.insert(institutionLabelVo);
+                //插入关系表
+                institutionLabelMapper.insert(institutionLabelVo);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
 
     }
 
@@ -64,18 +93,18 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
 
     @Override
     public PageFinder<InstitutionInfoVo> findInstitutionInfos(InstitutionInfoVo insInfoVo) {
-        try{
+            if(insInfoVo.getPage() == 1){
+                insInfoVo.setPage(0);
+            }else{
+                insInfoVo.setPage((insInfoVo.getPage()-1)*10);
+            }
             List<InstitutionInfoVo> data = institutionInfoMapper.findInstitutionInfos(insInfoVo);
+            for(int i = 0; i<data.size();i++){
+                data.get(i).setSort(i+1);
+            }
             Integer rowCount = institutionInfoMapper.findInstitutionInfosCount(insInfoVo);
-            insInfoVo.setPage(0);
-            insInfoVo.setPageSize(10);
-            PageFinder<InstitutionInfoVo> pageFinder=new PageFinder<>(insInfoVo.getPage(),insInfoVo.getPageSize(),rowCount,data);
+            PageFinder<InstitutionInfoVo> pageFinder=new PageFinder<>(insInfoVo.getPage()/10 ,insInfoVo.getPageSize(),rowCount,data);
             return pageFinder;
-        }catch (Exception e){
-            e.printStackTrace();
-
-        }
-      return null;
     }
 
     @Override
@@ -199,4 +228,16 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
             }
         }
     }
+
+    @Override
+    public InstitutionInfoVo checkUser(Integer id) {
+        try{
+            return institutionInfoMapper.checkUser(id);
+        }catch (Exception e){
+            return null;
+        }
+
+    }
+
+
 }

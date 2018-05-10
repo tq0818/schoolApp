@@ -20,6 +20,8 @@ public interface BaseMapper<T> {
 	* @user by wang.zx
 	 */
 	void insert(T t);
+
+	void insertA(T t);
 	
 	/**
 	 * 

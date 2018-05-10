@@ -43,4 +43,12 @@ public interface InstitutionCategoryService {
      * @return
      */
     List<InstitutionCategoryVo> findInstitutionCategorys();
+
+    /**
+     * 查询所有一级分类
+     * @return
+     */
+    List<InstitutionCategoryVo> findFistCategorys();
+
+    List<InstitutionCategoryVo> findCecondCategorys(Integer id);
 }

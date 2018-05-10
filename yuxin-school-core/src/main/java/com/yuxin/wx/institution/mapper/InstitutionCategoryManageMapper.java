@@ -15,4 +15,8 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
     List<InstitutionCategoryVo> queryInstitutionCategorys(Map<String, Object> params);
 
     InstitutionCategoryVo queryInstitutionCategoryByCondition(Map<String, Object> params);
+
+    List<InstitutionCategoryVo> findFistCategorys();
+
+    List<InstitutionCategoryVo> findCecondCategorys(Integer id );
 }

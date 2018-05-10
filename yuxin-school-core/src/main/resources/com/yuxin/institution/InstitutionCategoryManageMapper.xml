@@ -56,4 +56,12 @@
         VALUES (#{codeName},#{codeLevel},#{codeType}, #{imgUrl}, 0, #{parentId}, now(),now())
     </insert>
 
+    <select id="findFistCategorys" resultMap="queryCateData"  parameterType="map">
+        select id, code_name from institution_category where code_level = 1 and code_type = 0
+    </select>
+
+    <select id="findCecondCategorys" resultMap="queryCateData"  parameterType="Integer">
+        select id, code_name from institution_category where code_level = 2 and code_type = 0 and parent_id = #{id}
+    </select>
+
 </mapper>

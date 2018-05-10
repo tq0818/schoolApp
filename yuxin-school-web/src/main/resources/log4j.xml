@@ -82,7 +82,7 @@
 	<!-- end mybatis 日志 -->
 
 	<logger name="com.yuxin.tools">
-		<level value="INFO" />
+		<level value="ERROR" />
 	</logger>
 
 	<logger name="pay">
