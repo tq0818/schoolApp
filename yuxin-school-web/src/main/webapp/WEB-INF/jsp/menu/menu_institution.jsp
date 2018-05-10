@@ -12,7 +12,7 @@
                <%-- <li code="statistics_all_detail"><a href="<%=request.getContextPath() %>/query/statistics/studentList">查询统计</a></li>--%>
                 <li code="classification"><a href="<%=request.getContextPath() %>/InsInfoBase/classification">机构分类管理</a></li>
                 <li code="organizationIndex"><a href="<%=request.getContextPath() %>/InsInfoBase/organizationIndex">机构管理</a></li>
-                <li code="recommendation"><a href="<%=request.getContextPath() %>">推荐机构管理</a></li>
+                <li code="recommendation"><a href="<%=request.getContextPath() %>/InsInfoBase/recommendationOrganization">推荐机构管理</a></li>
                 <li code="student"><a href="<%=request.getContextPath() %>">学员管理</a></li>
                 <li code="review"><a href="<%=request.getContextPath() %>">机构评论</a></li>
             <%--</shiro:hasPermission>--%>

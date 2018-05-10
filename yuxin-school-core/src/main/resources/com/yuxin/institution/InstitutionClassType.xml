@@ -122,15 +122,21 @@
 	</sql>
 	
 	<select id="page" resultMap="classTypeResultMap" parameterType="map">
-		select <include refid="table_columns" />
-		from ins_class_type
-		<include refid="page_where" />
+		SELECT ict.* FROM  ins_class_type  ict 
+		INNER JOIN ins_class_type_relation ictr ON ict.`id` = ictr.`class_type_id`  
+		<if test="isShelves != null and isShelves != ''">and ict.is_shelves = #{isShelves},</if>
+		INNER JOIN institution_info info ON ictr.`ins_id` = info.`id`
+		<if test="insId != null and insId != ''">and info.id = #{insId},</if>
 		limit #{firstIndex},#{pageSize}
 	</select>
 	
 	<select id="pageCount" resultType="int" parameterType="map">
-		select count(id) from ins_class_type
-		<include refid="page_where" />
+		SELECT COUNT(ict.id) FROM  ins_class_type  ict 
+		INNER JOIN ins_class_type_relation ictr ON ict.`id` = ictr.`class_type_id`  
+		<if test="isShelves != null and isShelves != ''">and ict.is_shelves = #{isShelves},</if>
+		INNER JOIN institution_info info ON ictr.`ins_id` = info.`id`
+		<if test="insId != null and insId != ''">and info.id = #{insId},</if>
+		limit #{firstIndex},#{pageSize}
 	</select>
 	
 	

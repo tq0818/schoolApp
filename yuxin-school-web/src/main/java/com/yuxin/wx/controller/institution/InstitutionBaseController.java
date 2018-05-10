@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/InsInfoBase")
 public class InstitutionBaseController {
-    //机构管理首页
-    @RequestMapping(value = "/organizationIndex")
-    public String organizationIndex(){
+
+    @RequestMapping(value = "/organizationIndexZYT")
+    public String findInsInfoList(){
         return "institution/organizationIndex";
     }
     //课程管理
@@ -24,5 +24,19 @@ public class InstitutionBaseController {
     public String classification(){
         return "institution/classification";
     }
-
+    //基本信息管理
+    @RequestMapping(value = "/basicInformation")
+    public String basicInformation(){
+        return "institution/basicInformation";
+    }
+    //推荐机构管理
+    @RequestMapping(value = "/recommendationOrganization")
+    public String recommendationOrganization(){
+        return "institution/recommendationOrganization";
+    }
+    //风采管理
+    @RequestMapping(value = "/elegantDemeanor")
+    public String elegantDemeanor(){
+        return "institution/elegantDemeanor";
+    }
 }

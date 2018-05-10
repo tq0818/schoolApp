@@ -57,11 +57,13 @@ public class InstitutionClassTypeServiceImpl extends BaseServiceImpl implements 
 	}
 
 	@Override
-	public PageFinder<InstitutionClassTypeVo> page(Integer status, int pageStart, int pageSize) {
+	public PageFinder<InstitutionClassTypeVo> page(Integer insId,Integer status, int pageStart, int pageSize) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("isShelves", status);
+		map.put("insId", insId);
 		int count = institutionClassTypeMapper.pageCount(map);
 		List<InstitutionClassTypeVo> list = institutionClassTypeMapper.page(map);
+		
 		return new PageFinder<InstitutionClassTypeVo>(pageStart, pageSize, count, list);
 	}
 
