@@ -1,7 +1,6 @@
 package com.yuxin.wx.model.institution;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 活动
@@ -19,8 +18,6 @@ public class ActivityCly implements Serializable{
 	private String activityImgUrl;	
 	private String activityUrl;	
 	private String activityTime;
-	private Date startTime;
-	private Date endTime;
 	public Integer getActivityId() {
 		return activityId;
 	}
@@ -57,17 +54,5 @@ public class ActivityCly implements Serializable{
 	public void setActivityTime(String activityTime) {
 		this.activityTime = activityTime;
 	}
-	public Date getStartTime() {
-		return startTime;
-	}
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-	public Date getEndTime() {
-		return endTime;
-	}
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}	
-	
+
 }

@@ -1,18 +1,18 @@
 package com.yuxin.wx.model.institution;
 
-import java.io.Serializable;
 import java.util.List;
+
+import com.yuxin.wx.vo.commodity.ClassTypeInfoVO;
 
 /**
  * APP前端机构详情VO
  * @author hello
  *
  */
-public class InstitutionDetailVo implements Serializable {
+public class InstitutionDetailVo {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
 	private Integer institutionId;//		机构id
 	private String institutionName;//		机构名称
 	private Float institutionScore;//	机构评分等级
@@ -23,9 +23,9 @@ public class InstitutionDetailVo implements Serializable {
 	private String institutionAddress	;	//机构地址
 	private Integer isCertified		;//是否认证(0否 1是)
 	private List<String> institutionMobileList;//		机构电话集合
-	private String specialServer;//		特色服务
+	private List<SpecialServiceVo> specialServiceVoList;//		特色服务
 	private List<InstitutionStyleVo> institutionList;//		机构风采结果集合
-	private List<CourseInfoVo> hotOnLineCourseList	;//	热门线上课程集合
+	private List<ClassTypeInfoVO> hotOnLineCourseList	;//	热门线上课程集合
 	private List<CourseInfoVo> hotCourseList;//		热门线下课程集合
 	private List<TeacherStyleVo> teacherStyleList;//		教师风采集合
 	private List<StudentCommentVo> studentCommentList;//		学员评论
@@ -35,6 +35,8 @@ public class InstitutionDetailVo implements Serializable {
 	private Integer isHotOnLineMore;//是否存在更多的线上课程
 	private Integer isHotCourseMore;//是否存在更多的线下课程
 	private Integer isCommentMore;//是否存在更多的评论
+	private Integer isGuessLikeMore;//是否显示换一批
+	private Integer isCollect;//是否收藏
 	public Integer getInstitutionId() {
 		return institutionId;
 	}
@@ -95,11 +97,12 @@ public class InstitutionDetailVo implements Serializable {
 	public void setInstitutionMobileList(List<String> institutionMobileList) {
 		this.institutionMobileList = institutionMobileList;
 	}
-	public String getSpecialServer() {
-		return specialServer;
+	
+	public List<SpecialServiceVo> getSpecialServiceVoList() {
+		return specialServiceVoList;
 	}
-	public void setSpecialServer(String specialServer) {
-		this.specialServer = specialServer;
+	public void setSpecialServiceVoList(List<SpecialServiceVo> specialServiceVoList) {
+		this.specialServiceVoList = specialServiceVoList;
 	}
 	public List<InstitutionStyleVo> getInstitutionList() {
 		return institutionList;
@@ -107,10 +110,11 @@ public class InstitutionDetailVo implements Serializable {
 	public void setInstitutionList(List<InstitutionStyleVo> institutionList) {
 		this.institutionList = institutionList;
 	}
-	public List<CourseInfoVo> getHotOnLineCourseList() {
+	
+	public List<ClassTypeInfoVO> getHotOnLineCourseList() {
 		return hotOnLineCourseList;
 	}
-	public void setHotOnLineCourseList(List<CourseInfoVo> hotOnLineCourseList) {
+	public void setHotOnLineCourseList(List<ClassTypeInfoVO> hotOnLineCourseList) {
 		this.hotOnLineCourseList = hotOnLineCourseList;
 	}
 	public List<CourseInfoVo> getHotCourseList() {
@@ -166,6 +170,18 @@ public class InstitutionDetailVo implements Serializable {
 	}
 	public void setIsCommentMore(Integer isCommentMore) {
 		this.isCommentMore = isCommentMore;
+	}
+	public Integer getIsGuessLikeMore() {
+		return isGuessLikeMore;
+	}
+	public void setIsGuessLikeMore(Integer isGuessLikeMore) {
+		this.isGuessLikeMore = isGuessLikeMore;
+	}
+	public Integer getIsCollect() {
+		return isCollect;
+	}
+	public void setIsCollect(Integer isCollect) {
+		this.isCollect = isCollect;
 	}
 	
 }

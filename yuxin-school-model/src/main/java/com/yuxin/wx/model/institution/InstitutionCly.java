@@ -22,6 +22,8 @@ public class InstitutionCly implements Serializable{
 	private String reServationPackage;
 	private String courseInfoName;
 	private Integer isCertified;
+	private Integer reservCount;//预约数
+	private Integer commentCount;//评论数
 	public Integer getInstitutionId() {
 		return institutionId;
 	}
@@ -76,6 +78,18 @@ public class InstitutionCly implements Serializable{
 	}
 	public void setIsCertified(Integer isCertified) {
 		this.isCertified = isCertified;
+	}
+	public Integer getReservCount() {
+		return reservCount;
+	}
+	public void setReservCount(Integer reservCount) {
+		this.reservCount = reservCount;
+	}
+	public Integer getCommentCount() {
+		return commentCount;
+	}
+	public void setCommentCount(Integer commentCount) {
+		this.commentCount = commentCount;
 	}
 	
 }
