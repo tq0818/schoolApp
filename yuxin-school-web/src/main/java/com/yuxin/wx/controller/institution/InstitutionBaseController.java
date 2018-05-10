@@ -34,4 +34,9 @@ public class InstitutionBaseController {
     public String recommendationOrganization(){
         return "institution/recommendationOrganization";
     }
+    //风采管理
+    @RequestMapping(value = "/elegantDemeanor")
+    public String elegantDemeanor(){
+        return "institution/elegantDemeanor";
+    }
 }
