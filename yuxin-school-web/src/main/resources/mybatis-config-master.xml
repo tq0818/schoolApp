@@ -349,6 +349,7 @@
 		<mapper resource="com/yuxin/institution/InstitutionCategoryManageMapper.xml"/>
 
 		<mapper resource="com/yuxin/institution/InstitutionLabelMapper.xml"/>
+		<mapper resource="com/yuxin/institution/InstitutionClassTypeMapper.xml"/>
 	</mappers>
 
 </configuration>

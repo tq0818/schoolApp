@@ -6,23 +6,71 @@ import java.util.Map;
 import com.yuxin.wx.model.institution.InstitutionClassTypeVo;
 
 /**
- * 
  * @author liutingrong
- *
  */
-//extends BaseMapper<InstitutionClassTypeVo>
-public interface InstitutionClassTypeMapper   {
-	public void insert(InstitutionClassTypeVo entity);
-	public void batchInsert(List<InstitutionClassTypeVo> list);
-	public void deleteById(Integer id);
-	public void deleteByIds(List<Integer> ids);
-	public void update(InstitutionClassTypeVo entity);
-	public InstitutionClassTypeVo findById(Integer id);
-	public List<InstitutionClassTypeVo> queryAll();
-	
-	public List<InstitutionClassTypeVo> page(Map<String,Object> map);
-	
-	public int pageCount(Map<String,Object> map);
-	
-	
+public interface InstitutionClassTypeMapper {
+    /**
+     * 新建一个课程
+     * @param entity
+     */
+    void insert(InstitutionClassTypeVo entity);
+
+    /**
+     * 批量新建课程
+     * @param list
+     */
+    void batchInsert(List<InstitutionClassTypeVo> list);
+
+    /**
+     * 删除一个课程
+     * @param id
+     */
+    void deleteById(Integer id);
+
+    /**
+     * 批量删除课程
+     * @param ids
+     */
+    void deleteByIds(List<Integer> ids);
+
+    /**
+     * 更新一个课程
+     * @param entity
+     */
+    void update(InstitutionClassTypeVo entity);
+
+    /**
+     * 获取一个课程
+     * @param id
+     * @return
+     */
+    InstitutionClassTypeVo findById(Integer id);
+
+    /**
+     * 获取所有课程
+     * @return
+     */
+    List<InstitutionClassTypeVo> queryAll();
+
+    /**
+     * 根据条件获取课程列表
+     * @param map
+     * @return
+     */
+    List<InstitutionClassTypeVo> page(Map<String, Object> map);
+
+    /**
+     * 根据条件获取课程数量
+     * @param map
+     * @return
+     */
+    int pageCount(Map<String, Object> map);
+
+    /**
+     * 根据机构id获取机构拥有推荐课程数量
+     * @param insId
+     * @return
+     */
+    int getRecommendCountByClassTypeId(Integer insId);
+
 }

@@ -45,5 +45,9 @@ public interface InstitutionClassTypeService {
 	
 	
 	 PageFinder<InstitutionClassTypeVo> page(Integer insId,Integer status,int pageStart,int pageSize);
+
+
+	int getRecommendCountByClassTypeId(Integer insId);
+
 	
 }
