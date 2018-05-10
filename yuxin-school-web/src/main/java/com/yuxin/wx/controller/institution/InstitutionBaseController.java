@@ -29,4 +29,9 @@ public class InstitutionBaseController {
     public String basicInformation(){
         return "institution/basicInformation";
     }
+    //推荐机构管理
+    @RequestMapping(value = "/recommendationOrganization")
+    public String recommendationOrganization(){
+        return "institution/recommendationOrganization";
+    }
 }
