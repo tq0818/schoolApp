@@ -39,4 +39,11 @@ public interface InstitutionInfoMapper {
     Integer findInstitutionInfosCount(InstitutionInfoVo institutionInfoVo);
 
     Integer updateInsById (InstitutionInfoVo institutionInfoVo);
+
+    /**
+     * 查看机构是否有管理员
+     * @param id
+     * @return
+     */
+    InstitutionInfoVo checkUser(Integer id);
 }

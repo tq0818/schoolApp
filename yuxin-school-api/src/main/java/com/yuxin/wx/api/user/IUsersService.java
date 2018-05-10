@@ -30,6 +30,8 @@ public interface IUsersService  {
 	* @user by wangzx
 	 */
 	void insert(Users users);
+
+	void insertA(Users users);
 	
 	/**
 	 * 

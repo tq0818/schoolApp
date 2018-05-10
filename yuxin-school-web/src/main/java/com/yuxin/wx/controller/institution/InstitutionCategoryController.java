@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -64,4 +65,32 @@ public class InstitutionCategoryController {
     public List<InstitutionCategoryVo> findInstitutionCategorys(){
         return institutionCategoryService.findInstitutionCategorys();
     }
+
+    /**
+     * 查询一级分类
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/findFistCategorys")
+    public List<InstitutionCategoryVo> findFistCategorys(){
+        try {
+            return institutionCategoryService.findFistCategorys();
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/findSecondCategorys",method = RequestMethod.POST)
+    public List<InstitutionCategoryVo> findCecondCategorys(Integer id){
+        try {
+            return institutionCategoryService.findCecondCategorys(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

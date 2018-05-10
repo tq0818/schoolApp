@@ -122,6 +122,11 @@ public class UsersServiceImpl extends BaseServiceImpl implements IUsersService {
 	public void insert(Users users){
 		usersMapper.insert(users);
 	}
+
+	@Override
+	public void insertA(Users users){
+		usersMapper.insertA(users);
+	}
 	
 	/**
 	 * 

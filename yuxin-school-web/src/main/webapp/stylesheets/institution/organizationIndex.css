@@ -26,3 +26,5 @@ cursor: default;}
 .deleteBtn{position: absolute;font-size: 12px;color: #ff0000;right: 0;top: -12px;}
 .systemBtn{position: relative;}
 #listMachine>div{margin-bottom: 5px;}
+#listPhone>div{margin-left: 73px;margin-top: 14px;}
+#listPhone>div input{width: 440px !important;}

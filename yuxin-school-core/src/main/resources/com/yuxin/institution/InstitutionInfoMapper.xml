@@ -4,6 +4,8 @@
     <resultMap type="com.yuxin.wx.model.institution.InstitutionInfoVo" id="institutionInfoMap">
         <result property="id" column="id" />
         <result property="name" column="name" />
+        <result property="userName" column="username" />
+        <result property="userId" column="user_id" />
         <result property="province" column="province" />
         <result property="city" column="city" />
         <result property="area" column="area" />
@@ -41,9 +43,7 @@
         is_shelves,
         is_certified,
         create_time,
-        update_time,
-        secondcodeName,
-        firstcodeName
+        update_time
     </sql>
 
     <sql id="entity_properties">
@@ -86,10 +86,11 @@
             <if test="longitude != null and longitude != ''">longitude = #{longitude},</if>
             <if test="latitude != null and latitude != ''">latitude = #{latitude},</if>
             <if test="reservService != null and reservService != ''">reserv_service = #{reservService},</if>
-            <if test="isShelves != null and isShelves != ''">is_shelves = #{isShelves},</if>
-            <if test="isCertified != null and isCertified != ''">is_certified = #{isCertified},</if>
+            <if test="isShelves != null ">is_shelves = #{isShelves},</if>
+            <if test="userId != null and userId != ''">user_id = #{userId},</if>
+            <if test="isCertified != null ">is_certified = #{isCertified},</if>
             <if test="createTime != null and createTime != ''">create_time = #{createTime},</if>
-            <if test="updateTime != null and updateTime != ''">update_time = #{updateTime},</if>
+            <if test="updateTime != null and updateTime != ''">update_time = now(),</if>
         </trim>
         <where>id = #{id}</where>
     </update>
@@ -115,19 +116,22 @@
         <if test="province != null and province != ''">and s.item_code = #{province}</if>
         <if test="city != null and city != ''">and s1.item_code = #{city}</if>
         <if test="area != null and area != ''">and s2.item_code = #{area}</if>
-        <if test="isShelves != null and isShelves != ''">ii.is_shelves = #{isShelves}</if>
-        <if test="isCertified != null and isCertified != ''">ii.is_certified = #{isCertified}</if>
-        <if test="oneLevelId != null and oneLevelId != ''">ir.one_level_id = #{oneLevelId}</if>
-        <if test="twoLevelId != null and twoLevelId != ''">ir.two_level_id = #{twoLevelId}</if>
+        <if test="isShelves != null and isShelves != ''">and ii.is_shelves = #{isShelves}</if>
+        <if test="isCertified != null and isCertified != ''">and ii.is_certified = #{isCertified}</if>
+        <if test="oneLevelId != null and oneLevelId != ''">and ir.one_level_id = #{oneLevelId}</if>
+        <if test="twoLevelId != null and twoLevelId != ''">and ir.two_level_id = #{twoLevelId}</if>
         <if test="startTime != null and startTime != ''">and date_format(ii.create_time, "%Y-%m-%d") <![CDATA[>=]]> '${startTime}'</if>
         <if test="endTime != null and endTime != ''"> and date_format(ii.create_time, "%Y-%m-%d") <![CDATA[<=]]> '${endTime}'</if>
         GROUP BY  ii.id
         order by ii.is_shelves,ii.create_time desc
+        limit #{page},#{pageSize}
     </select>
 
 
     <select id="findInstitutionInfosCount" resultType="Integer" parameterType="com.yuxin.wx.model.institution.InstitutionInfoVo">
-        select count(1)
+        select count(1) from(
+        select ii.id,ii.name,s.item_name as province,s1.item_name as city,s2.item_name as area,ii.is_shelves,ii.is_certified,ii.create_time,
+        GROUP_CONCAT(ic.code_name) firstcodeName,GROUP_CONCAT(ic1.code_name) secondcodeName,GROUP_CONCAT(ic.id) oneLevelId,GROUP_CONCAT(ic1.id) twoLevelId
         from institution_info ii
         left JOIN sys_rise_school_dict s on s.item_code = ii.province
         left JOIN sys_rise_school_dict s1 on s1.item_code = ii.city
@@ -140,12 +144,19 @@
         <if test="province != null and province != ''">and s.item_code = #{province}</if>
         <if test="city != null and city != ''">and s1.item_code = #{city}</if>
         <if test="area != null and area != ''">and s2.item_code = #{area}</if>
-        <if test="isShelves != null and isShelves != ''">ii.is_shelves = #{isShelves}</if>
-        <if test="isCertified != null and isCertified != ''">ii.is_certified = #{isCertified}</if>
-        <if test="oneLevelId != null and oneLevelId != ''">ir.one_level_id = #{oneLevelId}</if>
-        <if test="twoLevelId != null and twoLevelId != ''">ir.two_level_id = #{twoLevelId}</if>
+        <if test="isShelves != null and isShelves != ''">and ii.is_shelves = #{isShelves}</if>
+        <if test="isCertified != null and isCertified != ''">and ii.is_certified = #{isCertified}</if>
+        <if test="oneLevelId != null and oneLevelId != ''">and ir.one_level_id = #{oneLevelId}</if>
+        <if test="twoLevelId != null and twoLevelId != ''">and ir.two_level_id = #{twoLevelId}</if>
         <if test="startTime != null and startTime != ''">and date_format(ii.create_time, "%Y-%m-%d") <![CDATA[>=]]> '${startTime}'</if>
         <if test="endTime != null and endTime != ''"> and date_format(ii.create_time, "%Y-%m-%d") <![CDATA[<=]]> '${endTime}'</if>
         GROUP BY  ii.id
+        )ins
+    </select>
+
+    <select id="checkUser" parameterType="Integer" resultMap="institutionInfoMap">
+        select ii.id ,u.username ,u.id as user_id from  users u
+        LEFT JOIN institution_info ii on u.id = ii.user_id
+        where ii.id = #{id}
     </select>
 </mapper>

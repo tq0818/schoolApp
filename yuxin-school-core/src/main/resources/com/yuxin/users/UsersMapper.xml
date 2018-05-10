@@ -222,6 +222,11 @@
 		where id=#{companyId}
 	</insert>
 
+	<insert id="insertA" parameterType="com.yuxin.wx.model.user.Users" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO users ( id, username, PASSWORD, user_type )
+		VALUES ( null, #{username}, #{password}, #{userType} )
+	</insert>
+
 	<!-- 批量添加 适用于主键自增类型  不支持返回主键-->
 	<insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
 		insert into users( <include refid="table_columns" /> )
