@@ -95,7 +95,7 @@
     </update>
 
     <select id="findInstitutionInfoById" parameterType="Integer" resultMap="institutionInfoMap">
-        select <include refid="table_columns" />
+        select *
         from institution_info
         where id  =#{id}
     </select>
