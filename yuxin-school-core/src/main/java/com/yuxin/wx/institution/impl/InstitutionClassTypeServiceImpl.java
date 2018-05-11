@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.yuxin.wx.model.institution.ClassTypeOnlineFindVo;
+import com.yuxin.wx.model.institution.ClassTypeOnlineVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,7 +67,7 @@ public class InstitutionClassTypeServiceImpl extends BaseServiceImpl implements 
 
         map.put("isShelves", status);
         map.put("insId", insId);
-        map.put("firstIndex", pageStart*pageSize);
+        map.put("firstIndex", pageStart * pageSize);
         map.put("pageSize", pageSize);
         //#{firstIndex},#{pageSize}
         try {
@@ -84,5 +86,72 @@ public class InstitutionClassTypeServiceImpl extends BaseServiceImpl implements 
     public int getRecommendCountByClassTypeId(Integer insId) {
         return institutionClassTypeMapper.getRecommendCountByClassTypeId(insId);
     }
+
+
+    /**
+     * 根据条件获取在线课程列表信息
+     *
+     * @param map
+     * @return
+     */
+    @Override
+    public List<ClassTypeOnlineVo> pageOnline(Map<String, Object> map) {
+        return institutionClassTypeMapper.pageOnline(map);
+    }
+
+    /**
+     * 根据条件获取在线课程数量
+     *
+     * @param map
+     * @return
+     */
+    @Override
+    public int pageOnlineCount(Map<String, Object> map) {
+        return institutionClassTypeMapper.pageOnlineCount(map);
+    }
+
+    /**
+     * 查询在线课程,包含是否关联
+     *
+     * @param map
+     * @return
+     */
+    @Override
+    public List<ClassTypeOnlineFindVo> findOnlineClassType(Map<String, Object> map) {
+        return institutionClassTypeMapper.findOnlineClassType(map);
+    }
+
+    /**
+     * 删除映射表中映射信息
+     *
+     * @param map
+     */
+    @Override
+    public void deleteRelation(Map<String, Object> map) {
+        institutionClassTypeMapper.deleteRelation(map);
+    }
+
+
+    /**
+     * 根据关系映射id删除在线课程关联信息
+     *
+     * @param id
+     */
+    @Override
+    public void deleteOnlineRelation(Integer id) {
+        institutionClassTypeMapper.deleteOnlineRelation(id);
+    }
+
+
+    /**
+     * 添加一个在线课程
+     *
+     * @param map
+     */
+    @Override
+    public void addOnlineClass(Map<String, Object> map) {
+        institutionClassTypeMapper.addOnlineClass(map);
+    }
+
 
 }

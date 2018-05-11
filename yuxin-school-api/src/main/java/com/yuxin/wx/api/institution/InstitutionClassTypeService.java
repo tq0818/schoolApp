@@ -1,8 +1,11 @@
 package com.yuxin.wx.api.institution;
 
 import java.util.List;
+import java.util.Map;
 
 import com.yuxin.wx.common.PageFinder;
+import com.yuxin.wx.model.institution.ClassTypeOnlineFindVo;
+import com.yuxin.wx.model.institution.ClassTypeOnlineVo;
 import com.yuxin.wx.model.institution.InstitutionClassTypeVo;
 
 public interface InstitutionClassTypeService {
@@ -49,5 +52,43 @@ public interface InstitutionClassTypeService {
 
 	int getRecommendCountByClassTypeId(Integer insId);
 
-	
+
+	/**
+	 * 根据条件获取在线课程列表信息
+	 * @param map
+	 * @return
+	 */
+	List<ClassTypeOnlineVo> pageOnline(Map<String, Object> map);
+
+	/**
+	 * 根据条件获取在线课程数量
+	 * @param map
+	 * @return
+	 */
+	int pageOnlineCount(Map<String, Object> map);
+
+	/**
+	 * 获取线上课程列表信息
+	 * @param map
+	 * @return
+	 */
+	List<ClassTypeOnlineFindVo> findOnlineClassType(Map<String, Object> map);
+
+	/**
+	 * 删除映射表中映射信息
+	 * @param map
+	 */
+	void deleteRelation(Map<String, Object> map);
+	/**
+	 * 根据关系映射id删除在线课程关联信息
+	 * @param id
+	 */
+	void deleteOnlineRelation(Integer id);
+
+	/**
+	 * 添加一个在线课程
+	 * @param map
+	 */
+	void addOnlineClass(Map<String, Object> map);
+
 }
