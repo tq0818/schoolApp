@@ -39,4 +39,10 @@ public class InstitutionBaseController {
     public String elegantDemeanor(){
         return "institution/elegantDemeanor";
     }
+    //新增线下课程
+    @RequestMapping(value = "/newLineCourse")
+    public String newLineCourse(){
+        return "institution/newLineCourse";
+    }
+
 }

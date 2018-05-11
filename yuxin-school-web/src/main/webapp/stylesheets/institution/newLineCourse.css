@@ -1,0 +1,4 @@
+#newCourse >div>span{width: 150px;text-align: right;display: inline-block;float: left;}
+.addingMechanism{width: 70%;}
+.mechanismName{background: url(../../images/institution/xing.png) no-repeat 90px center;}
+.deleteBtn{position: static;}
