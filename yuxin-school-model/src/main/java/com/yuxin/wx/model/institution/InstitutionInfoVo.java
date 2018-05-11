@@ -7,9 +7,14 @@ import java.util.Date;
 
 public class InstitutionInfoVo extends BaseEntity {
     private String name; //机构名称
-    private String province;//省
-    private String city;//市
-    private String area;//区
+    private String province;//省code
+    private String city;//市code
+    private String area;//区code
+
+    private String provinceName;//省
+    private String cityName;//市
+    private String areaName;//区
+
     private String address;//地址
     private String mobile;//电话
     private Integer isChain;//是否是连锁机构(1是0否)
@@ -52,6 +57,30 @@ public class InstitutionInfoVo extends BaseEntity {
     private String userName;//管理员账号
     private String pwd;
     private Integer userId;
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
 
     public String getPwd() {
         return pwd;

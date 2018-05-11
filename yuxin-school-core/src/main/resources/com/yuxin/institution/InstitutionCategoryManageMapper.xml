@@ -11,6 +11,15 @@
         <result property="codeLevel" column="code_level" />
     </resultMap>
 
+
+    <resultMap id="queryInsCategory" type="com.yuxin.wx.model.institution.InstitutionCategoryVo">
+        <result property="insId" column="insId" />
+        <result property="firstcodeName" column="firstcodeName" />
+        <result property="secondcodeName" column="secondcodeName" />
+        <result property="oneLevelId" column="oneLevelId" />
+        <result property="twoLevelId" column="twoLevelId" />
+    </resultMap>
+
     <!--查询所有1.2级分类-->
     <select id="queryInstitutionCategorys" resultType="com.yuxin.wx.model.institution.InstitutionCategoryVo" parameterType="map">
         select
@@ -62,6 +71,14 @@
 
     <select id="findCecondCategorys" resultMap="queryCateData"  parameterType="Integer">
         select id, code_name from institution_category where code_level = 2 and code_type = 0 and parent_id = #{id}
+    </select>
+
+    <select id="queryInstitutionCategorysByInsId" parameterType="Integer" resultMap="queryInsCategory">
+        select ii.id insId,ic.id oneLevelId,ic1.id twoLevelId ,ic.code_name firstcodeName,ic1.code_name secondcodeName from institution_info ii
+        join institution_relation ir on ii.id=ir.ins_id
+        left join institution_category ic on ic.id = ir.one_level_id
+        left JOIN institution_category ic1 on ic1.id = ir.two_level_id
+        where ii.id=#{id}
     </select>
 
 </mapper>

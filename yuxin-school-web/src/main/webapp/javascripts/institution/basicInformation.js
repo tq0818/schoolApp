@@ -136,6 +136,8 @@ $(function () {
     });
     //点击特色图片出下面图片列表
     $('.iconPic').click(function () {
+
+        findSpecialServiceImg();
         $('.iconList').show();
     });
     //点击关闭图片列表
@@ -143,4 +145,131 @@ $(function () {
         $('.iconList').hide();
     });
 
+    //选择所属省份 初始化身份
+    queryRiseSchoolDict(0);
+
+    //获取一级分类
+    findFistCategorys();
+
+    //分类筛选
+    $('#findFistCategorys').change(function () {
+        findSecondCategorys();
+    });
+
 });
+
+function queryRiseSchoolDict(areaFlag) {
+    var itemType = '';
+    var itemCode = '';
+    var eduAreaNew = $("#eduArea").val();
+    if (areaFlag == 0){
+        itemType = 'PROVINCE';
+    }else if (areaFlag == 1){
+        itemType = 'CITY';
+        itemCode = $("#eduArea").val();
+    }else if (areaFlag == 2){
+        itemType = 'DISTRICT';
+        itemCode = $("#eduSchool").val();
+    }
+    $.ajax({
+        url:rootPath +"/riseSchoolManage/queryRiseSchoolDict",
+        data:{"itemType":itemType,
+            "itemCode":itemCode},
+        dataType:"json",
+        beforeSend: function (XMLHttpRequest) {
+            $(".loading").show();
+            $(".loading-bg").show();
+        },
+        success:function (data) {
+            $(".loading").hide();
+            $(".loading-bg").hide();
+            //拼接下拉值
+            if (data.flag == 1){
+                var html = '';
+                for (var i in data.dictList){
+                    html = html + "<option value=\""+data.dictList[i].itemCode+"\">"+data.dictList[i].itemName+"</option>"
+                }
+                if (areaFlag == 0){
+                    html = "<option value=\"\">请选择省份</option>" + html;
+                    $("#eduArea").html("").html(html);
+                }else if (areaFlag == 1){
+                    if(eduAreaNew == ""){
+                        html = "<option value=\"\">请选择市</option>";
+                    }else{
+                        html = "<option value=\"\">请选择市</option>" + html;
+                    }
+                    $("#eduSchool").html("").html(html);
+                    html2 = "<option value=\"\">请选择区</option>";
+                    $("#registStatus").html("").html(html2);
+                }else if (areaFlag == 2){
+                    html = "<option value=\"\">请选择区</option>" + html;
+                    $("#registStatus").html("").html(html);
+                }
+            }
+        }
+    });
+}
+
+//获取一级分类
+function findFistCategorys() {
+    $.ajax({
+        url:rootPath +"/institutionCategory/findFistCategorys",
+        beforeSend: function (XMLHttpRequest) {
+            $(".loading").show();
+            $(".loading-bg").show();
+        },
+
+        success:function (data) {
+            var html = '';
+            html = "<option value=\"\">请选择一级分类</option>"
+            if(data.length>0){
+                for (var i in data){
+                    html = html + "<option value=\""+data[i].id+"\">"+data[i].codeName+"</option>"
+                }
+            }
+            $("#findFistCategorys").html("").html(html);
+        }
+    });
+
+}
+
+//获取二级分类
+function findSecondCategorys() {
+    var id = $("#findFistCategorys").val();
+    $.ajax({
+        url:rootPath +"/institutionCategory/findSecondCategorys",
+        data:{"id":id},
+        type:"post",
+
+        success:function (data) {
+            var html = '';
+            html = "<option value=\"\">请选择二级分类</option>"
+            if(data.length>0){
+                for (var i in data){
+                    html = html + "<option value=\""+data[i].id+"\">"+data[i].codeName+"</option>"
+                }
+            }
+            $("#findSecondCategorys").html("").html(html);
+        }
+    });
+}
+
+var page = 1;
+function findSpecialServiceImg(page) {
+    $.ajax({
+        url:rootPath +"/InsInfoBase/findSpecialServiceImg",
+        type:"post",
+        data:{"page":page},
+        success:function (data) {
+            var html = '';
+            /*for(var i in data.){
+
+            }*/
+
+        }
+    });
+
+}
+
+
+

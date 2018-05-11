@@ -21,12 +21,12 @@ public class InsFeaturesServiceImpl extends BaseServiceImpl implements InsFeatur
     }
 
     @Override
-    public List<InsFeaturesVo> findInsFeaturesVos() {
-        return insFeaturesMapper.findInsFeaturesVos();
+    public List<InsFeaturesVo> findInsFeaturesVos(InsFeaturesVo insFeaturesVo) {
+        return insFeaturesMapper.findInsFeaturesVos(insFeaturesVo);
     }
 
     @Override
-    public Integer findInsFeaturesVosCount() {
-        return insFeaturesMapper.findInsFeaturesVosCount();
+    public Integer findInsFeaturesVosCount(InsFeaturesVo insFeaturesVo) {
+        return insFeaturesMapper.findInsFeaturesVosCount(insFeaturesVo);
     }
 }

@@ -39,4 +39,11 @@ public interface InstitutionCategoryManageService {
      * @return
      */
     InstitutionCategoryVo queryInstitutionCategoryByCondition(Map<String, Object> params);
+
+    /**
+     * 根据机构id查询机构分类
+     * @param id
+     * @return
+     */
+    List<InstitutionCategoryVo> queryInstitutionCategorysByInsId(Integer id);
 }

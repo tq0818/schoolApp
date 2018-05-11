@@ -19,6 +19,52 @@ public class InstitutionCategoryVo extends BaseEntity{
     private Date updateTime;//修改时间
     private String secondCate;//二级分类组装
 
+    private String firstcodeName;
+    private String secondcodeName;
+    private String oneLevelId;
+    private String twoLevelId;
+    private Integer insId;
+
+    public String getFirstcodeName() {
+        return firstcodeName;
+    }
+
+    public void setFirstcodeName(String firstcodeName) {
+        this.firstcodeName = firstcodeName;
+    }
+
+    public String getSecondcodeName() {
+        return secondcodeName;
+    }
+
+    public void setSecondcodeName(String secondcodeName) {
+        this.secondcodeName = secondcodeName;
+    }
+
+    public String getOneLevelId() {
+        return oneLevelId;
+    }
+
+    public void setOneLevelId(String oneLevelId) {
+        this.oneLevelId = oneLevelId;
+    }
+
+    public String getTwoLevelId() {
+        return twoLevelId;
+    }
+
+    public void setTwoLevelId(String twoLevelId) {
+        this.twoLevelId = twoLevelId;
+    }
+
+    public Integer getInsId() {
+        return insId;
+    }
+
+    public void setInsId(Integer insId) {
+        this.insId = insId;
+    }
+
     public String getSecondCate() {
         return secondCate;
     }

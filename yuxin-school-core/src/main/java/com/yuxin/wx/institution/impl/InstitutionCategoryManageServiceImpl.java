@@ -41,4 +41,11 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
     public InstitutionCategoryVo queryInstitutionCategoryByCondition(Map<String, Object> params) {
         return institutionManageMapper.queryInstitutionCategoryByCondition(params);
     }
+
+    @Override
+    public List<InstitutionCategoryVo> queryInstitutionCategorysByInsId(Integer id) {
+        return institutionManageMapper.queryInstitutionCategorysByInsId(id);
+    }
+
+
 }

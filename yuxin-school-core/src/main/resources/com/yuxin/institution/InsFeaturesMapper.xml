@@ -28,11 +28,11 @@
         values ( <include refid="entity_properties" /> )
     </insert>
 
-    <select id="findInsFeaturesVos" parameterType="com.yuxin.wx.model.institution.InstitutionLabelVo" resultMap="insFeaturesMap">
-        select * from ins_features
+    <select id="findInsFeaturesVos" parameterType="com.yuxin.wx.model.institution.InsFeaturesVo" resultMap="insFeaturesMap">
+        select * from ins_features limit #{page}, #{pageSize}
     </select>
 
-    <select id="findInsFeaturesVosCount" parameterType="com.yuxin.wx.model.institution.InstitutionLabelVo" resultType="int">
+    <select id="findInsFeaturesVosCount" parameterType="com.yuxin.wx.model.institution.v" resultType="int">
         select count(id) from ins_features
     </select>
 

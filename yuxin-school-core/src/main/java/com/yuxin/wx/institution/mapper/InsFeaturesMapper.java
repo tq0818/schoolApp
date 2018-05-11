@@ -16,7 +16,7 @@ public interface InsFeaturesMapper {
      * 查询所有图片
      * @return
      */
-    List<InsFeaturesVo> findInsFeaturesVos();
+    List<InsFeaturesVo> findInsFeaturesVos(InsFeaturesVo insFeaturesVo);
 
-    Integer findInsFeaturesVosCount();
+    Integer findInsFeaturesVosCount(InsFeaturesVo insFeaturesVo);
 }

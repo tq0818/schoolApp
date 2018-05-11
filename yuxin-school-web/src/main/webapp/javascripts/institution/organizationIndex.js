@@ -230,6 +230,7 @@ $(function () {
 
 var curPage = 1;
 
+//查询省市区
 function queryRiseSchoolDict(areaFlag) {
     var itemType = '';
     var itemCode = '';
@@ -282,6 +283,7 @@ function queryRiseSchoolDict(areaFlag) {
     });
 }
 
+//查询省市区
 function queryRiseSchoolDict2(areaFlag) {
     var itemType = '';
     var itemCode = '';
@@ -334,6 +336,7 @@ function queryRiseSchoolDict2(areaFlag) {
     });
 }
 
+//获取一级分类
 function findFistCategorys() {
     $.ajax({
         url:rootPath +"/institutionCategory/findFistCategorys",
@@ -356,6 +359,7 @@ function findFistCategorys() {
 
 }
 
+//获取二级分类
 function findSecondCategorys() {
     var id = $("#findFistCategorys").val();
     $.ajax({
@@ -376,6 +380,7 @@ function findSecondCategorys() {
     });
 }
 
+//获取一级分类2
 function findFistCategorys2() {
     $.ajax({
         url:rootPath +"/institutionCategory/findFistCategorys",
@@ -395,6 +400,7 @@ function findFistCategorys2() {
 
 }
 
+//获取二级分类2
 function findSecondCategorys2() {
     var id = $(".findFistCategorys2").val();
     $.ajax({
@@ -415,8 +421,8 @@ function findSecondCategorys2() {
     });
 }
 
+//点击查询获取数据
 function findInsDate(page) {
-    console.log("cur"+page);
     curPage = page;
     var eduArea = $("#eduArea").val();
     var eduSchool = $("#eduSchool").val();
@@ -582,6 +588,7 @@ function authFrameLower(id,num,flag) {
 }
 
 
+//添加机构
 function addInsInfo() {
     var name = $("#name").val();
     var province = $("#eduArea2").val();
@@ -663,6 +670,7 @@ function addInsInfo() {
 
 }
 
+//创建机构用户
 function cureatManageUser() {
     var manageUser = $("#manageUser").val();
     var countManage = insId;
@@ -681,6 +689,7 @@ function cureatManageUser() {
 
 }
 
+//修改机构用户密码
 function updateManageUser() {
     var userId = $("#userId").val();
     var updataPwd = $("#updataPwd").val();
