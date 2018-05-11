@@ -44,5 +44,11 @@ public class InstitutionBaseController {
     public String newLineCourse(){
         return "institution/newLineCourse";
     }
+    //首页推荐分类管理
+    @RequestMapping(value = "/recommendationHomeC")
+    public String recommendationHomeClassification(){
+        return "institution/recommendationHomeC";
+    }
+
 
 }
