@@ -19,6 +19,10 @@ public class InsCollect implements Serializable{
 	private Integer isCollect;
 	private Date createTime;
 	private Date updateTime;
+	private Integer page;
+	private Integer firstSize;
+	private Integer endSize;
+	private Integer isPage;//是否分页
 	public Integer getId() {
 		return Id;
 	}
@@ -60,6 +64,30 @@ public class InsCollect implements Serializable{
 	}
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+	public Integer getPage() {
+		return page;
+	}
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+	public Integer getFirstSize() {
+		return firstSize;
+	}
+	public void setFirstSize(Integer firstSize) {
+		this.firstSize = firstSize;
+	}
+	public Integer getEndSize() {
+		return endSize;
+	}
+	public void setEndSize(Integer endSize) {
+		this.endSize = endSize;
+	}
+	public Integer getIsPage() {
+		return isPage;
+	}
+	public void setIsPage(Integer isPage) {
+		this.isPage = isPage;
 	}
 	
 }

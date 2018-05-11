@@ -1,5 +1,8 @@
 package com.yuxin.wx.api.institution;
 
+import com.yuxin.wx.common.PageFinder;
+import com.yuxin.wx.model.institution.MerchantEntryVo;
+
 public interface MerchantEntryService {
 
     /**
@@ -7,4 +10,14 @@ public interface MerchantEntryService {
      * @return
      */
     Integer merchantEntryCount();
+    /**
+     * 查询商家入驻申请
+     * @return
+     */
+    PageFinder<MerchantEntryVo> queryMerchantEntry(MerchantEntryVo merchantEntryVo);
+    /**
+     * 更新商家入驻信息
+     * @param merchantEntryVo
+     */
+    void updateMerchanrEntry(MerchantEntryVo merchantEntryVo);
 }

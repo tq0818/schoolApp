@@ -5,5 +5,53 @@
     <select id="merchantEntryCount" resultType="Integer" parameterMap="map">
 
     </select>
-
+	
+	<select id="queryMerchantEntry" parameterType="com.yuxin.wx.model.institution.MerchantEntryVo" resultType="com.yuxin.wx.model.institution.MerchantEntryVo">
+		SELECT me.id AS id,
+			   me.ins_name AS insName,
+			   me.mobile AS mobile,
+			   me.deal_status AS dealStatus,
+			   me.note AS note,
+			   me.create_time AS createTime,
+			   me.update_time AS updateTime 
+		  FROM merchant_entry me
+		 ORDER by me.deal_status ASC,me.create_time DESC
+		 LIMIT #{firstIndex},#{pageSize}
+	</select>
+	
+	<update id="updateMerchanrEntry" parameterType="com.yuxin.wx.model.institution.MerchantEntryVo">
+		UPDATE merchant_entry
+	    <trim prefix="set" suffixOverrides=",">
+	   		<if test="dealStatus != null">deal_status = #{dealStatus}</if>
+	   		<if test="note != null and note !=''">note = #{note}</if>
+	   		<if test="updateTime != null">update_time = #{updateTime}</if>
+	    </trim>
+		<where>
+		 WHERE id = #{id}
+		</where>
+	</update>
+	
+	<select id="dimMerchantEntry" parameterType="com.yuxin.wx.model.institution.DimQueryMerchantVo" resultType="com.yuxin.wx.model.institution.MerchantEntryVo">
+		SELECT me.id AS id,
+			   me.ins_name AS insName,
+			   me.mobile AS mobile,
+			   me.deal_status AS dealStatus,
+			   me.note AS note,
+			   me.create_time AS createTime,
+			   me.update_time AS updateTime 
+		  FROM merchant_entry me
+		 WHERE 1=1
+		  <if test="dimFlag == 0">
+		  	<if test="dealStatus != null">and me.deal_status = #{dealStatus}</if>
+		  	<if test="leftTime != null and rightTime == null"><![CDATA[and DATE_FORMAT(me.create_time,"%Y-%m-%d") >= DATE_FORMAT(#{leftTime},"%Y-%m-%d")]]></if>
+		  	<if test="leftTime != null and rightTime != null">and DATE_FORMAT(me.create_time,"%Y-%m-%d") DATE_FORMAT(#{leftTime} and DATE_FORMAT(#{rightTime},"%Y-%m-%d")</if>
+		  	<if test="leftTime == null and rightTime != null">and DATE_FORMAT(me.create_time,"%Y-%m-%d") = DATE_FORMAT(#{rightTime},"%Y-%m-%d")</if>
+		  </if>
+		  <if test="dimFlag == 1">
+		  	<if test="mobile != null and mobile != ''">and mobile like '%${mobile}%'</if>
+		  	<if test="insName != null and insName != ''">and ins_name like '%${insName}%'</if>
+		  </if>
+		 ORDER BY me.deal_status ASC,me.create_time DESC
+		 LIMIT #{firstIndex},#{pageSize}
+	</select>
 </mapper>
