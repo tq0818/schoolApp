@@ -19,4 +19,11 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
     List<InstitutionCategoryVo> findFistCategorys();
 
     List<InstitutionCategoryVo> findCecondCategorys(Integer id );
+
+    /**
+     * 根据机构id查询机构分类
+     * @param id
+     * @return
+     */
+    List<InstitutionCategoryVo> queryInstitutionCategorysByInsId(Integer id);
 }

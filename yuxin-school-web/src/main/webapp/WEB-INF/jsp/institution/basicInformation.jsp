@@ -32,15 +32,49 @@
             <div class="addingMechanism" style="display: block;">
                     <div style="margin-top: 0;">
                         <span class="mechanismName">机构名称：</span>
-                        <input type="text" style="width: 460px;" maxlength="20">
+                        <input type="text" style="width: 460px;" maxlength="20" value="${ins.name}">
                     </div>
                     <div id="orgType">
-                        <div>
+                        <c:forEach items="${categoryVos}" var="cate" varStatus="vs">
+                            <c:choose>
+                                <c:when test="${vs.count==fn:length(categoryVos)}">
+                                    <div style="padding-left: 80px;margin-top: 6px;">
+                                        <select name="" id="findFistCategorys">
+                                            <option value="">请选择一级分类</option>
+                                            <option value="${cate.oneLevelId}" selected>${cate.firstcodeName}</option>
+                                        </select>
+                                        <select name="" id="findSecondCategorys">
+                                            <option value="">请选择二级分类</option>
+                                            <option value="${cate.twoLevelId}" selected>${cate.secondcodeName}</option>
+                                        </select>
+                                        <span class="iconBtn deleteType">-</span>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div>
+                                        <span class="mechanismName">机构分类：</span>
+                                        <select name="" id="findFistCategorys2">
+                                            <option value="">请选择一级分类</option>
+                                            <option value="${cate.oneLevelId}" selected>${cate.firstcodeName}</option>
+                                        </select>
+                                        <select name="" id="findSecondCategorys2">
+                                            <option value="">请选择二级分类</option>
+                                            <option value="${cate.twoLevelId}" selected>${cate.secondcodeName}</option>
+                                        </select>
+                                        <span class="iconBtn addType">+</span>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
+
+                        </c:forEach>
+
+
+                        <%--<div>
                             <span class="mechanismName">机构分类：</span>
-                            <select name="" id="">
+                            <select name="" id="findFistCategorys">
                                 <option value="">请选择一级分类</option>
                             </select>
-                            <select name="" id="">
+                            <select name="" id="findSecondCategorys">
                                 <option value="">请选择二级分类</option>
                             </select>
                             <span class="iconBtn addType">+</span>
@@ -53,85 +87,87 @@
                                 <option value="">请选择二级分类</option>
                             </select>
                             <span class="iconBtn deleteType">-</span>
-                        </div>
-
+                        </div>--%>
                     </div>
                     <div>
                         <span class="mechanismName">机构地址：</span>
-                        <select name="" id="">
-                            <option value="">请选择省份</option>
+                        <select name="eduArea" id="eduArea" onchange="queryRiseSchoolDict(1)">
+                           <option value="">请选择省份</option>
+                           <option value="${ins.province}" selected>${ins.provinceName}</option>
                         </select>
-                        <select name="" id="">
+                        <select name="eduSchool" id="eduSchool" onchange="queryRiseSchoolDict(2)">
                             <option value="">请选择市</option>
+                            <option value="${ins.city}" selected>${ins.cityName}</option>
                         </select>
-                        <select name="" id="">
+                        <select id="registStatus" name="status">
                             <option value="">请选择区</option>
+                            <option value="${ins.area}" selected>${ins.areaName}</option>
                         </select>
                         <br/>
-                        <input type="text" placeholder="请输入详细地址" style="margin-left: 80px;margin-top: 14px;width: 460px;" maxlength="50" >
+                        <input type="text" placeholder="请输入详细地址" style="margin-left: 80px;margin-top: 14px;width: 460px;" maxlength="50" value="${ins.address}" >
                     </div>
                     <div>
                         <span style="float: left;">联系电话：</span>
                         <div style="display: inline-block" id="listMachine">
-                            <div>
-                                <input type="text" placeholder="区号" style="width: 30px;">-
-                                <input type="text" placeholder="请输入座机号">
-                                <span class="iconBtn addMachine">+</span>
-                            </div>
-                            <div>
-                                <input type="text" placeholder="区号" style="width: 30px;">-
-                                <input type="text" placeholder="请输入座机号">
-                                <span class="iconBtn deleteMachine">-</span>
-                            </div>
+                            <c:forEach items="${tells}" var="tell" varStatus="vs">
+                                <div>
+                                     <input type="text" placeholder="" style="width: 30px;" value="${ fn:split(tell, '-')[0] }">-
+                                     <input type="text" placeholder="请输入座机号" value="${ fn:split(tell, '-')[1] }">
+                                </div>
+                                <c:choose>
+                                    <c:when test="${vs.count==fn:length(tells)}">
+                                        <span class="iconBtn deleteMachine">-</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="iconBtn addMachine">+</span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
                         </div>
                         <div id="listPhone">
-                            <div style="margin-left: 73px;margin-top: 14px;">
-                                <input type="text" style="width: 440px;" placeholder="请输入手机号">
-                                <span class="iconBtn addPhone" >+</span>
-                            </div>
-                            <div style="margin-left: 73px;margin-top: 14px;">
-                                <input type="text" style="width: 440px;" placeholder="请输入手机号">
-                                <span class="iconBtn deletePhone" >-</span>
-                            </div>
+                            <c:forEach items="${mobiles}" var="mobile" varStatus="vs">
+                                <input type="text" style="width: 440px;" placeholder="请输入手机号" value="${mobile}">
+                                <c:choose>
+                                    <c:when test="${vs.count==fn:length(mobiles)}">
+                                        <span class="iconBtn deleteMachine">-</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="iconBtn addMachine">+</span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
                         </div>
-
                     </div>
                     <div>
                         <span>系统标签：</span>
-                            <span href="##" class="systemBtn">
-                                <span class="systemLabel">你的名字么</span>
+                            <c:forEach var="label" items="${sysLabel}">
+                             <span href="##" class="systemBtn">
+                                <input class="systemLabel" label-id="${label.id}" value="${label.labelName}">
                                 <i class="icon iconfont deleteBtn">&#xe610;</i>
                             </span>
-                            <span href="##" class="systemBtn">
-                                <span class="systemLabel">我的名字没</span>
-                                <i class="icon iconfont deleteBtn">&#xe610;</i>
-                            </span>
+                            </c:forEach>
                         <span class="iconBtn addSystem">+</span>
                     </div>
                 <div>
                     <span>自定义标签：</span>
-                    <span href="##" class="customLabel">
-                            <span class="systemLabel">你的名字么</span>
+
+                    <c:forEach var="custom" items="${customLabel}">
+                        <span href="##" class="customLabel">
+                            <input class="systemLabel" label-id="${custom.id}" value="${custom.labelName}">
                             <i class="icon iconfont deleteCustomLabel">&#xe610;</i>
                     </span>
-                    <span href="##" class="customLabel">
-                            <span class="systemLabel">我的名字没</span>
-                            <i class="icon iconfont deleteCustomLabel">&#xe610;</i>
-                    </span>
+                    </c:forEach>
                     <span class="iconBtn customLabelBtn">+</span>
                 </div>
                 <div>
                             <span>特色服务：</span>
-                            <span href="##" class="specialService">
+                    <c:forEach var="spe" items="${specialSer}">
+                             <span href="##" class="specialService">
                                 <img src="../../../images/institution/1.jpg" alt="" class="iconPic" >
-                                <span class="systemLabel">你的名字么</span>
+                                <input class="systemLabel" label-id="${spe.id}" value="${spe.labelName}">
                                 <i class="icon iconfont deletespecialService">&#xe610;</i>
                             </span>
-                            <span href="##" class="specialService">
-                                <img src="../../../images/institution/1.jpg" alt="" class="iconPic">
-                                <span class="systemLabel">我的名字没</span>
-                                <i class="icon iconfont deletespecialService">&#xe610;</i>
-                            </span>
+                    </c:forEach>
                             <span class="iconBtn specialServiceBtn">+</span>
                 </div>
                 <div>
@@ -155,7 +191,7 @@
                 <span>上传特色服务图标</span>
                 <i class="icon iconfont closeIconList" style="float: right;margin: 10px;">&#xe610;</i>
             </div>
-            <div style="height: 250px;">
+            <div style="height: 250px;" class="imgDiv">
                 <a href="##" class="uploadImg">+<input type="file"></a>
                 <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
                 <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >

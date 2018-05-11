@@ -1,11 +1,10 @@
 package com.yuxin.wx.controller.institution;
 
-import com.yuxin.wx.api.institution.InsFeaturesService;
-import com.yuxin.wx.api.institution.InstitutionInfoService;
-import com.yuxin.wx.api.institution.InstitutionLabelService;
+import com.yuxin.wx.api.institution.*;
 import com.yuxin.wx.api.user.IUsersService;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.institution.InsFeaturesVo;
+import com.yuxin.wx.model.institution.InstitutionCategoryVo;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
 import com.yuxin.wx.model.institution.InstitutionLabelVo;
 import com.yuxin.wx.model.user.Users;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +31,8 @@ public class InstitutionInfoController {
     private InstitutionLabelService institutionLabelService;
     @Autowired
     private InsFeaturesService insFeaturesService;
+    @Autowired
+    private InstitutionCategoryManageService institutionCategoryService;
     @Autowired
     private IUsersService usersServiceImpl;
     /**
@@ -89,6 +91,43 @@ public class InstitutionInfoController {
         String id = request.getParameter("id");
         //机构信息
         InstitutionInfoVo ins = institutionInfoService.findInstitutionInfoById(Integer.parseInt(id));
+        //电话号码数据处理
+        String mobile = ins.getMobile();
+        List<String> mobiles = new ArrayList<>();//手机号码容器
+        List<String> tellsA = new ArrayList<>();//座机号码区号容器
+        List<String> tellsB = new ArrayList<>();//座机号码后段容器
+        List<String> tells = new ArrayList<>();//座机号码区号容器
+        if(null != mobile && !"".equals(mobile)){
+            if(!mobile.contains(",")){
+                //只有一个电话号码
+                if(!mobile.contains("-")){
+                    //一个手机号码
+                    mobiles.add(mobile);
+                    model.addAttribute("mobiles",mobiles);
+                }else{
+                    //一个电话号码
+                    tells.add(mobile);
+                    model.addAttribute("tells",tells);
+                }
+            }else{
+                //多个号码
+                String [] mobileArr = mobile.split(",");
+                for(int i = 0; i<mobileArr.length; i++){
+                    if(!mobileArr[i].contains("-")){
+                        //当前是手机号码
+                        mobiles.add(mobileArr[i]);
+                    }else{
+                        //当前是座机号码
+                        tells.add(mobileArr[i]);
+                    }
+                }
+                model.addAttribute("mobiles",mobiles);
+                model.addAttribute("tells",tells);
+            }
+        }
+
+        //机构分类
+        List<InstitutionCategoryVo> categoryVos =  institutionCategoryService.queryInstitutionCategorysByInsId(Integer.parseInt(id));
         //系统标签
         List<InstitutionLabelVo> sysLabel = institutionLabelService.findSysLabelByInsId(Integer.parseInt(id));
         //自定义标签
@@ -96,6 +135,7 @@ public class InstitutionInfoController {
         //特殊服务
         List<InstitutionLabelVo> specialSer = institutionLabelService.findSpecialServiceByInsId(Integer.parseInt(id));
         model.addAttribute("ins",ins);
+        model.addAttribute("categoryVos",categoryVos);
         model.addAttribute("sysLabel",sysLabel);
         model.addAttribute("customLabel",customLabel);
         model.addAttribute("specialSer",specialSer);
@@ -106,18 +146,31 @@ public class InstitutionInfoController {
     /**
      * 特殊服务图片
      * @param model
-     * @param institutionInfoVo
+     * @param insFeaturesVo
      * @return
      */
+    @ResponseBody
     @RequestMapping(value = "/findSpecialServiceImg",method = RequestMethod.POST)
-    public String findSpecialServiceImg(Model model,InstitutionInfoVo institutionInfoVo){
+    public PageFinder<InsFeaturesVo> findSpecialServiceImg(Model model,InsFeaturesVo insFeaturesVo){
         //特殊服务
-        List<InsFeaturesVo> specialSer = insFeaturesService.findInsFeaturesVos();
-        Integer specialSerCount = insFeaturesService.findInsFeaturesVosCount();
+        try{
+            if(null != insFeaturesVo.getPage() && !"".equals(insFeaturesVo.getPage())){
+                if(insFeaturesVo.getPage() == 1){
+                    insFeaturesVo.setPage(0);
+                }else{
+                    insFeaturesVo.setPage((insFeaturesVo.getPage()-1)*2);
+                }
 
-        PageFinder<InsFeaturesVo> specialSerPage = new PageFinder<>(institutionInfoVo.getPage(),institutionInfoVo.getPageSize(),specialSerCount,specialSer);
-        model.addAttribute("specialSerPage",specialSerPage);
-        return "";
+            }
+            insFeaturesVo.setPageSize(2);
+            List<InsFeaturesVo> specialSer = insFeaturesService.findInsFeaturesVos(insFeaturesVo);
+            Integer specialSerCount = insFeaturesService.findInsFeaturesVosCount(insFeaturesVo);
+            PageFinder<InsFeaturesVo> specialSerPage = new PageFinder<>(insFeaturesVo.getPage()/2,insFeaturesVo.getPageSize(),specialSerCount,specialSer);
+            return specialSerPage;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return  null;
     }
 
 

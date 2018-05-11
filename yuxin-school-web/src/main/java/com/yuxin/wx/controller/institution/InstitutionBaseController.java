@@ -39,4 +39,16 @@ public class InstitutionBaseController {
     public String elegantDemeanor(){
         return "institution/elegantDemeanor";
     }
+    //新增线下课程
+    @RequestMapping(value = "/newLineCourse")
+    public String newLineCourse(){
+        return "institution/newLineCourse";
+    }
+    //首页推荐分类管理
+    @RequestMapping(value = "/recommendationHomeC")
+    public String recommendationHomeClassification(){
+        return "institution/recommendationHomeC";
+    }
+
+
 }

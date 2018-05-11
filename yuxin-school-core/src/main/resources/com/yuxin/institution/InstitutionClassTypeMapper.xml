@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuxin.wx.institution.mapper.InstitutionClassTypeMapper">
+	<resultMap type="com.yuxin.wx.model.institution.InstitutionClassTypeVo" id="classTypeResultMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="coverUrl" column="cover_url" />
+		<result property="price" column="price" />
+		<result property="isReser" column="is_reser" />
+		<result property="reserCount" column="reser_count" />
+		<result property="detaildesc" column="detaildesc" />
+		<result property="isShelves" column="is_shelves" />
+		<result property="delFlag" column="del_flag" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+	<resultMap type="com.yuxin.wx.model.institution.ClassTypeOnlineVo" id="classTypeOnlineResultMap">
+		<result property="cid" column="cid" />
+		<result property="name" column="name" />
+		<result property="rid" column="rid" />
+		<result property="insId" column="insId" />
+		<result property="isLink" column="isLink" />
+
+	</resultMap>
+
+
+	<resultMap type="com.yuxin.wx.model.institution.ClassTypeOnlineFindVo" id="classTypeOnlineFindResultMap">
+
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="companyName" column="companyName" />
+		<result property="subjectName" column="subjectName" />
+		<result property="link" column="link" />
+		<result property="rid" column="rid" />
+
+	</resultMap>
+
+	<sql id="table_columns">
+		id,
+		name,
+		cover_url,
+		price,
+		is_reser,
+		reser_count,
+		detaildesc,
+		is_shelves,
+		del_flag,
+		create_time,
+		update_time
+    </sql>
+	<sql id="entity_properties">
+		#{id},
+		#{name},
+		#{coverUrl},
+		#{price},
+		#{isReser},
+		#{reserCount},
+		#{detaildesc},
+		#{isShelves},
+		#{delFlag},
+		#{createTime},
+		#{updateTime}
+	</sql>
+	<sql id="batch_entity_properties">
+		#{item.id},
+		#{item.name},
+		#{item.coverUrl},
+		#{item.price},
+		#{item.isReser},
+		#{item.reserCount},
+		#{item.detaildesc},
+		#{item.isShelves},
+		#{item.delFlag},
+		#{item.createTime},
+		#{item.updateTime}
+	</sql>
+	
+	<!-- 适用于主键自增类型 -->
+	<insert id="insert" parameterType="com.yuxin.wx.model.institution.InstitutionClassTypeVo" useGeneratedKeys="true" keyProperty="id">
+		insert into ins_class_type( <include refid="table_columns" /> ) 
+		values ( <include refid="entity_properties" /> )
+	</insert>
+	
+	<!-- 批量添加 适用于主键自增类型  不支持返回主键-->
+	<insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
+		insert into ins_class_type( <include refid="table_columns" /> ) 
+		values 
+		<foreach item="item" collection="list" separator="," >
+			( <include refid="entity_properties" /> )
+		</foreach>
+	</insert>
+	
+	<!--根据主键删除 -->
+	<delete id="deleteById">
+		delete from ins_class_type
+		where id = #{id}
+	</delete>
+	
+	<!-- 根据ID批量删除 -->
+	<delete id="deleteByIds">
+		delete from ins_class_type
+		where id in
+		<foreach item="item" collection="array" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<update id="update" parameterType="com.yuxin.wx.model.institution.InstitutionClassTypeVo">
+		update ins_class_type 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="name != null and name != ''">name = #{name},</if>
+			<if test="coverUrl != null and coverUrl != ''">cover_url = #{coverUrl},</if>
+			price = #{price},
+			is_reser = #{isReser},
+			reser_count = #{reserCount},
+			
+			<if test="detaildesc != null and detaildesc != ''">detaildesc = #{detaildesc},</if>
+			is_shelves = #{isShelves},
+			del_flag = #{delFlag},
+			<if test="createTime != null and createTime != ''">create_time = #{createTime},</if>
+			<if test="updateTime != null and updateTime != ''">update_time = #{updateTime}</if>
+		</trim>
+		<where>id = #{id}</where>
+	</update>
+	
+	<select id="findById" resultMap="classTypeResultMap" parameterType="String" >
+		select <include refid="table_columns" />
+		from ins_class_type
+		where id = #{id}
+	</select>
+	
+	<select id="queryAll" resultMap="classTypeResultMap">
+		select <include refid="table_columns" /> 
+		from ins_class_type
+	</select>
+	
+	<!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
+	<sql id="page_where">
+		<trim prefix="where" prefixOverrides="and | or ">
+			<if test="isShelves != null and isShelves != ''">is_shelves = #{isShelves},</if>
+		</trim>
+	</sql>
+	
+	<select id="page" resultMap="classTypeResultMap" parameterType="map">
+		SELECT ict.* FROM  ins_class_type  ict 
+		INNER JOIN ins_class_type_relation ictr ON ict.`id` = ictr.`class_type_id`
+		and ictr.is_online = 0
+		<if test="isShelves != null "> and ict.is_shelves = #{isShelves} </if>
+		INNER JOIN institution_info info ON ictr.`ins_id` = info.`id`
+		<if test="insId != null and insId != ''">and info.id = #{insId} </if>
+
+		order by ict.`is_reser` DESC , ict.is_shelves DESC , ict.create_time DESC
+
+		limit #{firstIndex},#{pageSize}
+	</select>
+	
+	<select id="pageCount" resultType="int" parameterType="map">
+		SELECT COUNT(ict.id) FROM  ins_class_type  ict 
+		INNER JOIN ins_class_type_relation ictr ON ict.`id` = ictr.`class_type_id`
+		and ictr.is_online = 0
+		<if test="isShelves != null "> and ict.is_shelves = #{isShelves} </if>
+		INNER JOIN institution_info info ON ictr.`ins_id` = info.`id`
+		<if test="insId != null and insId != ''">and info.id = #{insId}</if>
+	</select>
+
+	<select id="getRecommendCountByClassTypeId" resultType="int" parameterType="Integer">
+		SELECT COUNT(ict.id) FROM  ins_class_type  ict
+		INNER JOIN ins_class_type_relation ictr ON ict.`id` = ictr.`class_type_id`
+		AND ict.is_shelves = 1
+		AND ict.`is_reser` = 1
+		INNER JOIN institution_info info ON ictr.`ins_id` = info.`id`
+		AND info.id = #{insId}
+	</select>
+
+
+
+	<!-- 在线课程部分  -->
+	<select id="pageOnline" resultMap="classTypeOnlineResultMap" parameterType="map">
+		SELECT
+		ct.id cid,
+		ct.`name`,
+		ictr.`id` rid,
+		info.`id` insId ,
+		ictr.`is_link` isLink
+		FROM
+		`class_type` ct
+		INNER JOIN `ins_class_type_relation` ictr
+		ON ct.`id` = ictr.`class_type_id`
+		<if test="link != null and link != ''">and ictr.`is_link`  = #{link} </if>
+		AND ictr.`is_online` = 1
+		INNER JOIN `institution_info` info
+		ON ictr.`ins_id` = info.`id`
+		<if test="insId != null and insId != ''">and info.id = #{insId} </if>
+		ORDER BY ictr.`is_link` DESC,
+		ictr.`id` DESC
+		limit #{firstIndex},#{pageSize}
+
+	</select>
+
+	<select id="pageOnlineCount" resultType="int" parameterType="map">
+		SELECT
+		COUNT(ct.id)
+		FROM
+		`class_type` ct
+		INNER JOIN `ins_class_type_relation` ictr
+		ON ct.`id` = ictr.`class_type_id`
+		<if test="link != null and link != ''">and ictr.`is_link`  = #{link} </if>
+		AND ictr.`is_online` = 1
+		INNER JOIN `institution_info` info
+		ON ictr.`ins_id` = info.`id`
+		<if test="insId != null and insId != ''">and info.id = #{insId} </if>
+		ORDER BY ictr.`is_link` DESC,
+		ictr.`id` DESC
+
+	</select>
+
+
+	<select id="findOnlineClassType" resultMap="classTypeOnlineFindResultMap" parameterType="map">
+		SELECT
+		ct.`id` ,
+		ct.`name`,
+		c.`company_name` companyName,
+		sci.`item_name` subjectName,
+		ictr.`is_link` link ,
+		ictr.id rid
+		FROM
+		class_type ct
+		INNER JOIN company c
+		ON ct.`company_id` = c.`id`
+		AND ct.`name` = #{name}
+		INNER JOIN `sys_config_item` sci
+		ON ct.`item_third_code` = sci.`item_code`
+		LEFT JOIN `ins_class_type_relation` ictr
+		ON ct.`id` = ictr.`class_type_id`
+		AND ictr.`ins_id` = #{insId}
+
+
+	</select>
+
+
+	<insert id="addOnlineClass" parameterType="map" >
+		INSERT INTO `ins_class_type_relation` (`ins_id`,`class_type_id`,`is_online`,`is_link`)
+			VALUES
+		(#{insId} , #{cid} , 1 , 0)
+
+	</insert>
+
+
+	<!-- 删除中间表信息 -->
+
+	<delete id="deleteRelation" parameterType="map">
+		delete from ins_class_type_relation where `ins_id` = #{insId} and class_type_id = #{cid} and is_online = 0
+	</delete>
+
+	<delete id="deleteOnlineRelation" parameterType="Integer">
+		delete from ins_class_type_relation where id = #{id}  and is_online = 1
+	</delete>
+
+
+
+
+</mapper>

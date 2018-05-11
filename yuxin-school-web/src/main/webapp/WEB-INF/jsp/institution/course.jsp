@@ -16,10 +16,12 @@
         .gobal-progress{display: none !important;} 
     </style>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/institution/course.css">
+    <script src="<%=rootPath %>/javascripts/common/json2.js"></script>
 </head>
 <body>
 <!-- 二级导航 -->
 <jsp:include page="/WEB-INF/jsp/menu/menu_institution.jsp"></jsp:include>
+
 <div class="u-wrap admin overflow schoolDetails">
     <jsp:include page="/WEB-INF/jsp/menu/menu_institutionLeft.jsp"></jsp:include>
     <div class="right-side">
@@ -37,40 +39,7 @@
                     <a href="##" class="btn btn-default  btn-mb">已下架</a>
                 </div>
                 <div class="imgList" style="width: 80%;margin: auto;display: block;float: none;">
-                    <ul>
-                        <li class="addImg mienShow" id="">
-                            <i class="icon iconfont"></i>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">取消推荐</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">下架</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm " >管理</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">取消推荐</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">下架</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm " >管理</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">推荐</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">下架</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm " >管理</a>
-                            </div>
-                        </li>
+                    <ul id="courseContainer">
                     </ul>
                 </div>
                 <div class="pages pagination" style="padding-top: 10px;">
@@ -167,7 +136,7 @@
 
 </div>
 
-
+<input id="insId" type="hidden" value="${insEntity.id}">
 
 
 

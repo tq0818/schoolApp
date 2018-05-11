@@ -10,6 +10,8 @@ public class InsFeaturesVo extends BaseEntity{
     private Integer imgType;
     private Date updateTime;
     private Date createTime;
+    private Integer page;
+    private Integer pageSize;
 
     public String getImgUrl() {
         return imgUrl;
@@ -41,5 +43,25 @@ public class InsFeaturesVo extends BaseEntity{
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public Integer getPage() {
+        return page;
+    }
+
+    @Override
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    @Override
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    @Override
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 }

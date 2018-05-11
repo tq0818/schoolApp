@@ -73,7 +73,7 @@
                         <a href="##" class="btn btn-default btn-sm">英语培训</a>
                         <a href="##" class="btn btn-default btn-sm">德语培训</a>
                         <span>
-                            <a href="" style="color: red;">管理</a>
+                            <a href="/InsInfoBase/recommendationHomeC" style="color: red;">管理</a>
                         </span>
                     </div>
                     <div  class="marginTop10 changeBtn">

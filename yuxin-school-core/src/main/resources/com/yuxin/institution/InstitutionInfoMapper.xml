@@ -9,6 +9,11 @@
         <result property="province" column="province" />
         <result property="city" column="city" />
         <result property="area" column="area" />
+
+        <result property="provinceName" column="provinceName" />
+        <result property="cityName" column="cityName" />
+        <result property="areaName" column="areaName" />
+
         <result property="address" column="address" />
         <result property="mobile" column="mobile" />
         <result property="isChain" column="is_chain" />
@@ -96,9 +101,11 @@
     </update>
 
     <select id="findInstitutionInfoById" parameterType="Integer" resultMap="institutionInfoMap">
-        select *
-        from institution_info
-        where id  =#{id}
+        select ii.* ,s.item_name provinceName,s1.item_name cityName,s2.item_name areaName from institution_info ii
+        left JOIN sys_rise_school_dict s on s.item_code = ii.province
+        left JOIN sys_rise_school_dict s1 on s1.item_code = ii.city
+        left JOIN sys_rise_school_dict s2 on s2.item_code = ii.area
+        where ii.id =#{id}
     </select>
 
     <select id="findInstitutionInfos" resultMap="institutionInfoMap" parameterType="com.yuxin.wx.model.institution.InstitutionInfoVo">
