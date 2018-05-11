@@ -249,9 +249,9 @@ public class InstitutionClassTypeController {
 
 			Map<String,Object> map = new HashMap<>();
 			map.put("insId",insId);
-			map.put("pageStart",pageStart * pageSize);
+			map.put("firstIndex",pageStart * pageSize);
 			map.put("pageSize",pageSize);
-			map.put("link",link);
+			map.put("link",link == 0 ? null : (link == 1 ? 1 : 0));
 
 			int count = institutionClassTypeService.pageOnlineCount(map);
 			List<ClassTypeOnlineVo> list = institutionClassTypeService.pageOnline(map);
@@ -359,9 +359,50 @@ public class InstitutionClassTypeController {
 
 
 
+	@ResponseBody
+	@RequestMapping(value = "/linkOnlineClass",method = RequestMethod.POST)
+	public String linkOnlineClass(HttpServletRequest request) {
+		try{
+
+			Integer insId = Integer.valueOf(request.getParameter("insId"));
+			Integer rid = Integer.valueOf(request.getParameter("rid"));
+
+			boolean flag = institutionClassTypeService.linkOpenClass(insId,rid);
+			if(!flag){
+				return JsonMsg.ERROR;
+			}
+
+		}catch (Exception e){
+			e.printStackTrace();
+			return JsonMsg.ERROR;
+		}
+		return JsonMsg.SUCCESS;
+	}
 
 
+	@ResponseBody
+	@RequestMapping(value = "/updateSortOnlineClass",method = RequestMethod.POST)
+	public String updateSortOnlineClass(HttpServletRequest request) {
+		try{
 
+			Integer insId = Integer.valueOf(request.getParameter("insId"));
+			Integer rid = Integer.valueOf(request.getParameter("rid"));
+			String method = request.getParameter("method");
+			if(null == method || (!"add".equals(method) && !"sub".equals(method))){
+				return JsonMsg.ERROR;
+			}
+
+			boolean flag = institutionClassTypeService.updateSortOpenClass(insId,rid,method);
+			if(!flag){
+				return JsonMsg.ERROR;
+			}
+
+		}catch (Exception e){
+			e.printStackTrace();
+			return JsonMsg.ERROR;
+		}
+		return JsonMsg.SUCCESS;
+	}
 
 
 }

@@ -12,6 +12,7 @@
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/plugins/jcrop/css/jquery.Jcrop.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/mbox.css">
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/fatstyle.css">
+    <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/fonts/iconfont.css">
     <style>
         .gobal-progress{display: none !important;} 
     </style>
@@ -32,7 +33,7 @@
                 <span class="line"></span>
             </div>
             <div class="courseUnderLine">
-                <div class="chooseBtn">
+                <div class="chooseBtn" id="chooseBtn1">
                     <span>上下架状态</span>
                     <a href="##" class="btn btn-default btn-primary btn-mb">全部</a>
                     <a href="##" class="btn btn-default  btn-mb">已上架</a>
@@ -42,43 +43,23 @@
                     <ul id="courseContainer">
                     </ul>
                 </div>
-                <div class="pages pagination" style="padding-top: 10px;">
+                <div class="pages pagination paginationUnderLine" style="padding-top: 10px;">
 
                 </div>
             </div>
             <div class="courseOnLine">
                 <span style="color: #a1a1a1;">功能说明：该功能用将卓鹿的“在线课程”和当前机构进行关联，便于用户查看属于该机构的在线视频课程</span>
-                <div class="chooseBtn">
+                <div class="chooseBtn" id="chooseBtn2">
                     <span>上下架状态</span>
-                    <a href="##" class="btn btn-default btn-primary btn-mb">全部</a>
-                    <a href="##" class="btn btn-default  btn-mb">已上架</a>
-                    <a href="##" class="btn btn-default  btn-mb">已下架</a>
+                    <a href="##" class="btn btn-default onlineStatus btn-primary btn-mb">全部</a>
+                    <a href="##" class="btn btn-default onlineStatus btn-mb">已上架</a>
+                    <a href="##" class="btn btn-default onlineStatus btn-mb">已下架</a>
                 </div>
                 <a href="##" class="btn btn-primary btn-mb addCourse" style="float: right;margin-right: 200px;margin-bottom: 10px;">添加课程</a>
                 <div style="width: 80%;margin: auto;">
                     <table class="table table-center" id="tableList">
-                        <tbody>
-                        <tr data-buy="true">
-                            <th width="3%">序号</th>
-                            <th width="12%">课程名称</th>
-                            <th width="5%">关联状态</th>
-                            <th width="5%">排序</th>
-                            <th width="5%">操作</th>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>如何写好作文</td>
-                            <td class="relationResult">已关联</td>
-                            <td>1</td>
-                            <td class="relation">取消关联</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>如何写好作文</td>
-                            <td class="relationResult">未关联</td>
-                            <td>1</td>
-                            <td class="relation">关联</td>
-                        </tr>
+                        <tbody id="onlineTbody">
+
                         </tbody>
                     </table>
                 </div>
@@ -105,15 +86,14 @@
     </h5>
     <div style="text-align: center;margin: 10px;">
         <span>课程名称：</span>
-        <input type="text" placeholder="请输入课程名称" style="width: 300px;height: 25px;margin-right: 5px;">
-        <a href="##" class="btn btn-sm btn-primary">搜索</a>
+        <input type="text" id="findClassName" placeholder="请输入课程名称" style="width: 300px;height: 25px;margin-right: 5px;">
+        <a href="##" class="btn btn-sm btn-primary findClassBtn">搜索</a>
     </div>
     <div>
 
         <div style="width: 80%;margin: auto;">
             <span style="color: #868686;">搜索结果：</span>
                 <table class="table table-center" >
-                    <tbody>
                     <tr>
                         <th width="3%">序号</th>
                         <th width="12%">课程名称</th>
@@ -121,13 +101,8 @@
                         <th width="15%">所属学校</th>
                         <th width="5%">操作</th>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>行程问题</td>
-                        <td>物理</td>
-                        <td>成都芳草附属小学</td>
-                        <td><a href="##" class="btn btn-primary btn-xs addConfirm">添加</a></td>
-                    </tr>
+                    <tbody id="findClassTbody">
+
                     </tbody>
                 </table>
             </div>

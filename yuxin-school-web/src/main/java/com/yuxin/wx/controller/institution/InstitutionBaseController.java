@@ -1,6 +1,8 @@
 package com.yuxin.wx.controller.institution;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -40,8 +42,9 @@ public class InstitutionBaseController {
         return "institution/elegantDemeanor";
     }
     //新增线下课程
-    @RequestMapping(value = "/newLineCourse")
-    public String newLineCourse(){
+    @RequestMapping(value = "/newLineCourse/{id}")
+    public String newLineCourse(Model model, @PathVariable Integer id){
+        model.addAttribute("underLineId",id);
         return "institution/newLineCourse";
     }
     //首页推荐分类管理

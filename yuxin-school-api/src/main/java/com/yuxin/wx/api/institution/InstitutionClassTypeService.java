@@ -91,4 +91,16 @@ public interface InstitutionClassTypeService {
 	 */
 	void addOnlineClass(Map<String, Object> map);
 
+	/**
+	 * 关联或者取消关联课程，并更新排序
+	 * @param insId
+	 * @param rid
+	 * @return
+	 */
+	boolean  linkOpenClass(Integer insId,Integer rid);
+
+
+	boolean  updateSortOpenClass(Integer insId,Integer rid,String method);
+
+
 }

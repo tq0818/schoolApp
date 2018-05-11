@@ -1,6 +1,75 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yuxin.wx.institution.mapper.InstitutionClassTypeMapper">
+
+
+	<!-- 课程和机构关联表 -->
+	<resultMap type="com.yuxin.wx.model.institution.InsClassRelationVO" id="classTypeRelationResultMap">
+		<result property="id" column="id" />
+		<result property="insId" column="ins_id" />
+		<result property="classTypeId" column="class_type_id" />
+		<result property="isOnline" column="is_online" />
+		<result property="isLink" column="is_link" />
+		<result property="sort" column="sort" />
+	</resultMap>
+
+	<sql id="relation_table_columns">
+		id,
+		ins_id,
+		class_type_id,
+		is_online,
+		is_link,
+		sort
+	</sql>
+
+
+	<select id="findRelationById" resultMap="classTypeRelationResultMap" parameterType="Integer" resultType="com.yuxin.wx.model.institution.InsClassRelationVO" >
+		select <include refid="relation_table_columns" />
+		from ins_class_type_relation
+		where id = #{id}
+	</select>
+
+	<!-- 根据关联表id更新关联状态 -->
+	<update id="delRelationLink" parameterType="Integer"  >
+		UPDATE `ins_class_type_relation` SET `is_link` = 0 WHERE `id` = #{rid}
+	</update>
+	<!-- 将指定机构课程排序依次-1 ， 用在删除关联课程时调用 -->
+	<update id="updateSubSourtBantch" parameterType="map" >
+		UPDATE `ins_class_type_relation` SET `sort` = `sort` - 1 WHERE  `is_link` = 1 AND `sort` &gt; #{sort} AND `ins_id` = #{insId}
+	</update>
+
+	<!-- 将指定机构课程排序依次+1 ， 用在新增关联课程时调用 -->
+	<update id="updateSourtBantch" parameterType="Integer" >
+		UPDATE `ins_class_type_relation` SET `sort` = `sort` + 1 WHERE  `is_link` = 1 AND `ins_id` = #{insId}
+	</update>
+
+	<!-- 新增一个关联课程 -->
+	<update id="addRelationLink" parameterType="Integer" >
+		UPDATE `ins_class_type_relation` SET `is_link` = 1 ,sort = 1 WHERE `id` = #{rid}
+	</update>
+
+	<update id="addSortRelationStep1" parameterType="map"  >
+		UPDATE `ins_class_type_relation` SET `sort`  = `sort`+1 WHERE `sort` = #{sort} AND `ins_id` = #{insId}
+	</update>
+
+	<update id="addSortRelationStep2" parameterType="Integer"  >
+		UPDATE `ins_class_type_relation` SET `sort`  = `sort`- 1 WHERE id = #{id}
+	</update>
+
+	<update id="subSortRelationStep1" parameterType="map"  >
+		UPDATE `ins_class_type_relation` SET `sort`  = `sort`-1 WHERE `sort` = #{sort} AND `ins_id` = #{insId}
+	</update>
+
+	<update id="subSortRelationStep2" parameterType="Integer"  >
+		UPDATE `ins_class_type_relation` SET `sort`  = `sort`+ 1 WHERE id = #{id}
+	</update>
+
+
+
+
+
+
+	<!--课程-->
 	<resultMap type="com.yuxin.wx.model.institution.InstitutionClassTypeVo" id="classTypeResultMap">
 		<result property="id" column="id" />
 		<result property="name" column="name" />
@@ -21,7 +90,7 @@
 		<result property="rid" column="rid" />
 		<result property="insId" column="insId" />
 		<result property="isLink" column="isLink" />
-
+		<result property="sort" column="sort" />
 	</resultMap>
 
 
@@ -182,18 +251,19 @@
 		ct.`name`,
 		ictr.`id` rid,
 		info.`id` insId ,
-		ictr.`is_link` isLink
+		ictr.`is_link` isLink ,
+		ictr.`sort`
 		FROM
 		`class_type` ct
 		INNER JOIN `ins_class_type_relation` ictr
 		ON ct.`id` = ictr.`class_type_id`
-		<if test="link != null and link != ''">and ictr.`is_link`  = #{link} </if>
+		<if test="link != null ">and ictr.`is_link`  = #{link} </if>
 		AND ictr.`is_online` = 1
 		INNER JOIN `institution_info` info
 		ON ictr.`ins_id` = info.`id`
-		<if test="insId != null and insId != ''">and info.id = #{insId} </if>
+		<if test="insId != null ">and info.id = #{insId} </if>
 		ORDER BY ictr.`is_link` DESC,
-		ictr.`id` DESC
+		ictr.`sort` ASC
 		limit #{firstIndex},#{pageSize}
 
 	</select>
@@ -205,11 +275,11 @@
 		`class_type` ct
 		INNER JOIN `ins_class_type_relation` ictr
 		ON ct.`id` = ictr.`class_type_id`
-		<if test="link != null and link != ''">and ictr.`is_link`  = #{link} </if>
+		<if test="link != null ">and ictr.`is_link`  = #{link} </if>
 		AND ictr.`is_online` = 1
 		INNER JOIN `institution_info` info
 		ON ictr.`ins_id` = info.`id`
-		<if test="insId != null and insId != ''">and info.id = #{insId} </if>
+		<if test="insId != null ">and info.id = #{insId} </if>
 		ORDER BY ictr.`is_link` DESC,
 		ictr.`id` DESC
 
@@ -229,12 +299,13 @@
 		INNER JOIN company c
 		ON ct.`company_id` = c.`id`
 		AND ct.`name` = #{name}
-		INNER JOIN `sys_config_item` sci
+		LEFT JOIN `sys_config_item` sci
 		ON ct.`item_third_code` = sci.`item_code`
 		LEFT JOIN `ins_class_type_relation` ictr
 		ON ct.`id` = ictr.`class_type_id`
 		AND ictr.`ins_id` = #{insId}
 
+		GROUP BY ct.`id`
 
 	</select>
 

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.yuxin.wx.model.institution.ClassTypeOnlineFindVo;
 import com.yuxin.wx.model.institution.ClassTypeOnlineVo;
+import com.yuxin.wx.model.institution.InsClassRelationVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -153,5 +154,86 @@ public class InstitutionClassTypeServiceImpl extends BaseServiceImpl implements 
         institutionClassTypeMapper.addOnlineClass(map);
     }
 
+    /**
+     * 关联或者取消关联线上课程并更新排序信息
+     *
+     * @param insId
+     * @param
+     * @param rid
+     * @return
+     */
+    @Override
+    public boolean linkOpenClass(Integer insId, Integer rid) {
+        InsClassRelationVO entity = institutionClassTypeMapper.findRelationById(rid);
+        //关联信息为空或者不是该机构的
+        if (null == entity || entity.getInsId() - insId != 0) {
+            return false;
+        }
+
+        try {
+
+            if (entity.getIsLink() == 0) {
+                //新增一个关联课程
+
+                //将原来的关联课程sort依次 +1
+                institutionClassTypeMapper.updateSourtBantch(insId);
+                //将该关联信息置为关联状态
+                institutionClassTypeMapper.addRelationLink(entity.getId());
+
+                return true;
+
+            } else {
+
+                Map<String, Object> map = new HashMap<>();
+                map.put("sort", entity.getSort());
+                map.put("insId", insId);
+                institutionClassTypeMapper.updateSubSourtBantch(map);
+
+                institutionClassTypeMapper.delRelationLink(entity.getId());
+
+                return true;
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+
+    }
+
+    @Override
+    public boolean updateSortOpenClass(Integer insId, Integer rid, String method) {
+        try {
+            InsClassRelationVO entity = institutionClassTypeMapper.findRelationById(rid);
+            //关联信息为空或者不是该机构的
+            if (null == entity || entity.getInsId() - insId != 0) {
+                return false;
+            }
+
+            if ("add".equals(method)) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("sort", entity.getSort() - 1);
+                map.put("insId", insId);
+
+                institutionClassTypeMapper.addSortRelationStep1(map);
+                institutionClassTypeMapper.addSortRelationStep2(entity.getId());
+            } else {
+                Map<String, Object> map = new HashMap<>();
+                map.put("sort", entity.getSort() + 1);
+                map.put("insId", insId);
+
+                institutionClassTypeMapper.subSortRelationStep1(map);
+                institutionClassTypeMapper.subSortRelationStep2(entity.getId());
+            }
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
 
 }

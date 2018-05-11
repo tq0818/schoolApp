@@ -112,11 +112,10 @@
     </p>
 </div>
 <div class="loading-bg lp-units-loading-bg" style="display: none"></div>
-
+        <input id="underLineId" type="hidden" value="${underLineId}">
 <script src="<%=rootPath %>/javascripts/riseschool/ajaxfileuploadR.js"></script>
 <script src="<%=rootPath %>/javascripts/plus/jquery.units.js"></script>
 <script src="<%=rootPath %>/javascripts/institution/newLineCourse.js"></script>
-
 
 
 </body>

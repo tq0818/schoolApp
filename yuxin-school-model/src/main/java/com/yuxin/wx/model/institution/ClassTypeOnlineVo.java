@@ -5,7 +5,7 @@ public class ClassTypeOnlineVo {
     private String name;
     private Integer rid;
     private Integer insId;
-
+    private Integer sort;
     private Integer isLink;
 
     public Integer getCid() {
@@ -47,5 +47,13 @@ public class ClassTypeOnlineVo {
 
     public void setIsLink(Integer isLink) {
         this.isLink = isLink;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 }
