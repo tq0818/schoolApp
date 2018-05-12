@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuxin.wx.institution.mapper.InstitutionTeacherMapper">
+
+
+
+
+
+
+
+
+    <!--名师-->
+    <resultMap type="com.yuxin.wx.model.institution.InstitutionTeacher" id="teacherResultMap">
+        <result property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="headUrl" column="head_url" />
+        <result property="graduateSchool" column="graduate_school" />
+        <result property="detailDesc" column="detaildesc" />
+        <result property="delFlag" column="del_flag" />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+    </resultMap>
+
+   <!-- <resultMap type="com.yuxin.wx.model.institution.ClassTypeOnlineVo" id="classTypeOnlineResultMap">
+        <result property="cid" column="cid" />
+        <result property="name" column="name" />
+        <result property="rid" column="rid" />
+        <result property="insId" column="insId" />
+        <result property="isLink" column="isLink" />
+        <result property="sort" column="sort" />
+    </resultMap>
+
+
+    <resultMap type="com.yuxin.wx.model.institution.ClassTypeOnlineFindVo" id="classTypeOnlineFindResultMap">
+
+        <result property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="companyName" column="companyName" />
+        <result property="subjectName" column="subjectName" />
+        <result property="link" column="link" />
+        <result property="rid" column="rid" />
+
+    </resultMap>
+-->
+    <sql id="table_columns">
+        id,
+        name,
+        head_url,
+        graduate_school,
+        detaildesc,
+        del_flag,
+        create_time,
+        update_time
+    </sql>
+    <sql id="entity_properties">
+        #{id},
+        #{name},
+        #{headUrl},
+        #{graduateSchool},
+        #{detailDesc},
+        #{delFlag},
+        #{createTime},
+        #{updateTime}
+
+    </sql>
+    <sql id="batch_entity_properties">
+        #{item.id},
+        #{item.name},
+        #{item.headUrl},
+        #{item.graduateSchool},
+        #{item.detailDesc},
+        #{item.delFlag},
+        #{item.createTime},
+        #{item.updateTime}
+    </sql>
+
+    <!-- 适用于主键自增类型 -->
+    <insert id="insert" parameterType="com.yuxin.wx.model.institution.InstitutionTeacher" useGeneratedKeys="true" keyProperty="id">
+        insert into institution_teacher( <include refid="table_columns" /> )
+        values ( <include refid="entity_properties" /> )
+    </insert>
+
+    <!-- 批量添加 适用于主键自增类型  不支持返回主键-->
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true">
+        insert into institution_teacher( <include refid="table_columns" /> )
+        values
+        <foreach item="item" collection="list" separator="," >
+            ( <include refid="entity_properties" /> )
+        </foreach>
+    </insert>
+
+    <!--根据主键删除 -->
+    <delete id="deleteById">
+        delete from institution_teacher
+        where id = #{id}
+    </delete>
+
+    <!-- 根据ID批量删除 -->
+    <delete id="deleteByIds">
+        delete from institution_teacher
+        where id in
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <update id="update" parameterType="com.yuxin.wx.model.institution.InstitutionTeacher">
+        update institution_teacher
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="headUrl != null and headUrl != ''">head_url = #{headUrl},</if>
+            <if test="graduateSchool != null and graduateSchool != ''">graduate_school = #{graduateSchool},</if>
+            <if test="detailDesc != null and detailDesc != ''">detaildesc = #{detailDesc},</if>
+            <if test="createTime != null and createTime != ''">create_time = #{createTime},</if>
+            <if test="updateTime != null and updateTime != ''">update_time = #{updateTime}</if>
+        </trim>
+        <where>id = #{id}</where>
+    </update>
+
+    <select id="findById" resultMap="classTypeResultMap" parameterType="String" >
+        select <include refid="table_columns" />
+        from institution_teacher
+        where id = #{id}
+    </select>
+
+    <select id="queryAll" resultMap="classTypeResultMap">
+        select <include refid="table_columns" />
+        from institution_teacher
+    </select>
+
+
+
+    <select id="loadTeacherByInstitutionId" resultMap="classTypeResultMap" parameterType="Integer">
+        SELECT
+          it.*
+        FROM
+          `institution_teacher` it
+          INNER JOIN `ins_teacher_relation` itr
+            ON it.`id` = itr.`teacher_id`
+          INNER JOIN `institution_info` info
+            ON itr.`ins_id` = info.`id`
+          AND info.id = #{insId}
+    </select>
+
+
+    <select id="getTeacherByTidInsId" resultMap="classTypeResultMap" parameterType="map">
+         SELECT
+            it.*
+            FROM
+            `institution_teacher` it
+            INNER JOIN `ins_teacher_relation` itr
+            ON it.`id` = itr.`teacher_id`
+            AND it.`id` = #{tid}
+            INNER JOIN `institution_info` info
+            ON itr.`ins_id` = info.`id`
+            AND info.id = #{insId}
+        LIMIT 1
+    </select>
+
+
+
+    <insert id="addTeacherInsRelation" parameterType="map" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `ins_teacher_relation` (`ins_id`,`teacher_id`) VALUES ( #{insId} , #{tid} )
+    </insert>
+
+
+    <!-- 删除中间表信息 -->
+
+    <delete id="deleteRelation" parameterType="map">
+        delete from ins_class_type_relation where `ins_id` = #{insId} and class_type_id = #{cid} and is_online = 0
+    </delete>
+
+    <delete id="deleteOnlineRelation" parameterType="Integer">
+        delete from ins_class_type_relation where id = #{id}  and is_online = 1
+    </delete>
+
+
+
+
+</mapper>

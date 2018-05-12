@@ -47,5 +47,19 @@ public interface InstitutionLabelMapper {
     List<InstitutionLabelVo> findSpecialServiceByInsId(Integer id);
     Integer findSpecialServiceByInsIdCount(Integer id);
 
+    /**
+     * 获取机构下所有名师的标签列表
+     * @param insId
+     * @return
+     */
+    List<InstitutionLabelVo> findTeacherLabelByInsId(Integer insId);
+
+    /**
+     * 根据名师id获取标签列表
+     * @param tid   名师id
+     * @return
+     */
+    List<InstitutionLabelVo> getTeacherLabelsByTeacherId(Integer tid);
+
 
 }

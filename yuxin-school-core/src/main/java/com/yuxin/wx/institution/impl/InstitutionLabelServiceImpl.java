@@ -51,4 +51,16 @@ public class InstitutionLabelServiceImpl extends BaseServiceImpl implements Inst
     }
 
 
+    @Override
+    public List<InstitutionLabelVo> findTeacherLabelByInsId(Integer insId) {
+        return institutionLabelMapper.findTeacherLabelByInsId(insId);
+    }
+
+    @Override
+    public List<InstitutionLabelVo> getTeacherLabelsByTeacherId(Integer tid) {
+        return institutionLabelMapper.getTeacherLabelsByTeacherId(tid);
+    }
+
+
+
 }

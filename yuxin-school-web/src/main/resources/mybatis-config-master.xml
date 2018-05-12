@@ -351,7 +351,10 @@
 		<mapper resource="com/yuxin/institution/InsFeaturesMapper.xml"/>
 
 		<mapper resource="com/yuxin/institution/InstitutionLabelMapper.xml"/>
+		<!-- 课程信息 -->
 		<mapper resource="com/yuxin/institution/InstitutionClassTypeMapper.xml"/>
+		<!-- 机构名师 -->
+		<mapper resource="com/yuxin/institution/InstitutionTeacherMapper.xml"/>
 	</mappers>
 
 </configuration>
