@@ -598,7 +598,7 @@
         <!--推荐机构管理-->
         <pattern>/InsInfoBase/recommendationOrganization</pattern>
         <!--风采管理-->
-        <pattern>/InsInfoBase/elegantDemeanor</pattern>
+        <pattern>/institutionStyle/queryInstitutionStyle</pattern>
         <!--新增线下课程-->
         <pattern>/InsInfoBase/newLineCourse/*</pattern>
         <!--首页推荐分类管理-->

@@ -13,7 +13,7 @@ public class InsVideo {
 	private String videoName;
 	private String videoCcId;
 	private String videoTime;
-	private Double vodeoSize;
+	private Double videoSize;
 	private String videoStatus;
 	private Integer creator;
 	private Date createTime;
@@ -51,11 +51,12 @@ public class InsVideo {
 	public void setVideoTime(String videoTime) {
 		this.videoTime = videoTime;
 	}
-	public Double getVodeoSize() {
-		return vodeoSize;
+
+	public Double getVideoSize() {
+		return videoSize;
 	}
-	public void setVodeoSize(Double vodeoSize) {
-		this.vodeoSize = vodeoSize;
+	public void setVideoSize(Double videoSize) {
+		this.videoSize = videoSize;
 	}
 	public String getVideoStatus() {
 		return videoStatus;
