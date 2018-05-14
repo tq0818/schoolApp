@@ -346,6 +346,15 @@ button.cloze {
                 <li code="statistics_org"><a href="<%=rootPath %>/company/orgstatistics/firstTransferStation" >总览</a></li>
             </shiro:hasPermission>
         </ul>
+        <div style="display: inline-block;font-size: 16px;color: #ff0000;
+        background: #ffff00;height: 51px;margin-left: 400px;line-height: 51px;">
+            <span>
+            您收到(<a href="##">20</a>)条评论待审核！
+            </span>
+            <span>
+                您收到（<a href="##">30</a>）条机构评论待审核！
+            </span>
+        </div>
         <ul class="nav nav-right">
             <c:choose>
             	<c:when test="${sessionScope.loginUser.realName != null && sessionScope.loginUser.realName != ''}">

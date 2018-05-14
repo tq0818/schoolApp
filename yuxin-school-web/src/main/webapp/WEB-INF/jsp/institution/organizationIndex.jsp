@@ -31,11 +31,10 @@
         <div class="mainbackground nopadding" style="margin: 0 10px;">
             <div class="heading">
                 <h2 class="h5">机构管理</h2>
-                <a href="" class="merchant">商家入驻申请<span>(9)</span></a>
+                <a href="/InsInfoBase/businessEntry" class="merchant">商家入驻申请<span>(9)</span></a>
                 <span class="line"></span>
             </div>
             <form method="post" id="searchForm" class="userVideoListNew">
-
                     <div>
                         <span>区域筛选</span>
                         <%--<select name="" id="a">
@@ -157,7 +156,7 @@
                                     <li><a href="">风采管理</a></li>
                                     <li><a href="">课程管理</a></li>
                                     <li><a href="">名师管理</a></li>
-                                    <li><a href="">评论管理</a></li>
+                                    <li><a href="/comment/insCommentIndex?id=${ins.id}">评论管理</a></li>
                                 </ul>
                             </td>
                         </tr>

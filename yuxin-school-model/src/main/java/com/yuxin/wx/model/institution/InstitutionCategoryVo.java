@@ -18,6 +18,8 @@ public class InstitutionCategoryVo extends BaseEntity{
     private Date createTime;//创建时间
     private Date updateTime;//修改时间
     private String secondCate;//二级分类组装
+    private Integer sort;   //排序
+
 
     private String firstcodeName;
     private String secondcodeName;
@@ -159,5 +161,14 @@ public class InstitutionCategoryVo extends BaseEntity{
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 }

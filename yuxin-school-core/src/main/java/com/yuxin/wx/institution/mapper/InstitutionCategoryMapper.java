@@ -3,6 +3,7 @@ package com.yuxin.wx.institution.mapper;
 import com.yuxin.wx.model.institution.InstitutionCategoryVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface InstitutionCategoryMapper {
 
@@ -49,4 +50,10 @@ public interface InstitutionCategoryMapper {
      * @return
      */
     List<InstitutionCategoryVo> findFistCategorys();
+
+
+
+
+
+
 }

@@ -52,6 +52,21 @@ public class InstitutionBaseController {
     public String recommendationHomeClassification(){
         return "institution/recommendationHomeC";
     }
-
+    //评论管理
+    @RequestMapping(value = "/evaluation")
+    public String evaluation(){
+        return "institution/evaluation";
+    }
+    //学员管理
+    @RequestMapping(value = "/studentManagement")
+    public String studentManagement(){
+        return "institution/studentManagement";
+    }
+    //商家入驻申请
+    @RequestMapping(value = "/businessEntry")
+    public String businessEntry(){        return "institution/businessEntry";  }
+    //名师管理
+    @RequestMapping(value = "/famousTeacher")
+    public String famousTeacher(){        return "institution/famousTeacher";  }
 
 }

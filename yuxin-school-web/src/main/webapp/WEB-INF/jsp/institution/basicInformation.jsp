@@ -161,12 +161,20 @@
                 </div>
                 <div>
                             <span>特色服务：</span>
-                    <c:forEach var="spe" items="${specialSer}">
-                             <span href="##" class="specialService">
-                                <img src="../../../images/institution/1.jpg" alt="" class="iconPic" >
-                                <input class="systemLabel" label-id="${spe.id}" value="${spe.labelName}">
-                                <i class="icon iconfont deletespecialService">&#xe610;</i>
-                            </span>
+                    <c:forEach var="spe" items="${specialSer}" varStatus="vs">
+                                <c:choose>
+                                    <c:when test="${vs.count==0}">
+
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span href="##" class="specialService">
+                                            <img src="../../../images/institution/1.jpg" alt="" class="iconPic" >
+                                             <input class="systemLabel" label-id="${spe.id}" value="${spe.labelName}">
+                                            <i class="icon iconfont deletespecialService">&#xe610;</i>
+                                        </span>
+                                    </c:otherwise>
+                                </c:choose>
+
                     </c:forEach>
                             <span class="iconBtn specialServiceBtn">+</span>
                 </div>
@@ -187,71 +195,11 @@
         </div>
     </div>
     <div class="iconList">
-            <div style="height: 34px;line-height: 34px;padding-left: 10px;font-size: 14px;">
+            <div style="height: 34px;line-height: 34px;padding-left: 10px;font-size: 14px;" class="addImg Show">
                 <span>上传特色服务图标</span>
                 <i class="icon iconfont closeIconList" style="float: right;margin: 10px;">&#xe610;</i>
             </div>
             <div style="height: 250px;" class="imgDiv">
-                <a href="##" class="uploadImg">+<input type="file"></a>
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-                <img src="../../../images/institution/1.jpg" alt="" class="iconListImg" >
-
             </div>
             <div class="pages pagination">
             </div>
@@ -270,6 +218,7 @@
 
 
 <script src="<%=rootPath %>/javascripts/riseschool/ajaxfileuploadR.js"></script>
+<script src="<%=rootPath %>/javascripts/riseschool/cutPic.js"></script>
 <script src="<%=rootPath %>/javascripts/plus/jquery.units.js"></script>
 <script src="<%=rootPath %>/javascripts/institution/basicInformation.js"></script>
 

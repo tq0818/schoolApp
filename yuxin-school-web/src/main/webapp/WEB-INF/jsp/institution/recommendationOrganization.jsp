@@ -35,10 +35,14 @@
             </div>
             <div id="recommendBtn" class="changeBtn">
                 <span>推荐位置</span>
-                <a href="##" class="btn btn-default btn-mb btn-primary">首页分类推荐</a>
+                <a href="##" class="btn btn-default recommendType btn-mb btn-primary">首页分类推荐</a>
                 <a href="##" class="btn btn-default btn-mb">首页列表推荐</a>
             </div>
             <div class="classificationRecommendation">
+                <div style="margin: 30px 0 10px 50px;">
+                    <span>推荐分类管理</span>
+                    <a href="/InsInfoBase/recommendationHomeC" class="btn btn-primary" style="float: right;">添加推荐分类</a>
+                </div>
                 <div class="user-list">
                     <table class="table table-center" >
                         <tr data-buy="true">
@@ -48,6 +52,7 @@
                             <th width="5%">排序</th>
                             <th width="5%">操作</th>
                         </tr>
+                        <tbody id="typeTbody">
                         <tr data-buy="false">
                             <td>1</td>
                             <td>美术培训</td>
@@ -59,9 +64,9 @@
                             </td>
                             <td class="cancelRecommend">取消推荐</td>
                         </tr>
-
+                        </tbody>
                     </table>
-                    <div class="pages pagination">
+                    <div class="pages paginationType pagination">
                     </div>
                 </div>
             </div>
@@ -135,8 +140,9 @@
     <script type="text/javascript" src="<%=rootPath %>/plugins/jquery-validation/jquery.validate.js"></script>
     <script type="text/javascript" src="<%=rootPath%>/javascripts/common/DateUtils.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
-
+        <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/recommendationOrganizationList.js"></script>
     <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/recommendationOrganization.js"></script>
+        <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/recommendationOrganizationType.js"></script>
 
 </body>
 </html>

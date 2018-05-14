@@ -39,7 +39,19 @@ $(function () {
     $('.changeBtn').children('a').click(function () {
         $(this).addClass('btn-primary');
         $(this).siblings('a').removeClass('btn-primary');
+
+        if($(this).hasClass('recommendType')){
+           // console.log('点击首页分类推荐 。。。 ');
+
+            getRecommendTypeList();
+
+        }
+
     });
+
+    getRecommendTypeList();
+
+
 });
 
 

@@ -63,6 +63,12 @@ public interface InstitutionClassTypeMapper {
     List<InstitutionClassTypeVo> queryAll();
 
     /**
+     * 获取某个机构所有课程
+     * @return
+     */
+    List<InstitutionClassTypeVo> queryAllByIns(Integer id);
+
+    /**
      * 根据条件获取课程列表
      *
      * @param map

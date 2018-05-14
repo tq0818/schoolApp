@@ -1,0 +1,5 @@
+.marginTop10{margin-top: 10px;}
+.remarks{display: none;padding: 10px;position: fixed;background: #fff;width: 410px;height: 146px;left: 50%;top: 50%;transform: translate(-50%,-50%);}
+.remarks textarea{width: 394px;height: 85px;resize: none;margin: auto;}
+.remarksBtn{text-align: center;}
+.remarksBtn a{margin: 10px 30px;}
