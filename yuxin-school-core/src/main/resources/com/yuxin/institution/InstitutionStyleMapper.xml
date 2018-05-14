@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuxin.wx.institution.mapper.InstitutionStyleMapper">
+	<resultMap id="institutionStyle" type="com.yuxin.wx.model.institution.InstitutionStyle">
+		<result property="id" column="id"></result>
+		<result property="relationId" column="relation_id"></result>
+		<result property="name" column="name"></result>
+		<result property="imgUrl" column="img_url"></result>
+		<result property="isVideo" column="is_video"></result>
+		<result property="sourceFlag" column="source_flag"></result>
+		<result property="content" column="content"></result>
+		<result property="type" column="type"></result>
+		<result property="createTime" column="create_time"></result>
+		<result property="updateTime" column="update_time"></result>
+		<result property="isTop" column="is_top"></result>
+	</resultMap>
+	<sql id="table_column">
+		id,
+		relation_id,
+		name,
+		img_url,
+		is_video,
+		source_flag,
+		content,
+		type,
+		create_time,
+		update_time,
+		is_top
+	</sql>
+	<sql id="entity">
+		#{id},
+		#{relationId},
+		#{name},
+		#{imgUrl},
+		#{isVideo},
+		#{sourceFlag},
+		#{content},
+		#{type},
+		#{createTime},
+		#{updateTime},
+		#{isTop}
+	</sql>
+	<insert id="insertInsStyle" parameterType="com.yuxin.wx.model.institution.InstitutionStyle">
+		INSERT INTO institution_style(<include refid="table_column"/>)
+		VALUES (<include refid="entity" />)
+	</insert>
+	<!-- 根据主键更新,不用管类型 -->
+	<update id="updateInsStyle" parameterType="com.yuxin.wx.model.institution.InstitutionStyle">
+		UPDATE institution_style
+		<trim prefix="set" suffixOverrides=",">
+			<if test="name != null and name != ''">name = #{name}</if>
+			<if test="imgUrl != null and imgUrl != ''">img_url = #{imgUrl}</if>
+			<if test="content != null and content != ''">content = #{content}</if>
+			<if test="updateTime != null">update_time = #{updateTime}</if>
+			<if test="isTop != null">is_top = #{isTop}</if>
+		</trim>
+		<where>
+			id = #{id}
+		</where>
+	</update>
+	<delete id="deleteInsStyle" parameterType="Integer">
+		DELETE FROM institution_style WHERE id = #{primaryId}
+	</delete>
+	<delete id="deleteInsVideo" parameterType="Integer">
+		DELETE FROM ins_video WHERE id = #{relationId}
+	</delete>
+	<select id="queryInstitutionStyle" parameterType="com.yuxin.wx.model.institution.InstitutionStyle" resultMap="institutionStyle">
+		SELECT <include refid="table_column"/>
+		  FROM institution_style
+		 WHERE relation_id = #{relationId}
+		 <if test="sourceFlag != null">AND source_flag = #{sourceFlag}</if>
+		 <if test="type != null">AND type = #{type}</if>
+		 ORDER BY is_top DESC,update_time DESC
+		 <if test="page != null and page != 0">
+		 	LIMIT #{page},#{pageSize}
+		 </if>
+	</select>
+	<select id="queryInstitutionStyleCount" parameterType="com.yuxin.wx.model.institution.InstitutionStyle" resultType="java.lang.Integer">
+		SELECT count(1)
+		  FROM institution_style
+		 WHERE relation_id = #{relationId}
+		 <if test="sourceFlag != null">AND source_flag = #{sourceFlag}</if>
+		 <if test="type != null">and type = #{type}</if>
+	</select>
+	<insert id="insertInsVideo" parameterType="com.yuxin.wx.model.institution.InsVideo">
+		INSERT INTO ins_video
+					(id,
+					 source_id,
+					 video_name,
+					 video_cc_id,
+					 video_time,
+					 vodeo_size,
+					 video_status,
+					 creator,
+					 create_time,
+					 update_time,
+					 storage_type,
+					 type,
+					 watch_count
+		    		)
+		     VALUES (#{id},
+					 #{sourceId},
+					 #{videoName},
+					 #{videoCcId},
+					 #{videoTime},
+					 #{vodeoSize},
+					 #{videoStatus},
+					 #{creator},
+					 #{createTime},
+					 #{updateTime},
+					 #{storageType},
+					 #{type},
+					 #{watchCount}
+		    		)
+	</insert>
+	<update id="updateInsVideo" parameterType="com.yuxin.wx.model.institution.InsVideo">
+		update ins_video
+		<trim prefix="set" suffixOverrides=",">
+			<if test="videoName != null and videoName != ''">video_name = #{videoName}</if>
+			<if test="videoCcId != null and videoCcId != ''">video_cc_id = #{videoCcId}</if>
+			<if test="videoTime != null and videoTime != ''">video_time = #{videoTime}</if>
+			<if test="videoSize !=null">video_size = #{videoSize}</if>
+			<if test="videoStatus != null">video_status = #{videoStatus}</if>
+			<if test="creator != null">creator = #{creator}</if>
+			<if test="createTime != null">create_time = #{createTime}</if>
+			<if test="updateTime !=null">update_time = #{updateTime}</if>
+			<if test="storageType !=null and storageType != ''">storage_type = #{storageType}</if>
+			<if test="type !=null">type = #{type}</if>
+			<if test="watchCount !=null">watch_count = #{watchCount}</if>
+		</trim>
+		<where>
+			id = #{id}
+		</where>   
+	</update>
+</mapper>
