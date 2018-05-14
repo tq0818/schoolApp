@@ -39,6 +39,10 @@
                 <a href="##" class="btn btn-default btn-mb">首页列表推荐</a>
             </div>
             <div class="classificationRecommendation">
+                <div style="margin: 30px 0 10px 50px;">
+                    <span>推荐分类管理</span>
+                    <a href="/InsInfoBase/recommendationHomeC" class="btn btn-primary" style="float: right;">添加推荐分类</a>
+                </div>
                 <div class="user-list">
                     <table class="table table-center" >
                         <tr data-buy="true">
