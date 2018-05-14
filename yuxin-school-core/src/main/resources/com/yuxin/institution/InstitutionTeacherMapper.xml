@@ -117,20 +117,20 @@
         <where>id = #{id}</where>
     </update>
 
-    <select id="findById" resultMap="classTypeResultMap" parameterType="String" >
+    <select id="findById" resultMap="teacherResultMap" parameterType="String" >
         select <include refid="table_columns" />
         from institution_teacher
         where id = #{id}
     </select>
 
-    <select id="queryAll" resultMap="classTypeResultMap">
+    <select id="queryAll" resultMap="teacherResultMap">
         select <include refid="table_columns" />
         from institution_teacher
     </select>
 
 
 
-    <select id="loadTeacherByInstitutionId" resultMap="classTypeResultMap" parameterType="Integer">
+    <select id="loadTeacherByInstitutionId" resultMap="teacherResultMap" parameterType="Integer">
         SELECT
           it.*
         FROM
@@ -143,7 +143,7 @@
     </select>
 
 
-    <select id="getTeacherByTidInsId" resultMap="classTypeResultMap" parameterType="map">
+    <select id="getTeacherByTidInsId" resultMap="teacherResultMap" parameterType="map">
          SELECT
             it.*
             FROM

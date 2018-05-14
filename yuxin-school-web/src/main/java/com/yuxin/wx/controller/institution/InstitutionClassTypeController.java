@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yuxin.wx.api.classes.IClassTypeService;
 import com.yuxin.wx.common.JsonMsg;
-import com.yuxin.wx.model.classes.ClassType;
 import com.yuxin.wx.model.institution.ClassTypeOnlineFindVo;
 import com.yuxin.wx.model.institution.ClassTypeOnlineVo;
 import org.apache.commons.logging.Log;

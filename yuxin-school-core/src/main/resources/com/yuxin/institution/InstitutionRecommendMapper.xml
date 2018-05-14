@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuxin.wx.institution.mapper.InstitutionTeacherMapper">
+
+    <!-- 首页列表推荐信息 -->
+    <resultMap type="com.yuxin.wx.model.institution.IndexRecommendVo" id="resultMap">
+        <result property="rid" column="rid" />
+        <result property="name" column="name" />
+        <result property="tid" column="tid" />
+        <result property="tname" column="tname" />
+        <result property="lv" column="lv" />
+        <result property="status" column="status" />
+        <result property="sort" column="sort" />
+        <result property="insId" column="insId" />
+
+    </resultMap>
+
+
+    <select id="recommendList" parameterType="map" resultMap="resultMap" >
+
+
+
+    </select>
+
+
+
+
+</mapper>
