@@ -156,7 +156,7 @@
                                     <li><a href="">风采管理</a></li>
                                     <li><a href="">课程管理</a></li>
                                     <li><a href="">名师管理</a></li>
-                                    <li><a href="">评论管理</a></li>
+                                    <li><a href="/comment/insCommentIndex?id=${ins.id}">评论管理</a></li>
                                 </ul>
                             </td>
                         </tr>

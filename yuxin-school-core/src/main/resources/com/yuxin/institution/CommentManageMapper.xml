@@ -5,7 +5,7 @@
         <result property="id" column="id" />
         <result property="userId" column="user_id" />
         <result property="relationId" column="relation_id" />
-        <result property="content" column="v" />
+        <result property="content" column="content" />
         <result property="score" column="score" />
         <result property="likeCount" column="like_count" />
         <result property="delFlag" column="del_flag" />
@@ -23,7 +23,7 @@
 
 
     <update id="update" parameterType="com.yuxin.wx.model.institution.CommentApp">
-        update institution_info
+        update comment
         <trim prefix="set" suffixOverrides=",">
             <if test="userId != null and userId != ''">user_id = #{userId},</if>
             <if test="relationId != null and relationId != ''">relation_id = #{relationId},</if>
@@ -44,15 +44,16 @@
         LEFT JOIN users_front u on c.user_id = u.id
         where c.del_flag = 0 and c.type =0
         <if test="relationId != null and relationId != ''">and c.relation_id = #{relationId}</if>
-        <if test="isCheck != null and v != ''">and c.is_check = #{isCheck}</if>
+        <if test="isCheck != null ">and c.is_check = #{isCheck}</if>
         ORDER BY c.create_time desc
+        limit #{page},#{pageSize}
     </select>
     <select id="findInsCommentCount" resultType="Integer" parameterType="com.yuxin.wx.model.institution.CommentApp">
         select count(1) from comment c
         LEFT JOIN users_front u on c.user_id = u.id
         where 1=1 and del_flag = 0 and type = 0
         <if test="relationId != null and relationId != ''">and c.relation_id = #{relationId}</if>
-        <if test="isCheck != null and v != ''">and c.is_check = #{isCheck}</if>
+        <if test="isCheck != null ">and c.is_check = #{isCheck}</if>
     </select>
 
 
@@ -65,8 +66,9 @@
         where c.del_flag = 0 and c.type = 1
         <if test="insId != null and insId != ''">and ii.id = #{insId}</if>
         <if test="relationId != null and relationId != ''">and c.relation_id = #{relationId}</if>
-        <if test="isCheck != null and isCheck != ''">and c.is_check = #{isCheck}</if>
+        <if test="isCheck != null  ">and c.is_check = #{isCheck}</if>
         ORDER BY c.create_time desc
+        limit #{page},#{pageSize}
     </select>
     <select id="findInsCommentClassCount" resultType="Integer" parameterType="com.yuxin.wx.model.institution.CommentApp">
         select count(1) from comment c
@@ -77,6 +79,6 @@
         where c.del_flag = 0 and c.type = 1
         <if test="insId != null and insId != ''">and ii.id = #{insId}</if>
         <if test="relationId != null and relationId != ''">and c.relation_id = #{relationId}</if>
-        <if test="isCheck != null and isCheck != ''">and c.is_check = #{isCheck}</if>
+        <if test="isCheck != null  ">and c.is_check = #{isCheck}</if>
     </select>
 </mapper>

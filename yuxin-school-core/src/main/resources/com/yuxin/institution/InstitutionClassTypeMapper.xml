@@ -205,13 +205,15 @@
 	</select>
 
 	<select id="queryAllByIns" resultMap="classTypeResultMap" parameterType="Integer">
-		select c.* from comment c
+		select ct.name,ct.id  from comment c
         JOIN ins_class_type ct on ct.id = c.relation_id and type = 1
 		JOIN ins_class_type_relation ic on ic.class_type_id = ct.id
 		JOIN institution_info ii on ii.id = ic.ins_id
 		JOIN users_front u on c.user_id = u.id
 		where c.del_flag = 0 and c.type =1 and ii.id = #{id}
+		GROUP BY ct.id
         ORDER BY ct.create_time desc
+
 	</select>
 	
 	<!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
