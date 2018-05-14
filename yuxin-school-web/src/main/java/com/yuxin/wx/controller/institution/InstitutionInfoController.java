@@ -1,5 +1,6 @@
 package com.yuxin.wx.controller.institution;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yuxin.wx.api.institution.*;
 import com.yuxin.wx.api.user.IUsersService;
 import com.yuxin.wx.common.PageFinder;
@@ -8,6 +9,9 @@ import com.yuxin.wx.model.institution.InstitutionCategoryVo;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
 import com.yuxin.wx.model.institution.InstitutionLabelVo;
 import com.yuxin.wx.model.user.Users;
+import com.yuxin.wx.utils.FileUtil;
+import com.yuxin.wx.utils.PropertiesUtil;
+import com.yuxin.wx.utils.WebUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -25,6 +31,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/InsInfoBase")
 public class InstitutionInfoController {
+    @Autowired
+    private PropertiesUtil propertiesUtil;
     @Autowired
     private InstitutionInfoService institutionInfoService;
     @Autowired
@@ -94,8 +102,6 @@ public class InstitutionInfoController {
         //电话号码数据处理
         String mobile = ins.getMobile();
         List<String> mobiles = new ArrayList<>();//手机号码容器
-        List<String> tellsA = new ArrayList<>();//座机号码区号容器
-        List<String> tellsB = new ArrayList<>();//座机号码后段容器
         List<String> tells = new ArrayList<>();//座机号码区号容器
         if(null != mobile && !"".equals(mobile)){
             if(!mobile.contains(",")){
@@ -171,6 +177,32 @@ public class InstitutionInfoController {
             e.printStackTrace();
         }
         return  null;
+    }
+
+
+    /**
+     * 上传图片
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/upSpecialServiceImg",method = RequestMethod.POST)
+    public JSONObject upRiseSchoolStyleImg(HttpServletRequest request, MultipartRequest multiPartRquest){
+        JSONObject json = new JSONObject();
+        MultipartFile multipartFile = multiPartRquest.getFile("imgData");
+        String realPath=null;
+        try {
+            realPath = FileUtil.upload(multipartFile, "temp", WebUtils.getCurrentCompanyId()+"");
+        } catch (Exception e) {
+            e.printStackTrace();
+            json.put("flag","0");
+            json.put("msg","失败");
+            return json;
+        }
+        json.put("flag","1");
+        json.put("msg","成功");
+        json.put("realPath","http://"+propertiesUtil.getProjectImageUrl()+"/"+realPath);
+        return json;
     }
 
 

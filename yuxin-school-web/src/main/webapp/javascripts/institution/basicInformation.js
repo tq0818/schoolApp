@@ -137,7 +137,7 @@ $(function () {
     //点击特色图片出下面图片列表
     $('.iconPic').click(function () {
 
-        findSpecialServiceImg();
+        findSpecialServiceImg(1);
         $('.iconList').show();
     });
     //点击关闭图片列表
@@ -155,6 +155,40 @@ $(function () {
     $('#findFistCategorys').change(function () {
         findSecondCategorys();
     });
+
+    //弹出弹窗
+    /*$('.Show').click(function () {
+        //点击时，清空之前的图片
+        $('.opacityPopup').fadeIn();
+        $('.commonPopup').fadeIn();
+        //清除上一次图片的名字
+        $("#imgData").removeAttr("type").attr("type","file");
+        //标记不同的弹窗，为一个标志赋值表示不同的操作
+        if (jcrop_apis){
+            jcrop_apis.destroy();
+        }
+        var windowFlag = '';
+        if ($(this).hasClass('addImg')){
+            windowFlag = '1';
+            $(".uploadImage").find("img").attr("src","").attr("style","").attr("style","width: 300px;height: 300px;");
+            $("#imgDiscrible").val('');
+        }else if ($(this).hasClass('imgChange')){
+            $(".uploadImage").find("img").attr("src",$(this).parent(".listBg").siblings("img").attr("src")).attr("style","");
+            //横图
+            if($(this).attr("imgType")=="2"){
+                $(".uploadImage").find("img").attr("style","width: 300px;height: auto;");
+            }else{
+                $(".uploadImage").find("img").attr("style","width: auto;height: 300px;");
+            }
+            $("#imgDiscrible").val($(this).parent(".listBg").siblings("span").text());
+            windowFlag = '2';
+            var updateId = $(this).attr("data-value");
+            $("#updateId").val(updateId);
+        }
+        $("#windowFlag").val(windowFlag);
+    });*/
+
+
 
 });
 
@@ -254,18 +288,46 @@ function findSecondCategorys() {
     });
 }
 
-var page = 1;
+
 function findSpecialServiceImg(page) {
+console.log(page);
     $.ajax({
         url:rootPath +"/InsInfoBase/findSpecialServiceImg",
         type:"post",
         data:{"page":page},
         success:function (data) {
+            var imgS = data.data;
+            if(imgS.length == 0){
+
+                return;
+            }
+
             var html = '';
-            /*for(var i in data.){
+            html +='<a href="##" class="uploadImg">+<input type="file"></a>';
+            for(var i in imgS){
+                html +='<img src="'+ imgS[i].imgUrl +'" alt="" class="iconListImg" >'
+            }
+            $(".imgDiv").html(html);
 
-            }*/
-
+            if (data.rowCount > 2) {
+                $(".pagination").html('');
+                $(".pagination").pagination(data.rowCount,
+                    {
+                        next_text: "下一页",
+                        prev_text: "上一页",
+                        current_page: data.pageNo,
+                        link_to: "javascript:void(0)",
+                        num_display_entries: 8,
+                        items_per_page: data.pageSize,
+                        num_edge_entries: 1,
+                        callback: function (page, jq) {
+                            var pageNo = page + 1;
+                            findSpecialServiceImg(pageNo);
+                        }
+                    });
+            } else {
+                $(".pagination").html('');
+            }
         }
     });
 

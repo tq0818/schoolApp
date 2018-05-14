@@ -24,6 +24,54 @@ public class CommentApp implements Serializable{
 	private Integer type;
 	private Date createTime;
 	private Date updateTime;
+
+	private Integer page;
+	private Integer pageSize;
+	private String nickName;
+	private String headPicMax;
+	private String className;
+
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getHeadPicMax() {
+		return headPicMax;
+	}
+
+	public void setHeadPicMax(String headPicMax) {
+		this.headPicMax = headPicMax;
+	}
+
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
+
+	public Integer getPage() {
+		return page;
+	}
+
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+
 	public Integer getId() {
 		return id;
 	}

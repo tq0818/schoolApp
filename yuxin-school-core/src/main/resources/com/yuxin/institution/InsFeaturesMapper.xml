@@ -29,7 +29,7 @@
     </insert>
 
     <select id="findInsFeaturesVos" parameterType="com.yuxin.wx.model.institution.InsFeaturesVo" resultMap="insFeaturesMap">
-        select * from ins_features limit #{page}, #{pageSize}
+        select * from ins_features ORDER BY id desc limit #{page}, #{pageSize}
     </select>
 
     <select id="findInsFeaturesVosCount" parameterType="com.yuxin.wx.model.institution.InsFeaturesVo" resultType="int">

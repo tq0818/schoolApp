@@ -60,6 +60,12 @@ public class InstitutionClassTypeServiceImpl extends BaseServiceImpl implements 
     }
 
     @Override
+    public List<InstitutionClassTypeVo> queryAllByIns(Integer id) {
+        return institutionClassTypeMapper.queryAllByIns(id);
+    }
+
+
+    @Override
     public PageFinder<InstitutionClassTypeVo> page(Integer insId, Integer status, int pageStart, int pageSize) {
         Map<String, Object> map = new HashMap<>();
 

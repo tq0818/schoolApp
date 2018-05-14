@@ -45,6 +45,12 @@ public interface InstitutionClassTypeService {
 	  * @return
 	  */
 	 List<InstitutionClassTypeVo> queryAll();
+
+	/**
+	 * 获取某个机构所有课程
+	 * @return
+	 */
+	List<InstitutionClassTypeVo> queryAllByIns(Integer id);
 	
 	
 	 PageFinder<InstitutionClassTypeVo> page(Integer insId,Integer status,int pageStart,int pageSize);
