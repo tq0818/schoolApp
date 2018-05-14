@@ -43,7 +43,7 @@
             </div>
             <div class="btnGroup" style="text-align: center;margin-top: 50px;">
                 <a href="##" class="btn btn-primary">取消</a>
-                <a href=""  class="btn commit btn-primary">保存</a>
+                <a href="##"  class="btn commit btn-primary">保存</a>
             </div>
         </div>
     </div>
@@ -64,6 +64,7 @@
     <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
     <script src="<%=rootPath %>/javascripts/itemTree/script/ztree/jquery.ztree.all.min.js"></script>
     <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/recommendationHomeC.js"></script>
+        <script type="text/javascript" src="<%=rootPath%>/javascripts/json2.js></script>
 
 </body>
 </html>

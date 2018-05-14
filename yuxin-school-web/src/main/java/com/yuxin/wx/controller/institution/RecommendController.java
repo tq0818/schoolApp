@@ -1,5 +1,6 @@
 package com.yuxin.wx.controller.institution;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yuxin.wx.api.institution.InstitutionCategoryManageService;
 import com.yuxin.wx.api.institution.InstitutionCategoryService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -218,6 +220,50 @@ public class RecommendController {
     }
 
 
+    @ResponseBody
+    @RequestMapping(value = "/updateTree",method = RequestMethod.POST)
+    public JSONObject updateTree(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        try{
+            String tree = request.getParameter("tree");
+            if(null == tree){
+                json.put("status",0);
+                json.put("msg","参数错误");
+            }
 
+            JSONArray arr = JSONArray.parseArray(tree);
+
+            List<InstitutionCategoryVo> list =  institutionCategoryService.queryInstitutionCategorysEnabled();
+            List<Integer> deleteList = new LinkedList<>();
+            List<Integer> addList = new LinkedList<>();
+            //算法说明 因为推荐分类本身数量比较少，而且 list.size() <= arr.length  , 所以算法复杂度为 list.size() * arr.length
+            for(int i = 0; i< arr.size();i++){
+
+                int id = arr.getJSONObject(i).getIntValue("id");
+                int checked = arr.getJSONObject(i).getIntValue("checked");
+                for(InstitutionCategoryVo vo : list){
+                    if(vo.getId() - id == 0){
+                        if(vo.getThirdRecommend() - checked == -1){
+                            //新增
+                            institutionCategoryService.updateRecommendStatusById( 1 ,vo.getId(),null);
+                        }else if(vo.getThirdRecommend() - checked == 1){
+                            //减少
+                            institutionCategoryService.updateRecommendStatusById( 0 ,vo.getId(),vo.getSort());
+                        }
+                    }
+                }
+            }
+
+            json.put("status",1);
+            json.put("msg","操作成功");
+
+            return  json;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+//updateTree
 
 }
