@@ -40,6 +40,7 @@ public class InstitutionCategoryManageController {
         if(null!=insCates && insCates.size()>0){
             resultJson.put("result",insCates);
         }else{
+            System.out.println(1111);
             resultJson.put("result","noData");
         }
         return resultJson;
