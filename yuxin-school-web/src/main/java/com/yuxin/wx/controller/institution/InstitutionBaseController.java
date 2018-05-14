@@ -65,5 +65,8 @@ public class InstitutionBaseController {
     //商家入驻申请
     @RequestMapping(value = "/businessEntry")
     public String businessEntry(){        return "institution/businessEntry";  }
+    //名师管理
+    @RequestMapping(value = "/famousTeacher")
+    public String famousTeacher(){        return "institution/famousTeacher";  }
 
 }

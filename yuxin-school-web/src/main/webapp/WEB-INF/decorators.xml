@@ -609,6 +609,8 @@
         <pattern>/InsInfoBase/studentManagement</pattern>
         <!--商家入驻申请-->
         <pattern>/InsInfoBase/businessEntry</pattern>
+        <!--名师管理-->
+        <pattern>/InsInfoBase/famousTeacher</pattern>
 
     </decorator>
 
