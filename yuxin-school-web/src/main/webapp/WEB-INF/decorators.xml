@@ -605,6 +605,8 @@
         <pattern>/InsInfoBase/recommendationHomeC</pattern>
         <!--评价管理-->
         <pattern>/InsInfoBase/evaluation</pattern>
+        <!--学员管理-->
+        <pattern>/InsInfoBase/studentManagement</pattern>
 
     </decorator>
 

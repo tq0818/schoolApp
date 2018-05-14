@@ -57,5 +57,11 @@ public class InstitutionBaseController {
     public String evaluation(){
         return "institution/evaluation";
     }
+    //学员管理
+    @RequestMapping(value = "/studentManagement")
+    public String studentManagement(){
+        return "institution/studentManagement";
+    }
+
 
 }
