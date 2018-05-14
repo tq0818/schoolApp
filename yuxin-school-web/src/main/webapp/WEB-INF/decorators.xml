@@ -595,6 +595,9 @@
         <pattern>/InsInfoBase/basicInformation</pattern>
         <!--机构基本信息-TQ-->
         <pattern>/InsInfoBase/findInsById</pattern>
+        <!--评价管理-TQ-->
+        <pattern>/comment/insCommentIndex</pattern>
+
         <!--推荐机构管理-->
         <pattern>/InsInfoBase/recommendationOrganization</pattern>
         <!--风采管理-->

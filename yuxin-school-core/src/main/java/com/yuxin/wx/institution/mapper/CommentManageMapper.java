@@ -39,5 +39,5 @@ public interface CommentManageMapper {
      * 删除评论和审核评论
      * @param id
      */
-    void update(Integer id);
+    void update(CommentApp commentApp);
 }

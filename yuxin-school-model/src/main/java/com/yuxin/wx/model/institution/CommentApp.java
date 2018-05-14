@@ -30,7 +30,33 @@ public class CommentApp implements Serializable{
 	private String nickName;
 	private String headPicMax;
 	private String className;
+	private String createTimeText;//时间
+	private String createTimeText2;//分钟
+	private Integer insId;
 
+	public Integer getInsId() {
+		return insId;
+	}
+
+	public void setInsId(Integer insId) {
+		this.insId = insId;
+	}
+
+	public String getCreateTimeText() {
+		return createTimeText;
+	}
+
+	public void setCreateTimeText(String createTimeText) {
+		this.createTimeText = createTimeText;
+	}
+
+	public String getCreateTimeText2() {
+		return createTimeText2;
+	}
+
+	public void setCreateTimeText2(String createTimeText2) {
+		this.createTimeText2 = createTimeText2;
+	}
 
 	public String getNickName() {
 		return nickName;

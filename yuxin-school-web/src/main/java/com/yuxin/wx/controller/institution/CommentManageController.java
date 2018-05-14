@@ -31,9 +31,10 @@ public class CommentManageController {
     public String insCommenIndex(Model model, HttpServletRequest request){
         String id = request.getParameter("id");
         //获取课程名称
-        List<InstitutionClassTypeVo> classTypeVos = institutionClassTypeService.queryAllByIns(Integer.parseInt("1"));
-        model.addAttribute(classTypeVos);
-        return "";
+        List<InstitutionClassTypeVo> classTypeVos = institutionClassTypeService.queryAllByIns(Integer.parseInt(id));
+        model.addAttribute("classTypeVos",classTypeVos);
+        model.addAttribute("insId",id);
+        return "institution/evaluation";
     }
 
     /**
@@ -45,7 +46,12 @@ public class CommentManageController {
     @RequestMapping(value = "/findInsComment",method = RequestMethod.POST)
     public PageFinder<CommentApp> findInsCommen(CommentApp commentApp){
 
-        return commentManageService.findInsComment(commentApp);
+        try{
+            return commentManageService.findInsComment(commentApp);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -57,16 +63,29 @@ public class CommentManageController {
     @RequestMapping(value = "/findInsClassComment",method = RequestMethod.POST)
     public PageFinder<CommentApp> findInsClassComment(CommentApp commentApp){
 
-        return commentManageService.findInsClassComment(commentApp);
+        try {
+            return commentManageService.findInsClassComment(commentApp);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
      * 删除评论和审核评论
      * @param id
      */
+    @ResponseBody
     @RequestMapping(value = "/updateComment",method = RequestMethod.POST)
-    public void update(Integer id){
-        commentManageService.update(id);
+    public Integer update(CommentApp commentApp){
+        try{
+            commentManageService.update(commentApp);
+            return 200;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 500;
+        }
+
     }
 
 }

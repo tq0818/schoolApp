@@ -37,6 +37,7 @@
 <jsp:include page="/WEB-INF/jsp/menu/menu_institution.jsp"></jsp:include>
 <div class="u-wrap admin overflow schoolDetails">
     <jsp:include page="/WEB-INF/jsp/menu/menu_institutionLeft.jsp"></jsp:include>
+    <input type="hidden" id="insId" value="${insId}">
     <div class="right-side">
         <div class="mainbackground nopadding">
             <div class="heading">
@@ -46,13 +47,6 @@
                 <span class="line"></span>
             </div>
             <div class="evaScreen">
-                <div style="padding-left: 13px;margin: 30px 0;" >
-                    <span style="font-size: 16px;margin-right: 30px;">课程名称</span>
-                    <a href="##" class="btn btn-default btn-primary">课程名称一</a>
-                    <a href="##" class="btn btn-default">课程名称一</a>
-                    <a href="##" class="btn btn-default">课程名称一</a>
-                    <a href="##" class="btn btn-default">课程名称一</a>
-                </div>
                 <div style="padding-left: 13px;" >
                     <span style="font-size: 16px;margin-right: 30px;">审核状态</span>
                     <a href="##" class="btn btn-default btn-primary">全部</a>
@@ -60,31 +54,31 @@
                     <a href="##" class="btn btn-default">审核通过</a>
                 </div>
                 <ul class="comment_all">
-                    <li class="Y_clear">
-                        <div class="headpic">
-                            <img src="/images/teachers.png" alt="" width="50" height="50">
-                        </div>
-                        <div class="Y_backcomment_content">
-                            <div class="word Y_clear">
-                                <span>f739aab6：</span>
-                                <span class="wordcontent" style="word-break:break-all">很不错！孩子很喜欢陶老师讲的课</span>
-                            </div>
-                            <p class="Y_time Y_mt10">
-                                <span>2018-05-06 </span>
-                                <span>22:12</span>
-                                <span>评分:</span>
-                                <span class="Y_mr10" style="color: #fb9f1b;">
-                                    <i class="iconfont"></i><i class="iconfont"></i><i class="iconfont"></i><i class="iconfont"></i><i class="iconfont"></i>
-                                </span>
-                                <span>老师:<a href="javascript:void(0);" class="teacherName" teacherid="1083">陶菲</a></span>
-                            </p>
-                        </div>
-                        <button class="delete " id="">删除</button>
-                    </li>
+
                 </ul>
                 <div class="pages pagination"></div>
             </div>
-            <div class="curriculum "></div>
+
+
+            <div class="curriculum ">
+                <div style="padding-left: 13px;margin: 30px 0;" id="curriculumClass" >
+                    <span style="font-size: 16px;margin-right: 30px;">课程名称</span>
+                    <a href="##" class="btn btn-default btn-primary">全部</a>
+                    <c:forEach var="cla" items="${classTypeVos}">
+                        <a href="##" class="btn btn-default"  data-classId="${cla.id}">${cla.name}</a>
+                    </c:forEach>
+                </div>
+                <div style="padding-left: 13px;" id="curriculumState">
+                    <span style="font-size: 16px;margin-right: 30px;">审核状态</span>
+                    <a href="##" class="btn btn-default btn-primary" data-review="">全部</a>
+                    <a href="##" class="btn btn-default" data-review="0">待审核</a>
+                    <a href="##" class="btn btn-default" data-review="1">审核通过</a>
+                </div>
+                <ul class="comment_all">
+
+                </ul>
+                <div class="pages paginationClass"></div>
+            </div>
         </div>
     </div>
 
