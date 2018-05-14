@@ -1,8 +1,10 @@
 package com.yuxin.wx.api.institution;
 
+import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.institution.InstitutionCategoryVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface InstitutionCategoryService {
 
@@ -51,4 +53,8 @@ public interface InstitutionCategoryService {
     List<InstitutionCategoryVo> findFistCategorys();
 
     List<InstitutionCategoryVo> findCecondCategorys(Integer id);
+
+
+
+
 }

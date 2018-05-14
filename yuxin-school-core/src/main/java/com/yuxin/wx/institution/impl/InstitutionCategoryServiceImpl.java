@@ -2,14 +2,18 @@ package com.yuxin.wx.institution.impl;
 
 import com.yuxin.wx.api.institution.InstitutionCategoryService;
 import com.yuxin.wx.common.BaseServiceImpl;
+import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.institution.mapper.InstitutionCategoryManageMapper;
 import com.yuxin.wx.institution.mapper.InstitutionCategoryMapper;
 import com.yuxin.wx.model.institution.InstitutionCategoryVo;
+import com.yuxin.wx.model.institution.InstitutionClassTypeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -68,6 +72,7 @@ public class InstitutionCategoryServiceImpl extends BaseServiceImpl implements I
             return null;
         }
     }
+
 
 
 }

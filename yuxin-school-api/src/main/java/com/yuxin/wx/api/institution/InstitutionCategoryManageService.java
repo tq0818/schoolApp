@@ -1,5 +1,6 @@
 package com.yuxin.wx.api.institution;
 
+import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.institution.InstitutionCategoryVo;
 
 import java.util.List;
@@ -46,4 +47,45 @@ public interface InstitutionCategoryManageService {
      * @return
      */
     List<InstitutionCategoryVo> queryInstitutionCategorysByInsId(Integer id);
+
+
+    /**
+     * 获取首页分类推荐列表 （后台）
+     * @param
+     * @return
+     */
+    PageFinder<InstitutionCategoryVo> queryCateList(Integer pageStart , Integer pageSize);
+
+
+    /**
+     * 更新某个推荐分类的推荐状态
+     * @param status 更新后的状态
+     * @param id
+     * @param oldSort   更新前的排序 ， 用于更新其他推荐状态的排序问题
+     */
+    void updateRecommendStatusById(Integer status , Integer id , Integer oldSort);
+
+    /**
+     * 根据id获取分类信息
+     * @param id id
+     * @return
+     */
+    InstitutionCategoryVo getCateById(Integer id);
+
+    boolean updateSort(InstitutionCategoryVo entity , boolean isIncrease);
+
+    /**
+     * 获取当前是推荐状态的分类个数
+     * @return
+     */
+    int queryRecommendCount();
+
+
+    /**
+     * 获取所有`is_enable` = 1  的分类信息
+     * @return
+     */
+    List<InstitutionCategoryVo> queryInstitutionCategorysEnabled();
+
+
 }

@@ -9,6 +9,18 @@
         <result property="secondCate" column="secondCate" />
         <result property="imgUrl" column="img_url" />
         <result property="codeLevel" column="code_level" />
+        <result property="sort" column="sort" />
+    </resultMap>
+
+    <!-- 推荐机构管理-首页分类推荐列表 by Liutr -->
+    <resultMap id="queryCateSimple" type="com.yuxin.wx.model.institution.InstitutionCategoryVo">
+        <result property="id" column="id" />
+        <result property="codeName" column="code_name" />
+        <result property="isEnable" column="is_enable" />
+        <result property="thirdRecommend" column="third_recommend" />
+        <result property="codeLevel" column="code_level" />
+        <result property="sort" column="sort" />
+        <result property="parentId" column="parent_id" />
     </resultMap>
 
 
@@ -80,5 +92,103 @@
         left JOIN institution_category ic1 on ic1.id = ir.two_level_id
         where ii.id=#{id}
     </select>
+
+    <!-- 推荐机构管理-首页分类推荐 - 列表  -->
+    <select id="queryCateList" parameterType="map" resultMap="queryCateSimple" >
+      SELECT
+          `id`,
+          `code_name`,
+          `code_level`,
+          `is_enable`,
+          `parent_id`,
+          `third_recommend`,
+          `sort`
+        FROM
+          `institution_category`
+        WHERE `code_type` = 0  and is_enable = 1 and `third_recommend` = 1
+        ORDER BY `sort` ASC  LIMIT #{firstIndex} , #{pageSize}
+    </select>
+
+    <select id="queryCateListCount"  resultType="int" >
+        SELECT
+          COUNT(id)
+        FROM
+        `institution_category`
+        WHERE `code_type` = 0 and is_enable = 1
+
+    </select>
+
+
+    <select id="getCateById" parameterType="Integer" resultMap="queryCateSimple" >
+        SELECT
+        `id`,
+        `code_name`,
+        `code_level`,
+        `is_enable`,
+        `parent_id`,
+        `third_recommend`,
+        `sort`
+        FROM
+        `institution_category`
+        WHERE `code_type` = 0
+        and id = #{id}
+    </select>
+
+    <update id="updateRecommendStatusById" parameterType="map" >
+      UPDATE
+          `institution_category`
+        SET
+          `third_recommend` = #{isRecommend}
+        WHERE `id` = #{id}
+    </update>
+
+    <!-- 提升指定某个排名的分类的排名 -->
+    <update id="increaseSort" parameterType="Integer" >
+       UPDATE `institution_category` SET `sort` = `sort` - 1 WHERE  is_enable = 1 and `sort` = #{sort}
+    </update>
+
+    <!-- 提升指定排名后的所有分类的排名 , 用在删除某个分类的时候使用 SET is_enable = 0 -->
+    <update id="increaseSortAfter" parameterType="Integer" >
+        UPDATE `institution_category` SET `sort` = `sort` - 1 WHERE  is_enable = 1 and `sort` &gt; #{oldSort}
+    </update>
+
+    <!-- 降低某个排名的分类的排名 -->
+    <update id="reduceSort" parameterType="Integer" >
+        UPDATE `institution_category` SET `sort` = `sort` + 1 WHERE is_enable = 1  and   `sort` = #{oldSort}
+    </update>
+
+    <update id="updateSort" parameterType="map" >
+      UPDATE
+          `institution_category`
+        SET
+          `sort` = #{sort}
+        WHERE `id` = #{id}
+    </update>
+
+    <select id="queryRecommendCount"  resultType="int" >
+        SELECT
+        COUNT(id)
+        FROM
+        `institution_category`
+        WHERE `code_type` = 0 AND `is_enable` = 1 and third_recommend = 1
+
+    </select>
+
+    <!--  获取所有的is_enable = 1 的分类数据，并且返回是否为推荐分类 -->
+    <select id="queryInstitutionCategorysEnabled"  resultMap="queryCateSimple" >
+      SELECT
+          `id`,
+          `code_name`,
+          `code_level`,
+          `code_type`,
+          `parent_id`,
+          `third_recommend`
+        FROM
+          `institution_category`
+        WHERE  `is_enable` = 1
+    </select>
+
+
+
 
 </mapper>
