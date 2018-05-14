@@ -114,7 +114,7 @@
           COUNT(id)
         FROM
         `institution_category`
-        WHERE `code_type` = 0 and is_enable = 1
+        WHERE `code_type` = 0 and is_enable = 1 and `third_recommend` = 1
 
     </select>
 
@@ -182,7 +182,8 @@
           `code_level`,
           `code_type`,
           `parent_id`,
-          `third_recommend`
+          `third_recommend`,
+          `sort`
         FROM
           `institution_category`
         WHERE  `is_enable` = 1

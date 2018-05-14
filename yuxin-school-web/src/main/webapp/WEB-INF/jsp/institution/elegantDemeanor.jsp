@@ -18,6 +18,9 @@
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/institution/elegantDemeanor.css">
 </head>
 <body>
+<%-- <input type="hidden" id="pageNo" value='${pageNo}'/>
+<input type="hidden" id="rowCount" value='${rowCount}'/>
+<input type="hidden" id="institutionId" value='${institutionId}'/> --%>
 <!-- 二级导航 -->
 <jsp:include page="/WEB-INF/jsp/menu/menu_institution.jsp"></jsp:include>
 <div class="u-wrap admin overflow schoolDetails">
@@ -32,11 +35,16 @@
                 <div style="height: 260px;" class="imgList">
                     <span class="labelName">封面图片:</span>
                     <ul style="display: inline-block;">
-                        <li class="addImg mienShow" id="">
-                            <i class="icon iconfont"></i>
-                        </li>
+                    	<c:choose  >
+                            <c:when test="${coverInfo.id == null}">
+	                           	<li class="addImg mienShow" id="addCover">
+		                            <i class="icon iconfont"></i>
+		                        </li>
+                            </c:when>
+                        </c:choose>
                         <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
+                            <img src="${coverInfo.imgUrl}" alt="" style="width: 100%;height: auto" class="imgClick">
+                            <input id="coverId" value="${coverInfo.id}" type="hidden"/>
                             <span class="imgInfo">学校建筑内部图</span>
                             <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">封面图片</a>
                             <div class="listBg">
@@ -54,7 +62,8 @@
                             <i class="icon iconfont"></i>
                         </li>
                         <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
+                            <img src="${videoInfo.imgUrl}" alt="" style="width: 100%;height: auto"  class="imgClick">
+                             <input id="videoId" value="${videoInfo.id}" type="hidden"/>
                             <span class="imgInfo">学校建筑内部图</span>
                             <a href="javascript:void(0)" class="btn btn-success btn-sm rightShow">视频</a>
                             <div class="listBg">
@@ -65,86 +74,9 @@
                     </ul>
                 </div>
                 <br/>
-                <div class="imgList">
-                    <span class="labelName">风采展示:</span>
-                    <ul style="display: inline-block;width: 1160px;">
-                        <li class="addImg mienShow" id="eleShow">
-                            <i class="icon iconfont"></i>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                <div class="imgList" id="insStyleInfo">
+                
+               	</div>
                 <div class="pages pagination" style="padding-top: 10px;">
 
                 </div>
@@ -162,6 +94,12 @@
     </p>
 </div>
 <div class="loading-bg lp-units-loading-bg" style="display: none"></div>
+
+<!-- 图片放大 -->
+
+<img class="bigImg" src="">	
+
+
 
 <%--视频上传弹窗--%>
 <div class="videoUpload">
@@ -193,7 +131,7 @@
     </div>
 </div>
 <%--风采上传弹窗--%>
-<div class="elePic">
+<div class="elePic" id='elegant'>
     <h5>风采图片</h5>
     <div>
         <img src="../../../images/institution/1.jpg" alt="" style="width: 300px;height: 300px;">
@@ -212,14 +150,48 @@
         <a href="##" class="btn btn-primary closeElePic">保存</a>
     </div>
 </div>
-
+<!-- 封面图片上传 -->
+<div class="elePic" id='cover' style="height: 500px;">
+    <h5>封面图片</h5>
+    <div>
+        <img src="../../../images/institution/1.jpg" alt="" style="width: 300px;height: 300px;">
+        <br/>
+        <a href="##" class="addPic" style="margin-top: 5px;margin-bottom: 20px;">
+            添加图片
+            <input type="file">
+        </a>
+    </div>
+    <div class="eleBtn">
+        <a href="##" class="btn btn-primary closeElePic">取消</a>
+        <a href="##" class="btn btn-primary closeElePic">保存</a>
+    </div>
+</div>
 
 
 
 <script src="<%=rootPath %>/javascripts/riseschool/ajaxfileuploadR.js"></script>
 <script src="<%=rootPath %>/javascripts/plus/jquery.units.js"></script>
 <script src="<%=rootPath %>/javascripts/institution/elegantDemeanor.js"></script>
-
+<script>
+	$(function(){
+		$.ajax({
+	        url: rootPath + "/institutionStyle/queryInsStyle",
+	        data: {"page":0,
+	            "pagesize":9,
+	            "relationId":$("#institutionId").val(),
+	        },beforeSend: function (XMLHttpRequest) {
+	           /* $(".loading").show();
+	            $(".loading-bg").show();*/
+	        },
+	        dataType: "html",
+	        success: function (data) {
+//	            $(".loading").hide();
+//	            $(".loading-bg").hide();
+	            $("#insStyleInfo").html("").html(data);
+	        }
+	    });
+	});
+</script>
 
 
 </body>

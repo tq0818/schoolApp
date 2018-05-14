@@ -21,7 +21,7 @@ public class StudentCommentVo implements Serializable{
 	private Date commtentTime;//		评论时间
 	private Integer commentThumpCount;//		评论点赞数
 	private Integer isThump;//是否点赞
-	private Integer commentName;//评论者的昵称
+	private String commentName;//评论者的昵称
 	public Integer getCommentId() {
 		return commentId;
 	}
@@ -70,10 +70,10 @@ public class StudentCommentVo implements Serializable{
 	public void setIsThump(Integer isThump) {
 		this.isThump = isThump;
 	}
-	public Integer getCommentName() {
+	public String getCommentName() {
 		return commentName;
 	}
-	public void setCommentName(Integer commentName) {
+	public void setCommentName(String commentName) {
 		this.commentName = commentName;
 	}
 	

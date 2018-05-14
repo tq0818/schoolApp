@@ -356,6 +356,8 @@
 		<mapper resource="com/yuxin/institution/InstitutionClassTypeMapper.xml"/>
 		<!-- 机构名师 -->
 		<mapper resource="com/yuxin/institution/InstitutionTeacherMapper.xml"/>
+		<!-- 机构风采 -->
+		<mapper resource="com/yuxin/institution/InstitutionStyleMapper.xml"/>
 	</mappers>
 
 </configuration>
