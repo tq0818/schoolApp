@@ -603,6 +603,8 @@
         <pattern>/InsInfoBase/newLineCourse/*</pattern>
         <!--首页推荐分类管理-->
         <pattern>/InsInfoBase/recommendationHomeC</pattern>
+        <!--评价管理-->
+        <pattern>/InsInfoBase/evaluation</pattern>
 
     </decorator>
 

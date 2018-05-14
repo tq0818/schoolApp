@@ -52,6 +52,10 @@ public class InstitutionBaseController {
     public String recommendationHomeClassification(){
         return "institution/recommendationHomeC";
     }
-
+    //评论管理
+    @RequestMapping(value = "/evaluation")
+    public String evaluation(){
+        return "institution/evaluation";
+    }
 
 }
