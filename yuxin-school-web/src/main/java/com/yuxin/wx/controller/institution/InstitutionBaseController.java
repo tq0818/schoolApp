@@ -62,6 +62,8 @@ public class InstitutionBaseController {
     public String studentManagement(){
         return "institution/studentManagement";
     }
-
+    //商家入驻申请
+    @RequestMapping(value = "/businessEntry")
+    public String businessEntry(){        return "institution/businessEntry";  }
 
 }

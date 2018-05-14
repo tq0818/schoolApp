@@ -607,6 +607,8 @@
         <pattern>/InsInfoBase/evaluation</pattern>
         <!--学员管理-->
         <pattern>/InsInfoBase/studentManagement</pattern>
+        <!--商家入驻申请-->
+        <pattern>/InsInfoBase/businessEntry</pattern>
 
     </decorator>
 

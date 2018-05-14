@@ -1,6 +1,6 @@
 $(function () {
     //选中二级菜单
-    $selectSubMenu('student');
+    $selectSubMenu('organizationIndex');
     //分页插件
     $(".pagination").pagination('', {
         next_text : "下一页",
@@ -15,7 +15,7 @@ $(function () {
 
         }
     });
-    //添加备注弹窗  //点击备注，弹出弹窗
+    //添加备注弹窗     //点击备注，弹出弹窗
     $('.addRemarks').click(function () {
         $('.remarks').show();
     });
@@ -27,6 +27,5 @@ $(function () {
         $(this).addClass('btn-primary');
         $(this).siblings('a').removeClass('btn-primary');
     });
-
 
 });

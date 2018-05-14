@@ -31,7 +31,7 @@
         <div class="mainbackground nopadding" style="margin: 0 10px;">
             <div class="heading">
                 <h2 class="h5">机构管理</h2>
-                <a href="" class="merchant">商家入驻申请<span>(9)</span></a>
+                <a href="/InsInfoBase/businessEntry" class="merchant">商家入驻申请<span>(9)</span></a>
                 <span class="line"></span>
             </div>
             <form method="post" id="searchForm" class="userVideoListNew">
