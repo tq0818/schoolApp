@@ -28,7 +28,7 @@
 <div class="u-wrap query overflow">
     <%--<jsp:include page="/WEB-INF/jsp/menu/menu_statistics_query.jsp"></jsp:include>--%>
     <div class="right-side set-system" style="width: 100%">
-        <div class="mainbackground nopadding" style="margin: 0 10px;">
+        <div class="mainbackground nopadding" style="margin: 0 10px;padding-bottom: 100px;">
             <div class="heading">
                 <h2 class="h5">机构管理</h2>
                 <a href="/InsInfoBase/businessEntry" class="merchant">商家入驻申请<span>(9)</span></a>
