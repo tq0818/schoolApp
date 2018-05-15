@@ -350,6 +350,7 @@
 		<!--TQ-->
 		<mapper resource="com/yuxin/institution/InsFeaturesMapper.xml"/>
 		<mapper resource="com/yuxin/institution/CommentManageMapper.xml"/>
+		<mapper resource="com/yuxin/institution/InstitutionRelationMapper.xml"/>
 
 		<mapper resource="com/yuxin/institution/InstitutionLabelMapper.xml"/>
 		<!-- 课程信息 -->

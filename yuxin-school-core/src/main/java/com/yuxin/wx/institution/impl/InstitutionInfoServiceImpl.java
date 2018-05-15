@@ -4,10 +4,14 @@ import com.google.common.io.ByteSource;
 import com.yuxin.wx.api.institution.InstitutionInfoService;
 import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.common.PageFinder;
+import com.yuxin.wx.institution.mapper.InstitutionCategoryManageMapper;
 import com.yuxin.wx.institution.mapper.InstitutionInfoMapper;
 import com.yuxin.wx.institution.mapper.InstitutionLabelMapper;
+import com.yuxin.wx.institution.mapper.InstitutionRelationMapper;
+import com.yuxin.wx.model.institution.InstitutionCategoryVo;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
 import com.yuxin.wx.model.institution.InstitutionLabelVo;
+import com.yuxin.wx.model.institution.InstitutionRelationVo;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.user.mapper.UsersMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +29,12 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
 
     @Autowired
     private InstitutionLabelMapper institutionLabelMapper;
+
     @Autowired
     private UsersMapper usersMapper;
+
+    @Autowired
+    private InstitutionRelationMapper institutionRelationMapper;
 
     @Override
     public void insert(InstitutionInfoVo institutionInfoVo) {
@@ -56,6 +64,25 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
             institutionInfoVo.setUserId(users.getId());
             institutionInfoMapper.insert(institutionInfoVo);
             InstitutionLabelVo institutionLabelVo = new InstitutionLabelVo();
+            String [] catOne=null;
+            String [] catTwo=null;
+            if(null != institutionInfoVo.getOneLevelId() && !"".equals(institutionInfoVo.getOneLevelId())){
+                catOne = institutionInfoVo.getOneLevelId().split(",");
+            }
+            if(null != institutionInfoVo.getTwoLevelId() && !"".equals(institutionInfoVo.getTwoLevelId())){
+                catTwo = institutionInfoVo.getTwoLevelId().split(",");
+            }
+
+            //插入机构分类关系表
+            InstitutionRelationVo institutionRelationVo = new InstitutionRelationVo();
+            for(int i =0;i<catOne.length;i++){
+                institutionRelationVo.setInsId(institutionInfoVo.getId());
+                institutionRelationVo.setOneLevelId(Integer.parseInt(catOne[i]));
+                institutionRelationVo.setOneLevelId(Integer.parseInt(catTwo[i]));
+                institutionRelationMapper.insert(institutionRelationVo);
+            }
+
+            //插入机构标签表
             for(int i =0;i<labelArr.length;i++){
                 institutionLabelVo.setId(null);
                 institutionLabelVo.setCreateTime(date);
@@ -65,7 +92,6 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
                 institutionLabelVo.setSourceFlag(0);
                 institutionLabelVo.setRelationId(institutionInfoVo.getId());//机构主键
 
-                //插入关系表
                 institutionLabelMapper.insert(institutionLabelVo);
             }
         }catch (Exception e){
