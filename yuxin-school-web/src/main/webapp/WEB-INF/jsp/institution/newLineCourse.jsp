@@ -51,17 +51,17 @@
                     </div>
                     <div  class="imgList">
                         <span>课程风采:</span>
-                        <ul style="display: inline-block;margin-left: 15px;">
+                        <ul id="styleContainer" style="display: inline-block;margin-left: 15px;">
                             <li class="addImg mienShow openPopup" id="">
                                 <i class="icon iconfont"></i>
                             </li>
                             <li>
-                                <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
+                                <span><img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto"></span>
+                                <input type="hidden" value="123456" />
                                 <span class="imgInfo">学校建筑内部图</span>
-                               <%-- <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>--%>
                                 <div class="listBg">
                                     <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                    <a href="javascript:void(0)" class="btn btn-success btn-sm openPopup">修改</a>
+                                    <a href="javascript:void(0)" data-i="0"  class="btn btn-success alterBtn btn-sm openPopup">修改</a>
                                 </div>
                             </li>
                         </ul>
@@ -120,16 +120,22 @@
 <div class="elePic" id='cover' style="height: 500px;">
             <h5>上传图片</h5>
             <div>
-                <img src="../../../images/institution/1.jpg" alt="" style="width: 300px;height: 300px;">
+                <span id="coverReturn">
+
+                </span>
+                <input type="text" id="hidCoverTop" value="用来放置图片地址" />
+                <input type="text" id="hidCoverFid" value="用来放置id" />
                 <br/>
-                <a href="##" class="addPic" style="margin-top: 5px;margin-bottom: 20px;">
-                    添加图片
-                    <input type="file">
-                </a>
+                <form id="uploadFormCover" method="post" enctype="multipart/form-data" >
+                    <a href="##" class="addPic" style="margin-top: 5px;margin-bottom: 20px;margin-left: 210px;" onchange="fileChangeCover()" >
+                        添加图片
+                        <input type="file" name="imgData" accept="image/jpg, image/jpeg,image/png,image/bmp">
+                    </a>
+                </form>
             </div>
             <div class="eleBtn">
-                <a href="##" class="btn btn-primary closeElePic">取消</a>
-                <a href="##" class="btn btn-primary closeElePic">保存</a>
+                <a href="##" class="btn btn-primary closeElePicCancel">取消</a>
+                <a href="##" class="btn btn-primary  closeElePicCommit">保存</a>
             </div>
 </div>
 
