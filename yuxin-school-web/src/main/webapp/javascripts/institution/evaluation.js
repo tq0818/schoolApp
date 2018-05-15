@@ -164,6 +164,9 @@ function initInsComment(page=1,reviewStatus='') {
             $.each(jsonData.data,function(i,item){
                 var score=item.score?item.score:0;
                 var check = item.isCheck;
+                /*(comee.comment ? unescape(comee.comment.replace(/\\u/g, '%u')) : "") +*/
+                var com = (item.content ? unescape(item.content.replace(/\\u/g, '%u')) : "");
+                console.log(com);
                 let  _check = "";
                 if(check==0){
                     _check = '<button  class="evaluationIns" id="evaluation" data-commentId="'+item.id+'">审核通过</button>';
@@ -212,7 +215,7 @@ function initInsComment(page=1,reviewStatus='') {
                     ' <div class="Y_backcomment_content">'+
                         '<div class="word Y_clear">'+
                             '<span>'+item.nickName+'</span>'+
-                            '<span class="wordcontent" style="word-break:break-all">'+item.content+'</span>'+
+                            '<span class="wordcontent" style="word-break:break-all">'+com+'</span>'+
                         '</div>'+
                         '<p class="Y_time Y_mt10">'+
                             '<span>'+item.createTimeText+' </span>'+
@@ -226,7 +229,7 @@ function initInsComment(page=1,reviewStatus='') {
             });
             $(".evaScreen ").children('.comment_all').html(html);
 
-            if (jsonData.rowCount > 2) {
+            if (jsonData.rowCount > 10) {
                 $(".pagination").html('');
                 $(".pagination").pagination(jsonData.rowCount,
                     {
@@ -282,6 +285,8 @@ function initInsClassComment(page=1,reviewStatus='',relationId='') {
             var html ='';
             $.each(jsonData.data,function(i,item){
                 var score=item.score?item.score:0;
+                var com = (item.content ? unescape(item.content.replace(/\\u/g, '%u')) : "");
+                console.log(com);
                 if(score==1){
                     scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
                         '<i class="iconfont">&#xe65e;</i>'+
@@ -324,8 +329,8 @@ function initInsClassComment(page=1,reviewStatus='',relationId='') {
                     '</div>'+
                     ' <div class="Y_backcomment_content">'+
                     '<div class="word Y_clear">'+
-                    '<span>'+item.nickName+'</span>'+
-                    '<span class="wordcontent" style="word-break:break-all">'+item.content+'</span>'+
+                    '<span>'+item.nickName+'：'+'</span>'+
+                    '<span class="wordcontent" style="word-break:break-all">'+com+'</span>'+
                     '</div>'+
                     '<p class="Y_time Y_mt10">'+
                     '<span>'+item.createTimeText+' </span>'+
@@ -339,7 +344,7 @@ function initInsClassComment(page=1,reviewStatus='',relationId='') {
             });
             $(".curriculum").children('.comment_all').html(html);
 
-            if (jsonData.rowCount > 2) {
+            if (jsonData.rowCount > 10) {
                 $(".paginationClass").html('');
                 $(".paginationClass").pagination(jsonData.rowCount,
                     {

@@ -466,6 +466,17 @@ function findInsDate(page) {
     var endTime = $("#endTime").val();
     var startTime = $("#startTime").val();
     var insName = $("#insName").val();
+    //两个时间不为空时，则需要判断时间大小
+    var from = $(".from").val();
+    var to = $(".to").val();
+    if (from !=null && to != null){
+        if (parseInt(from.replace(/-/g,"")) > parseInt(to.replace(/-/g,""))){
+            $(".from").val("");
+            $(".to").val("");
+            alert("左边时间不能晚于右边时间!");
+            return;
+        }
+    }
     $.ajax({
         url:rootPath+"/InsInfoBase/insData",
         type:"post",
@@ -541,11 +552,11 @@ function findInsDate(page) {
                             '<a href="##" class="countManage" id="countManage" data-id="'+item.id+'">'+'账号管理'+'</a>|'+
                             '<a href="##" class="manageBtn">'+'管理'+'</a>'+
                             '<ul class="none box" style="display: none">'+
-                                '<li><a href="">基本信息</a>'+'</li>'+
+                                '<li><a href="/InsInfoBase/findInsById?id="'+item.id+'>基本信息</a>'+'</li>'+
                                 '<li><a href="">风采管理</a>'+'</li>'+
                                 '<li><a href="">课程管理</a>'+'</li>'+
                                 '<li><a href="">名师管理</a>'+'</li>'+
-                                '<li><a href="">评论管理</a>'+'</li>'+
+                                '<li><a href="/comment/insCommentIndex?id="'+item.id+'>评论管理</a>'+'</li>'+
                             '</ul>'+
                         '</td>'+
                     '</tr>'
@@ -671,6 +682,18 @@ function addInsInfo() {
 
 
     //手机号码
+
+    // blur 手机输入框
+   /* $(document).on("blur","#mobile",function(){
+        var mobile = $.trim($("#mobile").val());
+            //局长： /^09\d{8}|1[3-9]\d{9}$/
+        if(!/^09\d{8}|1[3,4,5,7,8]\d{9}$/.test(mobile)){
+            $.msg("手机号格式不正确");
+            return ;
+        }
+    });*/
+
+
     let listPhone = '';
     let listPhoneChi = $('#listPhone').children('div');
     for(let i=0;i<listPhoneChi.length;i++){
