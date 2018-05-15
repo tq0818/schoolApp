@@ -5,16 +5,16 @@ $(function () {
     //选中二级菜单
     $selectSubMenu('organizationIndex');
     //管理显示弹窗
-    $('.manageBtn').mouseover(function () {
+    $('body').on('mouseover','.manageBtn',function () {
         $(this).siblings('ul').show();
     });
-    $('.manageBtn').mouseleave(function () {
+    $('body').on('mouseleave','.manageBtn',function () {
         $(this).siblings('ul').hide();
     });
-    $('.box').mouseover(function () {
+    $('body').on('mouseover','.box',function () {
         $(this).show();
     });
-    $('.box').mouseleave(function () {
+    $('body').on('mouseleave','.box',function () {
         $(this).hide();
 
     });
@@ -552,11 +552,11 @@ function findInsDate(page) {
                             '<a href="##" class="countManage" id="countManage" data-id="'+item.id+'">'+'账号管理'+'</a>|'+
                             '<a href="##" class="manageBtn">'+'管理'+'</a>'+
                             '<ul class="none box" style="display: none">'+
-                                '<li><a href="/InsInfoBase/findInsById?id="'+item.id+'>基本信息</a>'+'</li>'+
+                                '<li><a href="/InsInfoBase/findInsById?id='+item.id+'">基本信息</a>'+'</li>'+
                                 '<li><a href="">风采管理</a>'+'</li>'+
                                 '<li><a href="">课程管理</a>'+'</li>'+
                                 '<li><a href="">名师管理</a>'+'</li>'+
-                                '<li><a href="/comment/insCommentIndex?id="'+item.id+'>评论管理</a>'+'</li>'+
+                                '<li><a href="/comment/insCommentIndex?id='+item.id+'">评论管理</a>'+'</li>'+
                             '</ul>'+
                         '</td>'+
                     '</tr>'
