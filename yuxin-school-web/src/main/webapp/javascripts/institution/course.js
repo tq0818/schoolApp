@@ -145,7 +145,7 @@ function addOnlineClass(cid){
                 cid: cid,
                 insId: insId
             }, function (json) {
-                $.msg(json == 'success' ? '操作成功' : '操作失败');
+                $.msg(json == 'success' ? '操作成功' : json);
 
             })
         }

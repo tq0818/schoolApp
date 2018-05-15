@@ -37,12 +37,16 @@
                     <div>
                         <span>课程封面:</span>
                         <div>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 150px;height: 100px;margin-left: 15px;">
+                            <span id="imgTop"></span>
+
+                            <input type="hidden" id="hidTop" />
                             <br/>
-                            <a href="##" class="addPic" style="margin-top: 5px;margin-bottom: 20px;margin-left: 210px;">
-                                添加图片
-                                <input type="file">
-                            </a>
+                            <form id="uploadForm" method="post" enctype="multipart/form-data" >
+                                <a href="##" class="addPic" style="margin-top: 5px;margin-bottom: 20px;margin-left: 210px;" onchange="fileChange()" >
+                                    添加图片
+                                    <input type="file" name="imgData" accept="image/jpg, image/jpeg,image/png,image/bmp">
+                                </a>
+                            </form>
                         </div>
                     </div>
                     <div  class="imgList">
@@ -54,7 +58,7 @@
                             <li>
                                 <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
                                 <span class="imgInfo">学校建筑内部图</span>
-                                <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>
+                               <%-- <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>--%>
                                 <div class="listBg">
                                     <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
                                     <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
@@ -112,6 +116,13 @@
     </p>
 </div>
 <div class="loading-bg lp-units-loading-bg" style="display: none"></div>
+<%--上传图片弹窗--%>
+<div>
+
+</div>
+
+
+
         <input id="underLineId" type="hidden" value="${underLineId}">
 <script src="<%=rootPath %>/javascripts/riseschool/ajaxfileuploadR.js"></script>
 <script src="<%=rootPath %>/javascripts/plus/jquery.units.js"></script>

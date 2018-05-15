@@ -242,4 +242,9 @@ public class InstitutionClassTypeServiceImpl extends BaseServiceImpl implements 
 
     }
 
+
+    @Override
+    public int getCountOfOnlineClassyCidInsId(Map<String, Object> map) {
+        return institutionClassTypeMapper.getCountOfOnlineClassyCidInsId(map);
+    }
 }
