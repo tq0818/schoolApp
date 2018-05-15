@@ -52,7 +52,7 @@
                     <div  class="imgList">
                         <span>课程风采:</span>
                         <ul style="display: inline-block;margin-left: 15px;">
-                            <li class="addImg mienShow" id="">
+                            <li class="addImg mienShow openPopup" id="">
                                 <i class="icon iconfont"></i>
                             </li>
                             <li>
@@ -61,7 +61,7 @@
                                <%-- <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>--%>
                                 <div class="listBg">
                                     <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                    <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
+                                    <a href="javascript:void(0)" class="btn btn-success btn-sm openPopup">修改</a>
                                 </div>
                             </li>
                         </ul>
@@ -116,14 +116,26 @@
     </p>
 </div>
 <div class="loading-bg lp-units-loading-bg" style="display: none"></div>
-<%--上传图片弹窗--%>
-<div>
-
+<!-- 封面图片上传 -->
+<div class="elePic" id='cover' style="height: 500px;">
+            <h5>上传图片</h5>
+            <div>
+                <img src="../../../images/institution/1.jpg" alt="" style="width: 300px;height: 300px;">
+                <br/>
+                <a href="##" class="addPic" style="margin-top: 5px;margin-bottom: 20px;">
+                    添加图片
+                    <input type="file">
+                </a>
+            </div>
+            <div class="eleBtn">
+                <a href="##" class="btn btn-primary closeElePic">取消</a>
+                <a href="##" class="btn btn-primary closeElePic">保存</a>
+            </div>
 </div>
 
 
 
-        <input id="underLineId" type="hidden" value="${underLineId}">
+<input id="underLineId" type="hidden" value="${underLineId}">
 <script src="<%=rootPath %>/javascripts/riseschool/ajaxfileuploadR.js"></script>
 <script src="<%=rootPath %>/javascripts/plus/jquery.units.js"></script>
 <script src="<%=rootPath %>/javascripts/institution/newLineCourse.js"></script>

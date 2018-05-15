@@ -1,7 +1,13 @@
 $(function () {
     //    左侧active切换
     $selectSubMenus('course');
-
+    //新增弹窗
+    $('.openPopup').click(function () {
+        $('#cover').show();
+    });
+    $('.closeElePic').click(function () {
+        $('#cover').hide();
+    });
 });
 
 function getUnderLineClassInfo(){
