@@ -52,7 +52,7 @@ public class InstitutionBaseController {
     public String recommendationHomeClassification(){
         return "institution/recommendationHomeC";
     }
-    //评论管理
+    //单独机构评价管理
     @RequestMapping(value = "/evaluation")
     public String evaluation(){
         return "institution/evaluation";
@@ -68,5 +68,12 @@ public class InstitutionBaseController {
     //名师管理
     @RequestMapping(value = "/famousTeacher")
     public String famousTeacher(){        return "institution/famousTeacher";  }
+    //机构评价管理列表
+    @RequestMapping(value = "/evaluationList")
+    public String evaluationList(){
+        return "institution/evaluationList";
+    }
+
+
 
 }

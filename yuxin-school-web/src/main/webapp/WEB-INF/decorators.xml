@@ -606,7 +606,7 @@
         <pattern>/InsInfoBase/newLineCourse/*</pattern>
         <!--首页推荐分类管理-->
         <pattern>/InsInfoBase/recommendationHomeC</pattern>
-        <!--评价管理-->
+        <!--单独机构评价管理-->
         <pattern>/InsInfoBase/evaluation</pattern>
         <!--学员管理-->
         <pattern>/InsInfoBase/studentManagement</pattern>
@@ -614,6 +614,9 @@
         <pattern>/InsInfoBase/businessEntry</pattern>
         <!--名师管理-->
         <pattern>/InsInfoBase/famousTeacher</pattern>
+        <!--机构评价管理列表-->
+        <pattern>/InsInfoBase/evaluationList</pattern>
+
 
     </decorator>
 
