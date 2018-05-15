@@ -7,8 +7,13 @@ import com.yuxin.wx.api.classes.IClassTypeService;
 import com.yuxin.wx.common.JsonMsg;
 import com.yuxin.wx.model.institution.ClassTypeOnlineFindVo;
 import com.yuxin.wx.model.institution.ClassTypeOnlineVo;
+import com.yuxin.wx.utils.FileUtil;
+import com.yuxin.wx.utils.PropertiesUtil;
+import com.yuxin.wx.utils.WebUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +27,8 @@ import com.yuxin.wx.api.institution.InstitutionInfoService;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.institution.InstitutionClassTypeVo;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -34,6 +41,9 @@ public class InstitutionClassTypeController {
 	private static Log log = LogFactory.getLog("log");
 
 	private final int MAX_RECOMMEND_NUM = 2;
+
+	@Autowired
+	private PropertiesUtil propertiesUtil;
 
 	@Autowired
 	private InstitutionClassTypeService institutionClassTypeService;
@@ -335,7 +345,7 @@ public class InstitutionClassTypeController {
 	}
 
 	/**
-	 * 添加一个在线课程信息 , 可多次添加
+	 * 添加一个在线课程信息 , 同一个机构不能重复添加同一个课程
 	 * @param request
 	 * @return
 	 */
@@ -348,6 +358,12 @@ public class InstitutionClassTypeController {
 			Map<String,Object> map = new HashMap<>();
 			map.put("insId",insId);
 			map.put("cid",cid);
+
+			if(institutionClassTypeService.getCountOfOnlineClassyCidInsId(map) > 0){
+				return "该机构已经添加该课程";
+			}
+
+
 			institutionClassTypeService.addOnlineClass(map);
 		}catch (Exception e){
 			e.printStackTrace();
@@ -402,6 +418,45 @@ public class InstitutionClassTypeController {
 		}
 		return JsonMsg.SUCCESS;
 	}
+
+
+
+	@ResponseBody
+	@RequestMapping(value="/uploadImgs",method=RequestMethod.POST)
+	public JSONObject uploadImgs(MultipartRequest multiPartRquest, HttpServletRequest req){
+		JSONObject json = new JSONObject();
+		try{
+			Subject subject = SecurityUtils.getSubject();
+			String realPath=null;
+			String picPath=null;
+			MultipartFile multipartFile = multiPartRquest.getFile("imgData");
+			subject.getSession().setAttribute("imgData", multipartFile);
+			String name=multipartFile.getOriginalFilename();
+			if(name!=null&&!"".equals(name)){
+				try {
+					realPath = FileUtil.upload(multipartFile, "coursefile", "");
+				} catch (Exception e) {
+					log.error("文件上传失败",e);
+					e.printStackTrace();
+				}
+			}
+			picPath="http://"+propertiesUtil.getProjectImageUrl()+"/"+realPath;
+
+			json.put("status",1);
+			json.put("url",picPath);
+			json.put("picPath",realPath);
+			return json;
+			// return "{\"url\":\""+picPath+"\",\"picPath\":\""+realPath+"\"}";
+		}catch(Exception e){
+			e.printStackTrace();
+			json.put("status",0);
+			json.put("msg","操作失败");
+			return json;
+		}
+
+	}
+
+
 
 
 }

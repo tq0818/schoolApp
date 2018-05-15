@@ -108,5 +108,11 @@ public interface InstitutionClassTypeService {
 
 	boolean  updateSortOpenClass(Integer insId,Integer rid,String method);
 
+	/**
+	 *
+	 * @param map
+	 * @return
+	 */
+	int getCountOfOnlineClassyCidInsId(Map<String,Object> map);
 
 }

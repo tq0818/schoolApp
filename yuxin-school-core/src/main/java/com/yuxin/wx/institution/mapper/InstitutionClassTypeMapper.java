@@ -157,5 +157,7 @@ public interface InstitutionClassTypeMapper {
     void  subSortRelationStep2(Integer id);
 
 
+    int getCountOfOnlineClassyCidInsId(Map<String,Object> map);
+
 
 }
