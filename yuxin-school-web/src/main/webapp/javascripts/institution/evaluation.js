@@ -115,12 +115,17 @@ $(function () {
     });
 
     //初始机构化评论
-
-    let course = sessionStorage.getItem('course');
-    if(course=='机构评价'){
+    let courseBtn = sessionStorage.getItem('courseBtn');
+    if(courseBtn=='机构评价'){
         initInsComment();
+        $('.evaScreen').show();
+        $('.curriculum').hide();
+        $('.evaTitle').eq(0).addClass('active');
     }else{
         initInsClassComment();
+        $('.evaScreen').hide();
+        $('.curriculum').show();
+        $('.evaTitle').eq(1).addClass('active');
     }
 
     });
@@ -133,6 +138,7 @@ var currPage='';
 var currPageClass='';
 //查询机构评论
 function initInsComment(page=1,reviewStatus='') {
+    console.log('机构评价');
     currPage = page;
 
     var insId = $("#insId").val();//机构id
@@ -201,7 +207,7 @@ function initInsComment(page=1,reviewStatus='') {
                 }
                 html+='<li class="Y_clear">'+
                     '<div class="headpic">'+
-                        '<img src="'+(item.headPicMax ? item.headPicMax :  rootPath + "/images/teachers.png")+'" alt="" width="50" height="50">'+
+                        '<img src="'+(item.headPicMax ? item.headPicMax :  rootPath + "/images/user/head_top.png")+'" alt="" width="50" height="50">'+
                     '</div>'+
                     ' <div class="Y_backcomment_content">'+
                         '<div class="word Y_clear">'+
@@ -250,6 +256,7 @@ function initInsComment(page=1,reviewStatus='') {
 
 //机构课程评价
 function initInsClassComment(page=1,reviewStatus='',relationId='') {
+    console.log('课程评价');
     currPageClass = page;
 
     var insId = $("#insId").val();//机构id
@@ -330,7 +337,7 @@ function initInsClassComment(page=1,reviewStatus='',relationId='') {
                     '<button class="deleteClass" id="delete" data-commentId="'+item.id+'">删除</button>'+
                     '</li>'
             });
-            $(".comment_all").html(html);
+            $(".curriculum").children('.comment_all').html(html);
 
             if (jsonData.rowCount > 2) {
                 $(".paginationClass").html('');

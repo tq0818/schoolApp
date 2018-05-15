@@ -42,7 +42,7 @@
         <div class="mainbackground nopadding">
             <div class="heading">
                 <h2 class="h5" style="display: inline-block;">评价管理</h2>
-                <span class="evaTitle active" style="">机构评价</span>
+                <span class="evaTitle" style="">机构评价</span>
                 <span class="evaTitle" >课程评价</span>
                 <span class="line"></span>
             </div>

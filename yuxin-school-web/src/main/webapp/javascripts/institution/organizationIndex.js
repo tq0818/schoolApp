@@ -534,8 +534,8 @@ function findInsDate(page) {
                             '<a href="##" class="frameLower" data-id="'+item.id+'">'+isShelvesval+'</a>|'+
                             '<a href="##" class="authentication" data-id="'+item.id+'">'+isCertifiedval+'</a>|'+
                             '<a href="##" class="countManage" id="countManage" data-id="'+item.id+'">'+'账号管理'+'</a>|'+
-                            '<a href="##" class="manageBtn">'+'管理'+'</a>|'+
-                            '<ul class="none box" style="display: none;">'+
+                            '<a href="##" class="manageBtn">'+'管理'+'</a>'+
+                            '<ul class="none box" style="display: none">'+
                                 '<li><a href="">基本信息</a>'+'</li>'+
                                 '<li><a href="">风采管理</a>'+'</li>'+
                                 '<li><a href="">课程管理</a>'+'</li>'+
