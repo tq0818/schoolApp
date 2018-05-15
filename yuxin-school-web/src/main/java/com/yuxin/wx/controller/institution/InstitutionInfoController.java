@@ -49,10 +49,10 @@ public class InstitutionInfoController {
      */
     @RequestMapping(value = "/organizationIndex")
     public String organizationIndex(Model model, InstitutionInfoVo insInfoVo,HttpServletRequest request){
-        insInfoVo.setPage(1);
+        /*insInfoVo.setPage(1);
         insInfoVo.setPageSize(10);
         PageFinder<InstitutionInfoVo> pageFinder = institutionInfoService.findInstitutionInfos(insInfoVo);
-        model.addAttribute("insList",pageFinder);
+        model.addAttribute("insList",pageFinder);*/
         //商家入驻申请
         return "institution/organizationIndex";
     }
@@ -66,7 +66,7 @@ public class InstitutionInfoController {
     @ResponseBody
     @RequestMapping(value = "/insData",method = RequestMethod.POST)
     public PageFinder<InstitutionInfoVo> findIns(Model model, InstitutionInfoVo insInfoVo){
-        insInfoVo.setPageSize(10);
+        //insInfoVo.setPageSize(10);
         PageFinder<InstitutionInfoVo> pageFinder = institutionInfoService.findInstitutionInfos(insInfoVo);
         model.addAttribute("insList",pageFinder);
         return pageFinder;
@@ -270,7 +270,7 @@ public class InstitutionInfoController {
         users.setId(null);
         users.setUsername(userName);
         users.setPassword(md5Pwd);
-        users.setUserType("3");
+        users.setUserType("INSTITUTION_MANAGE");
         try{
             usersServiceImpl.insertA(users);
             InstitutionInfoVo institutionInfoVo = new InstitutionInfoVo();

@@ -96,14 +96,14 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
             if(insInfoVo.getPage() == 1){
                 insInfoVo.setPage(0);
             }else{
-                insInfoVo.setPage((insInfoVo.getPage()-1)*10);
+                insInfoVo.setPage((insInfoVo.getPage()-1)*insInfoVo.getPageSize());
             }
             List<InstitutionInfoVo> data = institutionInfoMapper.findInstitutionInfos(insInfoVo);
             for(int i = 0; i<data.size();i++){
                 data.get(i).setSort(i+1);
             }
             Integer rowCount = institutionInfoMapper.findInstitutionInfosCount(insInfoVo);
-            PageFinder<InstitutionInfoVo> pageFinder=new PageFinder<>(insInfoVo.getPage()/10 ,insInfoVo.getPageSize(),rowCount,data);
+            PageFinder<InstitutionInfoVo> pageFinder=new PageFinder<>(insInfoVo.getPage()/insInfoVo.getPageSize() ,insInfoVo.getPageSize(),rowCount,data);
             return pageFinder;
     }
 

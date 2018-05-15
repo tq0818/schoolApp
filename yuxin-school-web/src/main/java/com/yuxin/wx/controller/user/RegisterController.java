@@ -133,6 +133,26 @@ public class RegisterController {
  		}
 		
 	}
+
+	@ResponseBody
+	@RequestMapping(value="/insCheckUserName",method=RequestMethod.POST)
+	public String insCheckUserName(String userName,HttpServletRequest request){
+		if(null!=userName&&!"".equals(userName)){
+			if(ParameterUtil.isUserName(userName)){
+				Users user=usersServiceImpl.queryInsUserByName(userName);
+				if(user!=null){
+					return "用户名已经被注册";
+				}
+				return "true";
+			}else{
+				return "只能以字母开头并由数字、字母或下划线组成";
+			}
+
+		}else{
+			return "用户名不能为空";
+		}
+
+	}
 	
 	/**
 	 * 

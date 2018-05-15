@@ -37,7 +37,6 @@
 <jsp:include page="/WEB-INF/jsp/menu/menu_institution.jsp"></jsp:include>
 <div class="u-wrap admin overflow schoolDetails">
     <%--<jsp:include page="/WEB-INF/jsp/menu/menu_institutionLeft.jsp"></jsp:include>--%>
-    <input type="hidden" id="insId" value="${insId}">
     <div class="right-side">
         <div class="mainbackground nopadding">
             <div class="heading">

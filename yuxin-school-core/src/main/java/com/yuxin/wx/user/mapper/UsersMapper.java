@@ -26,6 +26,8 @@ public interface UsersMapper extends BaseMapper<Users> {
 	 * @return
 	 */
 	public Users queryByName(String userName);
+
+	public Users queryInsByName(String userName);
 	
 	/**
 	 * 

@@ -50,7 +50,7 @@ public interface InstitutionClassTypeService {
 	 * 获取某个机构所有课程
 	 * @return
 	 */
-	List<InstitutionClassTypeVo> queryAllByIns(Integer id);
+	List<InstitutionClassTypeVo> queryAllByIns(InstitutionClassTypeVo institutionClassTypeVo);
 	
 	
 	 PageFinder<InstitutionClassTypeVo> page(Integer insId,Integer status,int pageStart,int pageSize);

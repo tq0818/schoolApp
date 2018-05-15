@@ -52,7 +52,7 @@
                         <select name="eduSchool" id="eduSchool" onchange="queryRiseSchoolDict(2)">
                             <option value="">请选择市</option>
                         </select>
-                        <select id="registStatus" name="status">
+                        <select id="registStatus" name="status" onchange="queryInsData()" >
                             <option value="">请选择区</option>
                         </select>
                     </div>
@@ -107,7 +107,7 @@
                         <th width="5%">认证状态</th>
                         <th width="15%">操作</th>
                     </tr>
-                    <c:forEach  var="ins" items="${insList.data}">
+                    <%--<c:forEach  var="ins" items="${insList.data}">
                         <tr data-buy="false">
                             <td>${ins.sort}</td>
                             <td>${ins.name}</td>
@@ -160,15 +160,15 @@
                                 </ul>
                             </td>
                         </tr>
-                    </c:forEach>
+                    </c:forEach>--%>
                 </table>
                 <div class="pages pagination">
                 </div>
             </div>
         </div>
     </div>
-
-<script type="text/javascript">
+        <input type="hidden" id="selectCounts" value="10">
+<%--<script type="text/javascript">
      $(function(){
          $(".pagination").html("");
          $(".pagination").pagination(${insList.rowCount}, {
@@ -185,7 +185,7 @@
              }
          });
      });
-</script>
+</script>--%>
 
     <!-- ajax加载中div开始 -->
     <div class="loading lp-units-loading" style="display:none">

@@ -28,13 +28,37 @@ public class CommentManageController {
      * @return
      */
     @RequestMapping(value = "/insCommentIndex")
-    public String insCommenIndex(Model model, HttpServletRequest request){
+    public String insCommenIndex(Model model, HttpServletRequest request,InstitutionClassTypeVo institutionClassTypeVo){
         String id = request.getParameter("id");
         //获取课程名称
-        List<InstitutionClassTypeVo> classTypeVos = institutionClassTypeService.queryAllByIns(Integer.parseInt(id));
+        List<InstitutionClassTypeVo> classTypeVos= null;
+        try{
+            classTypeVos = institutionClassTypeService.queryAllByIns(institutionClassTypeVo);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         model.addAttribute("classTypeVos",classTypeVos);
         model.addAttribute("insId",id);
         return "institution/evaluation";
+    }
+
+    /**
+     * 所有机构下的课程
+     * @return
+     */
+    @RequestMapping(value = "/commentIndex")
+    public String commentIndex(Model model, HttpServletRequest request,InstitutionClassTypeVo institutionClassTypeVo){
+        //获取课程名称
+        List<InstitutionClassTypeVo> classTypeVos= null;
+        try{
+            classTypeVos = institutionClassTypeService.queryAllByIns(institutionClassTypeVo);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        model.addAttribute("classTypeVos",classTypeVos);
+        return "institution/evaluationList";
     }
 
     /**

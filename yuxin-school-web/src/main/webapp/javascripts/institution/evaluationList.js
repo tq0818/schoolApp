@@ -141,13 +141,10 @@ function initInsComment(page=1,reviewStatus='') {
     console.log('机构评价');
     currPage = page;
 
-    var insId = $("#insId").val();//机构id
-
     $.ajax({
         url:rootPath+"/comment/findInsComment",
         type:"post",
         data:{
-            "relationId":insId,
             "isCheck":reviewStatus,
             "page":page
         },
@@ -259,13 +256,11 @@ function initInsClassComment(page=1,reviewStatus='',relationId='') {
     console.log('课程评价');
     currPageClass = page;
 
-    var insId = $("#insId").val();//机构id
 
     $.ajax({
         url:rootPath+"/comment/findInsClassComment",
         type:"post",
         data:{
-            "insId":insId,
             "relationId":relationId,
             "isCheck":reviewStatus,
             "page":page

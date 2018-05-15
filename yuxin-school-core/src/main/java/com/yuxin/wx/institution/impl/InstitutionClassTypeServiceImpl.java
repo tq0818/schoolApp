@@ -60,8 +60,8 @@ public class InstitutionClassTypeServiceImpl extends BaseServiceImpl implements 
     }
 
     @Override
-    public List<InstitutionClassTypeVo> queryAllByIns(Integer id) {
-        return institutionClassTypeMapper.queryAllByIns(id);
+    public List<InstitutionClassTypeVo> queryAllByIns(InstitutionClassTypeVo institutionClassTypeVo) {
+        return institutionClassTypeMapper.queryAllByIns(institutionClassTypeVo);
     }
 
 

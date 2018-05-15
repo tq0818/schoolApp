@@ -118,6 +118,7 @@ public interface IUsersService  {
 	 * @return
 	 */
 	Users queryUserByName(String userName);
+	Users queryInsUserByName(String userName);
 	
 	/**
 	 * 

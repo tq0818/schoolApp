@@ -56,7 +56,6 @@ $(function () {
             url:rootPath+"/InsInfoBase/checkUser?checkId="+id,
             type:"get",
             success:function(data){
-                console.log(data);
                 if(data == null || data == ''){
                     $('.createCount').show();
                 }else{
@@ -106,18 +105,7 @@ $(function () {
 
     $('.closeCountPopup').click(function () {
         $('.createCount').hide();
-        //$('.cureatManageUser').show();
     });
-
-    /*$('.manageUser').click(function () {
-        $('.cureatManageUser').hide();
-        cureatManageUser();
-    });*/
-
-   /* $('.updateManageUser').click(function () {
-        $('.editCount').hide();
-        updateManageUser();
-    })*/
 
     //添加机构弹窗
     $('.addOrganization').click(function () {
@@ -138,6 +126,8 @@ $(function () {
             $(this).addClass('btn-primary');
             $(this).siblings('a').removeClass('btn-primary');
         }
+
+        findInsDate(1);
     });
     //系统标签增加和删除
     $('.addSystem').click(function () {
@@ -215,6 +205,10 @@ $(function () {
     //分类筛选
     $('#findFistCategorys').change(function () {
         findSecondCategorys();
+        findInsDate(1);
+    });
+    $('#findSecondCategorys').change(function () {
+        findInsDate(1);
     });
 
     //分类筛选
@@ -226,9 +220,13 @@ $(function () {
     $(".searchContents").click(function () {
         findInsDate(1);
     });
+
+
+
 });
 
 var curPage = 1;
+
 
 //查询省市区
 function queryRiseSchoolDict(areaFlag) {
@@ -279,8 +277,13 @@ function queryRiseSchoolDict(areaFlag) {
                     $("#registStatus").html("").html(html);
                 }
             }
+            findInsDate(1);
         }
     });
+}
+
+function queryInsData() {
+    findInsDate(1);
 }
 
 //查询省市区
@@ -378,6 +381,7 @@ function findSecondCategorys() {
             $("#findSecondCategorys").html("").html(html);
         }
     });
+
 }
 
 //获取一级分类2
@@ -476,7 +480,8 @@ function findInsDate(page) {
             "endTime":endTime,
             "startTime":startTime,
             "name":insName,
-            "page":page
+            "page":page,
+            "pageSize":$("#selectCounts").val() || 10
         },
         beforeSend: function (XMLHttpRequest) {
             $(".loading").show();
@@ -547,7 +552,41 @@ function findInsDate(page) {
             });
             $("#tableList").html(html);
 
-            if (jsonData.rowCount > 2) {
+
+
+            if (jsonData.rowCount >$("#selectCounts").val()) {
+                $(".pagination").html('');
+                $(".pagination").pagination(jsonData.rowCount,
+                    {
+                        next_text: "下一页",
+                        prev_text: "上一页",
+                        current_page: jsonData.pageNo,
+                        link_to: "javascript:void(0)",
+                        num_display_entries: 8,
+                        items_per_page: jsonData.pageSize,
+                        num_edge_entries: 1,
+                        callback: function (page, jq) {
+                            var pageNo = page + 1;
+                            findInsDate(pageNo);
+                        }
+                    });
+                $(".pagination").find("li:first").css("background-color","#fff").css("border","1px solid #999").css('cursor','default');
+                $(".pagination").find("li:first").before('每页：<select id="selectCount"  onchange="javascript:searchCount()">'+
+                    ' <option value="10">10</option>'+
+                    ' <option value="20">20</option>'+
+                    ' <option value="30">30</option>'+
+                    ' <option value="50">50</option>'+
+                    ' <option value="100">100</option>'+
+                    ' </select> 条   ');
+                $("#selectCount").val($("#selectCounts").val());
+            } else {
+                $(".pagination").html('');
+            }
+
+
+
+
+            /*if (jsonData.rowCount > 2) {
                 $(".pagination").html('');
                 $(".pagination").pagination(jsonData.rowCount,
                     {
@@ -565,13 +604,20 @@ function findInsDate(page) {
                     });
             } else {
                 $(".pagination").html('');
-            }
+            }*/
         },
         complete: function (XMLHttpRequest, textStatus) {
             $(".loading").hide();
             $(".loading-bg").hide();
         }
     })
+}
+
+function searchCount(){
+    $("#selectCounts").val($("#selectCount").val());
+    console.log($("#selectCount").val());
+    console.log($("#selectCounts").val());
+    findInsDate(1);
 }
 
 //修改上下架，认证
@@ -674,17 +720,45 @@ function addInsInfo() {
 function cureatManageUser() {
     var manageUser = $("#manageUser").val();
     var countManage = insId;
+
     $.ajax({
-        url:rootPath+"/InsInfoBase/cureatManageUser",
+        url:rootPath+"/register/insCheckUserName",
         type:"post",
         data:{
-            "manageUser":manageUser,
-            "countManage":countManage
+            "userName":manageUser
         },
         success:function(data){
-            findInsDate(curPage);
+            console.log(data);
+            if(data =='true'){
+                /*$.ajax({
+                    url:rootPath+"/InsInfoBase/cureatManageUser",
+                    type:"post",
+                    data:{
+                        "manageUser":manageUser,
+                        "countManage":countManage
+                    },
+                    success:function(data){
+                        findInsDate(curPage);
+                    }
+                })*/
+            }else if(data =='用户名已经被注册'){
+                alert('用户名已经被注册');
+                $("#manageUser").val("");
+            }else if(data =='用户名不能为空'){
+                alert('用户名不能为空');
+                $("#manageUser").val("");
+            }else if('只能以字母开头并由数字、字母或下划线组成'){
+                alert('只能以字母开头并由数字、字母或下划线组成');
+                $("#manageUser").val("");
+            }else{
+                alert('用户名不正确');
+                $("#manageUser").val("");
+            }
+
         }
     })
+
+
 
 
 }
@@ -707,3 +781,4 @@ function updateManageUser() {
         }
     })
 }
+
