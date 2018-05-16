@@ -33,10 +33,10 @@
                 <h2 class="h5">机构分类管理</h2>
                 <span class="line"></span>
             </div>
-            <div class="user-list">
                 <span style="font-size: 16px;margin-left: 50px;">分类管理</span>
-                <a href="##" class="btn btn-mb btn-primary addFirstBtn" style="float: right;">添加一级分类</a>
-                <table class="table table-center" id="tableList">
+                <a href="javascript:void(0);"  class="btn btn-mb btn-primary addFirstBtn" style="float: right;">添加一级分类</a>
+            <div class="user-list">
+                 <table class="table table-center" id="tableList">
                     <tr data-buy="true">
                         <th width="3%">序号</th>
                         <th width="5%">一级分类</th>
@@ -44,24 +44,7 @@
                         <th width="5%">启用状态</th>
                         <th width="15%">操作</th>
                     </tr>
-                    <tr data-buy="false">
-                        <td>1</td>
-                        <td>美术培训</td>
-                        <td>
-                            <a href="##" class="btn btn-default btn-xs detailSeconPopupBtn">绘画</a>
-                            <a href="##" class="btn btn-default btn-xs detailSeconPopupBtn">书法</a>
-                        </td>
-                        <td>已启用</td>
-                        <td>
-                            <a href="##" class="detailFirstPopupBtn">详情</a>|
-                            <a href="##" class="addSeconPopupBtn">添加二级分类</a>|
-                            <a href="##">禁用</a>
-                        </td>
-                    </tr>
                 </table>
-                <div class="pages pagination">
-
-                </div>
             </div>
         </div>
     </div>
@@ -73,24 +56,24 @@
     <!--  ajax加载中div结束 -->
     <%--添加一级分类    --%>
     <div class="addType addFirstPopup">
-        <h5>添加一级分类</h5>
+        <h5 id="tittle">添加一级分类</h5>
         <div style="margin-top: 10px;">
             <span>分类名称:</span>
-            <input type="text" style="width: 260px;height: 20px;">
+            <input type="text" style="width: 260px;height: 20px;" maxlength="5" id="insCatName">
         </div>
         <div>
             <span>分类图标:</span>
             <img src="../../../images/institution/1.jpg" alt="">
             <br/>
-            <a href="##" class="btnFile">更改图标<input type="file"></a>
+            <a href="javascript:void(0);" class="btnFile">更改图标<input type="file"></a>
         </div>
         <div class="addTypeBtn">
-            <a href="##" class="btn btn-primary btn-xs closeAddType">取消</a>
-            <a href="##" class="btn btn-primary btn-xs closeAddType">确认添加</a>
+            <a href="javascript:void(0);" class="btn btn-primary btn-xs closeAddType">取消</a>
+            <a href="javascript:void(0);" class="btn btn-primary btn-xs" id="addConfirm">确认添加</a>
         </div>
     </div>
     <%--一级分类详情--%>
-    <div class="addType detailFirstPopup">
+    <%--<div class="addType detailFirstPopup">
             <h5>一级分类详情</h5>
             <div style="margin-top: 10px;">
                 <span>分类名称:</span>
@@ -106,9 +89,9 @@
                 <a href="##" class="btn btn-primary btn-xs closeAddType">取消</a>
                 <a href="##" class="btn btn-primary btn-xs closeAddType">确认添加</a>
             </div>
-        </div>
+        </div>--%>
     <%--添加二级分类--%>
-    <div class="addType addSeconPopup">
+    <%--<div class="addType addSeconPopup">
             <h5>添加二级分类</h5>
             <div style="margin-top: 10px;">
                 <span>分类名称:</span>
@@ -124,9 +107,9 @@
                 <a href="##" class="btn btn-primary btn-xs closeAddType">取消</a>
                 <a href="##" class="btn btn-primary btn-xs closeAddType">确认添加</a>
             </div>
-        </div>
+        </div>--%>
     <%--二级分类详情--%>
-    <div class="addType detailSeconPopup">
+   <%-- <div class="addType detailSeconPopup">
             <h5>二级分类详情</h5>
             <div style="margin-top: 10px;">
                 <span>分类名称:</span>
@@ -142,7 +125,7 @@
                 <a href="##" class="btn btn-primary btn-xs closeAddType">取消</a>
                 <a href="##" class="btn btn-primary btn-xs closeAddType">确认添加</a>
             </div>
-        </div>
+        </div>--%>
 
 
 
@@ -152,7 +135,6 @@
     <script type="text/javascript" src="<%=rootPath %>/plugins/jquery-validation/jquery.validate.js"></script>
     <script type="text/javascript" src="<%=rootPath%>/javascripts/common/DateUtils.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
-
     <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/classification.js"></script>
 
 </body>
