@@ -20,4 +20,10 @@ public interface MerchantEntryService {
      * @param merchantEntryVo
      */
     void updateMerchanrEntry(MerchantEntryVo merchantEntryVo);
+
+    /**
+     * 总申请量
+     * @return
+     */
+    Integer queryCount();
 }

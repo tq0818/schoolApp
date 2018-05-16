@@ -718,24 +718,46 @@ function addInsInfo() {
             break;
         }
     }
-    $.ajax({
-        url:rootPath+"/InsInfoBase/addIns",
-        type:"post",
-        data:{
-            "name":name,
-            "province":province,
-            "city":city,
-            "area":area,
-            "address":address,
-            "userName":userName,
-            "sysLabel":labelName,
-            "mobile":mobile,
-            "isChains":org
-        },
-        success:function(data){
-            findInsDate(1);
-        }
-    })
+    if(userName != null || userName != ''){
+        $.ajax({
+            url:rootPath+"/register/insCheckUserName",
+            type:"post",
+            data:{
+                "userName":userName
+            },
+            success:function(data){
+                console.log(data);
+                if(data =='true'){
+                    $.ajax({
+                        url:rootPath+"/InsInfoBase/addIns",
+                        type:"post",
+                        data:{
+                            "name":name,
+                            "province":province,
+                            "city":city,
+                            "area":area,
+                            "address":address,
+                            "userName":userName,
+                            "sysLabel":labelName,
+                            "mobile":mobile,
+                            "isChains":org
+                        },
+                        success:function(data){
+                            findInsDate(1);
+                        }
+                    })
+                }else if(data =='用户名已经被注册'){
+                    alert('用户名已经被注册');
+                }else if('只能以字母开头并由数字、字母或下划线组成'){
+                    alert('只能以字母开头并由数字、字母或下划线组成');
+                }else{
+                    alert('用户名不正确');
+                }
+
+            }
+        })
+    }
+
 
 }
 
@@ -753,7 +775,7 @@ function cureatManageUser() {
         success:function(data){
             console.log(data);
             if(data =='true'){
-                /*$.ajax({
+                $.ajax({
                     url:rootPath+"/InsInfoBase/cureatManageUser",
                     type:"post",
                     data:{
@@ -763,7 +785,7 @@ function cureatManageUser() {
                     success:function(data){
                         findInsDate(curPage);
                     }
-                })*/
+                })
             }else if(data =='用户名已经被注册'){
                 alert('用户名已经被注册');
                 $("#manageUser").val("");
