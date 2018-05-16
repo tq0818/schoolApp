@@ -2,7 +2,7 @@
 .merchant{float: right;font-size: 16px;color: #333;}
 .merchant span{color: #fd3939;}
 .marginTop10{margin-top: 10px;}
-.addingMechanism{width: 590px;height: 540px;padding: 0 25px;position: fixed;background: #fff;left: 50%;
+.addingMechanism{width: 590px;height: 590px;padding: 0 25px;position: fixed;background: #fff;left: 50%;
 top: 50%;margin-left: -295px;margin-top: -270px;display: none;overflow-y: auto;}
 .addingMechanism h5{text-align: center;height: 36px;line-height: 36px;}
 .addingMechanism span{font-size: 14px;color: #939393;}

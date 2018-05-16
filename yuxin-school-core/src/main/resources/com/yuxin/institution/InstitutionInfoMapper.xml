@@ -131,7 +131,7 @@
         <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(ii.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
         <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(ii.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
         GROUP BY  ii.id
-        order by ii.is_shelves,ii.create_time desc
+        order by ii.is_shelves desc,ii.create_time desc
         limit #{page},#{pageSize}
     </select>
 

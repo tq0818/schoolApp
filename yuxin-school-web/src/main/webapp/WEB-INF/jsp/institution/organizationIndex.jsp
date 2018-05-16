@@ -37,15 +37,6 @@
             <form method="post" id="searchForm" class="userVideoListNew">
                     <div>
                         <span>区域筛选</span>
-                        <%--<select name="" id="a">
-                            <option value="">请选择省份</option>
-                        </select>
-                        <select name="" id="b">
-                            <option value="">请选择市</option>
-                        </select>
-                        <select name="" id="c">
-                            <option value="">请选择区</option>
-                        </select>--%>
                         <select name="eduArea" id="eduArea" onchange="queryRiseSchoolDict(1)">
                             <option value="">请选择省份</option>
                         </select>
@@ -198,7 +189,7 @@
         <h5>添加机构</h5>
         <div style="margin-top: 0;">
             <span class="mechanismName">机构名称：</span>
-            <input type="text" style="width: 460px;" maxlength="20" id="name">
+            <input type="text" style="width: 460px;" maxlength="20" id="name" onblur="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))">
         </div>
         <div id="orgType">
             <div>
@@ -245,34 +236,34 @@
             <span style="float: left;">联系电话：</span>
             <div style="display: inline-block" id="listMachine">
                 <div>
-                    <input type="text" placeholder="区号" style="width: 30px;">-
-                    <input type="text" placeholder="请输入座机号">
+                    <input type="text" placeholder="区号" style="width: 30px;" onkeyup="value=value.replace(/[^\d]/g,'')">-
+                    <input type="text" placeholder="请输入座机号" class="telephone" onkeyup="value=value.replace(/[^\d]/g,'')">
                     <span class="iconBtn addMachine">+</span>
                 </div>
-                <div>
-                    <input type="text" placeholder="区号" style="width: 30px;">-
-                    <input type="text" placeholder="请输入座机号">
-                    <span class="iconBtn deleteMachine">-</span>
-                </div>
+                <%--<div>--%>
+                    <%--<input type="text" placeholder="区号" style="width: 30px;">---%>
+                    <%--<input type="text" placeholder="请输入座机号">--%>
+                    <%--<span class="iconBtn deleteMachine">-</span>--%>
+                <%--</div>--%>
             </div>
             <div id="listPhone">
                 <div>
-                    <input type="text"  placeholder="请输入手机号">
+                    <input type="text"  placeholder="请输入手机号" maxlength="11" class="phoneNum" onkeyup="value=value.replace(/[^\d]/g,'')">
                     <span class="iconBtn addPhone" >+</span>
                 </div>
-                <div>
-                    <input type="text" placeholder="请输入手机号">
-                    <span class="iconBtn deletePhone" >-</span>
-                </div>
+                <%--<div>--%>
+                    <%--<input type="text" placeholder="请输入手机号">--%>
+                    <%--<span class="iconBtn deletePhone" >-</span>--%>
+                <%--</div>--%>
             </div>
 
         </div>
         <div>
             <span>系统标签：</span>
-            <span href="##" class="systemBtn">
-                <input class="systemLabel" value="你的名字么" maxlength="5">
-                <i class="icon iconfont deleteBtn">&#xe610;</i>
-            </span>
+            <%--<span href="##" class="systemBtn">--%>
+                <%--<input class="systemLabel" value="你的名字么" maxlength="5">--%>
+                <%--<i class="icon iconfont deleteBtn">&#xe610;</i>--%>
+            <%--</span>--%>
             <%--<span href="##" class="systemBtn">
                 <input class="systemLabel" value="sb">
                 <i class="icon iconfont deleteBtn">&#xe610;</i>
@@ -286,7 +277,7 @@
         </div>
         <div class="orgBtn">
             <a href="##" class="btn btn-primary btn-mb closeMechanism">取消</a>
-            <a href="##" class="btn btn-primary btn-mb closeMechanism addMechanism">确认添加</a>
+            <a href="##" class="btn btn-primary btn-mb addMechanism">确认添加</a>
         </div>
     </div>
     <%--账号管理弹窗    --%>
