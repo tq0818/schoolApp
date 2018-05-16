@@ -7,7 +7,11 @@ import com.yuxin.wx.institution.mapper.MerchantEntryMapper;
 import com.yuxin.wx.model.institution.MerchantEntryVo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
+@Transactional
 public class MerchantEntryServiceImpl extends BaseServiceImpl implements MerchantEntryService {
     @Autowired
     private MerchantEntryMapper merchantEntryMapper;
@@ -26,4 +30,11 @@ public class MerchantEntryServiceImpl extends BaseServiceImpl implements Merchan
 	public void updateMerchanrEntry(MerchantEntryVo merchantEntryVo) {
 		merchantEntryMapper.updateMerchanrEntry(merchantEntryVo);
 	}
+
+	@Override
+	public Integer queryCount() {
+		return merchantEntryMapper.queryCount();
+	}
+
+
 }

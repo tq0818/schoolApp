@@ -245,5 +245,15 @@ public class VideoCourseCommentServiceImpl extends BaseServiceImpl implements IV
 			Integer count=videoCourseCommentMapper.commentCount(teacherCommentVo);
 			PageFinder<TeacherCommentVo> pageFinder= new PageFinder<TeacherCommentVo>(teacherCommentVo.getPage(), teacherCommentVo.getPageSize(), count, teahcerCommentList);	
 		return pageFinder;
-	};
+	}
+
+	@Override
+	public Integer queryVideoComCount() {
+		return videoCourseCommentMapper.queryVideoComCount();
+	}
+
+	;
+
+
+
 }

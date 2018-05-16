@@ -161,5 +161,9 @@
 		limit 1
 	</select>
 	<!-- 其他自定义SQL -->
+
+	<select id="queryVideoComCount" resultType="Integer">
+		select count(id) from video_course_comment where is_check = 0
+	</select>
 	
 </mapper>

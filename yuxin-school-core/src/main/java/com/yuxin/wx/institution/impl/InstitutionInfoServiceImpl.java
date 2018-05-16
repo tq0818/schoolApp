@@ -44,11 +44,10 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
                 users.setId(null);
                 users.setUsername(institutionInfoVo.getUserName());
                 users.setPassword(institutionInfoVo.getPwd());
-                users.setUserType("3");
+                users.setUserType("INSTITUTION_MANAGE");
                 usersMapper.insertA(users);
             }
-            String labels = institutionInfoVo.getSysLabel().substring(0,institutionInfoVo.getSysLabel().lastIndexOf(","));
-            String[] labelArr = labels.split(",");//标签数组
+
             institutionInfoVo.setIsChain(Integer.parseInt(institutionInfoVo.getIsChains()));
             //插入机构表
             Date date = new Date();
@@ -82,17 +81,21 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
                 institutionRelationMapper.insert(institutionRelationVo);
             }
 
-            //插入机构标签表
-            for(int i =0;i<labelArr.length;i++){
-                institutionLabelVo.setId(null);
-                institutionLabelVo.setCreateTime(date);
-                institutionLabelVo.setUpdateTime(date);
-                institutionLabelVo.setLabelType("0");
-                institutionLabelVo.setLabelName(labelArr[i]);
-                institutionLabelVo.setSourceFlag(0);
-                institutionLabelVo.setRelationId(institutionInfoVo.getId());//机构主键
+            if(null != institutionInfoVo.getSysLabel() && !"".equals(institutionInfoVo.getSysLabel())){
+                String labels = institutionInfoVo.getSysLabel().substring(0,institutionInfoVo.getSysLabel().lastIndexOf(","));
+                String[] labelArr = labels.split(",");//标签数组
+                //插入机构标签表
+                for(int i =0;i<labelArr.length;i++){
+                    institutionLabelVo.setId(null);
+                    institutionLabelVo.setCreateTime(date);
+                    institutionLabelVo.setUpdateTime(date);
+                    institutionLabelVo.setLabelType("0");
+                    institutionLabelVo.setLabelName(labelArr[i]);
+                    institutionLabelVo.setSourceFlag(0);
+                    institutionLabelVo.setRelationId(institutionInfoVo.getId());//机构主键
 
-                institutionLabelMapper.insert(institutionLabelVo);
+                    institutionLabelMapper.insert(institutionLabelVo);
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
