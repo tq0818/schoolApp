@@ -19,6 +19,10 @@ public class InstitutionCategoryVo extends BaseEntity{
     private Date updateTime;//修改时间
     private String secondCate;//二级分类组装
     private Integer sort;   //排序
+    /**
+     * 更新主键id
+     */
+    private String ids;
 
 
     private String firstcodeName;
@@ -26,6 +30,14 @@ public class InstitutionCategoryVo extends BaseEntity{
     private String oneLevelId;
     private String twoLevelId;
     private Integer insId;
+
+    public String getIds() {
+        return ids;
+    }
+
+    public void setIds(String ids) {
+        this.ids = ids;
+    }
 
     public String getFirstcodeName() {
         return firstcodeName;

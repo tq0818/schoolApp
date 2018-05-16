@@ -93,4 +93,10 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
      */
     List<InstitutionCategoryVo> queryInstitutionCategorysEnabled();
 
+    /**
+     * 查询分类总记录数
+     * @param params
+     * @return
+     */
+    int queryInstitutionCategorysCount(Map<String, Object> params);
 }

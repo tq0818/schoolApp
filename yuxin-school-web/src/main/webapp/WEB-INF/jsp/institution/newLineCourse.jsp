@@ -37,27 +37,31 @@
                     <div>
                         <span>课程封面:</span>
                         <div>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 150px;height: 100px;margin-left: 15px;">
+                            <span id="imgTop"></span>
+
+                            <input type="hidden" id="hidTop" />
                             <br/>
-                            <a href="##" class="addPic" style="margin-top: 5px;margin-bottom: 20px;margin-left: 210px;">
-                                添加图片
-                                <input type="file">
-                            </a>
+                            <form id="uploadForm" method="post" enctype="multipart/form-data" >
+                                <a href="##" class="addPic" style="margin-top: 5px;margin-bottom: 20px;margin-left: 210px;" onchange="fileChange()" >
+                                    添加图片
+                                    <input type="file" name="imgData" accept="image/jpg, image/jpeg,image/png,image/bmp">
+                                </a>
+                            </form>
                         </div>
                     </div>
                     <div  class="imgList">
                         <span>课程风采:</span>
-                        <ul style="display: inline-block;margin-left: 15px;">
-                            <li class="addImg mienShow" id="">
+                        <ul id="styleContainer" style="display: inline-block;margin-left: 15px;">
+                            <li class="addImg mienShow openPopup" id="">
                                 <i class="icon iconfont"></i>
                             </li>
                             <li>
-                                <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
+                                <span><img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto"></span>
+                                <input type="hidden" value="123456" />
                                 <span class="imgInfo">学校建筑内部图</span>
-                                <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>
                                 <div class="listBg">
                                     <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                    <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
+                                    <a href="javascript:void(0)" data-i="0"  class="btn btn-success alterBtn btn-sm openPopup">修改</a>
                                 </div>
                             </li>
                         </ul>
@@ -112,7 +116,32 @@
     </p>
 </div>
 <div class="loading-bg lp-units-loading-bg" style="display: none"></div>
-        <input id="underLineId" type="hidden" value="${underLineId}">
+<!-- 封面图片上传 -->
+<div class="elePic" id='cover' style="height: 500px;">
+            <h5>上传图片</h5>
+            <div>
+                <span id="coverReturn">
+
+                </span>
+                <input type="text" id="hidCoverTop" value="用来放置图片地址" />
+                <input type="text" id="hidCoverFid" value="用来放置id" />
+                <br/>
+                <form id="uploadFormCover" method="post" enctype="multipart/form-data" >
+                    <a href="##" class="addPic" style="margin-top: 5px;margin-bottom: 20px;margin-left: 210px;" onchange="fileChangeCover()" >
+                        添加图片
+                        <input type="file" name="imgData" accept="image/jpg, image/jpeg,image/png,image/bmp">
+                    </a>
+                </form>
+            </div>
+            <div class="eleBtn">
+                <a href="##" class="btn btn-primary closeElePicCancel">取消</a>
+                <a href="##" class="btn btn-primary  closeElePicCommit">保存</a>
+            </div>
+</div>
+
+
+
+<input id="underLineId" type="hidden" value="${underLineId}">
 <script src="<%=rootPath %>/javascripts/riseschool/ajaxfileuploadR.js"></script>
 <script src="<%=rootPath %>/javascripts/plus/jquery.units.js"></script>
 <script src="<%=rootPath %>/javascripts/institution/newLineCourse.js"></script>

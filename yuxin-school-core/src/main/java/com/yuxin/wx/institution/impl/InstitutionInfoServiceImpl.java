@@ -4,10 +4,14 @@ import com.google.common.io.ByteSource;
 import com.yuxin.wx.api.institution.InstitutionInfoService;
 import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.common.PageFinder;
+import com.yuxin.wx.institution.mapper.InstitutionCategoryManageMapper;
 import com.yuxin.wx.institution.mapper.InstitutionInfoMapper;
 import com.yuxin.wx.institution.mapper.InstitutionLabelMapper;
+import com.yuxin.wx.institution.mapper.InstitutionRelationMapper;
+import com.yuxin.wx.model.institution.InstitutionCategoryVo;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
 import com.yuxin.wx.model.institution.InstitutionLabelVo;
+import com.yuxin.wx.model.institution.InstitutionRelationVo;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.user.mapper.UsersMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +29,12 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
 
     @Autowired
     private InstitutionLabelMapper institutionLabelMapper;
+
     @Autowired
     private UsersMapper usersMapper;
+
+    @Autowired
+    private InstitutionRelationMapper institutionRelationMapper;
 
     @Override
     public void insert(InstitutionInfoVo institutionInfoVo) {
@@ -36,11 +44,10 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
                 users.setId(null);
                 users.setUsername(institutionInfoVo.getUserName());
                 users.setPassword(institutionInfoVo.getPwd());
-                users.setUserType("3");
+                users.setUserType("INSTITUTION_MANAGE");
                 usersMapper.insertA(users);
             }
-            String labels = institutionInfoVo.getSysLabel().substring(0,institutionInfoVo.getSysLabel().lastIndexOf(","));
-            String[] labelArr = labels.split(",");//标签数组
+
             institutionInfoVo.setIsChain(Integer.parseInt(institutionInfoVo.getIsChains()));
             //插入机构表
             Date date = new Date();
@@ -56,17 +63,39 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
             institutionInfoVo.setUserId(users.getId());
             institutionInfoMapper.insert(institutionInfoVo);
             InstitutionLabelVo institutionLabelVo = new InstitutionLabelVo();
-            for(int i =0;i<labelArr.length;i++){
-                institutionLabelVo.setId(null);
-                institutionLabelVo.setCreateTime(date);
-                institutionLabelVo.setUpdateTime(date);
-                institutionLabelVo.setLabelType("0");
-                institutionLabelVo.setLabelName(labelArr[i]);
-                institutionLabelVo.setSourceFlag(0);
-                institutionLabelVo.setRelationId(institutionInfoVo.getId());//机构主键
+            String [] catOne=null;
+            String [] catTwo=null;
+            if(null != institutionInfoVo.getOneLevelId() && !"".equals(institutionInfoVo.getOneLevelId())){
+                catOne = institutionInfoVo.getOneLevelId().split(",");
+            }
+            if(null != institutionInfoVo.getTwoLevelId() && !"".equals(institutionInfoVo.getTwoLevelId())){
+                catTwo = institutionInfoVo.getTwoLevelId().split(",");
+            }
 
-                //插入关系表
-                institutionLabelMapper.insert(institutionLabelVo);
+            //插入机构分类关系表
+            InstitutionRelationVo institutionRelationVo = new InstitutionRelationVo();
+            for(int i =0;i<catOne.length;i++){
+                institutionRelationVo.setInsId(institutionInfoVo.getId());
+                institutionRelationVo.setOneLevelId(Integer.parseInt(catOne[i]));
+                institutionRelationVo.setOneLevelId(Integer.parseInt(catTwo[i]));
+                institutionRelationMapper.insert(institutionRelationVo);
+            }
+
+            if(null != institutionInfoVo.getSysLabel() && !"".equals(institutionInfoVo.getSysLabel())){
+                String labels = institutionInfoVo.getSysLabel().substring(0,institutionInfoVo.getSysLabel().lastIndexOf(","));
+                String[] labelArr = labels.split(",");//标签数组
+                //插入机构标签表
+                for(int i =0;i<labelArr.length;i++){
+                    institutionLabelVo.setId(null);
+                    institutionLabelVo.setCreateTime(date);
+                    institutionLabelVo.setUpdateTime(date);
+                    institutionLabelVo.setLabelType("0");
+                    institutionLabelVo.setLabelName(labelArr[i]);
+                    institutionLabelVo.setSourceFlag(0);
+                    institutionLabelVo.setRelationId(institutionInfoVo.getId());//机构主键
+
+                    institutionLabelMapper.insert(institutionLabelVo);
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -96,14 +125,14 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
             if(insInfoVo.getPage() == 1){
                 insInfoVo.setPage(0);
             }else{
-                insInfoVo.setPage((insInfoVo.getPage()-1)*10);
+                insInfoVo.setPage((insInfoVo.getPage()-1)*insInfoVo.getPageSize());
             }
             List<InstitutionInfoVo> data = institutionInfoMapper.findInstitutionInfos(insInfoVo);
             for(int i = 0; i<data.size();i++){
                 data.get(i).setSort(i+1);
             }
             Integer rowCount = institutionInfoMapper.findInstitutionInfosCount(insInfoVo);
-            PageFinder<InstitutionInfoVo> pageFinder=new PageFinder<>(insInfoVo.getPage()/10 ,insInfoVo.getPageSize(),rowCount,data);
+            PageFinder<InstitutionInfoVo> pageFinder=new PageFinder<>(insInfoVo.getPage()/insInfoVo.getPageSize() ,insInfoVo.getPageSize(),rowCount,data);
             return pageFinder;
     }
 

@@ -25,14 +25,14 @@ public class CommentManageServiceImpl extends BaseServiceImpl implements Comment
         if(commentApp.getPage() == 1){
             commentApp.setPage(0);
         }else{
-            commentApp.setPage((commentApp.getPage()-1)*2);
+            commentApp.setPage((commentApp.getPage()-1)*10);
         }
-        commentApp.setPageSize(2);
+        commentApp.setPageSize(10);
 
         List<CommentApp> data = commentManageMapper.findInsComment(commentApp);
         Integer count = commentManageMapper.findInsCommentCount(commentApp);
 
-        PageFinder<CommentApp> pageFinder = new PageFinder<>(commentApp.getPage()/2,commentApp.getPageSize(),count,data);
+        PageFinder<CommentApp> pageFinder = new PageFinder<>(commentApp.getPage()/10,commentApp.getPageSize(),count,data);
 
         for(int i =0;i<pageFinder.getData().size();i++){
             pageFinder.getData().get(i).setCreateTimeText(format.format(pageFinder.getData().get(i).getCreateTime()));
@@ -49,12 +49,12 @@ public class CommentManageServiceImpl extends BaseServiceImpl implements Comment
         if(commentApp.getPage() == 1){
             commentApp.setPage(0);
         }else{
-            commentApp.setPage((commentApp.getPage()-1)*2);
+            commentApp.setPage((commentApp.getPage()-1)*10);
         }
-        commentApp.setPageSize(2);
+        commentApp.setPageSize(10);
         List<CommentApp> data = commentManageMapper.findInsClassComment(commentApp);
         Integer count = commentManageMapper.findInsCommentClassCount(commentApp);
-        PageFinder<CommentApp> pageFinder = new PageFinder<>(commentApp.getPage()/2,commentApp.getPageSize(),count,data);
+        PageFinder<CommentApp> pageFinder = new PageFinder<>(commentApp.getPage()/10,commentApp.getPageSize(),count,data);
         for(int i =0;i<pageFinder.getData().size();i++){
             pageFinder.getData().get(i).setCreateTimeText(format.format(pageFinder.getData().get(i).getCreateTime()));
             //设置分钟
@@ -67,4 +67,11 @@ public class CommentManageServiceImpl extends BaseServiceImpl implements Comment
     public void update(CommentApp commentApp) {
         commentManageMapper.update(commentApp);
     }
+
+    @Override
+    public Integer commentCuont() {
+        return commentManageMapper.commentCuont();
+    }
+
+
 }

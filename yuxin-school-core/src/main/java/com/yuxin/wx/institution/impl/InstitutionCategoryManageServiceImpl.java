@@ -155,4 +155,9 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
     public List<InstitutionCategoryVo> queryInstitutionCategorysEnabled() {
         return institutionManageMapper.queryInstitutionCategorysEnabled();
     }
+
+    @Override
+    public int queryInstitutionCategorysCount(Map<String, Object> params) {
+        return institutionManageMapper.queryInstitutionCategorysCount(params);
+    }
 }

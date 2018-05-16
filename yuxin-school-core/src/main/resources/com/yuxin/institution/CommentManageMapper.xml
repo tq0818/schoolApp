@@ -81,4 +81,8 @@
         <if test="relationId != null and relationId != ''">and c.relation_id = #{relationId}</if>
         <if test="isCheck != null  ">and c.is_check = #{isCheck}</if>
     </select>
+
+    <select id="commentCuont" resultType="Integer">
+        select count(id) from comment where is_check = 0
+    </select>
 </mapper>

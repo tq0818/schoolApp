@@ -247,6 +247,12 @@ public class UsersServiceImpl extends BaseServiceImpl implements IUsersService {
 		Users user=usersMapper.queryByName(userName);
 		return user;
 	}
+
+	@Override
+	public Users queryInsUserByName(String userName) {
+		Users user=usersMapper.queryInsByName(userName);
+		return user;
+	}
 	@Override
 	public Boolean checkUserValid(Users user){
 	    Integer isValid=usersMapper.checkUser(user);

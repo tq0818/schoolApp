@@ -1,14 +1,53 @@
-var zTree = null;
+var zTree; //用于保存创建的树节点
 
 $(function () {
+
+
+
     getTreeData();
+
 
     $('.commit').click(function(){
         var nodeArr = new Array();
+        var nodes = zTree.getNodes() ;
+        for(var i in nodes){
+            nodeArr.push({id:nodes[i].id , checked:nodes[i].checked == true ? 1 : 0})
+            if(nodes[i].children != undefined){
+                var childList = nodes[i].children;
+                for(var j in childList){
+                    nodeArr.push({id:childList[j].id , checked:childList[j].checked == true ? 1 : 0})
+                }
+            }
+        }
 
-        console.log($.fn.zTree.getNodes());
 
-    });
+
+        $.ajax({
+            url: rootPath+'/institutionRecommend/updateTree',
+            data: {
+                tree:JSON.stringify(nodeArr)
+            },
+            type: 'post',
+            beforeSend: function () {
+                $(".loading").show();
+                $(".loading-bg").show();
+            },
+            complete:function(){
+                $(".loading").hide();
+                $(".loading-bg").hide();
+            },
+            success: function (json) {
+                if(json.status == 1){
+                    $.msg("操作成功");
+                    getTreeData();
+                }
+            }
+        });
+
+
+    })
+
+
 
 });
 
@@ -43,7 +82,7 @@ function getTreeData(){
 
             createTree(oneArr, "#ztree"); //创建
 
-            $("#myButton").click(function() {
+           /* $("#myButton").click(function() {
                 var treeObj = $.fn.zTree.getZTreeObj("ztree");
                 var nodes = treeObj.getCheckedNodes(true);
                 if(0 === nodes.length) {
@@ -56,7 +95,7 @@ function getTreeData(){
                 }
                 alert(dataNodes); //获取选中节点的值
             });
-
+*/
 
         }
     });
@@ -74,7 +113,7 @@ function findAndAddChildren(oneArr , child){
 
 
 function createTree(url, treeId) {
-    var zTree; //用于保存创建的树节点
+
     var setting = { //设置
         check: {
             enable: true
@@ -96,7 +135,3 @@ function createTree(url, treeId) {
     zTree = $.fn.zTree.init($(treeId), setting, url); //创建树
 
 }
-
-
-
-

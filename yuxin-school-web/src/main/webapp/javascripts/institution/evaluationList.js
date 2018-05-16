@@ -1,7 +1,7 @@
 var reviewStatus = "";
 $(function () {
     //    左侧active切换
-    $selectSubMenus('evaluate');
+    $selectSubMenu('review');
     //tab切换
     $('.evaTitle').click(function () {
         $(this).addClass('active');
@@ -66,34 +66,34 @@ $(function () {
 
     //机构评价和课程评价tab切换
     $('.evaTitle').click(function () {
-            if ($(this).html() == '机构评价') {
-                $('.evaScreen').show();
-                $('.curriculum').hide();
-            } else {
-                $('.evaScreen').hide();
-                $('.curriculum').show();
-            }
+        if ($(this).html() == '机构评价') {
+            $('.evaScreen').show();
+            $('.curriculum').hide();
+        } else {
+            $('.evaScreen').hide();
+            $('.curriculum').show();
+        }
 
-            //课程评价
-            initInsClassComment();
-        });
+        //课程评价
+        initInsClassComment();
+    });
 
     //删除按钮弹窗
     $('body').on('click', '.delete', function () {
-            var commentId = $(this).attr("data-commentId");
-            $.confirm("您是否确定删除该条评论？", function (data) {
+        var commentId = $(this).attr("data-commentId");
+        $.confirm("您是否确定删除该条评论？", function (data) {
 
-                if (data) {
-                    delIns(commentId);
-                }
-            });
+            if (data) {
+                delIns(commentId);
+            }
         });
+    });
 
     //点击审核
     $('body').on('click', '.evaluationIns', function () {
-            var commentId = $(this).attr("data-commentId");
-            evaluationIns(commentId);
-        });
+        var commentId = $(this).attr("data-commentId");
+        evaluationIns(commentId);
+    });
 
 
 
@@ -128,7 +128,7 @@ $(function () {
         $('.evaTitle').eq(1).addClass('active');
     }
 
-    });
+});
 
 
 
@@ -141,13 +141,10 @@ function initInsComment(page=1,reviewStatus='') {
     console.log('机构评价');
     currPage = page;
 
-    var insId = $("#insId").val();//机构id
-
     $.ajax({
         url:rootPath+"/comment/findInsComment",
         type:"post",
         data:{
-            "relationId":insId,
             "isCheck":reviewStatus,
             "page":page
         },
@@ -164,9 +161,7 @@ function initInsComment(page=1,reviewStatus='') {
             $.each(jsonData.data,function(i,item){
                 var score=item.score?item.score:0;
                 var check = item.isCheck;
-                /*(comee.comment ? unescape(comee.comment.replace(/\\u/g, '%u')) : "") +*/
-                var com = (item.content ? unescape(item.content.replace(/\\u/g, '%u')) : "");
-                console.log(com);
+                var com = item.content ? unescape(item.content.replace(/\\u/g, '%u')) : "";
                 let  _check = "";
                 if(check==0){
                     _check = '<button  class="evaluationIns" id="evaluation" data-commentId="'+item.id+'">审核通过</button>';
@@ -210,18 +205,18 @@ function initInsComment(page=1,reviewStatus='') {
                 }
                 html+='<li class="Y_clear">'+
                     '<div class="headpic">'+
-                        '<img src="'+(item.headPicMax ? item.headPicMax :  rootPath + "/images/user/head_top.png")+'" alt="" width="50" height="50">'+
+                    '<img src="'+(item.headPicMax ? item.headPicMax :  rootPath + "/images/user/head_top.png")+'" alt="" width="50" height="50">'+
                     '</div>'+
                     ' <div class="Y_backcomment_content">'+
-                        '<div class="word Y_clear">'+
-                            '<span>'+item.nickName+'</span>'+
-                            '<span class="wordcontent" style="word-break:break-all">'+com+'</span>'+
-                        '</div>'+
-                        '<p class="Y_time Y_mt10">'+
-                            '<span>'+item.createTimeText+' </span>'+
-                            '<span>'+item.createTimeText2+' </span>'+
-                            '<span>评分:'+ scorehtml+'</span>'+
-                        '</p>'+
+                    '<div class="word Y_clear">'+
+                    '<span>'+item.nickName+'：'+'</span>'+
+                    '<span class="wordcontent" style="word-break:break-all">'+com+'</span>'+
+                    '</div>'+
+                    '<p class="Y_time Y_mt10">'+
+                    '<span>'+item.createTimeText+' </span>'+
+                    '<span>'+item.createTimeText2+' </span>'+
+                    '<span>评分:'+ scorehtml+'</span>'+
+                    '</p>'+
                     '</div>'+
                     _check+
                     '<button class="delete " id="delete" data-commentId="'+item.id+'">删除</button>'+
@@ -262,13 +257,11 @@ function initInsClassComment(page=1,reviewStatus='',relationId='') {
     console.log('课程评价');
     currPageClass = page;
 
-    var insId = $("#insId").val();//机构id
 
     $.ajax({
         url:rootPath+"/comment/findInsClassComment",
         type:"post",
         data:{
-            "insId":insId,
             "relationId":relationId,
             "isCheck":reviewStatus,
             "page":page
@@ -286,7 +279,6 @@ function initInsClassComment(page=1,reviewStatus='',relationId='') {
             $.each(jsonData.data,function(i,item){
                 var score=item.score?item.score:0;
                 var com = (item.content ? unescape(item.content.replace(/\\u/g, '%u')) : "");
-                console.log(com);
                 if(score==1){
                     scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
                         '<i class="iconfont">&#xe65e;</i>'+

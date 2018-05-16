@@ -33,9 +33,25 @@
     </resultMap>
 
     <!--查询所有1.2级分类-->
-    <select id="queryInstitutionCategorys" resultType="com.yuxin.wx.model.institution.InstitutionCategoryVo" parameterType="map">
+    <select id="queryInstitutionCategorys" resultMap="queryCateData" parameterType="map">
         select
           ic1.id,
+          ic1.code_name ,
+          ic1.is_enable ,
+          GROUP_CONCAT(CONCAT(ic2.id,'@',ic2.code_name) order by ic2.id) as secondCate
+        from institution_category ic1
+        left join institution_category ic2 on ic1.id=ic2.parent_id
+        where ic1.code_level=1
+        GROUP BY ic1.id
+        ORDER BY ic1.is_enable desc,ic1.create_time desc
+        limit #{search.firstIndex},#{search.pageSize}
+    </select>
+
+    <!--查询所有1.2级分类 总记录-->
+    <select id="queryInstitutionCategorysCount" resultType="Integer" parameterType="map">
+    select count(1) from (
+     select
+           ic1.id,
           ic1.code_name ,
           ic1.is_enable ,
           GROUP_CONCAT(CONCAT(ic2.id,'@',ic2.code_name)) as secondCate
@@ -43,11 +59,12 @@
         left join institution_category ic2 on ic1.id=ic2.parent_id
         where ic1.code_level=1
         GROUP BY ic1.id
-        ORDER BY ic1.id
+    )t
+
     </select>
 
     <!--根据条件查询分类-->
-    <select id="queryInstitutionByCondition" resultType="com.yuxin.wx.model.institution.InstitutionCategoryVo" parameterType="map">
+    <select id="queryInstitutionCategoryByCondition" resultMap="queryCateData" parameterType="map">
        select
         id,
         code_name,
@@ -61,20 +78,20 @@
         update institution_category
         <trim prefix="set" suffixOverrides=",">
             <if test="codeName != null and codeName != ''">code_name = #{codeName},</if>
-            <if test="isEnable != null and isEnable != ''">is_enable = #{isEnable},</if>
+            <if test="isEnable != null">is_enable = #{isEnable},</if>
             <if test="imgUrl != null and imgUrl != ''">img_url = #{imgUrl},</if>
             <if test="firstRecommend != null and firstRecommend != ''">first_recommend = #{firstRecommend},</if>
             <if test="secondRecommend != null and secondRecommend != ''">second_recommend = #{secondRecommend},</if>
             <if test="thirdRecommend != null and thirdRecommend != ''">third_recommend = #{thirdRecommend},</if>
             update_time=now(),
         </trim>
-        <where>id = #{id}</where>
+        <where>id in (${ids})</where>
     </update>
     <!--保存分类信息-->
     <insert id="insert" parameterType="com.yuxin.wx.model.institution.InstitutionCategoryVo">
         INSERT INTO institution_category
-        (code_name,code_level,code_type,img_url,is_enable, parent_id,create_time, update_time)
-        VALUES (#{codeName},#{codeLevel},#{codeType}, #{imgUrl}, 0, #{parentId}, now(),now())
+        (code_name,code_level,code_type,img_url,is_enable, parent_id,create_time, update_time,sort)
+        VALUES (#{codeName},#{codeLevel},#{codeType}, #{imgUrl}, #{isEnable}, #{parentId}, now(),now(),#{sort})
     </insert>
 
     <select id="findFistCategorys" resultMap="queryCateData"  parameterType="map">
@@ -114,7 +131,7 @@
           COUNT(id)
         FROM
         `institution_category`
-        WHERE `code_type` = 0 and is_enable = 1
+        WHERE `code_type` = 0 and is_enable = 1 and `third_recommend` = 1
 
     </select>
 
@@ -182,7 +199,8 @@
           `code_level`,
           `code_type`,
           `parent_id`,
-          `third_recommend`
+          `third_recommend`,
+          `sort`
         FROM
           `institution_category`
         WHERE  `is_enable` = 1

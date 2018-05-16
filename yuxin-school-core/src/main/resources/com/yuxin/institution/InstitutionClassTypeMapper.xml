@@ -43,6 +43,10 @@
 		UPDATE `ins_class_type_relation` SET `sort` = `sort` + 1 WHERE  `is_link` = 1 AND `ins_id` = #{insId}
 	</update>
 
+	<select id="getCountOfOnlineClassyCidInsId" parameterType="map" resultType="int">
+		SELECT COUNT(id) FROM `ins_class_type_relation` WHERE `ins_id` = #{insId} AND `class_type_id` = #{cid} AND `is_online` = 1
+	</select>
+
 	<!-- 新增一个关联课程 -->
 	<update id="addRelationLink" parameterType="Integer" >
 		UPDATE `ins_class_type_relation` SET `is_link` = 1 ,sort = 1 WHERE `id` = #{rid}
@@ -210,7 +214,8 @@
 		JOIN ins_class_type_relation ic on ic.class_type_id = ct.id
 		JOIN institution_info ii on ii.id = ic.ins_id
 		JOIN users_front u on c.user_id = u.id
-		where c.del_flag = 0 and c.type =1 and ii.id = #{id}
+		where c.del_flag = 0 and c.type =1
+		<if test="id != null and id !=''"> and ii.id = #{id} </if>
 		GROUP BY ct.id
         ORDER BY ct.create_time desc
 

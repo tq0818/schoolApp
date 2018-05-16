@@ -401,6 +401,10 @@
 		where username = #{userName}  limit 1
 	</select>
 
+	<select id="queryInsByName" resultMap="usersResultMap" parameterType="String" >
+		select * from users where username = #{userName}
+	</select>
+
 	<select id="queryAll" resultMap="usersResultMap">
 		select <include refid="table_columns" />
 		from users

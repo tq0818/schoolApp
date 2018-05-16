@@ -30,14 +30,13 @@
             margin: 0 10px;
         }
     </style>
-    <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/institution/evaluation.css">
+    <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/institution/evaluationList.css">
 </head>
 <body>
 <!-- 二级导航 -->
 <jsp:include page="/WEB-INF/jsp/menu/menu_institution.jsp"></jsp:include>
 <div class="u-wrap admin overflow schoolDetails">
-    <jsp:include page="/WEB-INF/jsp/menu/menu_institutionLeft.jsp"></jsp:include>
-    <input type="hidden" id="insId" value="${insId}">
+    <%--<jsp:include page="/WEB-INF/jsp/menu/menu_institutionLeft.jsp"></jsp:include>--%>
     <div class="right-side">
         <div class="mainbackground nopadding">
             <div class="heading">
@@ -96,7 +95,7 @@
 <script src="<%=rootPath %>/javascripts/riseschool/ajaxfileuploadR.js"></script>
 <script src="<%=rootPath %>/javascripts/riseschool/cutPic.js"></script>
 <script src="<%=rootPath %>/javascripts/plus/jquery.units.js"></script>
-<script src="<%=rootPath %>/javascripts/institution/evaluation.js"></script>
+<script src="<%=rootPath %>/javascripts/institution/evaluationList.js"></script>
 
 
 

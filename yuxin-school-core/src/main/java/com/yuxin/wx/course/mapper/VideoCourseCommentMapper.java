@@ -16,6 +16,8 @@ public interface VideoCourseCommentMapper extends BaseMapper<VideoCourseComment>
 	List<TeacherCommentVo> findByTeacherId(TeacherCommentVo teacherCommentVo);
 
 	Integer commentCount(TeacherCommentVo teacherCommentVo);
+
+	Integer queryVideoComCount();
 	
 	
 }
