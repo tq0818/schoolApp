@@ -37,6 +37,9 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
     @Override
     public void updateInstitutionCategoryInfo(InstitutionCategoryVo insCatInfo) {
         institutionManageMapper.update(insCatInfo);
+        //获取禁用ids最小排序
+        Integer minSort = institutionManageMapper.queryMinSortByIds(insCatInfo);
+        //TODO 更新排序
     }
 
     @Override

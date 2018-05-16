@@ -99,4 +99,11 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
      * @return
      */
     int queryInstitutionCategorysCount(Map<String, Object> params);
+
+    /**
+     * 获取最小排序
+     * @param insCatInfo
+     * @return
+     */
+    Integer queryMinSortByIds(InstitutionCategoryVo insCatInfo);
 }
