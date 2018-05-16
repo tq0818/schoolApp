@@ -27,12 +27,10 @@ import org.springframework.web.multipart.MultipartRequest;
 import com.alibaba.fastjson.JSONObject;
 import com.yuxin.wx.api.riseschool.InstitutionStyleService;
 import com.yuxin.wx.model.institution.InstitutionStyle;
-import com.yuxin.wx.model.riseschool.RiseSchoolStyleVo;
 import com.yuxin.wx.util.ImageUtils;
 import com.yuxin.wx.utils.FileUtil;
 import com.yuxin.wx.utils.PropertiesUtil;
 import com.yuxin.wx.utils.WebUtils;
-import com.yuxin.wx.vo.company.CompanyPicsVo;
 /**
  * 机构风采
  * @author hello
@@ -50,7 +48,7 @@ public class InstitutionStyleController {
     public String elegantDemeanor(HttpServletRequest request,HttpServletResponse response,Model model,InstitutionStyle institutionStyle){
 		//TODO 这里先做一个测试
 		Integer page = institutionStyle.getPage();
-		institutionStyle.setRelationId(3);
+		institutionStyle.setRelationId(1);
 		institutionStyle.setPageSize(9);
 		if (page != null && page.intValue() == 0) {
 			institutionStyle.setPage(1);
@@ -66,15 +64,25 @@ public class InstitutionStyleController {
 		institutionStyle.setType(0);
 		institutionStyle.setPage(0);
 		List<InstitutionStyle> coverInfoList = institutionStyleServiceImpl.queryInstitutionStyle(institutionStyle);
+		if (coverInfoList != null && coverInfoList.size() >0) {
+			for (InstitutionStyle institutionStyle2 : coverInfoList) {
+				institutionStyle2.setImgUrl("http://"+propertiesUtil.getProjectImageUrl()+"/"+institutionStyle2.getImgUrl());
+			}
+		}
 		//查询视频
 		institutionStyle.setType(1);
 		List<InstitutionStyle> videoInfoList = institutionStyleServiceImpl.queryInstitutionStyle(institutionStyle);
+		if (videoInfoList != null && videoInfoList.size() >0) {
+			for (InstitutionStyle institutionStyle2 : videoInfoList) {
+				institutionStyle2.setImgUrl("http://"+propertiesUtil.getProjectImageUrl()+"/"+institutionStyle2.getImgUrl());
+			}
+		}
 		model.addAttribute("coverInfo",coverInfoList.size() > 0 ?coverInfoList.get(0):new InstitutionStyle());
 		model.addAttribute("videoInfo",videoInfoList.size() > 0 ?videoInfoList.get(0):new InstitutionStyle());
 //		model.addAttribute("result",styleInfoList);
 		model.addAttribute("pageNo",page);
         model.addAttribute("rowCount",count);
-        model.addAttribute("institutionId", institutionStyle.getId());
+        model.addAttribute("institutionId", institutionStyle.getRelationId());
 		return "/institution/elegantDemeanor";
     }
 	
@@ -83,7 +91,7 @@ public class InstitutionStyleController {
     public String queryInsStyle(HttpServletRequest request,HttpServletResponse response,Model model,InstitutionStyle institutionStyle){
 		//TODO 这里先做一个测试
 		Integer page = institutionStyle.getPage();
-		institutionStyle.setRelationId(3);
+		institutionStyle.setRelationId(1);
 		institutionStyle.setPageSize(9);
 		if (page != null && page.intValue() == 0) {
 			institutionStyle.setPage(1);
@@ -93,12 +101,24 @@ public class InstitutionStyleController {
 		institutionStyle.setSourceFlag(0);
 		institutionStyle.setType(2);
 		List<InstitutionStyle> styleInfoList = institutionStyleServiceImpl.queryInstitutionStyle(institutionStyle);
+		if (styleInfoList == null || styleInfoList.size() ==0) {
+			if (page.intValue() - 1 > 0) {
+				page = page.intValue() - 1;
+				institutionStyle.setPage(page);
+				styleInfoList = institutionStyleServiceImpl.queryInstitutionStyle(institutionStyle);
+			}
+		}
+		if (styleInfoList != null && styleInfoList.size() > 0) {
+			for (InstitutionStyle institutionStyle2 : styleInfoList) {
+				institutionStyle2.setImgUrl("http://"+propertiesUtil.getProjectImageUrl()+"/"+institutionStyle2.getImgUrl());
+			}
+		}
 		//查询风采总数
 		Integer count = institutionStyleServiceImpl.queryInstitutionStyleCount(institutionStyle);
 		model.addAttribute("result",styleInfoList);
 		model.addAttribute("pageNo",page);
         model.addAttribute("rowCount",count);
-        model.addAttribute("institutionId", institutionStyle.getId());
+        model.addAttribute("relationId", institutionStyle.getRelationId());
 		return "/institution/insStyleInfo";
     }
 	//上传图片
@@ -109,7 +129,7 @@ public class InstitutionStyleController {
 	//删除风采图
 	//回写视频中的状态
 	/**
-     * 上传图片
+     * 上传图片 上传临时图片 2为风采  1为视频 0为封面
      * @param request
      * @return
      */
@@ -135,27 +155,18 @@ public class InstitutionStyleController {
 
     @ResponseBody
     @RequestMapping(value="/saveCutPic")
-    public JSONObject saveCutPic(HttpServletRequest request,InstitutionStyle riseSchoolStyleVo,Integer updateId, String path, double x, double y, double w, double h){
+    public JSONObject saveCutPic(HttpServletRequest request,InstitutionStyle institutionStyle,Integer updateId, String path, double x, double y, double w, double h){
 //        log.info("初始化截图开始：");
         JSONObject jsonObject = new JSONObject();
         Resource resource = new ClassPathResource("config.properties");
         Map<String,Object>params = new HashMap<String,Object>();
         params.put("id",updateId==null?-1:updateId);
-        RiseSchoolStyleVo rssv = null;
-        boolean flag = true;
-        if(null!=rssv){
-            String oldImgName = rssv.getImgUrl().substring(rssv.getImgUrl().lastIndexOf("/"));
-            String newImgName = path.substring(path.lastIndexOf("/"));
-            if(oldImgName.equals(newImgName)){
-                flag = false;
-            }
-        }
         String realPath=null;
         String cssStyle = request.getParameter("cssStyle");
         String windowFlag = request.getParameter("windowFlag");
         String imgType = null;//1 竖图  2横图
 
-        if(flag){
+//        if(flag){
             Properties props=null;
             try{
                 props= PropertiesLoaderUtils.loadProperties(resource);
@@ -257,35 +268,41 @@ public class InstitutionStyleController {
             }
             FileUtil.deleteFile(target);
             FileUtil.deleteFile(cutImgPath);
-            CompanyPicsVo pics=new CompanyPicsVo();
-            pics.setRealPath(realPath);
-        }
-
-
-        Date date = new Date();
-//        riseSchoolStyleVo.setImgType(imgType);
-//        if ("1".equals(windowFlag)||"3".equals(windowFlag)){//1新增风采图 3新增封面图
-//            if ("1".equals(windowFlag)){
-//                riseSchoolStyleVo.setIsCover(0);
-//            }else{
-//                riseSchoolStyleVo.setIsCover(1);
-//            }
-//
-//            //将剪切的图片地址存放数据库中
-//            riseSchoolStyleVo.setImgUrl(realPath);
-//            riseSchoolStyleVo.setIsTop(0);
-//            riseSchoolStyleVo.setCreateTime(date);
-//            riseSchoolStyleVo.setUpdateTime(date);
-//            riseSchoolStyleServiceImpl.insertRiseSchoolStyle(riseSchoolStyleVo);
-//        }else if ("2".equals(windowFlag)||"4".equals(windowFlag)){//2修改风采图  4//修改封面图
-//            riseSchoolStyleVo.setRiseSchoolId(null);
-//            riseSchoolStyleVo.setId(updateId);
-//            riseSchoolStyleVo.setImgUrl(realPath);
-//            riseSchoolStyleVo.setUpdateTime(date);
-//            riseSchoolStyleServiceImpl.updateRiseSchoolStyle(riseSchoolStyleVo);
+//            CompanyPicsVo pics=new CompanyPicsVo();
+//            pics.setRealPath(realPath);
 //        }
 
+        //判断是更新还是新增
+        Date date = new Date();
+        institutionStyle.setImgUrl(realPath);
+        institutionStyle.setCreateTime(date);
+        institutionStyle.setUpdateTime(date);
+        if (updateId != null) {
+			institutionStyle.setId(updateId);
+			institutionStyleServiceImpl.updateInsStyle(institutionStyle);
+		}else{
+			institutionStyle.setIsTop(0);
+	        institutionStyle.setIsVideo(institutionStyle.getType().intValue() == 1 ?1:0);
+	        institutionStyleServiceImpl.insertInsStyle(institutionStyle);
+		}
         jsonObject.put("flag","1");
         return jsonObject;
+    }
+    
+    //置顶或取消置顶
+    @ResponseBody
+    @RequestMapping(value="/updateIsTop")
+    public String updateIsTop(HttpServletRequest request,InstitutionStyle institutionStyle){
+    	institutionStyle.setUpdateTime(new Date());
+    	institutionStyleServiceImpl.updateInsStyle(institutionStyle);
+    	return "success";
+    }
+    
+    //删除风采
+    @ResponseBody
+    @RequestMapping(value="/deleteStyle")
+    public String deleteStyle(HttpServletRequest request,Integer primaryId){
+    	institutionStyleServiceImpl.deleteInsStyle(primaryId);
+    	return "success";
     }
 }

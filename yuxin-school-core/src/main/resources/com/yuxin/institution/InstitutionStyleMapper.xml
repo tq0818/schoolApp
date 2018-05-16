@@ -48,11 +48,11 @@
 	<update id="updateInsStyle" parameterType="com.yuxin.wx.model.institution.InstitutionStyle">
 		UPDATE institution_style
 		<trim prefix="set" suffixOverrides=",">
-			<if test="name != null and name != ''">name = #{name}</if>
-			<if test="imgUrl != null and imgUrl != ''">img_url = #{imgUrl}</if>
-			<if test="content != null and content != ''">content = #{content}</if>
-			<if test="updateTime != null">update_time = #{updateTime}</if>
-			<if test="isTop != null">is_top = #{isTop}</if>
+			<if test="name != null and name != ''">name = #{name},</if>
+			<if test="imgUrl != null and imgUrl != ''">img_url = #{imgUrl},</if>
+			<if test="content != null and content != ''">content = #{content},</if>
+			<if test="updateTime != null">update_time = #{updateTime},</if>
+			<if test="isTop != null">is_top = #{isTop},</if>
 		</trim>
 		<where>
 			id = #{id}
@@ -72,7 +72,7 @@
 		 <if test="type != null">AND type = #{type}</if>
 		 ORDER BY is_top DESC,update_time DESC
 		 <if test="page != null and page != 0">
-		 	LIMIT #{page},#{pageSize}
+		 	LIMIT #{firstIndex},#{pageSize}
 		 </if>
 	</select>
 	<select id="queryInstitutionStyleCount" parameterType="com.yuxin.wx.model.institution.InstitutionStyle" resultType="java.lang.Integer">
@@ -116,17 +116,17 @@
 	<update id="updateInsVideo" parameterType="com.yuxin.wx.model.institution.InsVideo">
 		update ins_video
 		<trim prefix="set" suffixOverrides=",">
-			<if test="videoName != null and videoName != ''">video_name = #{videoName}</if>
-			<if test="videoCcId != null and videoCcId != ''">video_cc_id = #{videoCcId}</if>
-			<if test="videoTime != null and videoTime != ''">video_time = #{videoTime}</if>
-			<if test="videoSize !=null">video_size = #{videoSize}</if>
-			<if test="videoStatus != null">video_status = #{videoStatus}</if>
-			<if test="creator != null">creator = #{creator}</if>
-			<if test="createTime != null">create_time = #{createTime}</if>
-			<if test="updateTime !=null">update_time = #{updateTime}</if>
-			<if test="storageType !=null and storageType != ''">storage_type = #{storageType}</if>
-			<if test="type !=null">type = #{type}</if>
-			<if test="watchCount !=null">watch_count = #{watchCount}</if>
+			<if test="videoName != null and videoName != ''">video_name = #{videoName},</if>
+			<if test="videoCcId != null and videoCcId != ''">video_cc_id = #{videoCcId},</if>
+			<if test="videoTime != null and videoTime != ''">video_time = #{videoTime},</if>
+			<if test="videoSize !=null">video_size = #{videoSize},</if>
+			<if test="videoStatus != null">video_status = #{videoStatus},</if>
+			<if test="creator != null">creator = #{creator},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="updateTime !=null">update_time = #{updateTime},</if>
+			<if test="storageType !=null and storageType != ''">storage_type = #{storageType},</if>
+			<if test="type !=null">type = #{type},</if>
+			<if test="watchCount !=null">watch_count = #{watchCount},</if>
 		</trim>
 		<where>
 			id = #{id}

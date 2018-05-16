@@ -1,20 +1,6 @@
 $(function () {
     //    左侧active切换
     $selectSubMenus('elegantDemeano');
-  //分页插件
-/*    $(".pagination").pagination('${rowCount}', {
-        next_text : "下一页",
-        prev_text : "上一页",
-        current_page :'${pageNo - 1}',
-        link_to : "javascript:void(0)",
-        num_display_entries : 9,
-        items_per_page : 9,
-        num_edge_entries : 1,
-        callback:function(page){
-            var pageNo = page + 1;
-            queryInstitutionStyle(pageNo);
-        }
-    });*/
     //点击视频上传出视频上传弹窗
     $('#videoUp').click(function () {
         $('.videoUpload').show();
@@ -37,6 +23,15 @@ $(function () {
     $('.closeElePic').click(function () {
         $('#cover').hide();
     });
+    //点击修改封面弹窗
+    $(".btnUpdateCover").click(function () {
+    	console.log($(this).attr("data-value"));
+    	 $('#cover').show();
+    	 //将原有图片设置上去
+    	 $('#target').attr("src",$(this).attr("data-value"));
+    	 //将更新id设置到updateId上去
+    	 $("#updateId").attr("value",$("#coverId").val());
+    });
     //关闭大图
     $(document).click(function(){
     	$('.bigImg').hide();
@@ -52,26 +47,253 @@ $(function () {
     	$('.bigImg').show().attr('src',url);
     	return false;
     });
-    
-    
+    // 0 封面剪切图 1是视频剪切图 2是风采剪切图
+    //.on("change","#targetVideo",imgInit(1)).on("change","#targetStyle",imgInit(2));
+    //剪切图
+    $(".elePic").on("change","#target", function() {
+        var theImage = new Image();
+        console.log($(this).attr("src"));
+        theImage.src = $(this).attr("src");
+        if (theImage.complete) {
+            sourceHeight = theImage.height;
+            sourceWidth = theImage.width;
+            $.init(sourceWidth, sourceHeight,0);
+        } else {
+            theImage.onload = function () {
+                sourceHeight = theImage.height;
+                sourceWidth = theImage.width;
+                $.init(sourceWidth, sourceHeight,0);
+            };
+        }
+
+    }).on("change","#targetStyle", function() {
+	    var theImage = new Image();
+	    console.log($(this).attr("src"));
+	    theImage.src = $(this).attr("src");
+	    if (theImage.complete) {
+	        sourceHeight = theImage.height;
+	        sourceWidth = theImage.width;
+	        $.init(sourceWidth, sourceHeight,2);
+	    } else {
+	        theImage.onload = function () {
+	            sourceHeight = theImage.height;
+	            sourceWidth = theImage.width;
+	            $.init(sourceWidth, sourceHeight,2);
+	        };
+	    }
+    });
+  //videoUpload
+    $(".videoUpload").on("change","#targetVideo", function() {
+        var theImage = new Image();
+        console.log($(this).attr("src"));
+        theImage.src = $(this).attr("src");
+        if (theImage.complete) {
+            sourceHeight = theImage.height;
+            sourceWidth = theImage.width;
+            $.init(sourceWidth, sourceHeight,1);
+        } else {
+            theImage.onload = function () {
+                sourceHeight = theImage.height;
+                sourceWidth = theImage.width;
+                $.init(sourceWidth, sourceHeight,1);
+            };
+        }
+
+    });
 });
 
-//查询风采
-function queryInstitutionStyle(pageNo){
-	$.ajax({
-        url: rootPath + "/institutionStyle/queryInsStyle",
-        data: {"page":pageNo,
-            "pagesize":9,
-            "relationId":$("#institutionId").val(),
-        },beforeSend: function (XMLHttpRequest) {
-           /* $(".loading").show();
-            $(".loading-bg").show();*/
+//上传临时图片 2为风采  1为视频 0为封面
+function savePic(saveFlag) {
+    //选择的时候应先清空，
+    if (saveFlag == 0){
+        $("#target").attr("src","");
+    }else if(saveFlag == 1){
+        $("#targetVideo").attr("src","");
+    }else{
+    	$("#targetStyle").attr("src","");
+    }
+    console.log($("#imgDataStyle"));
+    $.ajaxFileUpload({
+        url : rootPath+"/institutionStyle/upLoadInsStyleImg",
+        secureuri : false,// 安全协议
+        async : false,
+        fileElementId : saveFlag == 0?'imgData':saveFlag == 1?'imgDataVideo':'imgDataStyle',
+        dataType:'json',
+        type : "POST",
+        success : function(data) {
+            //显示图片
+            // $("#sourcePic").attr("src",data.url);
+            //上传成功移除插件
+            if (jcrop_apis){
+                jcrop_apis.destroy();
+            }
+            if (data.flag == 1){
+                if (saveFlag == 0){
+                    $("#target").attr("src",data.realPath);
+                    $("#target").trigger("change");
+                    $(".jcrop-holder").find("img").attr("src",data.realPath);
+//                    $("#btnOne").show();
+//                    $("#btnTwo").show();
+                }else if(saveFlag == 1){
+                    $("#targetVideo").attr("src",data.realPath);
+                    $("#targetVideo").trigger("change");
+                    $(".jcrop-holder").find("img").attr("src",data.realPath);
+                }else{
+                	 $("#targetStyle").attr("src",data.realPath);
+                     $("#targetStyle").trigger("change");
+                     $(".jcrop-holder").find("img").attr("src",data.realPath);
+                }
+            }
+
         },
-        dataType: "html",
-        success: function (data) {
-//            $(".loading").hide();
-//            $(".loading-bg").hide();
-            $("#insStyleInfo").html("").html(data);
-        }
+        error:function(arg1,arg2,arg3){
+            //console.log(arg1);
+        },
+        saveFlag:saveFlag
+        // loadingEle:  saveFlag == 1?'#target':'#targetStyle',
+        // fileName: 'imgData'
     });
 }
+
+//上传剪切图,返回真实地址并插入数据库中
+function saveCutPic(saveFlag) {
+    var windowFlag = $("#windowFlag").val();
+    var id = $("#updateId").val();
+    console.log($("#institutionId").val());
+    //判断图片是否为空或则是未更改就进行保存
+    if (saveFlag == 0){//风采图，反之则是封面
+        //判断图片是否为空或则是未更改就进行保存
+        if (!$("#target").attr("src")){
+            $.msg("未选择图片");
+            return ;
+        }
+        var temp = $("#target").attr("style").split(";");
+        //处理剪切框的宽高
+        dealWidthAndHeight(temp);
+    }else if(saveFlag == 1){
+    	//判断图片是否为空或则是未更改就进行保存
+        if (!$("#targetVideo").attr("src")){
+            $.msg("未选择图片");
+            return ;
+        }
+        //处理重复提交
+//        if(!id){
+//        	if(countAdd != 0){
+//        		alert("请勿重复提交");
+//        		return ;
+//        	}
+//        	countAdd++;
+//        }
+    }else {
+        //判断图片是否为空或则是未更改就进行保存
+        if (!$("#targetStyle").attr("src")){
+            $.msg("未选择图片");
+            return ;
+        }
+        //处理重复提交
+//        if(!id){
+//        	if(countAdd != 0){
+//        		alert("请勿重复提交");
+//        		return ;
+//        	}
+//        	countAdd++;
+//        }
+    }
+
+    //上传截取后的图片
+    $.ajax({
+        url : rootPath + "/institutionStyle/saveCutPic",
+        data : {
+            path : saveFlag == 0?$("#target").attr("src"):saveFlag == 1?$("#targetVideo").attr("src"):$("#targetStyle").attr("src"),
+            x : $("#x").val(),
+            y : $("#y").val(),
+            w : $("#w").val(),
+            h : $("#h").val(),
+            content:saveFlag == 1?$("#videoContent").text():saveFlag == 2?$("#styleContent").text():"",
+            relationId:$("#institutionId").val(),
+            sourceFlag:0,//机构风采
+            type:saveFlag,// 0 封面 1视频 2风采
+            windowFlag:windowFlag,
+            updateId:id,
+            cssStyle:$("#btnOne").hasClass("btn-primary")?0:1
+        },
+        type : "post",
+        dataType : "json",
+        success : function(data) {
+            // chooseOnePic(data.picOriginalUrl,
+            //     data.realPath);
+            //上传成功则重新查询
+            if (data.flag == 1){
+            	if(saveFlag != 2){
+            		//刷新一下页面
+            		window.location.href=rootPath +"/institutionStyle/queryInstitutionStyle?relationId="+$("#institutionId").val();
+            	}else{
+            		queryInstitutionStyle(1);
+            	}
+               // queryRiseSchoolStyle(1);
+//                if(saveFlag==1){
+//                    $("#target").attr("src","");
+//                    $("#btnOne").hide();
+//                    $("#btnTwo").hide();
+//                }else{
+//                    $("#targetStyle").attr("src","");
+//                }
+            }else {
+                $.msg(data.msg);
+            }
+            $("#btnOne").hide();
+            $("#btnTwo").hide();
+            if (jcrop_apis){
+                jcrop_apis.destroy();
+            }
+            $('.opacityPopup').fadeOut();
+            $('.commonPopup').fadeOut();
+            $('.coverPopup').fadeOut();
+        }
+    })
+    $("#chooseDiv").css("display", "none");
+    $("#stopDiv").css("display", "none");
+    return;
+}
+
+
+//处理获取的图片像素
+function dealWidthAndHeight(temp){
+
+  var w = 0;
+  var h = 0;
+  for(var i=0;i<temp.length;i++){
+      if(temp[i].indexOf("width")!=-1){
+          w = temp[i].split(":")[1].replace("px","");
+      }
+      if(temp[i].indexOf("height")!=-1){
+          h = temp[i].split(":")[1].replace("px","");
+      }
+  }
+  if (parseFloat($("#w").val()) > parseFloat(w)){
+      $("#w").val(w);
+  }
+  if (parseFloat($("#h").val()) > parseFloat(h)){
+      $("#h").val(h);
+  }
+}
+
+//图片初始函数
+function imgInit(flag) {
+    var theImage = new Image();
+    console.log($(this).attr("src"));
+    theImage.src = $(this).attr("src");
+    if (theImage.complete) {
+        sourceHeight = theImage.height;
+        sourceWidth = theImage.width;
+        $.init(sourceWidth, sourceHeight,flag);
+    } else {
+        theImage.onload = function () {
+            sourceHeight = theImage.height;
+            sourceWidth = theImage.width;
+            $.init(sourceWidth, sourceHeight,flag);
+        };
+    };
+
+}
+

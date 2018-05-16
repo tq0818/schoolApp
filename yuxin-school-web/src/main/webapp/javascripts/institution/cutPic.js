@@ -3,45 +3,31 @@ var jcrop_apis;
     var boundx, boundy, $preview, $preview2, $preview3, $pcnt, $pcnt2, $pcnt3, $pimg, $pimg2, $pimg3, $img,
         xsize, xsize2, xsize3, ysize, ysize2, ysize3, minHeight, maxHeight, minWidth, maxWidth, $scale, sourceHeight, sourceWidth;
     $.init=function(initW,initH,picFlag) {
-        // $preview = $('#heandImageBig');
-        // $preview2 = $('#heandImageMid');
-        // $preview3 = $('#heandImageMin');
-        // $pcnt = $('.p1 .preview-container');
-        // $pcnt2 = $('.p2 .preview-container');
-        // $pcnt3 = $('.p3 .preview-container');
-        // $pimg = $('.p1 img');
-        // $pimg2 = $('.p2 img');
-        // $pimg3 = $('.p3 img');
-        $img = picFlag == 1?$("#target"):$("#targetStyle");
-        // xsize = $pcnt.width();
-        // xsize2 = $pcnt2.width();
-        // xsize3 = $pcnt3.width();
-        // ysize = $pcnt.height();
-        // ysize2 = $pcnt2.height();
-        // ysize3 = $pcnt3.height();
+        $img = picFlag == 0?$("#target"):picFlag == 1?$("#targetVideo"):$("#targetStyle");
+        	//picFlag == 1?$("#targetVideo"):$("#targetStyle");
         //风采图
-        if (picFlag == 1){
-
-            if ($('#btnOne').hasClass("btn-primary")){//竖图，反之则是横图
-                $scale = 186.57/300;
-                maxHeight = 300;
-                maxWidth = 186.57;
-                minHeight = 12.06;
-                minWidth = 7.5;
-            }else {
-                $scale = 300/188;
-                maxHeight = 188;
-                maxWidth = 300;
-                minHeight =23.5 ;
-                minWidth = 37.5;
-            }
-        }else {//封面图比例
+//        if (picFlag == 1){
+//
+//            if ($('#btnOne').hasClass("btn-primary")){//竖图，反之则是横图
+//                $scale = 186.57/300;
+//                maxHeight = 300;
+//                maxWidth = 186.57;
+//                minHeight = 12.06;
+//                minWidth = 7.5;
+//            }else {
+//                $scale = 300/188;
+//                maxHeight = 188;
+//                maxWidth = 300;
+//                minHeight =23.5 ;
+//                minWidth = 37.5;
+//            }
+//        }else {//封面图比例
             $scale = 300/120;
             maxHeight = 120;
             maxWidth = 300;
             minHeight = 6;
             minWidth = 15;
-        }
+//        }
         sourceWidth=initW;
         sourceHeight=initH;
         var initSize=resizePic();

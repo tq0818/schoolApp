@@ -20,22 +20,13 @@
 <body>
 <input type="hidden" id="pageNo" value='${pageNo}'/>
 <input type="hidden" id="rowCount" value='${rowCount}'/>
-<input type="hidden" id="institutionId" value='${institutionId}'/>
+<input type="hidden" id="relationId" value='${relationId}'/>
 
                     <span class="labelName">风采展示:</span>
                     <ul style="display: inline-block;width: 1160px;">
                         <li class="addImg mienShow" id="eleShow">
                             <i class="icon iconfont"></i>
                         </li>
-                       <!--  <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
-                            </div>
-                        </li> -->
                         <c:forEach var="schoolStyle" items="${result}" varStatus="status">
                         	<li>
                            <%--  <c:choose>
@@ -61,82 +52,14 @@
                             <c:if test="${schoolStyle.isTop == 1}"><a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">已置顶</a></c:if>
                             <c:if test="${schoolStyle.isTop == 0}"><a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">未置顶</a></c:if>
                             <div class="listBg">
-                                <c:if test="${schoolStyle.isTop == 1}"><a href="javaScript:void(0)" class="btn btn-warning btn-sm imgTop">取消置顶</a></c:if>
-                                <c:if test="${schoolStyle.isTop == 0}"><a href="javaScript:void(0)" class="btn btn-warning btn-sm imgTop">置顶</a></c:if>
+                                <c:if test="${schoolStyle.isTop == 1}"><a href="javaScript:void(0)" class="btn btn-warning btn-sm imgTop btnUpdateTop" data-value="0">取消置顶</a></c:if>
+                                <c:if test="${schoolStyle.isTop == 0}"><a href="javaScript:void(0)" class="btn btn-warning btn-sm imgTop btnUpdateTop" data-value="1">置顶</a></c:if>
                                 <a href="javaScript:void(0)" class="btn btn-success btn-sm imgDelete">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm imgChange mienShow" data-value="${schoolStyle.id}" >修改</a>
+                                <a href="javascript:void(0)" class="btn btn-success btn-sm imgChange mienShow btnStyleUpdate" data-value="${schoolStyle.id}" >修改</a>
                             </div>
                             </li>
                         </c:forEach>
-                        <!-- <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../../images/institution/1.jpg" alt="" style="width: 100%;height: auto">
-                            <span class="imgInfo">学校建筑内部图</span>
-                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">置顶</a>
-                            <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
-                            </div>
-                        </li> -->
                     </ul>
-            
-
-
-
-
 
 </body>
 </html>
@@ -153,8 +76,83 @@
         num_edge_entries : 1,
         callback:function(page){
             var pageNo = page + 1;
+            console.log(pageNo);
             queryInstitutionStyle(pageNo);
         }
     });
     
+    //点击风采上传弹窗
+    $('#eleShow').click(function () {
+        $('#elegant').show();
+    });
+    $('.closeElePic').click(function () {
+        $('#elegant').hide();
+    });
+    //点击修改风采 btnStyleUpdate
+    $('.btnStyleUpdate').click(function () {
+        $('#elegant').show();
+        $("#updateId").attr("value",$(this).attr("data-value"));
+    });
+    
+    //为图片添加点击事件,以便图片方大
+    $('.imgClick').click(function(){
+    	var url = $(this).attr('src');
+    	$('.bigImg').show().attr('src',url);
+    	return false;
+    });
+	//置顶和取消置顶
+	$(".btnUpdateTop").click(function(){
+		//更新id
+		var id = $(this).parent().find(".btnStyleUpdate").attr("data-value");
+		//
+		var isTop = $(this).attr("data-value");
+		console.log(id,isTop);
+		$.ajax({
+	          url: rootPath + "/institutionStyle/updateIsTop",
+	          data: {"id":id,
+	              "isTop":isTop
+	          },
+	          dataType: "json",
+	          success: function (data) {
+	              if(data == "success"){
+	            	  queryInstitutionStyle(1);
+	              }
+	          }
+	      });
+	});
+	
+	//删除风采
+	$(".imgDelete").click(function(){
+		var id = $(this).parent().find(".btnStyleUpdate").attr("data-value");
+		var pageNo = $("#pageNo").val();
+		console.log("当前页"+pageNo);
+		$.ajax({
+	          url: rootPath + "/institutionStyle/deleteStyle",
+	          data: {"primaryId":id
+	          },
+	          dataType: "json",
+	          success: function (data) {
+	              if(data == "success"){
+	            	  queryInstitutionStyle(pageNo);
+	              }
+	          }
+	      });
+		
+	});
+  //查询风采
+  function queryInstitutionStyle(pageNo){
+  	$.ajax({
+          url: rootPath + "/institutionStyle/queryInsStyle",
+          data: {"page":pageNo,
+              "pagesize":9,
+              "relationId":$("#relationId").val(),
+          },beforeSend: function (XMLHttpRequest) {
+          },
+          dataType: "html",
+          success: function (data) {
+              $("#insStyleInfo").html("").html(data);
+          }
+      });
+  }
+  
  </script>
