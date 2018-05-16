@@ -8,15 +8,15 @@
     <div class="left-side-title">
         <i class="icon iconfont" style="float: left;color: #cdcccc;font-size: 20px;margin-left: 2px;" id="backUp">&#xe650;</i>
         <%--<em title='${company.companyName }' style='overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width: 200px;display : inline-block;'>${company.companyName }</em>--%>
-        <em title='九方美术培训学校' style='overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width: 190px;display : inline-block;'>九方美术培训学校</em>
+        <em title='${ins.name}' style='overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width: 190px;display : inline-block;'>${ins.name}</em>
         <!-- <span class="iconfont return-pic hcancle">&#xe650;</span> -->
     </div>
     <ul id="course_manage" class="system_managelist">
-        <li class="subentry" code="essential" mark="/InsInfoBase/findInsById">基本信息管理</li>
+        <li class="subentry" code="essential" mark="/InsInfoBase/findInsById?id=${ins.id}">基本信息管理</li>
         <li class="subentry" code="elegantDemeano" mark="/InsInfoBase/elegantDemeanor">风采管理</li>
         <li class="subentry" code="course" mark="/InsInfoBase/course">课程管理</li>
         <li class="subentry" code="teacherFamous " mark="/InsInfoBase/famousTeacher">名师管理</li>
-        <li class="subentry" code="evaluate" mark="/InsInfoBase/evaluation">评价管理</li>
+        <li class="subentry" code="evaluate" mark="/comment/insCommentIndex?id=${ins.id}">评价管理</li>
     </ul>
 </div>
 <script>

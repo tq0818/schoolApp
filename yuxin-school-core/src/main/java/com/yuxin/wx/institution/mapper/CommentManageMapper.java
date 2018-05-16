@@ -40,4 +40,10 @@ public interface CommentManageMapper {
      * @param id
      */
     void update(CommentApp commentApp);
+
+    /**
+     * 未审核的评论总条数
+     * @return
+     */
+    Integer commentCuont();
 }

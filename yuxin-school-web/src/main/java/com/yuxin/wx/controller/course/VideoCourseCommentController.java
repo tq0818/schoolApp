@@ -73,4 +73,15 @@ public class VideoCourseCommentController {
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
+
+	/**
+	 * 未审核的评论总条数
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/queryVideoComCount")
+	public Integer queryVideoComCount(){
+		Integer count = videoCourseCommentServiceImpl.queryVideoComCount();
+		return count;
+	}
 }

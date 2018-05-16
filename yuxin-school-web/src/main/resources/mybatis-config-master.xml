@@ -344,13 +344,13 @@
 		<mapper resource="com/yuxin/riseschool/RiseSchoolDynamicMapper.xml"/>
 		<mapper resource="com/yuxin/riseschool/RiseStudentServiceFMapper.xml"/>
 
-		<!--机构第一期-->
+		<!--机构第一期TQ-->
 		<mapper resource="com/yuxin/institution/InstitutionInfoMapper.xml"/>
 		<mapper resource="com/yuxin/institution/InstitutionCategoryManageMapper.xml"/>
-		<!--TQ-->
 		<mapper resource="com/yuxin/institution/InsFeaturesMapper.xml"/>
 		<mapper resource="com/yuxin/institution/CommentManageMapper.xml"/>
 		<mapper resource="com/yuxin/institution/InstitutionRelationMapper.xml"/>
+		<mapper resource="com/yuxin/institution/MerchantEntryMapper.xml"/>
 
 		<mapper resource="com/yuxin/institution/InstitutionLabelMapper.xml"/>
 		<!-- 课程信息 -->

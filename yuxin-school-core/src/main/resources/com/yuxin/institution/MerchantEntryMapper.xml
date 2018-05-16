@@ -2,9 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yuxin.wx.institution.mapper.MerchantEntryMapper">
 
-    <select id="merchantEntryCount" resultType="Integer" parameterMap="map">
-
-    </select>
 	
 	<select id="queryMerchantEntry" parameterType="com.yuxin.wx.model.institution.MerchantEntryVo" resultType="com.yuxin.wx.model.institution.MerchantEntryVo">
 		SELECT me.id AS id,
@@ -53,5 +50,9 @@
 		  </if>
 		 ORDER BY me.deal_status ASC,me.create_time DESC
 		 LIMIT #{firstIndex},#{pageSize}
+	</select>
+
+	<select id="queryCount" resultType="Integer">
+		select count(1) from merchant_entry where deal_status = 0
 	</select>
 </mapper>

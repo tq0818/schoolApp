@@ -101,4 +101,6 @@ public interface IVideoCourseCommentService  {
 
 	PageFinder<TeacherCommentVo> findVideoCourseCommentByTeacherId(
 			TeacherCommentVo teacherCommentVo);
+
+	Integer queryVideoComCount();
 }

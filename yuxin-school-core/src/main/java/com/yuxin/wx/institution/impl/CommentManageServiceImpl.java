@@ -67,4 +67,11 @@ public class CommentManageServiceImpl extends BaseServiceImpl implements Comment
     public void update(CommentApp commentApp) {
         commentManageMapper.update(commentApp);
     }
+
+    @Override
+    public Integer commentCuont() {
+        return commentManageMapper.commentCuont();
+    }
+
+
 }

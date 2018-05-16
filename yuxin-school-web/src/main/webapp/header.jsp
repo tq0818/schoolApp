@@ -226,6 +226,25 @@ button.cloze {
 			});
 			
 		});
+
+		//获取机构未审核评论总条数
+        $.ajax({
+            url : rootPath+"/comment/commentCuont",
+            type : "get",
+            success : function(data){
+                $("#insComCount").html(data);
+            }
+        });
+
+        //获取课程评未审核论总条数
+        $.ajax({
+            url : rootPath+"/videoCourseComment/queryVideoComCount",
+            type : "get",
+            success : function(data){
+                $("#classComCount").html(data);
+            }
+        });
+
 	})
 
 	function getCookie(c_name) {
@@ -349,10 +368,10 @@ button.cloze {
         <div style="display: inline-block;font-size: 16px;color: #ff0000;
         background: #ffff00;height: 51px;margin-left: 400px;line-height: 51px;">
             <span>
-            您收到(<a href="##">20</a>)条评论待审核！
+            您收到(<a href="##" id="classComCount"></a>)条评论待审核！
             </span>
             <span>
-                您收到（<a href="##">30</a>）条机构评论待审核！
+                您收到（<a href="##" id="insComCount"></a>）条机构评论待审核！
             </span>
         </div>
         <ul class="nav nav-right">

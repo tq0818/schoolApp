@@ -2,9 +2,11 @@ package com.yuxin.wx.controller.institution;
 
 import com.yuxin.wx.api.institution.CommentManageService;
 import com.yuxin.wx.api.institution.InstitutionClassTypeService;
+import com.yuxin.wx.api.institution.InstitutionInfoService;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.institution.CommentApp;
 import com.yuxin.wx.model.institution.InstitutionClassTypeVo;
+import com.yuxin.wx.model.institution.InstitutionInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,8 @@ public class CommentManageController {
     private InstitutionClassTypeService institutionClassTypeService;
     @Autowired
     private CommentManageService commentManageService;
+    @Autowired
+    private InstitutionInfoService institutionInfoService;
 
     /**
      * 机构下的课程
@@ -37,9 +41,10 @@ public class CommentManageController {
         }catch (Exception e){
             e.printStackTrace();
         }
-
+        InstitutionInfoVo institutionInfoVo = institutionInfoService.findInstitutionInfoById(Integer.parseInt(id));
         model.addAttribute("classTypeVos",classTypeVos);
         model.addAttribute("insId",id);
+        model.addAttribute("ins",institutionInfoVo);
         return "institution/evaluation";
     }
 
@@ -111,5 +116,17 @@ public class CommentManageController {
         }
 
     }
+
+    /**
+     * 获取未审核的评论总条数
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/commentCuont")
+    public Integer commentCuont(){
+        Integer comCount = commentManageService.commentCuont();
+        return comCount;
+    }
+
 
 }
