@@ -1,14 +1,11 @@
 package com.yuxin.wx.institution.impl;
 
-import com.google.common.io.ByteSource;
 import com.yuxin.wx.api.institution.InstitutionInfoService;
 import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.common.PageFinder;
-import com.yuxin.wx.institution.mapper.InstitutionCategoryManageMapper;
 import com.yuxin.wx.institution.mapper.InstitutionInfoMapper;
 import com.yuxin.wx.institution.mapper.InstitutionLabelMapper;
 import com.yuxin.wx.institution.mapper.InstitutionRelationMapper;
-import com.yuxin.wx.model.institution.InstitutionCategoryVo;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
 import com.yuxin.wx.model.institution.InstitutionLabelVo;
 import com.yuxin.wx.model.institution.InstitutionRelationVo;
@@ -37,6 +34,7 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
     private InstitutionRelationMapper institutionRelationMapper;
 
     @Override
+    @Transactional
     public void insert(InstitutionInfoVo institutionInfoVo) {
         try{
             Users users = new Users();
@@ -75,9 +73,10 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
             //插入机构分类关系表
             InstitutionRelationVo institutionRelationVo = new InstitutionRelationVo();
             for(int i =0;i<catOne.length;i++){
+                institutionRelationVo.setId(null);
                 institutionRelationVo.setInsId(institutionInfoVo.getId());
                 institutionRelationVo.setOneLevelId(Integer.parseInt(catOne[i]));
-                institutionRelationVo.setOneLevelId(Integer.parseInt(catTwo[i]));
+                institutionRelationVo.setTwoLevelId(Integer.parseInt(catTwo[i]));
                 institutionRelationMapper.insert(institutionRelationVo);
             }
 

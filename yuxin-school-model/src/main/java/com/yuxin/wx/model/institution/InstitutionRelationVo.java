@@ -5,7 +5,7 @@ import com.yuxin.wx.common.BaseEntity;
 public class InstitutionRelationVo extends BaseEntity{
     private Integer insId;
     private Integer oneLevelId;
-    private Integer towLevelId;
+    private Integer twoLevelId;
 
 
     public Integer getInsId() {
@@ -24,11 +24,11 @@ public class InstitutionRelationVo extends BaseEntity{
         this.oneLevelId = oneLevelId;
     }
 
-    public Integer getTowLevelId() {
-        return towLevelId;
+    public Integer getTwoLevelId() {
+        return twoLevelId;
     }
 
-    public void setTowLevelId(Integer towLevelId) {
-        this.towLevelId = towLevelId;
+    public void setTwoLevelId(Integer twoLevelId) {
+        this.twoLevelId = twoLevelId;
     }
 }

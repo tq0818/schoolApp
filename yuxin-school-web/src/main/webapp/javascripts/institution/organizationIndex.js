@@ -116,8 +116,73 @@ $(function () {
     });
 
     $('.addMechanism').click(function () {
-        //添加机构
-        addInsInfo();
+
+        //手机号码判重
+        let arrPhoneNum = [];
+        for(let i=0;i<$('.phoneNum').length;i++){
+            if($('.phoneNum').eq(i).val() != ''){
+                arrPhoneNum.push($('.phoneNum').eq(i).val());
+            }
+        }
+
+        //点确定拼接电话号码
+        let telephone = [];
+        for(let i=0;i<$('.telephone').length;i++){
+            var _phone = $('.telephone').eq(i).siblings('input').val()+'-'+$('.telephone').eq(i).val();
+            if(_phone != '-'){
+                telephone.push(_phone);
+            }
+        }
+
+        //机构分类判重
+        let insCat = [];
+        let onOff = true;
+        for(let i=0;i<$('.findFistCategorys2').length;i++){
+            var insCatNum =$('.findFistCategorys2').eq(i).val()+'-'+$('.findFistCategorys2').eq(i).siblings('select').val();
+            if(insCatNum != '-'){
+                insCat.push(insCatNum);
+            }
+            if($('.findFistCategorys2').eq(i).val()==""||$('.findFistCategorys2').eq(i).siblings('select').val()==''){
+                onOff = false;
+            }
+        }
+
+        var name = $("#name").val();
+        var province = $("#eduArea2").val();
+        var city = $("#eduSchool2").val();
+        var area = $("#registStatus2").val();
+        var address = $("#address").val();
+        if(name == ''){
+            $.msg("机构名称不能为空！");
+        }else if(!onOff){
+            $.msg("机构分类不能为空！");
+        }else if(province == ''|| city == ''||area == ''|| address ==''){
+            $.msg("机构地址不能为空！");
+        }else if(arrPhone(insCat,0)==1){
+
+         if(arrPhone(telephone,1)==1){
+
+             if(arrPhone(arrPhoneNum,2)==1){
+
+                 //添加机构
+                 $.confirm('是否确认添加该机构?',function (data) {
+                     if(data){
+                         addInsInfo();
+                     }
+                 })
+             }
+         }
+     }
+
+
+
+
+
+
+
+
+
+
     });
 
     //认证状态、推荐状态、上下架按钮效果切换
@@ -132,7 +197,7 @@ $(function () {
     //系统标签增加和删除
     $('.addSystem').click(function () {
         let systemLength = $('.systemBtn').length;
-        if(systemLength<3){
+        if(systemLength<4){
             var _html =
                 `<span href="##" class="systemBtn">
                 <input class="systemLabel" maxlength="5">
@@ -140,12 +205,25 @@ $(function () {
             </span>`;
             $(this).before(_html);
         }
+        if(systemLength>2){
+            $('.addSystem').hide();
+        }
+
     });
     $('body').on('click','.deleteBtn',function () {
         $(this).parents('.systemBtn').remove();
+        let systemLength = $('.systemBtn').length;
+        if(systemLength<4){
+            $('.addSystem').show();
+
+        }
     });
+
+    var i = 2;
+
     //添加机构分类
     $('.addType').click(function () {
+        i++;
         let _html = `
             <div style="padding-left: 80px;margin-top: 6px;">
                 <select name=""  class="findFistCategorys2">
@@ -158,18 +236,19 @@ $(function () {
             </div>
         `;
         $('#orgType').append(_html);
-        findFistCategorys2();
+        findFistCategorys2(i-2);
     });
     //删除分类
     $('body').on('click','.deleteType',function () {
         $(this).parent('div').remove();
+        i--
     });
     //添加座机号
     $('.addMachine').click(function () {
         let _html = `
             <div>
-                    <input type="text" placeholder="区号" style="width: 30px;">-
-                    <input type="text" placeholder="请输入座机号">
+                    <input type="text" placeholder="区号" style="width: 30px;" onkeyup="value=value.replace(/[^\\d]/g,'')">-
+                    <input type="text" placeholder="请输入座机号" class="telephone" onkeyup="value=value.replace(/[^\\d]/g,'')">
                     <span class="iconBtn deleteMachine">-</span>
                 </div>
         `;
@@ -182,7 +261,7 @@ $(function () {
     $('.addPhone').click(function () {
         let _html = `
             <div>
-                    <input type="text" placeholder="请输入手机号">
+                    <input type="text" placeholder="请输入手机号" maxlength="11" class="phoneNum">
                     <span class="iconBtn deletePhone" >-</span>
                 </div>
         `;
@@ -190,7 +269,41 @@ $(function () {
     });
     $('body').on('click','.deletePhone',function () {
         $(this).parent('div').remove();
+
     });
+
+    //判重函数
+    function arrPhone(arr,index){
+
+        // 最简单数组去重法
+        function unique1(array){
+            var n = []; //一个新的临时数组
+            //遍历当前数组
+            for(var i = 0; i < array.length; i++){
+                //如果当前数组的第i已经保存进了临时数组，那么跳过，
+                //否则把当前项push到临时数组里面
+                if (n.indexOf(array[i]) == -1){
+                    n.push(array[i]);
+                }else {
+                    if(index==0){
+                        $.msg("机构分类重复！");
+                    }else if(index==1){
+                        $.msg("电话号码重复！");
+                    }else if(index==2){
+                        $.msg("手机号重复！");
+
+                    }
+                    return 0;
+
+                }
+            }
+            return 1;
+        }
+        return unique1(arr);
+
+    }
+
+
 
     //选择所属省份 初始化身份
     queryRiseSchoolDict(0);
@@ -200,11 +313,11 @@ $(function () {
     findFistCategorys();
 
     //初始化分类数据
-    findFistCategorys2();
+    findFistCategorys2(0);
 
     //分类筛选
     $('#findFistCategorys').change(function () {
-        findSecondCategorys();
+        findSecondCategorys(2);
         findInsDate(1);
     });
     $('#findSecondCategorys').change(function () {
@@ -212,8 +325,9 @@ $(function () {
     });
 
     //分类筛选
-    $('.findFistCategorys2').change(function () {
-        findSecondCategorys2();
+
+    $('body').on('change','.findFistCategorys2',function () {
+        findSecondCategorys2($(this).val(),this);
     });
 
     //搜索数据
@@ -385,11 +499,9 @@ function findSecondCategorys() {
 }
 
 //获取一级分类2
-function findFistCategorys2() {
+function findFistCategorys2(index) {
     $.ajax({
         url:rootPath +"/institutionCategory/findFistCategorys",
-
-
         success:function (data) {
             var html = '';
             html = "<option value=\"\">请选择一级分类</option>"
@@ -398,18 +510,17 @@ function findFistCategorys2() {
                     html = html + "<option value=\""+data[i].id+"\">"+data[i].codeName+"</option>"
                 }
             }
-            $(".findFistCategorys2").html("").html(html);
+            $(".findFistCategorys2").eq(index).html(html);
         }
     });
 
 }
 
 //获取二级分类2
-function findSecondCategorys2() {
-    var id = $(".findFistCategorys2").val();
+function findSecondCategorys2(catId,that){
     $.ajax({
         url:rootPath +"/institutionCategory/findSecondCategorys",
-        data:{"id":id},
+        data:{"id":catId},
         type:"post",
 
         success:function (data) {
@@ -420,7 +531,7 @@ function findSecondCategorys2() {
                     html = html + "<option value=\""+data[i].id+"\">"+data[i].codeName+"</option>"
                 }
             }
-            $(".findSecondCategorys2").html("").html(html);
+            $(that).siblings("select").html("").html(html);
         }
     });
 }
@@ -528,7 +639,7 @@ function findInsDate(page) {
                 }
                 var isCertified;
                 var isCertifiedval;
-                if(jsonData.data.isCertified==1){
+                if(item.isCertified==1){
                     isCertified='已认证';
                     isCertifiedval='取消认证';
                 }else{
@@ -594,28 +705,6 @@ function findInsDate(page) {
                 $(".pagination").html('');
             }
 
-
-
-
-            /*if (jsonData.rowCount > 2) {
-                $(".pagination").html('');
-                $(".pagination").pagination(jsonData.rowCount,
-                    {
-                        next_text: "下一页",
-                        prev_text: "上一页",
-                        current_page: jsonData.pageNo,
-                        link_to: "javascript:void(0)",
-                        num_display_entries: 8,
-                        items_per_page: jsonData.pageSize,
-                        num_edge_entries: 1,
-                        callback: function (page, jq) {
-                            var pageNo = page + 1;
-                            findInsDate(pageNo);
-                        }
-                    });
-            } else {
-                $(".pagination").html('');
-            }*/
         },
         complete: function (XMLHttpRequest, textStatus) {
             $(".loading").hide();
@@ -626,8 +715,6 @@ function findInsDate(page) {
 
 function searchCount(){
     $("#selectCounts").val($("#selectCount").val());
-    console.log($("#selectCount").val());
-    console.log($("#selectCounts").val());
     findInsDate(1);
 }
 
@@ -638,8 +725,8 @@ function authFrameLower(id,num,flag) {
         url:rootPath+"/InsInfoBase/authFrameLower",
         type:"post",
         data:{"id":id,"num":num,"flag":flag},
-        success:function(jsonData){
-            //findInsDate(curPage);
+        success:function(data){
+            findInsDate(curPage);
         }
     })
 }
@@ -653,6 +740,15 @@ function addInsInfo() {
     var area = $("#registStatus2").val();
     var address = $("#address").val();
     var userName = $("#userName").val();
+
+    let firstCat='';
+    let secondCat='';
+
+    for(let i=0;i<$('.findFistCategorys2').length;i++){
+        firstCat += $('.findFistCategorys2').eq(i).val()+',';
+        secondCat += $('.findSecondCategorys2').eq(i).val()+',';
+    }
+
 
     //系统标签
     let systemLabel = $('.systemLabel');
@@ -681,31 +777,26 @@ function addInsInfo() {
     }
 
 
-    //手机号码
-
-    // blur 手机输入框
-   /* $(document).on("blur","#mobile",function(){
-        var mobile = $.trim($("#mobile").val());
-            //局长： /^09\d{8}|1[3-9]\d{9}$/
-        if(!/^09\d{8}|1[3,4,5,7,8]\d{9}$/.test(mobile)){
-            $.msg("手机号格式不正确");
-            return ;
-        }
-    });*/
-
-
     let listPhone = '';
     let listPhoneChi = $('#listPhone').children('div');
     for(let i=0;i<listPhoneChi.length;i++){
-        if(i == listPhoneChi.length-1){
-            listPhone+= listPhoneChi.eq(i).children('input').eq(0).val()
-
-            ;
-        }else{
-            listPhone+= listPhoneChi.eq(i).children('input').eq(0).val()+','
-            ;
+        if(listPhoneChi.eq(i).children('input').eq(0).val() != '' && listPhoneChi.eq(i).children('input').eq(0).val() != null){
+            if(!/^09\d{8}|1[3-9]\d{9}$/.test(listPhoneChi.eq(i).children('input').eq(0).val())){
+                $.msg("手机号格式不正确");
+                $('.addingMechanism').show();
+                return;
+            }
         }
+
+        if(i == listPhoneChi.length-1){
+            listPhone+= listPhoneChi.eq(i).children('input').eq(0).val();
+        }else{
+            listPhone+= listPhoneChi.eq(i).children('input').eq(0).val()+',';
+        }
+
     }
+
+
 
     var mobile = listMachine+','+listPhone;
 
@@ -726,7 +817,6 @@ function addInsInfo() {
                 "userName":userName
             },
             success:function(data){
-                console.log(data);
                 if(data =='true'){
                     $.ajax({
                         url:rootPath+"/InsInfoBase/addIns",
@@ -740,9 +830,12 @@ function addInsInfo() {
                             "userName":userName,
                             "sysLabel":labelName,
                             "mobile":mobile,
-                            "isChains":org
+                            "isChains":org,
+                            "oneLevelId":firstCat,
+                            "twoLevelId":secondCat
                         },
                         success:function(data){
+                            $('.addingMechanism').hide();
                             findInsDate(1);
                         }
                     })
@@ -773,7 +866,6 @@ function cureatManageUser() {
             "userName":manageUser
         },
         success:function(data){
-            console.log(data);
             if(data =='true'){
                 $.ajax({
                     url:rootPath+"/InsInfoBase/cureatManageUser",
@@ -826,4 +918,5 @@ function updateManageUser() {
         }
     })
 }
+
 

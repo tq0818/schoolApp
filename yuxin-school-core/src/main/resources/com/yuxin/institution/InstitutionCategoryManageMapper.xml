@@ -100,11 +100,11 @@
     </insert>
 
     <select id="findFistCategorys" resultMap="queryCateData"  parameterType="map">
-        select id, code_name from institution_category where code_level = 1 and code_type = 0
+        select id, code_name from institution_category where code_level = 1 and code_type = 0 and is_enable = 1
     </select>
 
     <select id="findCecondCategorys" resultMap="queryCateData"  parameterType="Integer">
-        select id, code_name from institution_category where code_level = 2 and code_type = 0 and parent_id = #{id}
+        select id, code_name from institution_category where code_level = 2 and code_type = 0 and is_enable = 1 and parent_id = #{id}
     </select>
 
     <select id="queryInstitutionCategorysByInsId" parameterType="Integer" resultMap="queryInsCategory">

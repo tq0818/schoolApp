@@ -224,8 +224,9 @@ public class InstitutionInfoController {
      * @param num
      * @param flag 上架为0 认证为1
      */
+    @ResponseBody
     @RequestMapping(value = "/authFrameLower",method = RequestMethod.POST)
-    public void authFrameLower(String id,String num,String flag){
+    public Integer authFrameLower(String id,String num,String flag){
         InstitutionInfoVo institutionInfoVo = new InstitutionInfoVo();
         Date date = new Date();
         institutionInfoVo.setId(Integer.parseInt(id));
@@ -234,10 +235,14 @@ public class InstitutionInfoController {
         }else{
             institutionInfoVo.setIsCertified(Integer.parseInt(num));
         }
-
         institutionInfoVo.setUpdateTime(date);
-
-        institutionInfoService.update(institutionInfoVo);
+        try{
+            institutionInfoService.update(institutionInfoVo);
+            return 200;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 500;
+        }
     }
 
     /**
