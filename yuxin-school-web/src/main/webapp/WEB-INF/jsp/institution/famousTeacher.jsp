@@ -35,21 +35,45 @@
                 <div class="teacherList">
                     <div class="headerTeacher">
                         <span style="margin-left: 20px;">唐老师</span>
-                        <a href="" class='btn btn-default' style="float: right;margin: 3px 50px 0 0;">删除</a>
+                        <a href="##" class='btn btn-default delete' style="float: right;margin: 3px 50px 0 0;">删除</a>
                         <a href="" class='btn btn-default' style="float: right;margin: 3px 20px 0 0;">老师详情</a>
                     </div>
-                    <div>
-                        <label>姓名:</label>
-                        <span>唐老师</span>
+                    <div  class="contentTeacher">
+                        <div>
+                            <label>姓名:</label>
+                            <span>唐老师</span>
+                        </div>
+                        <div>
+                            <a href="##" class="btn btn-default">标签一</a>
+                            <a href="##" class="btn btn-default">标签一</a>
+                            <a href="##" class="btn btn-default">标签一</a>
+                        </div>
+                        <div>
+                            <label>毕业院校:</label>
+                            <span>中央美术学院</span>
+                        </div>
                     </div>
-                    <div>
-                        <a href="##" class="btn btn-default">标签一</a>
-                        <a href="##" class="btn btn-default">标签一</a>
-                        <a href="##" class="btn btn-default">标签一</a>
+                </div>
+                <div class="teacherList">
+                    <div class="headerTeacher">
+                        <span style="margin-left: 20px;">唐老师</span>
+                        <a href="##" class='btn btn-default delete' style="float: right;margin: 3px 50px 0 0;">删除</a>
+                        <a href="" class='btn btn-default' style="float: right;margin: 3px 20px 0 0;">老师详情</a>
                     </div>
-                    <div>
-                        <label>毕业院校:</label>
-                        <span>中央美术学院</span>
+                    <div  class="contentTeacher">
+                        <div>
+                            <label>姓名:</label>
+                            <span>唐老师</span>
+                        </div>
+                        <div>
+                            <a href="##" class="btn btn-default">标签一</a>
+                            <a href="##" class="btn btn-default">标签一</a>
+                            <a href="##" class="btn btn-default">标签一</a>
+                        </div>
+                        <div>
+                            <label>毕业院校:</label>
+                            <span>中央美术学院</span>
+                        </div>
                     </div>
                 </div>
 
