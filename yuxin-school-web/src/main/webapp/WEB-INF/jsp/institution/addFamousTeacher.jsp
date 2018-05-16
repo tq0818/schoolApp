@@ -43,11 +43,11 @@
                 </div>
                 <div>
                     <span class="mechanismName">老师名称：</span>
-                    <input type="text" style="width: 460px;" maxlength="20">
+                    <input type="text" style="width: 460px;" maxlength="10">
                 </div>
                 <div>
                     <span class="mechanismName">毕业院校：</span>
-                    <input type="text" style="width: 460px;" maxlength="20">
+                    <input type="text" style="width: 460px;" maxlength="30">
                 </div>
                 <div>
                     <span>老师标签：</span>
@@ -60,7 +60,7 @@
                 <div>
                     <span class="mechanismName">老师简介：</span>
                     <p>
-                        <textarea name="" id=""  style="width: 390px;height: 84px;
+                        <textarea name="" id="" maxlength="300"  style="width: 390px;height: 84px;
                         border: 1px solid #aeaeae;margin-left: 70px;margin-top: 10px;" ></textarea>
                     </p>
                 </div>
