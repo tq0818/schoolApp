@@ -618,7 +618,8 @@
         <pattern>/InsInfoBase/famousTeacher</pattern>
         <!--机构评价管理列表-->
         <pattern>/InsInfoBase/evaluationList</pattern>
-
+        <!--添加老师-->
+        <pattern>/InsInfoBase/addFamousTeacher</pattern>
 
     </decorator>
 

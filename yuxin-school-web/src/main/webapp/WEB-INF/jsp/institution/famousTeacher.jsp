@@ -27,7 +27,7 @@
         <div class="mainbackground nopadding">
             <div class="heading">
                 <h2 class="h5" style="display: inline-block;margin-bottom: 10px;">名师管理</h2>
-                <a href="##" class="btn btn-primary" style="float: right;">添加教师</a>
+                <a href="/InsInfoBase/addFamousTeacher" class="btn btn-primary" style="float: right;">添加教师</a>
                 <span class="line"></span>
             </div>
             <div>

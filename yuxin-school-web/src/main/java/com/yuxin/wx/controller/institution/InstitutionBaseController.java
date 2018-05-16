@@ -73,7 +73,11 @@ public class InstitutionBaseController {
     public String evaluationList(){
         return "institution/evaluationList";
     }
-
+    //添加老师
+    @RequestMapping(value = "/addFamousTeacher")
+    public String addFamousTeacher(){
+        return "institution/addFamousTeacher";
+    }
 
 
 }
