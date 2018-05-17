@@ -202,14 +202,14 @@ public class InstitutionCategoryManageController {
         //示例图尺寸
         double slW=0;
         double slH=0;
-        if(realW/realH>186.57/300.00){
+        if(realW/realH>200/200){
             //过宽
-            slH=186.57 * realH/realW;
-            slW=186.57;
+            slH=200 * realH/realW;
+            slW=200;
         }else{
             //过高
-            slH=300;
-            slW=300 * realW/realH;
+            slH=200;
+            slW=200 * realW/realH;
         }
         //原图所选中位置和区域
 

@@ -1,3 +1,4 @@
+var jcrop_apis;
 $(function () {
     //选中二级菜单
     $selectSubMenu('classification');
@@ -20,7 +21,7 @@ $(function () {
     //隐藏
     $('.mienHide').click(function(){
         $('.coverPopup').hide();
-        $("#targetStyle").attr("src","");
+        $("#targetStyle").attr("src","").attr("style","");
     });
 
     $(".uploadImageStyle").on("change","#targetStyle", function() {
@@ -43,19 +44,113 @@ $(function () {
 
 
 
+    //初始化切图函数
 
-    //一级弹窗详情
-/*    $('.detailFirstPopupBtn').click(function () {
-        fillData("一级分类详情");
-    });*/
-    //二级分类弹窗
-/*    $('.addSeconPopupBtn').click(function () {
-        fillData("添加二级分类");
-    });*/
-    //二级分类详情
-/*    $('.detailSeconPopupBtn').click(function () {
-        fillData("二级分类详情");
-    });*/
+    var boundx, boundy, $preview, $preview2, $preview3, $pcnt, $pcnt2, $pcnt3, $pimg, $pimg2, $pimg3, $img,
+        xsize, xsize2, xsize3, ysize, ysize2, ysize3, minHeight, maxHeight, minWidth, maxWidth, $scale, sourceHeight, sourceWidth;
+    $.init=function(initW,initH,picFlag) {
+        $img = $("#targetStyle");
+
+        //初始化比列
+        $scale = 200/200;
+        maxHeight = 200;
+        maxWidth = 200;
+        minHeight = 20;
+        minWidth = 20;
+
+        sourceWidth=initW;
+        sourceHeight=initH;
+        var initSize=resizePic();
+        var jcrop_api;
+        var scale = parseInt(sourceWidth) / parseInt(sourceHeight)
+
+        jc=$img.Jcrop({
+            onChange : showCoords,
+            onSelect : showCoords,
+            onRelease: clearCoords,
+            aspectRatio : $scale,
+            allowMove : true,
+            bgColor : "#f2f2f2",
+            borderOpacity : 0.4,
+            maxSize : [ initSize.w, initSize.h ],
+            minSize : [ minWidth, minHeight ],
+            bgFade : true,
+            allowSelect : false,
+            allowResize : true,
+            sideHandles : false
+        }, function() {
+            jc=jcrop_api = this;
+            var bounds = this.getBounds();
+            console.log(bounds);
+            boundx = bounds[0];
+            boundy = bounds[1];
+            var scale = parseInt(sourceWidth) / parseInt(sourceHeight);// 长宽比例
+            var size = resizePic();
+            if (scale > $scale) {
+                jcrop_api.animateTo([0,0,boundx*$scale,boundy*$scale],function () {
+
+                })
+            } else {
+                jcrop_api.animateTo([0,0,boundx*scale,boundy*scale],function () {
+
+                })
+
+            }
+        });
+        jcrop_apis = jcrop_api;
+
+    }
+
+    function showCoords(c) {
+        $('#x').val(c.x);
+        $('#y').val(c.y);
+        $('#w').val(c.w);
+        $('#h').val(c.h);
+    }
+
+    function clearCoords() {
+        $('#x').val('');
+        $('#y').val('');
+        $('#w').val('');
+        $('#h').val('');
+    }
+
+    function resizePic() {
+        var h, w, ml, mt;
+        var scale = parseInt(sourceWidth) / parseInt(sourceHeight);// 长宽比例
+        if (scale > $scale) {
+            // 过宽,宽为100%，高按比例缩
+            h = maxWidth * sourceHeight/ sourceWidth;
+            w = maxWidth;
+            ml = 0;
+            mt = (maxHeight - h) / 2;
+            $img.css("height", h+"px").css("width", w+"px");
+            // 改左侧图大小
+            $('.jcrop-holder').find("img").css("height", h + "px").css("width", w + "px");
+
+        } else {
+            // 过高,高为100%，宽按比例缩
+            h = maxHeight;
+            w = maxHeight * sourceWidth/sourceHeight;
+            ml = (maxWidth - w) / 2;
+            mt = 0;
+            $img.css("height", h+"px").css("width", w+"px");
+            // 改左侧图大小
+            $('.jcrop-holder').find("img").css("height", h + "px").css("width", w + "px");
+
+        }
+        var c = {};
+        c.w = w;
+        c.h = h;
+        c.ml = ml;
+        c.mt = mt;
+        return c;
+    }
+
+    $(document).ready(function() {
+//		$.init(500,280);
+    })
+
 });
 /**
  * 查看详情
@@ -120,7 +215,7 @@ function queryAllData(pageNo){
         url: rootPath + "/insCateManage/queryAllInsCate",
         data: {
             page:pageNo,
-            pageSize:5
+            pageSize:12
         },beforeSend: function (XMLHttpRequest) {
             $(".loading").show();
             $(".loading-bg").show();
@@ -316,6 +411,9 @@ function saveCutPic() {
         $.msg("未选择图片");
         return ;
     }
+    var temp = $("#targetStyle").attr("style").split(";");
+    //处理剪切框的宽高
+    dealWidthAndHeight(temp);
     //上传截取后的图片
     $.ajax({
         url : rootPath + "/insCateManage/saveCutPic",
@@ -343,4 +441,25 @@ function saveCutPic() {
             }
         }
     })
+}
+
+//处理获取的图片像素
+function dealWidthAndHeight(temp){
+
+    var w = 0;
+    var h = 0;
+    for(var i=0;i<temp.length;i++){
+        if(temp[i].indexOf("width")!=-1){
+            w = temp[i].split(":")[1].replace("px","");
+        }
+        if(temp[i].indexOf("height")!=-1){
+            h = temp[i].split(":")[1].replace("px","");
+        }
+    }
+    if (parseFloat($("#w").val()) > parseFloat(w)){
+        $("#w").val(w);
+    }
+    if (parseFloat($("#h").val()) > parseFloat(h)){
+        $("#h").val(h);
+    }
 }

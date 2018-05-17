@@ -116,7 +116,6 @@
     <script type="text/javascript" src="<%=rootPath %>/plugins/jquery-validation/jquery.validate.js"></script>
     <script type="text/javascript" src="<%=rootPath%>/javascripts/common/DateUtils.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
-    <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/cutPic.js"></script>
     <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/ajaxfileuploadR.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/plugins/jcrop/js/jquery.Jcrop.js"></script>
     <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/classification.js"></script>
