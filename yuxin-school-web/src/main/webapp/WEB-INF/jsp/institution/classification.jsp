@@ -55,7 +55,7 @@
                     <tr data-buy="true">
                         <th width="3%">序号</th>
                         <th width="5%">一级分类</th>
-                        <th width="25%">二级分类</th>
+                        <th width="10%">二级分类</th>
                         <th width="5%">启用状态</th>
                         <th width="15%">操作</th>
                     </tr>
