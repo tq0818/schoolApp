@@ -9,6 +9,7 @@ import com.yuxin.wx.utils.FileUtil;
 import com.yuxin.wx.utils.PropertiesUtil;
 import com.yuxin.wx.utils.StringUtil;
 import com.yuxin.wx.utils.WebUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -236,4 +237,41 @@ public class InstitutionCategoryManageController {
         return json;
     }
 
+    /**
+     * 查询单条分类数据信息
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/querySingleInsCateByName",method=RequestMethod.POST)
+    public JSONObject querySingleInsCateByName(HttpServletRequest request){
+        JSONObject resultJson = new JSONObject();
+        Map<String,Object> params = new HashMap<String,Object>();
+        String codeName = request.getParameter("codeName");
+        String id = request.getParameter("id");
+        params.put("codeName",codeName);
+        InstitutionCategoryVo insCates = institutionCategoryManageServiceIml.queryInstitutionCategoryByCondition(params);
+
+        if(StringUtils.isNotBlank(id)){
+            if(null!=insCates){
+                //id相等说明是自己原有的分类名称
+                if(id.equals(String.valueOf(insCates.getId()))){
+                    resultJson.put("flag","0");
+                }else{
+                    //否则就是其他的  又重复
+                    resultJson.put("flag","1");
+                }
+            }else{
+                resultJson.put("flag","0");
+            }
+        }else{
+            if(null!=insCates){
+                //已经存在
+                resultJson.put("flag",1);
+            }else{
+                resultJson.put("flag","0");
+            }
+        }
+        return resultJson;
+    }
 }

@@ -77,7 +77,14 @@
         is_enable,
         img_url,
         code_level
-       from institution_category where id=#{id} limit 1
+       from institution_category where 1=1
+       <if test="id!=null and id!=''">
+           and id=#{id}
+       </if>
+        <if test="codeName!=null and codeName!=''">
+            and code_name=#{codeName}
+        </if>
+        limit 1
     </select>
     <!--修改分类信息-->
     <update id="update" parameterType="com.yuxin.wx.model.institution.InstitutionCategoryVo">

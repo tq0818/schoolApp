@@ -171,23 +171,38 @@ function updatedata(flag,id,enable){
     var imgUrl = $("#imgUrl").val();
     $.ajax({
         type:"POST",
-        url: rootPath + "/insCateManage/updateInsCate",
+        url: rootPath + "/insCateManage/querySingleInsCateByName",
         data: {
-           flag:flag,
-            ids:ids,
-            enable:enable,
-            codeName:codeName,
-            imgUrl:imgUrl
+            id:ids,
+            codeName:codeName
         },
         dataType: "json",
         success: function (data) {
             if(data.flag=='1'){
-                queryAllData($("#pageNo").val());
-                hideTk();
+                alert("该分类名称已经存在");
             }else{
-                if(flag=='1'){
-                    $.msg("禁用失败请稍后再试");
-                }
+                $.ajax({
+                    type:"POST",
+                    url: rootPath + "/insCateManage/updateInsCate",
+                    data: {
+                        flag:flag,
+                        ids:ids,
+                        enable:enable,
+                        codeName:codeName,
+                        imgUrl:imgUrl
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if(data.flag=='1'){
+                            queryAllData($("#pageNo").val());
+                            hideTk();
+                        }else{
+                            if(flag=='1'){
+                                $.msg("禁用失败请稍后再试");
+                            }
+                        }
+                    }
+                });
             }
         }
     });
@@ -213,26 +228,46 @@ function addData(parentId){
         return;
     }
     var imgUrl = $("#imgUrl").val();
+
+    //校验分类名称是否重复
     $.ajax({
         type:"POST",
-        url: rootPath + "/insCateManage/saveInsCate",
+        url: rootPath + "/insCateManage/querySingleInsCateByName",
         data: {
-            codeName:codeName,
-            imgUrl:imgUrl,
-            parentId:parentId
+            codeName:codeName
         },
         dataType: "json",
         success: function (data) {
             if(data.flag=='1'){
-                queryAllData($("#pageNo").val());
-                hideTk();
+                alert("该分类名称已经存在");
             }else{
-                if(flag=='1'){
-                    $.msg("禁用失败请稍后再试");
-                }
+                $.ajax({
+                    type:"POST",
+                    url: rootPath + "/insCateManage/saveInsCate",
+                    data: {
+                        codeName:codeName,
+                        imgUrl:imgUrl,
+                        parentId:parentId
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if(data.flag=='1'){
+                            queryAllData($("#pageNo").val());
+                            hideTk();
+                        }else{
+                            if(flag=='1'){
+                                $.msg("禁用失败请稍后再试");
+                            }
+                        }
+                    }
+                });
             }
         }
     });
+
+
+
+
 }
 
 function hideTk(){
