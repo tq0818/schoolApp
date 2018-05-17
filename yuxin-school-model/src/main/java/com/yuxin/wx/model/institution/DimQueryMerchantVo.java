@@ -6,8 +6,8 @@ import com.yuxin.wx.common.BaseModel;
 
 public class DimQueryMerchantVo extends BaseModel {
 	private Integer dealStatus;//处理状态
-	private Date leftTime;//左边录入的时间
-	private Date rightTime;//右边录入的时间
+	private String leftTime;//左边录入的时间
+	private String rightTime;//右边录入的时间
 	private String mobile;//手机号码
 	private String insName;//机构名称
 	private Integer dimFlag;//0表示带入的是左边的条件,1表示带入的是右边的条件
@@ -17,16 +17,17 @@ public class DimQueryMerchantVo extends BaseModel {
 	public void setDealStatus(Integer dealStatus) {
 		this.dealStatus = dealStatus;
 	}
-	public Date getLeftTime() {
+	
+	public String getLeftTime() {
 		return leftTime;
 	}
-	public void setLeftTime(Date leftTime) {
+	public void setLeftTime(String leftTime) {
 		this.leftTime = leftTime;
 	}
-	public Date getRightTime() {
+	public String getRightTime() {
 		return rightTime;
 	}
-	public void setRightTime(Date rightTime) {
+	public void setRightTime(String rightTime) {
 		this.rightTime = rightTime;
 	}
 	public String getMobile() {

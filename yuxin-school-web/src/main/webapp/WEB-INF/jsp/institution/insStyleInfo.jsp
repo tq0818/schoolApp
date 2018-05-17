@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="<%=rootPath %>/stylesheets/fonts/iconfont.css">
     <link rel="stylesheet" href="<%=rootPath %>/stylesheets/riseschool/schoolDetails.css">
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/mine.css">
-    <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
+   <%--  <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script> --%>
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/plugins/jcrop/css/jquery.Jcrop.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/mbox.css">
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/fatstyle.css">
@@ -29,25 +29,7 @@
                         </li>
                         <c:forEach var="schoolStyle" items="${result}" varStatus="status">
                         	<li>
-                           <%--  <c:choose>
-                                <c:when test="${status.index + 1 == 2 or status.index + 1 == 6}">
-                                    <li id="${schoolStyle.id}" class="noMargin">
-                                </c:when>
-                                <c:otherwise>
-                                    <li id="${schoolStyle.id}">
-                                </c:otherwise>
-                            </c:choose> --%>
                              <img src="${schoolStyle.imgUrl}" alt="" style="width: 100%;height: auto"  class="imgClick">
-                           <%--  <img src="${schoolStyle.imgUrl}" alt=""
-                            <c:choose  >
-                                <c:when test="${schoolStyle.imgType eq '2'}">
-                                    style="width: 100%;height: auto"
-                                </c:when>
-                                <c:otherwise>
-                                    style="width: auto;height: 100%"
-                                </c:otherwise>
-                            </c:choose>
-                            > --%>
                             <span class="imgInfo">${schoolStyle.content}</span>
                             <c:if test="${schoolStyle.isTop == 1}"><a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">已置顶</a></c:if>
                             <c:if test="${schoolStyle.isTop == 0}"><a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">未置顶</a></c:if>
@@ -60,6 +42,7 @@
                             </li>
                         </c:forEach>
                     </ul>
+               
 
 </body>
 </html>
@@ -87,6 +70,13 @@
     });
     $('.closeElePic').click(function () {
         $('#elegant').hide();
+        //移除剪切图插件对象
+        if (jcrop_apis){
+            jcrop_apis.destroy();
+        }
+        //关闭后将添加图片的格式框恢复原状
+        $(".picStyle").attr("src","").attr("style","").attr("style","width: 300px;height: 300px;");
+        $(".writeWord").val("");
     });
     //点击修改风采 btnStyleUpdate
     $('.btnStyleUpdate').click(function () {

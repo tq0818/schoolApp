@@ -16,15 +16,21 @@
 		 LIMIT #{firstIndex},#{pageSize}
 	</select>
 	
+	<select id="merchantEntryCount" resultType="java.lang.Integer">
+		SELECT count(1)
+		  FROM merchant_entry me
+		 ORDER by me.deal_status ASC,me.create_time DESC
+	</select>
+	
 	<update id="updateMerchanrEntry" parameterType="com.yuxin.wx.model.institution.MerchantEntryVo">
 		UPDATE merchant_entry
 	    <trim prefix="set" suffixOverrides=",">
-	   		<if test="dealStatus != null">deal_status = #{dealStatus}</if>
-	   		<if test="note != null and note !=''">note = #{note}</if>
-	   		<if test="updateTime != null">update_time = #{updateTime}</if>
+	   		<if test="dealStatus != null">deal_status = #{dealStatus},</if>
+	   		<if test="note != null and note !=''">note = #{note},</if>
+	   		<if test="updateTime != null">update_time = #{updateTime},</if>
 	    </trim>
 		<where>
-		 WHERE id = #{id}
+		 id = #{id}
 		</where>
 	</update>
 	
@@ -40,9 +46,9 @@
 		 WHERE 1=1
 		  <if test="dimFlag == 0">
 		  	<if test="dealStatus != null">and me.deal_status = #{dealStatus}</if>
-		  	<if test="leftTime != null and rightTime == null"><![CDATA[and DATE_FORMAT(me.create_time,"%Y-%m-%d") >= DATE_FORMAT(#{leftTime},"%Y-%m-%d")]]></if>
-		  	<if test="leftTime != null and rightTime != null">and DATE_FORMAT(me.create_time,"%Y-%m-%d") DATE_FORMAT(#{leftTime} and DATE_FORMAT(#{rightTime},"%Y-%m-%d")</if>
-		  	<if test="leftTime == null and rightTime != null">and DATE_FORMAT(me.create_time,"%Y-%m-%d") = DATE_FORMAT(#{rightTime},"%Y-%m-%d")</if>
+		  <if test="leftTime != null and leftTime !='' and (rightTime == null or rightTime == '')"><![CDATA[and DATE_FORMAT(me.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{leftTime},"%Y-%m-%d")]]></if>
+		  	<if test="leftTime != null and leftTime !='' and rightTime != null and rightTime !=''">and DATE_FORMAT(me.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{leftTime},"%Y-%m-%d") and STR_TO_DATE(#{rightTime},"%Y-%m-%d")</if>
+		  	<if test="(leftTime == null or leftTime =='') and rightTime != null and rightTime !=''">and DATE_FORMAT(me.create_time,"%Y-%m-%d") = STR_TO_DATE(#{rightTime},"%Y-%m-%d")</if>
 		  </if>
 		  <if test="dimFlag == 1">
 		  	<if test="mobile != null and mobile != ''">and mobile like '%${mobile}%'</if>
@@ -50,6 +56,23 @@
 		  </if>
 		 ORDER BY me.deal_status ASC,me.create_time DESC
 		 LIMIT #{firstIndex},#{pageSize}
+	</select>
+	
+	<select id="dimMerchantEntryCount" parameterType="com.yuxin.wx.model.institution.DimQueryMerchantVo" resultType="java.lang.Integer">
+		SELECT count(1)
+		  FROM merchant_entry me
+		 WHERE 1=1
+		  <if test="dimFlag == 0">
+		  	<if test="dealStatus != null">and me.deal_status = #{dealStatus}</if>
+		  	<if test="leftTime != null and leftTime !='' and (rightTime == null or rightTime == '')"><![CDATA[and DATE_FORMAT(me.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{leftTime},"%Y-%m-%d")]]></if>
+		  	<if test="leftTime != null and leftTime !='' and rightTime != null and rightTime !=''">and DATE_FORMAT(me.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{leftTime},"%Y-%m-%d") and STR_TO_DATE(#{rightTime},"%Y-%m-%d")</if>
+		  	<if test="(leftTime == null or leftTime =='') and rightTime != null and rightTime !=''">and DATE_FORMAT(me.create_time,"%Y-%m-%d") = STR_TO_DATE(#{rightTime},"%Y-%m-%d")</if>
+		  </if>
+		  <if test="dimFlag == 1">
+		  	<if test="mobile != null and mobile != ''">and mobile like '%${mobile}%'</if>
+		  	<if test="insName != null and insName != ''">and ins_name like '%${insName}%'</if>
+		  </if>
+		 ORDER BY me.deal_status ASC,me.create_time DESC
 	</select>
 
 	<select id="queryCount" resultType="Integer">

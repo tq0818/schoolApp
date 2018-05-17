@@ -1,14 +1,16 @@
 package com.yuxin.wx.institution.impl;
 
-import com.yuxin.wx.api.institution.MerchantEntryService;
-import com.yuxin.wx.common.BaseServiceImpl;
-import com.yuxin.wx.common.PageFinder;
-import com.yuxin.wx.institution.mapper.MerchantEntryMapper;
-import com.yuxin.wx.model.institution.MerchantEntryVo;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.yuxin.wx.api.institution.MerchantEntryService;
+import com.yuxin.wx.common.BaseServiceImpl;
+import com.yuxin.wx.institution.mapper.MerchantEntryMapper;
+import com.yuxin.wx.model.institution.DimQueryMerchantVo;
+import com.yuxin.wx.model.institution.MerchantEntryVo;
 
 @Service
 @Transactional
@@ -22,7 +24,7 @@ public class MerchantEntryServiceImpl extends BaseServiceImpl implements Merchan
     }
 
 	@Override
-	public PageFinder<MerchantEntryVo> queryMerchantEntry(MerchantEntryVo merchantEntryVo) {
+	public List<MerchantEntryVo> queryMerchantEntry(MerchantEntryVo merchantEntryVo) {
 		return merchantEntryMapper.queryMerchantEntry(merchantEntryVo);
 	}
 
@@ -34,6 +36,16 @@ public class MerchantEntryServiceImpl extends BaseServiceImpl implements Merchan
 	@Override
 	public Integer queryCount() {
 		return merchantEntryMapper.queryCount();
+	}
+
+	@Override
+	public Integer dimMerchantEntryCount(DimQueryMerchantVo merchantEntryVo) {
+		return merchantEntryMapper.dimMerchantEntryCount(merchantEntryVo);
+	}
+
+	@Override
+	public List<MerchantEntryVo> dimMerchantEntry(DimQueryMerchantVo merchantEntryVo) {
+		return merchantEntryMapper.dimMerchantEntry(merchantEntryVo);
 	}
 
 

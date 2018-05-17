@@ -2,6 +2,8 @@ package com.yuxin.wx.controller.institution;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +20,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,7 +29,16 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yuxin.wx.api.riseschool.InstitutionStyleService;
+import com.yuxin.wx.common.CCVideoConstant;
+import com.yuxin.wx.common.Constant;
+import com.yuxin.wx.common.JsonMsg;
+import com.yuxin.wx.model.company.CompanyPayConfig;
+import com.yuxin.wx.model.course.Video;
+import com.yuxin.wx.model.course.VideoTag;
 import com.yuxin.wx.model.institution.InstitutionStyle;
+import com.yuxin.wx.model.user.Users;
+import com.yuxin.wx.util.APIServiceFunction;
+import com.yuxin.wx.util.HttpPostRequest;
 import com.yuxin.wx.util.ImageUtils;
 import com.yuxin.wx.utils.FileUtil;
 import com.yuxin.wx.utils.PropertiesUtil;
@@ -121,13 +133,7 @@ public class InstitutionStyleController {
         model.addAttribute("relationId", institutionStyle.getRelationId());
 		return "/institution/insStyleInfo";
     }
-	//上传图片
-	//新增风采图
-	//添加视频
-	//修改风采图
-	//修改视频
-	//删除风采图
-	//回写视频中的状态
+	
 	/**
      * 上传图片 上传临时图片 2为风采  1为视频 0为封面
      * @param request
@@ -305,4 +311,160 @@ public class InstitutionStyleController {
     	institutionStyleServiceImpl.deleteInsStyle(primaryId);
     	return "success";
     }
+   //判断视频大小 
+  //添加视频
+  //回写视频中的状态
+    /**
+     * @Description: 判断当前上传的文件是否大于所剩的空间大小
+     * @author wzx
+     * @date 2015-6-12 下午4:09:36
+     * @version 1.0
+     * @param request
+     * @param totalSize
+     * @return
+     */
+//    @ResponseBody
+//    @RequestMapping(value = "judgeVideoStorage", method = RequestMethod.POST)
+//    public String judgeVideoStorage(HttpServletRequest request, String totalSize) {
+//        Users user = WebUtils.getCurrentUser();
+//        if (user == null) {
+//            return "fail";
+//        }
+//        Integer companyId = user.getCompanyId();
+//        CompanyPayConfig config = this.companyPayConfigService.findByCompanyId(companyId);
+//        long time = System.currentTimeMillis();
+//        String salt = config.getCcApiKey();
+//
+//        // 获取当前视频是否满足空间大小条件
+//        String videoInfo = this.getCCVideoUserInfo(config, totalSize, companyId, time, salt);
+//        if ("over_storage".equals(videoInfo) || "date_over".equals(videoInfo)) {
+//            return videoInfo;
+//        }
+//        return "no_storage";
+//    }
+//    
+//    /**
+//     * @Description: H5异步上传视频
+//     * @author zx
+//     * @date 2015-7-22 下午4:35:08
+//     * @version 1.0
+//     * @param request
+//     * @param fileName
+//     * @param fileSize
+//     * @param tag
+//     * @param itemOneId
+//     * @param itemSecondId
+//     * @return
+//     */
+//    @ResponseBody
+//    @RequestMapping(value = "upload", method = RequestMethod.POST)
+//    public String uploadVieo(HttpServletRequest request, String fileName, String fileSize, String tag, Integer itemOneId, Integer itemSecondId) {
+//        Users user = WebUtils.getCurrentUser();
+//        if (user == null) {
+//            return "fail";
+//        }
+//
+//        Integer companyId = user.getCompanyId();
+//
+//        CompanyPayConfig config = this.companyPayConfigService.findByCompanyId(companyId);
+//
+//        this.log.info("CC视频上传，当前公司ID：" + companyId + ", 对应的配置信息为：" + config);
+//
+//        String description = fileName;
+//        String notify_url = this.propertiesUtil.getHostUrl() + "/video/ccNotify";
+//        String format = "json";
+//        long time = System.currentTimeMillis();
+//        String salt = config.getCcApiKey();
+//
+//        // 获取当前视频是否满足空间大小条件
+//        String videoInfo = this.getCCVideoUserInfo(config, fileSize, companyId, time, salt);
+//        this.log.info("CC视频上传，当前公司ID：" + companyId + ", 当前公司视频的使用情况：" + videoInfo);
+//        if ("over_storage".equals(videoInfo) || "date_over".equals(videoInfo)) {
+//            return videoInfo;
+//        }
+//        // 创建视频ID接口
+//        String url = CCVideoConstant.CC_VIDEO_CREATE;
+//
+//        String title = fileName;
+//        Map<String, String> paramsMap = new HashMap<String, String>();
+//        paramsMap.put("userid", config.getCcUserId());
+//        paramsMap.put("title", title);// new
+//                                      // String(title.getBytes("ISO-8859-1"),
+//                                      // "UTF-8"));
+//        paramsMap.put("tag", tag);// new String(tag.getBytes("ISO-8859-1"),
+//                                  // "UTF-8"));
+//        paramsMap.put("description", description);// new
+//                                                  // String(description.getBytes("ISO-8859-1"),
+//                                                  // "UTF-8"));
+//        paramsMap.put("filename", fileName);
+//        paramsMap.put("filesize", fileSize);
+//        paramsMap.put("notify_url", notify_url);
+//        paramsMap.put("format", format);
+//
+//        String hash = APIServiceFunction.createHashedQueryString(paramsMap, time, salt);
+//
+//        this.log.info("CC视频上传，当前公司ID：" + companyId + ", hash为：" + hash);
+//
+//        url += hash;
+//        String detail;
+//
+//        NumberFormat nf = new DecimalFormat("###0.0");
+//
+//        try {
+//            detail = HttpPostRequest.get(url);
+//            Integer index = detail.indexOf("videoid");
+//
+//            this.log.info("CC视频上传，当前公司ID：" + companyId + ", detail为：" + detail);
+//            // 将字符串转换为json对象，获取cc视频的ID，保存到数据库中
+//            if (index > 0) {
+//                // 保存到视频表中
+//                Video video = new Video();
+//
+//                video.setCompanyId(user.getCompanyId());
+//                video.setItemOneId(itemOneId);
+//                video.setItemSecondId(itemSecondId);
+//                video.setStorageType("VIDEO_STORAGE_TYPE_CC");
+//                String fileSizeM = nf.format(Double.parseDouble(fileSize) / 1024 / 1024);
+//                video.setVodeoSize(Double.parseDouble(fileSizeM));
+//                video.setVideoName(fileName.substring(0, fileName.lastIndexOf(".")));
+//                video.setVideoTag(tag);
+//                video.setCreateTime(new Date());
+//                video.setCreator(user.getId());
+//                video.setSchoolId(user.getSchoolId());
+//                video.setVideoCcId(detail.substring(index + 10, index + 42));
+//                video.setVideoStatus(Constant.VIDEO_PROCESS_UPLOAD);
+//                video.setOriginType(1);
+//                this.videoServiceImpl.insert(video);
+//
+//                VideoTag vTag = new VideoTag();
+//                vTag.setCompanyId(companyId);
+//                vTag.setTagName(tag);
+//                List<VideoTag> tags = this.videoTagServiceImpl.findVideoTagByPage(vTag);
+//                if (tags == null || (tags != null && tags.size() == 0)) {
+//                    this.videoTagServiceImpl.insert(vTag);
+//                }
+//                return detail;
+//            } else {
+//                return null;
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return "fail";
+//        }
+//    }
+//    
+//    @ResponseBody
+//    @RequestMapping(value = "/udpateStatus/{ccvid}", method = RequestMethod.POST)
+//    public String udpateStatus(@PathVariable String ccvid) {
+//        Video video = new Video();
+//        video.setVideoCcId(ccvid);
+//        List<Video> videos = this.videoServiceImpl.findVideoByPage(video);
+//        if (videos != null && videos.size() > 0) {
+//            Video video1 = videos.get(0);
+//            video1.setVideoStatus(Constant.VIDEO_PROCESS_INHAND);
+//            this.videoServiceImpl.update(videos.get(0));
+//        }
+//        return JsonMsg.SUCCESS;
+//    }
 }
+

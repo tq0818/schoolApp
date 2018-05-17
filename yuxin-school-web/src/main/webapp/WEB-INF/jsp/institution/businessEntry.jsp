@@ -20,6 +20,7 @@
         .pages li.disabled{padding:0px;}
         .userVideoListNew select{width: 180px;margin-right: 10px;}
     </style>
+     <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/institution/businessEntry.css">
 </head>
 <body>
@@ -33,13 +34,13 @@
                 <h2 class="h5">商家入驻申请</h2>
                 <span class="line"></span>
             </div>
-
+            <input id="dimFlag" value="" type="hidden" />
             <form method="post" id="searchForm" class="userVideoListNew">
                     <div class="marginTop10 changeBtn" >
                         <span>处理状态</span>
-                        <a href="##" class="btn btn-default btn-primary">全部</a>
-                        <a href="##" class="btn btn-default ">已处理</a>
-                        <a href="##" class="btn btn-default ">未处理</a>
+                        <a href="javascript:void(0)" class="btn btn-default btn-primary" data-value="2">全部</a>
+                        <a href="javascript:void(0)" class="btn btn-default " data-value="1">已处理</a>
+                        <a href="javascript:void(0)" class="btn btn-default " data-value="0">未处理</a>
                     </div>
                     <div class="marginTop10  "  >
                         <span>申请时间</span>
@@ -48,39 +49,13 @@
                         <em>到</em>
                         <input type="text" name="endTime" id="endTime" class="date-picker to"  readonly/>
 
-                        <input type="text" placeholder="手机号"/>
-                        <input type="text" placeholder="机构名称"/>
-                        <span><a href="javascript:void(0);" class="btn btn-primary" style="margin: 0 20px;">搜索</a></span>
+                        <input type="text" placeholder="手机号" id="dimMobile"/>
+                        <input type="text" placeholder="机构名称" id="dimInstitu"/>
+                        <span><a href="javascript:dimMerchantEntry(1);" class="btn btn-primary" style="margin: 0 20px;">搜索</a></span>
 
                     </div>
             </form>
             <div class="user-list">
-                <table class="table table-center" id="tableList">
-                    <tr data-buy="true">
-                        <th width="3%">序号</th>
-                        <th width="5%">手机号</th>
-                        <th width="5%">机构名称</th>
-                        <th width="5%">提交时间</th>
-                        <th width="5%">处理状态</th>
-                        <th width="5%">备注</th>
-                        <th width="5%">操作</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>18623235314</td>
-                        <td>九方美术培训学校</td>
-                        <td>2018-3-3 12:31</td>
-                        <td>未处理</td>
-                        <td class="addRemarks">备注</td>
-                        <td>
-                            <a href="##">切换状态</a>|
-                            <a href="##" class="addRemarks">添加备注</a>
-                        </td>
-                    </tr>
-
-                </table>
-                <div class="pages pagination">
-                </div>
             </div>
         </div>
     </div>
@@ -93,16 +68,16 @@
     <!--  ajax加载中div结束 -->
     <%--添加备注弹窗    --%>
     <div class="remarks">
-        <textarea name="" id="" placeholder="请输入备注信息"></textarea>
+        <textarea name="" id="content" placeholder="请输入备注信息"></textarea>
+        <input id="updateId" type="hidden" value=""/>
         <div class="remarksBtn">
-            <a href="##" class="btn btn-primary">取消</a>
-            <a href="##" class="btn btn-primary">保存</a>
+            <a href="javascript:void(0)" class="btn btn-primary">取消</a>
+            <a href="javascript:updateMerchantEntryT()" class="btn btn-primary" id="updateNote">保存</a>
         </div>
     </div>
 
     <script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
-    <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/plugins/jquery-validation/jquery.validate.js"></script>
     <script type="text/javascript" src="<%=rootPath%>/javascripts/common/DateUtils.js"></script>
     <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>

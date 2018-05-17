@@ -129,7 +129,7 @@
     </div>
     <div>
         <span class="videoIntro">视频名称:</span>
-        <input type="text" style="width: 248px;height: 24px;">
+        <input type="text" style="width: 248px;height: 24px;" class="videoStlye">
         <a href="##" class="addVideo">
             +
             <input type="file">
@@ -148,7 +148,7 @@
 <div class="elePic" id='elegant'>
     <h5>风采图片</h5>
     <div>
-        <img src="" alt="" style="width: 300px;height: 300px;" id="targetStyle">
+        <img src="" alt="" style="width: 300px;height: 300px;" id="targetStyle" class="picStyle">
         <br/>
         <a href="##" class="addPic" style="margin-top: 5px;margin-bottom: 20px;">
             选择图片
@@ -168,7 +168,7 @@
 <div class="elePic" id='cover' style="height: 500px;">
     <h5>封面图片</h5>
     <div>
-        <img src="" alt="" style="width: 300px;height: 300px;" id="target">
+        <img src="" alt="" style="width: 300px;height: 300px;" id="target" class="picStyle">
         <br/>
         <a href="##" class="addPic" style="margin-top: 5px;margin-bottom: 20px;">
            选择图片

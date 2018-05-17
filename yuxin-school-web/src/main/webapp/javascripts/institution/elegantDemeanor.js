@@ -7,6 +7,13 @@ $(function () {
     });
     $('.closeVideoUpload').click(function () {
         $('.videoUpload').hide();
+        //移除剪切图插件对象
+        if (jcrop_apis){
+            jcrop_apis.destroy();
+        }
+        $("#targetVideo").attr("src","").attr("style","").attr("style","width: 136px;height: 116px;");
+        $(".writeWord").val("");
+        $(".videoStlye").val("");
     });
 
     //点击风采上传弹窗
@@ -176,6 +183,11 @@ function saveCutPic(saveFlag) {
             $.msg("未选择图片");
             return ;
         }
+        //判断视频名称和视频描述是否为空
+        if(!$(".videoStyle").val()||!$("#videoContent").text()){
+        	$.msg("有必录项未录入");
+        	return ;
+        }
         //处理重复提交
 //        if(!id){
 //        	if(countAdd != 0){
@@ -215,7 +227,8 @@ function saveCutPic(saveFlag) {
             type:saveFlag,// 0 封面 1视频 2风采
             windowFlag:windowFlag,
             updateId:id,
-            cssStyle:$("#btnOne").hasClass("btn-primary")?0:1
+            name:saveFlag == 1?$(".videoStyle").val():""
+//            cssStyle:$("#btnOne").hasClass("btn-primary")?0:1
         },
         type : "post",
         dataType : "json",
@@ -241,14 +254,14 @@ function saveCutPic(saveFlag) {
             }else {
                 $.msg(data.msg);
             }
-            $("#btnOne").hide();
-            $("#btnTwo").hide();
+//            $("#btnOne").hide();
+//            $("#btnTwo").hide();
             if (jcrop_apis){
                 jcrop_apis.destroy();
             }
-            $('.opacityPopup').fadeOut();
-            $('.commonPopup').fadeOut();
-            $('.coverPopup').fadeOut();
+//            $('.opacityPopup').fadeOut();
+//            $('.commonPopup').fadeOut();
+//            $('.coverPopup').fadeOut();
         }
     })
     $("#chooseDiv").css("display", "none");
