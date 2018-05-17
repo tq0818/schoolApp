@@ -136,123 +136,87 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
     }
 
     @Override
+    @Transactional
     public void updateInsById(InstitutionInfoVo institutionInfoVo) {
         institutionInfoMapper.update(institutionInfoVo);
-        //修改已存在三类标签
-        //系统标签
-        InstitutionLabelVo insLabel = new InstitutionLabelVo();
+        //删除原机构分类
+        institutionRelationMapper.delete(institutionInfoVo.getId());
+        //删除原系统标签,自定义标签,原特色服务标签
+        institutionLabelMapper.deleteByInsId(institutionInfoVo.getId());
+
         Date date = new Date();
-        if(null != institutionInfoVo.getSysLabelIds() && !"".equals(institutionInfoVo.getSysLabelIds())){
-            String sysLabelIds = institutionInfoVo.getSysLabelIds().substring(0,institutionInfoVo.getSysLabelIds().lastIndexOf(","));
-            String sysLables = institutionInfoVo.getSysLabel().substring(0,institutionInfoVo.getSysLabel().lastIndexOf(","));
-            String [] sysLabelIdsArr = sysLabelIds.split(",");
-            String [] sysLablesArr = sysLables.split(",");
-            for(int i = 0; i<sysLabelIdsArr.length; i++){
-                insLabel.setId(Integer.parseInt(sysLabelIdsArr[i]));
-                insLabel.setRelationId(institutionInfoVo.getId());
-                insLabel.setLabelName(sysLablesArr[i]);
-                insLabel.setLabelType("0");
-                insLabel.setSourceFlag(0);
-                insLabel.setUpdateTime(date);
-                institutionLabelMapper.update(insLabel);
-            }
-
+        //插入新机构分类
+        String [] catOne=null;
+        String [] catTwo=null;
+        if(null != institutionInfoVo.getOneLevelId() && !"".equals(institutionInfoVo.getOneLevelId())){
+            catOne = institutionInfoVo.getOneLevelId().split(",");
+        }
+        if(null != institutionInfoVo.getTwoLevelId() && !"".equals(institutionInfoVo.getTwoLevelId())){
+            catTwo = institutionInfoVo.getTwoLevelId().split(",");
         }
 
-        //自定义标签
-        if(null != institutionInfoVo.getCustomLabelIds() && !"".equals(institutionInfoVo.getCustomLabelIds())){
-            String customLableIds = institutionInfoVo.getCustomLabelIds().substring(0,institutionInfoVo.getCustomLabelIds().lastIndexOf(","));
-            String customLables = institutionInfoVo.getCustomLabel().substring(0,institutionInfoVo.getCustomLabel().lastIndexOf(","));
-            String [] customLableIdsArr = customLableIds.split(",");
-            String [] customLablesArr = customLables.split(",");
-            for(int i = 0; i<customLableIdsArr.length; i++){
-                insLabel.setId(Integer.parseInt(customLableIdsArr[i]));
-                insLabel.setRelationId(institutionInfoVo.getId());
-                insLabel.setLabelName(customLablesArr[i]);
-                insLabel.setLabelType("1");
-                insLabel.setSourceFlag(0);
-                insLabel.setUpdateTime(date);
-                institutionLabelMapper.update(insLabel);
+        //插入机构分类关系表
+        InstitutionRelationVo institutionRelationVo = new InstitutionRelationVo();
+        for(int i =0;i<catOne.length;i++){
+            institutionRelationVo.setId(null);
+            institutionRelationVo.setInsId(institutionInfoVo.getId());
+            institutionRelationVo.setOneLevelId(Integer.parseInt(catOne[i]));
+            institutionRelationVo.setTwoLevelId(Integer.parseInt(catTwo[i]));
+            institutionRelationMapper.insert(institutionRelationVo);
+        }
+        //插入新系统标签
+        InstitutionLabelVo institutionLabelVo = new InstitutionLabelVo();
+        if(null != institutionInfoVo.getSysLabel() && !"".equals(institutionInfoVo.getSysLabel())){
+            String labels = institutionInfoVo.getSysLabel().substring(0,institutionInfoVo.getSysLabel().lastIndexOf(","));
+            String[] labelArr = labels.split(",");//标签数组
+            //插入机构标签表
+            for(int i =0;i<labelArr.length;i++){
+                institutionLabelVo.setId(null);
+                institutionLabelVo.setCreateTime(date);
+                institutionLabelVo.setUpdateTime(date);
+                institutionLabelVo.setLabelType("0");
+                institutionLabelVo.setLabelName(labelArr[i]);
+                institutionLabelVo.setSourceFlag(0);
+                institutionLabelVo.setRelationId(institutionInfoVo.getId());//机构主键
+
+                institutionLabelMapper.insert(institutionLabelVo);
             }
         }
+        //插入新自定义标签
+        if(null != institutionInfoVo.getCustomLabel() && !"".equals(institutionInfoVo.getCustomLabel())){
+            String labels = institutionInfoVo.getCustomLabel().substring(0,institutionInfoVo.getCustomLabel().lastIndexOf(","));
+            String[] labelArr = labels.split(",");//标签数组
+            //插入机构标签表
+            for(int i =0;i<labelArr.length;i++){
+                institutionLabelVo.setId(null);
+                institutionLabelVo.setCreateTime(date);
+                institutionLabelVo.setUpdateTime(date);
+                institutionLabelVo.setLabelType("1");
+                institutionLabelVo.setLabelName(labelArr[i]);
+                institutionLabelVo.setSourceFlag(0);
+                institutionLabelVo.setRelationId(institutionInfoVo.getId());//机构主键
 
-        //特殊服务
-        if(null != institutionInfoVo.getSpecialServiceIds() && !"".equals(institutionInfoVo.getSpecialServiceIds())){
-            String specialServiceIds = institutionInfoVo.getSpecialServiceIds().substring(0,institutionInfoVo.getSpecialServiceIds().lastIndexOf(","));
-            String specialServices = institutionInfoVo.getSpecialService().substring(0,institutionInfoVo.getSpecialService().lastIndexOf(","));
-            String [] imgUrlsArr = null;
-            if(null != institutionInfoVo.getImgUrl() && !"".equals(institutionInfoVo.getImgUrl())){
-                String imgUrls = institutionInfoVo.getImgUrl().substring(0,institutionInfoVo.getImgUrl().lastIndexOf(","));
-                imgUrlsArr = imgUrls.split(",");
-            }
-            String [] specialServiceIdsArr = specialServiceIds.split(",");
-            String [] specialServicesArr = specialServices.split(",");
-            for(int i = 0; i<specialServiceIdsArr.length; i++){
-                insLabel.setId(Integer.parseInt(specialServiceIdsArr[i]));
-                insLabel.setRelationId(institutionInfoVo.getId());
-                insLabel.setLabelName(specialServicesArr[i]);
-                insLabel.setLabelType("2");
-                insLabel.setSourceFlag(0);
-                if(null != imgUrlsArr && !"".equals(imgUrlsArr[i])){
-                    insLabel.setImgUrl(imgUrlsArr[i]);
-                }
-                insLabel.setUpdateTime(date);
-                institutionLabelMapper.update(insLabel);
+                institutionLabelMapper.insert(institutionLabelVo);
             }
         }
+        //插入新特色服务标签
+        if(null != institutionInfoVo.getImgUrl() && !"".equals(institutionInfoVo.getImgUrl())){
+            String labels = institutionInfoVo.getImgUrl().substring(0,institutionInfoVo.getImgUrl().lastIndexOf(","));
+            String[] labelArr = labels.split(",");//标签数组
+            String labels2 = institutionInfoVo.getSpecialService().substring(0,institutionInfoVo.getSpecialService().lastIndexOf(","));
+            String[] labelArr2 = labels2.split(",");//标签数组
+            //插入机构标签表
+            for(int i =0;i<labelArr.length;i++){
+                institutionLabelVo.setId(null);
+                institutionLabelVo.setCreateTime(date);
+                institutionLabelVo.setUpdateTime(date);
+                institutionInfoVo.setImgUrl(labelArr[i]);
+                institutionLabelVo.setLabelType("2");
+                institutionLabelVo.setLabelName(labelArr2[i]);
+                institutionLabelVo.setSourceFlag(0);
+                institutionLabelVo.setRelationId(institutionInfoVo.getId());//机构主键
 
-
-        //插入新增的标签
-        //系统标签
-        if(null != institutionInfoVo.getSysLabelNew() && !"".equals(institutionInfoVo.getSysLabelNew())){
-            String sysLabelNews = institutionInfoVo.getSysLabelNew().substring(0,institutionInfoVo.getSysLabelNew().lastIndexOf(","));
-            String [] sysLableNewArr = sysLabelNews.split(",");
-            for(int i = 0; i<sysLableNewArr.length;i++){
-                insLabel.setRelationId(institutionInfoVo.getId());
-                insLabel.setLabelName(sysLableNewArr[i]);
-                insLabel.setLabelType("0");
-                insLabel.setSourceFlag(0);
-                insLabel.setCreateTime(date);
-                insLabel.setUpdateTime(date);
-                institutionLabelMapper.insert(insLabel);
-            }
-        }
-
-        //自定义标签
-        if(null != institutionInfoVo.getCustomLabelNew() && !"".equals(institutionInfoVo.getCustomLabelNew())){
-            String customLabelNews = institutionInfoVo.getCustomLabelNew().substring(0,institutionInfoVo.getCustomLabelNew().lastIndexOf(","));
-            String [] customLabelNewsArr = customLabelNews.split(",");
-            for(int i = 0; i<customLabelNewsArr.length;i++){
-                insLabel.setRelationId(institutionInfoVo.getId());
-                insLabel.setLabelName(customLabelNewsArr[i]);
-                insLabel.setLabelType("1");
-                insLabel.setSourceFlag(0);
-                insLabel.setCreateTime(date);
-                insLabel.setUpdateTime(date);
-                institutionLabelMapper.insert(insLabel);
-            }
-        }
-
-        //特殊服务
-        if(null != institutionInfoVo.getSpecialServiceNew() && !"".equals(institutionInfoVo.getSpecialServiceNew())){
-            String specialServiceNews = institutionInfoVo.getSpecialServiceNew().substring(0,institutionInfoVo.getSpecialServiceNew().lastIndexOf(","));
-            String [] specialServiceNewsArr = specialServiceNews.split(",");
-            String [] imgUrlsArr = null;
-            if(null != institutionInfoVo.getImgUrlNew() && !"".equals(institutionInfoVo.getImgUrlNew())){
-                String imgUrls = institutionInfoVo.getImgUrlNew().substring(0,institutionInfoVo.getImgUrlNew().lastIndexOf(","));
-                imgUrlsArr = imgUrls.split(",");
-            }
-            for(int i = 0; i<specialServiceNewsArr.length;i++){
-                insLabel.setRelationId(institutionInfoVo.getId());
-                insLabel.setLabelName(specialServiceNewsArr[i]);
-                insLabel.setLabelType("2");
-                insLabel.setSourceFlag(0);
-                if(null != imgUrlsArr && !"".equals(imgUrlsArr[i])){
-                    insLabel.setImgUrl(imgUrlsArr[i]);
-                }
-                insLabel.setCreateTime(date);
-                insLabel.setUpdateTime(date);
-                institutionLabelMapper.insert(insLabel);
+                institutionLabelMapper.insert(institutionLabelVo);
             }
         }
     }

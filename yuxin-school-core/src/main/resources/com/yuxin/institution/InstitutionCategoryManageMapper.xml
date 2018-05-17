@@ -10,6 +10,7 @@
         <result property="imgUrl" column="img_url" />
         <result property="codeLevel" column="code_level" />
         <result property="sort" column="sort" />
+        <result property="parentId" column="parent_id" />
     </resultMap>
 
     <!-- 推荐机构管理-首页分类推荐列表 by Liutr -->
@@ -101,6 +102,10 @@
 
     <select id="findFistCategorys" resultMap="queryCateData"  parameterType="map">
         select id, code_name from institution_category where code_level = 1 and code_type = 0 and is_enable = 1
+    </select>
+
+    <select id="findSecondCategorys" resultMap="queryCateData"  parameterType="map">
+        select id, code_name,parent_id from institution_category where code_level = 2 and code_type = 0 and is_enable = 1
     </select>
 
     <select id="findCecondCategorys" resultMap="queryCateData"  parameterType="Integer">

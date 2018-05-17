@@ -26,6 +26,12 @@ public interface InstitutionLabelMapper {
     void deleteInstitutionLabelById(Integer id);
 
     /**
+     * 根据机构id删除
+     * @param id
+     */
+    void deleteByInsId(Integer id);
+
+    /**
      * 根据机构id查找系统标签
      * @param id
      * @return

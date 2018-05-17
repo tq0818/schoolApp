@@ -54,9 +54,14 @@
         <where>id = #{id}</where>
     </update>
 
-    <delete id="delete">
+    <delete id="delete" parameterType="Integer">
         delete from institution_label
 		where id = #{id}
+    </delete>
+
+    <delete id="deleteByInsId" parameterType="Integer">
+        delete from institution_label
+		where source_flag = 0 and relation_id = #{id}
     </delete>
 
     <select id="findSysLabelByInsId" parameterType="Integer" resultMap="institutionLabelMap">

@@ -52,6 +52,8 @@ public interface InstitutionCategoryService {
      */
     List<InstitutionCategoryVo> findFistCategorys();
 
+    List<InstitutionCategoryVo> findSecondCategorys();
+
     List<InstitutionCategoryVo> findCecondCategorys(Integer id);
 
 
