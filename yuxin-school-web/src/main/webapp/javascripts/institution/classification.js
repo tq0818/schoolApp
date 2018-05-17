@@ -12,6 +12,38 @@ $(function () {
         fillData("添加一级分类");
         $("#addConfirm").attr("onclick","addData();");
     });
+    $(".btnFile").click(function(){
+        $(".coverPopup").show();
+    });
+    //选择icon插件
+
+    //隐藏
+    $('.mienHide').click(function(){
+        $('.coverPopup').hide();
+        $("#targetStyle").attr("src","");
+    });
+
+    $(".uploadImageStyle").on("change","#targetStyle", function() {
+        var theImage = new Image();
+        console.log($(this).attr("src"));
+        theImage.src = $(this).attr("src");
+        if (theImage.complete) {
+            sourceHeight = theImage.height;
+            sourceWidth = theImage.width;
+            $.init(sourceWidth, sourceHeight,2);
+        } else {
+            theImage.onload = function () {
+                sourceHeight = theImage.height;
+                sourceWidth = theImage.width;
+                $.init(sourceWidth, sourceHeight,2);
+            };
+        };
+
+    });
+
+
+
+
     //一级弹窗详情
 /*    $('.detailFirstPopupBtn').click(function () {
         fillData("一级分类详情");
@@ -191,4 +223,73 @@ function addData(parentId){
 function hideTk(){
     $('.addType').hide();
     $('.commonPopup').remove();
+}
+
+/**
+ * 保存临时图片
+ * @param saveFlag
+ */
+function savePic() {
+    //改变图片时清空图片路径
+    $("#targetStyle").attr("src","");
+    console.log(111);
+    $.ajaxFileUpload({
+        url : rootPath+"/riseSchoolStyle/upRiseSchoolStyleImg",
+        secureuri : false,// 安全协议
+        async : false,
+        fileElementId :'imgDataStyle',
+        dataType:'json',
+        type : "POST",
+        success : function(data) {
+            if (jcrop_apis){
+                jcrop_apis.destroy();
+            }
+            if (data.flag == 1){
+                $("#targetStyle").attr("src",data.realPath);
+                $("#targetStyle").trigger("change");
+                $(".jcrop-holder").find("img").attr("src",data.realPath);
+            }
+        },
+        error:function(arg1,arg2,arg3){
+
+        }
+    });
+}
+
+/**
+ * 返回切图真实路径
+ * @param saveFlag
+ */
+function saveCutPic(saveFlag) {
+    //判断图片是否为空或则是未更改就进行保存
+    if (!$("#targetStyle").attr("src")){
+        $.msg("未选择图片");
+        return ;
+    }
+    //上传截取后的图片
+    $.ajax({
+        url : rootPath + "/insCateManage/saveCutPic",
+        data : {
+            path : ("#targetStyle").attr("src"),
+            x : $("#x").val(),
+            y : $("#y").val(),
+            w : $("#w").val(),
+            h : $("#h").val()
+        },
+        type : "post",
+        dataType : "json",
+        success : function(data) {
+            //上传成功则重新查询
+            if (data.flag == 1){
+                //上传成功返回路径
+                ("#target").attr("src",data.realPath);
+            }else {
+               // $.msg(data.msg);
+            }
+            ("#targetStyle").attr("src","");
+            if (jcrop_apis){
+                jcrop_apis.destroy();
+            }
+        }
+    })
 }

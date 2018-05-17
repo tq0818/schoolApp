@@ -4,6 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.yuxin.wx.api.institution.InstitutionCategoryManageService;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.institution.InstitutionCategoryVo;
+import com.yuxin.wx.util.ImageUtils;
+import com.yuxin.wx.utils.FileUtil;
+import com.yuxin.wx.utils.PropertiesUtil;
+import com.yuxin.wx.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +33,9 @@ public class InstitutionCategoryManageController {
 
     @Autowired
     private InstitutionCategoryManageService institutionCategoryManageServiceIml;
+
+    @Autowired
+    private PropertiesUtil propertiesUtil;
 
 
     /**
@@ -76,7 +86,6 @@ public class InstitutionCategoryManageController {
 
     /**
      * 修改分类数据
-     * @param insCate
      * @return
      */
     @ResponseBody
@@ -147,11 +156,75 @@ public class InstitutionCategoryManageController {
     }
 
 
+    @ResponseBody
+    @RequestMapping(value="/saveCutPic")
+    public JSONObject saveCutPic(HttpServletRequest request, String path, double x, double y, double w, double h){
+        JSONObject json = new JSONObject();
+        json.put("flag",1);
+        String fileName=path.substring(path.lastIndexOf("/")+1);
+        String tempPath=propertiesUtil.getTempPath()+"/source/"+fileName;
+        String target=propertiesUtil.getTempPath()+"/target/"+fileName;
+        String header="http://"+propertiesUtil.getProjectImageUrl()+"/";
 
+        File tempFile = new File(propertiesUtil.getTempPath()+"/source");
+        if(!tempFile.exists()){
+            tempFile.mkdirs();
+        }
 
+        File targetFile = new File(propertiesUtil.getTempPath()+"/target");
+        if(!targetFile.exists()){
+            targetFile.mkdirs();
+        }
+        path=path.replace(header, "");
+        System.out.println("oss临时文件路径["+path+"]=====本地磁盘临时文件路径["+tempPath+"]======切图后临时文件路径["+target+"]");
+        FileUtil.download("temp", path,tempPath);
+        //选中尺寸
+        BufferedImage img =null;
+        try{
+            img = ImageIO.read(new File(tempPath));
+        }catch(Exception e){
+            e.printStackTrace();
+            json.put("flag",0);
+            return json;
+        }
+        //原图尺寸
+        double realW=img.getWidth();
+        double realH=img.getHeight();
+        //示例图尺寸
+        double slW=0;
+        double slH=0;
+        if(realW/realH>186.57/300.00){
+            //过宽
+            slH=186.57 * realH/realW;
+            slW=186.57;
+        }else{
+            //过高
+            slH=300;
+            slW=300 * realW/realH;
+        }
+        //原图所选中位置和区域
 
-
-
-
+        int xx=(new   Double(x*realW/slW)).intValue();
+        int yy=(new   Double(y*realH/slH)).intValue();
+        int ww=(new   Double(w*realW/slW)).intValue();
+        int hh=(new   Double(h*realH/slH)).intValue();
+        System.out.println("选中区域:["+x+","+y+","+w+","+h+"]----原图选中区域:["+xx+","+yy+","+ww+","+hh+"]");
+        //在原图中切图
+        String cutImgPath= ImageUtils.cutImage(tempPath,target,xx,yy,ww,hh);
+        //切好的图缩放到规定比例
+        String realPath=null;
+        try {
+            realPath=FileUtil.upload(cutImgPath,"institutionCate", WebUtils.getCurrentCompanyId()+"");
+        } catch (Exception e) {
+            e.printStackTrace();
+            json.put("flag",0);
+            return json;
+        }
+        FileUtil.deleteFile(target);
+        FileUtil.deleteFile(cutImgPath);
+        json.put("realPath",realPath);
+        json.put("flag",1);
+        return json;
+    }
 
 }
