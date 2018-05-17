@@ -131,7 +131,18 @@ public class PropertiesUtil {
 	
 	private @Value("${timertask.switch.servicewarningsend}")
 	String serviceWarningSend;
-	
+
+	private  @Value("${server.imageupload.tempPath}")
+	String tempPath;
+
+	public String getTempPath() {
+		return tempPath;
+	}
+
+	public void setTempPath(String tempPath) {
+		this.tempPath = tempPath;
+	}
+
 	public String getImageServicePath() {
 		return imageServicePath;
 	}

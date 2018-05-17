@@ -7,6 +7,7 @@ import com.yuxin.wx.model.institution.InstitutionCategoryVo;
 import com.yuxin.wx.util.ImageUtils;
 import com.yuxin.wx.utils.FileUtil;
 import com.yuxin.wx.utils.PropertiesUtil;
+import com.yuxin.wx.utils.StringUtil;
 import com.yuxin.wx.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -77,7 +78,12 @@ public class InstitutionCategoryManageController {
         params.put("id",id);
         InstitutionCategoryVo insCates = institutionCategoryManageServiceIml.queryInstitutionCategoryByCondition(params);
         if(null!=insCates){
+            String header="http://"+propertiesUtil.getProjectImageUrl()+"/";
+            if(StringUtil.isNotEmpty(insCates.getImgUrl())){
+                insCates.setImgUrl(header+insCates.getImgUrl());
+            }
             resultJson.put("result",insCates);
+
         }else{
             resultJson.put("result","noData");
         }
@@ -107,6 +113,8 @@ public class InstitutionCategoryManageController {
             }else{
                 String codeName = request.getParameter("codeName");
                 insCate.setCodeName(codeName);
+                String imgUrl = request.getParameter("imgUrl");
+                insCate.setImgUrl(imgUrl);
             }
             insCate.setIds(ids);
             institutionCategoryManageServiceIml.updateInstitutionCategoryInfo(insCate);
@@ -157,7 +165,7 @@ public class InstitutionCategoryManageController {
 
 
     @ResponseBody
-    @RequestMapping(value="/saveCutPic")
+    @RequestMapping(value="/saveCutPic",method=RequestMethod.POST)
     public JSONObject saveCutPic(HttpServletRequest request, String path, double x, double y, double w, double h){
         JSONObject json = new JSONObject();
         json.put("flag",1);
@@ -223,6 +231,7 @@ public class InstitutionCategoryManageController {
         FileUtil.deleteFile(target);
         FileUtil.deleteFile(cutImgPath);
         json.put("realPath",realPath);
+        json.put("header",header);
         json.put("flag",1);
         return json;
     }

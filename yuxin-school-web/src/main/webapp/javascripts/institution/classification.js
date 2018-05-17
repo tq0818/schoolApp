@@ -80,7 +80,7 @@ function openDetails(level,updateId){
             var result = data.result;
             //填充名称
             $("#insCatName").val(result.codeName);
-            //TODO 填充图片
+            $("#target").attr("src",result.imgUrl);
         }
     });
 
@@ -103,7 +103,8 @@ function fillData(tittle){
     $("#tittle").html("").html(tittle);
     //清理上次操作填充数据
     $("#insCatName").val('');
-    //TODO 还需要新增部分清理数据操作
+    $("#imgUrl").val('');
+    $("#target").attr("src","");
     $('.addType').show();
     $.commonPopup();
 }
@@ -155,12 +156,19 @@ function updatedata(flag,id,enable){
     }else{
         ids = id;
         codeName = $("#insCatName").val();
-        // TODO 校验分类名称 长度5  只允许输入文本 标点包括英文状态下的'/.
-        if(!codeName){
+        //校验分类名称 长度5  只允许输入文本 标点包括英文状态下的'/.
+        if(!codeName || !$.trim(codeName)){
             alert("请输入分类名称");
             return;
         }
+        var regex = new RegExp("^([\u4E00-\uFA29]|[\uE7C7-\uE7F3]|[a-zA-Z0-9]|[.']){1,10}$");
+        var res = regex.test(codeName);
+        if(!res){
+            alert("分类名称只支持英文/汉字/英文状态下的.和'/数字");
+            return;
+        }
     }
+    var imgUrl = $("#imgUrl").val();
     $.ajax({
         type:"POST",
         url: rootPath + "/insCateManage/updateInsCate",
@@ -168,7 +176,8 @@ function updatedata(flag,id,enable){
            flag:flag,
             ids:ids,
             enable:enable,
-            codeName:codeName
+            codeName:codeName,
+            imgUrl:imgUrl
         },
         dataType: "json",
         success: function (data) {
@@ -192,12 +201,18 @@ function updatedata(flag,id,enable){
 function addData(parentId){
 
     var codeName = $("#insCatName").val();
-    // TODO 校验分类名称 长度5  只允许输入文本 标点包括英文状态下的'/.
-    if(!codeName){
+    //校验分类名称 长度5  只允许输入文本 标点包括英文状态下的'/.
+    if(!codeName || !$.trim(codeName)){
         alert("请输入分类名称");
         return;
     }
-    var imgUrl = '';
+    var regex = new RegExp("^([\u4E00-\uFA29]|[\uE7C7-\uE7F3]|[a-zA-Z0-9]|[.']){1,10}$");
+    var res = regex.test(codeName);
+    if(!res){
+        alert("分类名称只支持英文/汉字/英文状态下的.和'/数字");
+        return;
+    }
+    var imgUrl = $("#imgUrl").val();
     $.ajax({
         type:"POST",
         url: rootPath + "/insCateManage/saveInsCate",
@@ -260,7 +275,7 @@ function savePic() {
  * 返回切图真实路径
  * @param saveFlag
  */
-function saveCutPic(saveFlag) {
+function saveCutPic() {
     //判断图片是否为空或则是未更改就进行保存
     if (!$("#targetStyle").attr("src")){
         $.msg("未选择图片");
@@ -270,7 +285,7 @@ function saveCutPic(saveFlag) {
     $.ajax({
         url : rootPath + "/insCateManage/saveCutPic",
         data : {
-            path : ("#targetStyle").attr("src"),
+            path :$("#targetStyle").attr("src"),
             x : $("#x").val(),
             y : $("#y").val(),
             w : $("#w").val(),
@@ -282,11 +297,12 @@ function saveCutPic(saveFlag) {
             //上传成功则重新查询
             if (data.flag == 1){
                 //上传成功返回路径
-                ("#target").attr("src",data.realPath);
+                $("#target").attr("src",data.header+data.realPath);
+                $("#imgUrl").val(data.realPath);
             }else {
                // $.msg(data.msg);
             }
-            ("#targetStyle").attr("src","");
+            $("#targetStyle").attr("src","");
             if (jcrop_apis){
                 jcrop_apis.destroy();
             }

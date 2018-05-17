@@ -34,7 +34,7 @@
         border: 1px solid #e0dfe3;border-radius: 3px;margin: 5px 0;}
         .chooseImg input{position: absolute;width: 100%;height: 100%;left: 0;top: 0;opacity: 0;}
         .coverPopup{z-index: 1000;}
-        .mienPopup{display: block}
+        /*.mienPopup{display: block}*/
     </style>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/institution/classification.css">
 </head>
@@ -100,7 +100,7 @@
         </div>
         <div class="mienBtn">
             <a href="javascript:void(0)" class="btn btn-sm btn-danger mienHide">取消</a>
-            <a href="javascript:void(0)" class="btn btn-sm btn-success mienHide">确定</a>
+            <a href="javascript:void(0)" class="btn btn-sm btn-success mienHide" onclick="saveCutPic();">确定</a>
         </div>
     </div>
 
@@ -108,6 +108,7 @@
     <input type="hidden" id="y" name="y" value="0"/>
     <input type="hidden" id="w" name="w" value="0"/>
     <input type="hidden" id="h" name="h" value="0"/>
+    <input type="hidden" id="imgUrl"/>
 
     <script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
