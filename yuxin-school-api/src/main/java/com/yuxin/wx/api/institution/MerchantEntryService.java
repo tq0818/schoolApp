@@ -1,6 +1,8 @@
 package com.yuxin.wx.api.institution;
 
-import com.yuxin.wx.common.PageFinder;
+import java.util.List;
+
+import com.yuxin.wx.model.institution.DimQueryMerchantVo;
 import com.yuxin.wx.model.institution.MerchantEntryVo;
 
 public interface MerchantEntryService {
@@ -14,7 +16,7 @@ public interface MerchantEntryService {
      * 查询商家入驻申请
      * @return
      */
-    PageFinder<MerchantEntryVo> queryMerchantEntry(MerchantEntryVo merchantEntryVo);
+    List<MerchantEntryVo> queryMerchantEntry(MerchantEntryVo merchantEntryVo);
     /**
      * 更新商家入驻信息
      * @param merchantEntryVo
@@ -26,4 +28,17 @@ public interface MerchantEntryService {
      * @return
      */
     Integer queryCount();
+    /**
+     * 模糊查询数量
+     * @param merchantEntryVo
+     * @return
+     */
+    Integer dimMerchantEntryCount(DimQueryMerchantVo merchantEntryVo);
+    
+    /**
+     * 模糊查询
+     * @param merchantEntryVo
+     * @return
+     */
+    List<MerchantEntryVo> dimMerchantEntry(DimQueryMerchantVo merchantEntryVo);
 }
