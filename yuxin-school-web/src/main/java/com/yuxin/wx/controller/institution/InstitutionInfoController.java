@@ -42,6 +42,8 @@ public class InstitutionInfoController {
     @Autowired
     private InstitutionCategoryManageService institutionCategoryService;
     @Autowired
+    private InstitutionCategoryService institutionCategoryService2;
+    @Autowired
     private IUsersService usersServiceImpl;
     @Autowired
     private MerchantEntryService merchantEntryService;
@@ -136,6 +138,10 @@ public class InstitutionInfoController {
             }
         }
 
+        //一级分类列表
+        List<InstitutionCategoryVo> fistCategorys =  institutionCategoryService2.findFistCategorys();
+        //二级分类列表
+        List<InstitutionCategoryVo> secondCategorys =  institutionCategoryService2.findSecondCategorys();
         //机构分类
         List<InstitutionCategoryVo> categoryVos =  institutionCategoryService.queryInstitutionCategorysByInsId(Integer.parseInt(id));
         //系统标签
@@ -146,9 +152,14 @@ public class InstitutionInfoController {
         List<InstitutionLabelVo> specialSer = institutionLabelService.findSpecialServiceByInsId(Integer.parseInt(id));
         model.addAttribute("ins",ins);
         model.addAttribute("categoryVos",categoryVos);
+        model.addAttribute("fistCategorys",fistCategorys);
+        model.addAttribute("secondCategorys",secondCategorys);
         model.addAttribute("sysLabel",sysLabel);
         model.addAttribute("customLabel",customLabel);
         model.addAttribute("specialSer",specialSer);
+        model.addAttribute("tellSize",tells.size());
+        model.addAttribute("mobileSize",mobiles.size());
+        model.addAttribute("catSize",categoryVos.size());
 
         return "institution/basicInformation";
     }
@@ -224,8 +235,9 @@ public class InstitutionInfoController {
      * @param num
      * @param flag 上架为0 认证为1
      */
+    @ResponseBody
     @RequestMapping(value = "/authFrameLower",method = RequestMethod.POST)
-    public void authFrameLower(String id,String num,String flag){
+    public Integer authFrameLower(String id,String num,String flag){
         InstitutionInfoVo institutionInfoVo = new InstitutionInfoVo();
         Date date = new Date();
         institutionInfoVo.setId(Integer.parseInt(id));
@@ -234,10 +246,14 @@ public class InstitutionInfoController {
         }else{
             institutionInfoVo.setIsCertified(Integer.parseInt(num));
         }
-
         institutionInfoVo.setUpdateTime(date);
-
-        institutionInfoService.update(institutionInfoVo);
+        try{
+            institutionInfoService.update(institutionInfoVo);
+            return 200;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 500;
+        }
     }
 
     /**
@@ -303,6 +319,16 @@ public class InstitutionInfoController {
     }
 
 
-
+    @ResponseBody
+    @RequestMapping(value = "/updateIns" ,method = RequestMethod.POST)
+    public Integer updateIns(InstitutionInfoVo insInfoVon){
+        try{
+            institutionInfoService.updateInsById(insInfoVon);
+            return 200;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 500;
+        }
+    }
 
 }

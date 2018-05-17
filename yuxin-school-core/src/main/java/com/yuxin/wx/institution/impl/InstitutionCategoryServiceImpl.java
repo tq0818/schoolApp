@@ -64,6 +64,16 @@ public class InstitutionCategoryServiceImpl extends BaseServiceImpl implements I
     }
 
     @Override
+    public List<InstitutionCategoryVo> findSecondCategorys() {
+        try {
+            return institutionCategoryManageMapper.findSecondCategorys();
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
     public List<InstitutionCategoryVo> findCecondCategorys(Integer id) {
         try {
             return institutionCategoryManageMapper.findCecondCategorys(id);

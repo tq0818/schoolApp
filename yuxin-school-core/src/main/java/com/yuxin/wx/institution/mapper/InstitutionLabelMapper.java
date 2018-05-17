@@ -26,6 +26,12 @@ public interface InstitutionLabelMapper {
     void deleteInstitutionLabelById(Integer id);
 
     /**
+     * 根据机构id删除
+     * @param id
+     */
+    void deleteByInsId(Integer id);
+
+    /**
      * 根据机构id查找系统标签
      * @param id
      * @return
@@ -60,6 +66,13 @@ public interface InstitutionLabelMapper {
      * @return
      */
     List<InstitutionLabelVo> getTeacherLabelsByTeacherId(Integer tid);
+
+    /**
+     * 获取指定课程的标签
+     * @param tid
+     * @return
+     */
+    List<InstitutionLabelVo> findClassLabels(Integer tid);
 
 
 }

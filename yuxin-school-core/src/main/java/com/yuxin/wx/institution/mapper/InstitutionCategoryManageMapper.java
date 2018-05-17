@@ -18,6 +18,8 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
 
     List<InstitutionCategoryVo> findFistCategorys();
 
+    List<InstitutionCategoryVo> findSecondCategorys();
+
     List<InstitutionCategoryVo> findCecondCategorys(Integer id);
 
     /**
@@ -99,4 +101,15 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
      * @return
      */
     int queryInstitutionCategorysCount(Map<String, Object> params);
+
+    /**
+     * 获取最小排序
+     * @param insCatInfo
+     * @return
+     */
+    Integer queryMinSortByIds(InstitutionCategoryVo insCatInfo);
+
+
+    List<InstitutionCategoryVo> queryInstitutionCategorysAfterSort(Integer sort);
+
 }

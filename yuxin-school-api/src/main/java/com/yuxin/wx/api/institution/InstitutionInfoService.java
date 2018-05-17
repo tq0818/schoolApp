@@ -48,4 +48,5 @@ public interface InstitutionInfoService {
     InstitutionInfoVo checkUser(Integer id);
 
 
+
 }

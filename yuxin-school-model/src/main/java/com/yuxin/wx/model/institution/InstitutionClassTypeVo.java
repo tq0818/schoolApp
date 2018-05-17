@@ -30,9 +30,14 @@ public class InstitutionClassTypeVo extends BaseEntity{
 	private Integer delFlag;	//'删除标志(0未删除 1是删除)',
 	private Date createTime;	//'创建时间',
 	private Date updateTime;	//'修改时间',
-	
-	
-	
+
+	private String summary;	//课程将要描述
+	private Integer isRecommend;	//is_recommend  是否推荐(0 no  , 1 yes)
+
+
+	private String fullCoverUrl;	//coverUrl 的完整HTTP路径，用于显示在页面上
+
+
 	public Integer getId() {
 		return id;
 	}
@@ -99,7 +104,29 @@ public class InstitutionClassTypeVo extends BaseEntity{
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-	
-	
-	
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public Integer getIsRecommend() {
+		return isRecommend;
+	}
+
+	public void setIsRecommend(Integer isRecommend) {
+		this.isRecommend = isRecommend;
+	}
+
+
+	public String getFullCoverUrl() {
+		return fullCoverUrl;
+	}
+
+	public void setFullCoverUrl(String fullCoverUrl) {
+		this.fullCoverUrl = fullCoverUrl;
+	}
 }

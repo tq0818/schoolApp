@@ -54,9 +54,14 @@
         <where>id = #{id}</where>
     </update>
 
-    <delete id="delete">
+    <delete id="delete" parameterType="Integer">
         delete from institution_label
 		where id = #{id}
+    </delete>
+
+    <delete id="deleteByInsId" parameterType="Integer">
+        delete from institution_label
+		where source_flag = 0 and relation_id = #{id}
     </delete>
 
     <select id="findSysLabelByInsId" parameterType="Integer" resultMap="institutionLabelMap">
@@ -97,6 +102,11 @@
 
     <select id="findSpecialServiceByInsIdCount" parameterType="Integer" resultMap="institutionLabelMap">
         select count(1) from institution_label where label_type=2 and source_flag = 0 and relation_id = #{id}
+    </select>
+
+
+    <select id="findClassLabels" parameterType="Integer" resultMap="institutionLabelMap">
+        select * from institution_label where label_type=1 and source_flag = 1 and relation_id = #{id}
     </select>
 
 

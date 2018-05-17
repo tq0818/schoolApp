@@ -37,6 +37,10 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
     @Override
     public void updateInstitutionCategoryInfo(InstitutionCategoryVo insCatInfo) {
         institutionManageMapper.update(insCatInfo);
+        //获取禁用ids最小排序
+        Integer minSort = institutionManageMapper.queryMinSortByIds(insCatInfo);
+        //更新排序
+        this.flushSortAll(minSort);
     }
 
     @Override
@@ -159,5 +163,29 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
     @Override
     public int queryInstitutionCategorysCount(Map<String, Object> params) {
         return institutionManageMapper.queryInstitutionCategorysCount(params);
+    }
+
+    /**
+     *
+     * @param baseSort
+     * @return
+     */
+    @Override
+    public int flushSortAll(Integer baseSort) {
+       try{
+           List<InstitutionCategoryVo> list =  institutionManageMapper.queryInstitutionCategorysAfterSort(baseSort);
+           Map<String,Object> map = new HashMap<>();
+           int num = 0;
+           for(int i = 0;i<list.size();i++){
+               map.put("sort",baseSort + i);
+               map.put("id",list.get(i).getId());
+               institutionManageMapper.updateSort(map);
+               num ++ ;
+           }
+           return num;
+       }catch(Exception e){
+           e.printStackTrace();
+       }
+        return -1;
     }
 }

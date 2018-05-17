@@ -6,4 +6,6 @@ public interface InstitutionRelationMapper {
 
     void insert(InstitutionRelationVo institutionRelationVo);
 
+    void delete(Integer id);
+
 }

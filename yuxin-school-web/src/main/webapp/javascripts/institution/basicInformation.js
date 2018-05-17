@@ -7,7 +7,7 @@ $(function () {
         if(systemLength<4){
             var _html =
                 `<span href="##" class="systemBtn">
-                <span class="systemLabel">我的名字没</span>
+                <input class="systemLabel sysLabel" maxlength="5"/>
                 <i class="icon iconfont deleteBtn">&#xe610;</i>
             </span>`;
             $(this).before(_html);
@@ -30,7 +30,7 @@ $(function () {
         if(customLabelLength<5){
             var _html =
                 `  <span href="##" class="customLabel">
-                            <span class="systemLabel">我的名字没</span>
+                            <input class="systemLabel cusLabel" maxlength="5"/>
                             <i class="icon iconfont deleteCustomLabel">&#xe610;</i>
                     </span>
             </span>`;
@@ -54,8 +54,8 @@ $(function () {
         if(specialServiceLength<10){
             var _html =
                 `   <span href="##" class="specialService">
-                                <img src="../../../images/institution/1.jpg" alt="" style="width: 40px;height: 40px;">
-                                <span class="systemLabel">你的名字么</span>
+                                <img src="../../../images/institution/1.jpg" alt="" style="width: 40px;height: 40px;"  class="iconPic">
+                                <input class="systemLabel iconPicName" maxlength="5"></input>
                                 <i class="icon iconfont deletespecialService">&#xe610;</i>
                     </span>
                 `;
@@ -74,7 +74,7 @@ $(function () {
     });
 
 
-    //添加机构分类
+    /*//添加机构分类
     $('.addType').click(function () {
         let _html = `
             <div style="padding-left: 80px;margin-top: 6px;">
@@ -92,13 +92,37 @@ $(function () {
     //删除分类
     $('body').on('click','.deleteType',function () {
         $(this).parent('div').remove();
+    });*/
+
+    var i = 2;
+    //添加机构分类
+    $('.addType').click(function () {
+        i++;
+        let _html = `
+            <div style="padding-left: 80px;margin-top: 6px;">
+                <select name=""  class="findFistCategorys">
+                    <option value="" >请选择一级分类</option>
+                </select>
+                <select name=""  class="findSecondCategorys">
+                    <option value="">请选择二级分类</option>
+                </select>
+                <span class="iconBtn deleteType">-</span>
+            </div>
+        `;
+        $('#orgType').append(_html);
+        findFistCategorys(i-1);
+    });
+    //删除分类
+    $('body').on('click','.deleteType',function () {
+        $(this).parent('div').remove();
+        i--
     });
     //添加座机号
     $('.addMachine').click(function () {
         let _html = `
             <div>
-                    <input type="text" placeholder="区号" style="width: 30px;">-
-                    <input type="text" placeholder="请输入座机号">
+                    <input type="text" placeholder="区号" style="width: 30px;" onkeyup="value=value.replace(/[^\\d]/g,'')">-
+                    <input type="text" placeholder="请输入座机号" class="telephone" onkeyup="value=value.replace(/[^\\d]/g,'')">
                     <span class="iconBtn deleteMachine">-</span>
                 </div>
         `;
@@ -110,8 +134,8 @@ $(function () {
     //添加手机号
     $('.addPhone').click(function () {
         let _html = `
-            <div style="margin-left: 73px;margin-top: 14px;">
-                    <input type="text" style="width: 440px;" placeholder="请输入手机号">
+            <div style="margin-top: 5px;">
+                    <input type="text" style="width: 440px;" maxlength="11"  class="phoneNum" placeholder="请输入手机号" onkeyup="value=value.replace(/[^\\d]/g,'')">
                     <span class="iconBtn deletePhone" >-</span>
                 </div>
         `;
@@ -135,7 +159,7 @@ $(function () {
         }
     });
     //点击特色图片出下面图片列表
-    $('.iconPic').click(function () {
+    $('body').on('click','.iconPic',function () {
 
         findSpecialServiceImg(1);
         $('.iconList').show();
@@ -148,47 +172,82 @@ $(function () {
     //选择所属省份 初始化身份
     queryRiseSchoolDict(0);
 
-    //获取一级分类
-    findFistCategorys();
 
+    $('body').on('change','.findFistCategorys',function () {
+        findSecondCategorys($(this).val(),this);
+    });
     //分类筛选
-    $('#findFistCategorys').change(function () {
+    $('.findFistCategorys').change(function () {
         findSecondCategorys();
     });
 
-    //弹出弹窗
-    /*$('.Show').click(function () {
-        //点击时，清空之前的图片
-        $('.opacityPopup').fadeIn();
-        $('.commonPopup').fadeIn();
-        //清除上一次图片的名字
-        $("#imgData").removeAttr("type").attr("type","file");
-        //标记不同的弹窗，为一个标志赋值表示不同的操作
-        if (jcrop_apis){
-            jcrop_apis.destroy();
+
+    //保存修改的内容
+    $('.updateIns').click(function () {
+        //判断机构名称是否为空
+        var insName = $("#insName").val();
+        if(insName == '' || insName == null){
+            $.msg("机构名称不能为空！");
+            return;
         }
-        var windowFlag = '';
-        if ($(this).hasClass('addImg')){
-            windowFlag = '1';
-            $(".uploadImage").find("img").attr("src","").attr("style","").attr("style","width: 300px;height: 300px;");
-            $("#imgDiscrible").val('');
-        }else if ($(this).hasClass('imgChange')){
-            $(".uploadImage").find("img").attr("src",$(this).parent(".listBg").siblings("img").attr("src")).attr("style","");
-            //横图
-            if($(this).attr("imgType")=="2"){
-                $(".uploadImage").find("img").attr("style","width: 300px;height: auto;");
-            }else{
-                $(".uploadImage").find("img").attr("style","width: auto;height: 300px;");
+
+        //判断机构分类是否为空
+        let insCat = [];
+        let onOff = true;
+        for(let i=0;i<$('.findFistCategorys').length;i++){
+            var insCatNum =$('.findFistCategorys').eq(i).val()+'-'+$('.findFistCategorys').eq(i).siblings('select').val();
+            if(insCatNum != '-'){
+                insCat.push(insCatNum);
             }
-            $("#imgDiscrible").val($(this).parent(".listBg").siblings("span").text());
-            windowFlag = '2';
-            var updateId = $(this).attr("data-value");
-            $("#updateId").val(updateId);
+            if($('.findFistCategorys').eq(i).val()==""||$('.findFistCategorys').eq(i).siblings('select').val()==''){
+                onOff = false;
+            }
         }
-        $("#windowFlag").val(windowFlag);
-    });*/
+        if(!onOff){
+            $.msg("机构分类不能为空！");
+            return;
+        }
+
+        //判断机构地址是否为空
+        var province = $("#eduArea").val();
+        var city = $("#eduSchool").val();
+        var area = $("#registStatus").val();
+        var address = $("#address").val();
+        if(province == ''|| city == ''||area == ''|| address ==''){
+            $.msg("机构地址不能为空！");
+            return;
+        }
+        //手机号码判重
+        let arrPhoneNum = [];
+        for(let i=0;i<$('.phoneNum').length;i++){
+            if($('.phoneNum').eq(i).val() != ''){
+                arrPhoneNum.push($('.phoneNum').eq(i).val());
+            }
+        }
+
+        //拼接电话号码
+        let telephone = [];
+        for(let i=0;i<$('.telephone').length;i++){
+            var _phone = $('.telephone').eq(i).siblings('input').val()+'-'+$('.telephone').eq(i).val();
+            if(_phone != '-'){
+                telephone.push(_phone);
+            }
+        }
+
+        if(checkData(insCat,0)==1){
+
+            if(checkData(telephone,1)==1){
+
+                if(checkData(arrPhoneNum,2)==1){
+                    //添加机构
+                    updataIns();
+                }
+            }
+        }
 
 
+
+    })
 
 });
 
@@ -221,7 +280,14 @@ function queryRiseSchoolDict(areaFlag) {
             if (data.flag == 1){
                 var html = '';
                 for (var i in data.dictList){
-                    html = html + "<option value=\""+data.dictList[i].itemCode+"\">"+data.dictList[i].itemName+"</option>"
+                    var eduArea = $("#eduAreaCode").val();
+                    if(data.dictList[i].itemCode == eduArea){
+                        html = html + "<option value=\""+data.dictList[i].itemCode+"\" selected>"+data.dictList[i].itemName+"</option>"
+                    }else{
+                        html = html + "<option value=\""+data.dictList[i].itemCode+"\">"+data.dictList[i].itemName+"</option>"
+                    }
+
+
                 }
                 if (areaFlag == 0){
                     html = "<option value=\"\">请选择省份</option>" + html;
@@ -245,14 +311,9 @@ function queryRiseSchoolDict(areaFlag) {
 }
 
 //获取一级分类
-function findFistCategorys() {
+function findFistCategorys(index) {
     $.ajax({
         url:rootPath +"/institutionCategory/findFistCategorys",
-        beforeSend: function (XMLHttpRequest) {
-            $(".loading").show();
-            $(".loading-bg").show();
-        },
-
         success:function (data) {
             var html = '';
             html = "<option value=\"\">请选择一级分类</option>"
@@ -261,15 +322,14 @@ function findFistCategorys() {
                     html = html + "<option value=\""+data[i].id+"\">"+data[i].codeName+"</option>"
                 }
             }
-            $("#findFistCategorys").html("").html(html);
+            $(".findFistCategorys").eq(index).html(html);
         }
     });
 
 }
 
 //获取二级分类
-function findSecondCategorys() {
-    var id = $("#findFistCategorys").val();
+function findSecondCategorys(id,that) {
     $.ajax({
         url:rootPath +"/institutionCategory/findSecondCategorys",
         data:{"id":id},
@@ -283,7 +343,7 @@ function findSecondCategorys() {
                     html = html + "<option value=\""+data[i].id+"\">"+data[i].codeName+"</option>"
                 }
             }
-            $("#findSecondCategorys").html("").html(html);
+            $(that).siblings("select").html("").html(html);
         }
     });
 }
@@ -330,6 +390,168 @@ console.log(page);
             }
         }
     });
+
+}
+
+//判重函数
+function checkData(arr,index){
+
+    // 最简单数组去重法
+    function unique1(array){
+        var n = []; //一个新的临时数组
+        //遍历当前数组
+        for(var i = 0; i < array.length; i++){
+            //如果当前数组的第i已经保存进了临时数组，那么跳过，
+            //否则把当前项push到临时数组里面
+            if (n.indexOf(array[i]) == -1){
+                n.push(array[i]);
+            }else {
+                if(index==0){
+                    $.msg("机构分类重复！");
+                }else if(index==1){
+                    $.msg("电话号码重复！");
+                }else if(index==2){
+                    $.msg("手机号重复！");
+
+                }
+                return 0;
+
+            }
+        }
+        return 1;
+    }
+    return unique1(arr);
+
+}
+
+//修改机构信息
+function updataIns() {
+    var insName = $("#insName").val();
+    var province = $("#eduArea").val();
+    var city = $("#eduSchool").val();
+    var area = $("#registStatus").val();
+    var address = $("#address").val();
+
+    let firstCat='';
+    let secondCat='';
+
+    for(let i=0;i<$('.findFistCategorys').length;i++){
+        firstCat += $('.findFistCategorys').eq(i).val()+',';
+        secondCat += $('.findSecondCategorys').eq(i).val()+',';
+    }
+
+    //系统标签
+    let systemLabel = $('.sysLabel');
+    let labelName = '';
+    for(let i = 0;i<systemLabel.length;i++){
+        if(i == systemLabel.length-1){
+            labelName+= systemLabel.eq(i).val()+',';
+        }else{
+            labelName+= systemLabel.eq(i).val()+',';
+        }
+    }
+
+    //电话号码
+    let listMachine = '';
+    let listMachineChi = $('#listMachine').children('div');
+    for(let i=0;i<listMachineChi.length;i++){
+        if(i == listMachineChi.length-1){
+            listMachine+= listMachineChi.eq(i).children('input').eq(0).val()+'-'+
+                listMachineChi.eq(i).children('input').eq(1).val()
+            ;
+        }else{
+            listMachine+= listMachineChi.eq(i).children('input').eq(0).val()+'-'+
+                listMachineChi.eq(i).children('input').eq(1).val()+','
+            ;
+        }
+    }
+
+    //手机号码
+    let listPhone = '';
+    let listPhoneChi = $('#listPhone').children('div');
+    for(let i=0;i<listPhoneChi.length;i++){
+        if(listPhoneChi.eq(i).children('input').val() != '' && listPhoneChi.eq(i).children('input').val() != null){
+            if(!/^09\d{8}|1[3-9]\d{9}$/.test(listPhoneChi.eq(i).children('input').eq(0).val())){
+                $.msg("手机号格式不正确");
+                return;
+            }
+        }
+
+        if(i == listPhoneChi.length-1){
+            listPhone+= listPhoneChi.eq(i).children('input').val();
+        }else{
+            listPhone+= listPhoneChi.eq(i).children('input').val()+',';
+        }
+
+    }
+
+    var mobile = listMachine+','+listPhone;
+
+    //自定义标签
+    let cusLabel = $('.cusLabel');
+    let cusLabelName = '';
+    for(let i = 0;i<cusLabel.length;i++){
+        if(i == cusLabel.length-1){
+            cusLabelName+= cusLabel.eq(i).val()+',';
+        }else{
+            cusLabelName+= cusLabel.eq(i).val()+',';
+        }
+    }
+
+    //特色服务
+    let imgUrl='';
+    let specialName='';
+
+
+    for(let i=0;i<$('.iconPic').length;i++){
+
+        imgUrl += $('.iconPic').eq(i).attr("src")+',';
+        specialName += $('.iconPicName').eq(i).val()+',';
+    }
+    var insId = $("#insId").val();
+    var reservService = $("#reservService").val();
+
+    console.log(province,city,area,address,labelName,mobile,firstCat,secondCat,cusLabelName,specialName,imgUrl)
+
+    $.ajax({
+        url:rootPath+"/InsInfoBase/updateIns",
+        type:"post",
+        data:{
+            "id":insId,
+            "name":insName,
+            "province":province,
+            "city":city,
+            "area":area,
+            "address":address,
+            "sysLabel":labelName,
+            "mobile":mobile,
+            "oneLevelId":firstCat,
+            "twoLevelId":secondCat,
+
+            "customLabel":cusLabelName,
+            "specialService":specialName,
+            "imgUrl":imgUrl,
+            "reservService":reservService
+
+        },
+        beforeSend: function (XMLHttpRequest) {
+            $(".loading").show();
+            $(".loading-bg").show();
+        },
+        success:function(data){
+            if(data == '200'){
+                $.msg("保存成功")
+            }else{
+                $.msg("保存失败")
+            }
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+            $(".loading").hide();
+            $(".loading-bg").hide();
+        }
+    })
+
+
 
 }
 

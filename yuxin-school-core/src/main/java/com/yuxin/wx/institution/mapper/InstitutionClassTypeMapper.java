@@ -137,6 +137,11 @@ public interface InstitutionClassTypeMapper {
      */
     void addOnlineClass(Map<String, Object> map);
 
+    /**
+     * 添加一个线下课程
+     * @param map
+     */
+    void addUnderlineClass(Map<String, Object> map);
 
     InsClassRelationVO findRelationById(Integer id);
 

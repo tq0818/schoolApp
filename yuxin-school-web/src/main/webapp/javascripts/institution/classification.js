@@ -12,6 +12,38 @@ $(function () {
         fillData("添加一级分类");
         $("#addConfirm").attr("onclick","addData();");
     });
+    $(".btnFile").click(function(){
+        $(".coverPopup").show();
+    });
+    //选择icon插件
+
+    //隐藏
+    $('.mienHide').click(function(){
+        $('.coverPopup').hide();
+        $("#targetStyle").attr("src","");
+    });
+
+    $(".uploadImageStyle").on("change","#targetStyle", function() {
+        var theImage = new Image();
+        console.log($(this).attr("src"));
+        theImage.src = $(this).attr("src");
+        if (theImage.complete) {
+            sourceHeight = theImage.height;
+            sourceWidth = theImage.width;
+            $.init(sourceWidth, sourceHeight,2);
+        } else {
+            theImage.onload = function () {
+                sourceHeight = theImage.height;
+                sourceWidth = theImage.width;
+                $.init(sourceWidth, sourceHeight,2);
+            };
+        };
+
+    });
+
+
+
+
     //一级弹窗详情
 /*    $('.detailFirstPopupBtn').click(function () {
         fillData("一级分类详情");
@@ -48,7 +80,7 @@ function openDetails(level,updateId){
             var result = data.result;
             //填充名称
             $("#insCatName").val(result.codeName);
-            //TODO 填充图片
+            $("#target").attr("src",result.imgUrl);
         }
     });
 
@@ -71,7 +103,8 @@ function fillData(tittle){
     $("#tittle").html("").html(tittle);
     //清理上次操作填充数据
     $("#insCatName").val('');
-    //TODO 还需要新增部分清理数据操作
+    $("#imgUrl").val('');
+    $("#target").attr("src","");
     $('.addType').show();
     $.commonPopup();
 }
@@ -123,30 +156,53 @@ function updatedata(flag,id,enable){
     }else{
         ids = id;
         codeName = $("#insCatName").val();
-        // TODO 校验分类名称 长度5  只允许输入文本 标点包括英文状态下的'/.
-        if(!codeName){
+        //校验分类名称 长度5  只允许输入文本 标点包括英文状态下的'/.
+        if(!codeName || !$.trim(codeName)){
             alert("请输入分类名称");
             return;
         }
+        var regex = new RegExp("^([\u4E00-\uFA29]|[\uE7C7-\uE7F3]|[a-zA-Z0-9]|[.']){1,10}$");
+        var res = regex.test(codeName);
+        if(!res){
+            alert("分类名称只支持英文/汉字/英文状态下的.和'/数字");
+            return;
+        }
     }
+    var imgUrl = $("#imgUrl").val();
     $.ajax({
         type:"POST",
-        url: rootPath + "/insCateManage/updateInsCate",
+        url: rootPath + "/insCateManage/querySingleInsCateByName",
         data: {
-           flag:flag,
-            ids:ids,
-            enable:enable,
+            id:ids,
             codeName:codeName
         },
         dataType: "json",
         success: function (data) {
             if(data.flag=='1'){
-                queryAllData($("#pageNo").val());
-                hideTk();
+                alert("该分类名称已经存在");
             }else{
-                if(flag=='1'){
-                    $.msg("禁用失败请稍后再试");
-                }
+                $.ajax({
+                    type:"POST",
+                    url: rootPath + "/insCateManage/updateInsCate",
+                    data: {
+                        flag:flag,
+                        ids:ids,
+                        enable:enable,
+                        codeName:codeName,
+                        imgUrl:imgUrl
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if(data.flag=='1'){
+                            queryAllData($("#pageNo").val());
+                            hideTk();
+                        }else{
+                            if(flag=='1'){
+                                $.msg("禁用失败请稍后再试");
+                            }
+                        }
+                    }
+                });
             }
         }
     });
@@ -160,35 +216,131 @@ function updatedata(flag,id,enable){
 function addData(parentId){
 
     var codeName = $("#insCatName").val();
-    // TODO 校验分类名称 长度5  只允许输入文本 标点包括英文状态下的'/.
-    if(!codeName){
+    //校验分类名称 长度5  只允许输入文本 标点包括英文状态下的'/.
+    if(!codeName || !$.trim(codeName)){
         alert("请输入分类名称");
         return;
     }
-    var imgUrl = '';
+    var regex = new RegExp("^([\u4E00-\uFA29]|[\uE7C7-\uE7F3]|[a-zA-Z0-9]|[.']){1,10}$");
+    var res = regex.test(codeName);
+    if(!res){
+        alert("分类名称只支持英文/汉字/英文状态下的.和'/数字");
+        return;
+    }
+    var imgUrl = $("#imgUrl").val();
+
+    //校验分类名称是否重复
     $.ajax({
         type:"POST",
-        url: rootPath + "/insCateManage/saveInsCate",
+        url: rootPath + "/insCateManage/querySingleInsCateByName",
         data: {
-            codeName:codeName,
-            imgUrl:imgUrl,
-            parentId:parentId
+            codeName:codeName
         },
         dataType: "json",
         success: function (data) {
             if(data.flag=='1'){
-                queryAllData($("#pageNo").val());
-                hideTk();
+                alert("该分类名称已经存在");
             }else{
-                if(flag=='1'){
-                    $.msg("禁用失败请稍后再试");
-                }
+                $.ajax({
+                    type:"POST",
+                    url: rootPath + "/insCateManage/saveInsCate",
+                    data: {
+                        codeName:codeName,
+                        imgUrl:imgUrl,
+                        parentId:parentId
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if(data.flag=='1'){
+                            queryAllData($("#pageNo").val());
+                            hideTk();
+                        }else{
+                            if(flag=='1'){
+                                $.msg("禁用失败请稍后再试");
+                            }
+                        }
+                    }
+                });
             }
         }
     });
+
+
+
+
 }
 
 function hideTk(){
     $('.addType').hide();
     $('.commonPopup').remove();
+}
+
+/**
+ * 保存临时图片
+ * @param saveFlag
+ */
+function savePic() {
+    //改变图片时清空图片路径
+    $("#targetStyle").attr("src","");
+    console.log(111);
+    $.ajaxFileUpload({
+        url : rootPath+"/riseSchoolStyle/upRiseSchoolStyleImg",
+        secureuri : false,// 安全协议
+        async : false,
+        fileElementId :'imgDataStyle',
+        dataType:'json',
+        type : "POST",
+        success : function(data) {
+            if (jcrop_apis){
+                jcrop_apis.destroy();
+            }
+            if (data.flag == 1){
+                $("#targetStyle").attr("src",data.realPath);
+                $("#targetStyle").trigger("change");
+                $(".jcrop-holder").find("img").attr("src",data.realPath);
+            }
+        },
+        error:function(arg1,arg2,arg3){
+
+        }
+    });
+}
+
+/**
+ * 返回切图真实路径
+ * @param saveFlag
+ */
+function saveCutPic() {
+    //判断图片是否为空或则是未更改就进行保存
+    if (!$("#targetStyle").attr("src")){
+        $.msg("未选择图片");
+        return ;
+    }
+    //上传截取后的图片
+    $.ajax({
+        url : rootPath + "/insCateManage/saveCutPic",
+        data : {
+            path :$("#targetStyle").attr("src"),
+            x : $("#x").val(),
+            y : $("#y").val(),
+            w : $("#w").val(),
+            h : $("#h").val()
+        },
+        type : "post",
+        dataType : "json",
+        success : function(data) {
+            //上传成功则重新查询
+            if (data.flag == 1){
+                //上传成功返回路径
+                $("#target").attr("src",data.header+data.realPath);
+                $("#imgUrl").val(data.realPath);
+            }else {
+               // $.msg(data.msg);
+            }
+            $("#targetStyle").attr("src","");
+            if (jcrop_apis){
+                jcrop_apis.destroy();
+            }
+        }
+    })
 }

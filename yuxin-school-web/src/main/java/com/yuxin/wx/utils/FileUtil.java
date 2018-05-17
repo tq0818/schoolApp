@@ -98,13 +98,13 @@ public class FileUtil {
 		 * 课程资料
 		 */
 		String COURSEFILE="coursefile";
-		
+
 
 		/**
 		 * 订阅文章
 		 */
 		String DINGYUE="dingyue";
-		
+
 		/**
 		 * 编辑器
 		 */
@@ -136,8 +136,16 @@ public class FileUtil {
 		String BANNER = "banner";
 
 		String RISESCHOOLSRTYLE = "riseSchoolStyle";
-		
+
+		/**
+		 * 机构风采
+		 */
 		String INSTITUTIONSTYLE = "institutionStyle";
+
+		/**
+		 * 机构分类
+		 */
+		String INSTITUTIONCATE = "institutionCate";
 	}
 
 	private static void init(){
@@ -167,6 +175,7 @@ public class FileUtil {
 					||Module.BANNER.equals(module)
 					||Module.RISESCHOOLSRTYLE.equals(module)
 					||Module.INSTITUTIONSTYLE.equals(module)
+					||Module.INSTITUTIONCATE.equals(module)
 					){
 				folder=module;
 			}
