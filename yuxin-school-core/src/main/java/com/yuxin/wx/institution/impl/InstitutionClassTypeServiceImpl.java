@@ -4,9 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.yuxin.wx.model.institution.ClassTypeOnlineFindVo;
-import com.yuxin.wx.model.institution.ClassTypeOnlineVo;
-import com.yuxin.wx.model.institution.InsClassRelationVO;
+import com.yuxin.wx.institution.mapper.InstitutionStyleMapper;
+import com.yuxin.wx.model.institution.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,11 +14,13 @@ import com.yuxin.wx.api.institution.InstitutionClassTypeService;
 import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.institution.mapper.InstitutionClassTypeMapper;
-import com.yuxin.wx.model.institution.InstitutionClassTypeVo;
 
 @Service
 @Transactional
 public class InstitutionClassTypeServiceImpl extends BaseServiceImpl implements InstitutionClassTypeService {
+
+    @Autowired
+    private InstitutionStyleMapper styleMapper;
 
     @Autowired
     private InstitutionClassTypeMapper institutionClassTypeMapper;
@@ -80,6 +81,7 @@ public class InstitutionClassTypeServiceImpl extends BaseServiceImpl implements 
         try {
             int count = institutionClassTypeMapper.pageCount(map);
             List<InstitutionClassTypeVo> list = institutionClassTypeMapper.page(map);
+
             return new PageFinder<InstitutionClassTypeVo>(pageStart, pageSize, count, list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -246,5 +248,38 @@ public class InstitutionClassTypeServiceImpl extends BaseServiceImpl implements 
     @Override
     public int getCountOfOnlineClassyCidInsId(Map<String, Object> map) {
         return institutionClassTypeMapper.getCountOfOnlineClassyCidInsId(map);
+    }
+
+    @Override
+    public void addStyle(InstitutionStyle entity) {
+
+        styleMapper.insertInsStyle(entity);
+
+    }
+
+    @Override
+    public List<InstitutionStyle> getStyleByClassId(Integer cid) {
+        InstitutionStyle search = new InstitutionStyle();
+        search.setRelationId(cid);
+        search.setIsVideo(0);
+        search.setSourceFlag(1);
+        search.setType(2);
+
+         return styleMapper.queryInstitutionStyle(search);
+    }
+
+    @Override
+    public void updateStyle(InstitutionStyle entity) {
+        styleMapper.updateInsStyle(entity);
+    }
+
+    @Override
+    public void delStyle(Integer sid) {
+        styleMapper.deleteInsStyle(sid);
+    }
+
+    @Override
+    public void addUnderlineClass(Map<String, Object> map) {
+        institutionClassTypeMapper.addUnderlineClass(map);
     }
 }

@@ -605,7 +605,7 @@
         <!--风采管理-->
         <pattern>/institutionStyle/queryInstitutionStyle</pattern>
         <!--新增线下课程-->
-        <pattern>/InsInfoBase/newLineCourse/*</pattern>
+        <pattern>/InsInfoBase/newLineCourse/*/*</pattern>
         <!--首页推荐分类管理-->
         <pattern>/InsInfoBase/recommendationHomeC</pattern>
         <!--单独机构评价管理-->

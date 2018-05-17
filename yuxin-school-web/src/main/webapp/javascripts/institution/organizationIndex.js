@@ -780,7 +780,7 @@ function addInsInfo() {
     let listPhone = '';
     let listPhoneChi = $('#listPhone').children('div');
     for(let i=0;i<listPhoneChi.length;i++){
-        if(listPhoneChi.eq(i).children('input').eq(0).val() != '' && listPhoneChi.eq(i).children('input').eq(0).val() != null){
+        if(listPhoneChi.eq(i).children('input').val() != '' && listPhoneChi.eq(i).children('input').val() != null){
             if(!/^09\d{8}|1[3-9]\d{9}$/.test(listPhoneChi.eq(i).children('input').eq(0).val())){
                 $.msg("手机号格式不正确");
                 $('.addingMechanism').show();
@@ -789,9 +789,9 @@ function addInsInfo() {
         }
 
         if(i == listPhoneChi.length-1){
-            listPhone+= listPhoneChi.eq(i).children('input').eq(0).val();
+            listPhone+= listPhoneChi.eq(i).children('input').val();
         }else{
-            listPhone+= listPhoneChi.eq(i).children('input').eq(0).val()+',';
+            listPhone+= listPhoneChi.eq(i).children('input').val()+',';
         }
 
     }
@@ -809,7 +809,7 @@ function addInsInfo() {
             break;
         }
     }
-    if(userName != null || userName != ''){
+    if(userName != null && userName != ''){
         $.ajax({
             url:rootPath+"/register/insCheckUserName",
             type:"post",
@@ -842,14 +842,37 @@ function addInsInfo() {
                 }else if(data =='用户名已经被注册'){
                     alert('用户名已经被注册');
                 }else if('只能以字母开头并由数字、字母或下划线组成'){
-                    alert('只能以字母开头并由数字、字母或下划线组成');
+                    alert('用户名只能以字母开头并由数字、字母或下划线组成');
                 }else{
                     alert('用户名不正确');
                 }
 
             }
         })
+    }else{
+        $.ajax({
+            url:rootPath+"/InsInfoBase/addIns",
+            type:"post",
+            data:{
+                "name":name,
+                "province":province,
+                "city":city,
+                "area":area,
+                "address":address,
+                "userName":userName,
+                "sysLabel":labelName,
+                "mobile":mobile,
+                "isChains":org,
+                "oneLevelId":firstCat,
+                "twoLevelId":secondCat
+            },
+            success:function(data){
+                $('.addingMechanism').hide();
+                findInsDate(1);
+            }
+        })
     }
+
 
 
 }

@@ -306,7 +306,7 @@ function getClassTypeList(){
                        </li>`;
            for(var i in list){
                html += `<li>
-                            <img src="${list[i].coverUrl}" alt="" style="width: 100%;height: auto">
+                            <img src="${list[i].fullCoverUrl}" alt="" style="width: 100%;height: auto">
                                 <span class="imgInfo">${list[i].name}</span>
                                 ${
                                     list[i].isReser == 1 ? 
@@ -319,7 +319,7 @@ function getClassTypeList(){
                                 <div class="listBg">
                                 <a href="javascript:void(0)" data-id="${list[i].id}" class="btn btn-warning btn-sm deleteBtn">删除</a>
                                 <a href="javascript:void(0)" data-id="${list[i].id}" class="btn btn-success btn-sm ">${list[i].isShelves == 1 ? '下架' : '上架'}</a>
-                                <a href="javascript:void(0)" data-id="${list[i].id}" class="btn btn-success btn-sm " >管理</a>
+                                <a href="javascript:void(0)" data-id="${list[i].id}" class="btn btn-success btn-sm infoBtn " >管理</a>
                                 </div>
                         </li>`;
            }
@@ -346,6 +346,9 @@ function getClassTypeList(){
 
 
 
+
+
+
         $('#courseContainer').html(html);
 
             $('.imgList').find('li').mouseover(function () {
@@ -363,10 +366,12 @@ function getClassTypeList(){
             });
 
             $('.addImg').click(function(){
-                window.location.href = rootPath + '/InsInfoBase/newLineCourse/0'
+                window.location.href = rootPath + "/InsInfoBase/newLineCourse/"+$("#insId").val()+"/0"
             });
 
-
+            $('.infoBtn').click(function(){
+                window.location.href = rootPath + "/InsInfoBase/newLineCourse/"+$("#insId").val()+"/"+$(this).attr('data-id');
+            })
         }
     });
 }

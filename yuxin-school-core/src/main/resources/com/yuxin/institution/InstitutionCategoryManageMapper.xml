@@ -10,6 +10,7 @@
         <result property="imgUrl" column="img_url" />
         <result property="codeLevel" column="code_level" />
         <result property="sort" column="sort" />
+        <result property="parentId" column="parent_id" />
     </resultMap>
 
     <!-- 推荐机构管理-首页分类推荐列表 by Liutr -->
@@ -101,6 +102,10 @@
 
     <select id="findFistCategorys" resultMap="queryCateData"  parameterType="map">
         select id, code_name from institution_category where code_level = 1 and code_type = 0 and is_enable = 1
+    </select>
+
+    <select id="findSecondCategorys" resultMap="queryCateData"  parameterType="map">
+        select id, code_name,parent_id from institution_category where code_level = 2 and code_type = 0 and is_enable = 1
     </select>
 
     <select id="findCecondCategorys" resultMap="queryCateData"  parameterType="Integer">
@@ -210,8 +215,20 @@
           `institution_category`
         WHERE  `is_enable` = 1
     </select>
-
-
+    <!-- 获取指定排名后的所有is_enabled = 1的分类 -->
+    <select id="queryInstitutionCategorysAfterSort" parameterType="Integer"  resultMap="queryCateSimple" >
+        SELECT
+        `id`,
+        `code_name`,
+        `code_level`,
+        `code_type`,
+        `parent_id`,
+        `third_recommend`,
+        `sort`
+        FROM
+        `institution_category`
+        WHERE  `is_enable` = 1 AND `sort` > #{sort}  order by sort ASC
+    </select>
 
 
 </mapper>

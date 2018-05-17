@@ -62,5 +62,11 @@ public interface InstitutionLabelService {
      */
     List<InstitutionLabelVo> getTeacherLabelsByTeacherId(Integer tid);
 
+    /**
+     * 获取线下课程标签
+     * @param cid
+     * @return
+     */
+    List<InstitutionLabelVo> getClassLabels(Integer cid);
 
 }

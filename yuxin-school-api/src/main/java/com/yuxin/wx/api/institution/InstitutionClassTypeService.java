@@ -7,6 +7,7 @@ import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.institution.ClassTypeOnlineFindVo;
 import com.yuxin.wx.model.institution.ClassTypeOnlineVo;
 import com.yuxin.wx.model.institution.InstitutionClassTypeVo;
+import com.yuxin.wx.model.institution.InstitutionStyle;
 
 public interface InstitutionClassTypeService {
 	 /**
@@ -98,6 +99,12 @@ public interface InstitutionClassTypeService {
 	void addOnlineClass(Map<String, Object> map);
 
 	/**
+	 * 添加一个线下课程
+	 * @param map
+	 */
+	void addUnderlineClass(Map<String, Object> map);
+
+	/**
 	 * 关联或者取消关联课程，并更新排序
 	 * @param insId
 	 * @param rid
@@ -114,5 +121,21 @@ public interface InstitutionClassTypeService {
 	 * @return
 	 */
 	int getCountOfOnlineClassyCidInsId(Map<String,Object> map);
+
+
+	void addStyle(InstitutionStyle entity);
+
+	/**
+	 * 获取某个线下课程的风采列表
+	 * @param cid
+	 * @return
+	 */
+	List<InstitutionStyle> getStyleByClassId(Integer cid);
+
+
+	void updateStyle(InstitutionStyle entity);
+
+	void delStyle(Integer sid);
+
 
 }

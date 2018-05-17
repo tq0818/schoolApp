@@ -21,4 +21,8 @@
         values ( <include refid="entity_properties" /> )
     </insert>
 
+    <delete id="delete" parameterType="Integer">
+        delete from institution_relation where ins_id = #{id}
+    </delete>
+
 </mapper>
