@@ -1847,4 +1847,20 @@ public static String chiDeUTF8(String str) {
 		}
 		return list;
   	}
+
+	/**
+	 * 验证多个字符串参数中是否存在null、空字符串、以及全由空格组成的字符串
+	 * @param args
+	 * @return
+	 */
+	public static boolean existBlank(String... args){
+		for(String str : args){
+			if( null == str || "".equals(str.trim())){
+				return true;
+			}
+		}
+		return false;
+	}
+
+
 }

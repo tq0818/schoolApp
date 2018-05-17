@@ -30,7 +30,8 @@ public class InstitutionClassTypeVo extends BaseEntity{
 	private Integer delFlag;	//'删除标志(0未删除 1是删除)',
 	private Date createTime;	//'创建时间',
 	private Date updateTime;	//'修改时间',
-	
+
+	private String summary;	//课程将要描述
 	
 	
 	public Integer getId() {
@@ -99,7 +100,12 @@ public class InstitutionClassTypeVo extends BaseEntity{
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-	
-	
-	
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
 }

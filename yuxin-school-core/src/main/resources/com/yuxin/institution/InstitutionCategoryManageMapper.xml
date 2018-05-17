@@ -210,8 +210,20 @@
           `institution_category`
         WHERE  `is_enable` = 1
     </select>
-
-
+    <!-- 获取指定排名后的所有is_enabled = 1的分类 -->
+    <select id="queryInstitutionCategorysAfterSort" parameterType="Integer"  resultMap="queryCateSimple" >
+        SELECT
+        `id`,
+        `code_name`,
+        `code_level`,
+        `code_type`,
+        `parent_id`,
+        `third_recommend`,
+        `sort`
+        FROM
+        `institution_category`
+        WHERE  `is_enable` = 1 AND `sort` > #{sort}  order by sort ASC
+    </select>
 
 
 </mapper>

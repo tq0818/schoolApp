@@ -61,5 +61,12 @@ public interface InstitutionLabelMapper {
      */
     List<InstitutionLabelVo> getTeacherLabelsByTeacherId(Integer tid);
 
+    /**
+     * 获取指定课程的标签
+     * @param tid
+     * @return
+     */
+    List<InstitutionLabelVo> findClassLabels(Integer tid);
+
 
 }

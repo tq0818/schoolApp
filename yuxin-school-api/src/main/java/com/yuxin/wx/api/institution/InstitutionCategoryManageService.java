@@ -94,4 +94,13 @@ public interface InstitutionCategoryManageService {
      * @return
      */
     int queryInstitutionCategorysCount(Map<String, Object> params);
+
+    /**
+     * 更新指定排名后的所有分类排名
+     * @param baseSort
+     * @return
+     */
+    int flushSortAll(Integer baseSort);
+
+
 }

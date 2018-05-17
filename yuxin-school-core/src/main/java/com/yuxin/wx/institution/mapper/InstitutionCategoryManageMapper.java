@@ -106,4 +106,8 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
      * @return
      */
     Integer queryMinSortByIds(InstitutionCategoryVo insCatInfo);
+
+
+    List<InstitutionCategoryVo> queryInstitutionCategorysAfterSort(Integer sort);
+
 }

@@ -13,6 +13,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSONArray;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -722,4 +723,22 @@ public class WebUtils {
         CompanyFunctionSet cfs = companyFunctionSetList != null && companyFunctionSetList.size() > 0 ? companyFunctionSetList.get(0) : null;
         return cfs;
     }
+
+
+    /**
+     * 根据status 、 msg返回相应的json
+     * @param status
+     * @param msg
+     * @return
+     */
+    public static com.alibaba.fastjson.JSONObject getFailedJSON(int status, String msg){
+        com.alibaba.fastjson.JSONObject json = new com.alibaba.fastjson.JSONObject();
+        json.put("status",status);
+        json.put("msg",msg);
+        return json;
+
+    }
+
+
+
 }

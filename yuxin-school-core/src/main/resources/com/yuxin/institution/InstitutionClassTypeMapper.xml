@@ -11,6 +11,8 @@
 		<result property="isOnline" column="is_online" />
 		<result property="isLink" column="is_link" />
 		<result property="sort" column="sort" />
+
+
 	</resultMap>
 
 	<sql id="relation_table_columns">
@@ -86,6 +88,7 @@
 		<result property="delFlag" column="del_flag" />
 		<result property="createTime" column="create_time" />
 		<result property="updateTime" column="update_time" />
+		<result property="summary" column="summary" />
 	</resultMap>
 
 	<resultMap type="com.yuxin.wx.model.institution.ClassTypeOnlineVo" id="classTypeOnlineResultMap">
@@ -116,6 +119,7 @@
 		price,
 		is_reser,
 		reser_count,
+		summary,
 		detaildesc,
 		is_shelves,
 		del_flag,
@@ -133,7 +137,8 @@
 		#{isShelves},
 		#{delFlag},
 		#{createTime},
-		#{updateTime}
+		#{updateTime},
+		#{summary}
 	</sql>
 	<sql id="batch_entity_properties">
 		#{item.id},
@@ -146,11 +151,12 @@
 		#{item.isShelves},
 		#{item.delFlag},
 		#{item.createTime},
-		#{item.updateTime}
+		#{item.updateTime},
+		#{item.summary}
 	</sql>
 	
 	<!-- 适用于主键自增类型 -->
-	<insert id="insert" parameterType="com.yuxin.wx.model.institution.InstitutionClassTypeVo" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insert" parameterType="com.yuxin.wx.model.institution.InstitutionClassTypeVo" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
 		insert into ins_class_type( <include refid="table_columns" /> ) 
 		values ( <include refid="entity_properties" /> )
 	</insert>

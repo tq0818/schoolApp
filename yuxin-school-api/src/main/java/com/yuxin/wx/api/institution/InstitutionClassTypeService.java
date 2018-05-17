@@ -7,6 +7,7 @@ import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.institution.ClassTypeOnlineFindVo;
 import com.yuxin.wx.model.institution.ClassTypeOnlineVo;
 import com.yuxin.wx.model.institution.InstitutionClassTypeVo;
+import com.yuxin.wx.model.institution.InstitutionStyle;
 
 public interface InstitutionClassTypeService {
 	 /**
@@ -114,5 +115,21 @@ public interface InstitutionClassTypeService {
 	 * @return
 	 */
 	int getCountOfOnlineClassyCidInsId(Map<String,Object> map);
+
+
+	void addStyle(InstitutionStyle entity);
+
+	/**
+	 * 获取某个线下课程的风采列表
+	 * @param cid
+	 * @return
+	 */
+	List<InstitutionStyle> getStyleByClassId(Integer cid);
+
+
+	void updateStyle(InstitutionStyle entity);
+
+	void delStyle(Integer sid);
+
 
 }

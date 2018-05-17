@@ -62,5 +62,8 @@ public class InstitutionLabelServiceImpl extends BaseServiceImpl implements Inst
     }
 
 
-
+    @Override
+    public List<InstitutionLabelVo> getClassLabels(Integer cid) {
+        return institutionLabelMapper.findClassLabels(cid);
+    }
 }

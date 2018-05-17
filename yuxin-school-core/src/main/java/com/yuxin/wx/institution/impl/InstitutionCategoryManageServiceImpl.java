@@ -163,4 +163,28 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
     public int queryInstitutionCategorysCount(Map<String, Object> params) {
         return institutionManageMapper.queryInstitutionCategorysCount(params);
     }
+
+    /**
+     *
+     * @param baseSort
+     * @return
+     */
+    @Override
+    public int flushSortAll(Integer baseSort) {
+       try{
+           List<InstitutionCategoryVo> list =  institutionManageMapper.queryInstitutionCategorysAfterSort(baseSort);
+           Map<String,Object> map = new HashMap<>();
+           int num = 0;
+           for(int i = 0;i<list.size();i++){
+               map.put("sort",baseSort + i);
+               map.put("id",list.get(i).getId());
+               institutionManageMapper.updateSort(map);
+               num ++ ;
+           }
+           return num;
+       }catch(Exception e){
+           e.printStackTrace();
+       }
+        return -1;
+    }
 }
