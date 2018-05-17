@@ -81,6 +81,7 @@ public class InstitutionClassTypeServiceImpl extends BaseServiceImpl implements 
         try {
             int count = institutionClassTypeMapper.pageCount(map);
             List<InstitutionClassTypeVo> list = institutionClassTypeMapper.page(map);
+
             return new PageFinder<InstitutionClassTypeVo>(pageStart, pageSize, count, list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -275,5 +276,10 @@ public class InstitutionClassTypeServiceImpl extends BaseServiceImpl implements 
     @Override
     public void delStyle(Integer sid) {
         styleMapper.deleteInsStyle(sid);
+    }
+
+    @Override
+    public void addUnderlineClass(Map<String, Object> map) {
+        institutionClassTypeMapper.addUnderlineClass(map);
     }
 }

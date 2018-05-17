@@ -83,12 +83,14 @@
 		<result property="price" column="price" />
 		<result property="isReser" column="is_reser" />
 		<result property="reserCount" column="reser_count" />
+		<result property="summary" column="summary" />
 		<result property="detaildesc" column="detaildesc" />
 		<result property="isShelves" column="is_shelves" />
 		<result property="delFlag" column="del_flag" />
 		<result property="createTime" column="create_time" />
 		<result property="updateTime" column="update_time" />
-		<result property="summary" column="summary" />
+		<result property="isRecommend" column="is_recommend" />
+
 	</resultMap>
 
 	<resultMap type="com.yuxin.wx.model.institution.ClassTypeOnlineVo" id="classTypeOnlineResultMap">
@@ -124,7 +126,8 @@
 		is_shelves,
 		del_flag,
 		create_time,
-		update_time
+		update_time,
+		is_recommend
     </sql>
 	<sql id="entity_properties">
 		#{id},
@@ -133,12 +136,13 @@
 		#{price},
 		#{isReser},
 		#{reserCount},
+		#{summary},
 		#{detaildesc},
 		#{isShelves},
 		#{delFlag},
 		#{createTime},
 		#{updateTime},
-		#{summary}
+		#{isRecommend}
 	</sql>
 	<sql id="batch_entity_properties">
 		#{item.id},
@@ -147,12 +151,14 @@
 		#{item.price},
 		#{item.isReser},
 		#{item.reserCount},
+		#{item.summary},
 		#{item.detaildesc},
 		#{item.isShelves},
 		#{item.delFlag},
 		#{item.createTime},
 		#{item.updateTime},
-		#{item.summary}
+		#{item.isRecommend}
+
 	</sql>
 	
 	<!-- 适用于主键自增类型 -->
@@ -332,7 +338,7 @@
 
 	</select>
 
-
+	<!-- 新增一个线上课程 -->
 	<insert id="addOnlineClass" parameterType="map" >
 		INSERT INTO `ins_class_type_relation` (`ins_id`,`class_type_id`,`is_online`,`is_link`)
 			VALUES
@@ -340,6 +346,13 @@
 
 	</insert>
 
+	<!-- 新增一个线下课程 -->
+	<insert id="addUnderlineClass" parameterType="map" >
+		INSERT INTO `ins_class_type_relation` (`ins_id`,`class_type_id`,`is_online`)
+		VALUES
+		(#{insId} , #{cid} , 0 )
+
+	</insert>
 
 	<!-- 删除中间表信息 -->
 

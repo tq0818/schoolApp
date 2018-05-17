@@ -92,8 +92,8 @@
                 </div>
                 <div>
                     <span>是否限定预约人数:</span>
-                    <input type="radio" name="classLimitNum" class="limitYes" value="1" style="margin-left: 15px;">是
-                    <input type="radio" name="classLimitNum" class="limitNo" value="0" checked="checked">否
+                    <input type="radio" name="classLimitNum" id="classLimitNumYes" class="limitYes" value="1" style="margin-left: 15px;">是
+                    <input type="radio" name="classLimitNum" id="classLimitNumNo" class="limitNo" value="0" checked="checked">否
                 </div>
                 <div style="display: none" id="limitContainer">
                     <span><b style="color:red;">*</b>限定预约人数:</span>
@@ -148,12 +148,14 @@
     </div>
 
 
-    <input id="insId" type="hidden" value="${insEntity.id}">
+    <input id="insId" type="hidden" value="${insId}">
     <input id="underLineId" type="hidden" value="${underLineId}">
     <script src="<%=rootPath %>/javascripts/riseschool/ajaxfileuploadR.js"></script>
     <script src="<%=rootPath %>/javascripts/plus/jquery.units.js"></script>
     <script src="<%=rootPath %>/javascripts/institution/newLineCourse.js"></script>
+        <script src="<%=rootPath %>/javascripts/institution/newLineCourseListener.js"></script>
     <script src="<%=rootPath %>/javascripts/json2.js"></script>
+
 
 </body>
 </html>

@@ -14,100 +14,6 @@ $(function () {
 
     //    左侧active切换
     $selectSubMenus('course');
-    //新增弹窗
-    $('.openPopup').click(function () {
-        var num = $("#styleContainer").find('li').length - 1;
-        if (num >= MAX_STYLE) {
-            $.msg('已超过课程风采数量');
-            return;
-        }
-        $("#hidCoverTop").val('');
-        $('#hidCoverFid').val('');
-        $('#hidCoverSort').val('');
-        $('#coverReturn').html('');
-        $('#cover').show();
-    });
-
-    //弹出层取消按钮事件
-    $('.closeElePicCancel').click(function () {
-        $('#cover').hide();
-    });
-
-    //弹出层确定按钮事件
-    $('.closeElePicCommit').click(function () {
-        var imgUrl = $("#hidCoverTop").val();
-        var id = $("#hidCoverFid").val();
-        if (imgUrl == null || imgUrl == '') {
-            $.msg('请上传图片');
-            return;
-        }
-
-        if (id == null || id == '') {
-            var num = $("#styleContainer").find('li').length - 1;
-            if (num >= MAX_STYLE) {
-                $.msg('已超过课程风采数量');
-                return;
-            }
-            var showImg = $('#coverReturn').html();
-            var subscript = null;
-
-            //新增风采
-            var html = `
-                    <li data-i="${num}">
-                        <span>${showImg}</span>
-                        <input type="hidden" value="${imgUrl}"  />
-                        <span class="imgInfo"></span>
-                        <div class="listBg">
-                        <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-                           <a href="javascript:void(0)" data-id=""  class="btn btn-success alterBtn btn-sm openPopup">修改</a>
-                        </div>
-                    </li>
-           `;
-
-            $("#styleContainer").append(html);
-
-            $('#fileUploadInput').val('');
-
-            $('#cover').hide();
-
-            //添加完节点后添加监听器
-            $('.deleteBtn').click(function () {
-                $(this).parent('div').parent('li').remove();
-            })
-
-            $('.alterBtn').click(function () {
-                //获取当前元素的li根节点
-                var baseNode = $(this).parent('div').parent('li');
-                //获取span中的img的src
-                var url = $(baseNode).find('span').eq(0).find('img')[0].src;
-                //弹出层中显示图片
-                $('#coverReturn').html("<img src='" + url + "' alt=\"\" style=\"width: 100%; max-height: 260px;\">");
-                //保存图片的相对路径
-                $("#hidCoverTop").val($(baseNode).find('input').eq(0).val());
-                //保存映射id
-                $('#hidCoverFid').val($(this).attr('data-id'));
-                //保存当前修改的是哪一个li，用于点击确认的时候更新数据
-                $('#hidCoverSort').val($(baseNode).eq(0).attr('data-i'));
-                $('#cover').show();
-            });
-
-        } else {
-            //修改风采
-
-            var i = $('#hidCoverSort').val();
-            var dom = $("#styleContainer").find('li').eq(i + 1);
-            for (var i in dom) {
-                if ($(dom).eq(i).attr('data-i') == i) {
-                    $(dom).find('span').eq(0).html($('#coverReturn').html());
-                    $(dom).find('input').eq(0).val($("#hidCoverTop").val());
-                    $('#cover').hide();
-                }
-            }
-
-        }
-
-
-    })
 
     getUnderLineClassInfo();
 
@@ -115,17 +21,20 @@ $(function () {
     $('.closeMechanismCommit').click(function () {
         //课程封面
         var face = $('#hidTop').val();
+
         //课程风采
         var classStyles = new Array();
         var styleLis = $("#styleContainer").find('li');
+
         if (styleLis.length > 1) {
             for (var i = 1; i < styleLis.length; i++) {
                 classStyles.push({
-                    id: $(styleLis[i]).attr('data-id'),
+                    id: $(styleLis[i]).find('div').eq(0).find('a').eq(1).attr('data-id'),
                     path: $(styleLis[i]).find('input').eq(0).val()
                 })
             }
         }
+
 
         //课程名称
         var className = $("#className").val();
@@ -134,16 +43,21 @@ $(function () {
         //课程标签
         var labels = new Array();
         var labelSpans = $("#spanContainerLabel").find('.systemBtn');
-        for (var i in labelSpans) {
+        for(var i = 0;i<labelSpans.length;i++){
+
             labels.push({
-                id: $(labelSpans[i]).attr('label-id'),
-                name: $(labelSpans[i]).find('input').eq(0).val()
+                id:$(labelSpans[i]).find('.systemLabel').eq(0).attr('label-id'),
+                name:$(labelSpans[i]).find('.systemLabel').eq(0).val()
             })
         }
+
+
         //课程价格
         var price = $('#classPrice').val();
         //限制报名人数
-        var limit = getLimit();
+        var limit = $('input:radio[name="classLimitNum"]:checked').val();
+        console.log('limit = '+limit);
+       // return;
         //限制预约人数  limit = 1有效
         var limitNum = $('#classPersonLimit').val();
         //课程详情
@@ -178,14 +92,13 @@ $(function () {
         }
 
 
-
-
         $.ajax({
             url: rootPath+'/institutionClassType/editUnderLineClass',
             data: {
+                insId:$("#insId").val(),
                 id:$('#underLineId').val(),
                 face:face,
-                style:JSON.stringify(styleLis),
+                style:JSON.stringify(classStyles),
                 name:className,
                 summary:summary,
                 label:JSON.stringify(labels),
@@ -204,135 +117,33 @@ $(function () {
                 $(".loading-bg").hide();
             },
             success: function (json) {
+                $.msg(json.msg);
+                if(json.status == 1){
+                    $.msg(json.msg,2000,function(){
+                        window.location.href = rootPath + "/institutionClassType/classTypeMain/"+$("#insId").val()
+                    });
+                }else{
+                    $.msg(json.msg);
+                }
                 console.log(json);
             }
         });
 
-
-
-
     })
 
+    addCourseListener();
 
 })
 
-function getLimit() {
-    $("input[name='classLimitNum']").each(
-        function () {
-            if ($(this).get(0).checked) {
-                return $(this).val();
-            }
-        })
-}
+/*function getLimit() {
+    var val=$('input:radio[name="classLimitNum"]:checked').val();
+   console.log(val);
+}*/
 
 //获取线下课程信息
 function getUnderLineClassInfo() {
     //添加一些必要的事件监听器
-    //监听课程人数限定监听器
-    $(":radio").click(function () {
-        if ($(this).val() == 1) {
-            $('#limitContainer').show();
-        } else {
-            $('#limitContainer').hide();
-        }
-    })
 
-    //
-    //添加限制人数监听器，>= 0
-    $('#classPersonLimit').bind('input propertychange', 'input' , function(){
-        var val = $('#classPersonLimit').val();
-        if(isNaN(val)){
-            $('#classPersonLimit').val(val.substr(0,val.length - 1));
-            return;
-        }
-
-    })
-
-
-    //添加价格输入监听器
-    $('#classPrice').bind('input propertychange', 'input' , function(){
-        var price = $('#classPrice').val();
-        if(isNaN(price)){
-            $('#classPrice').val(price.substr(0,price.length - 1));
-            return;
-        }
-        if(!priceTest.test(price)){
-            $('#classPrice').val(price.substr(0,price.length - 1));
-            return;
-        }
-    })
-
-     // 课程名称事件监听
-    $('#className').bind('input propertychange', 'input' , function(){
-        var val = $('#className').val();
-        //不能输入全是空格的字符串
-        if(trim(val) == ''){
-            $('#className').val('');
-            return;
-        }
-
-        //字符串末尾连续多个空格
-        if(val.length - trim(val).length > 1){
-            $('#className').val(val.substr(0,val.length - 1));
-            return;
-        }
-
-        if(!nameTest.test(trim(val))){
-            $('#className').val(val.substr(0,val.length - 1));
-        }
-    })
-
-    //课程说明事件监听
-    $('textarea').bind('input propertychange', function(){
-        var val = $('#classDetail').val();
-        //不能输入全是空格的字符串
-        if(trim(val) == ''){
-            $('#classDetail').val('');
-            return;
-        }
-
-        //字符串末尾连续多个空格
-        if(val.length - trim(val).length > 1){
-            $('#classDetail').val(val.substr(0,val.length - 1));
-            return;
-        }
-
-        if(!nameTest.test(trim(val))){
-            $('#classDetail').val(val.substr(0,val.length - 1));
-        }
-    })
-
-
-    $('.addSystemBtn').click(function () {
-        var len = $('#labelContainer').find('.systemBtn').length;
-        if (len >= MAX_LABEL) {
-            $(this).hide();
-        } else {
-            var html = `
-                        <span href="##" class="systemBtn">
-                             <input class="systemLabel" maxlength="5" label-id="" value="">
-                             <i class="icon iconfont deleteBtn deleteLabelBtn">&#xe610;</i>
-                        </span>
-                       
-             `;
-            $('#spanContainerLabel').append(html);
-
-            if (len + 1 >= MAX_LABEL) {
-                $(this).hide();
-            }
-
-
-            $('.deleteLabelBtn').click(function () {
-                $(this).parent('span').remove();
-                var len = $('#labelContainer').find('.systemBtn').length;
-                if (len < MAX_LABEL) {
-                    $('.addSystemBtn').show();
-                }
-
-            })
-
-        }
-    })
 
 
     var id = $("#underLineId").val();
@@ -345,6 +156,84 @@ function getUnderLineClassInfo() {
             id:$("#underLineId").val()
         },function(json){
             console.log(json);
+
+            if(json.status == 1){
+                var data = json.data;
+
+
+                //课程封面
+                $('#hidTop').val(data.face);
+                $('#imgTop').html("<img src='" + data.fullFace + "'  alt=\"\" style=\"width: 150px;height: 100px;margin-left: 15px;\">");
+
+                //课程风采
+                var styleHtml = `
+                     <li class="addImg mienShow openPopup" id="">
+                            <i class="icon iconfont"></i>
+                     </li>
+                `;
+                for(var i in data.styles){
+                    styleHtml += `
+                            <li data-i="${i}">
+                                <span><img src="${data.styles[i].url}" alt="" style="width: 100%; max-height: 260px;"></span>
+                                <input type="hidden" value="${data.styles[i].path}"  />
+                                <span class="imgInfo"></span>
+                                <div class="listBg">
+                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
+                                   <a href="javascript:void(0)" data-id="${data.styles[i].id}"  class="btn btn-success alterBtn btn-sm openPopup">修改</a>
+                                </div>
+                            </li>
+                    `;
+                }
+
+
+                $("#styleContainer").html(styleHtml);
+
+
+                //课程名称
+                $("#className").val(data.name);
+                //课程描述
+                $("#classSummary").val(data.summary);
+                //课程标签
+                var labelHtml = "";
+                for(var i in data.labels){
+                    labelHtml += `
+                         <span href="##" class="systemBtn">
+                             <input class="systemLabel" maxlength="5" label-id="${data.labels[i].id}" value="${data.labels[i].name}">
+                             <i class="icon iconfont deleteBtn deleteLabelBtn">&#xe610;</i>
+                        </span>
+                    `;
+                }
+                $("#spanContainerLabel").html(labelHtml);
+
+                if(data.labels.length >= MAX_LABEL){
+                    $('.addSystemBtn').hide();
+                }
+
+                //课程价格
+                $('#classPrice').val(data.price);
+                //限制报名人数
+                if(data.limit == 0){
+                    $("#classLimitNumYes").removeAttr('checked');
+                    $("#classLimitNumNo").attr("checked","checked");
+                    $("#limitContainer").hide();
+                }else{
+                    $("#classLimitNumYes").attr("checked","checked");
+                    $("#classLimitNumNo").removeAttr('checked');
+                    $("#limitContainer").show();
+                }
+                // return;
+                //限制预约人数  limit = 1有效
+                $('#classPersonLimit').val(data.limitNum == null ? '' : data.limitNum);
+                //课程详情
+                $('#classDetail').val(data.detail);
+
+                clearCourseListenner(); //清除监听器
+
+                addCourseListener();    //重新添加监听器
+
+            }
+
+
         })
 
     }

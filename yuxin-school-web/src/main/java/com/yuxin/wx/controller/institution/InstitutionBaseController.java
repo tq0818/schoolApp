@@ -42,9 +42,10 @@ public class InstitutionBaseController {
         return "institution/elegantDemeanor";
     }
     //新增线下课程
-    @RequestMapping(value = "/newLineCourse/{id}")
-    public String newLineCourse(Model model, @PathVariable Integer id){
+    @RequestMapping(value = "/newLineCourse/{insId}/{id}")
+    public String newLineCourse(Model model, @PathVariable Integer insId,@PathVariable Integer id){
         model.addAttribute("underLineId",id);
+        model.addAttribute("insId",insId);
         return "institution/newLineCourse";
     }
     //首页推荐分类管理
