@@ -2,6 +2,7 @@ package com.yuxin.wx.institution.mapper;
 
 
 import com.yuxin.wx.common.BaseMapper;
+import com.yuxin.wx.model.institution.CaseWhenVO;
 import com.yuxin.wx.model.institution.InstitutionCategoryVo;
 
 import java.util.List;
@@ -189,6 +190,6 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
     Map<String,Object> getRelationByTypeIdSort2(Map<String,Object> map);
 
 
-    int exchangeSortByCaseWhen(String case_when);
+    int exchangeSortByCaseWhen(List<CaseWhenVO> list);
 
 }

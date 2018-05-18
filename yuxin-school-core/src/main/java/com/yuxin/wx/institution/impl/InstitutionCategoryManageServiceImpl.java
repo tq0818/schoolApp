@@ -6,16 +6,14 @@ import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.institution.mapper.InstitutionCategoryManageMapper;
 import com.yuxin.wx.institution.mapper.InstitutionInfoMapper;
+import com.yuxin.wx.model.institution.CaseWhenVO;
 import com.yuxin.wx.model.institution.InstitutionCategoryVo;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by lym_gxm on 18/5/8.
@@ -320,13 +318,13 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
         //前一个或者后一个的排名信息
         int sort2 = (Integer)otherRelation.get("sort");
 
-        //交换排名SQL
-        StringBuilder builder = new StringBuilder();
-        builder.append(" WHEN "+rid + " THEN "+sort2 );
-        builder.append(" WHEN "+ otherRelation.get("id")+ " THEN "+sort).append("");
+        List<CaseWhenVO> list = new ArrayList<>(2); //已知list需要的长度，直接指定list的长度
+        list.add(new CaseWhenVO(rid,sort2));
+        list.add(new CaseWhenVO((Integer)otherRelation.get("id"),sort));
 
-        int result = institutionManageMapper.exchangeSortByCaseWhen(builder.toString());
 
-        return result == 2;
+        int result = institutionManageMapper.exchangeSortByCaseWhen(list);
+
+        return true;
     }
 }
