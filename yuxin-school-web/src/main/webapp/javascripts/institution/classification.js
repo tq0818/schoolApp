@@ -240,9 +240,27 @@ function updatedata(flag,id,enable){
     var codeName = '';
     if('1'==flag){
 
-        if(!confirm("您确认禁用该分类?")){
-            return;
-        }
+        // if(!confirm("您确认禁用该分类?")){
+        //     return;
+        // }
+
+        $.mbox({
+            area: [ "450px", "auto" ], //弹框大小
+            border: [ 0, .5, "#666" ],
+            dialog: {
+                msg: "您确认禁用该分类?",
+                btns: 2,   //1: 只有一个按钮   2：两个按钮  3：没有按钮 提示框
+                type: 2,   //1:对钩   2：问号  3：叹号
+                btn: [ "试一试", "再看看"],  //自定义按钮
+                yes: function() {  //点击左侧按钮：成功
+                    alert();
+                },
+                no: function() { //点击右侧按钮：失败
+                    return false;
+                }
+            }
+        });
+
 
         $("#firtId_"+id).find("a").each(function(){
             ids+=$(this).attr("id").split("_")[0]+",";
