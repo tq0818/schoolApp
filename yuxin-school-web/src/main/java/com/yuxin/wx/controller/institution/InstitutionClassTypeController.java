@@ -713,18 +713,10 @@ public class InstitutionClassTypeController {
 
             List<InstitutionStyle> styleList = institutionClassTypeService.getStyleByClassId(entity.getId());
 
-           /* String style = request.getParameter("style");
-
-            String label = request.getParameter("label");
-
-            Integer limit = Integer.valueOf(request.getParameter("limit"));
-            String limitNum = request.getParameter("limitNum");
-            String detail = request.getParameter("detail");*/
-
             JSONObject data = new JSONObject();
             data.put("id",entity.getId());
             data.put("face",entity.getCoverUrl());
-            data.put("fullFace","http://localhost/"+entity.getCoverUrl());
+            data.put("fullFace","http://"+propertiesUtil.getProjectImageUrl()+entity.getCoverUrl());
             data.put("name",entity.getName());
             data.put("summary",entity.getSummary());
             data.put("price", FloatFormatUtil.format(entity.getPrice(),"0.00"));
@@ -738,7 +730,7 @@ public class InstitutionClassTypeController {
                     obj = new JSONObject();
                     obj.put("id",vo.getId());
                     obj.put("path",vo.getImgUrl());
-                    obj.put("url","http://localhost/"+vo.getImgUrl());
+                    obj.put("url","http://"+propertiesUtil.getProjectImageUrl()+vo.getImgUrl());
                 styleArr.add(obj);
             }
 

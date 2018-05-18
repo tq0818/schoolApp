@@ -7,6 +7,7 @@ import com.yuxin.wx.api.institution.InstitutionCategoryService;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.institution.IndexRecommendVo;
 import com.yuxin.wx.model.institution.InstitutionCategoryVo;
+import com.yuxin.wx.utils.WebUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +40,35 @@ public class RecommendController {
      */
     @ResponseBody
     @RequestMapping(value = "/getRecommendList",method = RequestMethod.POST)
-    public PageFinder<IndexRecommendVo> getRecommendList(HttpServletRequest request) {
+    public JSONObject getRecommendList(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
         try{
-            // TODO 获取首页列表推荐信息
-            return null;
+
+            String name = request.getParameter("name");
+            Integer page = Integer.valueOf(request.getParameter("page"));
+            Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
+            Integer typeId = Integer.valueOf(request.getParameter("typeId"));
+
+            int count = institutionCategoryService.getIndexRecommendListCount(typeId,name);
+            List<Map<String,Object>> list = institutionCategoryService.getIndexRecommendList(typeId,name,page*pageSize,pageSize);
+
+            int recommendAll = institutionCategoryService.getIndexRecommendYesCount(typeId);
+
+            json.put("status",1);
+            JSONObject data = new JSONObject();
+            data.put("count",count);
+            data.put("page",page);
+            data.put("pageSize",pageSize);
+            data.put("list",list);
+            data.put("recommendNum",recommendAll);  //当前分类中状态为推荐的机构个数
+            json.put("data",data);
+
+            return json;
         }catch (Exception e){
             e.printStackTrace();
+            return WebUtils.getFailedJSON(0,"获取列表失败");
         }
-        return null;
+
     }
 
 
@@ -56,21 +78,33 @@ public class RecommendController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/cancel",method = RequestMethod.POST)
-    public PageFinder<IndexRecommendVo> cancelRecommend(HttpServletRequest request) {
+    @RequestMapping(value = "/updateIndexRecommendStatus",method = RequestMethod.POST)
+    public String cancelRecommend(HttpServletRequest request) {
         try{
 
             Integer insId = Integer.valueOf(request.getParameter("insId"));
-            Integer typeId = Integer.valueOf(request.getParameter("typeId"));
             Integer rid = Integer.valueOf(request.getParameter("rid"));
+            //获取当前分类编号，用于定制排序方案
+            Integer typeId = Integer.valueOf(request.getParameter("typeId"));
 
-            // TODO 取消推荐
-            return null;
+            Map<String,Object> map = new HashMap<>();
+            map.put("rid",rid);
+            map.put("insId",insId);
+            map.put("typeId",typeId);
+            int num = institutionCategoryService.alterIndexRecommendStatus(map);
+            if(num != 1){
+                log.error("====> 更新首页列表推荐失败,num = "+num + "insId = "+insId + "rid = " + rid);
+                return "操作失败";
+            }
+
+            return "success";
         }catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        return "操作失败";
     }
+
+
 
     /**
      * 重新对推荐进行排序
@@ -79,20 +113,27 @@ public class RecommendController {
      */
     @ResponseBody
     @RequestMapping(value = "/sort",method = RequestMethod.POST)
-    public PageFinder<IndexRecommendVo> sortRecommend(HttpServletRequest request) {
+    public String sortRecommend(HttpServletRequest request) {
         try{
 
-            Integer insId = Integer.valueOf(request.getParameter("insId"));
             Integer typeId = Integer.valueOf(request.getParameter("typeId"));
             Integer rid = Integer.valueOf(request.getParameter("rid"));
             String method = request.getParameter("method");
+            // 'add' : 'sub'
+
+            if(!"add".equals(method) && !"sub".equals(method)){
+                return "参数错误";
+            }
+
+            //updateSort
+            boolean result =  institutionCategoryService.updateSort(typeId,rid,"add".equals(method));
 
             // TODO 取消推荐
-            return null;
+            return result ? "success" : "操作失败";
         }catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        return "操作失败";
     }
 
 
