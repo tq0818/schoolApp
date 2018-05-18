@@ -333,8 +333,16 @@
     </select>
 
     <!-- 交换两个关联表的排序 -->
-    <update id="exchangeSortByCaseWhen" parameterType="String" >
-        UPDATE `institution_relation` SET `sort` = CASE `id` #{case_when} END
+    <update id="exchangeSortByCaseWhen" parameterType="java.util.List" >
+        UPDATE `institution_relation` SET `sort` = CASE `id`
+
+        <foreach collection="list" index="index" item="item"  separator=" " >
+            WHEN ${item.id} THEN ${item.sort}
+        </foreach>
+
+        ELSE sort
+
+         END
     </update>
 
 

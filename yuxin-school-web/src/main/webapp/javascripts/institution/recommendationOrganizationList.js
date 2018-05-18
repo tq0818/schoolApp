@@ -80,7 +80,7 @@ function getIndexRecommendList(){
                 },function(json){
                     if(json == 'success'){
                         $.msg('操作成功');
-                        getOnlineClassTypeList();
+                        getIndexRecommendList();
                     }else{
                         $.msg('操作失败!')
                     }
