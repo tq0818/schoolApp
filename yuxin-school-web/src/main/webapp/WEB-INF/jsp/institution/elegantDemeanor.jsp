@@ -8,14 +8,15 @@
     <link rel="stylesheet" href="<%=rootPath %>/stylesheets/fonts/iconfont.css">
     <link rel="stylesheet" href="<%=rootPath %>/stylesheets/riseschool/schoolDetails.css">
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/mine.css">
-    <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
     <link rel="stylesheet"  type="text/css" href="<%=rootPath %>/plugins/jcrop/css/jquery.Jcrop.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/mbox.css">
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/fatstyle.css">
     <style>
         .gobal-progress{display: none !important;} 
+      
     </style>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/institution/elegantDemeanor.css">
+	
 </head>
 <body>
 <input type="hidden" id="x" name="x" value="0"/>
@@ -129,11 +130,28 @@
     </div>
     <div>
         <span class="videoIntro">视频名称:</span>
-        <input type="text" style="width: 248px;height: 24px;" class="videoStlye">
-        <a href="##" class="addVideo">
+        <input type="text" style="width: 248px;height: 18px;" class="videoStlye" maxlength="30">
+        <div id="videoFile" style="margin-top: -27px;margin-left: 328px;">
+        <form id="fileupload" method="POST" enctype="multipart/form-data" action="">
+			 <a href="javascript:void(0)" class="addVideo">
             +
-            <input type="file">
-        </a>
+            <!-- <input type="file"> -->
+            	<input type="file" name="file" accept=".avi,.mp4*,.asf,.sdx,.wmv,.rmvb,.3gp,.mkv,.flv,.f4v,.rm,.ra,.ram,.mpg,.pgeg,.mpe,.vob,.dat,.mov,.3gp,.mts" id="filebutton" class="filebutton" multiple="">
+        	</a>
+			<!-- <table class="table table-hover table-center operate_vedio_table L-table L-table-hover">
+				<thead>
+	 						<tr>
+	 							<th width="480">文件名</th>
+	 							<th width="100">大小</th>
+	 							<th width="300">状态</th>
+	 							<th width="190">操作</th>
+	 						</tr>
+				</thead>
+				<tbody class="files">
+	            </tbody>
+			</table> -->
+		</form>
+		</div>
     </div>
     <div>
         <span class="videoIntro">视频描述:</span>
@@ -148,7 +166,7 @@
 <div class="elePic" id='elegant'>
     <h5>风采图片</h5>
     <div>
-        <img src="" alt="" style="width: 300px;height: 300px;" id="targetStyle" class="picStyle">
+        <img src="" alt="" style="margin: auto;width: 300px;height: 300px;" id="targetStyle" class="picStyle">
         <br/>
         <a href="##" class="addPic" style="margin-top: 5px;margin-bottom: 20px;">
             选择图片
@@ -186,6 +204,32 @@
 <script src="<%=rootPath %>/javascripts/institution/ajaxfileuploadR.js"></script>
 <script src="<%=rootPath %>/javascripts/plus/jquery.units.js"></script>
 <script src="<%=rootPath %>/javascripts/institution/elegantDemeanor.js"></script>
+
+<script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/plupload.full.min.js"></script>
+<script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/i18n/zh_CN.js"></script>
+<script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/moxie.js"></script>
+<script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.2.1/jquery.js"></script>
+<script type="text/javascript" src="http://cdn.staticfile.org/qiniu-js-sdk/1.0.14-beta/qiniu.js"></script>
+<script src="http://v.polyv.net/file/plug-in2/js/polyv-upload.js"></script>
+<script type="text/javascript" src="<%=rootPath%>/plugins/ydUpload/yunduo.js"></script>
+<script type="text/javascript" src="<%=rootPath%>/javascripts/operate/showTc.js"></script>
+<script type="text/javascript" src="<%=rootPath%>/javascripts/operate.js?_=1.0"></script>
+<script type="text/javascript" src="<%=rootPath%>/javascripts/onlynum.js"></script>
+<script type="text/javascript" src="<%=rootPath%>/plugins/letv/letvUpload.js?v=1.0"></script>
+
+<script src="<%=rootPath%>/plugins/ccUpload/upload_files/encapsulated_getJson.js"></script>
+<script src="<%=rootPath%>/plugins/ccUpload/upload_files/msgPrompt.js"></script>
+<script src="<%=rootPath%>/plugins/ccUpload/upload_files/jquery.ui.widget.js"></script>
+<script src="<%=rootPath%>/plugins/ccUpload/upload_files/jquery.iframe-transport.js"></script>
+<script src="<%=rootPath%>/plugins/ccUpload/upload_files/jquery.fileupload.js"></script>
+<%-- <script src="<%=rootPath%>/plugins/ccUpload/upload_files/tmpl.min.js"></script> --%>
+<script src="<%=rootPath%>/plugins/ccUpload/upload_files/jquery.fileupload-process.js"></script>
+<script src="<%=rootPath%>/plugins/ccUpload/upload_files/jquery.fileupload-ui.js"></script>
+<script src="<%=rootPath%>/plugins/ccUpload/upload_files/crypt.js"></script>
+<script src="<%=rootPath%>/plugins/ccUpload/upload_files/spark-md5.js"></script>
+<script type="text/javascript" src="<%=rootPath%>/javascripts/common/utils.js"></script>
+
+<script src="<%=rootPath %>/javascripts/institution/upload6.js"></script>
 <script>
 	$(function(){
 		$.ajax({
