@@ -84,7 +84,7 @@
             <if test="city != null and city != ''">city = #{city},</if>
             <if test="area != null and area != ''">area = #{area},</if>
             <if test="address != null and address != ''">address = #{address},</if>
-            <if test="mobile != null and mobile != ''">mobile = #{mobile},</if>
+            mobile = #{mobile},
             <if test="isChain != null and isChain != ''">is_chain = #{isChain},</if>
             <if test="chainId != null and chainId != ''">chain_id = #{chainId},</if>
             <if test="chainName != null and chainName != ''">chain_name = #{chainName},</if>
@@ -166,5 +166,9 @@
         select ii.id ,u.username ,u.id as user_id from  users u
         LEFT JOIN institution_info ii on u.id = ii.user_id
         where ii.id = #{id}
+    </select>
+
+    <select id="insCheckName" parameterType="String" resultMap="institutionInfoMap" >
+        select * from institution_info where name = #{name}
     </select>
 </mapper>

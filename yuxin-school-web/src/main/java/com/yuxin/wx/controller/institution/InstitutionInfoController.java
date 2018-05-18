@@ -9,7 +9,9 @@ import com.yuxin.wx.model.institution.InstitutionCategoryVo;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
 import com.yuxin.wx.model.institution.InstitutionLabelVo;
 import com.yuxin.wx.model.user.Users;
+import com.yuxin.wx.util.ImageUtils;
 import com.yuxin.wx.utils.FileUtil;
+import com.yuxin.wx.utils.HttpPostRequest;
 import com.yuxin.wx.utils.PropertiesUtil;
 import com.yuxin.wx.utils.WebUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -23,7 +25,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -79,18 +84,34 @@ public class InstitutionInfoController {
     }
 
     /**
+     * 判断机构名称是否重复
+     * @param name
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/insCheckName",method = RequestMethod.POST)
+    public InstitutionInfoVo insCheckName(String name){
+
+        InstitutionInfoVo insInfoVon = institutionInfoService.insCheckName(name);
+
+        return insInfoVon;
+    }
+
+    /**
      * 添加机构
      * @param insInfoVo
      */
     @ResponseBody
     @RequestMapping(value = "/addIns",method = RequestMethod.POST)
-    public void addIns(InstitutionInfoVo insInfoVon){
+    public void addIns(InstitutionInfoVo insInfoVon, HttpServletRequest request){
         if(null != insInfoVon.getUserName() && !"".equals(insInfoVon.getUserName())) {
             String md5Pwd = new Md5Hash("111111", ByteSource.Util.bytes(insInfoVon.getUserName()
                     + "salt")).toHex();
             insInfoVon.setPwd(md5Pwd);
         }
-            institutionInfoService.insert(insInfoVon);
+        Integer curUserId = WebUtils.getCurrentUserId(request);
+        insInfoVon.setCurrtUser(curUserId);
+        institutionInfoService.insert(insInfoVon);
     }
 
 
@@ -179,14 +200,14 @@ public class InstitutionInfoController {
                 if(insFeaturesVo.getPage() == 1){
                     insFeaturesVo.setPage(0);
                 }else{
-                    insFeaturesVo.setPage((insFeaturesVo.getPage()-1)*2);
+                    insFeaturesVo.setPage((insFeaturesVo.getPage()-1)*55);
                 }
 
             }
-            insFeaturesVo.setPageSize(2);
+            insFeaturesVo.setPageSize(55);
             List<InsFeaturesVo> specialSer = insFeaturesService.findInsFeaturesVos(insFeaturesVo);
             Integer specialSerCount = insFeaturesService.findInsFeaturesVosCount(insFeaturesVo);
-            PageFinder<InsFeaturesVo> specialSerPage = new PageFinder<>(insFeaturesVo.getPage()/2,insFeaturesVo.getPageSize(),specialSerCount,specialSer);
+            PageFinder<InsFeaturesVo> specialSerPage = new PageFinder<>(insFeaturesVo.getPage()/55,insFeaturesVo.getPageSize(),specialSerCount,specialSer);
             return specialSerPage;
         }catch (Exception e){
             e.printStackTrace();
@@ -283,6 +304,7 @@ public class InstitutionInfoController {
     public void cureatManageUser(HttpServletRequest request){
         String userName = request.getParameter("manageUser");
         String insId = request.getParameter("countManage");
+        Integer curUserId = WebUtils.getCurrentUserId(request);
 
         String md5Pwd = new Md5Hash("111111", ByteSource.Util.bytes(userName
                 + "salt")).toHex();
@@ -291,12 +313,15 @@ public class InstitutionInfoController {
         users.setUsername(userName);
         users.setPassword(md5Pwd);
         users.setUserType("INSTITUTION_MANAGE");
+        users.setCurrtUser(curUserId);
+        users.setCompanyId(WebUtils.getCurrentCompanyId());
+        users.setStatus(1);
         try{
             usersServiceImpl.insertA(users);
             InstitutionInfoVo institutionInfoVo = new InstitutionInfoVo();
             institutionInfoVo.setId(Integer.parseInt(insId));
             institutionInfoVo.setUserId(users.getId());
-            institutionInfoService.updateInsById(institutionInfoVo);
+            institutionInfoService.updateInsManageById(institutionInfoVo);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -329,6 +354,92 @@ public class InstitutionInfoController {
             e.printStackTrace();
             return 500;
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/saveCutPic",method=RequestMethod.POST)
+    public JSONObject saveCutPic(HttpServletRequest request, String path, double x, double y, double w, double h){
+        JSONObject json = new JSONObject();
+        json.put("flag",1);
+        String fileName=path.substring(path.lastIndexOf("/")+1);
+        String tempPath=propertiesUtil.getTempPath()+"/source/"+fileName;
+        String target=propertiesUtil.getTempPath()+"/target/"+fileName;
+        String header="http://"+propertiesUtil.getProjectImageUrl()+"/";
+
+        File tempFile = new File(propertiesUtil.getTempPath()+"/source");
+        if(!tempFile.exists()){
+            tempFile.mkdirs();
+        }
+
+        File targetFile = new File(propertiesUtil.getTempPath()+"/target");
+        if(!targetFile.exists()){
+            targetFile.mkdirs();
+        }
+        path=path.replace(header, "");
+        System.out.println("oss临时文件路径["+path+"]=====本地磁盘临时文件路径["+tempPath+"]======切图后临时文件路径["+target+"]");
+        FileUtil.download("temp", path,tempPath);
+        //选中尺寸
+        BufferedImage img =null;
+        try{
+            img = ImageIO.read(new File(tempPath));
+        }catch(Exception e){
+            e.printStackTrace();
+            json.put("flag",0);
+            return json;
+        }
+        //原图尺寸
+        double realW=img.getWidth();
+        double realH=img.getHeight();
+        //示例图尺寸
+        double slW=0;
+        double slH=0;
+        if(realW/realH>186.57/300.00){
+            //过宽
+            slH=186.57 * realH/realW;
+            slW=186.57;
+        }else{
+            //过高
+            slH=300;
+            slW=300 * realW/realH;
+        }
+        //原图所选中位置和区域
+
+        int xx=(new   Double(x*realW/slW)).intValue();
+        int yy=(new   Double(y*realH/slH)).intValue();
+        int ww=(new   Double(w*realW/slW)).intValue();
+        int hh=(new   Double(h*realH/slH)).intValue();
+        System.out.println("选中区域:["+x+","+y+","+w+","+h+"]----原图选中区域:["+xx+","+yy+","+ww+","+hh+"]");
+        //在原图中切图
+        String cutImgPath= ImageUtils.cutImage(tempPath,target,xx,yy,ww,hh);
+        //切好的图缩放到规定比例
+        String realPath=null;
+        try {
+            realPath=FileUtil.upload(cutImgPath,"institutionSpe", WebUtils.getCurrentCompanyId()+"");
+        } catch (Exception e) {
+            e.printStackTrace();
+            json.put("flag",0);
+            return json;
+        }
+        //将图片放入数据库
+        InsFeaturesVo insFeaturesVo = new InsFeaturesVo();
+        Date date = new Date();
+        insFeaturesVo.setId(null);
+        insFeaturesVo.setImgType(0);
+        insFeaturesVo.setImgUrl(header+realPath);
+        insFeaturesVo.setCreateTime(date);
+        insFeaturesVo.setUpdateTime(date);
+        try {
+            insFeaturesService.insert(insFeaturesVo);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        FileUtil.deleteFile(target);
+        FileUtil.deleteFile(cutImgPath);
+        json.put("realPath",realPath);
+        json.put("header",header);
+        json.put("flag",1);
+        return json;
     }
 
 }
