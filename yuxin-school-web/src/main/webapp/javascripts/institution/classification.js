@@ -240,9 +240,9 @@ function updatedata(flag,id,enable){
     var codeName = '';
     if('1'==flag){
 
-        // if(!confirm("您确认禁用该分类?")){
-        //     return;
-        // }
+/*         if(!confirm("您确认禁用该分类?")){
+             return;
+         }*/
 
         $.mbox({
             area: [ "450px", "auto" ], //弹框大小
@@ -251,21 +251,19 @@ function updatedata(flag,id,enable){
                 msg: "您确认禁用该分类?",
                 btns: 2,   //1: 只有一个按钮   2：两个按钮  3：没有按钮 提示框
                 type: 2,   //1:对钩   2：问号  3：叹号
-                btn: [ "试一试", "再看看"],  //自定义按钮
+                btn: [ "确定", "取消"],  //自定义按钮
                 yes: function() {  //点击左侧按钮：成功
-                    alert();
+                    $("#firtId_"+id).find("a").each(function(){
+                        ids+=$(this).attr("id").split("_")[0]+",";
+                    });
+                    ids+=id;
+                    goUpdateData(ids,codeName,flag,enable,imgUrl);
                 },
                 no: function() { //点击右侧按钮：失败
                     return false;
                 }
             }
         });
-
-
-        $("#firtId_"+id).find("a").each(function(){
-            ids+=$(this).attr("id").split("_")[0]+",";
-        });
-        ids+=id;
     }else{
         ids = id;
         codeName = $("#insCatName").val();
@@ -280,14 +278,20 @@ function updatedata(flag,id,enable){
             alert("分类名称只支持英文/汉字/英文状态下的.和'/数字");
             return;
         }
+        var imgUrl = $("#imgUrl").val();
+        goUpdateData(ids,codeName,flag,enable,imgUrl);
     }
-    var imgUrl = $("#imgUrl").val();
+
+}
+
+function goUpdateData(ids,codeName,flag,enable,imgUrl){
     $.ajax({
         type:"POST",
         url: rootPath + "/insCateManage/querySingleInsCateByName",
         data: {
             id:ids,
-            codeName:codeName
+            codeName:codeName,
+            flag:flag
         },
         dataType: "json",
         success: function (data) {
@@ -311,7 +315,7 @@ function updatedata(flag,id,enable){
                             hideTk();
                         }else{
                             if(flag=='1'){
-                                $.msg("禁用失败请稍后再试");
+                                alert("禁用失败请稍后再试");
                             }
                         }
                     }

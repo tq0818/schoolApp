@@ -246,6 +246,11 @@ public class InstitutionCategoryManageController {
     @RequestMapping(value = "/querySingleInsCateByName",method=RequestMethod.POST)
     public JSONObject querySingleInsCateByName(HttpServletRequest request){
         JSONObject resultJson = new JSONObject();
+        String flag = request.getParameter("flag");
+        if("1".equals(flag)){//启用禁用
+            resultJson.put("flag","0");
+            return resultJson;
+        }
         Map<String,Object> params = new HashMap<String,Object>();
         String codeName = request.getParameter("codeName");
         String id = request.getParameter("id");
