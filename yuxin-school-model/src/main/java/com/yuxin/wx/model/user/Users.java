@@ -50,6 +50,16 @@ public class Users extends BaseEntity {
 	private String domain;/*公司域名*/
 	private Integer proxyOrgId;
 	private Integer userscore;/*用户积分*/
+	private Integer currtUser;
+
+	public Integer getCurrtUser() {
+		return currtUser;
+	}
+
+	public void setCurrtUser(Integer currtUser) {
+		this.currtUser = currtUser;
+	}
+
 	// Constructor
 	public Users() {
 	}

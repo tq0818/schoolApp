@@ -368,10 +368,10 @@ button.cloze {
         <div style="display: inline-block;font-size: 16px;color: #ff0000;
         background: #ffff00;height: 51px;margin-left: 400px;line-height: 51px;">
             <span>
-            您收到(<a href="##" id="classComCount"></a>)条评论待审核！
+            您收到(<a href="<%=rootPath %>/classModule/comment" id="classComCount"></a>)条评论待审核！
             </span>
             <span>
-                您收到（<a href="##" id="insComCount"></a>）条机构评论待审核！
+                您收到（<a href="<%=rootPath %>/comment/commentIndex" id="insComCount"></a>）条机构评论待审核！
             </span>
         </div>
         <ul class="nav nav-right">

@@ -1,14 +1,18 @@
 package com.yuxin.wx.institution.impl;
 
 import com.yuxin.wx.api.institution.InstitutionCategoryManageService;
+import com.yuxin.wx.api.institution.InstitutionInfoService;
 import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.institution.mapper.InstitutionCategoryManageMapper;
+import com.yuxin.wx.institution.mapper.InstitutionInfoMapper;
 import com.yuxin.wx.model.institution.InstitutionCategoryVo;
+import com.yuxin.wx.model.institution.InstitutionInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +27,7 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
 
     @Autowired
     private InstitutionCategoryManageMapper institutionManageMapper;
+
 
     @Override
     public List<InstitutionCategoryVo> queryInstitutionCategorys(Map<String, Object> params) {
@@ -166,26 +171,162 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
     }
 
     /**
-     *
      * @param baseSort
      * @return
      */
     @Override
     public int flushSortAll(Integer baseSort) {
-       try{
-           List<InstitutionCategoryVo> list =  institutionManageMapper.queryInstitutionCategorysAfterSort(baseSort);
-           Map<String,Object> map = new HashMap<>();
-           int num = 0;
-           for(int i = 0;i<list.size();i++){
-               map.put("sort",baseSort + i);
-               map.put("id",list.get(i).getId());
-               institutionManageMapper.updateSort(map);
-               num ++ ;
-           }
-           return num;
-       }catch(Exception e){
-           e.printStackTrace();
-       }
+        try {
+            List<InstitutionCategoryVo> list = institutionManageMapper.queryInstitutionCategorysAfterSort(baseSort);
+            Map<String, Object> map = new HashMap<>();
+            int num = 0;
+            for (int i = 0; i < list.size(); i++) {
+                map.put("sort", baseSort + i);
+                map.put("id", list.get(i).getId());
+                institutionManageMapper.updateSort(map);
+                num++;
+            }
+            return num;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return -1;
+    }
+
+    @Override
+    public List<Map<String, Object>> getIndexRecommendList(int typeId, String name, int pageStart, int pageSize) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("typeId", typeId);
+        map.put("name", name);
+        map.put("pageStart", pageStart);
+        map.put("pageSize", pageSize);
+        // int count = institutionManageMapper.getIndexRecommendListCount(map);
+        List<Map<String, Object>> list = institutionManageMapper.getIndexRecommendList(map);
+
+        return list;
+    }
+
+    @Override
+    public int getIndexRecommendListCount(int typeId, String name) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("typeId", typeId);
+        map.put("name", name);
+
+        return institutionManageMapper.getIndexRecommendListCount(map);
+    }
+
+    @Override
+    public int alterIndexRecommendStatus(Map<String, Object> map) {
+        //获取当前分类信息，用于判断排序算法
+        Map<String,Object> typeEntity = institutionManageMapper.getTypeEntityById((Integer) map.get("typeId"));
+        if (null == typeEntity ) {
+            return -1;
+        }
+        Map<String, Object> info = institutionManageMapper.getIndexRecommendInfo(map);
+        if (null == info) {
+            return -1;
+        }
+
+        if (0 == (Integer) info.get("is_recommend")) {
+            //将一个机构置为推荐状态的时候需要更新排名信息
+            //获取指定分类下当前推荐状态为1的数量
+            int count = (Integer)typeEntity.get("code_level") == 1 ? institutionManageMapper.getIndexRecommendYesCount1((Integer)typeEntity.get("id")) : institutionManageMapper.getIndexRecommendYesCount2((Integer)typeEntity.get("id"));
+            map.put("sort", count + 1);
+            return institutionManageMapper.alterIndexRecommendStatusYes(map);
+        } else {
+            //将一个机构置为不推荐状态的时候需要更新排其后的所有机构排名
+            Integer sort = (Integer) info.get("sort");
+            map.put("sort", sort);
+            map.put("typeId", typeEntity.get("id"));
+            if((Integer)typeEntity.get("code_level") == 1){
+                institutionManageMapper.increaseIndexRecommendAfter1(map);
+            }else{
+                institutionManageMapper.increaseIndexRecommendAfter2(map);
+            }
+
+            return institutionManageMapper.alterIndexRecommendStatusNo(map);
+        }
+
+
+    }
+
+    /**
+     * 获取指定分类的机构状态是推荐的个数
+     *
+     * @param typeId
+     * @param name
+     * @return
+     */
+    @Override
+    public int getIndexRecommendYesCount(int typeId, String name) {
+
+        return 0;
+    }
+
+
+    @Override
+    public int getIndexRecommendYesCount(Integer typeId) {
+        Map<String,Object> typeEntity = institutionManageMapper.getTypeEntityById(typeId);
+        if (null == typeEntity ) {
+            return -1;
+        }
+        //几级分类
+        int type = (Integer)typeEntity.get("code_level");
+
+        if(type == 1){
+            //1级分类
+            return institutionManageMapper.getIndexRecommendYesCount1(typeId);
+        }else{
+            //2级分类
+            return institutionManageMapper.getIndexRecommendYesCount2(typeId);
+        }
+
+    }
+
+    /**
+     *
+     * @param typeId    当前分类id
+     * @param rid   关联映射id
+     * @param addFlag   提高或者降低排名
+     * @return
+     */
+    @Override
+    public boolean updateSort(Integer typeId, Integer rid, boolean addFlag) {
+        //获取当前分类信息，用于判断排序算法
+        Map<String,Object> typeEntity = institutionManageMapper.getTypeEntityById(typeId);
+        if (null == typeEntity ) {
+            return false;
+        }
+        Map<String,Object> param = new HashMap<>();
+        param.put("rid",rid);
+        Map<String, Object> info = institutionManageMapper.getIndexRecommendInfo(param);
+        if (null == info || info.get("sort") == null) {
+            return false;
+        }
+
+        //当前要更新的关联信息的排序
+        Integer sort = (Integer)info.get("sort");
+        //判断分类是一级分类还是二级分类
+        int type = (Integer)typeEntity.get("code_level") ;
+        param.put("typeId",typeId);
+        //如果是提高排名，则获取前一个排名的信息，反之获取后一个排名的信息
+        param.put("sort",addFlag ? sort - 1 : sort + 1);
+        Map<String,Object> otherRelation = (type == 1 ? institutionManageMapper.getRelationByTypeIdSort1(param) : institutionManageMapper.getRelationByTypeIdSort2(param));
+        if(null == otherRelation){
+            //获取前一个或者后一个排名信息失败
+            return false;
+        }
+
+        //前一个或者后一个的排名信息
+        int sort2 = (Integer)otherRelation.get("sort");
+
+        //交换排名SQL
+        StringBuilder builder = new StringBuilder();
+        builder.append(" WHEN "+rid + " THEN "+sort2 );
+        builder.append(" WHEN "+ otherRelation.get("id")+ " THEN "+sort).append("");
+
+        int result = institutionManageMapper.exchangeSortByCaseWhen(builder.toString());
+
+        return result == 2;
     }
 }

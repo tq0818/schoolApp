@@ -103,4 +103,40 @@ public interface InstitutionCategoryManageService {
     int flushSortAll(Integer baseSort);
 
 
+    List<Map<String,Object>> getIndexRecommendList(int typeId, String name, int pageStart, int pageSize);
+
+    int getIndexRecommendListCount(int typeId, String name);
+
+    /**
+     * 获取指定分类的机构状态是推荐的个数
+     * @param typeId
+     * @param name
+     * @return
+     */
+    int getIndexRecommendYesCount(int typeId, String name);
+
+
+    /**
+     * 更新首页列表推荐的某个机构的推荐状态
+     * @param map
+     * @return
+     */
+    int alterIndexRecommendStatus(Map<String,Object> map);
+
+    /**
+     * 根据分类id获取该分类下状态为推荐的机构个数
+     * @param typeId
+     * @return
+     */
+    int getIndexRecommendYesCount(Integer typeId);
+
+    /**
+     * 调整某个首页列表推荐的排序
+     * @param typeId    当前分类id
+     * @param rid   关联映射id
+     * @param addFlag   提高或者降低排名
+     * @return
+     */
+    boolean updateSort(Integer typeId,Integer rid,boolean addFlag);
+
 }

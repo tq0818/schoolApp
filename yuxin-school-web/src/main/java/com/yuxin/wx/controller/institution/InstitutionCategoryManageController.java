@@ -202,14 +202,14 @@ public class InstitutionCategoryManageController {
         //示例图尺寸
         double slW=0;
         double slH=0;
-        if(realW/realH>186.57/300.00){
+        if(realW/realH>200/200){
             //过宽
-            slH=186.57 * realH/realW;
-            slW=186.57;
+            slH=200 * realH/realW;
+            slW=200;
         }else{
             //过高
-            slH=300;
-            slW=300 * realW/realH;
+            slH=200;
+            slW=200 * realW/realH;
         }
         //原图所选中位置和区域
 
@@ -246,6 +246,11 @@ public class InstitutionCategoryManageController {
     @RequestMapping(value = "/querySingleInsCateByName",method=RequestMethod.POST)
     public JSONObject querySingleInsCateByName(HttpServletRequest request){
         JSONObject resultJson = new JSONObject();
+        String flag = request.getParameter("flag");
+        if("1".equals(flag)){//启用禁用
+            resultJson.put("flag","0");
+            return resultJson;
+        }
         Map<String,Object> params = new HashMap<String,Object>();
         String codeName = request.getParameter("codeName");
         String id = request.getParameter("id");

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.yuxin.wx.api.auth.IAuthUserRoleService;
+import com.yuxin.wx.riseschool.mapper.RiseSchoolManageMapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,6 +109,8 @@ public class UsersServiceImpl extends BaseServiceImpl implements IUsersService {
 	private SysCcAccountMapper ccAccountMapper;
 	@Autowired
 	private SysConfigTeacherMapper sysConfigTeacherMapper;
+	@Autowired
+	private IAuthUserRoleService authUserRoleServiceImpl;
 	
 	/**
 	 * 
@@ -126,6 +130,27 @@ public class UsersServiceImpl extends BaseServiceImpl implements IUsersService {
 	@Override
 	public void insertA(Users users){
 		usersMapper.insertA(users);
+		//插入角色关系
+		Map<String,Object> param=new HashMap<String,Object>();
+		param.put("userId", users.getId());
+		param.put("companyId",18113);
+		usersMapper.insertUserCompanyRalation(param);
+
+		Integer curUserId = users.getCurrtUser();
+		String roleCode = "where ap.privilege_name in ('rise_school')";
+		Map<String,Object>params = new HashMap<String,Object>();
+		params.put("roleCode",roleCode);
+		List<AuthUserRole> roleIds = authUserRoleServiceImpl.queryRoleIds(params);
+		for (AuthUserRole aur : roleIds){
+			AuthUserRole authUserRole=new AuthUserRole();
+			authUserRole.setUserId(users.getId());
+			authUserRole.setRoleUid(aur.getRoleUid());
+			authUserRole.setCreateTime(new Date());
+			authUserRole.setCreator(curUserId+"");
+			authUserRole.setUpdateTime(new Date());
+			authUserRole.setUpdator(curUserId+"");
+			authUserRoleServiceImpl.insert(authUserRole);
+		}
 	}
 	
 	/**

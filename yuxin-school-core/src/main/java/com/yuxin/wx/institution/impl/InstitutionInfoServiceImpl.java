@@ -1,11 +1,14 @@
 package com.yuxin.wx.institution.impl;
 
+import com.yuxin.wx.api.auth.IAuthUserRoleService;
 import com.yuxin.wx.api.institution.InstitutionInfoService;
+import com.yuxin.wx.api.user.IUsersService;
 import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.institution.mapper.InstitutionInfoMapper;
 import com.yuxin.wx.institution.mapper.InstitutionLabelMapper;
 import com.yuxin.wx.institution.mapper.InstitutionRelationMapper;
+import com.yuxin.wx.model.auth.AuthUserRole;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
 import com.yuxin.wx.model.institution.InstitutionLabelVo;
 import com.yuxin.wx.model.institution.InstitutionRelationVo;
@@ -16,7 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -33,6 +38,12 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
     @Autowired
     private InstitutionRelationMapper institutionRelationMapper;
 
+    @Autowired
+    private IUsersService usersServiceImpl;
+
+    @Autowired
+    private IAuthUserRoleService authUserRoleServiceImpl;
+
     @Override
     @Transactional
     public void insert(InstitutionInfoVo institutionInfoVo) {
@@ -44,6 +55,23 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
                 users.setPassword(institutionInfoVo.getPwd());
                 users.setUserType("INSTITUTION_MANAGE");
                 usersMapper.insertA(users);
+            }
+            //添加用户关系表
+            usersServiceImpl.insertUserCompanyRalation(users.getId(),18113);
+            Integer curUserId = institutionInfoVo.getCurrtUser();
+            String roleCode = "where ap.privilege_name in ('INSTITUTION_MANAGE')";
+            Map<String,Object> params = new HashMap<>();
+            params.put("roleCode",roleCode);
+            List<AuthUserRole> roleIds = authUserRoleServiceImpl.queryRoleIds(params);
+            for (AuthUserRole aur : roleIds){
+                AuthUserRole authUserRole=new AuthUserRole();
+                authUserRole.setUserId(users.getId());
+                authUserRole.setRoleUid(aur.getRoleUid());
+                authUserRole.setCreateTime(new Date());
+                authUserRole.setCreator(curUserId+"");
+                authUserRole.setUpdateTime(new Date());
+                authUserRole.setUpdator(curUserId+"");
+                authUserRoleServiceImpl.insert(authUserRole);
             }
 
             institutionInfoVo.setIsChain(Integer.parseInt(institutionInfoVo.getIsChains()));
@@ -222,6 +250,11 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
     }
 
     @Override
+    public void updateInsManageById(InstitutionInfoVo institutionInfoVo) {
+        institutionInfoMapper.update(institutionInfoVo);
+    }
+
+    @Override
     public InstitutionInfoVo checkUser(Integer id) {
         try{
             return institutionInfoMapper.checkUser(id);
@@ -230,6 +263,13 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
         }
 
     }
+
+    @Override
+    public InstitutionInfoVo insCheckName(String name) {
+        return institutionInfoMapper.insCheckName(name);
+    }
+
+
 
 
 }

@@ -1,3 +1,4 @@
+var speId = '';
 $(function () {
     //    左侧active切换
     $selectSubMenus('essential');
@@ -47,15 +48,15 @@ $(function () {
             $('.customLabelBtn').show();
         }
     });
-
+var j = 1;
     //特色服务增加和删除
     $('.specialServiceBtn').click(function () {
         let specialServiceLength = $('.specialService').length;
         if(specialServiceLength<10){
             var _html =
                 `   <span href="##" class="specialService">
-                                <img src="../../../images/institution/1.jpg" alt="" style="width: 40px;height: 40px;"  class="iconPic">
-                                <input class="systemLabel iconPicName" maxlength="5"></input>
+                                <img src="../../../images/institution/1.jpg" id="${j}" alt="" style="width: 40px;height: 40px;"  class="iconPic">
+                                <input class="systemLabel iconPicName" maxlength="5">
                                 <i class="icon iconfont deletespecialService">&#xe610;</i>
                     </span>
                 `;
@@ -64,6 +65,7 @@ $(function () {
                 $(this).hide();
             }
         }
+        j++;
     });
     $('body').on('click','.deletespecialService',function () {
         $(this).parents('.specialService').remove();
@@ -74,33 +76,12 @@ $(function () {
     });
 
 
-    /*//添加机构分类
-    $('.addType').click(function () {
-        let _html = `
-            <div style="padding-left: 80px;margin-top: 6px;">
-                <select name="" id="">
-                    <option value="">请选择一级分类</option>
-                </select>
-                <select name="" id="">
-                    <option value="">请选择二级分类</option>
-                </select>
-                <span class="iconBtn deleteType">-</span>
-            </div>
-        `;
-        $('#orgType').append(_html);
-    });
-    //删除分类
-    $('body').on('click','.deleteType',function () {
-        $(this).parent('div').remove();
-    });*/
-
-    var i = 2;
+    var i = 100;
     //添加机构分类
     $('.addType').click(function () {
-        i++;
         let _html = `
             <div style="padding-left: 80px;margin-top: 6px;">
-                <select name=""  class="findFistCategorys">
+                <select name=""  class="findFistCategorys" id="${i}">
                     <option value="" >请选择一级分类</option>
                 </select>
                 <select name=""  class="findSecondCategorys">
@@ -110,7 +91,8 @@ $(function () {
             </div>
         `;
         $('#orgType').append(_html);
-        findFistCategorys(i-1);
+        findFistCategorys(i);
+        i++;
     });
     //删除分类
     $('body').on('click','.deleteType',function () {
@@ -160,13 +142,19 @@ $(function () {
     });
     //点击特色图片出下面图片列表
     $('body').on('click','.iconPic',function () {
-
         findSpecialServiceImg(1);
         $('.iconList').show();
+        speId = $(this).attr("id");
     });
     //点击关闭图片列表
     $('.closeIconList').click(function () {
         $('.iconList').hide();
+    });
+
+    //点击图片列表中某个图片
+    $('body').on('click','.iconListImg',function () {
+        //将点击的图片放入到特色标签上
+        $("#"+speId).attr("src",$(this).attr("src"));
     });
 
     //选择所属省份 初始化身份
@@ -244,10 +232,39 @@ $(function () {
                 }
             }
         }
-
-
-
     })
+
+    //上传图片
+
+    $('body').on('click','.uploadImg',function () {
+        $(".coverPopup").show();
+        $.commonPopup();
+    });
+
+    //隐藏
+    $('.mienHide').click(function(){
+        $('.coverPopup').hide();
+        $("#targetStyle").attr("src","");
+        $('.commonPopup').hide();
+
+    });
+
+    $(".uploadImageStyle").on("change","#targetStyle", function() {
+        var theImage = new Image();
+        theImage.src = $(this).attr("src");
+        if (theImage.complete) {
+            sourceHeight = theImage.height;
+            sourceWidth = theImage.width;
+            $.init(sourceWidth, sourceHeight,2);
+        } else {
+            theImage.onload = function () {
+                sourceHeight = theImage.height;
+                sourceWidth = theImage.width;
+                $.init(sourceWidth, sourceHeight,2);
+            };
+        };
+
+    });
 
 });
 
@@ -322,7 +339,7 @@ function findFistCategorys(index) {
                     html = html + "<option value=\""+data[i].id+"\">"+data[i].codeName+"</option>"
                 }
             }
-            $(".findFistCategorys").eq(index).html(html);
+            $("#"+index).html(html);
         }
     });
 
@@ -348,7 +365,7 @@ function findSecondCategorys(id,that) {
     });
 }
 
-
+//获取图片列表
 function findSpecialServiceImg(page) {
 console.log(page);
     $.ajax({
@@ -363,13 +380,13 @@ console.log(page);
             }
 
             var html = '';
-            html +='<a href="##" class="uploadImg">+<input type="file"></a>';
+            html +='<span href="##" class="uploadImg" style="cursor: default;">+</span>';
             for(var i in imgS){
                 html +='<img src="'+ imgS[i].imgUrl +'" alt="" class="iconListImg" >'
             }
             $(".imgDiv").html(html);
 
-            if (data.rowCount > 2) {
+            if (data.rowCount > 55) {
                 $(".pagination").html('');
                 $(".pagination").pagination(data.rowCount,
                     {
@@ -455,14 +472,18 @@ function updataIns() {
     let listMachine = '';
     let listMachineChi = $('#listMachine').children('div');
     for(let i=0;i<listMachineChi.length;i++){
-        if(i == listMachineChi.length-1){
-            listMachine+= listMachineChi.eq(i).children('input').eq(0).val()+'-'+
-                listMachineChi.eq(i).children('input').eq(1).val()
-            ;
-        }else{
-            listMachine+= listMachineChi.eq(i).children('input').eq(0).val()+'-'+
-                listMachineChi.eq(i).children('input').eq(1).val()+','
-            ;
+        var quhao = listMachineChi.eq(i).children('input').eq(0).val();
+        var num = listMachineChi.eq(i).children('input').eq(1).val();
+        if(null != quhao && null != num && quhao != '' && num !=''){
+            if(i == listMachineChi.length-1){
+                listMachine+= listMachineChi.eq(i).children('input').eq(0).val()+'-'+
+                    listMachineChi.eq(i).children('input').eq(1).val()
+                ;
+            }else{
+                listMachine+= listMachineChi.eq(i).children('input').eq(0).val()+'-'+
+                    listMachineChi.eq(i).children('input').eq(1).val()+','
+                ;
+            }
         }
     }
 
@@ -485,7 +506,16 @@ function updataIns() {
 
     }
 
-    var mobile = listMachine+','+listPhone;
+    var mobile ='';
+    if(listMachine == '' && listPhone ==''){
+        mobile = '';
+    }else if(listMachine ==''){
+        mobile = listPhone;
+    }else if(listPhone == ''){
+        mobile = listMachine;
+    }else{
+        mobile = listMachine+','+listPhone;
+    }
 
     //自定义标签
     let cusLabel = $('.cusLabel');
@@ -553,6 +583,73 @@ function updataIns() {
 
 
 
+}
+
+/**
+ * 保存临时图片
+ * @param saveFlag
+ */
+function savePic() {
+    //改变图片时清空图片路径
+    $("#targetStyle").attr("src","");
+    $.ajaxFileUpload({
+        url : rootPath+"/riseSchoolStyle/upRiseSchoolStyleImg",
+        secureuri : false,// 安全协议
+        async : false,
+        fileElementId :'imgDataStyle',
+        dataType:'json',
+        type : "POST",
+        success : function(data) {
+            if (jcrop_apis){
+                jcrop_apis.destroy();
+            }
+            if (data.flag == 1){
+                $("#targetStyle").attr("src",data.realPath);
+                $("#targetStyle").trigger("change");
+                $(".jcrop-holder").find("img").attr("src",data.realPath);
+            }
+        },
+        error:function(arg1,arg2,arg3){
+
+        }
+    });
+}
+
+/**
+ * 返回切图真实路径
+ * @param saveFlag
+ */
+function saveCutPic() {
+    //判断图片是否为空或则是未更改就进行保存
+    if (!$("#targetStyle").attr("src")){
+        $.msg("未选择图片");
+        return ;
+    }
+    //上传截取后的图片
+    $.ajax({
+        url : rootPath + "/InsInfoBase/saveCutPic",
+        data : {
+            path :$("#targetStyle").attr("src"),
+            x : $("#x").val(),
+            y : $("#y").val(),
+            w : $("#w").val(),
+            h : $("#h").val()
+        },
+        type : "post",
+        dataType : "json",
+        success : function(data) {
+            //上传成功则重新查询
+            if (data.flag == 1){
+                findSpecialServiceImg(1)
+            }else {
+                // $.msg(data.msg);
+            }
+            $("#targetStyle").attr("src","");
+            if (jcrop_apis){
+                jcrop_apis.destroy();
+            }
+        }
+    })
 }
 
 

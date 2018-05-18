@@ -112,4 +112,83 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
 
     List<InstitutionCategoryVo> queryInstitutionCategorysAfterSort(Integer sort);
 
+    /**
+     * 首页列表推荐获取列表
+     * @param map
+     * @return
+     */
+    List<Map<String,Object>> getIndexRecommendList(Map<String,Object> map);
+
+    int getIndexRecommendListCount(Map<String,Object> map);
+
+    /**
+     * 更新首页列表推荐的某个机构的推荐状态
+     * @param map
+     * @return
+     */
+    int alterIndexRecommendStatusNo(Map<String,Object> map);
+
+    /**
+     *
+     * @param map
+     * @return
+     */
+    int alterIndexRecommendStatusYes(Map<String,Object> map);
+
+    /**
+     * 提高某个排名后的所有机构的排名，适用于当前分类为一级分类
+     * @param map
+     */
+    void increaseIndexRecommendAfter1(Map<String,Object> map);
+
+    /**
+     * 提高某个排名后的所有机构的排名，适用于当前分类为二级分类
+     * @param map
+     */
+    void increaseIndexRecommendAfter2(Map<String,Object> map);
+
+    /**
+     *获取首页列表推荐的某个机构的信息
+     * @param map
+     * @return
+     */
+    Map<String,Object> getIndexRecommendInfo(Map<String,Object> map);
+
+    /**
+     * 获取当前机构是推荐状态的数量，适用于当前分类为一级分类
+     * @return
+     */
+    int getIndexRecommendYesCount1(Integer typeId);
+
+    /**
+     * 获取当前机构是推荐状态的数量，适用于当前分类为二级分类
+     * @param typeId
+     * @return
+     */
+    int getIndexRecommendYesCount2(Integer typeId);
+
+    /**
+     *获取指定id的分类信息
+     * @param id
+     * @return
+     */
+    Map<String,Object> getTypeEntityById(Integer id);
+
+    /**
+     * 根据排名和类型id获取关联信息，适用于分类为一级分类
+     * @param map
+     * @return
+     */
+    Map<String,Object> getRelationByTypeIdSort1(Map<String,Object> map);
+
+    /**
+     * 根据排名和类型id获取关联信息，适用于分类为二级分类
+     * @param map
+     * @return
+     */
+    Map<String,Object> getRelationByTypeIdSort2(Map<String,Object> map);
+
+
+    int exchangeSortByCaseWhen(String case_when);
+
 }

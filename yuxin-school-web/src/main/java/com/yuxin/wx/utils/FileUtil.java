@@ -146,6 +146,11 @@ public class FileUtil {
 		 * 机构分类
 		 */
 		String INSTITUTIONCATE = "institutionCate";
+
+		/**
+		 * 特色服务
+		 */
+		String INSTITUTIONSPE = "institutionSpe";
 	}
 
 	private static void init(){
@@ -176,6 +181,7 @@ public class FileUtil {
 					||Module.RISESCHOOLSRTYLE.equals(module)
 					||Module.INSTITUTIONSTYLE.equals(module)
 					||Module.INSTITUTIONCATE.equals(module)
+					||Module.INSTITUTIONSPE.equals(module)
 					){
 				folder=module;
 			}

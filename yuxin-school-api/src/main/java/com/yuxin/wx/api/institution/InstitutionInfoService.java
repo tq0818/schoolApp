@@ -40,12 +40,21 @@ public interface InstitutionInfoService {
 
     void updateInsById (InstitutionInfoVo institutionInfoVo);
 
+    void updateInsManageById (InstitutionInfoVo institutionInfoVo);
+
     /**
      * 查看机构是否有管理员
      * @param id
      * @return
      */
     InstitutionInfoVo checkUser(Integer id);
+
+    /**
+     * 判断机构名称是否重复
+     * @param name
+     * @return
+     */
+    InstitutionInfoVo insCheckName(String name);
 
 
 

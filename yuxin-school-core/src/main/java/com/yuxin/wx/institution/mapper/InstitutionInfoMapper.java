@@ -46,4 +46,11 @@ public interface InstitutionInfoMapper {
      * @return
      */
     InstitutionInfoVo checkUser(Integer id);
+
+    /**
+     * 判断机构名称是否重复
+     * @param name
+     * @return
+     */
+    InstitutionInfoVo insCheckName(String name);
 }

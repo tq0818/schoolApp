@@ -271,7 +271,7 @@
                                     </c:when>
                                     <c:otherwise>
                                         <span href="##" class="specialService">
-                                            <img src="../../../images/institution/1.jpg" alt="" class="iconPic" >
+                                            <img src="${spe.imgUrl}" alt="" class="iconPic" id="${spe.id}">
                                              <input class="systemLabel iconPicName" label-id="${spe.id}" value="${spe.labelName}" maxlength="5">
                                             <i class="icon iconfont deletespecialService">&#xe610;</i>
                                         </span>
@@ -293,20 +293,32 @@
                         <a href="##" class="btn btn-primary btn-mb closeMechanism updateIns">保存</a>
                 </div>
 
-
         </div>
         </div>
     </div>
     <div class="iconList">
-            <%--<div style="height: 34px;line-height: 34px;padding-left: 10px;font-size: 14px;" class="addImg Show">
-                <span>上传特色服务图标</span>
-                <i class="icon iconfont closeIconList" style="float: right;margin: 10px;">&#xe610;</i>
-            </div>--%>
             <div style="height: 250px;" class="imgDiv">
             </div>
             <div class="pages pagination">
             </div>
     </div>
+
+
+        <%--特色服务图片弹窗--%>
+        <div class="mienPopup coverPopup" style="width: 234px; height: 240px; margin-left: -135px;z-index: 1000;">
+            <div class="uploadImageStyle">
+                <label for="">分类图片：</label>
+                <img src="" alt="" id="targetStyle" style="width: 400px;height: 300px;">
+                <a href="javascript:void(0);" class="chooseImg">
+                    <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgDataStyle" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic()" value="重新选择文件"/>
+                </a>
+            </div>
+            <div class="mienBtn" style="bottom: 10px; left: 26px; text-align: center;width: 80% !important;">
+                <a href="javascript:void(0)" class="btn btn-danger mienHide" style="margin: 0 20px">取消</a>
+                <a href="javascript:void(0)" class="btn btn-success mienHide" onclick="saveCutPic();" style="margin: 0 20px">确定</a>
+            </div>
+        </div>
+
 <!-- ajax加载中div开始 -->
 <div class="loading lp-units-loading" style="display: none">
     <p>
@@ -315,15 +327,19 @@
 </div>
 <div class="loading-bg lp-units-loading-bg" style="display: none"></div>
 
+<input type="hidden" id="x" name="x" value="0"/>
+<input type="hidden" id="y" name="y" value="0"/>
+<input type="hidden" id="w" name="w" value="0"/>
+<input type="hidden" id="h" name="h" value="0"/>
+<input type="hidden" id="imgUrl"/>
 
-
-
-
-
-<script src="<%=rootPath %>/javascripts/riseschool/ajaxfileuploadR.js"></script>
-<script src="<%=rootPath %>/javascripts/riseschool/cutPic.js"></script>
+<script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
+<script type="text/javascript" src="<%=rootPath %>/plugins/jcrop/js/jquery.Jcrop.js"></script>
+<script type="text/javascript" src="<%=rootPath%>/javascripts/institution/ajaxfileuploadR.js"></script>
+<script type="text/javascript" src="<%=rootPath%>/javascripts/institution/cutPic.js"></script>
 <script src="<%=rootPath %>/javascripts/plus/jquery.units.js"></script>
 <script src="<%=rootPath %>/javascripts/institution/basicInformation.js"></script>
+
 
 
 

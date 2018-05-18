@@ -53,17 +53,7 @@
                             <th width="5%">操作</th>
                         </tr>
                         <tbody id="typeTbody">
-                        <tr data-buy="false">
-                            <td>1</td>
-                            <td>美术培训</td>
-                            <td>一级</td>
-                            <td>
-                                <span>1</span>
-                                <i class="icon iconfont">&#xe6e3;</i>
-                                <i class="icon iconfont">&#xe6e4;</i>
-                            </td>
-                            <td class="cancelRecommend">取消推荐</td>
-                        </tr>
+
                         </tbody>
                     </table>
                     <div class="pages paginationType pagination">
@@ -103,22 +93,11 @@
                             <th width="5%">排序</th>
                             <th width="30%">操作</th>
                         </tr>
-                        <tr data-buy="false">
-                            <td>1</td>
-                            <td>九方美术培训学校</td>
-                            <td>美术培训</td>
-                            <td>一级</td>
-                            <td class="recomendState">已推荐</td>
-                            <td>
-                                <span>1</span>
-                                <i class="icon iconfont">&#xe6e3;</i>
-                                <i class="icon iconfont">&#xe6e4;</i>
-                            </td>
-                            <td class="recomendBtn">取消推荐</td>
-                        </tr>
+                        <tbody id="indexRecommendTbody"></tbody>
+
 
                     </table>
-                    <div class="pages pagination">
+                    <div class="pages pagination paginationIndexRecommend">
                     </div>
                 </div>
             </div>

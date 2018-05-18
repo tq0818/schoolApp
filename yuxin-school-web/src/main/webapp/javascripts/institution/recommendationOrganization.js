@@ -27,8 +27,8 @@ $(function () {
         prev_text : "上一页",
         current_page : 1,
         link_to : "javascript:void(0)",
-        num_display_entries : 8,
-        items_per_page : 12,
+        num_display_entries : 10,
+        items_per_page : 10,
         num_edge_entries : 1,
         callback:function(page){
             var pageNo = page + 1;
@@ -45,6 +45,8 @@ $(function () {
 
             getRecommendTypeList();
 
+        }else{
+            getIndexRecommendList();
         }
 
     });
