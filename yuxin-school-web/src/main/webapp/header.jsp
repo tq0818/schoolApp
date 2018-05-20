@@ -341,9 +341,13 @@ button.cloze {
              
              <shiro:hasPermission name="resource_head">  
             <li code="resource_head"><a href="<%=rootPath %>/company/resource/firstTransferStation">资源</a></li>
-				 <li code="earlyLitre"><a href="<%=rootPath %>/riseschoolback/earlyLitre" >小升初</a></li>
-				 <li code="mechanism"><a href="<%=rootPath %>/InsInfoBase/classification" >机构</a></li>
+
              </shiro:hasPermission>
+
+			<shiro:hasPermission name="student_head">
+				<li code="earlyLitre"><a href="<%=rootPath %>/riseschoolback/earlyLitre" >小升初</a></li>
+				<li code="mechanism"><a href="<%=rootPath %>/InsInfoBase/classification" >机构</a></li>
+			</shiro:hasPermission>
 
            <%--<shiro:hasPermission name="system_head">--%>
             <%--<li code="system_head"><a href="<%=rootPath %>/company/system/firstTransferStation" >系统</a></li>--%>
@@ -370,15 +374,18 @@ button.cloze {
                 <li code="statistics_org"><a href="<%=rootPath %>/company/orgstatistics/firstTransferStation" >总览</a></li>
             </shiro:hasPermission>
         </ul>
-        <div style="display: inline-block;font-size: 16px;color: #ff0000;
-        background: #ffff00;height: 51px;margin-left: 400px;line-height: 51px;">
-            <span>
-            您收到(<a href="<%=rootPath %>/classModule/comment" id="classComCount"></a>)条评论待审核！
-            </span>
-            <span>
-                您收到（<a href="<%=rootPath %>/comment/commentIndex" id="insComCount"></a>）条机构评论待审核！
-            </span>
-        </div>
+			<shiro:hasPermission name="student_head">
+
+				<div style="display: inline-block;font-size: 16px;color: #ff0000;
+					background: #ffff00;height: 51px;margin-left: 400px;line-height: 51px;">
+					<span>
+					您收到(<a href="<%=rootPath %>/classModule/comment" id="classComCount"></a>)条评论待审核！
+					</span>
+					<span>
+						您收到（<a href="<%=rootPath %>/comment/commentIndex" id="insComCount"></a>）条机构评论待审核！
+					</span>
+				</div>
+			</shiro:hasPermission>
         <ul class="nav nav-right">
             <c:choose>
             	<c:when test="${sessionScope.loginUser.realName != null && sessionScope.loginUser.realName != ''}">

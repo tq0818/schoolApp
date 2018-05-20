@@ -265,6 +265,11 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
     }
 
     @Override
+    public InstitutionInfoVo queryInstitutionByUserId(Map<String, Object> params) {
+        return institutionInfoMapper.queryInstitutionByUserId(params);
+    }
+
+    @Override
     public InstitutionInfoVo insCheckName(String name) {
         return institutionInfoMapper.insCheckName(name);
     }

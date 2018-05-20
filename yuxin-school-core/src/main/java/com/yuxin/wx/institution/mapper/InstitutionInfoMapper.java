@@ -3,6 +3,7 @@ package com.yuxin.wx.institution.mapper;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface InstitutionInfoMapper {
 

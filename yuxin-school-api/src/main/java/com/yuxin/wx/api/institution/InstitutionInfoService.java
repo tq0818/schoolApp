@@ -4,6 +4,7 @@ import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface InstitutionInfoService {
 
