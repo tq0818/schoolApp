@@ -20,7 +20,7 @@
                 <shiro:hasPermission name="INSTITUTION_MANAGE">
                     <li code="organizationIndex"><a href="<%=request.getContextPath() %>/InsInfoBase/findInsById?id=${insId}">机构管理</a></li>
                     <li code="student"><a href="<%=request.getContextPath() %>/InsInfoBase/studentManagement">学员管理</a></li>
-                    <li code="review"><a href="<%=request.getContextPath() %>/comment/commentIndex">机构评论</a></li>
+                    <%--<li code="review"><a href="<%=request.getContextPath() %>/comment/commentIndex">机构评论</a></li>--%>
                 </shiro:hasPermission>
 
             <%--</shiro:hasPermission>--%>
