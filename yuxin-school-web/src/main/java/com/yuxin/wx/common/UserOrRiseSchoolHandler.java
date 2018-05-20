@@ -2,6 +2,7 @@ package com.yuxin.wx.common;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.yuxin.wx.model.user.Users;
 import org.apache.commons.lang.StringUtils;
 
 import com.yuxin.wx.api.user.IUsersService;
@@ -19,12 +20,19 @@ public class UserOrRiseSchoolHandler extends GetInjectionClassForSpringContainer
 		if (StringUtils.isNotBlank(url)) {
 			Integer count = usersServiceImpl.queryUserOrRiseSchool(userId);
 			if (count.intValue() == 1) {
-				if (url.indexOf("riseschoolback") == -1) {
+				if (url.indexOf("rise") == -1) {
 					flag = false;
 				}
 			}
 		}else{
 			flag = false;
+		}
+
+		//处理机构用户
+		Users user = WebUtils.getCurrentUser(request);
+		String requestUrl = request.getRequestURL().toString().toLowerCase();
+		if("INSTITUTION_MANAGE".equals(user.getUserType()) && !requestUrl.contains("ins")){
+			flag=false;
 		}
 		return flag;
 	}

@@ -139,7 +139,7 @@ public class BaseWebController {
             params.put("userId",user.getId());
             InstitutionInfoVo infoVo = institutionInfoServiceImpl.queryInstitutionByUserId(params);
             if(null==infoVo){
-
+                mv.setViewName("redirect:/login");
             }else{
                 mv.setViewName("redirect:/InsInfoBase/findInsById?id="+infoVo.getId());
                 request.getSession().setAttribute("userType", user.getUserType());

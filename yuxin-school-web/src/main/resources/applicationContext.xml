@@ -193,6 +193,16 @@
 			<mvc:mapping path="/question/show"/>
 			<mvc:mapping path="/sysConfigItem/project"/>
 			<mvc:mapping path="/query/statistics/userVideoList"/>
+			<!--机构-->
+			<mvc:mapping path="/comment/*"></mvc:mapping>
+			<mvc:mapping path="/InsInfoBase/*"/>
+			<mvc:mapping path="/institutionCategory/*"></mvc:mapping>
+			<mvc:mapping path="/insCateManage/*"></mvc:mapping>
+			<mvc:mapping path="/institutionClassType/*"></mvc:mapping>
+			<mvc:mapping path="/institutionRecommend/*"></mvc:mapping>
+			<mvc:mapping path="/institutionStyle/*"></mvc:mapping>
+			<mvc:mapping path="/institutionTeacher/*"></mvc:mapping>
+			<mvc:mapping path="/merchantEntry/*"></mvc:mapping>
     		 <bean id="userHandler" class="com.yuxin.wx.common.UserHandler"></bean>
     	</mvc:interceptor>
     </mvc:interceptors>
