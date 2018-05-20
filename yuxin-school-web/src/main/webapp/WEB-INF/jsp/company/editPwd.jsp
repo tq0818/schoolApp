@@ -32,12 +32,15 @@
 		</div>
 		<ul>
 			<li class="subentry active">修改密码</li>
-			<c:if test="${isMaxRole == 1 }">
-				<li class="subentry" onclick="javascript:location.href='<%=rootPath%>/users/accountInfo'">账户信息</li>
+			<c:if test="${userType ne 'INSTITUTION_MANAGE'}">
+				<c:if test="${isMaxRole == 1 }">
+					<li class="subentry" onclick="javascript:location.href='<%=rootPath%>/users/accountInfo'">账户信息</li>
+				</c:if>
+				<c:if test="${isMaxRole == 2 }">
+					<li class="subentry" onclick="javascript:location.href='<%=rootPath%>/users/teacherAccountInfo'">账户信息</li>
+				</c:if>
 			</c:if>
-			<c:if test="${isMaxRole == 2 }">
-				<li class="subentry" onclick="javascript:location.href='<%=rootPath%>/users/teacherAccountInfo'">账户信息</li>
-			</c:if>
+
 		</ul>
 	</div>
 	<div class="right-side">
