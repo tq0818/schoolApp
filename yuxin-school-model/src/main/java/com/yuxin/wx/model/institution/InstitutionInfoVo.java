@@ -58,6 +58,20 @@ public class InstitutionInfoVo extends BaseEntity {
     private String pwd;
     private Integer userId;
 
+    /**
+     * 当前操作用户
+     */
+    private Integer curUserId;
+
+
+    public Integer getCurUserId() {
+        return curUserId;
+    }
+
+    public void setCurUserId(Integer curUserId) {
+        this.curUserId = curUserId;
+    }
+
     public String getProvinceName() {
         return provinceName;
     }

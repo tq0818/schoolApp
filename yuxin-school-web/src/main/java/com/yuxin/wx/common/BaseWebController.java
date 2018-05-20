@@ -2,12 +2,14 @@ package com.yuxin.wx.common;
 
 import com.yuxin.wx.api.auth.IAuthUserRoleService;
 import com.yuxin.wx.api.company.*;
+import com.yuxin.wx.api.institution.InstitutionInfoService;
 import com.yuxin.wx.api.riseschool.RiseSchoolManageService;
 import com.yuxin.wx.api.system.ISysConfigServiceService;
 import com.yuxin.wx.api.system.ISysServiceDredgeConfigService;
 import com.yuxin.wx.api.user.IUsersLoginSessionService;
 import com.yuxin.wx.api.user.IUsersService;
 import com.yuxin.wx.model.company.*;
+import com.yuxin.wx.model.institution.InstitutionInfoVo;
 import com.yuxin.wx.model.riseschool.RiseSchoolInfoVo;
 import com.yuxin.wx.model.riseschool.RiseSchoolManageVo;
 import com.yuxin.wx.model.system.SysConfigService;
@@ -98,6 +100,9 @@ public class BaseWebController {
     @Autowired
     private RiseSchoolManageService riseSchoolManageServiceImpl;
 
+    @Autowired
+    private InstitutionInfoService institutionInfoServiceImpl;
+
     @RequestMapping(value = "/index", method = { RequestMethod.POST, RequestMethod.GET })
     public ModelAndView index(HttpServletRequest request, Model model) {
         ModelAndView mv = new ModelAndView();
@@ -128,67 +133,80 @@ public class BaseWebController {
             mv.setViewName("redirect:/riseschoolback/essential?schoolId="+rsieSchool.getId());
             request.getSession().setAttribute("userType", user.getUserType());
             request.getSession().setAttribute("riseSchoolIdStudent", rsieSchool.getId());
+        }else if("INSTITUTION_MANAGE".equals(user.getUserType())){
+            //根据userId查询机构信息
+            Map<String,Object>params = new HashMap<String,Object>();
+            params.put("userId",user.getId());
+            InstitutionInfoVo infoVo = institutionInfoServiceImpl.queryInstitutionByUserId(params);
+            if(null==infoVo){
+
+            }else{
+                mv.setViewName("redirect:/InsInfoBase/findInsById?id="+infoVo.getId());
+                request.getSession().setAttribute("userType", user.getUserType());
+                request.getSession().setAttribute("insId", infoVo.getId());
+            }
         }else{
             mv.setViewName("redirect:/simpleClasses/showClassTypePage");
+            Session session = subject.getSession(true);
+            Company currtCompany = companyServiceImpl.findCompanyById(WebUtils.getCurrentCompanyId());
+            if (currtCompany != null) {
+                Date registTime = currtCompany.getRegistTime();
+                Integer max = Integer.parseInt(CacheService.dictCode2Name("AUTHORITY_ALARM_DAY"));
+                Calendar now = Calendar.getInstance();
+                now.setTime(new Date());
+                Calendar trial = Calendar.getInstance();
+                trial.setTime(registTime);
+                int days = now.compareTo(trial);
+                if (max - days > 0) {
+                    session.setAttribute("trial", true);
+                } else {
+                    session.setAttribute("trial", false);
+                }
+
+                // 查询机构是否开启对应的服务
+
+                // 直播服务(为了兼容之前的错误数据，至格的ce7网校存在的一种情况.这是很矬的办法。。。。)
+                boolean liveService = true;
+                boolean videoService = true;
+                // 名师专题-老师动态回复
+                boolean serviceTeacher = true;
+                // 社区问答-最新未作答问题
+                boolean serviceQa = true;
+                // 查询未开通服务
+                List<SysConfigService> scservList = sysConfigServiceServiceImpl.findByCompanyId(WebUtils.getCurrentCompanyId());
+                for (SysConfigService s : scservList) {
+                    if (s.getGroupCode().equals("SERVICE_LIVE")) {
+                        liveService = false;
+                    }
+                    if (s.getGroupCode().equals("SERVICE_TEACHER")) {
+                        serviceTeacher = false;
+                    }
+                    if (s.getGroupCode().equals("SERVICE_QUESTION_ANSWER")) {
+                        serviceQa = false;
+                    }
+                    if (s.getGroupCode().equals("SERVICE_VIDEO")) {
+                        videoService = false;
+                    }
+                }
+                model.addAttribute("liveService", liveService);
+                model.addAttribute("videoService", videoService);
+                model.addAttribute("serviceTeacher", serviceTeacher);
+                model.addAttribute("serviceQa", serviceQa);
+
+                // 课程评论
+                CompanyFunctionSet CompanyFunctionSet = new CompanyFunctionSet();
+                CompanyFunctionSet.setCompanyId(WebUtils.getCurrentCompanyId());
+                CompanyFunctionSet.setFunctionCode("COURSE_COMMENT");
+                List<CompanyFunctionSet> CompanyFunctionSetList = companyFunctionSetImpl.findCompanyFunctionSetByPage(CompanyFunctionSet);
+                CompanyFunctionSet courseComment = CompanyFunctionSetList != null && CompanyFunctionSetList.size() > 0 ? CompanyFunctionSetList.get(0) : null;
+
+                if (courseComment != null && "1".equals(courseComment.getStatus())) {
+                    model.addAttribute("courseComment", true);
+                }
+
+            }
         }
-        Session session = subject.getSession(true);
-        Company currtCompany = companyServiceImpl.findCompanyById(WebUtils.getCurrentCompanyId());
-        if (currtCompany != null) {
-            Date registTime = currtCompany.getRegistTime();
-            Integer max = Integer.parseInt(CacheService.dictCode2Name("AUTHORITY_ALARM_DAY"));
-            Calendar now = Calendar.getInstance();
-            now.setTime(new Date());
-            Calendar trial = Calendar.getInstance();
-            trial.setTime(registTime);
-            int days = now.compareTo(trial);
-            if (max - days > 0) {
-                session.setAttribute("trial", true);
-            } else {
-                session.setAttribute("trial", false);
-            }
 
-            // 查询机构是否开启对应的服务
-
-            // 直播服务(为了兼容之前的错误数据，至格的ce7网校存在的一种情况.这是很矬的办法。。。。)
-            boolean liveService = true;
-            boolean videoService = true;
-            // 名师专题-老师动态回复
-            boolean serviceTeacher = true;
-            // 社区问答-最新未作答问题
-            boolean serviceQa = true;
-            // 查询未开通服务
-            List<SysConfigService> scservList = sysConfigServiceServiceImpl.findByCompanyId(WebUtils.getCurrentCompanyId());
-            for (SysConfigService s : scservList) {
-                if (s.getGroupCode().equals("SERVICE_LIVE")) {
-                    liveService = false;
-                }
-                if (s.getGroupCode().equals("SERVICE_TEACHER")) {
-                    serviceTeacher = false;
-                }
-                if (s.getGroupCode().equals("SERVICE_QUESTION_ANSWER")) {
-                    serviceQa = false;
-                }
-                if (s.getGroupCode().equals("SERVICE_VIDEO")) {
-                    videoService = false;
-                }
-            }
-            model.addAttribute("liveService", liveService);
-            model.addAttribute("videoService", videoService);
-            model.addAttribute("serviceTeacher", serviceTeacher);
-            model.addAttribute("serviceQa", serviceQa);
-
-            // 课程评论
-            CompanyFunctionSet CompanyFunctionSet = new CompanyFunctionSet();
-            CompanyFunctionSet.setCompanyId(WebUtils.getCurrentCompanyId());
-            CompanyFunctionSet.setFunctionCode("COURSE_COMMENT");
-            List<CompanyFunctionSet> CompanyFunctionSetList = companyFunctionSetImpl.findCompanyFunctionSetByPage(CompanyFunctionSet);
-            CompanyFunctionSet courseComment = CompanyFunctionSetList != null && CompanyFunctionSetList.size() > 0 ? CompanyFunctionSetList.get(0) : null;
-
-            if (courseComment != null && "1".equals(courseComment.getStatus())) {
-                model.addAttribute("courseComment", true);
-            }
-
-        }
         return mv;
     }
 

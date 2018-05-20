@@ -48,7 +48,8 @@
         is_shelves,
         is_certified,
         create_time,
-        update_time
+        update_time,
+        user_id
     </sql>
 
     <sql id="entity_properties">
@@ -68,7 +69,8 @@
         #{isShelves},
         #{isCertified},
         #{createTime},
-        #{updateTime}
+        #{updateTime},
+        #{userId}
     </sql>
 
     <insert id="insert" parameterType="com.yuxin.wx.model.institution.InstitutionInfoVo" useGeneratedKeys="true" keyProperty="id">
@@ -166,5 +168,9 @@
         select ii.id ,u.username ,u.id as user_id from  users u
         LEFT JOIN institution_info ii on u.id = ii.user_id
         where ii.id = #{id}
+    </select>
+
+    <select id="queryInstitutionByUserId" parameterType="map" resultMap="institutionInfoMap">
+       select * from institution_info where user_id=#{userId}
     </select>
 </mapper>

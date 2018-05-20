@@ -66,12 +66,12 @@ $(function(){
 	            <%-- <shiro:hasPermission name="class_package"> --%>
 	             <%--<li code="course_package"><a href="<%=rootPath %>/classPackage/list" >课程包</a></li>--%>
 	            <%--</shiro:hasPermission>--%>
-				<%--<shiro:hasPermission name="">--%>
+				<shiro:hasPermission name="course_class_type">
 					<li code="shelvesCourses"><a href="<%=rootPath %>/appNewClasses/shelvesCourses" >已上架课程</a></li>
-				<%--</shiro:hasPermission>--%>
-					<%--<shiro:hasPermission name="">--%>
+				</shiro:hasPermission>
+					<shiro:hasPermission name="course_class_type">
 				<li code="getModelList"><a href="<%=rootPath %>/specialModel/getModelList" >首页推荐专题列表</a></li>
-					<%--</shiro:hasPermission>--%>
+					</shiro:hasPermission>
 	        </ul>
         	</c:otherwise>
         </c:choose>

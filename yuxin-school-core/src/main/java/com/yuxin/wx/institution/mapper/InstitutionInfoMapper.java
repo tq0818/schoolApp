@@ -3,6 +3,7 @@ package com.yuxin.wx.institution.mapper;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface InstitutionInfoMapper {
 
@@ -46,4 +47,11 @@ public interface InstitutionInfoMapper {
      * @return
      */
     InstitutionInfoVo checkUser(Integer id);
+
+    /**
+     * 根据用户id查询机构信息
+     * @param params
+     * @return
+     */
+    InstitutionInfoVo queryInstitutionByUserId(Map<String, Object> params);
 }
