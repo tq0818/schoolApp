@@ -1,14 +1,14 @@
 /* 该js用于首页列表推荐使用 */
-
-function getRecommendList(){
+var nowIndexPage = 0;
+var pageSize = 10;
+function getIndexRecommendList(){
 
     $.ajax({
-        url: rootPath+'xxxx',
+        url: rootPath+'/institutionRecommend/getRecommendList',
         data: {
-            /* insId:$('#insId').val(),
-             link:getUpDownStatus('chooseBtn2'),
-             pageStart:nowOnlinePage,
-             pageSize:pageSize*/
+             typeId:1,
+             page:nowIndexPage,
+             pageSize:pageSize
         },
         type: 'post',
         beforeSend: function () {
@@ -21,61 +21,66 @@ function getRecommendList(){
         },
         success: function (json) {
             console.log(json);
-            var list = json.data;
+            var list = json.data.list;
             var html = "";
             for(var i in list){
                 html += `
                     <tr>
                         <td>${parseInt(i)+1}</td>
                         <td>${list[i].name}</td>
-                        <td class="relationResult">${list[i].isLink == 1 ? '已关联' : '未关联'}</td>
+                        <td>${list[i].lv == 2 ? list[i].name2 : list[i].name1}</td>
+                        <td>${list[i].lv == 2 ? '二级' : '一级'}</td>
+                        <td class="relationResult">${list[i].is_recommend == 1 ? '已推荐' : '未推荐'}</td>
                         <td>${
-                    list[i].isLink == 1 ?
-                        ( list[i].sort + (parseInt(i) == 0 ?
+                    list[i].is_recommend == 1 ?
+                        ( list[i].sort + ( list[i].sort + parseInt(i) == 1 ?
                             "<i data-id='"+list[i].rid+"' data-status='down' class='icon iconfont'>&#xe6e4;</i>"
-                            : (parseInt(i) == list.length - 1 || list[parseInt(i) + 1].isLink != 1 ?
+                            : (list[i].sort == json.data.recommendNum || (parseInt(i) < list.length - 1 && list[parseInt(i) + 1].is_recommend != 1 ) ?
                                     "<i data-id='"+list[i].rid+"' data-status='up' class='icon iconfont'>&#xe6e3;</i>" :
                                     "<i data-id='"+list[i].rid+"' data-status='up' class='icon iconfont'>&#xe6e3;</i>" +
                                     "<i data-id='"+list[i].rid+"' data-status='down' class='icon iconfont'>&#xe6e4;</i>"
                             )) ) : "-"
                     }</td>
-                        <td class="relation" data-id="${list[i].rid}" >取消推荐</td>
+                        <td class="recomendBtn" data-id="${list[i].rid}" data-insId="${list[i].id}" >${list[i].is_recommend == 1 ? '取消推荐' : '推荐'}</td>
                     </tr>
                 `;
             }
 
-            $(".paginationOnLine").pagination(json.rowCount,
+            $("#indexRecommendTbody").html(html);
+
+            $(".paginationIndexRecommend").pagination(json.data.count,
                 {
                     next_text: "下一页",
                     prev_text: "上一页",
-                    current_page:json.pageNo,
-                    link_to: "javascript:getOnlineClassTypeList()",
+                    current_page:json.data.page,
+                    link_to: "javascript:getIndexRecommendList()",
                     num_display_entries: 7,
                     items_per_page: 7,
                     num_edge_entries: 1,
                     callback: function (page) {
-                        nowOnlinePage = page;
-                        getOnlineClassTypeList();
+                        nowIndexPage = page;
+                        getIndexRecommendList();
                     }
                 }
             );
 
 
 
-            $('#onlineTbody').html(html);
+         //   $('#onlineTbody').html(html);
 
             //调整排序
             $('.iconfont').click(function(){
                 //upDownOnlineClass($(this).attr('data-id'),$(this).attr('data-status'));
 
-                $.post(rootPath+'/institutionClassType/updateSortOnlineClass',{
-                    insId:$('#insId').val(),
+                $.post(rootPath+'/institutionRecommend/sort',{
+
                     rid:$(this).attr('data-id'),
-                    method:$(this).attr('data-status') == 'up' ? 'add' : 'sub'
+                    method:$(this).attr('data-status') == 'up' ? 'add' : 'sub',
+                    typeId:getCurrentTypeId()
                 },function(json){
                     if(json == 'success'){
                         $.msg('操作成功');
-                        getOnlineClassTypeList();
+                        getIndexRecommendList();
                     }else{
                         $.msg('操作失败!')
                     }
@@ -84,16 +89,17 @@ function getRecommendList(){
             })
 
             //取消推荐
-            $('.relation').click(function(){
+            $('.recomendBtn').click(function(){
                 // linkClass($(this).attr('data-id'),$(this).html());
 
-                $.post(rootPath+'/institutionClassType/linkOnlineClass',{
-                    insId:$('#insId').val(),
-                    rid:$(this).attr('data-id')
+                $.post(rootPath+'/institutionRecommend/updateIndexRecommendStatus',{
+                    insId:$(this).attr('data-insId'),
+                    rid:$(this).attr('data-id'),
+                    typeId:getCurrentTypeId()
                 },function(json){
                     if(json == 'success'){
                         $.msg('操作成功');
-                        getOnlineClassTypeList();
+                        getIndexRecommendList();
                     }else{
                         $.msg('操作失败!')
                     }
@@ -105,6 +111,12 @@ function getRecommendList(){
     });
 
 }
+
+
+function getCurrentTypeId(){
+    return 1;
+}
+
 
 /**
  * 获取推荐分类，用于筛选推荐机构

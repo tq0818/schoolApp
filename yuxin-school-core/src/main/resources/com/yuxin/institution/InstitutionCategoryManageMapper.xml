@@ -238,4 +238,112 @@
     </select>
 
 
+    <!-- 首页列表推荐 - 获取列表 -->
+    <select id="getIndexRecommendList" parameterType="map" resultType="map">
+        SELECT
+          info.id,
+          info.`name`,
+          ir.id rid,
+          ir.`is_recommend`,
+          ir.`sort`,
+          ir.`one_level_id`,
+          ir.`two_level_id`,
+          ic1.`code_name` name1,
+          ic2.`code_name` name2,
+          IF(ISNULL(ic2.`code_level`), 1, 2) lv,
+          ic1.`first_recommend` icRecommend1,
+          ic2.`first_recommend` icRecommend2
+        FROM
+          `institution_info` info
+          INNER JOIN `institution_relation` ir
+            ON info.`id` = ir.`ins_id`
+          LEFT JOIN `institution_category` ic1
+            ON ir.`one_level_id` = ic1.`id`
+          LEFT JOIN `institution_category` ic2
+            ON ir.`two_level_id` = ic2.`id`
+        WHERE ir.`one_level_id` = #{typeId}
+          OR ir.`two_level_id` = #{typeId}
+          <if test="name != null and name != ''"> and info.name LIKE '%#{name}%' </if>
+          ORDER BY ir.`is_recommend` DESC,
+                   ir.`sort` ASC
+          LIMIT #{pageStart} , #{pageSize}
+    </select>
+
+    <select id="getIndexRecommendListCount" parameterType="map" resultType="int">
+        SELECT
+          COUNT(info.id)
+        FROM
+        `institution_info` info
+        INNER JOIN `institution_relation` ir
+        ON info.`id` = ir.`ins_id`
+        LEFT JOIN `institution_category` ic1
+        ON ir.`one_level_id` = ic1.`id`
+        LEFT JOIN `institution_category` ic2
+        ON ir.`two_level_id` = ic2.`id`
+        WHERE ir.`one_level_id` = #{typeId}
+        OR ir.`two_level_id` = #{typeId}
+        <if test="name != null and name != ''"> and info.name LIKE '%#{name}%' </if>
+
+    </select>
+
+    <!-- 更新首页列表推荐的某个机构的推荐状态 -->
+    <update id="alterIndexRecommendStatusNo" parameterType="map"  >
+        UPDATE `institution_relation` SET `is_recommend` = 0 WHERE id = #{rid} and ins_id = #{insId}
+    </update>
+
+    <update id="alterIndexRecommendStatusYes" parameterType="map"  >
+        UPDATE `institution_relation` SET `is_recommend` = 1 , `sort` = #{sort} WHERE id = #{rid} and ins_id = #{insId}
+    </update>
+
+    <!-- UPDATE `institution_relation` SET `sort` = `sort` - 1 WHERE `is_recommend` = 1 AND `sort` &gt; #{sort}-->
+    <!-- 适用于当前分类为一级分类 -->
+    <update id="increaseIndexRecommendAfter1" parameterType="map" >
+         UPDATE `institution_relation` SET `sort` = `sort` - 1 WHERE `is_recommend` = 1 AND `sort` &gt; #{sort} AND  `one_level_id` = #{typeId}
+    </update>
+    <!-- 适用于当前分类为二级分类 -->
+    <update id="increaseIndexRecommendAfter2" parameterType="map" >
+        UPDATE `institution_relation` SET `sort` = `sort` - 1 WHERE `is_recommend` = 1 AND `sort` &gt; #{sort} AND   `two_level_id` = #{typeId}
+    </update>
+
+    <!-- 获取首页列表推荐的某个机构的推荐状态  -->
+   <select id="getIndexRecommendInfo" parameterType="map" resultType="map" >
+       SELECT * FROM `institution_relation` WHERE `id` = #{rid}
+       <if test="insId != null and insId != '' "> AND `ins_id` = #{insId} </if>
+   </select>
+    <!-- 适用与当前分类为一级分类 -->
+   <select id="getIndexRecommendYesCount1" parameterType="Integer" resultType="int" >
+       SELECT COUNT(id) FROM `institution_relation` WHERE `is_recommend` = 1 AND  `one_level_id` = #{typeId}
+   </select>
+    <!--适用于当前分类为二级分类-->
+    <select id="getIndexRecommendYesCount2" parameterType="Integer" resultType="int" >
+        SELECT COUNT(id) FROM `institution_relation` WHERE `is_recommend` = 1 AND  `two_level_id` = #{typeId}
+    </select>
+
+    <select id="getTypeEntityById" parameterType="Integer" resultType="map">
+        SELECT * FROM  `institution_category` WHERE id = #{id} limit 1
+    </select>
+    <!-- 根据排名和类型id获取关联信息，适用于分类为一级分类 -->
+    <select id="getRelationByTypeIdSort1" resultType="map" parameterType="map">
+        SELECT * FROM `institution_relation` WHERE `sort` = #{sort} AND `one_level_id` = #{typeId} LIMIT 1
+    </select>
+
+    <!-- 根据排名和类型id获取关联信息，适用于分类为二级分类 -->
+    <select id="getRelationByTypeIdSort2" resultType="map" parameterType="map">
+        SELECT * FROM `institution_relation` WHERE `sort` = #{sort} AND `two_level_id` = #{typeId} LIMIT 1
+    </select>
+
+    <!-- 交换两个关联表的排序 -->
+    <update id="exchangeSortByCaseWhen" parameterType="java.util.List" >
+        UPDATE `institution_relation` SET `sort` = CASE `id`
+
+        <foreach collection="list" index="index" item="item"  separator=" " >
+            WHEN ${item.id} THEN ${item.sort}
+        </foreach>
+
+        ELSE sort
+
+         END
+    </update>
+
+
 </mapper>

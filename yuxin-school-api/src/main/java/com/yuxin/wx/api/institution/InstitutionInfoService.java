@@ -4,7 +4,6 @@ import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
 
 import java.util.List;
-import java.util.Map;
 
 public interface InstitutionInfoService {
 
@@ -41,6 +40,8 @@ public interface InstitutionInfoService {
 
     void updateInsById (InstitutionInfoVo institutionInfoVo);
 
+    void updateInsManageById (InstitutionInfoVo institutionInfoVo);
+
     /**
      * 查看机构是否有管理员
      * @param id
@@ -54,5 +55,13 @@ public interface InstitutionInfoService {
      * @return
      */
     InstitutionInfoVo queryInstitutionByUserId(Map<String,Object> params);
+    /**
+     * 判断机构名称是否重复
+     * @param name
+     * @return
+     */
+    InstitutionInfoVo insCheckName(String name);
+
+
 
 }

@@ -55,29 +55,23 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
                 users.setPassword(institutionInfoVo.getPwd());
                 users.setUserType("INSTITUTION_MANAGE");
                 usersMapper.insertA(users);
-
-                //TODO 插入登陆用户相关信息
-
-                //判断用户是否插入成功
-                if (users.getId() == null){
-                    throw new Exception("用户插入失败!");
-                }
-                //添加用户关系表
-                usersServiceImpl.insertUserCompanyRalation(users.getId(),18113);
-                String roleCode = "where ap.privilege_name in ('INSTITUTION_MANAGE')";
-                Map<String,Object>params = new HashMap<String,Object>();
-                params.put("roleCode",roleCode);
-                List<AuthUserRole> roleIds = authUserRoleServiceImpl.queryRoleIds(params);
-                for (AuthUserRole aur : roleIds){
-                    AuthUserRole authUserRole=new AuthUserRole();
-                    authUserRole.setUserId(users.getId());
-                    authUserRole.setRoleUid(aur.getRoleUid());
-                    authUserRole.setCreateTime(new Date());
-                    authUserRole.setCreator(String.valueOf(institutionInfoVo.getCurUserId()));
-                    authUserRole.setUpdateTime(new Date());
-                    authUserRole.setUpdator(String.valueOf(institutionInfoVo.getCurUserId()));
-                    authUserRoleServiceImpl.insert(authUserRole);
-                }
+            }
+            //添加用户关系表
+            usersServiceImpl.insertUserCompanyRalation(users.getId(),18113);
+            Integer curUserId = institutionInfoVo.getCurrtUser();
+            String roleCode = "where ap.privilege_name in ('INSTITUTION_MANAGE')";
+            Map<String,Object> params = new HashMap<>();
+            params.put("roleCode",roleCode);
+            List<AuthUserRole> roleIds = authUserRoleServiceImpl.queryRoleIds(params);
+            for (AuthUserRole aur : roleIds){
+                AuthUserRole authUserRole=new AuthUserRole();
+                authUserRole.setUserId(users.getId());
+                authUserRole.setRoleUid(aur.getRoleUid());
+                authUserRole.setCreateTime(new Date());
+                authUserRole.setCreator(curUserId+"");
+                authUserRole.setUpdateTime(new Date());
+                authUserRole.setUpdator(curUserId+"");
+                authUserRoleServiceImpl.insert(authUserRole);
             }
 
             institutionInfoVo.setIsChain(Integer.parseInt(institutionInfoVo.getIsChains()));
@@ -130,7 +124,6 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
                     institutionLabelMapper.insert(institutionLabelVo);
                 }
             }
-
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -257,6 +250,11 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
     }
 
     @Override
+    public void updateInsManageById(InstitutionInfoVo institutionInfoVo) {
+        institutionInfoMapper.update(institutionInfoVo);
+    }
+
+    @Override
     public InstitutionInfoVo checkUser(Integer id) {
         try{
             return institutionInfoMapper.checkUser(id);
@@ -267,9 +265,11 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
     }
 
     @Override
-    public InstitutionInfoVo queryInstitutionByUserId(Map<String, Object> params) {
-        return institutionInfoMapper.queryInstitutionByUserId(params);
+    public InstitutionInfoVo insCheckName(String name) {
+        return institutionInfoMapper.insCheckName(name);
     }
+
+
 
 
 }

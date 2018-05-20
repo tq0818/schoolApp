@@ -156,77 +156,77 @@ function initInsComment(page=1,reviewStatus='') {
             $(".loading-bg").show();
         },
         success:function(jsonData){
-            if(!jsonData||jsonData.data.length==0){
-                /*$('.coursePackageList').append('<tr><td colspan="4">暂无数据</td></tr>');
-                return;*/
-            }
             var html ='';
-            $.each(jsonData.data,function(i,item){
-                var score=item.score?item.score:0;
-                var check = item.isCheck;
-                /*(comee.comment ? unescape(comee.comment.replace(/\\u/g, '%u')) : "") +*/
-                var com = (item.content ? unescape(item.content.replace(/\\u/g, '%u')) : "");
-                console.log(com);
-                let  _check = "";
-                if(check==0){
-                    _check = '<button  class="evaluationIns" id="evaluation" data-commentId="'+item.id+'">审核通过</button>';
-                }
+            if(!jsonData||jsonData.data.length==0){
+                html+='<div style="text-align: center">暂无数据</div>'
+            }else{
+                $.each(jsonData.data,function(i,item){
+                    var score=item.score?item.score:0;
+                    var check = item.isCheck;
+                    /*(comee.comment ? unescape(comee.comment.replace(/\\u/g, '%u')) : "") +*/
+                    var com = (item.content ? unescape(item.content.replace(/\\u/g, '%u')) : "");
+                    console.log(com);
+                    let  _check = "";
+                    if(check==0){
+                        _check = '<button  class="evaluationIns" id="evaluation" data-commentId="'+item.id+'">审核通过</button>';
+                    }
 
-                if(score==1){
-                    scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65f;</i>'+
-                        '<i class="iconfont">&#xe65f;</i>'+
-                        '<i class="iconfont">&#xe65f;</i>'+
-                        '<i class="iconfont">&#xe65f;</i></span>';
-                }else if(score==2){
-                    scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65f;</i>'+
-                        '<i class="iconfont">&#xe65f;</i>'+
-                        '<i class="iconfont">&#xe65f;</i></span>';
-                }else if(score==3){
-                    scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65f;</i>'+
-                        '<i class="iconfont">&#xe65f;</i></span>';
-                }else if(score==4){
-                    scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65f;</i></span>';
-                }else if(score==5){
-                    scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i></span>';
-                }
-                html+='<li class="Y_clear">'+
-                    '<div class="headpic">'+
+                    if(score==1){
+                        scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65f;</i>'+
+                            '<i class="iconfont">&#xe65f;</i>'+
+                            '<i class="iconfont">&#xe65f;</i>'+
+                            '<i class="iconfont">&#xe65f;</i></span>';
+                    }else if(score==2){
+                        scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65f;</i>'+
+                            '<i class="iconfont">&#xe65f;</i>'+
+                            '<i class="iconfont">&#xe65f;</i></span>';
+                    }else if(score==3){
+                        scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65f;</i>'+
+                            '<i class="iconfont">&#xe65f;</i></span>';
+                    }else if(score==4){
+                        scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65f;</i></span>';
+                    }else if(score==5){
+                        scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i></span>';
+                    }
+                    html+='<li class="Y_clear">'+
+                        '<div class="headpic">'+
                         '<img src="'+(item.headPicMax ? item.headPicMax :  rootPath + "/images/user/head_top.png")+'" alt="" width="50" height="50">'+
-                    '</div>'+
-                    ' <div class="Y_backcomment_content">'+
+                        '</div>'+
+                        ' <div class="Y_backcomment_content">'+
                         '<div class="word Y_clear">'+
-                            '<span>'+item.nickName+'</span>'+
-                            '<span class="wordcontent" style="word-break:break-all">'+com+'</span>'+
+                        '<span>'+item.nickName+'</span>'+
+                        '<span class="wordcontent" style="word-break:break-all">'+com+'</span>'+
                         '</div>'+
                         '<p class="Y_time Y_mt10">'+
-                            '<span>'+item.createTimeText+' </span>'+
-                            '<span>'+item.createTimeText2+' </span>'+
-                            '<span>评分:'+ scorehtml+'</span>'+
+                        '<span>'+item.createTimeText+' </span>'+
+                        '<span>'+item.createTimeText2+' </span>'+
+                        '<span>评分:'+ scorehtml+'</span>'+
                         '</p>'+
-                    '</div>'+
-                    _check+
-                    '<button class="delete " id="delete" data-commentId="'+item.id+'">删除</button>'+
-                    '</li>'
-            });
+                        '</div>'+
+                        _check+
+                        '<button class="delete " id="delete" data-commentId="'+item.id+'">删除</button>'+
+                        '</li>'
+                });
+            }
             $(".evaScreen ").children('.comment_all').html(html);
 
             if (jsonData.rowCount > 10) {
@@ -278,70 +278,71 @@ function initInsClassComment(page=1,reviewStatus='',relationId='') {
             $(".loading-bg").show();
         },
         success:function(jsonData){
-            if(!jsonData||jsonData.data.length==0){
-                /*$('.coursePackageList').append('<tr><td colspan="4">暂无数据</td></tr>');
-                return;*/
-            }
             var html ='';
-            $.each(jsonData.data,function(i,item){
-                var score=item.score?item.score:0;
-                var com = (item.content ? unescape(item.content.replace(/\\u/g, '%u')) : "");
-                console.log(com);
-                if(score==1){
-                    scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65f;</i>'+
-                        '<i class="iconfont">&#xe65f;</i>'+
-                        '<i class="iconfont">&#xe65f;</i>'+
-                        '<i class="iconfont">&#xe65f;</i></span>';
-                }else if(score==2){
-                    scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65f;</i>'+
-                        '<i class="iconfont">&#xe65f;</i>'+
-                        '<i class="iconfont">&#xe65f;</i></span>';
-                }else if(score==3){
-                    scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65f;</i>'+
-                        '<i class="iconfont">&#xe65f;</i></span>';
-                }else if(score==4){
-                    scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65f;</i></span>';
-                }else if(score==5){
-                    scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i>'+
-                        '<i class="iconfont">&#xe65e;</i></span>';
-                }
-                html+='<li class="Y_clear">'+
-                    '<div class="headpic">'+
-                    '<img src="'+(item.headPicMax ? item.headPicMax :  rootPath + "/images/teachers.png")+'" alt="" width="50" height="50">'+
-                    '</div>'+
-                    ' <div class="Y_backcomment_content">'+
-                    '<div class="word Y_clear">'+
-                    '<span>'+item.nickName+'：'+'</span>'+
-                    '<span class="wordcontent" style="word-break:break-all">'+com+'</span>'+
-                    '</div>'+
-                    '<p class="Y_time Y_mt10">'+
-                    '<span>'+item.createTimeText+' </span>'+
-                    '<span>'+item.createTimeText2+' </span>'+
-                    '<span>评分:'+ scorehtml+'</span>'+
-                    '</p>'+
-                    '</div>'+
-                    '<button  class="evaluationInsClass" id="evaluation" data-commentId="'+item.id+'">审核通过</button>'+
-                    '<button class="deleteClass" id="delete" data-commentId="'+item.id+'">删除</button>'+
-                    '</li>'
-            });
+            if(!jsonData||jsonData.data.length==0){
+                html+='<div style="text-align: center">暂无数据</div>'
+            }else{
+                $.each(jsonData.data,function(i,item){
+                    var score=item.score?item.score:0;
+                    var com = (item.content ? unescape(item.content.replace(/\\u/g, '%u')) : "");
+                    console.log(com);
+                    if(score==1){
+                        scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65f;</i>'+
+                            '<i class="iconfont">&#xe65f;</i>'+
+                            '<i class="iconfont">&#xe65f;</i>'+
+                            '<i class="iconfont">&#xe65f;</i></span>';
+                    }else if(score==2){
+                        scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65f;</i>'+
+                            '<i class="iconfont">&#xe65f;</i>'+
+                            '<i class="iconfont">&#xe65f;</i></span>';
+                    }else if(score==3){
+                        scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65f;</i>'+
+                            '<i class="iconfont">&#xe65f;</i></span>';
+                    }else if(score==4){
+                        scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65f;</i></span>';
+                    }else if(score==5){
+                        scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i>'+
+                            '<i class="iconfont">&#xe65e;</i></span>';
+                    }
+                    html+='<li class="Y_clear">'+
+                        '<div class="headpic">'+
+                        '<img src="'+(item.headPicMax ? item.headPicMax :  rootPath + "/images/teachers.png")+'" alt="" width="50" height="50">'+
+                        '</div>'+
+                        ' <div class="Y_backcomment_content">'+
+                        '<div class="word Y_clear">'+
+                        '<span>'+item.nickName+'：'+'</span>'+
+                        '<span class="wordcontent" style="word-break:break-all">'+com+'</span>'+
+                        '</div>'+
+                        '<p class="Y_time Y_mt10">'+
+                        '<span>'+item.createTimeText+' </span>'+
+                        '<span>'+item.createTimeText2+' </span>'+
+                        '<span>评分:'+ scorehtml+'</span>'+
+                        '</p>'+
+                        '</div>'+
+                        '<button  class="evaluationInsClass" id="evaluation" data-commentId="'+item.id+'">审核通过</button>'+
+                        '<button class="deleteClass" id="delete" data-commentId="'+item.id+'">删除</button>'+
+                        '</li>'
+                });
+            }
+
             $(".curriculum").children('.comment_all').html(html);
 
             if (jsonData.rowCount > 10) {

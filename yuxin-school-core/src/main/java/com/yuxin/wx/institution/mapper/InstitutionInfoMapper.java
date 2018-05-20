@@ -3,7 +3,6 @@ package com.yuxin.wx.institution.mapper;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
 
 import java.util.List;
-import java.util.Map;
 
 public interface InstitutionInfoMapper {
 
@@ -54,4 +53,11 @@ public interface InstitutionInfoMapper {
      * @return
      */
     InstitutionInfoVo queryInstitutionByUserId(Map<String, Object> params);
+
+    /**
+     * 判断机构名称是否重复
+     * @param name
+     * @return
+     */
+    InstitutionInfoVo insCheckName(String name);
 }

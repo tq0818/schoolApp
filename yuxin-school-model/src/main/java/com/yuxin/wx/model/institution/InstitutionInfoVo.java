@@ -57,6 +57,15 @@ public class InstitutionInfoVo extends BaseEntity {
     private String userName;//管理员账号
     private String pwd;
     private Integer userId;
+    private Integer currtUser;
+
+    public Integer getCurrtUser() {
+        return currtUser;
+    }
+
+    public void setCurrtUser(Integer currtUser) {
+        this.currtUser = currtUser;
+    }
 
     /**
      * 当前操作用户

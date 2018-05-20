@@ -23,8 +23,8 @@
         #{updateTime}
     </sql>
 
-    <insert id="insert" parameterType="com.yuxin.wx.model.institution.InstitutionLabelVo" useGeneratedKeys="true" keyProperty="id">
-        insert into institution_label( <include refid="table_columns" /> )
+    <insert id="insert" parameterType="com.yuxin.wx.model.institution.InsFeaturesVo" useGeneratedKeys="true" keyProperty="id">
+        insert into ins_features( <include refid="table_columns" /> )
         values ( <include refid="entity_properties" /> )
     </insert>
 

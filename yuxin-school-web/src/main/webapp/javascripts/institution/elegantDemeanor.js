@@ -310,3 +310,33 @@ function imgInit(flag) {
 
 }
 
+//视频上传
+//function videoInfo(){
+//	  var file = $("#filebutton").val();
+//      var maxsize = 100*1024*1024;//100M
+//      var objFile = document.getElementById("filebutton");
+//      var filesize = objFile.files[0].size;
+//      var name =  objFile.files[0].name;
+//      //判断视频大小
+//      if(filesize > maxsize){
+//    	  $.msg("视频大小不能超过100M");
+//    	  return false;
+//      }
+//      //提交表单
+//      //上传截取后的图片
+//      $.ajax({
+//          url : rootPath + "/video/upload",
+//          data : {
+//           "fileName":name,
+//           "fileSize":filesize,
+//           "tag":"123",
+//           "itemOneId":1682,
+//      	   "itemSecondId":1687
+//          },
+//          type : "post",
+//          dataType : "json",
+//          success : function(data) {
+//             console.log("ok"); 
+//          }
+//      })
+//}

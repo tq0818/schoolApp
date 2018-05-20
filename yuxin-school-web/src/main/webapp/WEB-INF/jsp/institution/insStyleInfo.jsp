@@ -46,7 +46,7 @@
 
 </body>
 </html>
-
+<script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
 <script>
 
     $(".pagination").pagination('${rowCount}', {
@@ -75,7 +75,7 @@
             jcrop_apis.destroy();
         }
         //关闭后将添加图片的格式框恢复原状
-        $(".picStyle").attr("src","").attr("style","").attr("style","width: 300px;height: 300px;");
+        $(".picStyle").attr("src","").attr("style","").attr("style","margin: auto;width: 300px;height: 300px;");
         $(".writeWord").val("");
     });
     //点击修改风采 btnStyleUpdate

@@ -610,10 +610,6 @@ function findInsDate(page) {
             $(".loading-bg").show();
         },
         success:function(jsonData){
-            if(!jsonData||jsonData.data.length==0){
-                /*$('.coursePackageList').append('<tr><td colspan="4">暂无数据</td></tr>');
-                return;*/
-            }
             var html = '\'<tr data-buy="true">' +
                 '<th width="3%">序号</th>' +
                 '<th width="12%">机构名称</th>' +
@@ -626,28 +622,33 @@ function findInsDate(page) {
                 '<th width="5%">认证状态</th>'+
                 '<th width="15%">操作</th>'+
                 '</tr>';
-            $.each(jsonData.data,function(i,item){
-                i+1;
-                var isShelves;
-                var isShelvesval;
-                if(item.isShelves==1){
-                    isShelves='已上架';
-                    isShelvesval ='下架'
-                }else{
-                    isShelves='未上架';
-                    isShelvesval ='上架';
-                }
-                var isCertified;
-                var isCertifiedval;
-                if(item.isCertified==1){
-                    isCertified='已认证';
-                    isCertifiedval='取消认证';
-                }else{
-                    isCertified='未认证';
-                    isCertifiedval='认证';
-                }
+            if(!jsonData||jsonData.data.length==0){
+                html+='<tr >'+
+                    '<td colspan="10">暂无数据</td>'+
+                    '</tr>'
+            }else{
+                $.each(jsonData.data,function(i,item){
+                    i+1;
+                    var isShelves;
+                    var isShelvesval;
+                    if(item.isShelves==1){
+                        isShelves='已上架';
+                        isShelvesval ='下架'
+                    }else{
+                        isShelves='未上架';
+                        isShelvesval ='上架';
+                    }
+                    var isCertified;
+                    var isCertifiedval;
+                    if(item.isCertified==1){
+                        isCertified='已认证';
+                        isCertifiedval='取消认证';
+                    }else{
+                        isCertified='未认证';
+                        isCertifiedval='认证';
+                    }
                     html +=
-                    '<tr data-buy="false">'+
+                        '<tr data-buy="false">'+
                         '<td>'+item.sort+'</td>'+
                         '<td>'+item.name +'</td>'+
                         '<td>'+item.province +'</td>'+
@@ -658,20 +659,22 @@ function findInsDate(page) {
                         '<td>'+isShelves+'</td>'+
                         '<td class="authenticationReal">'+isCertified+'</td>'+
                         '<td class="slink">'+
-                            '<a href="##" class="frameLower" data-id="'+item.id+'">'+isShelvesval+'</a>|'+
-                            '<a href="##" class="authentication" data-id="'+item.id+'">'+isCertifiedval+'</a>|'+
-                            '<a href="##" class="countManage" id="countManage" data-id="'+item.id+'">'+'账号管理'+'</a>|'+
-                            '<a href="##" class="manageBtn">'+'管理'+'</a>'+
-                            '<ul class="none box" style="display: none">'+
-                                '<li><a href="/InsInfoBase/findInsById?id='+item.id+'">基本信息</a>'+'</li>'+
-                                '<li><a href="">风采管理</a>'+'</li>'+
-                                '<li><a href="">课程管理</a>'+'</li>'+
-                                '<li><a href="">名师管理</a>'+'</li>'+
-                                '<li><a href="/comment/insCommentIndex?id='+item.id+'">评论管理</a>'+'</li>'+
-                            '</ul>'+
+                        '<a href="##" class="frameLower" data-id="'+item.id+'">'+isShelvesval+'</a>|'+
+                        '<a href="##" class="authentication" data-id="'+item.id+'">'+isCertifiedval+'</a>|'+
+                        '<a href="##" class="countManage" id="countManage" data-id="'+item.id+'">'+'账号管理'+'</a>|'+
+                        '<a href="##" class="manageBtn">'+'管理'+'</a>'+
+                        '<ul class="none box" style="display: none">'+
+                        '<li><a href="/InsInfoBase/findInsById?id='+item.id+'">基本信息</a>'+'</li>'+
+                        '<li><a href="">风采管理</a>'+'</li>'+
+                        '<li><a href="/institutionClassType/classTypeMain/'+item.id+'">课程管理</a>'+'</li>'+
+                        '<li><a href="">名师管理</a>'+'</li>'+
+                        '<li><a href="/comment/insCommentIndex?id='+item.id+'">评论管理</a>'+'</li>'+
+                        '</ul>'+
                         '</td>'+
-                    '</tr>'
-            });
+                        '</tr>'
+                });
+            }
+
             $("#tableList").html(html);
 
 
@@ -765,15 +768,20 @@ function addInsInfo() {
     let listMachine = '';
     let listMachineChi = $('#listMachine').children('div');
     for(let i=0;i<listMachineChi.length;i++){
-        if(i == listMachineChi.length-1){
-            listMachine+= listMachineChi.eq(i).children('input').eq(0).val()+'-'+
-                listMachineChi.eq(i).children('input').eq(1).val()
-            ;
-        }else{
-            listMachine+= listMachineChi.eq(i).children('input').eq(0).val()+'-'+
-                listMachineChi.eq(i).children('input').eq(1).val()+','
-            ;
+        var quhao = listMachineChi.eq(i).children('input').eq(0).val();
+        var num = listMachineChi.eq(i).children('input').eq(1).val();
+        if(null != quhao && null != num && quhao != '' && num !=''){
+            if(i == listMachineChi.length-1){
+                listMachine+= listMachineChi.eq(i).children('input').eq(0).val()+'-'+
+                    listMachineChi.eq(i).children('input').eq(1).val()
+                ;
+            }else{
+                listMachine+= listMachineChi.eq(i).children('input').eq(0).val()+'-'+
+                    listMachineChi.eq(i).children('input').eq(1).val()+','
+                ;
+            }
         }
+
     }
 
 
@@ -798,7 +806,16 @@ function addInsInfo() {
 
 
 
-    var mobile = listMachine+','+listPhone;
+    var mobile ='';
+    if(listMachine == '' && listPhone ==''){
+        mobile = '';
+    }else if(listMachine ==''){
+        mobile = listPhone;
+    }else if(listPhone == ''){
+        mobile = listMachine;
+    }else{
+        mobile = listMachine+','+listPhone;
+    }
 
     //是否是连锁机构
     var org='';
@@ -809,15 +826,61 @@ function addInsInfo() {
             break;
         }
     }
-    if(userName != null && userName != ''){
-        $.ajax({
-            url:rootPath+"/register/insCheckUserName",
-            type:"post",
-            data:{
-                "userName":userName
-            },
-            success:function(data){
-                if(data =='true'){
+    //判断机构名称是否重复
+    $.ajax({
+        url: rootPath + "/InsInfoBase/insCheckName",
+        type: "post",
+        data: {
+            "name": name
+        },
+        success: function (data) {
+            if(data != null && data != ''){
+                $.msg(data.name+"机构已存在！");
+                $('.addingMechanism').show();
+                return;
+            }else{
+                if(userName != null && userName != ''){
+                    $.ajax({
+                        url:rootPath+"/register/insCheckUserName",
+                        type:"post",
+                        data:{
+                            "userName":userName
+                        },
+                        success:function(data){
+                            if(data =='true'){
+                                $.ajax({
+                                    url:rootPath+"/InsInfoBase/addIns",
+                                    type:"post",
+                                    data:{
+                                        "name":name,
+                                        "province":province,
+                                        "city":city,
+                                        "area":area,
+                                        "address":address,
+                                        "userName":userName,
+                                        "sysLabel":labelName,
+                                        "mobile":mobile,
+                                        "isChains":org,
+                                        "oneLevelId":firstCat,
+                                        "twoLevelId":secondCat
+                                    },
+                                    success:function(data){
+                                        $('.addingMechanism').hide();
+                                        $.msg("添加成功");
+                                        findInsDate(1);
+                                    }
+                                })
+                            }else if(data =='用户名已经被注册'){
+                                alert('用户名已经被注册');
+                            }else if('只能以字母开头并由数字、字母或下划线组成'){
+                                alert('用户名只能以字母开头并由数字、字母或下划线组成');
+                            }else{
+                                alert('用户名不正确');
+                            }
+
+                        }
+                    })
+                }else{
                     $.ajax({
                         url:rootPath+"/InsInfoBase/addIns",
                         type:"post",
@@ -839,39 +902,13 @@ function addInsInfo() {
                             findInsDate(1);
                         }
                     })
-                }else if(data =='用户名已经被注册'){
-                    alert('用户名已经被注册');
-                }else if('只能以字母开头并由数字、字母或下划线组成'){
-                    alert('用户名只能以字母开头并由数字、字母或下划线组成');
-                }else{
-                    alert('用户名不正确');
                 }
+            }
+        }
+    });
 
-            }
-        })
-    }else{
-        $.ajax({
-            url:rootPath+"/InsInfoBase/addIns",
-            type:"post",
-            data:{
-                "name":name,
-                "province":province,
-                "city":city,
-                "area":area,
-                "address":address,
-                "userName":userName,
-                "sysLabel":labelName,
-                "mobile":mobile,
-                "isChains":org,
-                "oneLevelId":firstCat,
-                "twoLevelId":secondCat
-            },
-            success:function(data){
-                $('.addingMechanism').hide();
-                findInsDate(1);
-            }
-        })
-    }
+
+
 
 
 
