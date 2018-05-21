@@ -611,7 +611,7 @@
         <!--新增线下课程-->
         <pattern>/InsInfoBase/newLineCourse/*/*</pattern>
         <!--首页推荐分类管理-->
-        <pattern>/InsInfoBase/recommendationHomeC</pattern>
+        <pattern>/InsInfoBase/recommendationHomeC/*</pattern>
         <!--单独机构评价管理-->
         <pattern>/InsInfoBase/evaluation</pattern>
         <!--学员管理-->
@@ -619,7 +619,7 @@
         <!--商家入驻申请-->
         <pattern>/merchantEntry/businessEntry</pattern>
         <!--名师管理-->
-        <pattern>/InsInfoBase/famousTeacher</pattern>
+        <pattern>/InsInfoBase/famousTeacher/*</pattern>
         <!--机构评价管理列表-->
         <pattern>/InsInfoBase/evaluationList</pattern>
         <!--添加老师-->

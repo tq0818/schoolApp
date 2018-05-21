@@ -54,6 +54,12 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
      */
     void updateRecommendStatusById(Map<String, Object> map);
 
+    /**
+     *更新某个推荐分类的推荐状态  first_recommend
+     * @param map
+     */
+    void updateRecommendStatusById1(Map<String, Object> map);
+
 
     InstitutionCategoryVo getCateById(Integer id);
 
@@ -95,6 +101,12 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
      * @return
      */
     List<InstitutionCategoryVo> queryInstitutionCategorysEnabled();
+
+    /**
+     * 获取所有`is_enable` = 1 ,first_recommend  的分类信息
+     * @return
+     */
+    List<InstitutionCategoryVo> queryInstitutionCategorysEnabled1();
 
     /**
      * 查询分类总记录数
@@ -191,5 +203,9 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
 
 
     int exchangeSortByCaseWhen(List<CaseWhenVO> list);
+
+    int getMaxSortByTypeId1(Integer typeId);
+
+    int getMaxSortByTypeId2(Integer typeId);
 
 }

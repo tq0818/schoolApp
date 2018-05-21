@@ -48,11 +48,20 @@ public class RecommendController {
             Integer page = Integer.valueOf(request.getParameter("page"));
             Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
             Integer typeId = Integer.valueOf(request.getParameter("typeId"));
+            String status = request.getParameter("status");
+            Integer iStatus = null;
+            if(null == status ||  "".equals(status)){
+                iStatus = null;
+            }else{
+                iStatus = "1".equals(status) ? 1 : 0;
+            }
 
-            int count = institutionCategoryService.getIndexRecommendListCount(typeId,name);
-            List<Map<String,Object>> list = institutionCategoryService.getIndexRecommendList(typeId,name,page*pageSize,pageSize);
+            int count = institutionCategoryService.getIndexRecommendListCount(typeId,name,iStatus);
+            List<Map<String,Object>> list = institutionCategoryService.getIndexRecommendList(typeId,name,iStatus,page*pageSize,pageSize);
 
             int recommendAll = institutionCategoryService.getIndexRecommendYesCount(typeId);
+
+            int maxSort = institutionCategoryService.getMaxSortByTypeId(typeId);
 
             json.put("status",1);
             JSONObject data = new JSONObject();
@@ -61,6 +70,7 @@ public class RecommendController {
             data.put("pageSize",pageSize);
             data.put("list",list);
             data.put("recommendNum",recommendAll);  //当前分类中状态为推荐的机构个数
+            data.put("maxSort",maxSort);    //分类中最大排序值   用于应对在一级分类中排序后查询二级分类时候的显示问题
             json.put("data",data);
 
             return json;
@@ -251,9 +261,15 @@ public class RecommendController {
      */
     @ResponseBody
     @RequestMapping(value = "/typeListAll",method = RequestMethod.POST)
-    public List<InstitutionCategoryVo> getTypeListAll() {
+    public List<InstitutionCategoryVo> getTypeListAll(HttpServletRequest request) {
         try{
-            return   institutionCategoryService.queryInstitutionCategorysEnabled();
+            String type = request.getParameter("type");
+            if("0".equals(type)){
+                return   institutionCategoryService.queryInstitutionCategorysEnabled();
+            }else{
+                return   institutionCategoryService.queryInstitutionCategorysEnabled1();
+            }
+          //  return   institutionCategoryService.queryInstitutionCategorysEnabled();
         }catch (Exception e){
             e.printStackTrace();
             return null;
@@ -267,33 +283,60 @@ public class RecommendController {
         JSONObject json = new JSONObject();
         try{
             String tree = request.getParameter("tree");
+            String type = request.getParameter("type");
             if(null == tree){
                 json.put("status",0);
                 json.put("msg","参数错误");
             }
 
             JSONArray arr = JSONArray.parseArray(tree);
+            List<InstitutionCategoryVo> list = null;
+            if("0".equals(type)){
+                list =  institutionCategoryService.queryInstitutionCategorysEnabled();
+                //算法说明 因为推荐分类本身数量比较少，而且 list.size() <= arr.length  , 所以算法复杂度为 list.size() * arr.length
+                for(int i = 0; i< arr.size();i++){
 
-            List<InstitutionCategoryVo> list =  institutionCategoryService.queryInstitutionCategorysEnabled();
-            List<Integer> deleteList = new LinkedList<>();
-            List<Integer> addList = new LinkedList<>();
-            //算法说明 因为推荐分类本身数量比较少，而且 list.size() <= arr.length  , 所以算法复杂度为 list.size() * arr.length
-            for(int i = 0; i< arr.size();i++){
-
-                int id = arr.getJSONObject(i).getIntValue("id");
-                int checked = arr.getJSONObject(i).getIntValue("checked");
-                for(InstitutionCategoryVo vo : list){
-                    if(vo.getId() - id == 0){
-                        if(vo.getThirdRecommend() - checked == -1){
-                            //新增
-                            institutionCategoryService.updateRecommendStatusById( 1 ,vo.getId(),null);
-                        }else if(vo.getThirdRecommend() - checked == 1){
-                            //减少
-                            institutionCategoryService.updateRecommendStatusById( 0 ,vo.getId(),vo.getSort());
+                    int id = arr.getJSONObject(i).getIntValue("id");
+                    int checked = arr.getJSONObject(i).getIntValue("checked");
+                    for(InstitutionCategoryVo vo : list){
+                        if(vo.getId() - id == 0){
+                            if(vo.getThirdRecommend() != null && vo.getThirdRecommend() - checked == -1){
+                                //新增
+                                institutionCategoryService.updateRecommendStatusById( 1 ,vo.getId(),null);
+                            }else if(vo.getThirdRecommend() != null && vo.getThirdRecommend() - checked == 1){
+                                //减少
+                                institutionCategoryService.updateRecommendStatusById( 0 ,vo.getId(),vo.getSort());
+                            }
                         }
                     }
                 }
+
+            }else{
+                list = institutionCategoryService.queryInstitutionCategorysEnabled1();
+
+                for(int i = 0; i< arr.size();i++){
+
+                    int id = arr.getJSONObject(i).getIntValue("id");
+                    int checked = arr.getJSONObject(i).getIntValue("checked");
+                    for(InstitutionCategoryVo vo : list){
+                        if(vo.getId() - id == 0){
+                            if(vo.getFirstRecommend() != null && vo.getFirstRecommend() - checked == -1){
+                                //新增
+                                institutionCategoryService.updateRecommendStatusById1( 1 ,vo.getId(),null);
+                            }else if( vo.getFirstRecommend() != null && vo.getFirstRecommend() - checked == 1){
+                                //减少
+                                institutionCategoryService.updateRecommendStatusById1( 0 ,vo.getId(),vo.getSort());
+                            }
+                        }
+                    }
+                }
+
             }
+
+          //  List<Integer> deleteList = new LinkedList<>();
+          //  List<Integer> addList = new LinkedList<>();
+
+
 
             json.put("status",1);
             json.put("msg","操作成功");

@@ -41,7 +41,7 @@
             <div class="classificationRecommendation">
                 <div style="margin: 30px 0 10px 50px;">
                     <span>推荐分类管理</span>
-                    <a href="/InsInfoBase/recommendationHomeC" class="btn btn-primary" style="float: right;">添加推荐分类</a>
+                    <a href="/InsInfoBase/recommendationHomeC/0" class="btn btn-primary" style="float: right;">添加推荐分类</a>
                 </div>
                 <div class="user-list">
                     <table class="table table-center" >
@@ -62,23 +62,21 @@
             </div>
             <div class="listRecommendation">
                 <div>
-                    <div class="marginTop10 changeBtn" >
+                    <div class="marginTop10 changeBtn" id="recommendBtnContainor" >
                         <span>推荐分类</span>
-                        <a href="##" class="btn btn-default btn-primary btn-sm">美术培训</a>
-                        <a href="##" class="btn btn-default btn-sm">英语培训</a>
-                        <a href="##" class="btn btn-default btn-sm">德语培训</a>
+
                         <span>
-                            <a href="/InsInfoBase/recommendationHomeC" style="color: red;">管理</a>
+                            <a href="/InsInfoBase/recommendationHomeC/1" style="color: red;">管理</a>
                         </span>
                     </div>
-                    <div  class="marginTop10 changeBtn">
+                    <div  class="marginTop10 changeBtn" id="recommendStatusContainor">
                         <span>推荐状态</span>
                         <a href="##" class="btn btn-default btn-primary btn-mb">全部</a>
                         <a href="##" class="btn btn-default btn-mb">已推荐</a>
                         <a href="##" class="btn btn-default btn-mb">未推荐</a>
                     </div>
                     <div  class="marginTop10" >
-                        <input type="text" placeholder="请输入机构名称">
+                        <input type="text" id="recommendName" placeholder="请输入机构名称">
                         <a href="##" class="btn btn-primary btn-sm">搜索</a>
                     </div>
                 </div>

@@ -110,6 +110,21 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
     }
 
     /**
+     * 更新指定分类的推荐状态 first_recommend
+     * @param status 更新后的状态
+     * @param id
+     * @param oldSort 更新前的排序 ， 用于更新其他推荐状态的排序问题
+     */
+    @Override
+    public void updateRecommendStatusById1(Integer status, Integer id, Integer oldSort) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("isRecommend", status);
+        map.put("id", id);
+
+        institutionManageMapper.updateRecommendStatusById1(map);
+    }
+
+    /**
      * @param id id
      * @return
      */
@@ -164,6 +179,11 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
     }
 
     @Override
+    public List<InstitutionCategoryVo> queryInstitutionCategorysEnabled1() {
+        return institutionManageMapper.queryInstitutionCategorysEnabled1();
+    }
+
+    @Override
     public int queryInstitutionCategorysCount(Map<String, Object> params) {
         return institutionManageMapper.queryInstitutionCategorysCount(params);
     }
@@ -192,12 +212,13 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
     }
 
     @Override
-    public List<Map<String, Object>> getIndexRecommendList(int typeId, String name, int pageStart, int pageSize) {
+    public List<Map<String, Object>> getIndexRecommendList(int typeId, String name,Integer status, int pageStart, int pageSize) {
         Map<String, Object> map = new HashMap<>();
         map.put("typeId", typeId);
         map.put("name", name);
         map.put("pageStart", pageStart);
         map.put("pageSize", pageSize);
+        map.put("status",status);
         // int count = institutionManageMapper.getIndexRecommendListCount(map);
         List<Map<String, Object>> list = institutionManageMapper.getIndexRecommendList(map);
 
@@ -205,10 +226,11 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
     }
 
     @Override
-    public int getIndexRecommendListCount(int typeId, String name) {
+    public int getIndexRecommendListCount(int typeId, String name,Integer status) {
         Map<String, Object> map = new HashMap<>();
         map.put("typeId", typeId);
         map.put("name", name);
+        map.put("status",status);
 
         return institutionManageMapper.getIndexRecommendListCount(map);
     }
@@ -326,5 +348,24 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
         int result = institutionManageMapper.exchangeSortByCaseWhen(list);
 
         return true;
+    }
+
+
+    @Override
+    public int getMaxSortByTypeId(Integer typeId) {
+        //获取当前分类信息
+        Map<String,Object> typeEntity = institutionManageMapper.getTypeEntityById(typeId);
+        //判断分类是一级分类还是二级分类
+        int type = (Integer)typeEntity.get("code_level") ;
+        Integer maxSort = 0;
+        if(type == 1){
+            //分类是一级分类
+           Integer  temp =  institutionManageMapper.getMaxSortByTypeId1(typeId);
+           maxSort = maxSort > temp ? maxSort : temp;
+        }else{
+            Integer  temp =  institutionManageMapper.getMaxSortByTypeId2(typeId);
+            maxSort = maxSort > temp ? maxSort : temp;
+        }
+        return maxSort;
     }
 }

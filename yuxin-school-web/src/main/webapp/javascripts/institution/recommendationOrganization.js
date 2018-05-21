@@ -46,6 +46,7 @@ $(function () {
             getRecommendTypeList();
 
         }else{
+            getRecommendTypeData();
             getIndexRecommendList();
         }
 

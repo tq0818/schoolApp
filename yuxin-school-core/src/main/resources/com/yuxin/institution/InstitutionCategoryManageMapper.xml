@@ -22,6 +22,8 @@
         <result property="codeLevel" column="code_level" />
         <result property="sort" column="sort" />
         <result property="parentId" column="parent_id" />
+        <result property="firstRecommend" column="first_recommend" />
+
     </resultMap>
 
 
@@ -176,6 +178,14 @@
         WHERE `id` = #{id}
     </update>
 
+    <update id="updateRecommendStatusById1" parameterType="map" >
+        UPDATE
+        `institution_category`
+        SET
+        `first_recommend` = #{isRecommend}
+        WHERE `id` = #{id}
+    </update>
+
     <!-- 提升指定某个排名的分类的排名 -->
     <update id="increaseSort" parameterType="Integer" >
        UPDATE `institution_category` SET `sort` = `sort` - 1 WHERE  is_enable = 1 and `sort` = #{sort}
@@ -222,6 +232,22 @@
           `institution_category`
         WHERE  `is_enable` = 1
     </select>
+
+
+    <select id="queryInstitutionCategorysEnabled1"  resultMap="queryCateSimple" >
+        SELECT
+        `id`,
+        `code_name`,
+        `code_level`,
+        `code_type`,
+        `parent_id`,
+        `first_recommend`,
+        `sort`
+        FROM
+        `institution_category`
+        WHERE  `is_enable` = 1
+    </select>
+
     <!-- 获取指定排名后的所有is_enabled = 1的分类 -->
     <select id="queryInstitutionCategorysAfterSort" parameterType="Integer"  resultMap="queryCateSimple" >
         SELECT
@@ -261,9 +287,10 @@
             ON ir.`one_level_id` = ic1.`id`
           LEFT JOIN `institution_category` ic2
             ON ir.`two_level_id` = ic2.`id`
-        WHERE ir.`one_level_id` = #{typeId}
-          OR ir.`two_level_id` = #{typeId}
+        WHERE ( ir.`one_level_id` = #{typeId}
+          OR ir.`two_level_id` = #{typeId} )
           <if test="name != null and name != ''"> and info.name LIKE '%#{name}%' </if>
+          <if test="status != null  "> and  ir.`is_recommend` = #{status} </if>
           ORDER BY ir.`is_recommend` DESC,
                    ir.`sort` ASC
           LIMIT #{pageStart} , #{pageSize}
@@ -280,8 +307,9 @@
         ON ir.`one_level_id` = ic1.`id`
         LEFT JOIN `institution_category` ic2
         ON ir.`two_level_id` = ic2.`id`
-        WHERE ir.`one_level_id` = #{typeId}
-        OR ir.`two_level_id` = #{typeId}
+        WHERE ( ir.`one_level_id` = #{typeId}
+        OR ir.`two_level_id` = #{typeId} )
+        <if test="status != null  "> and  ir.`is_recommend` = #{status} </if>
         <if test="name != null and name != ''"> and info.name LIKE '%#{name}%' </if>
 
     </select>
@@ -324,12 +352,12 @@
     </select>
     <!-- 根据排名和类型id获取关联信息，适用于分类为一级分类 -->
     <select id="getRelationByTypeIdSort1" resultType="map" parameterType="map">
-        SELECT * FROM `institution_relation` WHERE `sort` = #{sort} AND `one_level_id` = #{typeId} LIMIT 1
+        SELECT * FROM `institution_relation` WHERE `sort` = #{sort} AND `one_level_id` = #{typeId} and is_recommend = 1 LIMIT 1
     </select>
 
     <!-- 根据排名和类型id获取关联信息，适用于分类为二级分类 -->
     <select id="getRelationByTypeIdSort2" resultType="map" parameterType="map">
-        SELECT * FROM `institution_relation` WHERE `sort` = #{sort} AND `two_level_id` = #{typeId} LIMIT 1
+        SELECT * FROM `institution_relation` WHERE `sort` = #{sort} AND `two_level_id` = #{typeId} and is_recommend = 1 LIMIT 1
     </select>
 
     <!-- 交换两个关联表的排序 -->
@@ -344,6 +372,15 @@
 
          END
     </update>
+
+
+    <select id="getMaxSortByTypeId1" parameterType="Integer" resultType="Integer">
+        SELECT IF(ISNULL(MAX(sort)),0,MAX(sort)) maxSort FROM `institution_relation` WHERE `is_recommend` = 1 AND `one_level_id` = #{typeId}
+    </select>
+
+    <select id="getMaxSortByTypeId2" parameterType="Integer" resultType="Integer">
+       SELECT IF(ISNULL(MAX(sort)),0,MAX(sort)) maxSort FROM `institution_relation` WHERE `is_recommend` = 1 AND `two_level_id` =  #{typeId}
+    </select>
 
 
 </mapper>

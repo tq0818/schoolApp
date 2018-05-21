@@ -50,8 +50,9 @@ public class InstitutionBaseController {
         return "institution/newLineCourse";
     }
     //首页推荐分类管理
-    @RequestMapping(value = "/recommendationHomeC")
-    public String recommendationHomeClassification(){
+    @RequestMapping(value = "/recommendationHomeC/{type}")
+    public String recommendationHomeClassification(Model model, @PathVariable Integer type){
+        model.addAttribute("recommendType",type);
         return "institution/recommendationHomeC";
     }
     //单独机构评价管理
@@ -68,8 +69,11 @@ public class InstitutionBaseController {
     @RequestMapping(value = "/businessEntry")
     public String businessEntry(){        return "institution/businessEntry";  }
     //名师管理
-    @RequestMapping(value = "/famousTeacher")
-    public String famousTeacher(){        return "institution/famousTeacher";  }
+    @RequestMapping(value = "/famousTeacher/{insId}")
+    public String famousTeacher(Model model, @PathVariable Integer insId){
+        model.addAttribute("insId",insId);
+        return "institution/famousTeacher";
+    }
     //机构评价管理列表
     @RequestMapping(value = "/evaluationList")
     public String evaluationList(){
