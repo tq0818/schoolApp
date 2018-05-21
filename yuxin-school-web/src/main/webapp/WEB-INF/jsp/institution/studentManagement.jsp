@@ -34,21 +34,24 @@
                 <span class="line"></span>
             </div>
             <form method="post" id="searchForm" class="userVideoListNew">
-                    <div class="marginTop10 changeBtn">
+                    <div class="marginTop10 changeBtn" id="status">
                         <span>处理状态</span>
-                        <a href="##" class="btn btn-default btn-primary">全部</a>
-                        <a href="##" class="btn btn-default ">已处理</a>
-                        <a href="##" class="btn btn-default ">未处理</a>
+                        <a href="##" class="btn btn-default btn-primary status" data-flag="">全部</a>
+                        <a href="##" class="btn btn-default status" data-flag="1">已处理</a>
+                        <a href="##" class="btn btn-default status" data-flag="0">未处理</a>
                     </div>
                     <div class="marginTop10">
                         <span>预约机构</span>
-                        <select>
+                        <select id="reServApplyInsId" onchange="findReServApplyClassByInsId()">
                             <option value="">请选择机构</option>
+                            <c:forEach var="ins" items="${insList}">
+                                <option value="${ins.relationId}">${ins.relationName}</option>
+                            </c:forEach>
                         </select>
                     </div>
                     <div class="marginTop10">
                         <span>预约课程</span>
-                        <select name="">
+                        <select name="" id="reServApplyClass" onchange="findReServApplyListByClassId()">
                             <option value="">请选择课程</option>
                         </select>
                     </div>
@@ -59,8 +62,8 @@
                         <em>到</em>
                         <input type="text" name="endTime" id="endTime" class="date-picker to"  readonly/>
 
-                        <input type="text" placeholder="手机号"/>
-                        <span><a href="javascript:void(0);" class="btn btn-primary" style="margin: 0 20px;">搜索</a></span>
+                        <input type="text" id="mobile" placeholder="手机号"/>
+                        <span><a href="javascript:void(0);" class="btn btn-primary search" style="margin: 0 20px;">搜索</a></span>
                         <span style="float: right;"><a href="javascript:void(0);" class="btn btn-primary" style="margin: 0 20px;">导出用户</a></span>
                     </div>
             </form>
@@ -98,7 +101,7 @@
             </div>
         </div>
     </div>
-
+        <input type="hidden" id="selectCounts" value="10">
     <!-- ajax加载中div开始 -->
     <div class="loading lp-units-loading" style="display:none">
         <p><i></i>加载中,请稍后...</p>
@@ -107,10 +110,10 @@
     <!--  ajax加载中div结束 -->
     <%--添加备注弹窗    --%>
     <div class="remarks">
-        <textarea name="" id="" placeholder="请输入备注信息"></textarea>
+        <textarea name="" id="not" placeholder="请输入备注信息"></textarea>
         <div class="remarksBtn">
             <a href="##" class="btn btn-primary">取消</a>
-            <a href="##" class="btn btn-primary">保存</a>
+            <a href="##" class="btn btn-primary addNot" id="addNote" data-id="">保存</a>
         </div>
     </div>
 

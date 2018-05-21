@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuxin.wx.institution.mapper.ReServApplyMapper">
+
+
+
+    <update id="update" parameterType="com.yuxin.wx.model.institution.ReServApply">
+        update reservation_apply
+        <trim prefix="set" suffixOverrides=",">
+            <if test="dealStatus != null">deal_status = #{dealStatus},</if>
+            <if test="note != null and note != ''">note = #{note},</if>
+        </trim>
+        <where>id = #{id}</where>
+    </update>
+
+
+    <select id="findReServApplyIns" resultType="com.yuxin.wx.model.institution.ReServApply">
+        select id,relation_id relationId ,relation_name relationName from reservation_apply where type = 0 GROUP  BY relation_id
+    </select>
+
+    <select id="findReServApplyList" parameterType="com.yuxin.wx.model.institution.ReServApply" resultType="com.yuxin.wx.model.institution.ReServApply">
+        select r.id,r.mobile,r.relation_name insName,ct.name className,ct.price,r.note,r.deal_status dealStatus,r.create_time createTime from reservation_apply r
+        left join ins_class_type_relation icr on r.relation_id = icr.ins_id
+        LEFT JOIN ins_class_type ct on ct.id = icr.class_type_id
+        where 1=1 and type = 0
+        <if test="insId != null and insId != ''">and r.relation_id = #{insId} </if>
+        <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
+        <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
+        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        order by r.create_time desc
+        limit #{page},#{pageSize}
+    </select>
+
+    <select id="findReServApplyListCount" parameterType="com.yuxin.wx.model.institution.ReServApply" resultType="Integer">
+        select count(1) from reservation_apply r
+        left join ins_class_type_relation icr on r.relation_id = icr.ins_id
+        LEFT JOIN ins_class_type ct on ct.id = icr.class_type_id
+        where 1=1 and type = 0
+        <if test="insId != null and insId != ''">and r.relation_id = #{insId} </if>
+        <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
+        <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
+        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+
+    </select>
+
+    <select id="findReServApplyClassList" parameterType="com.yuxin.wx.model.institution.ReServApply" resultType="com.yuxin.wx.model.institution.ReServApply">
+        select r.id,r.mobile,r.relation_name insName,ct.name className,ct.price,r.note,r.type,r.deal_status dealStatus,r.create_time createTime  from reservation_apply r
+        LEFT JOIN ins_class_type ct on ct.id = r.relation_id and r.type = 1
+        left join ins_class_type_relation icr on ct.id = icr.class_type_id
+        LEFT JOIN institution_info ii on ii.id = icr.ins_id and ii.id = #{insId}
+        where 1=1  and ct.id = #{insClassId}
+        <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
+        <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
+        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        order by r.create_time desc
+        limit #{page},#{pageSize}
+    </select>
+
+    <select id="findReServApplyClassListCount" parameterType="com.yuxin.wx.model.institution.ReServApply" resultType="Integer">
+        select count(1) from reservation_apply r
+        LEFT JOIN ins_class_type ct on ct.id = r.relation_id and r.type = 1
+        left join ins_class_type_relation icr on ct.id = icr.class_type_id
+        LEFT JOIN institution_info ii on ii.id = icr.ins_id and ii.id = #{insId}
+        where 1=1  and ct.id = #{insClassId}
+        <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
+        <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
+        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+    </select>
+
+
+    <select id="findReServApplyMap" parameterType="com.yuxin.wx.model.institution.ReServApply" resultType="Map">
+        select r.id,r.mobile,r.relation_name insName,ct.name className,ct.price,r.note,r.deal_status dealStatus,r.create_time createTime from reservation_apply r
+        left join ins_class_type_relation icr on r.relation_id = icr.ins_id
+        LEFT JOIN ins_class_type ct on ct.id = icr.class_type_id
+        where 1=1 and type = 0
+        <if test="insId != null and insId != ''">and r.relation_id = #{insId} </if>
+        <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
+        <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
+        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        order by r.create_time desc
+    </select>
+
+    <select id="findReServApplyClassMap" parameterType="com.yuxin.wx.model.institution.ReServApply" resultType="Map">
+        select r.id,r.mobile,r.relation_name insName,ct.name className,ct.price,r.note,r.type,r.deal_status dealStatus,r.create_time createTime  from reservation_apply r
+        LEFT JOIN ins_class_type ct on ct.id = r.relation_id and r.type = 1
+        left join ins_class_type_relation icr on ct.id = icr.class_type_id
+        LEFT JOIN institution_info ii on ii.id = icr.ins_id and ii.id = #{insId}
+        where 1=1  and ct.id = #{insClassId}
+        <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
+        <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
+        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        order by r.create_time desc
+    </select>
+</mapper>
