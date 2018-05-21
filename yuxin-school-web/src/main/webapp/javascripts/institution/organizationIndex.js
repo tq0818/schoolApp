@@ -62,6 +62,7 @@ $(function () {
                     $('.editCount').show();
                     $("#user").html("账号："+data.userName);
                     $("#userId").val(data.userId);
+                    $("#insUserName").val(data.userName);
                 }
             }
         })
@@ -665,9 +666,9 @@ function findInsDate(page) {
                         '<a href="##" class="manageBtn">'+'管理'+'</a>'+
                         '<ul class="none box" style="display: none">'+
                         '<li><a href="/InsInfoBase/findInsById?id='+item.id+'">基本信息</a>'+'</li>'+
-                        '<li><a href="">风采管理</a>'+'</li>'+
+                        '<li><a href="/institutionStyle/queryInstitutionStyle?relationId='+item.id+'">风采管理</a>'+'</li>'+
                         '<li><a href="/institutionClassType/classTypeMain/'+item.id+'">课程管理</a>'+'</li>'+
-                        '<li><a href="">名师管理</a>'+'</li>'+
+                        '<li><a href="/InsInfoBase/famousTeacher/'+item.id+'">名师管理</a>'+'</li>'+
                         '<li><a href="/comment/insCommentIndex?id='+item.id+'">评论管理</a>'+'</li>'+
                         '</ul>'+
                         '</td>'+
@@ -964,7 +965,7 @@ function cureatManageUser() {
 function updateManageUser() {
     var userId = $("#userId").val();
     var updataPwd = $("#updataPwd").val();
-    var userName = $("#user").html();
+    var userName = $("#insUserName").val();
     $.ajax({
         url:rootPath+"/InsInfoBase/updataUserPwd",
         type:"post",

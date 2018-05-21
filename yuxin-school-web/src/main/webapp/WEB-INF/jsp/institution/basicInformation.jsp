@@ -217,7 +217,7 @@
                         <div id="listPhone" style="padding-left: 70px;">
                             <c:if test="${mobileSize == 0}">
                                 <div style="margin-top: 5px;">
-                                    <input type="text" style="width: 440px;" placeholder="请输入手机号" class="phoneNum" onkeyup="value=value.replace(/[^\d]/g,'')">
+                                    <input type="text" style="width: 440px;" placeholder="请输入手机号" class="phoneNum" maxlength="11" onkeyup="value=value.replace(/[^\d]/g,'')">
                                     <span class="iconBtn addPhone" >+</span>
                                 </div>
                             </c:if>

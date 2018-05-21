@@ -306,8 +306,7 @@ public class InstitutionInfoController {
         String insId = request.getParameter("countManage");
         Integer curUserId = WebUtils.getCurrentUserId(request);
 
-        String md5Pwd = new Md5Hash("111111", ByteSource.Util.bytes(userName
-                + "salt")).toHex();
+        String md5Pwd = new Md5Hash("111111", ByteSource.Util.bytes(userName + "salt")).toHex();
         Users users = new Users();
         users.setId(null);
         users.setUsername(userName);
@@ -335,8 +334,7 @@ public class InstitutionInfoController {
         String updataPwd = request.getParameter("updataPwd");
         String userNames = request.getParameter("userName");
         String userName = userNames.substring(userNames.indexOf(":")+1);
-        String md5Pwd = new Md5Hash(updataPwd, ByteSource.Util.bytes(userName
-                + "salt")).toHex();
+        String md5Pwd = new Md5Hash(updataPwd, ByteSource.Util.bytes(userName + "salt")).toHex();
         Users users = new Users();
         users.setId(Integer.parseInt(userId));
         users.setPassword(md5Pwd);

@@ -300,6 +300,7 @@
     <div  class="countPopup editCount">
         <h5>修改密码</h5>
         <input type="hidden" id="userId" value="">
+        <input id="insUserName" type="hidden" value="">
         <p id="user">账号：cdsywgyxx</p>
         <p>密码：<input type="password" id="updataPwd"></p>
         <div class="countPopupBtn">
