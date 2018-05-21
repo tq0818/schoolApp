@@ -380,7 +380,10 @@ console.log(page);
             }
 
             var html = '';
-            html +='<span href="##" class="uploadImg" style="cursor: default;">+</span>';
+            var userType = $("#userType").val();
+            if("INSTITUTION_MANAGE"!=userType){
+                html +='<span href="##" class="uploadImg" style="cursor: default;">+</span>';
+            }
             for(var i in imgS){
                 html +='<img src="'+ imgS[i].imgUrl +'" alt="" class="iconListImg" >'
             }

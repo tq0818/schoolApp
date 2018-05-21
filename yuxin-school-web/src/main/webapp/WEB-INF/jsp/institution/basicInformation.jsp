@@ -327,11 +327,14 @@
 </div>
 <div class="loading-bg lp-units-loading-bg" style="display: none"></div>
 
+
 <input type="hidden" id="x" name="x" value="0"/>
 <input type="hidden" id="y" name="y" value="0"/>
 <input type="hidden" id="w" name="w" value="0"/>
 <input type="hidden" id="h" name="h" value="0"/>
 <input type="hidden" id="imgUrl"/>
+<input type="hidden" id="userType" value="${userType}"/>
+
 
 <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/plugins/jcrop/js/jquery.Jcrop.js"></script>
