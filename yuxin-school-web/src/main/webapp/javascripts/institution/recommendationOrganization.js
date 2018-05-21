@@ -21,20 +21,20 @@ $(function () {
             $(this).siblings('.recomendState').html('已推荐');
         }
     });
-    //分页插件
-    $(".pagination").pagination('', {
-        next_text : "下一页",
-        prev_text : "上一页",
-        current_page : 1,
-        link_to : "javascript:void(0)",
-        num_display_entries : 10,
-        items_per_page : 10,
-        num_edge_entries : 1,
-        callback:function(page){
-            var pageNo = page + 1;
-
-        }
-    });
+    // //分页插件
+    // $(".pagination").pagination('', {
+    //     next_text : "下一页",
+    //     prev_text : "上一页",
+    //     current_page : 1,
+    //     link_to : "javascript:void(0)",
+    //     num_display_entries : 10,
+    //     items_per_page : 10,
+    //     num_edge_entries : 1,
+    //     callback:function(page){
+    //         var pageNo = page + 1;
+    //
+    //     }
+    // });
     //推荐位置、推荐分类、推荐状态按钮颜色切换
     $('.changeBtn').children('a').click(function () {
         $(this).addClass('btn-primary');
