@@ -14,6 +14,8 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yuxin.wx.api.institution.InstitutionInfoService;
+import com.yuxin.wx.model.institution.InstitutionInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -58,6 +60,8 @@ public class InstitutionStyleController {
 	private InstitutionStyleService institutionStyleServiceImpl;
     @Autowired
     private ICompanyPayConfigService companyPayConfigServiceImpl;
+    @Autowired
+    private InstitutionInfoService institutionInfoService;
 	//查询风采图上半部分
 	@RequestMapping(value = "/queryInstitutionStyle")// ,method = RequestMethod.POST
     public String elegantDemeanor(HttpServletRequest request,HttpServletResponse response,Model model,InstitutionStyle institutionStyle){
@@ -92,12 +96,16 @@ public class InstitutionStyleController {
 				institutionStyle2.setImgUrl("http://"+propertiesUtil.getProjectImageUrl()+"/"+institutionStyle2.getImgUrl());
 			}
 		}
+
+
 		model.addAttribute("coverInfo",coverInfoList.size() > 0 ?coverInfoList.get(0):new InstitutionStyle());
 		model.addAttribute("videoInfo",videoInfoList.size() > 0 ?videoInfoList.get(0):new InstitutionStyle());
 //		model.addAttribute("result",styleInfoList);
 		model.addAttribute("pageNo",page);
         model.addAttribute("rowCount",count);
         model.addAttribute("institutionId", institutionStyle.getRelationId());
+        InstitutionInfoVo institutionInfoVo = institutionInfoService.findInstitutionInfoById(institutionStyle.getRelationId());
+        model.addAttribute("ins", institutionInfoVo);
 		return "/institution/elegantDemeanor";
     }
 	

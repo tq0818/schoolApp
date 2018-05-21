@@ -138,7 +138,6 @@ var currPage='';
 var currPageClass='';
 //查询机构评论
 function initInsComment(page=1,reviewStatus='') {
-    console.log('机构评价');
     currPage = page;
 
     $.ajax({
@@ -152,7 +151,9 @@ function initInsComment(page=1,reviewStatus='') {
             $(".loading").show();
             $(".loading-bg").show();
         },
-        success:function(jsonData){
+        success:function(data){
+            var userType = data.usersType;
+            var jsonData = data.comment;
             var html ='';
             if(!jsonData||jsonData.data.length==0){
                 html+='<div style="text-align: center">暂无数据</div>'
@@ -162,8 +163,16 @@ function initInsComment(page=1,reviewStatus='') {
                     var check = item.isCheck;
                     var com = item.content ? unescape(item.content.replace(/\\u/g, '%u')) : "";
                     let  _check = "";
+
                     if(check==0){
                         _check = '<button  class="evaluationIns" id="evaluation" data-commentId="'+item.id+'">审核通过</button>';
+                    }
+
+                    var del = '<button class="delete " id="delete" data-commentId="'+item.id+'">删除</button>';
+
+                    if(userType == 'INSTITUTION_MANAGE'){
+                        _check='';
+                        del ='';
                     }
 
                     if(score==1){
@@ -218,7 +227,7 @@ function initInsComment(page=1,reviewStatus='') {
                         '</p>'+
                         '</div>'+
                         _check+
-                        '<button class="delete " id="delete" data-commentId="'+item.id+'">删除</button>'+
+                        del+
                         '</li>'
                 });
             }
@@ -269,7 +278,9 @@ function initInsClassComment(page=1,reviewStatus='',relationId='') {
             $(".loading").show();
             $(".loading-bg").show();
         },
-        success:function(jsonData){
+        success:function(data){
+            var userType = data.usersType;
+            var jsonData = data.comment;
             var html ='';
             if(!jsonData||jsonData.data.length==0){
                 html+='<div style="text-align: center">暂无数据</div>'
@@ -277,6 +288,20 @@ function initInsClassComment(page=1,reviewStatus='',relationId='') {
                 $.each(jsonData.data,function(i,item){
                     var score=item.score?item.score:0;
                     var com = (item.content ? unescape(item.content.replace(/\\u/g, '%u')) : "");
+                    var check = item.isCheck;
+
+                    let  _check = "";
+
+                    if(check==0){
+                        _check = '<button  class="evaluationInsClass" id="evaluation" data-commentId="'+item.id+'">审核通过</button>';
+                    }
+
+                    var del = '<button class="deleteClass" id="delete" data-commentId="'+item.id+'">删除</button>';
+
+                    if(userType == 'INSTITUTION_MANAGE'){
+                        _check='';
+                        del ='';
+                    }
                     if(score==1){
                         scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
                             '<i class="iconfont">&#xe65e;</i>'+
@@ -328,8 +353,8 @@ function initInsClassComment(page=1,reviewStatus='',relationId='') {
                         '<span>评分:'+ scorehtml+'</span>'+
                         '</p>'+
                         '</div>'+
-                        '<button  class="evaluationInsClass" id="evaluation" data-commentId="'+item.id+'">审核通过</button>'+
-                        '<button class="deleteClass" id="delete" data-commentId="'+item.id+'">删除</button>'+
+                        _check+
+                        del+
                         '</li>'
                 });
             }
