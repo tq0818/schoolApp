@@ -192,7 +192,7 @@ public class RecommendController {
                 return json;
             }
 
-            institutionCategoryService.updateRecommendStatusById(entity.getThirdRecommend() == 1 ? 0 : 1 ,entity.getId(),entity.getSort());
+            institutionCategoryService.updateRecommendStatusById(entity.getFirstRecommend() == 1 ? 0 : 1 ,entity.getId(),entity.getSort());
 
             json.put("status",1);
             json.put("msg","操作成功");

@@ -208,4 +208,6 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
 
     int getMaxSortByTypeId2(Integer typeId);
 
+    int exchangeSortIndexType(List<CaseWhenVO> list);
+
 }

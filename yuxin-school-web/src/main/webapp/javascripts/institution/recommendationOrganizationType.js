@@ -34,17 +34,17 @@ function getRecommendTypeList(){
                             <td>${list[i].codeName}</td>
                             <td>${list[i].codeLevel == 1 ? '一级' : '二级'}</td>
                             <td>
-                            <span>${list[i].thirdRecommend != 1 ? '-' : (list[i].sort)}</span>
-                                ${list[i].thirdRecommend != 1 ? '' : (
+                            <span>${list[i].firstRecommend != 1 ? '-' : (list[i].sort)}</span>
+                                ${list[i].firstRecommend != 1 ? '' : (
                                    parseInt(i) == 0 && list[i].sort == 1  ? "<i data-id='"+list[i].id+"' data-status='down' class=\"icon iconfont\">&#xe6e4;</i>" : (
-                                       list[parseInt(i)].sort == list[parseInt(i)].num || (parseInt(i) + 1 < list.length && list[parseInt(i) + 1].thirdRecommend != 1) ? 
+                                       list[parseInt(i)].sort == list[parseInt(i)].num || (parseInt(i) + 1 < list.length && list[parseInt(i) + 1].firstRecommend != 1) ? 
                                            " <i data-id='"+list[i].id+"'  data-status='up' class=\"icon iconfont\">&#xe6e3;</i>" :
                                            " <i data-id='"+list[i].id+"'  data-status='up' class=\"icon iconfont\">&#xe6e3;</i> " + "<i data-id='"+list[i].id+"' data-status='down' class=\"icon iconfont\">&#xe6e4;</i>"
                                    )
                 )}
                               
                             </td>
-                            <td data-id="${list[i].id}" class="cancelRecommend">${list[i].thirdRecommend != 1 ? '推荐' : '取消推荐'}</td>
+                            <td data-id="${list[i].id}" class="cancelRecommend">${list[i].firstRecommend != 1 ? '推荐' : '取消推荐'}</td>
                         </tr>
                 `;
             }

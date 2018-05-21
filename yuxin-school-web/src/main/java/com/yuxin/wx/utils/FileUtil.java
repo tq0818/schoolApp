@@ -338,7 +338,7 @@ public class FileUtil {
 		init();
 		String fileName=generateFileName(mFile.getOriginalFilename());
 		String path=getPath(module,company,fileName);
-		path = "/"+  fileName;
+		//path = "/"+  fileName;
 		String realPath = imageServiceRealPath+path;
 		if (!mFile.isEmpty()) {
 			try {
