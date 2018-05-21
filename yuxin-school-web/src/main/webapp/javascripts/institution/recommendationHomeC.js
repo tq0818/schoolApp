@@ -25,7 +25,8 @@ $(function () {
         $.ajax({
             url: rootPath+'/institutionRecommend/updateTree',
             data: {
-                tree:JSON.stringify(nodeArr)
+                tree:JSON.stringify(nodeArr),
+                type:$("#recommendType").val()
             },
             type: 'post',
             beforeSend: function () {
@@ -54,10 +55,13 @@ $(function () {
 
 function getTreeData(){
 
+    var type = $("#recommendType").val();
+
+
     $.ajax({
         url: rootPath+'/institutionRecommend/typeListAll',
         data: {
-
+            type:type
         },
         type: 'post',
         beforeSend: function () {
@@ -74,7 +78,7 @@ function getTreeData(){
             var oneArr = new Array();
             for(var i in json){
                 if(json[i].codeLevel == 1){
-                    oneArr.push({name:json[i].codeName,children:new Array() , checked:json[i].thirdRecommend == 1 , id:json[i].id  });
+                    oneArr.push({name:json[i].codeName,children:new Array() , checked:(type == 0 ? json[i].thirdRecommend == 1 : json[i].firstRecommend == 1 ), id:json[i].id  });
                 }else{
                     findAndAddChildren(oneArr,json[i]);
                 }

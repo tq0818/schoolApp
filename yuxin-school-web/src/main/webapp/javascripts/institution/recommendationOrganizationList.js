@@ -6,9 +6,11 @@ function getIndexRecommendList(){
     $.ajax({
         url: rootPath+'/institutionRecommend/getRecommendList',
         data: {
-             typeId:1,
+             typeId:getCurrentTypeId(),
              page:nowIndexPage,
-             pageSize:pageSize
+             pageSize:pageSize,
+             status:getStatus(),
+             name:$('#recommendName').val()
         },
         type: 'post',
         beforeSend: function () {
@@ -35,7 +37,7 @@ function getIndexRecommendList(){
                     list[i].is_recommend == 1 ?
                         ( list[i].sort + ( list[i].sort + parseInt(i) == 1 ?
                             "<i data-id='"+list[i].rid+"' data-status='down' class='icon iconfont'>&#xe6e4;</i>"
-                            : (list[i].sort == json.data.recommendNum || (parseInt(i) < list.length - 1 && list[parseInt(i) + 1].is_recommend != 1 ) ?
+                            : ( list[i].sort == json.data.maxSort ||  list[i].sort == json.data.recommendNum || (parseInt(i) < list.length - 1 && list[parseInt(i) + 1].is_recommend != 1 ) ?
                                     "<i data-id='"+list[i].rid+"' data-status='up' class='icon iconfont'>&#xe6e3;</i>" :
                                     "<i data-id='"+list[i].rid+"' data-status='up' class='icon iconfont'>&#xe6e3;</i>" +
                                     "<i data-id='"+list[i].rid+"' data-status='down' class='icon iconfont'>&#xe6e4;</i>"
@@ -114,7 +116,29 @@ function getIndexRecommendList(){
 
 
 function getCurrentTypeId(){
+    var alist = $('#recommendBtnContainor').find('.recommendTypeBtn');
+    // console.log(alist);
+    for(var i = 0;i<alist.length;i++){
+        if($(alist[i]).hasClass('btn-primary')){
+            return $(alist[i]).attr('data-id');
+        }
+    }
     return 1;
+}
+
+function getStatus(){
+    var alist = $('#recommendStatusContainor').find('.btn-default');
+    for(var i = 0;i<alist.length;i++){
+        if($(alist[i]).hasClass('btn-primary')){
+           if($(alist[i]).html() == '全部'){
+               return "";
+           }else if($(alist[i]).html() == '已推荐'){
+               return 1;
+           }else{
+               return 0;
+           }
+        }
+    }
 }
 
 
@@ -122,7 +146,47 @@ function getCurrentTypeId(){
  * 获取推荐分类，用于筛选推荐机构
  */
 function getRecommendTypeData(){
-    $.post(rootPath + '' , {} , function(json){
+    $.post(rootPath + '/institutionRecommend/typeListAll' , {type:1} , function(json){
+        console.log(json);
+
+    var recommendNum = 0;
+
+    var html = '<span>推荐分类</span>';
+        for(var i in json){
+            if(json[i].firstRecommend == 1){
+                if(recommendNum == 0){
+                    html += "<a href=\"##\" data-id='"+json[i].id+"' class=\"btn recommendTypeBtn btn-default btn-primary btn-sm\">"+json[i].codeName+"</a>" ;
+                    recommendNum ++ ;
+                }else{
+                    html += "<a href=\"##\" data-id='"+json[i].id+"' class=\"btn recommendTypeBtn btn-default  btn-sm\">"+json[i].codeName+"</a>" ;
+                    recommendNum ++ ;
+                }
+
+            }
+        }
+
+        html += " <span>\n" + "<a href=\"/InsInfoBase/recommendationHomeC/1\" style=\"color: red;\">管理</a>\n" + "</span>";
+
+       $('#recommendBtnContainor').html(html);
+
+
+       $('.recommendTypeBtn').click(function() {
+           //取消其他标签的class属性
+           var alist = $('#recommendBtnContainor').find('.recommendTypeBtn');
+          // console.log(alist);
+            for(var i = 0;i<alist.length;i++){
+                if($(alist[i]).hasClass('btn-primary')){
+                    $(alist[i]).removeClass('btn-primary');
+                }
+            }
+
+
+           //给当前a标签添加class
+           $(this).addClass('btn-primary');
+
+           getIndexRecommendList();
+       })
+
 
     })
 }
