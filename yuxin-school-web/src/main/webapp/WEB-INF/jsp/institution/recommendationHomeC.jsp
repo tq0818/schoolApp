@@ -54,7 +54,7 @@
     <div class="loading-bg lp-units-loading-bg" style="display:none"></div>
     <!--  ajax加载中div结束 -->
 
-
+        <input id="recommendType" type="hidden" value="${recommendType}">
 
     <script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>

@@ -58,12 +58,20 @@ public interface InstitutionCategoryManageService {
 
 
     /**
-     * 更新某个推荐分类的推荐状态
+     * 更新某个推荐分类的推荐状态 third_recommend
      * @param status 更新后的状态
      * @param id
      * @param oldSort   更新前的排序 ， 用于更新其他推荐状态的排序问题
      */
     void updateRecommendStatusById(Integer status , Integer id , Integer oldSort);
+
+    /**
+     * 更新某个推荐分类的推荐状态 first_recommend
+     * @param status 更新后的状态
+     * @param id
+     * @param oldSort 更新前的排序 ， 用于更新其他推荐状态的排序问题
+     */
+    void updateRecommendStatusById1(Integer status , Integer id , Integer oldSort);
 
     /**
      * 根据id获取分类信息
@@ -87,6 +95,11 @@ public interface InstitutionCategoryManageService {
      */
     List<InstitutionCategoryVo> queryInstitutionCategorysEnabled();
 
+    /**
+     * 获取所有`is_enable` = 1  , first_recommend 作为推荐标志 的分类信息
+     * @return
+     */
+    List<InstitutionCategoryVo> queryInstitutionCategorysEnabled1();
 
     /**
      * 查询分类总记录
@@ -103,9 +116,9 @@ public interface InstitutionCategoryManageService {
     int flushSortAll(Integer baseSort);
 
 
-    List<Map<String,Object>> getIndexRecommendList(int typeId, String name, int pageStart, int pageSize);
+    List<Map<String,Object>> getIndexRecommendList(int typeId, String name,Integer status , int pageStart, int pageSize);
 
-    int getIndexRecommendListCount(int typeId, String name);
+    int getIndexRecommendListCount(int typeId, String name,Integer status);
 
     /**
      * 获取指定分类的机构状态是推荐的个数
@@ -129,6 +142,8 @@ public interface InstitutionCategoryManageService {
      * @return
      */
     int getIndexRecommendYesCount(Integer typeId);
+
+    int getMaxSortByTypeId(Integer typeId);
 
     /**
      * 调整某个首页列表推荐的排序

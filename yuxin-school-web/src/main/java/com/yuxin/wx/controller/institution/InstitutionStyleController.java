@@ -24,7 +24,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,6 +34,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yuxin.wx.api.company.ICompanyPayConfigService;
 import com.yuxin.wx.api.company.ICompanyVideoConfigService;
+import com.yuxin.wx.api.institution.InstitutionInfoService;
 import com.yuxin.wx.api.riseschool.InstitutionStyleService;
 import com.yuxin.wx.common.CCVideoConstant;
 import com.yuxin.wx.common.Constant;
@@ -43,6 +43,7 @@ import com.yuxin.wx.model.ccVideo.CcNotifyVo;
 import com.yuxin.wx.model.company.CompanyPayConfig;
 import com.yuxin.wx.model.company.CompanyVideoConfig;
 import com.yuxin.wx.model.institution.InsVideo;
+import com.yuxin.wx.model.institution.InstitutionInfoVo;
 import com.yuxin.wx.model.institution.InstitutionStyle;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.util.APIServiceFunction;
@@ -68,6 +69,8 @@ public class InstitutionStyleController {
     private ICompanyPayConfigService companyPayConfigServiceImpl;
     @Autowired
     private ICompanyVideoConfigService companyVideoConfigImpl;
+    @Autowired
+    private InstitutionInfoService institutionInfoService;
 	//查询风采图上半部分
 	@RequestMapping(value = "/queryInstitutionStyle")// ,method = RequestMethod.POST
     public String elegantDemeanor(HttpServletRequest request,HttpServletResponse response,Model model,InstitutionStyle institutionStyle){
@@ -104,7 +107,6 @@ public class InstitutionStyleController {
 			//查询视频id
 			videoId = institutionStyleServiceImpl.queryInsVideoIdBySourceId(videoInfoList.get(0).getId());
 		}
-		
 		model.addAttribute("coverInfo",coverInfoList.size() > 0 ?coverInfoList.get(0):new InstitutionStyle());
 		model.addAttribute("videoInfo",videoInfoList.size() > 0 ?videoInfoList.get(0):new InstitutionStyle());
 //		model.addAttribute("result",styleInfoList);
@@ -112,6 +114,8 @@ public class InstitutionStyleController {
         model.addAttribute("rowCount",count);
         model.addAttribute("institutionId", institutionStyle.getRelationId());
         model.addAttribute("videoId", videoId);
+        InstitutionInfoVo institutionInfoVo = institutionInfoService.findInstitutionInfoById(institutionStyle.getRelationId());
+        model.addAttribute("ins", institutionInfoVo);
 		return "/institution/elegantDemeanor";
     }
 	

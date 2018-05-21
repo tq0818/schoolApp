@@ -13,9 +13,9 @@
     </div>
     <ul id="course_manage" class="system_managelist">
         <li class="subentry" code="essential" mark="/InsInfoBase/findInsById?id=${ins.id}">基本信息管理</li>
-        <li class="subentry" code="elegantDemeano" mark="/InsInfoBase/elegantDemeanor">风采管理</li>
-        <li class="subentry" code="course" mark="/InsInfoBase/course">课程管理</li>
-        <li class="subentry" code="teacherFamous " mark="/InsInfoBase/famousTeacher">名师管理</li>
+        <li class="subentry" code="elegantDemeano" mark="/institutionStyle/queryInstitutionStyle?relationId=${ins.id}">风采管理</li>
+        <li class="subentry" code="course" mark="/institutionClassType/classTypeMain/${ins.id}">课程管理</li>
+        <li class="subentry" code="teacherFamous " mark="/InsInfoBase/famousTeacher/${ins.id}">名师管理</li>
         <li class="subentry" code="evaluate" mark="/comment/insCommentIndex?id=${ins.id}">评价管理</li>
     </ul>
 </div>

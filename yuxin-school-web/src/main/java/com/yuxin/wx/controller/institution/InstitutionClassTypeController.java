@@ -124,6 +124,7 @@ public class InstitutionClassTypeController {
     private void getInstitution(Model model, Integer insId) throws Exception {
         InstitutionInfoVo insEntity = institutionInfoService.findInstitutionInfoById(insId);
         model.addAttribute("insEntity", insEntity);
+        model.addAttribute("ins",insEntity);
     }
 
 

@@ -1,5 +1,6 @@
 package com.yuxin.wx.controller.institution;
 
+import com.alibaba.fastjson.JSONObject;
 import com.yuxin.wx.api.institution.CommentManageService;
 import com.yuxin.wx.api.institution.InstitutionClassTypeService;
 import com.yuxin.wx.api.institution.InstitutionInfoService;
@@ -7,6 +8,8 @@ import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.institution.CommentApp;
 import com.yuxin.wx.model.institution.InstitutionClassTypeVo;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
+import com.yuxin.wx.model.user.Users;
+import com.yuxin.wx.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -73,10 +76,13 @@ public class CommentManageController {
      */
     @ResponseBody
     @RequestMapping(value = "/findInsComment",method = RequestMethod.POST)
-    public PageFinder<CommentApp> findInsCommen(CommentApp commentApp){
-
+    public JSONObject findInsCommen(CommentApp commentApp,HttpServletRequest request){
+        JSONObject json = new JSONObject();
+        Users users = WebUtils.getCurrentUser();
         try{
-            return commentManageService.findInsComment(commentApp);
+            json.put("usersType",users.getUserType());
+            json.put("comment",commentManageService.findInsComment(commentApp));
+            return json;
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -90,10 +96,13 @@ public class CommentManageController {
      */
     @ResponseBody
     @RequestMapping(value = "/findInsClassComment",method = RequestMethod.POST)
-    public PageFinder<CommentApp> findInsClassComment(CommentApp commentApp){
-
+    public JSONObject findInsClassComment(CommentApp commentApp){
+        JSONObject json = new JSONObject();
+        Users users = WebUtils.getCurrentUser();
         try {
-            return commentManageService.findInsClassComment(commentApp);
+            json.put("usersType",users.getUserType());
+            json.put("comment",commentManageService.findInsClassComment(commentApp));
+            return json;
         }catch (Exception e){
             e.printStackTrace();
         }
