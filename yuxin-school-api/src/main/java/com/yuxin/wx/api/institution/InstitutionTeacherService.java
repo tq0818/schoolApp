@@ -19,7 +19,7 @@ public interface InstitutionTeacherService {
      * 新建一个机构名师
      * @param entity
      */
-    void insert(InstitutionTeacher entity);
+    int insert(InstitutionTeacher entity);
 
     /**
      * 批量新建

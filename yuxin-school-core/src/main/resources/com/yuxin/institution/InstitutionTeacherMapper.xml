@@ -140,6 +140,9 @@
           INNER JOIN `institution_info` info
             ON itr.`ins_id` = info.`id`
           AND info.id = #{insId}
+
+          ORDER BY it.`create_time` DESC
+
     </select>
 
 

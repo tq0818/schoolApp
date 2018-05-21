@@ -6,15 +6,24 @@ import com.yuxin.wx.api.institution.InstitutionLabelService;
 import com.yuxin.wx.api.institution.InstitutionTeacherService;
 import com.yuxin.wx.model.institution.InstitutionLabelVo;
 import com.yuxin.wx.model.institution.InstitutionTeacher;
+import com.yuxin.wx.utils.FileUtil;
+import com.yuxin.wx.utils.PropertiesUtil;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +40,9 @@ public class InstitutionTeacherController {
 
     @Autowired
     private InstitutionLabelService labelService;
+
+    @Autowired
+    private PropertiesUtil propertiesUtil;
 
     /**
      * 获取机构中的所有名师列表
@@ -105,6 +117,9 @@ public class InstitutionTeacherController {
     public JSONObject teacherInfo(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         try{
+
+
+
             Integer insId = Integer.valueOf(request.getParameter("insId"));
             Integer teacherId = Integer.valueOf(request.getParameter("tid"));
             Map<String,Object> map = new HashMap<>();
@@ -131,6 +146,7 @@ public class InstitutionTeacherController {
             JSONObject data = new JSONObject();
             data.put("id",teacher.getId());
             data.put("headUrl",teacher.getHeadUrl());
+            data.put("fullUrl","http://"+propertiesUtil.getProjectImageUrl()+"/"+teacher.getHeadUrl());
             data.put("name",teacher.getName());
             data.put("school",teacher.getGraduateSchool());
             data.put("labels",arr);
@@ -197,16 +213,26 @@ public class InstitutionTeacherController {
                 return json;
             }
 
+            //新增老师
+            institutionTeacherService.addTeacher(teacher,insId);
+
             JSONArray arr = JSONArray.parseArray(label);
             //TODO  label信息处理
+            for(int i = 0;i<arr.size();i++){
+                InstitutionLabelVo vo = new InstitutionLabelVo();
+                vo.setUpdateTime(new Date());
+                vo.setCreateTime(new Date());
+                vo.setSourceFlag(2);
+                vo.setLabelType("1");
+                vo.setRelationId(teacher.getId());
+                vo.setLabelName(arr.getJSONObject(i).getString("name"));
+               // vo.setImgUrl(headUrl);
 
-
-
-
-
-
+                labelService.insert(vo);
+            }
 
             json.put("status",1);
+            json.put("msg","操作成功");
         }catch (Exception e){
             e.printStackTrace();
             json.put("status",0);
@@ -215,6 +241,70 @@ public class InstitutionTeacherController {
         }
         return json;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/updateTeacher",method = RequestMethod.POST)
+    public JSONObject updateTeacher(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        try{
+            String label = request.getParameter("label");
+            Integer insId = Integer.valueOf(request.getParameter("insId"));
+            Integer tid = Integer.valueOf(request.getParameter("id"));
+            InstitutionTeacher teacher = checkTeacherParams(request,false) ;
+            if(null == teacher){
+                json.put("status",0);
+                json.put("msg","请按要求填写信息");
+                return json;
+            }
+
+            //修改老师基本信息
+            institutionTeacherService.update(teacher);
+
+            JSONArray arr = JSONArray.parseArray(label);
+            //TODO  label信息处理
+
+          List<InstitutionLabelVo> labelVoList =  labelService.getTeacherLabelsByTeacherId(tid);
+            for(int i = 0;i<arr.size();i++){
+              JSONObject obj = arr.getJSONObject(i);
+              if(obj.getString("id") == null){
+                  InstitutionLabelVo vo = new InstitutionLabelVo();
+                  vo.setUpdateTime(new Date());
+                  vo.setCreateTime(new Date());
+                  vo.setSourceFlag(2);
+                  vo.setLabelType("1");
+                  vo.setRelationId(teacher.getId());
+                  vo.setLabelName(arr.getJSONObject(i).getString("name"));
+                  // vo.setImgUrl(headUrl);
+
+                  labelService.insert(vo);
+              }else{
+                  int id = obj.getIntValue("id");
+                  for(InstitutionLabelVo listVo : labelVoList){
+                      if(listVo.getId() - id == 0){
+                          listVo.setUpdateTime(new Date());
+                          listVo.setLabelName(arr.getJSONObject(i).getString("name"));
+                          // vo.setImgUrl(headUrl);
+                          labelService.update(listVo);
+                      }
+                  }
+
+              }
+
+            }
+
+            json.put("status",1);
+            json.put("msg","操作成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            json.put("status",0);
+            json.put("msg","操作异常");
+            return json;
+        }
+        return json;
+    }
+
+
+
 
     /**
      * 新增、修改名师信息参数验证
@@ -233,7 +323,7 @@ public class InstitutionTeacherController {
             String desc = request.getParameter("desc");
             Integer tid = null;
             if(!addFlag){
-                tid = Integer.valueOf(request.getParameter("tid"));
+                tid = Integer.valueOf(request.getParameter("id"));
             }
 
             if(existBlank(headUrl,name,school,label,desc)){
@@ -258,12 +348,16 @@ public class InstitutionTeacherController {
                     return null;
                 }
 
-                return teacher;
+               // return teacher;
             }
 
-            teacher = new InstitutionTeacher();
-            teacher.setCreateTime(new Date());
-            teacher.setDelFlag(0);
+            if(addFlag){
+                teacher = new InstitutionTeacher();
+                teacher.setCreateTime(new Date());
+                teacher.setDelFlag(0);
+            }
+
+
             teacher.setDetailDesc(desc);
             teacher.setGraduateSchool(school);
             teacher.setHeadUrl(headUrl);
@@ -285,6 +379,62 @@ public class InstitutionTeacherController {
         }
         return false;
     }
+
+
+
+    /**
+     * 上传图片
+     *
+     * @param multiPartRquest
+     * @param req
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/uploadImgs", method = RequestMethod.POST)
+    public JSONObject uploadImgs(MultipartRequest multiPartRquest, HttpServletRequest req) {
+        JSONObject json = new JSONObject();
+        try {
+            Subject subject = SecurityUtils.getSubject();
+            String realPath = null;
+            String picPath = null;
+            MultipartFile multipartFile = multiPartRquest.getFile("imgData");
+            subject.getSession().setAttribute("imgData", multipartFile);
+            String name = multipartFile.getOriginalFilename();
+            if (name != null && !"".equals(name)) {
+                try {
+                    realPath = FileUtil.upload(multipartFile, "coursefile", "");
+
+                 //  String[] arr = realPath.split("/");
+                  // realPath = arr[arr.length - 1];
+
+                } catch (Exception e) {
+                    log.error("文件上传失败", e);
+                    e.printStackTrace();
+                }
+            }
+            picPath="http://"+propertiesUtil.getProjectImageUrl()+"/"+realPath;
+            // picPath = "http://localhost/" + realPath;
+
+            if (realPath == null) {
+                json.put("status", 0);
+                json.put("msg", "没有文件");
+                return json;
+            }
+
+            json.put("status", 1);
+            json.put("url", picPath);
+            json.put("picPath", realPath);
+            return json;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            json.put("status", 0);
+            json.put("msg", "操作失败");
+            return json;
+        }
+
+    }
+
 
 
 }
