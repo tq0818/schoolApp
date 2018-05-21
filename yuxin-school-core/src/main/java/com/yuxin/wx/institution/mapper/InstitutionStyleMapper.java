@@ -14,4 +14,7 @@ public interface InstitutionStyleMapper {
 	Integer queryInstitutionStyleCount(InstitutionStyle institutionStyle);
 	void insertInsVideo(InsVideo insVideo);
 	void updateInsVideo(InsVideo insVideo);
+	InsVideo queryInsVideo(InsVideo insVideo);
+	InsVideo queryInsVideoByCcId(String videoCcId);
+	Integer queryInsVideoIdBySourceId(Integer sourceId);
 }

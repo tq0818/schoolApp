@@ -38,7 +38,7 @@ $(function () {
                 	//把上传完的视频ID获取出来，修改为处理中的状态
                 	var ccvid = data.video.ccvid;
             		//根据视频ID从数据中库中删除
-            		var uri = rootPath + '/video/udpateStatus/'+ccvid;
+            		var uri = rootPath + '/institutionStyle/udpateStatus';
             	    $.ajax({
             	        url: uri,
             	        async: false,
@@ -134,7 +134,6 @@ function resumeUpload(data) {
             for(var i = 0; i < myfiles.length; i++){
             	totalSize += file.size;
             }
-            
             $.ajax({
     	        url: rootPath+"/video/judgeVideoStorage",
     	        async: false,
@@ -169,11 +168,11 @@ function resumeUpload(data) {
     	                     index: index
     	                 };
     	                 $.ajax({
-    	                         url: rootPath+"/video/upload",
+    	                         url: rootPath+"/institutionStyle/upload",
     	                         async: false,
     	                         type: "post",
     	                         data: {//20180518
-    	                         	"tag":"123",
+    	                         	"tag":"机构视频",
     	                         	"itemOneId":"",
     	                 			"itemSecondId":"",
     	                             "fileName": file.name,
@@ -205,6 +204,8 @@ function resumeUpload(data) {
     	                         		video.uri = data.uploadinfo.metaurl.substring(0,data.uploadinfo.metaurl.length - 18);
     	                         		video.first = 1;
     	                         		video.size = file.size;
+    	                         		//将videoId设置到页面上
+    	                         		$("#videoId").val(data.videoId);
     	                         	}
     	                         }
     	                     });
@@ -337,7 +338,7 @@ function errorMsgHandler(content) {
 
 $(function () {
     $('#changeUploadMethod').click(function () {
-        window.location.href = '/video/upload.bo';
+        window.location.href = '/institutionStyle/upload.bo';
     });
 });
 

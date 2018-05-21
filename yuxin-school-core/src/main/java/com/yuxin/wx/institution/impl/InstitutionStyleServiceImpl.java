@@ -55,4 +55,19 @@ public class InstitutionStyleServiceImpl implements InstitutionStyleService {
 		institutionStyleMapper.updateInsVideo(insVideo);
 	}
 
+	@Override
+	public InsVideo queryInsVideo(InsVideo insVideo) {
+		return institutionStyleMapper.queryInsVideo(insVideo);
+	}
+
+	@Override
+	public InsVideo queryInsVideoByCcId(String videoCcId) {
+		return institutionStyleMapper.queryInsVideoByCcId(videoCcId);
+	}
+
+	@Override
+	public Integer queryInsVideoIdBySourceId(Integer sourceId) {
+		return institutionStyleMapper.queryInsVideoIdBySourceId(sourceId);
+	}
+
 }

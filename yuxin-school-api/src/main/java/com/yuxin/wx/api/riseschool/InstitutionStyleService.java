@@ -48,4 +48,22 @@ public interface InstitutionStyleService {
 	 * @param insVideo
 	 */
 	void updateInsVideo(InsVideo insVideo);
+	/**
+	 * 查询视频信息
+	 * @param insVideo
+	 * @return
+	 */
+	InsVideo queryInsVideo(InsVideo insVideo);
+	/**
+	 * 根据ccId去查询数据
+	 * @param videoCcId
+	 * @return
+	 */
+	InsVideo queryInsVideoByCcId(String videoCcId);
+	/**
+	 * 根据sourceId去查询视频id
+	 * @param sourceId
+	 * @return
+	 */
+	Integer queryInsVideoIdBySourceId(Integer sourceId);
 }

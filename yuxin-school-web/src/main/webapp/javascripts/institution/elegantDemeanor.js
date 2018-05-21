@@ -13,7 +13,17 @@ $(function () {
         }
         $("#targetVideo").attr("src","").attr("style","").attr("style","width: 136px;height: 116px;");
         $(".writeWord").val("");
-        $(".videoStlye").val("");
+        $(".videoStyle").val("");
+        //重新设置videoId,以便上传的视频但没有保存
+        $("#videoId").val($("#oldVideoId").val());
+    });
+    
+    $(".btnVideoUpdate").click(function(){
+    	 $('.videoUpload').show();
+    	 $(".writeWord").val($("#videoInfoName").val());
+         $(".videoStyle").val($("#videoInfoContent").val());
+         $("#targetVideo").attr("src",$("#videoInfoImg").attr("src"));
+         
     });
 
     //点击风采上传弹窗
@@ -184,7 +194,9 @@ function saveCutPic(saveFlag) {
             return ;
         }
         //判断视频名称和视频描述是否为空
-        if(!$(".videoStyle").val()||!$("#videoContent").text()){
+        if(!$(".videoStyle").val()||!$("#videoContent").val()){
+        	console.log($(".videoStyle").val());
+        	console.log($("#videoContent").val());
         	$.msg("有必录项未录入");
         	return ;
         }
@@ -221,13 +233,16 @@ function saveCutPic(saveFlag) {
             y : $("#y").val(),
             w : $("#w").val(),
             h : $("#h").val(),
-            content:saveFlag == 1?$("#videoContent").text():saveFlag == 2?$("#styleContent").text():"",
+            content:saveFlag == 1?$("#videoContent").val():saveFlag == 2?$("#styleContent").text():"",
             relationId:$("#institutionId").val(),
             sourceFlag:0,//机构风采
             type:saveFlag,// 0 封面 1视频 2风采
             windowFlag:windowFlag,
             updateId:id,
-            name:saveFlag == 1?$(".videoStyle").val():""
+            videoName:saveFlag == 1?$(".videoStyle").val():"",
+            videoId:saveFlag == 1?$("#videoId").val():"",
+            saveFlag:saveFlag,
+            oldVideoId:saveFlag == 1?$("#oldVideoId").val():""
 //            cssStyle:$("#btnOne").hasClass("btn-primary")?0:1
         },
         type : "post",
@@ -310,33 +325,23 @@ function imgInit(flag) {
 
 }
 
-//视频上传
-//function videoInfo(){
-//	  var file = $("#filebutton").val();
-//      var maxsize = 100*1024*1024;//100M
-//      var objFile = document.getElementById("filebutton");
-//      var filesize = objFile.files[0].size;
-//      var name =  objFile.files[0].name;
-//      //判断视频大小
-//      if(filesize > maxsize){
-//    	  $.msg("视频大小不能超过100M");
-//    	  return false;
-//      }
-//      //提交表单
-//      //上传截取后的图片
-//      $.ajax({
-//          url : rootPath + "/video/upload",
-//          data : {
-//           "fileName":name,
-//           "fileSize":filesize,
-//           "tag":"123",
-//           "itemOneId":1682,
-//      	   "itemSecondId":1687
-//          },
-//          type : "post",
-//          dataType : "json",
-//          success : function(data) {
-//             console.log("ok"); 
-//          }
-//      })
-//}
+//删除视频
+function deleteVideo(videoInfoId){
+	//获取到视频的id，上方参数只是视频风采id
+	var videoId = $("#videoId").val();
+	$.ajax({
+        url: rootPath + "/institutionStyle/deleteStyle",
+        data: {"primaryId":videoInfoId,
+        	   "deleteFlag":1,
+        	   "videoId":videoId
+        },
+        dataType: "json",
+        success: function (data) {
+            if(data == "success"){
+            	//刷新页面
+            	//刷新一下页面
+        		window.location.href=rootPath +"/institutionStyle/queryInstitutionStyle?relationId="+$("#institutionId").val();
+            }
+        }
+    });
+}

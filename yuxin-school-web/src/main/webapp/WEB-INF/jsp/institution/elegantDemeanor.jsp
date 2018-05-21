@@ -66,6 +66,8 @@
                 <br/>
                 <div style="height: 260px;" class="imgList">
                     <span  class="labelName"> 视频:</span>
+                    <input id="videoId" value="${videoId}" type="hidden" />
+                    <input id="oldVideoId" value="${videoId}" type="hidden"/>
                     <ul style="display: inline-block;">
                     	<c:choose>
                     		<c:when test="${videoInfo.id == null}">
@@ -75,13 +77,15 @@
 							</c:when>
 							<c:otherwise>
 								<li>
-		                            <img src="${videoInfo.imgUrl}" alt="" style="width: 100%;height: auto"  class="imgClick">
-		                             <input id="videoId" value="${videoInfo.id}" type="hidden"/>
+		                            <img src="${videoInfo.imgUrl}" alt="" style="width: 100%;height: auto"  class="imgClick" id="videoInfoImg">
+		                             <input id="videoInfoId" value="${videoInfo.id}" type="hidden"/>
+		                             <input id="videoInfoName" value="${videoInfo.name}" type="hidden"/>
+		                             <input id="videoInfoContent" value="${videoInfo.content}" type="hidden"/>
 		                            <span class="imgInfo">学校建筑内部图</span>
 		                            <a href="javascript:void(0)" class="btn btn-success btn-sm rightShow">视频</a>
 		                            <div class="listBg">
-		                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
-		                                <a href="javascript:void(0)" class="btn btn-success btn-sm ">修改</a>
+		                                <a href="javascript:deleteVideo(${videoInfo.id})" class="btn btn-warning btn-sm deleteBtn">删除</a>
+		                                <a href="javascript:void(0)" class="btn btn-success btn-sm btnVideoUpdate">修改</a>
 		                            </div>
 		                        </li>
 							</c:otherwise>
@@ -130,7 +134,7 @@
     </div>
     <div>
         <span class="videoIntro">视频名称:</span>
-        <input type="text" style="width: 248px;height: 18px;" class="videoStlye" maxlength="30">
+        <input type="text" style="width: 248px;height: 18px;" class="videoStyle" maxlength="30">
         <div id="videoFile" style="margin-top: -27px;margin-left: 328px;">
         <form id="fileupload" method="POST" enctype="multipart/form-data" action="">
 			 <a href="javascript:void(0)" class="addVideo">
@@ -199,12 +203,6 @@
     </div>
 </div>
 
-<script src="<%=rootPath %>/plugins/jcrop/js/jquery.Jcrop.js"></script>
-<script src="<%=rootPath %>/javascripts/institution/cutPic.js"></script>
-<script src="<%=rootPath %>/javascripts/institution/ajaxfileuploadR.js"></script>
-<script src="<%=rootPath %>/javascripts/plus/jquery.units.js"></script>
-<script src="<%=rootPath %>/javascripts/institution/elegantDemeanor.js"></script>
-
 <script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/plupload.full.min.js"></script>
 <script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/i18n/zh_CN.js"></script>
 <script type="text/javascript" src="http://cdn.staticfile.org/Plupload/2.1.1/moxie.js"></script>
@@ -217,12 +215,13 @@
 <script type="text/javascript" src="<%=rootPath%>/javascripts/onlynum.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/plugins/letv/letvUpload.js?v=1.0"></script>
 
+<script type="text/javascript" src="<%=rootPath%>/plugins/ccUpload/upload_files/h.js"></script>
 <script src="<%=rootPath%>/plugins/ccUpload/upload_files/encapsulated_getJson.js"></script>
 <script src="<%=rootPath%>/plugins/ccUpload/upload_files/msgPrompt.js"></script>
 <script src="<%=rootPath%>/plugins/ccUpload/upload_files/jquery.ui.widget.js"></script>
 <script src="<%=rootPath%>/plugins/ccUpload/upload_files/jquery.iframe-transport.js"></script>
 <script src="<%=rootPath%>/plugins/ccUpload/upload_files/jquery.fileupload.js"></script>
-<%-- <script src="<%=rootPath%>/plugins/ccUpload/upload_files/tmpl.min.js"></script> --%>
+<script src="<%=rootPath%>/plugins/ccUpload/upload_files/tmpl.min.js"></script>
 <script src="<%=rootPath%>/plugins/ccUpload/upload_files/jquery.fileupload-process.js"></script>
 <script src="<%=rootPath%>/plugins/ccUpload/upload_files/jquery.fileupload-ui.js"></script>
 <script src="<%=rootPath%>/plugins/ccUpload/upload_files/crypt.js"></script>
@@ -230,6 +229,66 @@
 <script type="text/javascript" src="<%=rootPath%>/javascripts/common/utils.js"></script>
 
 <script src="<%=rootPath %>/javascripts/institution/upload6.js"></script>
+<script id="template-upload" type="text/x-tmpl">
+		{% for (var i=0, file; file=o.files[i]; i++) {
+			var getFileType = function (file) {
+                return file.name.split(".").pop();
+            };
+		 var key = [getFileType(file), file.size, (file.lastModifiedDate==null)?0:file.lastModifiedDate.getTime()].join('_');
+		 %}
+		    <tr class="template-upload fade" id="{%=key%}">
+		        <td>
+		            <p class="name" style="margin-top: 6px;">{%=file.name%}</p>
+		            <strong class="error text-danger"></strong>
+		        </td>
+		        <td>
+		            <p class="size" style="margin-top: 6px;">处理中...</p>
+		        </td>
+				<td class="progressbar">
+					<div style="margin-top:4px; width:150px; display:inline-block;" class="progress progress-striped active mb0 tc_rel" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+						<div class="progress-bar progress-bar-success" style="width:0%;"></div>
+						<div style="margin-top: 3px;" class="tc tc_pos upload_percent progress-u">0%</div>
+					</div>
+					<span class="rate" style="vertical-align:super; "></span>
+				</td>
+		        <td class="operate">
+		            {% if (!i && !o.options.autoUpload) { %}
+		                <button class="btn btn-primary btn-xs start" style="margin-top:3px;" disabled>
+		                    <i class="glyphicon glyphicon-upload"></i>
+		                    <span>开始上传</span>
+		                </button>
+		            {% } %}
+		            {% if (!i) { %}
+		                <button class="btn btn-warning btn-xs cancel" id="cancel" onclick="cancle(this)" style="margin-top:3px;">
+		                    <i class="glyphicon glyphicon-ban-circle"></i>
+		                    <span>取消</span>
+		                </button>
+		            {% } %}
+					{% if (!i) { %}
+		                <button class="btn btn-primary btn-xs" id="pause" style="margin-top:3px;">
+		                    <i class="glyphicon glyphicon-ban-circle"></i>
+		                    <span>暂停</span>
+		                </button>
+		            {% } %}
+					{% if (!i) { %}
+		                <button class="btn btn-primary btn-xs" id="resume" style="display:none; margin-top:3px;">
+		                    <i class="glyphicon glyphicon-upload"></i>
+		                    <span>续传</span>
+		                </button>
+		            {% } %}
+		        </td>
+				<td width="0%" style="display:none">
+		            <input id="isPause" value="false">
+		        </td>
+		    </tr>
+		{% } %}
+	</script>
+
+<script src="<%=rootPath %>/plugins/jcrop/js/jquery.Jcrop.js"></script>
+<script src="<%=rootPath %>/javascripts/institution/cutPic.js"></script>
+<script src="<%=rootPath %>/javascripts/institution/ajaxfileuploadR.js"></script>
+<script src="<%=rootPath %>/javascripts/plus/jquery.units.js"></script>
+<script src="<%=rootPath %>/javascripts/institution/elegantDemeanor.js"></script>
 <script>
 	$(function(){
 		$.ajax({

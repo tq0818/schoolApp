@@ -40,7 +40,7 @@
 		#{updateTime},
 		#{isTop}
 	</sql>
-	<insert id="insertInsStyle" parameterType="com.yuxin.wx.model.institution.InstitutionStyle">
+	<insert id="insertInsStyle" parameterType="com.yuxin.wx.model.institution.InstitutionStyle" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO institution_style(<include refid="table_column"/>)
 		VALUES (<include refid="entity" />)
 	</insert>
@@ -82,14 +82,14 @@
 		 <if test="sourceFlag != null">AND source_flag = #{sourceFlag}</if>
 		 <if test="type != null">and type = #{type}</if>
 	</select>
-	<insert id="insertInsVideo" parameterType="com.yuxin.wx.model.institution.InsVideo">
+	<insert id="insertInsVideo" parameterType="com.yuxin.wx.model.institution.InsVideo" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO ins_video
 					(id,
 					 source_id,
 					 video_name,
 					 video_cc_id,
 					 video_time,
-					 vodeo_size,
+					 video_size,
 					 video_status,
 					 creator,
 					 create_time,
@@ -103,7 +103,7 @@
 					 #{videoName},
 					 #{videoCcId},
 					 #{videoTime},
-					 #{vodeoSize},
+					 #{videoSize},
 					 #{videoStatus},
 					 #{creator},
 					 #{createTime},
@@ -116,6 +116,7 @@
 	<update id="updateInsVideo" parameterType="com.yuxin.wx.model.institution.InsVideo">
 		update ins_video
 		<trim prefix="set" suffixOverrides=",">
+			<if test="sourceId != null">source_id = #{sourceId},</if>
 			<if test="videoName != null and videoName != ''">video_name = #{videoName},</if>
 			<if test="videoCcId != null and videoCcId != ''">video_cc_id = #{videoCcId},</if>
 			<if test="videoTime != null and videoTime != ''">video_time = #{videoTime},</if>
@@ -132,4 +133,43 @@
 			id = #{id}
 		</where>   
 	</update>
+	<select id="queryInsVideo" parameterType="com.yuxin.wx.model.institution.InsVideo" resultType="com.yuxin.wx.model.institution.InsVideo">
+		select id as id,
+			   source_id as sourceId,
+			   video_name as videoName,
+			   video_cc_id as videoCcId,
+			   video_time as videoTime,
+			   video_size as videoSize,
+			   video_status as videoStatus,
+			   creator as creator,
+			   create_time as createTime,
+			   update_time as updateTime,
+			   storage_type as  storageType,
+			   type as type,
+			   watch_count as watchCount
+		  from ins_video 
+		 where id = #{id}
+	</select>
+	<select id="queryInsVideoByCcId" parameterType="String" resultType="com.yuxin.wx.model.institution.InsVideo">
+		select id as id,
+			   source_id as sourceId,
+			   video_name as videoName,
+			   video_cc_id as videoCcId,
+			   video_time as videoTime,
+			   video_size as videoSize,
+			   video_status as videoStatus,
+			   creator as creator,
+			   create_time as createTime,
+			   update_time as updateTime,
+			   storage_type as  storageType,
+			   type as type,
+			   watch_count as watchCount
+		  from ins_video 
+		 where video_cc_id = #{videoCcId}
+	</select>
+	<select id="queryInsVideoIdBySourceId" parameterType="Integer" resultType="java.lang.Integer">
+		select id 
+		  from ins_video
+		 where source_id = #{sourceId}
+	</select>
 </mapper>
