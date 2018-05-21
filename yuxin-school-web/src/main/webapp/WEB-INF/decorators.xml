@@ -585,13 +585,13 @@
         <!--appTag-->
         <pattern>/appTagManage/queryAppTagList</pattern>
 
-        <!--机构管理首页-->
+        <!--机构管理首页-TQ-->
         <pattern>/InsInfoBase/organizationIndex</pattern>
         <!--课程管理-->
         <pattern>/institutionClassType/classTypeMain/*</pattern>
         <!--机构分类管理-->
         <pattern>/InsInfoBase/classification</pattern>
-        <!--基本信息管理-->
+        <!--基本信息管理-TQ-->
         <pattern>/InsInfoBase/basicInformation</pattern>
         <!--机构基本信息-TQ-->
         <pattern>/InsInfoBase/findInsById</pattern>
@@ -599,6 +599,10 @@
         <pattern>/comment/insCommentIndex</pattern>
         <!--所有评论管理-TQ-->
         <pattern>/comment/commentIndex</pattern>
+        <!--学员管理-TQ-->
+        <pattern>/InsStudent/studentManagementIndex</pattern>
+        <!--商家入驻申请-TQ-->
+        <pattern>/InsInfoBase/businessEntry</pattern>
 
         <!--推荐机构管理-->
         <pattern>/InsInfoBase/recommendationOrganization</pattern>
