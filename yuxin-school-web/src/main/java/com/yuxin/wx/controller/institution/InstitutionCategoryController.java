@@ -74,15 +74,6 @@ public class InstitutionCategoryController {
     @RequestMapping(value = "/findFistCategorys")
     public List<InstitutionCategoryVo> findFistCategorys(){
         try {
-            List<InstitutionCategoryVo> list = institutionCategoryService.findFistCategorys();
-            for(int i=0;i<list.size();i++){
-                List<InstitutionCategoryVo> list2 = institutionCategoryService.findCecondCategorys(list.get(i).getId());
-                if(list2.size() == 0){
-                    list.remove(i);
-                    i--;
-                }
-
-            }
             return institutionCategoryService.findFistCategorys();
         }catch (Exception e){
             e.printStackTrace();
