@@ -339,7 +339,7 @@
 <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/plugins/jcrop/js/jquery.Jcrop.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/ajaxfileuploadR.js"></script>
-<script type="text/javascript" src="<%=rootPath%>/javascripts/institution/cutPic.js"></script>
+<script type="text/javascript" src="<%=rootPath%>/javascripts/institution/insBaseCut.js"></script>
 <script src="<%=rootPath %>/javascripts/plus/jquery.units.js"></script>
 <script src="<%=rootPath %>/javascripts/institution/basicInformation.js"></script>
 

@@ -150,10 +150,6 @@ $(function () {
         return c;
     }
 
-    $(document).ready(function() {
-//		$.init(500,280);
-    })
-
 });
 /**
  * 查看详情
