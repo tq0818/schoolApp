@@ -246,6 +246,17 @@ function trim(str) {
 function savePic() {
     //改变图片时清空图片路径
     $("#targetStyle").attr("src","");
+    var fileStr = $("#imgDataStyle").val();
+    //.jpg,.jpeg,.gif,.png,.bmp,.ico
+    if(!(fileStr.indexOf(".jpg")>0
+        ||fileStr.indexOf(".jpeg")>0
+        ||fileStr.indexOf(".gif")>0
+        ||fileStr.indexOf(".png")>0
+        ||fileStr.indexOf(".bmp")>0
+        ||fileStr.indexOf(".ico")>0)){
+        alert("上传文件仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
+        return;
+    }
     $.ajaxFileUpload({
         url : rootPath+"/riseSchoolStyle/upRiseSchoolStyleImg",
         secureuri : false,// 安全协议
