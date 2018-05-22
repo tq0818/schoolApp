@@ -235,39 +235,33 @@ public class InstitutionStyleController {
         double slH=0;
         double scale=0;//根据不同类型的图片有不同的比例
 
-        if ("1".equals(windowFlag) || "2".equals(windowFlag) ){//1 ,2都是风采图,反之则是封面图
-            if ("0".equals(cssStyle)){//0是竖图，反之则是横图
-                if(realW/realH>186.57/300.00){
+//        if ("0".equals(saveFlag) || "1".equals(saveFlag) ){//1 ,2都是风采图,反之则是封面图
+//            if ("0".equals(cssStyle)){//0是竖图，反之则是横图 200 120
+                if(realW/realH>200/120){
                     //过宽
-                    slH=186.57 * realH/realW;
-                    slW=186.57;
+                    slH=200 * realH/realW;
+                    slW=200;
                 }else{
                     //过高
-                    slH=300;
-                    slW=300 * realW/realH;
+                    slH=120;
+                    slW=120 * realW/realH;
                 }
-            }else{
-                if(realW/realH>300.00/188){
-                    //过宽
-                    slH=300 * realH/realW;
-                    slW=300.00;
-                }else{
-                    //过高
-                    slH=188;
-                    slW=188 * realW/realH;
-                }
-            }
-        }else{
-            if(realW/realH>300/120){
-                //过宽
-                slH=300 * realH/realW;
-                slW=300;
-            }else{
-                //过高
-                slH=120;
-                slW=120 * realW/realH;
-            }
-        }
+//            }else{
+//                if(realW/realH>300.00/188){
+//                    //过宽
+//                    slH=300 * realH/realW;
+//                    slW=300.00;
+//                }else{
+//                    //过高
+//                    slH=188;
+//                    slW=188 * realW/realH;
+//                }
+//            }
+//        }else{
+//                //过宽
+//            slH=realH;
+//            slW=realW;
+//        }
 
         //原图所选中位置和区域
 
