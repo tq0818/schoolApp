@@ -175,11 +175,29 @@
                         </select>
                         <select name="eduSchool" id="eduSchool" onchange="queryRiseSchoolDict(2)">
                             <option value="">请选择市</option>
-                            <option value="${ins.city}" selected>${ins.cityName}</option>
+                            <c:forEach items="${listCity}" var="city">
+                                <c:if test="${city.parentCode == ins.province}">
+                                    <c:if test="${city.itemCode == ins.city}">
+                                        <option value="${city.itemCode}" selected>${city.itemName}</option>
+                                    </c:if>
+                                    <c:if test="${city.itemCode != ins.city}">
+                                        <option value="${city.itemCode}">${city.itemName}</option>
+                                    </c:if>
+                                </c:if>
+                            </c:forEach>
                         </select>
                         <select id="registStatus" name="status">
                             <option value="">请选择区</option>
-                            <option value="${ins.area}" selected>${ins.areaName}</option>
+                            <c:forEach items="${listDistrict}" var="district">
+                                <c:if test="${district.parentCode == ins.city}">
+                                    <c:if test="${district.itemCode == ins.area}">
+                                        <option value="${district.itemCode}" selected>${district.itemName}</option>
+                                    </c:if>
+                                    <c:if test="${district.itemCode != ins.area}">
+                                        <option value="${district.itemCode}">${district.itemName}</option>
+                                    </c:if>
+                                </c:if>
+                            </c:forEach>
                         </select>
                         <br/>
                         <input type="text" id="address" placeholder="请输入详细地址" style="margin-left: 80px;margin-top: 14px;width: 460px;" maxlength="50" value="${ins.address}" >
@@ -270,11 +288,22 @@
 
                                     </c:when>
                                     <c:otherwise>
-                                        <span href="##" class="specialService">
-                                            <img src="${spe.imgUrl}" alt="" class="iconPic" id="${spe.id}">
-                                             <input class="systemLabel iconPicName" label-id="${spe.id}" value="${spe.labelName}" maxlength="5">
-                                            <i class="icon iconfont deletespecialService">&#xe610;</i>
-                                        </span>
+                                        <c:choose>
+                                            <c:when test="${spe.imgUrl == ''}">
+                                                <span href="##" class="specialService">
+                                                    <img src="../../../images/institution/1.jpg" alt="" class="iconPic" id="${spe.id}">
+                                                     <input class="systemLabel iconPicName" label-id="${spe.id}" value="${spe.labelName}" maxlength="5">
+                                                    <i class="icon iconfont deletespecialService">&#xe610;</i>
+                                                </span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <span href="##" class="specialService">
+                                                    <img src="${spe.imgUrl}" alt="" class="iconPic" id="${spe.id}">
+                                                     <input class="systemLabel iconPicName" label-id="${spe.id}" value="${spe.labelName}" maxlength="5">
+                                                    <i class="icon iconfont deletespecialService">&#xe610;</i>
+                                                </span>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </c:otherwise>
                                 </c:choose>
 
@@ -282,15 +311,15 @@
                             <span class="iconBtn specialServiceBtn">+</span>
                 </div>
                 <div>
-                    <span>预约服务：<a href="##" style="color: #a1a1a1;font-size: 14px;">该服务内容用于展示在机构首页，让用户知晓预约的礼品</a></span>
+                    <span>预约服务：该服务内容用于展示在机构首页，让用户知晓预约的礼品</span>
                     <p>
                         <textarea name="" id="reservService" maxlength="30" style="width: 390px;height: 84px;
                         border: 1px solid #aeaeae;margin-left: 70px;margin-top: 10px;" placeholder="请输入提供的预约服务内容" >${ins.reservService}</textarea>
                     </p>
                 </div>
                 <div class="orgBtn">
-                        <a href="##" class="btn btn-primary btn-mb closeMechanism">取消</a>
-                        <a href="##" class="btn btn-primary btn-mb closeMechanism updateIns">保存</a>
+                        <a href="javascript:void(0)" class="btn btn-primary btn-mb closeMechanism cancel">取消</a>
+                        <a href="javascript:void(0)" class="btn btn-primary btn-mb closeMechanism updateIns">保存</a>
                 </div>
 
         </div>

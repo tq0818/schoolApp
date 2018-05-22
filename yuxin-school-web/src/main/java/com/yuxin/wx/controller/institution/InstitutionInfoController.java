@@ -2,12 +2,14 @@ package com.yuxin.wx.controller.institution;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yuxin.wx.api.institution.*;
+import com.yuxin.wx.api.riseschool.RiseSchoolManageService;
 import com.yuxin.wx.api.user.IUsersService;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.institution.InsFeaturesVo;
 import com.yuxin.wx.model.institution.InstitutionCategoryVo;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
 import com.yuxin.wx.model.institution.InstitutionLabelVo;
+import com.yuxin.wx.model.riseschool.SysDictVo;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.util.ImageUtils;
 import com.yuxin.wx.utils.FileUtil;
@@ -52,6 +54,8 @@ public class InstitutionInfoController {
     private IUsersService usersServiceImpl;
     @Autowired
     private MerchantEntryService merchantEntryService;
+    @Autowired
+    private RiseSchoolManageService riseSchoolManageServiceImpl;
     /**
      * 机构首页
      * @return
@@ -171,6 +175,20 @@ public class InstitutionInfoController {
         List<InstitutionLabelVo> customLabel = institutionLabelService.findCustomLabelByInsId(Integer.parseInt(id));
         //特殊服务
         List<InstitutionLabelVo> specialSer = institutionLabelService.findSpecialServiceByInsId(Integer.parseInt(id));
+        //地址
+        List<SysDictVo> listCity = riseSchoolManageServiceImpl.queryCity();
+        List<SysDictVo> listDistrict = riseSchoolManageServiceImpl.queryDistrict();
+
+        model.addAttribute("listCity",listCity);
+        model.addAttribute("listDistrict",listDistrict);
+        String header="http://"+propertiesUtil.getProjectImageUrl()+"/";
+        for(int i = 0;i<specialSer.size();i++){
+            if(null == specialSer.get(i).getImgUrl() || "".equals(specialSer.get(i).getImgUrl())){
+                specialSer.get(i).setImgUrl("");
+            }else{
+                specialSer.get(i).setImgUrl(header+specialSer.get(i).getImgUrl());
+            }
+        }
         model.addAttribute("ins",ins);
         model.addAttribute("categoryVos",categoryVos);
         model.addAttribute("fistCategorys",fistCategorys);

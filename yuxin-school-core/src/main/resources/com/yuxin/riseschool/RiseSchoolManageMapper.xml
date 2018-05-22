@@ -323,4 +323,17 @@
           FROM rise_school_info rsi
           WHERE rsi.id = #{schoolId}
     </select>
+
+    <select id="queryProvince" resultType="com.yuxin.wx.model.riseschool.SysDictVo">
+        SELECT id,item_code AS itemCode,item_name AS itemName,item_type AS itemType
+		FROM sys_rise_school_dict where item_type='PROVINCE'
+    </select>
+    <select id="queryCity" resultType="com.yuxin.wx.model.riseschool.SysDictVo">
+      SELECT id,item_code AS itemCode,item_name AS itemName,item_type AS itemType ,parent_code as parentCode
+		FROM sys_rise_school_dict where item_type='CITY'
+    </select>
+    <select id="queryDistrict" resultType="com.yuxin.wx.model.riseschool.SysDictVo">
+      SELECT id,item_code AS itemCode,item_name AS itemName,item_type AS itemType ,parent_code as parentCode
+		FROM sys_rise_school_dict where item_type='DISTRICT'
+    </select>
 </mapper>

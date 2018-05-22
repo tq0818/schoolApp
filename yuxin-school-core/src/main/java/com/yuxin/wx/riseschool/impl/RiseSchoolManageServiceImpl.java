@@ -117,7 +117,9 @@ public class RiseSchoolManageServiceImpl implements RiseSchoolManageService {
 		return count;
 	}
 
-	@Override
+
+
+    @Override
 	public List<SysDictVo> querySchoolName(Map map) {
 		List<SysDictVo> list = riseSchoolManageMapper.querySchoolName(map);
 		return list;
@@ -128,4 +130,19 @@ public class RiseSchoolManageServiceImpl implements RiseSchoolManageService {
 		List<UsersFront> users = riseSchoolManageMapper.searchUsers(map);
 		return users;
 	}
+
+    @Override
+    public List<SysDictVo> queryProvince() {
+        return riseSchoolManageMapper.queryProvince();
+    }
+
+    @Override
+    public List<SysDictVo> queryCity() {
+        return riseSchoolManageMapper.queryCity();
+    }
+
+    @Override
+    public List<SysDictVo> queryDistrict() {
+        return riseSchoolManageMapper.queryDistrict();
+    }
 }
