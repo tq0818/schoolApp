@@ -53,6 +53,8 @@ public class InstitutionBaseController {
     public String newLineCourse(Model model, @PathVariable Integer insId,@PathVariable Integer id){
         model.addAttribute("underLineId",id);
         model.addAttribute("insId",insId);
+        InstitutionInfoVo ins = institutionInfoService.findInstitutionInfoById(insId);
+        model.addAttribute("ins",ins);
         return "institution/newLineCourse";
     }
     //首页推荐分类管理
