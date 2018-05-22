@@ -16,7 +16,7 @@
     <style>
         .gobal-progress{display: none !important;} 
 
-      .mienPopup{display: none;width: 740px;height: 440px;position: fixed;left: 50%;top: 50%;margin-left: -400px;margin-top: -250px;
+      .mienPopup{display: none;width: 740px;height: 440px;position: fixed;left: 50%;top: 47%;margin-left: -400px;margin-top: -250px;
           background: #fff;padding: 20px 30px 0;}
         .mienBtn{position: absolute;bottom: 20px;left: 0;text-align: center;width: 100% !important;}
         .mienBtn a{margin: 0 60px;}
