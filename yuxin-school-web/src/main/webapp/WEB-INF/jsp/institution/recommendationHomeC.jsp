@@ -20,6 +20,7 @@
     <style type="text/css">
         .pages li.disabled{padding:0px;}
         .userVideoListNew select{width: 180px;margin-right: 10px;}
+        .right-side{overflow: auto;}
     </style>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/institution/recommendationHomeC.css">
 </head>

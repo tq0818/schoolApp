@@ -24,11 +24,11 @@ public class InstitutionTeacherServiceImpl extends BaseServiceImpl implements In
     }
 
     @Override
-    public void insert(InstitutionTeacher entity) {
+    public int insert(InstitutionTeacher entity) {
         if(null !=  entity){
-            institutionClassTypeMapper.insert(entity);
+           return institutionClassTypeMapper.insert(entity);
         }
-
+    return 0;
     }
 
     @Override

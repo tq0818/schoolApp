@@ -9,7 +9,7 @@
             <tr data-buy="true">
                 <th width="3%">序号</th>
                 <th width="5%">一级分类</th>
-                <th width="10%">二级分类</th>
+                <th width="15%">二级分类</th>
                 <th width="5%">启用状态</th>
                 <th width="15%">操作</th>
             </tr>
@@ -79,7 +79,7 @@
         current_page : '${pageNo-1}',
         link_to : "javascript:void(0)",
         num_display_entries : 8,
-        items_per_page : 12,
+        items_per_page : 10,
         num_edge_entries : 1,
         callback:function(page){
             var pageNo = page + 1;

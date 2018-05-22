@@ -55,6 +55,7 @@ public interface InstitutionLabelService {
     List<InstitutionLabelVo> findTeacherLabelByInsId(Integer insId);
 
 
+
     /**
      * 根据名师id获取标签列表
      * @param tid   名师id

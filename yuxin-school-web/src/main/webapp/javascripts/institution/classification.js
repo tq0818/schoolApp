@@ -22,6 +22,9 @@ $(function () {
     $('.mienHide').click(function(){
         $('.coverPopup').hide();
         $("#targetStyle").attr("src","").attr("style","");
+        if (jcrop_apis){
+            jcrop_apis.destroy();
+        }
     });
 
     $(".uploadImageStyle").on("change","#targetStyle", function() {
@@ -147,10 +150,6 @@ $(function () {
         return c;
     }
 
-    $(document).ready(function() {
-//		$.init(500,280);
-    })
-
 });
 /**
  * 查看详情
@@ -215,7 +214,7 @@ function queryAllData(pageNo){
         url: rootPath + "/insCateManage/queryAllInsCate",
         data: {
             page:pageNo,
-            pageSize:12
+            pageSize:10
         },beforeSend: function (XMLHttpRequest) {
             $(".loading").show();
             $(".loading-bg").show();
@@ -244,26 +243,44 @@ function updatedata(flag,id,enable){
              return;
          }*/
 
-        $.mbox({
-            area: [ "450px", "auto" ], //弹框大小
-            border: [ 0, .5, "#666" ],
-            dialog: {
-                msg: "您确认禁用该分类?",
-                btns: 2,   //1: 只有一个按钮   2：两个按钮  3：没有按钮 提示框
-                type: 2,   //1:对钩   2：问号  3：叹号
-                btn: [ "确定", "取消"],  //自定义按钮
-                yes: function() {  //点击左侧按钮：成功
-                    $("#firtId_"+id).find("a").each(function(){
-                        ids+=$(this).attr("id").split("_")[0]+",";
-                    });
-                    ids+=id;
-                    goUpdateData(ids,codeName,flag,enable,imgUrl);
-                },
-                no: function() { //点击右侧按钮：失败
-                    return false;
-                }
+        var msg = '';
+        if('1'==enable){
+            msg = '您确认禁用该分类?';
+        }else{
+            msg = '您确认启用该分类?';
+        }
+
+        $.confirm(msg,function(b){
+            if(b){
+                $("#firtId_"+id).find("a").each(function(){
+                    ids+=$(this).attr("id").split("_")[0]+",";
+                });
+                ids+=id;
+                goUpdateData(ids,codeName,flag,enable,imgUrl);
             }
         });
+
+
+        //$.mbox({
+        //    area: [ "450px", "auto" ], //弹框大小
+        //    border: [ 0, .5, "#666" ],
+        //    dialog: {
+        //        msg: "您确认禁用该分类?",
+        //        btns: 2,   //1: 只有一个按钮   2：两个按钮  3：没有按钮 提示框
+        //        type: 2,   //1:对钩   2：问号  3：叹号
+        //        btn: [ "确定", "取消"],  //自定义按钮
+        //        yes: function() {  //点击左侧按钮：成功
+        //            $("#firtId_"+id).find("a").each(function(){
+        //                ids+=$(this).attr("id").split("_")[0]+",";
+        //            });
+        //            ids+=id;
+        //            goUpdateData(ids,codeName,flag,enable,imgUrl);
+        //        },
+        //        no: function() { //点击右侧按钮：失败
+        //            return false;
+        //        }
+        //    }
+        //});
     }else{
         ids = id;
         codeName = $("#insCatName").val();
@@ -399,7 +416,19 @@ function hideTk(){
 function savePic() {
     //改变图片时清空图片路径
     $("#targetStyle").attr("src","");
-    console.log(111);
+    var fileStr = $("#imgDataStyle").val();
+    //.jpg,.jpeg,.gif,.png,.bmp,.ico
+    if(!(fileStr.indexOf(".jpg")>0
+        ||fileStr.indexOf(".jpeg")>0
+        ||fileStr.indexOf(".gif")>0
+        ||fileStr.indexOf(".png")>0
+        ||fileStr.indexOf(".bmp")>0
+        ||fileStr.indexOf(".ico")>0)){
+        alert("上传文件仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
+        return;
+    }
+
+
     $.ajaxFileUpload({
         url : rootPath+"/riseSchoolStyle/upRiseSchoolStyleImg",
         secureuri : false,// 安全协议

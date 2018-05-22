@@ -62,4 +62,8 @@ public interface RiseSchoolManageMapper {
     String findSchoolNo();
     //判断学校名称是否重复
     Integer checkSchoolName(String schoolName);
+
+    List<SysDictVo> queryProvince();
+    List<SysDictVo> queryCity();
+    List<SysDictVo> queryDistrict();
 }

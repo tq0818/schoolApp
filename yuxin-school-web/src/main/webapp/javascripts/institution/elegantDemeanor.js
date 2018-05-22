@@ -121,6 +121,40 @@ $(function () {
 
 //上传临时图片 2为风采  1为视频 0为封面
 function savePic(saveFlag) {
+    var fileStr = $("#imgData").val();
+    //.jpg,.jpeg,.gif,.png,.bmp,.ico
+    if(!(fileStr.indexOf(".jpg")>0
+        ||fileStr.indexOf(".jpeg")>0
+        ||fileStr.indexOf(".gif")>0
+        ||fileStr.indexOf(".png")>0
+        ||fileStr.indexOf(".bmp")>0
+        ||fileStr.indexOf(".ico")>0)){
+        alert("上传封面仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
+        return;
+    }
+    var fileStr = $("#imgDataStyle").val();
+    //.jpg,.jpeg,.gif,.png,.bmp,.ico
+    if(!(fileStr.indexOf(".jpg")>0
+        ||fileStr.indexOf(".jpeg")>0
+        ||fileStr.indexOf(".gif")>0
+        ||fileStr.indexOf(".png")>0
+        ||fileStr.indexOf(".bmp")>0
+        ||fileStr.indexOf(".ico")>0)){
+        alert("上传风采图仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
+        return;
+    }
+    var fileStr = $("#imgDataVideo").val();
+    //.jpg,.jpeg,.gif,.png,.bmp,.ico
+    if(!(fileStr.indexOf(".jpg")>0
+        ||fileStr.indexOf(".jpeg")>0
+        ||fileStr.indexOf(".gif")>0
+        ||fileStr.indexOf(".png")>0
+        ||fileStr.indexOf(".bmp")>0
+        ||fileStr.indexOf(".ico")>0)){
+        alert("上传视频封面仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
+        return;
+    }
+
     //选择的时候应先清空，
     if (saveFlag == 0){
         $("#target").attr("src","");
@@ -174,6 +208,7 @@ function savePic(saveFlag) {
 
 //上传剪切图,返回真实地址并插入数据库中
 function saveCutPic(saveFlag) {
+
     var windowFlag = $("#windowFlag").val();
     var id = $("#updateId").val();
     console.log($("#institutionId").val());

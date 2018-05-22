@@ -110,15 +110,15 @@
     </insert>
 
     <select id="findFistCategorys" resultMap="queryCateData"  parameterType="map">
-        select id, code_name from institution_category where code_level = 1 and code_type = 0 and is_enable = 1
+        select id, code_name from institution_category where code_level = 1 and code_type = 0
     </select>
 
     <select id="findSecondCategorys" resultMap="queryCateData"  parameterType="map">
-        select id, code_name,parent_id from institution_category where code_level = 2 and code_type = 0 and is_enable = 1
+        select id, code_name,parent_id from institution_category where code_level = 2 and code_type = 0
     </select>
 
     <select id="findCecondCategorys" resultMap="queryCateData"  parameterType="Integer">
-        select id, code_name from institution_category where code_level = 2 and code_type = 0 and is_enable = 1 and parent_id = #{id}
+        select id, code_name from institution_category where code_level = 2 and code_type = 0  and parent_id = #{id}
     </select>
 
     <select id="queryInstitutionCategorysByInsId" parameterType="Integer" resultMap="queryInsCategory">
@@ -137,11 +137,11 @@
           `code_level`,
           `is_enable`,
           `parent_id`,
-          `third_recommend`,
+          `first_recommend`,
           `sort`
         FROM
           `institution_category`
-        WHERE `code_type` = 0  and is_enable = 1 and `third_recommend` = 1
+        WHERE `code_type` = 0  and is_enable = 1 and `first_recommend` = 1
         ORDER BY `sort` ASC  LIMIT #{firstIndex} , #{pageSize}
     </select>
 
@@ -150,7 +150,7 @@
           COUNT(id)
         FROM
         `institution_category`
-        WHERE `code_type` = 0 and is_enable = 1 and `third_recommend` = 1
+        WHERE `code_type` = 0 and is_enable = 1 and `first_recommend` = 1
 
     </select>
 
@@ -162,7 +162,7 @@
         `code_level`,
         `is_enable`,
         `parent_id`,
-        `third_recommend`,
+        `first_recommend`,
         `sort`
         FROM
         `institution_category`
@@ -174,7 +174,7 @@
       UPDATE
           `institution_category`
         SET
-          `third_recommend` = #{isRecommend}
+          `first_recommend` = #{isRecommend}
         WHERE `id` = #{id}
     </update>
 
@@ -182,7 +182,7 @@
         UPDATE
         `institution_category`
         SET
-        `first_recommend` = #{isRecommend}
+        `third_recommend` = #{isRecommend}
         WHERE `id` = #{id}
     </update>
 
@@ -214,7 +214,7 @@
         COUNT(id)
         FROM
         `institution_category`
-        WHERE `code_type` = 0 AND `is_enable` = 1 and third_recommend = 1
+        WHERE `code_type` = 0 AND `is_enable` = 1 and first_recommend = 1
 
     </select>
 
@@ -248,7 +248,7 @@
         WHERE  `is_enable` = 1
     </select>
 
-    <!-- 获取指定排名后的所有is_enabled = 1的分类 -->
+    <!-- 获取指定排名后的所有is_enabled = 1的分类  AND `sort` &lt; #{sort} -->
     <select id="queryInstitutionCategorysAfterSort" parameterType="Integer"  resultMap="queryCateSimple" >
         SELECT
         `id`,
@@ -256,11 +256,12 @@
         `code_level`,
         `code_type`,
         `parent_id`,
-        `third_recommend`,
+        `first_recommend`,
         `sort`
         FROM
         `institution_category`
-        WHERE  `is_enable` = 1 AND `sort` > #{sort}  order by sort ASC
+        WHERE  `is_enable` = 1   order by sort ASC
+
     </select>
 
 
@@ -373,6 +374,18 @@
          END
     </update>
 
+    <!-- 批量更新首页分类推荐 -->
+    <update id="exchangeSortIndexType" parameterType="java.util.List" >
+        UPDATE `institution_category` SET `sort` = CASE `id`
+
+        <foreach collection="list" index="index" item="item"  separator=" " >
+            WHEN ${item.id} THEN ${item.sort}
+        </foreach>
+
+        ELSE sort
+
+        END
+    </update>
 
     <select id="getMaxSortByTypeId1" parameterType="Integer" resultType="Integer">
         SELECT IF(ISNULL(MAX(sort)),0,MAX(sort)) maxSort FROM `institution_relation` WHERE `is_recommend` = 1 AND `one_level_id` = #{typeId}

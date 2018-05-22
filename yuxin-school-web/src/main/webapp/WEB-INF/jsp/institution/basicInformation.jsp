@@ -33,7 +33,7 @@
             <div class="addingMechanism" style="display: block;">
                     <div style="margin-top: 0;">
                         <span class="mechanismName">机构名称：</span>
-                        <input type="text" style="width: 460px;" maxlength="20" value="${ins.name}" id="insName" onblur="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))">
+                        <input type="text" style="width: 460px;" maxlength="20" value="${ins.name}" id="insName">
                     </div>
                     <div id="orgType">
                         <span class="mechanismName">机构分类：</span>
@@ -175,11 +175,29 @@
                         </select>
                         <select name="eduSchool" id="eduSchool" onchange="queryRiseSchoolDict(2)">
                             <option value="">请选择市</option>
-                            <option value="${ins.city}" selected>${ins.cityName}</option>
+                            <c:forEach items="${listCity}" var="city">
+                                <c:if test="${city.parentCode == ins.province}">
+                                    <c:if test="${city.itemCode == ins.city}">
+                                        <option value="${city.itemCode}" selected>${city.itemName}</option>
+                                    </c:if>
+                                    <c:if test="${city.itemCode != ins.city}">
+                                        <option value="${city.itemCode}">${city.itemName}</option>
+                                    </c:if>
+                                </c:if>
+                            </c:forEach>
                         </select>
                         <select id="registStatus" name="status">
                             <option value="">请选择区</option>
-                            <option value="${ins.area}" selected>${ins.areaName}</option>
+                            <c:forEach items="${listDistrict}" var="district">
+                                <c:if test="${district.parentCode == ins.city}">
+                                    <c:if test="${district.itemCode == ins.area}">
+                                        <option value="${district.itemCode}" selected>${district.itemName}</option>
+                                    </c:if>
+                                    <c:if test="${district.itemCode != ins.area}">
+                                        <option value="${district.itemCode}">${district.itemName}</option>
+                                    </c:if>
+                                </c:if>
+                            </c:forEach>
                         </select>
                         <br/>
                         <input type="text" id="address" placeholder="请输入详细地址" style="margin-left: 80px;margin-top: 14px;width: 460px;" maxlength="50" value="${ins.address}" >
@@ -270,11 +288,22 @@
 
                                     </c:when>
                                     <c:otherwise>
-                                        <span href="##" class="specialService">
-                                            <img src="${spe.imgUrl}" alt="" class="iconPic" id="${spe.id}">
-                                             <input class="systemLabel iconPicName" label-id="${spe.id}" value="${spe.labelName}" maxlength="5">
-                                            <i class="icon iconfont deletespecialService">&#xe610;</i>
-                                        </span>
+                                        <c:choose>
+                                            <c:when test="${spe.imgUrl == ''}">
+                                                <span href="##" class="specialService">
+                                                    <img src="../../../images/institution/1.jpg" alt="" class="iconPic" id="${spe.id}">
+                                                     <input class="systemLabel iconPicName" label-id="${spe.id}" value="${spe.labelName}" maxlength="5">
+                                                    <i class="icon iconfont deletespecialService">&#xe610;</i>
+                                                </span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <span href="##" class="specialService">
+                                                    <img src="${spe.imgUrl}" alt="" class="iconPic" id="${spe.id}">
+                                                     <input class="systemLabel iconPicName" label-id="${spe.id}" value="${spe.labelName}" maxlength="5">
+                                                    <i class="icon iconfont deletespecialService">&#xe610;</i>
+                                                </span>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </c:otherwise>
                                 </c:choose>
 
@@ -282,22 +311,22 @@
                             <span class="iconBtn specialServiceBtn">+</span>
                 </div>
                 <div>
-                    <span>预约服务：<a href="##" style="color: #a1a1a1;font-size: 14px;">该服务内容用于展示在机构首页，让用户知晓预约的礼品</a></span>
+                    <span>预约服务：该服务内容用于展示在机构首页，让用户知晓预约的礼品</span>
                     <p>
                         <textarea name="" id="reservService" maxlength="30" style="width: 390px;height: 84px;
                         border: 1px solid #aeaeae;margin-left: 70px;margin-top: 10px;" placeholder="请输入提供的预约服务内容" >${ins.reservService}</textarea>
                     </p>
                 </div>
                 <div class="orgBtn">
-                        <a href="##" class="btn btn-primary btn-mb closeMechanism">取消</a>
-                        <a href="##" class="btn btn-primary btn-mb closeMechanism updateIns">保存</a>
+                        <a href="javascript:void(0)" class="btn btn-primary btn-mb closeMechanism cancel">取消</a>
+                        <a href="javascript:void(0)" class="btn btn-primary btn-mb closeMechanism updateIns">保存</a>
                 </div>
 
         </div>
         </div>
     </div>
     <div class="iconList">
-            <div style="height: 250px;" class="imgDiv">
+            <div style="height: 250px;width: 840px;" class="imgDiv">
             </div>
             <div class="pages pagination">
             </div>
@@ -305,9 +334,9 @@
 
 
         <%--特色服务图片弹窗--%>
-        <div class="mienPopup coverPopup" style="width: 234px; height: 240px; margin-left: -135px;z-index: 1000;">
+        <div class="mienPopup coverPopup" style="width: 234px; height: 260px; margin-left: -135px;z-index: 1000;">
             <div class="uploadImageStyle">
-                <label for="">分类图片：</label>
+                <label for="">特色服务：</label>
                 <img src="" alt="" id="targetStyle" style="width: 400px;height: 300px;">
                 <a href="javascript:void(0);" class="chooseImg">
                     <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgDataStyle" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic()" value="重新选择文件"/>
@@ -339,7 +368,7 @@
 <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
 <script type="text/javascript" src="<%=rootPath %>/plugins/jcrop/js/jquery.Jcrop.js"></script>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/ajaxfileuploadR.js"></script>
-<script type="text/javascript" src="<%=rootPath%>/javascripts/institution/cutPic.js"></script>
+<script type="text/javascript" src="<%=rootPath%>/javascripts/institution/insBaseCut.js"></script>
 <script src="<%=rootPath %>/javascripts/plus/jquery.units.js"></script>
 <script src="<%=rootPath %>/javascripts/institution/basicInformation.js"></script>
 

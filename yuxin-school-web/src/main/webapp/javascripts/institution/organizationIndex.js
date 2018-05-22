@@ -149,6 +149,19 @@ $(function () {
         }
 
         var name = $("#name").val();
+        name = name.split(" ").join("");
+        if(name.length == 0){
+            $.msg("机构名称不能为空！");
+        }
+
+        //系统标签判重
+        let systemLabel = $('.systemLabel');
+        let labelName = [];
+        for(let i = 0;i<systemLabel.length;i++){
+            labelName.push(systemLabel.eq(i).val());
+        }
+
+
         var province = $("#eduArea2").val();
         var city = $("#eduSchool2").val();
         var area = $("#registStatus2").val();
@@ -165,12 +178,15 @@ $(function () {
 
              if(arrPhone(arrPhoneNum,2)==1){
 
-                 //添加机构
-                 $.confirm('是否确认添加该机构?',function (data) {
-                     if(data){
-                         addInsInfo();
-                     }
-                 })
+                 if(arrPhone(labelName,3)==1){
+                     //添加机构
+                     $.confirm('是否确认添加该机构?',function (data) {
+                         if(data){
+                             addInsInfo();
+                             window.location.reload();
+                         }
+                     })
+                 }
              }
          }
      }
@@ -292,7 +308,8 @@ $(function () {
                         $.msg("电话号码重复！");
                     }else if(index==2){
                         $.msg("手机号重复！");
-
+                    }else if(index == 3){
+                        $.msg("存在重复系统标签！");
                     }
                     return 0;
 
@@ -665,11 +682,11 @@ function findInsDate(page) {
                         '<a href="##" class="countManage" id="countManage" data-id="'+item.id+'">'+'账号管理'+'</a>|'+
                         '<a href="##" class="manageBtn">'+'管理'+'</a>'+
                         '<ul class="none box" style="display: none">'+
-                        '<li><a href="/InsInfoBase/findInsById?id='+item.id+'">基本信息</a>'+'</li>'+
-                        '<li><a href="/institutionStyle/queryInstitutionStyle?relationId='+item.id+'">风采管理</a>'+'</li>'+
-                        '<li><a href="/institutionClassType/classTypeMain/'+item.id+'">课程管理</a>'+'</li>'+
-                        '<li><a href="/InsInfoBase/famousTeacher/'+item.id+'">名师管理</a>'+'</li>'+
-                        '<li><a href="/comment/insCommentIndex?id='+item.id+'">评论管理</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/InsInfoBase/findInsById?id='+item.id+'">基本信息</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/institutionStyle/queryInstitutionStyle?relationId='+item.id+'">风采管理</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/institutionClassType/classTypeMain/'+item.id+'">课程管理</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/InsInfoBase/famousTeacher/'+item.id+'">名师管理</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/comment/insCommentIndex?id='+item.id+'">评论管理</a>'+'</li>'+
                         '</ul>'+
                         '</td>'+
                         '</tr>'
@@ -868,7 +885,7 @@ function addInsInfo() {
                                     success:function(data){
                                         $('.addingMechanism').hide();
                                         $.msg("添加成功");
-                                        findInsDate(1);
+
                                     }
                                 })
                             }else if(data =='用户名已经被注册'){
@@ -940,16 +957,20 @@ function cureatManageUser() {
                     }
                 })
             }else if(data =='用户名已经被注册'){
-                alert('用户名已经被注册');
+                $(".cureatManageUser").show();
+                $.msg('机构账号已经被注册');
                 $("#manageUser").val("");
             }else if(data =='用户名不能为空'){
-                alert('用户名不能为空');
+                $(".cureatManageUser").show();
+                $.msg('机构账号不能为空');
                 $("#manageUser").val("");
-            }else if('只能以字母开头并由数字、字母或下划线组成'){
-                alert('只能以字母开头并由数字、字母或下划线组成');
+            }else if(data =='只能以字母开头并由数字、字母或下划线组成'){
+                $(".cureatManageUser").show();
+                $.msg('机构账号只能以字母开头并由数字、字母或下划线组成');
                 $("#manageUser").val("");
             }else{
-                alert('用户名不正确');
+                $.msg('机构账号不正确');
+                $(".cureatManageUser").show();
                 $("#manageUser").val("");
             }
 
@@ -965,6 +986,12 @@ function cureatManageUser() {
 function updateManageUser() {
     var userId = $("#userId").val();
     var updataPwd = $("#updataPwd").val();
+    if(updataPwd == ''){
+        $.msg("密码不能为空！");
+        $('.editCount').show();
+        return;
+    }
+
     var userName = $("#insUserName").val();
     $.ajax({
         url:rootPath+"/InsInfoBase/updataUserPwd",

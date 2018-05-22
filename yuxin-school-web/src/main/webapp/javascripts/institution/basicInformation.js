@@ -164,6 +164,10 @@ var j = 1;
     $('body').on('change','.findFistCategorys',function () {
         findSecondCategorys($(this).val(),this);
     });
+
+    $('body').on('click','.cancel',function () {
+        window.location.href = rootPath + "/InsInfoBase/organizationIndex";
+    });
     //分类筛选
     $('.findFistCategorys').change(function () {
         findSecondCategorys();
@@ -213,6 +217,12 @@ var j = 1;
             }
         }
 
+        var quhao = listMachineChi.eq(i).children('input').eq(0).val();
+        var num = listMachineChi.eq(i).children('input').eq(1).val();
+        if(quhao == ""&& quhao!=""){
+            $.msg("");
+        }
+
         //拼接电话号码
         let telephone = [];
         for(let i=0;i<$('.telephone').length;i++){
@@ -222,13 +232,49 @@ var j = 1;
             }
         }
 
+        //系统标签判重
+        let systemLabel = $('.sysLabel');
+        let labelName = [];
+        for(let i = 0;i<systemLabel.length;i++){
+            labelName.push(systemLabel.eq(i).val());
+        }
+
+        //自定义标签判重
+        let cusLabel = $('.cusLabel');
+        let cusLabelArr = [];
+        for(let i = 0;i<cusLabel.length;i++){
+            cusLabelArr.push(cusLabel.eq(i).val());
+        }
+
+        //特色服务标签判重
+        let iconPicName = $('.iconPicName');
+        let iconPicNameArr = [];
+        for(let i = 0;i<iconPicName.length;i++){
+            if(iconPicName.eq(i).val() == ''){
+               $.msg("特色服务标签名称不能为空！");
+               return;
+            }else{
+                iconPicNameArr.push(iconPicName.eq(i).val());
+            }
+
+        }
+
         if(checkData(insCat,0)==1){
 
             if(checkData(telephone,1)==1){
 
                 if(checkData(arrPhoneNum,2)==1){
-                    //添加机构
-                    updataIns();
+                    if(checkData(labelName,3)==1){
+                        if(checkData(cusLabelArr,4)==1){
+                            if(checkData(iconPicNameArr,5)==1){
+                                //添加机构
+                                updataIns();
+                            }
+
+                        }
+
+                    }
+
                 }
             }
         }
@@ -242,12 +288,14 @@ var j = 1;
     });
 
     //隐藏
-    $('.mienHide').click(function(){
+    $('body').on('click','.mienHide',function () {
         $('.coverPopup').hide();
         $("#targetStyle").attr("src","");
+        if (jcrop_apis){
+            jcrop_apis.destroy();
+        }
         $('.commonPopup').hide();
-
-    });
+    })
 
     $(".uploadImageStyle").on("change","#targetStyle", function() {
         var theImage = new Image();
@@ -367,7 +415,6 @@ function findSecondCategorys(id,that) {
 
 //获取图片列表
 function findSpecialServiceImg(page) {
-console.log(page);
     $.ajax({
         url:rootPath +"/InsInfoBase/findSpecialServiceImg",
         type:"post",
@@ -433,6 +480,12 @@ function checkData(arr,index){
                 }else if(index==2){
                     $.msg("手机号重复！");
 
+                }else if(index==3){
+                    $.msg("存在重复系统标签！");
+                }else if(index==4){
+                    $.msg("存在重复自定义标签！");
+                }else if(index==5){
+                    $.msg("存在重复特色服务标签！");
                 }
                 return 0;
 
@@ -477,6 +530,7 @@ function updataIns() {
     for(let i=0;i<listMachineChi.length;i++){
         var quhao = listMachineChi.eq(i).children('input').eq(0).val();
         var num = listMachineChi.eq(i).children('input').eq(1).val();
+
         if(null != quhao && null != num && quhao != '' && num !=''){
             if(i == listMachineChi.length-1){
                 listMachine+= listMachineChi.eq(i).children('input').eq(0).val()+'-'+
@@ -593,8 +647,20 @@ function updataIns() {
  * @param saveFlag
  */
 function savePic() {
+
     //改变图片时清空图片路径
     $("#targetStyle").attr("src","");
+    var fileStr = $("#imgDataStyle").val();
+    //.jpg,.jpeg,.gif,.png,.bmp,.ico
+    if(!(fileStr.indexOf(".jpg")>0
+        ||fileStr.indexOf(".jpeg")>0
+        ||fileStr.indexOf(".gif")>0
+        ||fileStr.indexOf(".png")>0
+        ||fileStr.indexOf(".bmp")>0
+        ||fileStr.indexOf(".ico")>0)){
+        alert("上传文件仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
+        return;
+    }
     $.ajaxFileUpload({
         url : rootPath+"/riseSchoolStyle/upRiseSchoolStyleImg",
         secureuri : false,// 安全协议

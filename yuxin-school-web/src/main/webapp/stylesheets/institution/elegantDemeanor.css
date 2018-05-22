@@ -19,3 +19,4 @@ line-height: 25px;text-align: center;position: relative;font-size: 12px;}
 .videoIntro{background: url("../../images/institution/xing.png") no-repeat left center;padding-left: 6px;}
 .elePic{text-align: center;height: 670px;margin-top: -335px;}
 .bigImg{position: fixed;top: 50%;left: 50%;transform: translate(-50%,-50%);display: none;}
+.videoUpload{overflow-y: auto;}

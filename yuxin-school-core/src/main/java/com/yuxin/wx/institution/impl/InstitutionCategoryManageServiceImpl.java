@@ -195,16 +195,33 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
     @Override
     public int flushSortAll(Integer baseSort) {
         try {
+            if(baseSort <= 0){
+                return -1;
+            }
+
+            //查询所有en_abled = 1的数据，全部更新
             List<InstitutionCategoryVo> list = institutionManageMapper.queryInstitutionCategorysAfterSort(baseSort);
-            Map<String, Object> map = new HashMap<>();
+            List<CaseWhenVO> voList = new LinkedList<>();
+            CaseWhenVO whenVO = null;
+            int sort = 1;
+            for(InstitutionCategoryVo vo : list){
+                whenVO = new CaseWhenVO();
+                whenVO.setId(vo.getId());
+                whenVO.setSort(sort++);
+                voList.add(whenVO);
+            }
+           /* Map<String, Object> map = new HashMap<>();
             int num = 0;
             for (int i = 0; i < list.size(); i++) {
                 map.put("sort", baseSort + i);
                 map.put("id", list.get(i).getId());
                 institutionManageMapper.updateSort(map);
                 num++;
-            }
-            return num;
+            }*/
+
+            institutionManageMapper.exchangeSortIndexType(voList);
+
+            return (null == list ? 0 : list.size());
         } catch (Exception e) {
             e.printStackTrace();
         }

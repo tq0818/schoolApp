@@ -3,14 +3,34 @@ var jcrop_apis;
     var boundx, boundy, $preview, $preview2, $preview3, $pcnt, $pcnt2, $pcnt3, $pimg, $pimg2, $pimg3, $img,
         xsize, xsize2, xsize3, ysize, ysize2, ysize3, minHeight, maxHeight, minWidth, maxWidth, $scale, sourceHeight, sourceWidth;
     $.init=function(initW,initH,picFlag) {
-        $img = picFlag == 0?$("#target"):picFlag == 1?$("#targetVideo"):$("#targetStyle");
+        $img = $("#targetStyle");
         	//picFlag == 1?$("#targetVideo"):$("#targetStyle");
-        //风采图
-        $scale = 200/120;
-        maxHeight = 120;
-        maxWidth = 200;
-        minHeight = 3;
-        minWidth = 5;
+        //特色服务比列
+       if (picFlag == 2){
+           $scale = 150/150;
+           maxHeight = 150;
+           maxWidth = 150;
+           minHeight =30 ;
+           minWidth = 30;
+       }else if(picFlag==3){
+           $scale = 300/120;
+           maxHeight = 120;
+           maxWidth = 300;
+           minHeight =10 ;
+           minWidth = 25;
+       }else if(picFlag==4){
+           $scale = 300/120;
+           maxHeight = 120;
+           maxWidth = 300;
+           minHeight =10 ;
+           minWidth = 25;
+       }else{//老师头像比列
+            $scale = 100/100;
+            maxHeight = 100;
+            maxWidth = 100;
+            minHeight = 10;
+            minWidth = 10;
+       }
         sourceWidth=initW;
         sourceHeight=initH;
         var initSize=resizePic();
@@ -25,7 +45,7 @@ var jcrop_apis;
             onChange : showCoords,
             onSelect : showCoords,
             onRelease: clearCoords,
-            aspectRatio :picFlag == 2?0:$scale,
+            aspectRatio : picFlag==4?0:$scale,
             allowMove : true,
             bgColor : "#f2f2f2",
             borderOpacity : 0.4,

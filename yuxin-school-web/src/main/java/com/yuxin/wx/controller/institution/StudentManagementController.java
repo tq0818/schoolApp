@@ -1,12 +1,17 @@
 package com.yuxin.wx.controller.institution;
 
+import cn.jpush.api.report.UsersResult;
 import com.yuxin.wx.api.institution.InstitutionClassTypeService;
+import com.yuxin.wx.api.institution.InstitutionInfoService;
 import com.yuxin.wx.api.institution.ReServApplyService;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.common.ViewFiles;
 import com.yuxin.wx.model.institution.InstitutionClassTypeVo;
+import com.yuxin.wx.model.institution.InstitutionInfoVo;
 import com.yuxin.wx.model.institution.ReServApply;
+import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.utils.ExcelUtil;
+import com.yuxin.wx.utils.WebUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +36,8 @@ public class StudentManagementController {
 private ReServApplyService reServApplyService;
 @Autowired
 private InstitutionClassTypeService institutionClassTypeService;
+@Autowired
+private InstitutionInfoService institutionInfoService;
 
     /**
      * 预约机构下拉列表
@@ -42,6 +49,22 @@ private InstitutionClassTypeService institutionClassTypeService;
         //预约机构下拉框
         try{
             model.addAttribute("insList",reServApplyService.findReServApplyIns());
+            Users users = WebUtils.getCurrentUser();
+            //机构管理官
+            if("INSTITUTION_MANAGE".equals(users.getUserType())){
+                //获取所管理的机构
+                Map<String,Object> map = new HashMap<>();
+                map.put("userId",users.getId());
+                InstitutionInfoVo institutionInfoVo = institutionInfoService.queryInstitutionByUserId(map);
+
+                //根据机构id查找该机构下的课程
+                InstitutionClassTypeVo institutionClassTypeVo = new InstitutionClassTypeVo();
+                institutionClassTypeVo.setId(institutionInfoVo.getId());
+                model.addAttribute("insId",institutionInfoVo.getId());
+                model.addAttribute("insClassList",institutionClassTypeService.queryAllByIns(institutionClassTypeVo));
+            }
+            model.addAttribute("usesType",users.getUserType());
+
         }catch (Exception e){
             e.printStackTrace();
         }

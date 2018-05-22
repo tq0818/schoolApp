@@ -40,21 +40,38 @@
                         <a href="##" class="btn btn-default status" data-flag="1">已处理</a>
                         <a href="##" class="btn btn-default status" data-flag="0">未处理</a>
                     </div>
-                    <div class="marginTop10">
-                        <span>预约机构</span>
-                        <select id="reServApplyInsId" onchange="findReServApplyClassByInsId()">
-                            <option value="">请选择机构</option>
-                            <c:forEach var="ins" items="${insList}">
-                                <option value="${ins.relationId}">${ins.relationName}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                    <div class="marginTop10">
-                        <span>预约课程</span>
-                        <select name="" id="reServApplyClass" onchange="findReServApplyListByClassId()">
-                            <option value="">请选择课程</option>
-                        </select>
-                    </div>
+
+                    <c:choose>
+                        <c:when test="${usesType == 'INSTITUTION_MANAGE'}">
+                            <input type="hidden" id="insId" value="${insId}">
+                            <div class="marginTop10">
+                                <span>预约课程</span>
+                                <select name="" id="reServApplyClass" onchange="findReServApplyListByClassId()">
+                                    <option value="">请选择课程</option>
+                                    <c:forEach items="${insClassList}" var="class">
+                                        <option value="${class.id}">${class.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="marginTop10">
+                                <span>预约机构</span>
+                                <select id="reServApplyInsId" onchange="findReServApplyClassByInsId()">
+                                    <option value="">请选择机构</option>
+                                    <c:forEach var="ins" items="${insList}">
+                                        <option value="${ins.relationId}">${ins.relationName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="marginTop10">
+                                <span>预约课程</span>
+                                <select name="" id="reServApplyClass" onchange="findReServApplyListByClassId()">
+                                    <option value="">请选择课程</option>
+                                </select>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
                     <div class="marginTop10  "  >
                         <span>预约时间</span>
 
@@ -64,7 +81,7 @@
 
                         <input type="text" id="mobile" placeholder="手机号"/>
                         <span><a href="javascript:void(0);" class="btn btn-primary search" style="margin: 0 20px;">搜索</a></span>
-                        <span style="float: right;"><a href="javascript:void(0);" class="btn btn-primary" style="margin: 0 20px;">导出用户</a></span>
+                        <span style="float: right;"><a href="javascript:void(0);" class="btn btn-primary exportStudent" style="margin: 0 20px;">导出用户</a></span>
                     </div>
             </form>
             <div class="user-list">
