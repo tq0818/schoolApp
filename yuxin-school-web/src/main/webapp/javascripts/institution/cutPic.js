@@ -6,28 +6,19 @@ var jcrop_apis;
         $img = picFlag == 0?$("#target"):picFlag == 1?$("#targetVideo"):$("#targetStyle");
         	//picFlag == 1?$("#targetVideo"):$("#targetStyle");
         //风采图
-//        if (picFlag == 1){
-//
-//            if ($('#btnOne').hasClass("btn-primary")){//竖图，反之则是横图
-//                $scale = 186.57/300;
-//                maxHeight = 300;
-//                maxWidth = 186.57;
-//                minHeight = 12.06;
-//                minWidth = 7.5;
-//            }else {
-//                $scale = 300/188;
-//                maxHeight = 188;
-//                maxWidth = 300;
-//                minHeight =23.5 ;
-//                minWidth = 37.5;
-//            }
-//        }else {//封面图比例
+       if (picFlag == 2){
+           $scale = 150/150;
+           maxHeight = 150;
+           maxWidth = 150;
+           minHeight =30 ;
+           minWidth = 30;
+       }else {//封面图比例
             $scale = 300/120;
             maxHeight = 120;
             maxWidth = 300;
             minHeight = 6;
             minWidth = 15;
-//        }
+       }
         sourceWidth=initW;
         sourceHeight=initH;
         var initSize=resizePic();
