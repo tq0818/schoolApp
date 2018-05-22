@@ -22,6 +22,9 @@ $(function () {
     $('.mienHide').click(function(){
         $('.coverPopup').hide();
         $("#targetStyle").attr("src","").attr("style","");
+        if (jcrop_apis){
+            jcrop_apis.destroy();
+        }
     });
 
     $(".uploadImageStyle").on("change","#targetStyle", function() {
@@ -244,26 +247,44 @@ function updatedata(flag,id,enable){
              return;
          }*/
 
-        $.mbox({
-            area: [ "450px", "auto" ], //弹框大小
-            border: [ 0, .5, "#666" ],
-            dialog: {
-                msg: "您确认禁用该分类?",
-                btns: 2,   //1: 只有一个按钮   2：两个按钮  3：没有按钮 提示框
-                type: 2,   //1:对钩   2：问号  3：叹号
-                btn: [ "确定", "取消"],  //自定义按钮
-                yes: function() {  //点击左侧按钮：成功
-                    $("#firtId_"+id).find("a").each(function(){
-                        ids+=$(this).attr("id").split("_")[0]+",";
-                    });
-                    ids+=id;
-                    goUpdateData(ids,codeName,flag,enable,imgUrl);
-                },
-                no: function() { //点击右侧按钮：失败
-                    return false;
-                }
+        var msg = '';
+        if('1'==enable){
+            msg = '您确认禁用该分类?';
+        }else{
+            msg = '您确认启用该分类?';
+        }
+
+        $.confirm(msg,function(b){
+            if(b){
+                $("#firtId_"+id).find("a").each(function(){
+                    ids+=$(this).attr("id").split("_")[0]+",";
+                });
+                ids+=id;
+                goUpdateData(ids,codeName,flag,enable,imgUrl);
             }
         });
+
+
+        //$.mbox({
+        //    area: [ "450px", "auto" ], //弹框大小
+        //    border: [ 0, .5, "#666" ],
+        //    dialog: {
+        //        msg: "您确认禁用该分类?",
+        //        btns: 2,   //1: 只有一个按钮   2：两个按钮  3：没有按钮 提示框
+        //        type: 2,   //1:对钩   2：问号  3：叹号
+        //        btn: [ "确定", "取消"],  //自定义按钮
+        //        yes: function() {  //点击左侧按钮：成功
+        //            $("#firtId_"+id).find("a").each(function(){
+        //                ids+=$(this).attr("id").split("_")[0]+",";
+        //            });
+        //            ids+=id;
+        //            goUpdateData(ids,codeName,flag,enable,imgUrl);
+        //        },
+        //        no: function() { //点击右侧按钮：失败
+        //            return false;
+        //        }
+        //    }
+        //});
     }else{
         ids = id;
         codeName = $("#insCatName").val();
