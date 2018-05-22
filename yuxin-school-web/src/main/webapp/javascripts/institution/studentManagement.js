@@ -42,7 +42,7 @@ $(function () {
         updateReServApply(id,status);
     })
 
-    $("#searchForm").on(
+    $(".exportStudent").on(
         'click',
         function () {
             if ($("#tableList").find("tr").eq(1).find("td").length <= 1) {
@@ -108,6 +108,10 @@ function initReServApplyList(page) {
     }
     //预约机构
     var ins = $("#reServApplyInsId").val();
+    var insId = $("#insId").val();
+    if(insId != null && insId != ''){
+        ins = insId;
+    }
     //预约课程
     var insClass = $("#reServApplyClass").val();
     var startTime = $("#startTime").val();
