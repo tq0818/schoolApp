@@ -150,10 +150,6 @@ $(function () {
         return c;
     }
 
-    $(document).ready(function() {
-//		$.init(500,280);
-    })
-
 });
 /**
  * 查看详情
@@ -218,7 +214,7 @@ function queryAllData(pageNo){
         url: rootPath + "/insCateManage/queryAllInsCate",
         data: {
             page:pageNo,
-            pageSize:12
+            pageSize:10
         },beforeSend: function (XMLHttpRequest) {
             $(".loading").show();
             $(".loading-bg").show();

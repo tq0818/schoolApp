@@ -7,17 +7,17 @@ var jcrop_apis;
         	//picFlag == 1?$("#targetVideo"):$("#targetStyle");
         //风采图
        //if (picFlag == 2){
-       //    $scale = 150/150;
-       //    maxHeight = 150;
-       //    maxWidth = 150;
-       //    minHeight =30 ;
-       //    minWidth = 30;
+           $scale = 150/150;
+           maxHeight = 150;
+           maxWidth = 150;
+           minHeight =30 ;
+           minWidth = 30;
        //}else {//封面图比例
-            $scale = 300/120;
-            maxHeight = 120;
-            maxWidth = 300;
-            minHeight = 6;
-            minWidth = 15;
+       //     $scale = 300/120;
+       //     maxHeight = 120;
+       //     maxWidth = 300;
+       //     minHeight = 6;
+       //     minWidth = 15;
        //}
         sourceWidth=initW;
         sourceHeight=initH;

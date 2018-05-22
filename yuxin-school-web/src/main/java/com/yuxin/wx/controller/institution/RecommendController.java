@@ -148,7 +148,7 @@ public class RecommendController {
 
 
 
-//========================== 首页分类推荐部分
+//========================== 首页分类推荐部分  ==========================================================
 
 
     /**
@@ -192,7 +192,9 @@ public class RecommendController {
                 return json;
             }
 
-            institutionCategoryService.updateRecommendStatusById(entity.getFirstRecommend() == 1 ? 0 : 1 ,entity.getId(),entity.getSort());
+            int status = entity.getFirstRecommend() == null ? 1 : (entity.getFirstRecommend() == 1 ? 0 : 1) ;
+
+            institutionCategoryService.updateRecommendStatusById(status ,entity.getId(),entity.getSort());
 
             json.put("status",1);
             json.put("msg","操作成功");
@@ -300,13 +302,16 @@ public class RecommendController {
                     int checked = arr.getJSONObject(i).getIntValue("checked");
                     for(InstitutionCategoryVo vo : list){
                         if(vo.getId() - id == 0){
-                            if(vo.getThirdRecommend() != null && vo.getThirdRecommend() - checked == -1){
+                            if(checked == 1 && (vo.getFirstRecommend() == null || vo.getFirstRecommend() == 0 )){
                                 //新增
                                 institutionCategoryService.updateRecommendStatusById( 1 ,vo.getId(),null);
-                            }else if(vo.getThirdRecommend() != null && vo.getThirdRecommend() - checked == 1){
-                                //减少
-                                institutionCategoryService.updateRecommendStatusById( 0 ,vo.getId(),vo.getSort());
+                            }else{
+                                if(vo.getFirstRecommend() == 1){
+                                    //减少
+                                    institutionCategoryService.updateRecommendStatusById( 0 ,vo.getId(),vo.getSort());
+                                }
                             }
+
                         }
                     }
                 }
@@ -320,13 +325,18 @@ public class RecommendController {
                     int checked = arr.getJSONObject(i).getIntValue("checked");
                     for(InstitutionCategoryVo vo : list){
                         if(vo.getId() - id == 0){
-                            if(vo.getFirstRecommend() != null && vo.getFirstRecommend() - checked == -1){
+
+                            if(checked == 1 && (vo.getThirdRecommend() == null || vo.getThirdRecommend() == 0 )){
                                 //新增
                                 institutionCategoryService.updateRecommendStatusById1( 1 ,vo.getId(),null);
-                            }else if( vo.getFirstRecommend() != null && vo.getFirstRecommend() - checked == 1){
-                                //减少
-                                institutionCategoryService.updateRecommendStatusById1( 0 ,vo.getId(),vo.getSort());
+                            }else{
+                                if(vo.getThirdRecommend() == 1){
+                                    //减少
+                                    institutionCategoryService.updateRecommendStatusById1( 0 ,vo.getId(),vo.getSort());
+                                }
                             }
+
+
                         }
                     }
                 }

@@ -93,7 +93,7 @@ public class InstitutionClassTypeController {
             if(null != list){
                 for(int i=0;i<list.size();i++){
                     //picPath="http://"+propertiesUtil.getProjectImageUrl()+"/"+realPath;
-                    list.get(i).setFullCoverUrl("http://"+propertiesUtil.getProjectImageUrl()+list.get(i).getCoverUrl());
+                    list.get(i).setFullCoverUrl("http://"+propertiesUtil.getProjectImageUrl()+"/"+list.get(i).getCoverUrl());
                 }
             }
             return page;

@@ -99,7 +99,7 @@ public class InstitutionInfoController {
 
     /**
      * 添加机构
-     * @param insInfoVo
+     * @param
      */
     @ResponseBody
     @RequestMapping(value = "/addIns",method = RequestMethod.POST)
@@ -181,6 +181,8 @@ public class InstitutionInfoController {
         model.addAttribute("tellSize",tells.size());
         model.addAttribute("mobileSize",mobiles.size());
         model.addAttribute("catSize",categoryVos.size());
+        Users users = WebUtils.getCurrentUser();
+        model.addAttribute("userType",users.getUserType());
 
         return "institution/basicInformation";
     }
@@ -205,7 +207,11 @@ public class InstitutionInfoController {
 
             }
             insFeaturesVo.setPageSize(55);
+            String header="http://"+propertiesUtil.getProjectImageUrl()+"/";
             List<InsFeaturesVo> specialSer = insFeaturesService.findInsFeaturesVos(insFeaturesVo);
+            for(int i=0;i<specialSer.size();i++){
+                specialSer.get(i).setImgUrl(header+specialSer.get(i).getImgUrl());
+            }
             Integer specialSerCount = insFeaturesService.findInsFeaturesVosCount(insFeaturesVo);
             PageFinder<InsFeaturesVo> specialSerPage = new PageFinder<>(insFeaturesVo.getPage()/55,insFeaturesVo.getPageSize(),specialSerCount,specialSer);
             return specialSerPage;
@@ -391,14 +397,14 @@ public class InstitutionInfoController {
         //示例图尺寸
         double slW=0;
         double slH=0;
-        if(realW/realH>186.57/300.00){
+        if(realW/realH>150/150){
             //过宽
-            slH=186.57 * realH/realW;
-            slW=186.57;
+            slH=150 * realH/realW;
+            slW=150;
         }else{
             //过高
-            slH=300;
-            slW=300 * realW/realH;
+            slH=150;
+            slW=150 * realW/realH;
         }
         //原图所选中位置和区域
 
@@ -423,7 +429,7 @@ public class InstitutionInfoController {
         Date date = new Date();
         insFeaturesVo.setId(null);
         insFeaturesVo.setImgType(0);
-        insFeaturesVo.setImgUrl(header+realPath);
+        insFeaturesVo.setImgUrl(realPath);
         insFeaturesVo.setCreateTime(date);
         insFeaturesVo.setUpdateTime(date);
         try {

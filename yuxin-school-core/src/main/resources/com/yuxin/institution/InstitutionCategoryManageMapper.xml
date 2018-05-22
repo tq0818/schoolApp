@@ -150,7 +150,7 @@
           COUNT(id)
         FROM
         `institution_category`
-        WHERE `code_type` = 0 and is_enable = 1 and `third_recommend` = 1
+        WHERE `code_type` = 0 and is_enable = 1 and `first_recommend` = 1
 
     </select>
 
@@ -162,7 +162,7 @@
         `code_level`,
         `is_enable`,
         `parent_id`,
-        `third_recommend`,
+        `first_recommend`,
         `sort`
         FROM
         `institution_category`
@@ -248,7 +248,7 @@
         WHERE  `is_enable` = 1
     </select>
 
-    <!-- 获取指定排名后的所有is_enabled = 1的分类 -->
+    <!-- 获取指定排名后的所有is_enabled = 1的分类  AND `sort` &lt; #{sort} -->
     <select id="queryInstitutionCategorysAfterSort" parameterType="Integer"  resultMap="queryCateSimple" >
         SELECT
         `id`,
@@ -260,7 +260,8 @@
         `sort`
         FROM
         `institution_category`
-        WHERE  `is_enable` = 1 AND `sort` &lt; #{sort}  order by sort ASC
+        WHERE  `is_enable` = 1   order by sort ASC
+
     </select>
 
 
