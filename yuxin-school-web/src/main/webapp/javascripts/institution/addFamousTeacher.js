@@ -78,6 +78,43 @@ $(function () {
 
     getTeacherInfo();
 
+
+    /**
+     *初始化截图
+     */
+    $(".uploadImageStyle").on("change","#targetStyle", function() {
+        var theImage = new Image();
+        theImage.src = $(this).attr("src");
+        if (theImage.complete) {
+            sourceHeight = theImage.height;
+            sourceWidth = theImage.width;
+            $.init(sourceWidth, sourceHeight,1);
+        } else {
+            theImage.onload = function () {
+                sourceHeight = theImage.height;
+                sourceWidth = theImage.width;
+                $.init(sourceWidth, sourceHeight,1);
+            };
+        };
+
+    });
+
+    /**
+     * 隐藏及销毁截图
+     */
+        //隐藏
+    $('.mienHide').click(function(){
+        $('.coverPopup').hide();
+        $("#targetStyle").attr("src","").attr("style","");
+        if (jcrop_apis){
+            jcrop_apis.destroy();
+        }
+    });
+
+
+
+
+
 });
 
 
@@ -116,7 +153,10 @@ function getTeacherInfo(){
 
 
 //点击提交按钮
+var isClick = 0;
 $('.closeMechanismCommit').click(function(){
+    if(isClick==1)return;
+    isClick=1;
     var param = {
         headUrl:$("#hidHeadImg").val(),
         name:$("#teacherName").val(),
@@ -152,6 +192,8 @@ $('.closeMechanismCommit').click(function(){
             $.msg('操作成功',50,function () {
                 window.location.href = rootPath + "/InsInfoBase/famousTeacher/"+getInsId();
             })
+        }else{
+            isClick = 0;
         }
     })
 
@@ -201,8 +243,33 @@ function trim(str) {
 }
 
 
-function fileChange() {
-    $.ajax({
+function savePic() {
+    //改变图片时清空图片路径
+    $("#targetStyle").attr("src","");
+    $.ajaxFileUpload({
+        url : rootPath+"/riseSchoolStyle/upRiseSchoolStyleImg",
+        secureuri : false,// 安全协议
+        async : false,
+        fileElementId :'imgDataStyle',
+        dataType:'json',
+        type : "POST",
+        success : function(data) {
+            if (jcrop_apis){
+                jcrop_apis.destroy();
+            }
+            if (data.flag == 1){
+                $("#targetStyle").attr("src",data.realPath);
+                $("#targetStyle").trigger("change");
+                $(".jcrop-holder").find("img").attr("src",data.realPath);
+            }
+        },
+        error:function(arg1,arg2,arg3){
+
+        }
+    });
+
+
+/*    $.ajax({
         url: rootPath + '/institutionTeacher/uploadImgs',　　　　　　　　　　//上传地址
         type: 'POST',
         cache: false,
@@ -223,6 +290,74 @@ function fileChange() {
 
 
         }
-    });
+    });*/
 
+}
+
+function popAddImg(){
+    $(".coverPopup").show();
+}
+
+/**
+ * 返回切图真实路径
+ * @param saveFlag
+ */
+function saveCutPic() {
+    //判断图片是否为空或则是未更改就进行保存
+    if (!$("#targetStyle").attr("src")){
+        $.msg("未选择图片");
+        return ;
+    }
+    var temp = $("#targetStyle").attr("style").split(";");
+    //处理剪切框的宽高
+    dealWidthAndHeight(temp);
+    //上传截取后的图片
+    $.ajax({
+        url : rootPath + "/insCateManage/saveCutPic",
+        data : {
+            path :$("#targetStyle").attr("src"),
+            x : $("#x").val(),
+            y : $("#y").val(),
+            w : $("#w").val(),
+            h : $("#h").val(),
+            insFlag:1
+        },
+        type : "post",
+        dataType : "json",
+        success : function(data) {
+            //上传成功则重新查询
+            if (data.flag == 1){
+                //上传成功返回路径
+                $("#hidHeadImg").val(data.realPath);
+                $('#imgTop').html("<img src='"+data.header+data.realPath+"' alt=\"\" style=\"width: 100px;height: 100px;border-radius: 50px;\">");
+            }else {
+                // $.msg(data.msg);
+            }
+            $("#targetStyle").attr("src","");
+            if (jcrop_apis){
+                jcrop_apis.destroy();
+            }
+        }
+    })
+}
+
+//处理获取的图片像素
+function dealWidthAndHeight(temp){
+
+    var w = 0;
+    var h = 0;
+    for(var i=0;i<temp.length;i++){
+        if(temp[i].indexOf("width")!=-1){
+            w = temp[i].split(":")[1].replace("px","");
+        }
+        if(temp[i].indexOf("height")!=-1){
+            h = temp[i].split(":")[1].replace("px","");
+        }
+    }
+    if (parseFloat($("#w").val()) > parseFloat(w)){
+        $("#w").val(w);
+    }
+    if (parseFloat($("#h").val()) > parseFloat(h)){
+        $("#h").val(h);
+    }
 }

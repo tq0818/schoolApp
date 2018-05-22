@@ -3,22 +3,22 @@ var jcrop_apis;
     var boundx, boundy, $preview, $preview2, $preview3, $pcnt, $pcnt2, $pcnt3, $pimg, $pimg2, $pimg3, $img,
         xsize, xsize2, xsize3, ysize, ysize2, ysize3, minHeight, maxHeight, minWidth, maxWidth, $scale, sourceHeight, sourceWidth;
     $.init=function(initW,initH,picFlag) {
-        $img = picFlag == 0?$("#target"):picFlag == 1?$("#targetVideo"):$("#targetStyle");
+        $img = $("#targetStyle");
         	//picFlag == 1?$("#targetVideo"):$("#targetStyle");
-        //风采图
-       //if (picFlag == 2){
+        //特色服务比列
+       if (picFlag == 2){
            $scale = 150/150;
            maxHeight = 150;
            maxWidth = 150;
            minHeight =30 ;
            minWidth = 30;
-       //}else {//封面图比例
-       //     $scale = 300/120;
-       //     maxHeight = 120;
-       //     maxWidth = 300;
-       //     minHeight = 6;
-       //     minWidth = 15;
-       //}
+       }else {//老师头像比列
+            $scale = 100/100;
+            maxHeight = 100;
+            maxWidth = 100;
+            minHeight = 10;
+            minWidth = 10;
+       }
         sourceWidth=initW;
         sourceHeight=initH;
         var initSize=resizePic();
