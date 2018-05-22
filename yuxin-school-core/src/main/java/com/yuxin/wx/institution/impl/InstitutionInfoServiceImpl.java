@@ -238,7 +238,11 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
                 institutionLabelVo.setId(null);
                 institutionLabelVo.setCreateTime(date);
                 institutionLabelVo.setUpdateTime(date);
-                institutionLabelVo.setImgUrl(labelArr[i]);
+                if(labelArr[i].indexOf("institutionSpe")!=-1){
+                    institutionLabelVo.setImgUrl(labelArr[i].substring(labelArr[i].indexOf("institutionSpe")));
+                }else{
+                    institutionLabelVo.setImgUrl("");
+                }
                 institutionLabelVo.setLabelType("2");
                 institutionLabelVo.setLabelName(labelArr2[i]);
                 institutionLabelVo.setSourceFlag(0);
