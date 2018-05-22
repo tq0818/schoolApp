@@ -6,9 +6,11 @@ $(function () {
         if($(this).html()=="首页分类推荐"){
             $('.classificationRecommendation').show();
             $('.listRecommendation').hide();
+            getRecommendTypeList(); //首页分类推荐数据
         }else{
             $('.classificationRecommendation').hide();
             $('.listRecommendation').show();
+            getRecommendTypeData(); //首页列表推荐
         }
     });
     //推荐和取消推进啊
@@ -40,19 +42,27 @@ $(function () {
         $(this).addClass('btn-primary');
         $(this).siblings('a').removeClass('btn-primary');
 
-        if($(this).hasClass('recommendType')){
-           // console.log('点击首页分类推荐 。。。 ');
+        getIndexRecommendList();
 
-            getRecommendTypeList();
-
-        }else{
-            getRecommendTypeData();
+       /* if($(this).hasClass('recommendStatusBtn')){
+           //点击的是推荐状态
+           // getRecommendTypeList();
             getIndexRecommendList();
-        }
+        }else{
+          //  getRecommendTypeData();
+           // getIndexRecommendList();
+        }*/
 
     });
 
+
+    //获取推荐类型
     getRecommendTypeList();
+
+    $('.btnSearch').click(function(){
+        nowIndexPage = 0;
+        getIndexRecommendList();
+    })
 
 
 });

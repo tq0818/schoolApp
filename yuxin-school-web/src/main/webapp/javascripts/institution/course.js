@@ -306,7 +306,7 @@ function getClassTypeList(){
                        </li>`;
            for(var i in list){
                html += `<li>
-                            <img src="${list[i].fullCoverUrl}" alt="" style="width: 100%;height: auto">
+                            <img src="${list[i].fullCoverUrl}" alt="" style="width: 100%;max-height:190px;">
                                 <span class="imgInfo">${list[i].name}</span>
                                 ${
                                     list[i].isReser == 1 ? 

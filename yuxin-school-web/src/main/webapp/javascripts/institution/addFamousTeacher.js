@@ -145,6 +145,10 @@ function getTeacherInfo(){
 
             $('.iconBtn').before(html);
 
+            if(labelList != null && labelList.length >= 5){
+                $('.iconBtn').hide();
+            }
+
 
         }
     })
@@ -191,6 +195,9 @@ $('.closeMechanismCommit').click(function(){
        // console.log(json);
         if(json.status == 1){
             $.msg('操作成功',50,function () {
+
+               $('.closeMechanismCommit').unbind();
+
                 window.location.href = rootPath + "/InsInfoBase/famousTeacher/"+getInsId();
             })
         }else{

@@ -8,6 +8,7 @@ import com.yuxin.wx.model.institution.InstitutionLabelVo;
 import com.yuxin.wx.model.institution.InstitutionTeacher;
 import com.yuxin.wx.utils.FileUtil;
 import com.yuxin.wx.utils.PropertiesUtil;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -46,14 +47,15 @@ public class InstitutionTeacherController {
 
     /**
      * 获取机构中的所有名师列表
+     *
      * @param request
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/teacherList",method = RequestMethod.POST)
+    @RequestMapping(value = "/teacherList", method = RequestMethod.POST)
     public JSONObject teacherList(HttpServletRequest request) {
         JSONObject json = new JSONObject();
-        try{
+        try {
             Integer insId = Integer.valueOf(request.getParameter("insId"));
             //获取机构下的所有名师
             List<InstitutionTeacher> list = institutionTeacherService.loadTeacherByInstitutionId(insId);
@@ -62,20 +64,20 @@ public class InstitutionTeacherController {
 
             JSONObject obj = null;
             JSONArray arr = new JSONArray();
-            for(InstitutionTeacher teacher : list){
+            for (InstitutionTeacher teacher : list) {
                 obj = new JSONObject();
-                obj.put("id",teacher.getId());
-                obj.put("name",teacher.getName());
-                obj.put("label",getTeacherLabel(labelVoList,teacher));
-                obj.put("school",teacher.getGraduateSchool());
+                obj.put("id", teacher.getId());
+                obj.put("name", teacher.getName());
+                obj.put("label", getTeacherLabel(labelVoList, teacher));
+                obj.put("school", teacher.getGraduateSchool());
                 arr.add(obj);
             }
-            json.put("list",arr);
-            json.put("status",1);
-        }catch (Exception e){
+            json.put("list", arr);
+            json.put("status", 1);
+        } catch (Exception e) {
             e.printStackTrace();
-            json.put("status",0);
-            json.put("msg","操作异常");
+            json.put("status", 0);
+            json.put("msg", "操作异常");
             return json;
         }
         return json;
@@ -84,21 +86,22 @@ public class InstitutionTeacherController {
     /**
      * 将名师的标签放置在JSONArray中。
      * 算法设计理由:  每个机构最多8个名师，每个名师最多5个标签，所以最多进行 8*8*5 = 320次循环,并且该应用为后端管理，所以并发量并不高
+     *
      * @param labelVoList
      * @param teacher
      * @return
      */
-    private JSONArray getTeacherLabel(List<InstitutionLabelVo> labelVoList ,InstitutionTeacher teacher ){
-        if(null == teacher || null == labelVoList || labelVoList.size() == 0){
+    private JSONArray getTeacherLabel(List<InstitutionLabelVo> labelVoList, InstitutionTeacher teacher) {
+        if (null == teacher || null == labelVoList || labelVoList.size() == 0) {
             return new JSONArray();
         }
         JSONArray arr = new JSONArray();
         JSONObject obj = null;
-        for(InstitutionLabelVo label : labelVoList){
-            if(label.getRelationId() - teacher.getId() == 0){
+        for (InstitutionLabelVo label : labelVoList) {
+            if (label.getRelationId() - teacher.getId() == 0) {
                 obj = new JSONObject();
-                obj.put("id",label.getId());
-                obj.put("name",label.getLabelName());
+                obj.put("id", label.getId());
+                obj.put("name", label.getLabelName());
                 arr.add(obj);
             }
         }
@@ -109,26 +112,26 @@ public class InstitutionTeacherController {
 
     /**
      * 获取机构中的所有名师列表
+     *
      * @param request
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/teacherInfo",method = RequestMethod.POST)
+    @RequestMapping(value = "/teacherInfo", method = RequestMethod.POST)
     public JSONObject teacherInfo(HttpServletRequest request) {
         JSONObject json = new JSONObject();
-        try{
-
+        try {
 
 
             Integer insId = Integer.valueOf(request.getParameter("insId"));
             Integer teacherId = Integer.valueOf(request.getParameter("tid"));
-            Map<String,Object> map = new HashMap<>();
-            map.put("tid",teacherId);
-            map.put("insId",insId);
+            Map<String, Object> map = new HashMap<>();
+            map.put("tid", teacherId);
+            map.put("insId", insId);
             InstitutionTeacher teacher = institutionTeacherService.getTeacherByTidInsId(map);
-            if(null == teacher){
-                json.put("status",0);
-                json.put("msg","参数错误");
+            if (null == teacher) {
+                json.put("status", 0);
+                json.put("msg", "参数错误");
                 return json;
             }
 
@@ -137,27 +140,27 @@ public class InstitutionTeacherController {
 
             JSONObject obj = null;
             JSONArray arr = new JSONArray();
-            for(InstitutionLabelVo labelVo : labelVoList){
+            for (InstitutionLabelVo labelVo : labelVoList) {
                 obj = new JSONObject();
-                obj.put("id",labelVo.getId());
-                obj.put("name",labelVo.getLabelName());
+                obj.put("id", labelVo.getId());
+                obj.put("name", labelVo.getLabelName());
                 arr.add(obj);
             }
             JSONObject data = new JSONObject();
-            data.put("id",teacher.getId());
-            data.put("headUrl",teacher.getHeadUrl());
-            data.put("fullUrl","http://"+propertiesUtil.getProjectImageUrl()+"/"+teacher.getHeadUrl());
-            data.put("name",teacher.getName());
-            data.put("school",teacher.getGraduateSchool());
-            data.put("labels",arr);
-            data.put("desc",teacher.getDetailDesc());
+            data.put("id", teacher.getId());
+            data.put("headUrl", teacher.getHeadUrl());
+            data.put("fullUrl", "http://" + propertiesUtil.getProjectImageUrl() + "/" + teacher.getHeadUrl());
+            data.put("name", teacher.getName());
+            data.put("school", teacher.getGraduateSchool());
+            data.put("labels", arr);
+            data.put("desc", teacher.getDetailDesc());
 
-            json.put("data",data);
-            json.put("status",1);
-        }catch (Exception e){
+            json.put("data", data);
+            json.put("status", 1);
+        } catch (Exception e) {
             e.printStackTrace();
-            json.put("status",0);
-            json.put("msg","操作异常");
+            json.put("status", 0);
+            json.put("msg", "操作异常");
             return json;
         }
         return json;
@@ -165,33 +168,34 @@ public class InstitutionTeacherController {
 
     /**
      * 删除一个名师
+     *
      * @param request
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/delTeacher",method = RequestMethod.POST)
+    @RequestMapping(value = "/delTeacher", method = RequestMethod.POST)
     public JSONObject delTeacher(HttpServletRequest request) {
         JSONObject json = new JSONObject();
-        try{
+        try {
             Integer insId = Integer.valueOf(request.getParameter("insId"));
             Integer teacherId = Integer.valueOf(request.getParameter("tid"));
-            Map<String,Object> map = new HashMap<>();
-            map.put("tid",teacherId);
-            map.put("insId",insId);
+            Map<String, Object> map = new HashMap<>();
+            map.put("tid", teacherId);
+            map.put("insId", insId);
             InstitutionTeacher teacher = institutionTeacherService.getTeacherByTidInsId(map);
-            if(null == teacher){
-                json.put("status",0);
-                json.put("msg","参数错误");
+            if (null == teacher) {
+                json.put("status", 0);
+                json.put("msg", "参数错误");
                 return json;
             }
 
             institutionTeacherService.deleteById(teacher.getId());
 
-            json.put("status",1);
-        }catch (Exception e){
+            json.put("status", 1);
+        } catch (Exception e) {
             e.printStackTrace();
-            json.put("status",0);
-            json.put("msg","操作异常");
+            json.put("status", 0);
+            json.put("msg", "操作异常");
             return json;
         }
         return json;
@@ -199,26 +203,26 @@ public class InstitutionTeacherController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/addTeacher",method = RequestMethod.POST)
+    @RequestMapping(value = "/addTeacher", method = RequestMethod.POST)
     public JSONObject addTeacher(HttpServletRequest request) {
         JSONObject json = new JSONObject();
-        try{
+        try {
             String label = request.getParameter("label");
             Integer insId = Integer.valueOf(request.getParameter("insId"));
 
-            InstitutionTeacher teacher = checkTeacherParams(request,true) ;
-            if(null == teacher){
-                json.put("status",0);
-                json.put("msg","请按要求填写信息");
+            InstitutionTeacher teacher = checkTeacherParams(request, true);
+            if (null == teacher) {
+                json.put("status", 0);
+                json.put("msg", "请按要求填写信息");
                 return json;
             }
 
             //新增老师
-            institutionTeacherService.addTeacher(teacher,insId);
+            institutionTeacherService.addTeacher(teacher, insId);
 
             JSONArray arr = JSONArray.parseArray(label);
             //TODO  label信息处理
-            for(int i = 0;i<arr.size();i++){
+            for (int i = 0; i < arr.size(); i++) {
                 InstitutionLabelVo vo = new InstitutionLabelVo();
                 vo.setUpdateTime(new Date());
                 vo.setCreateTime(new Date());
@@ -226,34 +230,34 @@ public class InstitutionTeacherController {
                 vo.setLabelType("1");
                 vo.setRelationId(teacher.getId());
                 vo.setLabelName(arr.getJSONObject(i).getString("name"));
-               // vo.setImgUrl(headUrl);
+                // vo.setImgUrl(headUrl);
 
                 labelService.insert(vo);
             }
 
-            json.put("status",1);
-            json.put("msg","操作成功");
-        }catch (Exception e){
+            json.put("status", 1);
+            json.put("msg", "操作成功");
+        } catch (Exception e) {
             e.printStackTrace();
-            json.put("status",0);
-            json.put("msg","操作异常");
+            json.put("status", 0);
+            json.put("msg", "操作异常");
             return json;
         }
         return json;
     }
 
     @ResponseBody
-    @RequestMapping(value = "/updateTeacher",method = RequestMethod.POST)
+    @RequestMapping(value = "/updateTeacher", method = RequestMethod.POST)
     public JSONObject updateTeacher(HttpServletRequest request) {
         JSONObject json = new JSONObject();
-        try{
+        try {
             String label = request.getParameter("label");
             Integer insId = Integer.valueOf(request.getParameter("insId"));
             Integer tid = Integer.valueOf(request.getParameter("id"));
-            InstitutionTeacher teacher = checkTeacherParams(request,false) ;
-            if(null == teacher){
-                json.put("status",0);
-                json.put("msg","请按要求填写信息");
+            InstitutionTeacher teacher = checkTeacherParams(request, false);
+            if (null == teacher) {
+                json.put("status", 0);
+                json.put("msg", "请按要求填写信息");
                 return json;
             }
 
@@ -263,57 +267,74 @@ public class InstitutionTeacherController {
             JSONArray arr = JSONArray.parseArray(label);
             //TODO  label信息处理
 
-          List<InstitutionLabelVo> labelVoList =  labelService.getTeacherLabelsByTeacherId(tid);
-            for(int i = 0;i<arr.size();i++){
-              JSONObject obj = arr.getJSONObject(i);
-              if(obj.getString("id") == null){
-                  InstitutionLabelVo vo = new InstitutionLabelVo();
-                  vo.setUpdateTime(new Date());
-                  vo.setCreateTime(new Date());
-                  vo.setSourceFlag(2);
-                  vo.setLabelType("1");
-                  vo.setRelationId(teacher.getId());
-                  vo.setLabelName(arr.getJSONObject(i).getString("name"));
-                  // vo.setImgUrl(headUrl);
+            List<InstitutionLabelVo> labelVoList = labelService.getTeacherLabelsByTeacherId(tid);
 
-                  labelService.insert(vo);
-              }else{
-                  int id = obj.getIntValue("id");
-                  for(InstitutionLabelVo listVo : labelVoList){
-                      if(listVo.getId() - id == 0){
-                          listVo.setUpdateTime(new Date());
-                          listVo.setLabelName(arr.getJSONObject(i).getString("name"));
-                          // vo.setImgUrl(headUrl);
-                          labelService.update(listVo);
-                      }
-                  }
+            //检查哪些标签被删除了，并删除
+            Map<String, InstitutionLabelVo> map = new HashMap<>();
+            for (InstitutionLabelVo vo : labelVoList) {
+                map.put("key" + vo.getId(), vo);
+            }
 
-              }
+            for (int i = 0; i < arr.size(); i++) {
+                JSONObject obj = arr.getJSONObject(i);
+                if (obj.getString("id") == null) {
+                    InstitutionLabelVo vo = new InstitutionLabelVo();
+                    vo.setUpdateTime(new Date());
+                    vo.setCreateTime(new Date());
+                    vo.setSourceFlag(2);
+                    vo.setLabelType("1");
+                    vo.setRelationId(teacher.getId());
+                    vo.setLabelName(arr.getJSONObject(i).getString("name"));
+                    // vo.setImgUrl(headUrl);
+
+                    labelService.insert(vo);
+                } else {
+                    int id = obj.getIntValue("id");
+                    for (InstitutionLabelVo listVo : labelVoList) {
+                        if (listVo.getId() - id == 0) {
+                            listVo.setUpdateTime(new Date());
+                            listVo.setLabelName(arr.getJSONObject(i).getString("name"));
+                            // vo.setImgUrl(headUrl);
+                            labelService.update(listVo);
+
+                            map.remove("key" + id);
+
+                        }
+                    }
+
+                }
+
 
             }
 
-            json.put("status",1);
-            json.put("msg","操作成功");
-        }catch (Exception e){
+            //遍历map，将数据删掉
+            for (Map.Entry<String, InstitutionLabelVo> entry : map.entrySet()) {
+                InstitutionLabelVo delEntity = entry.getValue();
+                labelService.deleteInstitutionLabelById(delEntity.getId());
+            }
+
+
+            json.put("status", 1);
+            json.put("msg", "操作成功");
+        } catch (Exception e) {
             e.printStackTrace();
-            json.put("status",0);
-            json.put("msg","操作异常");
+            json.put("status", 0);
+            json.put("msg", "操作异常");
             return json;
         }
         return json;
     }
 
 
-
-
     /**
      * 新增、修改名师信息参数验证
+     *
      * @param request
      * @param addFlag true ? add : update
      * @return
      */
-    private InstitutionTeacher checkTeacherParams(HttpServletRequest request , boolean addFlag){
-        try{
+    private InstitutionTeacher checkTeacherParams(HttpServletRequest request, boolean addFlag) {
+        try {
 
             Integer insId = Integer.valueOf(request.getParameter("insId"));
             String headUrl = request.getParameter("headUrl");
@@ -322,36 +343,36 @@ public class InstitutionTeacherController {
             String label = request.getParameter("label");
             String desc = request.getParameter("desc");
             Integer tid = null;
-            if(!addFlag){
+            if (!addFlag) {
                 tid = Integer.valueOf(request.getParameter("id"));
             }
 
-            if(existBlank(headUrl,name,school,label,desc)){
-                log.error((addFlag ? " 新增 " : " 修改 " )+ "名师信息重要参数存在空 ......");
+            if (existBlank(headUrl, name, school, label, desc)) {
+                log.error((addFlag ? " 新增 " : " 修改 ") + "名师信息重要参数存在空 ......");
                 return null;
             }
 
-            if(name.length() > 10 || school.length() > 30 || desc.length() > 300){
-                log.error((addFlag ? " 新增 " : " 修改 " )+ "名师信息重要限长字段超过长度  ......");
+            if (name.length() > 10 || school.length() > 30 || desc.length() > 300) {
+                log.error((addFlag ? " 新增 " : " 修改 ") + "名师信息重要限长字段超过长度  ......");
                 return null;
             }
 
             InstitutionTeacher teacher = null;
 
-            if(!addFlag){
-                Map<String,Object> map = new HashMap<>();
-                map.put("tid",tid);
-                map.put("insId",insId);
+            if (!addFlag) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("tid", tid);
+                map.put("insId", insId);
                 teacher = institutionTeacherService.getTeacherByTidInsId(map);
-                if(null == teacher){
-                    log.error(" 修改名师信息,参数错误,获取名师信息失败 , tid = "+tid + " , insId = "+insId);
+                if (null == teacher) {
+                    log.error(" 修改名师信息,参数错误,获取名师信息失败 , tid = " + tid + " , insId = " + insId);
                     return null;
                 }
 
-               // return teacher;
+                // return teacher;
             }
 
-            if(addFlag){
+            if (addFlag) {
                 teacher = new InstitutionTeacher();
                 teacher.setCreateTime(new Date());
                 teacher.setDelFlag(0);
@@ -364,22 +385,21 @@ public class InstitutionTeacherController {
             teacher.setName(name);
             teacher.setUpdateTime(new Date());
             return teacher;
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
 
-    private boolean existBlank(String... args){
-        for(String str : args){
-            if(null == str || "".equals(str.trim())){
+    private boolean existBlank(String... args) {
+        for (String str : args) {
+            if (null == str || "".equals(str.trim())) {
                 return true;
             }
         }
         return false;
     }
-
 
 
     /**
@@ -404,15 +424,15 @@ public class InstitutionTeacherController {
                 try {
                     realPath = FileUtil.upload(multipartFile, "coursefile", "");
 
-                 //  String[] arr = realPath.split("/");
-                  // realPath = arr[arr.length - 1];
+                    //  String[] arr = realPath.split("/");
+                    // realPath = arr[arr.length - 1];
 
                 } catch (Exception e) {
                     log.error("文件上传失败", e);
                     e.printStackTrace();
                 }
             }
-            picPath="http://"+propertiesUtil.getProjectImageUrl()+"/"+realPath;
+            picPath = "http://" + propertiesUtil.getProjectImageUrl() + "/" + realPath;
             // picPath = "http://localhost/" + realPath;
 
             if (realPath == null) {
@@ -434,7 +454,6 @@ public class InstitutionTeacherController {
         }
 
     }
-
 
 
 }

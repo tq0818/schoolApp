@@ -226,7 +226,7 @@
           `code_level`,
           `code_type`,
           `parent_id`,
-          `third_recommend`,
+          `first_recommend`,
           `sort`
         FROM
           `institution_category`
@@ -241,7 +241,7 @@
         `code_level`,
         `code_type`,
         `parent_id`,
-        `first_recommend`,
+        `third_recommend`,
         `sort`
         FROM
         `institution_category`
@@ -290,14 +290,14 @@
             ON ir.`two_level_id` = ic2.`id`
         WHERE ( ir.`one_level_id` = #{typeId}
           OR ir.`two_level_id` = #{typeId} )
-          <if test="name != null and name != ''"> and info.name LIKE '%#{name}%' </if>
+          <if test="name != null and name != ''"> and info.name LIKE '%${name}%' </if>
           <if test="status != null  "> and  ir.`is_recommend` = #{status} </if>
           ORDER BY ir.`is_recommend` DESC,
                    ir.`sort` ASC
           LIMIT #{pageStart} , #{pageSize}
     </select>
 
-    <select id="getIndexRecommendListCount" parameterType="map" resultType="int">
+    <select id="getIndexRecommendListCount" parameterType="Map" resultType="int">
         SELECT
           COUNT(info.id)
         FROM
@@ -311,7 +311,7 @@
         WHERE ( ir.`one_level_id` = #{typeId}
         OR ir.`two_level_id` = #{typeId} )
         <if test="status != null  "> and  ir.`is_recommend` = #{status} </if>
-        <if test="name != null and name != ''"> and info.name LIKE '%#{name}%' </if>
+        <if test="typeName != null "> and info.name LIKE  CONCAT('%','${typeName}','%' )  </if>
 
     </select>
 
@@ -324,29 +324,51 @@
         UPDATE `institution_relation` SET `is_recommend` = 1 , `sort` = #{sort} WHERE id = #{rid} and ins_id = #{insId}
     </update>
 
-    <!-- UPDATE `institution_relation` SET `sort` = `sort` - 1 WHERE `is_recommend` = 1 AND `sort` &gt; #{sort}-->
-    <!-- 适用于当前分类为一级分类 -->
-    <update id="increaseIndexRecommendAfter1" parameterType="map" >
-         UPDATE `institution_relation` SET `sort` = `sort` - 1 WHERE `is_recommend` = 1 AND `sort` &gt; #{sort} AND  `one_level_id` = #{typeId}
+    <!-- 更新指定list中的所有排序信息 -->
+    <update id="increaseIndexRecommendAfterAll" parameterType="java.util.List"  >
+        UPDATE `institution_relation` SET `sort` = CASE `id`
+
+        <foreach collection="list" index="index" item="item"  separator=" " >
+            WHEN ${item.id} THEN ${item.sort}
+        </foreach>
+
+        ELSE sort
+
+        END
     </update>
-    <!-- 适用于当前分类为二级分类 -->
-    <update id="increaseIndexRecommendAfter2" parameterType="map" >
-        UPDATE `institution_relation` SET `sort` = `sort` - 1 WHERE `is_recommend` = 1 AND `sort` &gt; #{sort} AND   `two_level_id` = #{typeId}
-    </update>
+
+    <!---->
+    <select id="getRelationAfterSortAll" parameterType="Integer" resultType="map">
+        SELECT `id` FROM `institution_relation` WHERE `is_recommend` = 1 AND `sort` &gt; #{sort}
+    </select>
+
+    <!-- 获取指定排序指定更新方法周围的关联信息，适用于首页列表推荐箭头调整排序业务 -->
+    <select id="getAroundRelation" resultType="map" parameterType="map">
+        SELECT
+          *
+        FROM
+        `institution_relation`
+        WHERE `is_recommend` = 1
+        <if test="type == 1 "> AND `one_level_id` = #{typeId} </if>
+        <if test="type == 2 "> AND `two_level_id` = #{typeId} </if>
+        <if test="flag == 1 ">  AND `sort` &lt; #{sort}  </if>
+        <if test="flag == 0 ">  AND `sort` &gt; #{sort}  </if>
+        <if test="flag == 1 ">  ORDER BY `sort` DESC   </if>
+        <if test="flag == 0 ">  ORDER BY `sort` ASC   </if>
+        LIMIT 1
+    </select>
 
     <!-- 获取首页列表推荐的某个机构的推荐状态  -->
    <select id="getIndexRecommendInfo" parameterType="map" resultType="map" >
        SELECT * FROM `institution_relation` WHERE `id` = #{rid}
        <if test="insId != null and insId != '' "> AND `ins_id` = #{insId} </if>
    </select>
-    <!-- 适用与当前分类为一级分类 -->
-   <select id="getIndexRecommendYesCount1" parameterType="Integer" resultType="int" >
-       SELECT COUNT(id) FROM `institution_relation` WHERE `is_recommend` = 1 AND  `one_level_id` = #{typeId}
-   </select>
-    <!--适用于当前分类为二级分类-->
-    <select id="getIndexRecommendYesCount2" parameterType="Integer" resultType="int" >
-        SELECT COUNT(id) FROM `institution_relation` WHERE `is_recommend` = 1 AND  `two_level_id` = #{typeId}
+
+    <!-- 获取所有中间表的排序信息-->
+    <select id="getIndexRecommendYesCountAll"  resultType="int" >
+        SELECT COUNT(id) FROM `institution_relation` WHERE `is_recommend` = 1
     </select>
+
 
     <select id="getTypeEntityById" parameterType="Integer" resultType="map">
         SELECT * FROM  `institution_category` WHERE id = #{id} limit 1

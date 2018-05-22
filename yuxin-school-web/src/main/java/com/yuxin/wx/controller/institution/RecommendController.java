@@ -83,7 +83,7 @@ public class RecommendController {
 
 
     /**
-     * 取消推荐
+     * 推荐状态调整转换
      * @param request
      * @return
      */
@@ -306,7 +306,7 @@ public class RecommendController {
                                 //新增
                                 institutionCategoryService.updateRecommendStatusById( 1 ,vo.getId(),null);
                             }else{
-                                if(vo.getFirstRecommend() == 1){
+                                if(vo.getFirstRecommend() == 1 && checked != 1){
                                     //减少
                                     institutionCategoryService.updateRecommendStatusById( 0 ,vo.getId(),vo.getSort());
                                 }
@@ -330,7 +330,7 @@ public class RecommendController {
                                 //新增
                                 institutionCategoryService.updateRecommendStatusById1( 1 ,vo.getId(),null);
                             }else{
-                                if(vo.getThirdRecommend() == 1){
+                                if(vo.getThirdRecommend() == 1 && checked != 1){
                                     //减少
                                     institutionCategoryService.updateRecommendStatusById1( 0 ,vo.getId(),vo.getSort());
                                 }

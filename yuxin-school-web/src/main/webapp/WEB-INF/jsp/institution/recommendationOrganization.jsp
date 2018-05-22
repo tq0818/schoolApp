@@ -71,13 +71,13 @@
                     </div>
                     <div  class="marginTop10 changeBtn" id="recommendStatusContainor">
                         <span>推荐状态</span>
-                        <a href="##" class="btn btn-default btn-primary btn-mb">全部</a>
-                        <a href="##" class="btn btn-default btn-mb">已推荐</a>
-                        <a href="##" class="btn btn-default btn-mb">未推荐</a>
+                        <a href="##" class="btn recommendStatusBtn btn-default btn-primary btn-mb">全部</a>
+                        <a href="##" class="btn recommendStatusBtn btn-default btn-mb">已推荐</a>
+                        <a href="##" class="btn recommendStatusBtn btn-default btn-mb">未推荐</a>
                     </div>
                     <div  class="marginTop10" >
-                        <input type="text" id="recommendName" placeholder="请输入机构名称">
-                        <a href="##" class="btn btn-primary btn-sm">搜索</a>
+                        <input type="text" id="recommendName" maxlength="30" placeholder="请输入机构名称">
+                        <a href="##" class="btn btnSearch btn-primary btn-sm">搜索</a>
                     </div>
                 </div>
                 <div class="user-list">

@@ -22,9 +22,19 @@ function getIndexRecommendList(){
             $(".loading-bg").hide();
         },
         success: function (json) {
-            console.log(json);
+          //  console.log(json);
+            if(json.status != 1){
+                $.msg(json.msg);
+                return;
+            }
             var list = json.data.list;
             var html = "";
+
+            //判断是否还有下一页，用于判断最后一个推荐机构上下箭头有几个的问题
+            var nowPage = parseInt(nowIndexPage/pageSize) + 1;
+            var pageNum = json.data.count <= 10 ? 1 : parseInt(json.data.count / pageSize) + 1;
+            var hasNextPage = pageNum > nowPage ;
+
             for(var i in list){
                 html += `
                     <tr>
@@ -35,7 +45,7 @@ function getIndexRecommendList(){
                         <td class="relationResult">${list[i].is_recommend == 1 ? '已推荐' : '未推荐'}</td>
                         <td>${
                     list[i].is_recommend == 1 ?
-                        ( list[i].sort + ( list[i].sort + parseInt(i) == 1 ?
+                        ( parseInt(i)+1 + ( ( list.length > 1 && parseInt(i) == 0 && list[parseInt(i) + 1].is_recommend != 1) || (list.length == 1 && nowIndexPage == 0) ? '' : parseInt(i) == 0 ?
                             "<i data-id='"+list[i].rid+"' data-status='down' class='icon iconfont'>&#xe6e4;</i>"
                             : ( list[i].sort == json.data.maxSort ||  list[i].sort == json.data.recommendNum || (parseInt(i) < list.length - 1 && list[parseInt(i) + 1].is_recommend != 1 ) ?
                                     "<i data-id='"+list[i].rid+"' data-status='up' class='icon iconfont'>&#xe6e3;</i>" :
@@ -47,6 +57,12 @@ function getIndexRecommendList(){
                     </tr>
                 `;
             }
+
+
+            if(list.length == 0){
+                html = "<tr><td colspan='7'>没有数据</td></tr>";
+            }
+
 
             $("#indexRecommendTbody").html(html);
 
@@ -147,13 +163,13 @@ function getStatus(){
  */
 function getRecommendTypeData(){
     $.post(rootPath + '/institutionRecommend/typeListAll' , {type:1} , function(json){
-        console.log(json);
+      //  console.log(json);
 
     var recommendNum = 0;
 
     var html = '<span>推荐分类</span>';
         for(var i in json){
-            if(json[i].firstRecommend == 1){
+            if(json[i].thirdRecommend == 1){
                 if(recommendNum == 0){
                     html += "<a href=\"##\" data-id='"+json[i].id+"' class=\"btn recommendTypeBtn btn-default btn-primary btn-sm\">"+json[i].codeName+"<span class='pullRight'>></span></a>" ;
                     recommendNum ++ ;

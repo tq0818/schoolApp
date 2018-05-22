@@ -69,7 +69,7 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
      *
      * @param sort
      */
-    void increaseSort(Integer sort);
+    int increaseSort(Integer sort);
 
     /**
      * 提升某个分类排名后的所有分类的排名，用在设置 is_enable = 0 的时候更新排名信息
@@ -82,7 +82,7 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
      *
      * @param sort 要降低的排名
      */
-    void reduceSort(Integer sort);
+    int reduceSort(Integer sort);
 
     /**
      * 更新某个分类的排名 key ： sort , id
@@ -148,17 +148,10 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
      */
     int alterIndexRecommendStatusYes(Map<String,Object> map);
 
-    /**
-     * 提高某个排名后的所有机构的排名，适用于当前分类为一级分类
-     * @param map
-     */
-    void increaseIndexRecommendAfter1(Map<String,Object> map);
 
-    /**
-     * 提高某个排名后的所有机构的排名，适用于当前分类为二级分类
-     * @param map
-     */
-    void increaseIndexRecommendAfter2(Map<String,Object> map);
+    int increaseIndexRecommendAfterAll(List<CaseWhenVO> list);
+
+    List<Map<String,Object>> getRelationAfterSortAll(Integer sort);
 
     /**
      *获取首页列表推荐的某个机构的信息
@@ -168,17 +161,10 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
     Map<String,Object> getIndexRecommendInfo(Map<String,Object> map);
 
     /**
-     * 获取当前机构是推荐状态的数量，适用于当前分类为一级分类
+     * 获取当前推荐的机构数量
      * @return
      */
-    int getIndexRecommendYesCount1(Integer typeId);
-
-    /**
-     * 获取当前机构是推荐状态的数量，适用于当前分类为二级分类
-     * @param typeId
-     * @return
-     */
-    int getIndexRecommendYesCount2(Integer typeId);
+    int getIndexRecommendYesCountAll();
 
     /**
      *获取指定id的分类信息
@@ -209,5 +195,8 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
     int getMaxSortByTypeId2(Integer typeId);
 
     int exchangeSortIndexType(List<CaseWhenVO> list);
+
+
+   Map<String,Object> getAroundRelation(Map<String,Object> map);
 
 }
