@@ -129,7 +129,7 @@
         <if test="isCertified != null ">and ii.is_certified = #{isCertified}</if>
         <if test="oneLevelId != null and oneLevelId != ''">and ir.one_level_id = #{oneLevelId}</if>
         <if test="twoLevelId != null and twoLevelId != ''">and ir.two_level_id = #{twoLevelId}</if>
-
+        <if test="startTime != null and startTime != '' and endTime == ''"><![CDATA[AND DATE_FORMAT(ii.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
         <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(ii.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
         <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(ii.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
         GROUP BY  ii.id
@@ -158,6 +158,7 @@
         <if test="isCertified != null ">and ii.is_certified = #{isCertified}</if>
         <if test="oneLevelId != null and oneLevelId != ''">and ir.one_level_id = #{oneLevelId}</if>
         <if test="twoLevelId != null and twoLevelId != ''">and ir.two_level_id = #{twoLevelId}</if>
+        <if test="startTime != null and startTime != '' and endTime == ''"><![CDATA[AND DATE_FORMAT(ii.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
         <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(ii.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
         <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(ii.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
         GROUP BY  ii.id
