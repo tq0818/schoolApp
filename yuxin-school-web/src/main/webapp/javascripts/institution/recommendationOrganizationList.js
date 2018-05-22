@@ -155,10 +155,10 @@ function getRecommendTypeData(){
         for(var i in json){
             if(json[i].firstRecommend == 1){
                 if(recommendNum == 0){
-                    html += "<a href=\"##\" data-id='"+json[i].id+"' class=\"btn recommendTypeBtn btn-default btn-primary btn-sm\">"+json[i].codeName+"</a>" ;
+                    html += "<a href=\"##\" data-id='"+json[i].id+"' class=\"btn recommendTypeBtn btn-default btn-primary btn-sm\">"+json[i].codeName+"<span class='pullRight'>></span></a>" ;
                     recommendNum ++ ;
                 }else{
-                    html += "<a href=\"##\" data-id='"+json[i].id+"' class=\"btn recommendTypeBtn btn-default  btn-sm\">"+json[i].codeName+"</a>" ;
+                    html += "<a href=\"##\" data-id='"+json[i].id+"' class=\"btn recommendTypeBtn btn-default  btn-sm\"><span class='pullLeft'><</span>"+json[i].codeName+"<span class='pullRight'>></span></a>" ;
                     recommendNum ++ ;
                 }
 
@@ -192,5 +192,14 @@ function getRecommendTypeData(){
 }
 
 
+$(function () {
+    //点击箭头
+    $('body').on('click', '.pullLeft', function () {
+        alert("点击了左边");
+    });
+    $('body').on('click', '.pullRight', function () {
+        alert("点击了右边");
+    });
+});
 
 

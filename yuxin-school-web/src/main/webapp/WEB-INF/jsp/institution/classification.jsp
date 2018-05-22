@@ -74,11 +74,11 @@
     <div class="addType addFirstPopup">
         <h5 id="tittle">添加一级分类</h5>
         <div style="margin-top: 10px;">
-            <span>分类名称:</span>
+            <span><a href="##" class="redIcon">*</a>分类名称:</span>
             <input type="text" style="width: 260px;height: 20px;" maxlength="5" id="insCatName">
         </div>
         <div>
-            <span>分类图标:</span>
+            <span class="paddingLeft">分类图标:</span>
             <img id="target" src="" alt="">
             <br/>
             <a href="javascript:void(0);" class="btnFile"  >选择图标</a>

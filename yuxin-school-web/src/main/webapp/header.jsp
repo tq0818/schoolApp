@@ -374,18 +374,7 @@ button.cloze {
                 <li code="statistics_org"><a href="<%=rootPath %>/company/orgstatistics/firstTransferStation" >总览</a></li>
             </shiro:hasPermission>
         </ul>
-			<shiro:hasPermission name="student_head">
 
-				<div style="display: inline-block;font-size: 16px;color: #ff0000;
-					background: #ffff00;height: 51px;margin-left: 400px;line-height: 51px;">
-					<span>
-					您收到(<a href="<%=rootPath %>/classModule/comment" id="classComCount"></a>)条评论待审核！
-					</span>
-					<span>
-						您收到（<a href="<%=rootPath %>/comment/commentIndex" id="insComCount"></a>）条机构评论待审核！
-					</span>
-				</div>
-			</shiro:hasPermission>
         <ul class="nav nav-right">
             <c:choose>
             	<c:when test="${sessionScope.loginUser.realName != null && sessionScope.loginUser.realName != ''}">
@@ -403,5 +392,18 @@ button.cloze {
     </div>
     
 	<div class="add-subs-layer-bg"></div>
+    <shiro:hasPermission name="student_head">
+
+        <div style="display: inline-block;font-size: 16px;color: #ff0000;
+					background: #ffff00;height: 51px;line-height: 51px;float: right;">
+					<span>
+					您收到(<a href="<%=rootPath %>/classModule/comment" id="classComCount"></a>)条评论待审核！
+					</span>
+            <span>
+						您收到（<a href="<%=rootPath %>/comment/commentIndex" id="insComCount"></a>）条机构评论待审核！
+					</span>
+        </div>
+    </shiro:hasPermission>
+
 </header>
 <!-- header end -->

@@ -49,9 +49,9 @@
             <div class="evaScreen">
                 <div style="padding-left: 13px;" >
                     <span style="font-size: 16px;margin-right: 30px;">审核状态</span>
-                    <a href="##" class="btn btn-default btn-primary">全部</a>
-                    <a href="##" class="btn btn-default">待审核</a>
-                    <a href="##" class="btn btn-default">审核通过</a>
+                    <a href="javascript:void(0)" class="btn btn-default btn-primary">全部</a>
+                    <a href="javascript:void(0)" class="btn btn-default">待审核</a>
+                    <a href="javascript:void(0)" class="btn btn-default">审核通过</a>
                 </div>
                 <ul class="comment_all">
 
@@ -63,16 +63,16 @@
             <div class="curriculum ">
                 <div style="padding-left: 13px;margin: 30px 0;" id="curriculumClass" >
                     <span style="font-size: 16px;margin-right: 30px;">课程名称</span>
-                    <a href="##" class="btn btn-default btn-primary">全部</a>
+                    <a href="javascript:void(0)" class="btn btn-default btn-primary">全部</a>
                     <c:forEach var="cla" items="${classTypeVos}">
-                        <a href="##" class="btn btn-default"  data-classId="${cla.id}">${cla.name}</a>
+                        <a href="javascript:void(0)" class="btn btn-default"  data-classId="${cla.id}">${cla.name}</a>
                     </c:forEach>
                 </div>
                 <div style="padding-left: 13px;" id="curriculumState">
                     <span style="font-size: 16px;margin-right: 30px;">审核状态</span>
-                    <a href="##" class="btn btn-default btn-primary" data-review="">全部</a>
-                    <a href="##" class="btn btn-default" data-review="0">待审核</a>
-                    <a href="##" class="btn btn-default" data-review="1">审核通过</a>
+                    <a href="javascript:void(0)" class="btn btn-default btn-primary" data-review="">全部</a>
+                    <a href="javascript:void(0)" class="btn btn-default" data-review="0">待审核</a>
+                    <a href="javascript:void(0)" class="btn btn-default" data-review="1">审核通过</a>
                 </div>
                 <ul class="comment_all">
 

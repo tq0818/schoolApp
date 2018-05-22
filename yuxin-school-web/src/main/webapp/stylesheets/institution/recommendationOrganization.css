@@ -1,3 +1,6 @@
 .listRecommendation{display: none;}
 .marginTop10{margin-top: 10px;}
 .recomendBtn,.cancelRecommend{cursor: pointer;}
+#recommendBtnContainor a{margin: 5px;position: relative;display: inline-block;width: 70px;text-align: center;}
+.pullLeft{position: absolute;cursor: default;font-size: 20px;left: 0;top: 3px;}
+.pullRight{position: absolute;cursor: default;font-size: 20px;right: 0;top: 3px;}

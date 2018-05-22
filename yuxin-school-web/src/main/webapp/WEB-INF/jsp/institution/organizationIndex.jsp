@@ -58,16 +58,16 @@
                     </div>
                     <div class="marginTop10 changeBtn " id="isCertified" >
                         <span>认证状态</span>
-                        <a href="##" class="btn btn-default btn-primary btn-mb">全部</a>
-                        <a href="##" class="btn btn-default btn-mb">已认证</a>
-                        <a href="##" class="btn btn-default btn-mb">未认证</a>
+                        <a href="javascript:void(0)" class="btn btn-default btn-primary btn-mb">全部</a>
+                        <a href="javascript:void(0)" class="btn btn-default btn-mb">已认证</a>
+                        <a href="javascript:void(0)" class="btn btn-default btn-mb">未认证</a>
                     </div>
 
                     <div  class="marginTop10 changeBtn" id="isShelves">
                         <span>上下架&nbsp&nbsp&nbsp</span>
-                        <a href="##" class="btn btn-default btn-primary btn-mb">全部</a>
-                        <a href="##" class="btn btn-default btn-mb">已上架</a>
-                        <a href="##" class="btn btn-default btn-mb">未上架</a>
+                        <a href="javascript:void(0)" class="btn btn-default btn-primary btn-mb">全部</a>
+                        <a href="javascript:void(0)" class="btn btn-default btn-mb">已上架</a>
+                        <a href="javascript:void(0)" class="btn btn-default btn-mb">未上架</a>
                     </div>
                     <div class="margin10 marginTop10" >
                         <span class="text">创建时间</span>
@@ -178,11 +178,11 @@
         </div>
         <div>
             <span>系统标签：</span>
-            <%--<span href="##" class="systemBtn">--%>
+            <%--<span href="javascript:void(0)" class="systemBtn">--%>
                 <%--<input class="systemLabel" value="你的名字么" maxlength="5">--%>
                 <%--<i class="icon iconfont deleteBtn">&#xe610;</i>--%>
             <%--</span>--%>
-            <%--<span href="##" class="systemBtn">
+            <%--<span href="javascript:void(0)" class="systemBtn">
                 <input class="systemLabel" value="sb">
                 <i class="icon iconfont deleteBtn">&#xe610;</i>
             </span>--%>
@@ -190,20 +190,20 @@
         </div>
         <div id="orgs">
             <span>是否属于连锁机构：</span>
-            <a href="##"><input type="radio" name="org" id="isOrg" value="1">是</a>
-            <a href="##"><input type="radio" name="org" id="noOrg" value="0" checked>否</a>
+            <a href="javascript:void(0)"><input type="radio" name="org" id="isOrg" value="1">是</a>
+            <a href="javascript:void(0)"><input type="radio" name="org" id="noOrg" value="0" checked>否</a>
         </div>
         <div class="orgBtn">
-            <a href="##" class="btn btn-primary btn-mb closeMechanism">取消</a>
-            <a href="##" class="btn btn-primary btn-mb addMechanism">确认添加</a>
+            <a href="javascript:void(0)" class="btn btn-primary btn-mb closeMechanism">取消</a>
+            <a href="javascript:void(0)" class="btn btn-primary btn-mb addMechanism">确认添加</a>
         </div>
     </div>
     <%--账号管理弹窗    --%>
     <div class="countPopup createCount">
         <p>该账号还未创建账号，是否立即创建？</p>
         <div class="countPopupBtn">
-            <a href="##" class="btn btn-primary btn-mb closeCountPopup canclImmediateCreation">取消</a>
-            <a href="##" class="btn btn-primary btn-mb closeCountPopup immediateCreation">立即创建</a>
+            <a href="javascript:void(0)" class="btn btn-primary btn-mb closeCountPopup canclImmediateCreation">取消</a>
+            <a href="javascript:void(0)" class="btn btn-primary btn-mb closeCountPopup immediateCreation">立即创建</a>
         </div>
     </div>
     <div class="countPopup sureCount cureatManageUser">
@@ -211,8 +211,8 @@
             <p>机构账号：<input type="text" placeholder="请输入学校管理员账号" id="manageUser"></p>
             <span>初始密码为：111111</span>
         <div class="countPopupBtn ">
-            <a href="##" class="btn btn-primary btn-mb closeCountPopup cabcelManageUser">取消</a>
-            <a href="##" class="btn btn-primary btn-mb closeCountPopup manageUser">确定创建</a>
+            <a href="javascript:void(0)" class="btn btn-primary btn-mb closeCountPopup cabcelManageUser">取消</a>
+            <a href="javascript:void(0)" class="btn btn-primary btn-mb closeCountPopup manageUser">确定创建</a>
         </div>
     </div>
     <div  class="countPopup editCount">
@@ -222,8 +222,8 @@
         <p id="user">账号：cdsywgyxx</p>
         <p>密码：<input type="password" id="updataPwd"></p>
         <div class="countPopupBtn">
-            <a href="##" class="btn btn-primary btn-mb closeCountPopup cancelManageUser">取消</a>
-            <a href="##" class="btn btn-primary btn-mb closeCountPopup updateManageUser">保存</a>
+            <a href="javascript:void(0)" class="btn btn-primary btn-mb closeCountPopup cancelManageUser">取消</a>
+            <a href="javascript:void(0)" class="btn btn-primary btn-mb closeCountPopup updateManageUser">保存</a>
         </div>
     </div>
 

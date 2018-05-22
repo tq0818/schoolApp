@@ -8,6 +8,8 @@ body{min-width: 1920px;}
 .addTypeBtn a{margin :0 20px}
 .btnFile{position: relative;width: 60px;height: 24px;line-height: 24px;text-align: center;
     background: #e4e4e4;display: inline-block;overflow: hidden;border-radius:3px;border: 1px solid #c9c9c9;color: #c9c9c9;
-font-size: 12px;text-decoration: none;margin-left: 55px;margin-top: 5px;}
+font-size: 12px;text-decoration: none;margin-left: 60px;margin-top: 5px;}
 .btnFile input{opacity: 0;position: absolute;left: 0;top: 0;width: 60px;height: 24px;}
 .detailSeconPopupBtn{width: 60px;height: 18px;line-height: 18px !important;}
+.redIcon{color: red !important;}
+.paddingLeft{padding-left: 4px;}
