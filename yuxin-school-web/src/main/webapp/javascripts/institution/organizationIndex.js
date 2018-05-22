@@ -665,11 +665,11 @@ function findInsDate(page) {
                         '<a href="##" class="countManage" id="countManage" data-id="'+item.id+'">'+'账号管理'+'</a>|'+
                         '<a href="##" class="manageBtn">'+'管理'+'</a>'+
                         '<ul class="none box" style="display: none">'+
-                        '<li><a href="/InsInfoBase/findInsById?id='+item.id+'">基本信息</a>'+'</li>'+
-                        '<li><a href="/institutionStyle/queryInstitutionStyle?relationId='+item.id+'">风采管理</a>'+'</li>'+
-                        '<li><a href="/institutionClassType/classTypeMain/'+item.id+'">课程管理</a>'+'</li>'+
-                        '<li><a href="/InsInfoBase/famousTeacher/'+item.id+'">名师管理</a>'+'</li>'+
-                        '<li><a href="/comment/insCommentIndex?id='+item.id+'">评论管理</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/InsInfoBase/findInsById?id='+item.id+'">基本信息</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/institutionStyle/queryInstitutionStyle?relationId='+item.id+'">风采管理</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/institutionClassType/classTypeMain/'+item.id+'">课程管理</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/InsInfoBase/famousTeacher/'+item.id+'">名师管理</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/comment/insCommentIndex?id='+item.id+'">评论管理</a>'+'</li>'+
                         '</ul>'+
                         '</td>'+
                         '</tr>'

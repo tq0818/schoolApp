@@ -33,7 +33,7 @@
             <div class="addingMechanism" style="display: block;">
                     <div style="margin-top: 0;">
                         <span class="mechanismName">机构名称：</span>
-                        <input type="text" style="width: 460px;" maxlength="20" value="${ins.name}" id="insName" onblur="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\u4E00-\u9FA5]/g,''))">
+                        <input type="text" style="width: 460px;" maxlength="20" value="${ins.name}" id="insName">
                     </div>
                     <div id="orgType">
                         <span class="mechanismName">机构分类：</span>
@@ -297,7 +297,7 @@
         </div>
     </div>
     <div class="iconList">
-            <div style="height: 250px;" class="imgDiv">
+            <div style="height: 250px;width: 840px;" class="imgDiv">
             </div>
             <div class="pages pagination">
             </div>
@@ -305,7 +305,7 @@
 
 
         <%--特色服务图片弹窗--%>
-        <div class="mienPopup coverPopup" style="width: 234px; height: 240px; margin-left: -135px;z-index: 1000;">
+        <div class="mienPopup coverPopup" style="width: 234px; height: 260px; margin-left: -135px;z-index: 1000;">
             <div class="uploadImageStyle">
                 <label for="">分类图片：</label>
                 <img src="" alt="" id="targetStyle" style="width: 400px;height: 300px;">

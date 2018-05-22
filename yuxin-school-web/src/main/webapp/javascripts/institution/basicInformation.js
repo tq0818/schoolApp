@@ -242,12 +242,14 @@ var j = 1;
     });
 
     //隐藏
-    $('.mienHide').click(function(){
+    $('body').on('click','.mienHide',function () {
         $('.coverPopup').hide();
         $("#targetStyle").attr("src","");
+        if (jcrop_apis){
+            jcrop_apis.destroy();
+        }
         $('.commonPopup').hide();
-
-    });
+    })
 
     $(".uploadImageStyle").on("change","#targetStyle", function() {
         var theImage = new Image();
@@ -593,6 +595,7 @@ function updataIns() {
  * @param saveFlag
  */
 function savePic() {
+
     //改变图片时清空图片路径
     $("#targetStyle").attr("src","");
     $.ajaxFileUpload({
