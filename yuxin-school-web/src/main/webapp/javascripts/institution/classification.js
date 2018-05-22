@@ -218,7 +218,7 @@ function queryAllData(pageNo){
         url: rootPath + "/insCateManage/queryAllInsCate",
         data: {
             page:pageNo,
-            pageSize:12
+            pageSize:10
         },beforeSend: function (XMLHttpRequest) {
             $(".loading").show();
             $(".loading-bg").show();
