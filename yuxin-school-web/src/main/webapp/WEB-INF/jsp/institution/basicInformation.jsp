@@ -307,7 +307,7 @@
         <%--特色服务图片弹窗--%>
         <div class="mienPopup coverPopup" style="width: 234px; height: 260px; margin-left: -135px;z-index: 1000;">
             <div class="uploadImageStyle">
-                <label for="">分类图片：</label>
+                <label for="">特色服务：</label>
                 <img src="" alt="" id="targetStyle" style="width: 400px;height: 300px;">
                 <a href="javascript:void(0);" class="chooseImg">
                     <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgDataStyle" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic()" value="重新选择文件"/>

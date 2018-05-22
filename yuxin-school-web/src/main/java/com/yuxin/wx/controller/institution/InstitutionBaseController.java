@@ -1,5 +1,8 @@
 package com.yuxin.wx.controller.institution;
 
+import com.yuxin.wx.api.institution.InstitutionInfoService;
+import com.yuxin.wx.model.institution.InstitutionInfoVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/InsInfoBase")
 public class InstitutionBaseController {
+
+    @Autowired
+    private InstitutionInfoService institutionInfoService;
 
     @RequestMapping(value = "/organizationIndexZYT")
     public String findInsInfoList(){
@@ -71,6 +77,9 @@ public class InstitutionBaseController {
     //名师管理
     @RequestMapping(value = "/famousTeacher/{insId}")
     public String famousTeacher(Model model, @PathVariable Integer insId){
+        InstitutionInfoVo ins = institutionInfoService.findInstitutionInfoById(insId);
+        model.addAttribute("ins",ins);
+
         model.addAttribute("insId",insId);
         return "institution/famousTeacher";
     }
