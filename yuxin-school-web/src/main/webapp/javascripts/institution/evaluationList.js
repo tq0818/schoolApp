@@ -115,7 +115,9 @@ $(function () {
     });
 
     //初始机构化评论
-    let courseBtn = sessionStorage.getItem('courseBtn');
+    initInsComment();
+    $('.evaTitle').eq(0).addClass('active');
+    /*let courseBtn = sessionStorage.getItem('courseBtn');
     if(courseBtn=='机构评价'){
         initInsComment();
         $('.evaScreen').show();
@@ -126,7 +128,7 @@ $(function () {
         $('.evaScreen').hide();
         $('.curriculum').show();
         $('.evaTitle').eq(1).addClass('active');
-    }
+    }*/
 
 });
 
