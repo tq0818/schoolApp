@@ -168,6 +168,12 @@ public class InstitutionCategoryManageController {
     @ResponseBody
     @RequestMapping(value="/saveCutPic",method=RequestMethod.POST)
     public JSONObject saveCutPic(HttpServletRequest request, String path, double x, double y, double w, double h){
+
+        /**
+         * 1.教师头像
+         */
+        String insFlag = request.getParameter("insFlag");
+
         JSONObject json = new JSONObject();
         json.put("flag",1);
         String fileName=path.substring(path.lastIndexOf("/")+1);
@@ -202,15 +208,28 @@ public class InstitutionCategoryManageController {
         //示例图尺寸
         double slW=0;
         double slH=0;
-        if(realW/realH>200/200){
-            //过宽
-            slH=200 * realH/realW;
-            slW=200;
-        }else{
-            //过高
-            slH=200;
-            slW=200 * realW/realH;
+        if("1".equals(insFlag)){
+            if(realW/realH>100/100){
+                //过宽
+                slH=100 * realH/realW;
+                slW=100;
+            }else{
+                //过高
+                slH=100;
+                slW=100 * realW/realH;
+            }
+        }else {
+            if(realW/realH>200/200){
+                //过宽
+                slH=200 * realH/realW;
+                slW=200;
+            }else{
+                //过高
+                slH=200;
+                slW=200 * realW/realH;
+            }
         }
+
         //原图所选中位置和区域
 
         int xx=(new   Double(x*realW/slW)).intValue();

@@ -2,11 +2,14 @@ package com.yuxin.wx.controller.institution;
 
 import com.yuxin.wx.api.institution.InstitutionInfoService;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by lym_gxm on 18/5/6.
@@ -92,7 +95,13 @@ public class InstitutionBaseController {
     }
     //添加老师
     @RequestMapping(value = "/addFamousTeacher")
-    public String addFamousTeacher(){
+    public String addFamousTeacher(Model model, HttpServletRequest request){
+        if(StringUtils.isNotBlank(request.getParameter("id"))){
+           Integer insId = Integer.parseInt(request.getParameter("id"));
+            InstitutionInfoVo ins = institutionInfoService.findInstitutionInfoById(insId);
+            model.addAttribute("ins",ins);
+            model.addAttribute("insId",insId);
+        }
         return "institution/addFamousTeacher";
     }
 
