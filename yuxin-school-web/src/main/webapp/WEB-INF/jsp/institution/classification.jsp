@@ -52,15 +52,15 @@
                 <span style="font-size: 16px;margin-left: 50px;">分类管理</span>
                 <a href="javascript:void(0);"  class="btn btn-mb btn-primary addFirstBtn" style="float: right;">添加一级分类</a>
             <div class="user-list">
-                 <table class="table table-center" id="tableList">
-                    <tr data-buy="true">
-                        <th width="3%">序号</th>
-                        <th width="5%">一级分类</th>
-                        <th width="10%">二级分类</th>
-                        <th width="5%">启用状态</th>
-                        <th width="15%">操作</th>
-                    </tr>
-                </table>
+                 <%--<table class="table table-center" id="tableList">--%>
+                    <%--<tr data-buy="true">--%>
+                        <%--<th width="3%">序号</th>--%>
+                        <%--<th width="5%">一级分类</th>--%>
+                        <%--<th width="15%">二级分类</th>--%>
+                        <%--<th width="5%">启用状态</th>--%>
+                        <%--<th width="15%">操作</th>--%>
+                    <%--</tr>--%>
+                <%--</table>--%>
             </div>
         </div>
     </div>
