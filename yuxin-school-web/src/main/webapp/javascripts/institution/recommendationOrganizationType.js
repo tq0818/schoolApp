@@ -23,6 +23,7 @@ function getRecommendTypeList(){
             $(".loading-bg").hide();
         },
         success: function (json) {
+            console.log(json);
             var num = json.num;
             var list = json.data.data;
             var html = "";
@@ -47,6 +48,11 @@ function getRecommendTypeList(){
                             <td data-id="${list[i].id}" class="cancelRecommend">${list[i].firstRecommend != 1 ? '推荐' : '取消推荐'}</td>
                         </tr>
                 `;
+            }
+
+
+            if(list.length == 0){
+                html = "<tr><td colspan='5'>没有数据</td></tr>";
             }
 
             $(".paginationType").pagination(json.data.rowCount,

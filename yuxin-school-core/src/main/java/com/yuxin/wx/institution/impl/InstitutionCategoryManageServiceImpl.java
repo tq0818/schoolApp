@@ -199,13 +199,15 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
                 return -1;
             }
 
+            //查询所有en_abled = 1的数据，全部更新
             List<InstitutionCategoryVo> list = institutionManageMapper.queryInstitutionCategorysAfterSort(baseSort);
             List<CaseWhenVO> voList = new LinkedList<>();
             CaseWhenVO whenVO = null;
+            int sort = 1;
             for(InstitutionCategoryVo vo : list){
                 whenVO = new CaseWhenVO();
                 whenVO.setId(vo.getId());
-                whenVO.setSort(baseSort++);
+                whenVO.setSort(sort++);
                 voList.add(whenVO);
             }
            /* Map<String, Object> map = new HashMap<>();
