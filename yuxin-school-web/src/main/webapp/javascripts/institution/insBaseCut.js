@@ -12,7 +12,19 @@ var jcrop_apis;
            maxWidth = 150;
            minHeight =30 ;
            minWidth = 30;
-       }else {//老师头像比列
+       }else if(picFlag==3){
+           $scale = 300/120;
+           maxHeight = 120;
+           maxWidth = 300;
+           minHeight =10 ;
+           minWidth = 25;
+       }else if(picFlag==4){
+           $scale = 300/120;
+           maxHeight = 120;
+           maxWidth = 300;
+           minHeight =10 ;
+           minWidth = 25;
+       }else{//老师头像比列
             $scale = 100/100;
             maxHeight = 100;
             maxWidth = 100;
@@ -33,7 +45,7 @@ var jcrop_apis;
             onChange : showCoords,
             onSelect : showCoords,
             onRelease: clearCoords,
-            aspectRatio : $scale,
+            aspectRatio : picFlag==4?0:$scale,
             allowMove : true,
             bgColor : "#f2f2f2",
             borderOpacity : 0.4,

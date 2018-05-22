@@ -105,6 +105,7 @@ $(function () {
         //隐藏
     $('.mienHide').click(function(){
         $('.coverPopup').hide();
+        $('.commonPopup').hide();
         $("#targetStyle").attr("src","").attr("style","");
         if (jcrop_apis){
             jcrop_apis.destroy();
@@ -307,6 +308,7 @@ function savePic() {
 
 function popAddImg(){
     $(".coverPopup").show();
+    $.commonPopup();
 }
 
 /**
