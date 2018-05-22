@@ -268,7 +268,7 @@ function saveCutPic(saveFlag) {
             y : $("#y").val(),
             w : $("#w").val(),
             h : $("#h").val(),
-            content:saveFlag == 1?$("#videoContent").val():saveFlag == 2?$("#styleContent").text():"",
+            content:saveFlag == 1?$("#videoContent").val():saveFlag == 2?$("#styleContent").val():"",
             relationId:$("#institutionId").val(),
             sourceFlag:0,//机构风采
             type:saveFlag,// 0 封面 1视频 2风采

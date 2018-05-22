@@ -17,6 +17,7 @@ public class InstitutionStyleVo implements Serializable{
 	private String institutionName;//		风采名称
 	private Integer watchCount;//		观看次数
 	private Integer isVideo	;//	是否是视频(0否1是)
+	private String content;//描述
 	public Integer getInstitutionStyleId() {
 		return institutionStyleId;
 	}
@@ -47,6 +48,12 @@ public class InstitutionStyleVo implements Serializable{
 	}
 	public void setIsVideo(Integer isVideo) {
 		this.isVideo = isVideo;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
 	}
 	
 }

@@ -24,6 +24,11 @@ public class InstitutionCly implements Serializable{
 	private Integer isCertified;
 	private Integer reservCount;//预约数
 	private Integer commentCount;//评论数
+	private Integer isChain;//是否是连锁机构 0 否 1 是
+	
+	private Integer codeLevel;//几级分类
+	private Integer parentId;//
+	
 	public Integer getInstitutionId() {
 		return institutionId;
 	}
@@ -90,6 +95,24 @@ public class InstitutionCly implements Serializable{
 	}
 	public void setCommentCount(Integer commentCount) {
 		this.commentCount = commentCount;
+	}
+	public Integer getCodeLevel() {
+		return codeLevel;
+	}
+	public void setCodeLevel(Integer codeLevel) {
+		this.codeLevel = codeLevel;
+	}
+	public Integer getParentId() {
+		return parentId;
+	}
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+	public Integer getIsChain() {
+		return isChain;
+	}
+	public void setIsChain(Integer isChain) {
+		this.isChain = isChain;
 	}
 	
 }

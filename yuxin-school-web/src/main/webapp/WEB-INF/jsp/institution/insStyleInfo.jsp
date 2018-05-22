@@ -29,7 +29,7 @@
                         </li>
                         <c:forEach var="schoolStyle" items="${result}" varStatus="status">
                         	<li>
-                             <img src="${schoolStyle.imgUrl}" alt="" style="width: 100%;height: auto"  class="imgClick">
+                             <img src="${schoolStyle.imgUrl}" alt="" style="width: 100%;height: 100%"  class="imgClick">
                             <span class="imgInfo">${schoolStyle.content}</span>
                             <c:if test="${schoolStyle.isTop == 1}"><a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">已置顶</a></c:if>
                             <c:if test="${schoolStyle.isTop == 0}"><a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">未置顶</a></c:if>
@@ -82,6 +82,9 @@
     $('.btnStyleUpdate').click(function () {
         $('#elegant').show();
         $("#updateId").attr("value",$(this).attr("data-value"));
+        console.log($(this).parent());
+        $("#targetStyle").attr("src",$(this).parent().siblings(".imgClick").attr("src"));
+        $("#styleContent").val($(this).parent().siblings(".imgInfo").text());
     });
     
     //为图片添加点击事件,以便图片方大
