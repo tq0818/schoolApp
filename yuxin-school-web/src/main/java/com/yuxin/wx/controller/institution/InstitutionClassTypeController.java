@@ -717,7 +717,7 @@ public class InstitutionClassTypeController {
             JSONObject data = new JSONObject();
             data.put("id",entity.getId());
             data.put("face",entity.getCoverUrl());
-            data.put("fullFace","http://"+propertiesUtil.getProjectImageUrl()+entity.getCoverUrl());
+            data.put("fullFace","http://"+propertiesUtil.getProjectImageUrl()+"/"+entity.getCoverUrl());
             data.put("name",entity.getName());
             data.put("summary",entity.getSummary());
             data.put("price", FloatFormatUtil.format(entity.getPrice(),"0.00"));
@@ -731,7 +731,7 @@ public class InstitutionClassTypeController {
                     obj = new JSONObject();
                     obj.put("id",vo.getId());
                     obj.put("path",vo.getImgUrl());
-                    obj.put("url","http://"+propertiesUtil.getProjectImageUrl()+vo.getImgUrl());
+                    obj.put("url","http://"+propertiesUtil.getProjectImageUrl()+"/"+vo.getImgUrl());
                 styleArr.add(obj);
             }
 

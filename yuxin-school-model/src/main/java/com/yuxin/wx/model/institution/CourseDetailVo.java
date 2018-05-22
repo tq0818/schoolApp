@@ -22,6 +22,8 @@ public class CourseDetailVo {
 	private Integer isCommentMore;//是否还有更多评论
 	private Integer isHotCourseMore;//是否还有更多课程
 	private Integer reserCount;//预约人数
+	private String mobile;//电话号码
+	private Integer insId;//机构id
 	public Integer getCourseInfoId() {
 		return courseInfoId;
 	}
@@ -105,6 +107,18 @@ public class CourseDetailVo {
 	}
 	public void setReserCount(Integer reserCount) {
 		this.reserCount = reserCount;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public Integer getInsId() {
+		return insId;
+	}
+	public void setInsId(Integer insId) {
+		this.insId = insId;
 	}
 	
 }

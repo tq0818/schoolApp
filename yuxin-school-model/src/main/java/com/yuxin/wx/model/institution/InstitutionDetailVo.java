@@ -37,6 +37,7 @@ public class InstitutionDetailVo {
 	private Integer isCommentMore;//是否存在更多的评论
 	private Integer isGuessLikeMore;//是否显示换一批
 	private Integer isCollect;//是否收藏
+	private Integer isChain;//
 	public Integer getInstitutionId() {
 		return institutionId;
 	}
@@ -182,6 +183,12 @@ public class InstitutionDetailVo {
 	}
 	public void setIsCollect(Integer isCollect) {
 		this.isCollect = isCollect;
+	}
+	public Integer getIsChain() {
+		return isChain;
+	}
+	public void setIsChain(Integer isChain) {
+		this.isChain = isChain;
 	}
 	
 }

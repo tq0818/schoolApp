@@ -29,3 +29,4 @@ line-height: 40px;text-decoration: none;text-align: center;position: relative;ba
 .uploadImg input{position: absolute;left: 0;top: 0;width: 100%;height: 100%;opacity: 0;}
 .iconPic{width: 40px;height: 40px;}
 .specialService img{border-radius: 20px; }
+.specialService{margin-right: 15px;}

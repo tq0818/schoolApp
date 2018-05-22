@@ -218,7 +218,17 @@ public class InstitutionCategoryManageController {
                 slH=100;
                 slW=100 * realW/realH;
             }
-        }else {
+        }else if("3".equals(insFlag) || "4".equals(insFlag)){
+            if(realW/realH>300/120){
+                //过宽
+                slH=300 * realH/realW;
+                slW=300;
+            }else{
+                //过高
+                slH=120;
+                slW=120 * realW/realH;
+            }
+        }else{
             if(realW/realH>200/200){
                 //过宽
                 slH=200 * realH/realW;

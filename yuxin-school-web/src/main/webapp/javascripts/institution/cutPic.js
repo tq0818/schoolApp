@@ -6,19 +6,11 @@ var jcrop_apis;
         $img = picFlag == 0?$("#target"):picFlag == 1?$("#targetVideo"):$("#targetStyle");
         	//picFlag == 1?$("#targetVideo"):$("#targetStyle");
         //风采图
-       //if (picFlag == 2){
-       //    $scale = 150/150;
-       //    maxHeight = 150;
-       //    maxWidth = 150;
-       //    minHeight =30 ;
-       //    minWidth = 30;
-       //}else {//封面图比例
-            $scale = 300/120;
-            maxHeight = 120;
-            maxWidth = 300;
-            minHeight = 6;
-            minWidth = 15;
-       //}
+        $scale = 200/120;
+        maxHeight = 120;
+        maxWidth = 200;
+        minHeight = 3;
+        minWidth = 5;
         sourceWidth=initW;
         sourceHeight=initH;
         var initSize=resizePic();
@@ -33,7 +25,7 @@ var jcrop_apis;
             onChange : showCoords,
             onSelect : showCoords,
             onRelease: clearCoords,
-            aspectRatio : $scale,
+            aspectRatio :picFlag == 2?0:$scale,
             allowMove : true,
             bgColor : "#f2f2f2",
             borderOpacity : 0.4,
