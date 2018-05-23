@@ -85,6 +85,11 @@
         console.log($(this).parent());
         $("#targetStyle").attr("src",$(this).parent().siblings(".imgClick").attr("src"));
         $("#styleContent").val($(this).parent().siblings(".imgInfo").text());
+	      //初始化xywh
+	   	 $("#x").val("0");
+	   	 $("#y").val("0");
+	   	 $("#w").val("0");
+	   	 $("#h").val("0");
     });
     
     //为图片添加点击事件,以便图片方大

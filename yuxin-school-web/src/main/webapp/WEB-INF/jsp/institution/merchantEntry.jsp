@@ -58,6 +58,11 @@
         	</tr>
         </c:forEach>
     </table>
+     <c:if test="${rowCount == 0 }">
+     	<table style="width: 100%;">
+     		<tr><th>暂无数据</th></tr>
+     	</table>
+     </c:if>
      <div class="pages pageNa">
      </div>
    <%--  <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script> --%>

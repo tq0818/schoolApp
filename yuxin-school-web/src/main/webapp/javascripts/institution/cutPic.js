@@ -6,10 +6,10 @@ var jcrop_apis;
         $img = picFlag == 0?$("#target"):picFlag == 1?$("#targetVideo"):$("#targetStyle");
         	//picFlag == 1?$("#targetVideo"):$("#targetStyle");
         //风采图
-        $scale = 200/120;
+        $scale = 300/120;
         maxHeight = 120;
-        maxWidth = 200;
-        minHeight = 3;
+        maxWidth = 300;
+        minHeight = 2;
         minWidth = 5;
         sourceWidth=initW;
         sourceHeight=initH;

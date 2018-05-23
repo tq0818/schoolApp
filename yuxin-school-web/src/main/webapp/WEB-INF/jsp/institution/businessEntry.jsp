@@ -45,9 +45,9 @@
                     <div class="marginTop10  "  >
                         <span>申请时间</span>
 
-                        <input type="text" name="startTime" id="startTime" class="date-picker from"  readonly/>
+                        <input type="text" name="startTime" id="startTime" class="date-picker from" />
                         <em>到</em>
-                        <input type="text" name="endTime" id="endTime" class="date-picker to"  readonly/>
+                        <input type="text" name="endTime" id="endTime" class="date-picker to" />
 
                         <input type="text" placeholder="手机号" id="dimMobile"/>
                         <input type="text" placeholder="机构名称" id="dimInstitu"/>

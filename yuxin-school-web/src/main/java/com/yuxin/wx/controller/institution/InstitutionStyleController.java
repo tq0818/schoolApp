@@ -102,7 +102,12 @@ public class InstitutionStyleController {
 		List<InstitutionStyle> videoInfoList = institutionStyleServiceImpl.queryInstitutionStyle(institutionStyle);
 		if (videoInfoList != null && videoInfoList.size() >0) {
 			for (InstitutionStyle institutionStyle2 : videoInfoList) {
-				institutionStyle2.setImgUrl("http://"+propertiesUtil.getProjectImageUrl()+"/"+institutionStyle2.getImgUrl());
+				if (StringUtils.isEmpty(institutionStyle2.getImgUrl())) {
+					String str = "/manage/images/overview_demo.jpg";
+					institutionStyle2.setImgUrl(str);
+				}else{
+					institutionStyle2.setImgUrl("http://"+propertiesUtil.getProjectImageUrl()+"/"+institutionStyle2.getImgUrl());
+				}
 			}
 			//查询视频id
 			videoId = institutionStyleServiceImpl.queryInsVideoIdBySourceId(videoInfoList.get(0).getId());
@@ -191,7 +196,8 @@ public class InstitutionStyleController {
 //        String cssStyle = request.getParameter("cssStyle");
 //        String windowFlag = request.getParameter("windowFlag");
         String saveFlag = request.getParameter("saveFlag");
-        if (StringUtils.isNotEmpty(path)) {
+        boolean flag = false;
+        if (StringUtils.isNotEmpty(path) && (x != 0 || y != 0 || w != 0|| h !=0)) {
         	Properties props=null;
             try{
                 props= PropertiesLoaderUtils.loadProperties(resource);
@@ -233,10 +239,10 @@ public class InstitutionStyleController {
             //示例图尺寸
             double slW=0;
             double slH=0;
-            if(realW/realH>200/120){
+            if(realW/realH>300/120){
                 //过宽
-                slH=200 * realH/realW;
-                slW=200;
+                slH=300 * realH/realW;
+                slW=300;
             }else{
                 //过高
                 slH=120;
@@ -260,11 +266,12 @@ public class InstitutionStyleController {
             }
             FileUtil.deleteFile(target);
             FileUtil.deleteFile(cutImgPath);
+            flag = true;
 		}
         
         //判断是更新还是新增
         Date date = new Date();
-        if (StringUtils.isNotEmpty(realPath)) {
+        if (flag) {
         	institutionStyle.setImgUrl(realPath);
 		}
         institutionStyle.setCreateTime(date);
@@ -295,10 +302,13 @@ public class InstitutionStyleController {
 			insVideo.setId(new Integer(videoId));
 			//查询视频信息
 			InsVideo video = institutionStyleServiceImpl.queryInsVideo(insVideo);
-			video.setSourceId(institutionStyle.getId());
-			video.setVideoName(request.getParameter("videoName"));
-			video.setUpdateTime(date);
-			institutionStyleServiceImpl.updateInsVideo(video);
+			//存在更新
+			if (video != null) {
+				video.setSourceId(institutionStyle.getId());
+				video.setVideoName(request.getParameter("videoName"));
+				video.setUpdateTime(date);
+				institutionStyleServiceImpl.updateInsVideo(video);
+			}
 		}
         jsonObject.put("flag","1");
         return jsonObject;
@@ -562,7 +572,7 @@ public class InstitutionStyleController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/delVideo")
+    @RequestMapping(value = "/delVideo",method = RequestMethod.POST)
     public String delVideo(Integer relationId) {
         Integer companyId = WebUtils.getCurrentCompanyId();
         CompanyPayConfig config = companyPayConfigServiceImpl.findByCompanyId(companyId);
@@ -574,6 +584,9 @@ public class InstitutionStyleController {
         InsVideo insVideo = new InsVideo();
 		insVideo.setId(relationId);
 		InsVideo video = institutionStyleServiceImpl.queryInsVideo(insVideo);
+		if(video == null){
+			return "success";
+		}
         // 增加乐视视频删除 hanrb
         Map<String, String> params = new HashMap<String, String>();
         params.put("userid", config.getCcUserId());

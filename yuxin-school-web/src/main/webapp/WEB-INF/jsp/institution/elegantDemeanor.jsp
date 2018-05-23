@@ -135,7 +135,7 @@
         <span class="videoIntro">视频名称:</span>
         <input type="text" style="width: 248px;height: 18px;" class="videoStyle" maxlength="30">
         <!-- <div id="videoFile"> -->
-	        <form id="fileupload" method="POST" enctype="multipart/form-data" action="" style="margin-left: 326px;margin-top: -27px">
+	        <form id="fileupload" method="POST" enctype="multipart/form-data" action="" style="margin-left: 329px;margin-top: -29px">
 				 <a href="javascript:void(0)" class="addVideo">
 	            +
 	            	<input type="file" name="file" accept=".avi,.mp4*,.asf,.sdx,.wmv,.rmvb,.3gp,.mkv,.flv,.f4v,.rm,.ra,.ram,.mpg,.pgeg,.mpe,.vob,.dat,.mov,.3gp,.mts" id="filebutton" class="filebutton" multiple="">

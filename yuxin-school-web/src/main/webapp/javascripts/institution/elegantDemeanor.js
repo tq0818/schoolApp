@@ -1,3 +1,4 @@
+
 $(function () {
     //    左侧active切换
     $selectSubMenus('elegantDemeano');
@@ -14,8 +15,23 @@ $(function () {
         $("#targetVideo").attr("src","").attr("style","").attr("style","width: 136px;height: 116px;");
         $(".writeWord").val("");
         $(".videoStyle").val("");
-        //重新设置videoId,以便上传的视频但没有保存
-        $("#videoId").val($("#oldVideoId").val());
+        //取消保存的时候，如果是新增则删除视频信息，如果是修改，则需要判断是否上传过视频
+        var oldVideoId = $("#oldVideoId").val();
+        var videoId = $("#videoId").val();
+        if(videoId != oldVideoId && videoId !=0 &&videoId !=''&&videoId !=null ){
+        	$.ajax({
+                url : rootPath + "/institutionStyle/delVideo",
+                data : {
+                	"relationId":videoId
+                },
+                type : "post",
+                dataType : "json",
+                success : function(data) {
+                	//刷新一下页面
+            		window.location.href=rootPath +"/institutionStyle/queryInstitutionStyle?relationId="+$("#institutionId").val();
+                }
+            });
+        }
     });
     
     $(".btnVideoUpdate").click(function(){
@@ -23,7 +39,13 @@ $(function () {
     	 $(".videoStyle").val($("#videoInfoName").val());
          $(".writeWord").val($("#videoInfoContent").val());
          $("#targetVideo").attr("src",$("#videoInfoImg").attr("src"));
-         
+         //将更新id设置到updateId上去
+    	 $("#updateId").val($("#videoInfoId").val());
+         //初始化xywh
+    	 $("#x").val("0");
+    	 $("#y").val("0");
+    	 $("#w").val("0");
+    	 $("#h").val("0");
     });
 
     //点击风采上传弹窗
@@ -47,7 +69,12 @@ $(function () {
     	 //将原有图片设置上去
     	 $('#target').attr("src",$(this).attr("data-value"));
     	 //将更新id设置到updateId上去
-    	 $("#updateId").attr("value",$("#coverId").val());
+    	 $("#updateId").val($("#coverId").val());
+    	 //初始化xywh
+    	 $("#x").val("0");
+    	 $("#y").val("0");
+    	 $("#w").val("0");
+    	 $("#h").val("0");
     });
     //关闭大图
     $(document).click(function(){
@@ -121,26 +148,26 @@ $(function () {
 
 //上传临时图片 2为风采  1为视频 0为封面
 function savePic(saveFlag) {
-    var fileStr = $("#imgData").val();
+	var fileStr = $("#imgData").val();
     if(fileStr){
-        if(!(fileStr.indexOf(".jpg")>0
-            ||fileStr.indexOf(".jpeg")>0
-            ||fileStr.indexOf(".gif")>0
-            ||fileStr.indexOf(".png")>0
-            ||fileStr.indexOf(".bmp")>0
-            ||fileStr.indexOf(".ico")>0)){
+        if(!(fileStr.indexOf(".jpg")==(fileStr.length-4)
+            ||fileStr.indexOf(".jpeg")==(fileStr.length-5)
+            ||fileStr.indexOf(".gif")==(fileStr.length-4)
+            ||fileStr.indexOf(".png")==(fileStr.length-4)
+            ||fileStr.indexOf(".bmp")==(fileStr.length-4)
+            ||fileStr.indexOf(".ico")==(fileStr.length-4))){
             alert("上传封面仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
             return;
         }
     }
     var fileStr1 = $("#imgDataStyle").val();
     if(fileStr1){
-        if(!(fileStr1.indexOf(".jpg")>0
-            ||fileStr1.indexOf(".jpeg")>0
-            ||fileStr1.indexOf(".gif")>0
-            ||fileStr1.indexOf(".png")>0
-            ||fileStr1.indexOf(".bmp")>0
-            ||fileStr1.indexOf(".ico")>0)){
+        if(!(fileStr1.indexOf(".jpg")==(fileStr1.length-4)
+            ||fileStr1.indexOf(".jpeg")==(fileStr1.length-5)
+            ||fileStr1.indexOf(".gif")==(fileStr1.length-4)
+            ||fileStr1.indexOf(".png")==(fileStr1.length-4)
+            ||fileStr1.indexOf(".bmp")==(fileStr1.length-4)
+            ||fileStr1.indexOf(".ico")==(fileStr1.length-4))){
             alert("上传风采图仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
             return;
         }
@@ -149,18 +176,16 @@ function savePic(saveFlag) {
     var fileStr2 = $("#imgDataVideo").val();
     //.jpg,.jpeg,.gif,.png,.bmp,.ico
     if(fileStr2){
-        if(!(fileStr2.indexOf(".jpg")>0
-            ||fileStr2.indexOf(".jpeg")>0
-            ||fileStr2.indexOf(".gif")>0
-            ||fileStr2.indexOf(".png")>0
-            ||fileStr2.indexOf(".bmp")>0
-            ||fileStr2.indexOf(".ico")>0)){
+        if(!(fileStr2.indexOf(".jpg")==(fileStr2.length-4)
+            ||fileStr2.indexOf(".jpeg")==(fileStr2.length-5)
+            ||fileStr2.indexOf(".gif")==(fileStr2.length-4)
+            ||fileStr2.indexOf(".png")==(fileStr2.length-4)
+            ||fileStr2.indexOf(".bmp")==(fileStr2.length-4)
+            ||fileStr2.indexOf(".ico")==(fileStr2.length-4))){
             alert("上传视频封面仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
             return;
         }
     }
-
-
     //选择的时候应先清空，
     if (saveFlag == 0){
         $("#target").attr("src","");
@@ -237,6 +262,11 @@ function saveCutPic(saveFlag) {
         //判断视频名称和视频描述是否为空
         if(!$(".videoStyle").val()||!$("#videoContent").val()){
         	$.msg("有必录项未录入");
+        	return false;
+        }
+        var videoIds = $("#videoId").val();
+        if(videoIds == null || videoIds == '' || videoIds ==0){
+        	$.msg("未上传视频");
         	return false;
         }
         //处理重复提交
@@ -317,7 +347,7 @@ function saveCutPic(saveFlag) {
 //            $('.commonPopup').fadeOut();
 //            $('.coverPopup').fadeOut();
         }
-    })
+    });
     $("#chooseDiv").css("display", "none");
     $("#stopDiv").css("display", "none");
     return;
