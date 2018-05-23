@@ -166,7 +166,7 @@ function addCourseListener(){
             return;
         }
 
-        if(price > 1000000){
+        if(price > 99999){
             $('#classPrice').val(price.substr(0,price.length - 1));
             return;
         }
@@ -352,7 +352,7 @@ function saveCutPic() {
                     $('#imgTop').html("<img src='" +data.header+data.realPath + "'  alt=\"\" style=\"width: 150px;height: auto;margin-left: 15px;\">");
                     $('#hidTop').val(data.realPath);
                 }else{
-                    $('#coverReturn').html("<img src='" +data.header+data.realPath + "'  alt=\"\" style=\"width: 100%; max-height: 260px;\">");
+                    $('#coverReturn').html("<img src='" +data.header+data.realPath + "'  alt=\"\" style=\"width: 100%; max-height: 190px;\">");
                     $('#hidCoverTop').val(data.realPath);
                 }
             }else {

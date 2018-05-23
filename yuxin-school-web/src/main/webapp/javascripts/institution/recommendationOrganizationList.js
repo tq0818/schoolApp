@@ -22,9 +22,19 @@ function getIndexRecommendList(){
             $(".loading-bg").hide();
         },
         success: function (json) {
-            console.log(json);
+          //  console.log(json);
+            if(json.status != 1){
+                $.msg(json.msg);
+                return;
+            }
             var list = json.data.list;
             var html = "";
+
+            //判断是否还有下一页，用于判断最后一个推荐机构上下箭头有几个的问题
+            var nowPage = parseInt(nowIndexPage/pageSize) + 1;
+            var pageNum = json.data.count <= 10 ? 1 : parseInt(json.data.count / pageSize) + 1;
+            var hasNextPage = pageNum > nowPage ;
+
             for(var i in list){
                 html += `
                     <tr>
@@ -35,7 +45,7 @@ function getIndexRecommendList(){
                         <td class="relationResult">${list[i].is_recommend == 1 ? '已推荐' : '未推荐'}</td>
                         <td>${
                     list[i].is_recommend == 1 ?
-                        ( list[i].sort + ( list[i].sort + parseInt(i) == 1 ?
+                        ( parseInt(i)+1 + ( ( list.length > 1 && parseInt(i) == 0 && list[parseInt(i) + 1].is_recommend != 1) || (list.length == 1 && nowIndexPage == 0) ? '' : parseInt(i) == 0 ?
                             "<i data-id='"+list[i].rid+"' data-status='down' class='icon iconfont'>&#xe6e4;</i>"
                             : ( list[i].sort == json.data.maxSort ||  list[i].sort == json.data.recommendNum || (parseInt(i) < list.length - 1 && list[parseInt(i) + 1].is_recommend != 1 ) ?
                                     "<i data-id='"+list[i].rid+"' data-status='up' class='icon iconfont'>&#xe6e3;</i>" :
@@ -47,6 +57,12 @@ function getIndexRecommendList(){
                     </tr>
                 `;
             }
+
+
+            if(list.length == 0){
+                html = "<tr><td colspan='7'>没有数据</td></tr>";
+            }
+
 
             $("#indexRecommendTbody").html(html);
 
@@ -147,22 +163,25 @@ function getStatus(){
  */
 function getRecommendTypeData(){
     $.post(rootPath + '/institutionRecommend/typeListAll' , {type:1} , function(json){
-        console.log(json);
 
-    var recommendNum = 0;
+
+    var arr = new Array();
+    for(var i in json){
+        if(json[i].thirdRecommend == 1){
+            arr.push(json[i]);
+        }
+    }
+
+    json = arr;
 
     var html = '<span>推荐分类</span>';
         for(var i in json){
-            if(json[i].firstRecommend == 1){
-                if(recommendNum == 0){
-                    html += "<a href=\"##\" data-id='"+json[i].id+"' class=\"btn recommendTypeBtn btn-default btn-primary btn-sm\">"+json[i].codeName+"<span class='pullRight'>></span></a>" ;
-                    recommendNum ++ ;
-                }else{
-                    html += "<a href=\"##\" data-id='"+json[i].id+"' class=\"btn recommendTypeBtn btn-default  btn-sm\"><span class='pullLeft'><</span>"+json[i].codeName+"<span class='pullRight'>></span></a>" ;
-                    recommendNum ++ ;
-                }
+            html += parseInt(i) == 0 ? '<a href="##"  class="btn  btn-default btn-primary btn-sm">' :  '<a href="##"  class="btn  btn-default  btn-sm">';
+            html += parseInt(i) == 0 ?'':"<span class='pullLeft' data-id='"+json[i].id+"'>&lt;</span>";
+            html += "<span data-id='"+json[i].id+"' class='recommendTypeBtn'>"+json[i].codeName+"</span>";
+            html += parseInt(i) == json.length - 1 ? '' : "<span class='pullRight' data-id='"+json[i].id+"'>&gt;</span>";
+            html += '</a>';
 
-            }
         }
 
         html += " <span>\n" + "<a href=\"/InsInfoBase/recommendationHomeC/1\" style=\"color: red;\">管理</a>\n" + "</span>";
@@ -171,6 +190,7 @@ function getRecommendTypeData(){
 
 
        $('.recommendTypeBtn').click(function() {
+
            //取消其他标签的class属性
            var alist = $('#recommendBtnContainor').find('.recommendTypeBtn');
           // console.log(alist);
@@ -195,11 +215,41 @@ function getRecommendTypeData(){
 $(function () {
     //点击箭头
     $('body').on('click', '.pullLeft', function () {
-        alert("点击了左边");
+        //alert("点击了左边");
+
+        $.post(rootPath+'/institutionRecommend/changeSort',{
+            third:1,
+            method:'up',
+            id:$(this).attr('data-id')
+        },function(json){
+           if(json.status == 1){
+               $.msg('操作成功',10,function(){
+                   getRecommendTypeData();
+               })
+           }else{
+               $.msg('操作失败');
+           }
+        })
+
     });
     $('body').on('click', '.pullRight', function () {
-        alert("点击了右边");
+        $.post(rootPath+'/institutionRecommend/changeSort',{
+            third:1,
+            method:'down',
+            id:$(this).attr('data-id')
+        },function(json){
+            if(json.status == 1){
+                $.msg('操作成功',10,function(){
+                    getRecommendTypeData();
+                })
+            }else{
+                $.msg('操作失败');
+            }
+        })
     });
 });
+
+
+
 
 

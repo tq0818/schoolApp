@@ -177,8 +177,14 @@ var j = 1;
     //保存修改的内容
     $('.updateIns').click(function () {
         //判断机构名称是否为空
-        var insName = $("#insName").val();
+        /*var insName = $("#insName").val();
         if(insName == '' || insName == null){
+            $.msg("机构名称不能为空！");
+            return;
+        }*/
+        var insName = $("#insName").val();
+        insName = insName.split(" ").join("");
+        if(insName.length == 0){
             $.msg("机构名称不能为空！");
             return;
         }
@@ -217,11 +223,21 @@ var j = 1;
             }
         }
 
-        var quhao = listMachineChi.eq(i).children('input').eq(0).val();
-        var num = listMachineChi.eq(i).children('input').eq(1).val();
-        if(quhao == ""&& quhao!=""){
-            $.msg("");
+        let listMachineChi = $('#listMachine').children('div');
+        for(let i=0;i<listMachineChi.length;i++){
+            var quhao = listMachineChi.eq(i).children('input').eq(0).val();
+            var num = listMachineChi.eq(i).children('input').eq(1).val();
+            if(quhao == ""&& num!=""){
+                $.msg("电话号码不完整！");
+                return;
+            }
+            if(quhao != ""&& num==""){
+                $.msg("电话号码不完整！");
+                return;
+            }
         }
+
+
 
         //拼接电话号码
         let telephone = [];
@@ -250,13 +266,14 @@ var j = 1;
         let iconPicName = $('.iconPicName');
         let iconPicNameArr = [];
         for(let i = 0;i<iconPicName.length;i++){
-            if(iconPicName.eq(i).val() == ''){
-               $.msg("特色服务标签名称不能为空！");
-               return;
+            var picName = iconPicName.eq(i).val();
+            picName = picName.split(" ").join("");
+            if(picName.length == 0){
+                $.msg("特色服务标签名称不能为空！");
+                return;
             }else{
                 iconPicNameArr.push(iconPicName.eq(i).val());
             }
-
         }
 
         if(checkData(insCat,0)==1){

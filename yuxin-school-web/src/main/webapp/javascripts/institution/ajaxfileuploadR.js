@@ -36,7 +36,8 @@ jQuery.extend({
             }
         }
         var oldElement = jQuery('#' + fileElementId);
-        var newElement = jQuery(oldElement).clone();
+        //var newElement = jQuery(oldElement).clone();
+        var newElement = $(oldElement).clone(true).val("");
         jQuery(oldElement).attr('id', fileId);
         jQuery(oldElement).before(newElement);
         jQuery(oldElement).appendTo(form);

@@ -127,4 +127,9 @@
     </select>
 
 
+    <delete id="deleteInstitutionLabelById" parameterType="Integer" >
+        DELETE FROM `institution_label` WHERE `id` = #{id}
+    </delete>
+
+
 </mapper>

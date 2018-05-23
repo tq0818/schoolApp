@@ -49,6 +49,22 @@ $(function () {
     })
 
 
+    //设定取消按钮参数
+    var type = $("#recommendType").val();
+    $('.cancelBtn').click(function(){
+       // window.location.href = '/InsInfoBase/recommendationOrganization';
+        $(".loading").show();
+        $(".loading-bg").show();
+        if(type == 0){
+            //首页分类推荐
+            window.location.href = '/InsInfoBase/recommendationOrganization';
+        }else{
+            //首页列表推荐
+            window.location.href = '/InsInfoBase/recommendationOrganization?type=2';
+        }
+    });
+
+
 
 });
 
@@ -78,9 +94,14 @@ function getTreeData(){
             var oneArr = new Array();
             for(var i in json){
                 if(json[i].codeLevel == 1){
-                    oneArr.push({name:json[i].codeName,children:new Array() , checked:(type == 0 ? json[i].thirdRecommend == 1 : json[i].firstRecommend == 1 ), id:json[i].id  });
+                    console.log('type = '+type);
+                    if(type == 0){
+                        oneArr.push({name:json[i].codeName,children:new Array() , checked:( json[i].firstRecommend == 1), id:json[i].id  });
+                    }else{
+                        oneArr.push({name:json[i].codeName,children:new Array() , checked:( json[i].thirdRecommend == 1  ), id:json[i].id  });
+                    }
                 }else{
-                    findAndAddChildren(oneArr,json[i]);
+                    findAndAddChildren(oneArr,json[i],type);
                 }
             }
 
@@ -107,10 +128,10 @@ function getTreeData(){
 }
 
 //前端组装tree
-function findAndAddChildren(oneArr , child){
+function findAndAddChildren(oneArr , child,type){
     for(var i = 0 ;i<oneArr.length;i++){
         if(oneArr[i].id == child.parentId){
-            oneArr[i].children.push({name:child.codeName,id:child.id , checked : child.thirdRecommend == 1})
+            oneArr[i].children.push({name:child.codeName,id:child.id , checked : (type == 0 ? child.firstRecommend == 1 : child.thirdRecommend == 1) })
         }
     }
 }
