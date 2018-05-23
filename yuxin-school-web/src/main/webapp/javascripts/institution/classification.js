@@ -12,6 +12,7 @@ $(function () {
     $('.addFirstBtn').click(function () {
         fillData("添加一级分类");
         $("#addConfirm").attr("onclick","addData();");
+        $("#addConfirm").html("").html("确认添加");
     });
     $(".btnFile").click(function(){
         $(".coverPopup").show();
@@ -162,6 +163,7 @@ function openDetails(level,updateId){
     }else {//二级
         fillData("二级分类详情");
     }
+    $("#addConfirm").html("").html("保存");
     //绑定更新函数
     $("#addConfirm").attr("onclick","updatedata('2',"+updateId+",'')");
     //查询分类基本信息
@@ -187,6 +189,7 @@ function openDetails(level,updateId){
 function openSecAdd(parentId){
     fillData("添加二级分类");
     $("#addConfirm").attr("onclick","addData("+parentId+");");
+    $("#addConfirm").html("").html("确认添加");
 }
 
 /**
