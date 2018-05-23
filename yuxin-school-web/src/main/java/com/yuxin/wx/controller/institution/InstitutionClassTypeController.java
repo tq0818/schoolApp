@@ -553,12 +553,13 @@ public class InstitutionClassTypeController {
 
             entity.setSummary(summary);
             entity.setDetaildesc(detail);
-            entity.setIsShelves(0);
+
             entity.setDelFlag(0);
 
             entity.setUpdateTime(new Date());
             if (id <= 0) {
                 //新增线下课程
+                entity.setIsShelves(0);
                 entity.setCreateTime(new Date());
                 entity.setIsRecommend(0);
                 //新增课程不修改数据库，直接将课程中的风采、标签写入数据库

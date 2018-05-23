@@ -41,7 +41,7 @@ function addCourseListener(){
     //新增弹窗
     $('.openPopup').click(function () {
         var num = $("#styleContainer").find('li').length - 1;
-        if (num >= MAX_STYLE) {
+        if (num >= MAX_STYLE && !$(this).hasClass('alterBtn')) {
             $.msg('已超过课程风采数量');
             return;
         }
@@ -61,12 +61,14 @@ function addCourseListener(){
     $('.closeElePicCommit').click(function () {
         var imgUrl = $("#hidCoverTop").val();
         var id = $("#hidCoverFid").val();
+        var index = $('#hidCoverSort').val();
         if (imgUrl == null || imgUrl == '') {
             $.msg('请上传图片');
             return;
         }
 
-        if (id == null || id == '') {
+        if ( (id == null || id == '') && index == '' ) {
+            //新增风采
             var num = $("#styleContainer").find('li').length - 1;
             if (num >= MAX_STYLE) {
                 $.msg('已超过课程风采数量');
@@ -96,7 +98,14 @@ function addCourseListener(){
 
             //添加完节点后添加监听器
             $('.deleteBtn').click(function () {
-                $(this).parent('div').parent('li').remove();
+                var dom = this;
+                $.confirm('是否确定删除该风采图片?',function (data) {
+                    if(data){
+                        $(dom).parent('div').parent('li').remove();
+                        //刷新li的data-i
+                        flushLiDataI();
+                    }
+                })
             })
 
             $('.alterBtn').click(function () {
@@ -115,18 +124,19 @@ function addCourseListener(){
                 $('#cover').show();
             });
 
+            //刷新li的data-i
+            flushLiDataI();
+
         } else {
             //修改风采
-
+            //console.log('执行修改风采...');
             var i = $('#hidCoverSort').val();
-            var dom = $("#styleContainer").find('li').eq(i + 1);
-            for (var i in dom) {
-                if ($(dom).eq(i).attr('data-i') == i) {
-                    $(dom).find('span').eq(0).html($('#coverReturn').html());
-                    $(dom).find('input').eq(0).val($("#hidCoverTop").val());
-                    $('#cover').hide();
-                }
-            }
+
+            $("#styleContainer").find('li').eq(parseInt(i) + 1).find('span').eq(0).html($('#coverReturn').html())
+            $("#styleContainer").find('li').eq(parseInt(i) + 1).find('input').eq(0).val($("#hidCoverTop").val())
+
+            $('#cover').hide();
+
 
         }
 
@@ -146,7 +156,7 @@ function addCourseListener(){
     //添加限制人数监听器，>= 0
     $('#classPersonLimit').bind('input propertychange', 'input' , function(){
         var val = $('#classPersonLimit').val();
-        if(isNaN(val)){
+        if(isNaN(val) || val > 999999){
             $('#classPersonLimit').val(val.substr(0,val.length - 1));
             return;
         }
@@ -246,9 +256,16 @@ function addCourseListener(){
     })
 
 
-
+    //删除风采图片事件监听
     $('.deleteBtn').click(function () {
-        $(this).parent('div').parent('li').remove();
+        var dom = this;
+        $.confirm('是否确定删除该风采图片?',function (data) {
+            if(data){
+                $(dom).parent('div').parent('li').remove();
+                //刷新li的data-i
+                flushLiDataI();
+            }
+        })
     })
 
     $('.alterBtn').click(function () {
@@ -276,6 +293,17 @@ function addCourseListener(){
         }
 
     })
+
+    //取消按钮监听
+    $('.closeMechanismCancel').click(function(){
+
+        $(".loading").show();
+        $(".loading-bg").show();
+       // window.history.back()
+       window.location.href = '/institutionClassType/classTypeMain/'+$("#insId").val();
+
+    })
+
 
 }
 
@@ -330,6 +358,7 @@ function saveCutPic() {
     //处理剪切框的宽高
     dealWidthAndHeight(temp);
     var imgType = $("#imgType").val();
+   // console.log($("#targetStyle").attr("src"));
     //上传截取后的图片
     $.ajax({
         url : rootPath + "/insCateManage/saveCutPic",
@@ -356,7 +385,7 @@ function saveCutPic() {
                     $('#hidCoverTop').val(data.realPath);
                 }
             }else {
-                // $.msg(data.msg);
+                 $.msg(data.msg);
             }
             $("#targetStyle").attr("src","");
             if (jcrop_apis){
@@ -380,15 +409,22 @@ function popAddImg(imgType){
 function savePic() {
     //改变图片时清空图片路径
     $("#targetStyle").attr("src","");
+   // console.log($("#targetStyle").attr("src"));
     var fileStr = $("#imgDataStyle").val();
     //.jpg,.jpeg,.gif,.png,.bmp,.ico
-    if(!(fileStr.indexOf(".jpg")==(fileStr.length-4)
-        ||fileStr.indexOf(".jpeg")==(fileStr.length-5)
-        ||fileStr.indexOf(".gif")==(fileStr.length-4)
-        ||fileStr.indexOf(".png")==(fileStr.length-4)
-        ||fileStr.indexOf(".bmp")==(fileStr.length-4)
-        ||fileStr.indexOf(".ico")==(fileStr.length-4))){
-        alert("上传文件仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
+    if(!(fileStr.indexOf(".jpg")>0
+        ||fileStr.indexOf(".jpeg")>0
+        ||fileStr.indexOf(".gif")>0
+        ||fileStr.indexOf(".png")>0
+        ||fileStr.indexOf(".bmp")>0
+        ||fileStr.indexOf(".ico")>0)){
+        alert("上传文件仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
+       //
+        $("#imgDataStyle").val('');
+        /*if(!$("#targetStyle").attr("src")){
+
+        }*/
+
         return;
     }
     $.ajaxFileUpload({

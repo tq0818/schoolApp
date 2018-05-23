@@ -304,9 +304,11 @@ function getClassTypeList(){
            var html = `<li class="addImg mienShow" id="">
                             <i class="icon iconfont"></i>
                        </li>`;
+           // <img src="${list[i].coverUrl == null || list[i].coverUrl == '' ? '' :  list[i].fullCoverUrl}" alt="" style="width: 100%;max-height:190px;">
            for(var i in list){
                html += `<li>
-                            <img src="${list[i].fullCoverUrl}" alt="" style="width: 100%;max-height:190px;">
+                            ${list[i].coverUrl == null || list[i].coverUrl == '' ? '' : "<img src='"+list[i].fullCoverUrl+"' alt='' style=\"width: 100%;max-height:190px\";>" }
+
                                 <span class="imgInfo">${list[i].name}</span>
                                 ${
                                     list[i].isReser == 1 ? 
