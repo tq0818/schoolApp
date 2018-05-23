@@ -418,12 +418,12 @@ function savePic() {
     $("#targetStyle").attr("src","");
     var fileStr = $("#imgDataStyle").val();
     //.jpg,.jpeg,.gif,.png,.bmp,.ico
-    if(!(fileStr.indexOf(".jpg")>0
-        ||fileStr.indexOf(".jpeg")>0
-        ||fileStr.indexOf(".gif")>0
-        ||fileStr.indexOf(".png")>0
-        ||fileStr.indexOf(".bmp")>0
-        ||fileStr.indexOf(".ico")>0)){
+    if(!(fileStr.indexOf(".jpg")==(fileStr.length-4)
+        ||fileStr.indexOf(".jpeg")==(fileStr.length-5)
+        ||fileStr.indexOf(".gif")==(fileStr.length-4)
+        ||fileStr.indexOf(".png")==(fileStr.length-4)
+        ||fileStr.indexOf(".bmp")==(fileStr.length-4)
+        ||fileStr.indexOf(".ico")==(fileStr.length-4))){
         alert("上传文件仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
         return;
     }

@@ -77,7 +77,7 @@
                             </span>
                 </div>
                 <div>
-                    <span class="mechanismName">老师简介：</span>
+                    <span class="mechanismName">老师简介-建议上传图片尺寸为100*100px</span>
                     <p>
                         <textarea name="" id="summary" maxlength="300"  style="width: 390px;height: 84px;
                         border: 1px solid #aeaeae;margin-left: 70px;margin-top: 10px;" ></textarea>

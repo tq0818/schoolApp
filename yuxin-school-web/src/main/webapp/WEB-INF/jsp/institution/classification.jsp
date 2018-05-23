@@ -92,7 +92,7 @@
     <%--分类图片弹窗--%>
     <div class="mienPopup coverPopup">
         <div class="uploadImageStyle">
-            <label for="">分类图片：</label>
+            <label for="">分类图片-建议上传图片尺寸为200*200px</label>
             <img src="" alt="" id="targetStyle" style="width: 400px;height: 300px;">
             <a href="javascript:void(0);" class="chooseImg">
                 选择图片
