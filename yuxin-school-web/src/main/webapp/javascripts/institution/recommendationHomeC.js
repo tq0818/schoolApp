@@ -49,6 +49,22 @@ $(function () {
     })
 
 
+    //设定取消按钮参数
+    var type = $("#recommendType").val();
+    $('.cancelBtn').click(function(){
+       // window.location.href = '/InsInfoBase/recommendationOrganization';
+        $(".loading").show();
+        $(".loading-bg").show();
+        if(type == 0){
+            //首页分类推荐
+            window.location.href = '/InsInfoBase/recommendationOrganization';
+        }else{
+            //首页列表推荐
+            window.location.href = '/InsInfoBase/recommendationOrganization?type=2';
+        }
+    });
+
+
 
 });
 

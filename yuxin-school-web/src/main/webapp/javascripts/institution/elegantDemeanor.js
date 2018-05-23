@@ -20,8 +20,8 @@ $(function () {
     
     $(".btnVideoUpdate").click(function(){
     	 $('.videoUpload').show();
-    	 $(".writeWord").val($("#videoInfoName").val());
-         $(".videoStyle").val($("#videoInfoContent").val());
+    	 $(".videoStyle").val($("#videoInfoName").val());
+         $(".writeWord").val($("#videoInfoContent").val());
          $("#targetVideo").attr("src",$("#videoInfoImg").attr("src"));
          
     });
@@ -230,16 +230,14 @@ function saveCutPic(saveFlag) {
         dealWidthAndHeight(temp);
     }else if(saveFlag == 1){
     	//判断图片是否为空或则是未更改就进行保存
-        if (!$("#targetVideo").attr("src")){
-            $.msg("未选择图片");
-            return ;
-        }
+//        if (!$("#targetVideo").attr("src")){
+//            $.msg("未选择图片");
+//            return ;
+//        }
         //判断视频名称和视频描述是否为空
         if(!$(".videoStyle").val()||!$("#videoContent").val()){
-        	console.log($(".videoStyle").val());
-        	console.log($("#videoContent").val());
         	$.msg("有必录项未录入");
-        	return ;
+        	return false;
         }
         //处理重复提交
 //        if(!id){

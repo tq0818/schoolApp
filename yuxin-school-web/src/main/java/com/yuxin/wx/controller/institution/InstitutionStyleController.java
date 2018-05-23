@@ -188,105 +188,85 @@ public class InstitutionStyleController {
         Map<String,Object>params = new HashMap<String,Object>();
         params.put("id",updateId==null?-1:updateId);
         String realPath=null;
-        String cssStyle = request.getParameter("cssStyle");
-        String windowFlag = request.getParameter("windowFlag");
+//        String cssStyle = request.getParameter("cssStyle");
+//        String windowFlag = request.getParameter("windowFlag");
         String saveFlag = request.getParameter("saveFlag");
-
-        Properties props=null;
-        try{
-            props= PropertiesLoaderUtils.loadProperties(resource);
-        }catch(Exception e){
-//            log.error(e,e);
-            e.printStackTrace();
-            jsonObject.put("flag","0");
-            jsonObject.put("msg","获取配置文件失败");
-            return jsonObject;
-        }
-        String fileName=path.substring(path.lastIndexOf("/")+1);
-        //下载图片到这个文件夹下
-        String tempPath=props.getProperty("server.imageupload.tempPath")+"/source/"+fileName;
-        //剪切的图片
-        String target=props.getProperty("server.imageupload.tempPath")+"/target/"+fileName;
-        String header="http://"+props.getProperty("yunduoketang.oss.imagedomain")+"/";
-        File tempPathFile = new File(props.getProperty("server.imageupload.tempPath") + "/source/");
-        if(!tempPathFile.exists()){
-            tempPathFile.mkdirs();
-        }
-        File targetFile = new File(props.getProperty("server.imageupload.tempPath") + "/target/");
-        if(!targetFile.exists()){
-            targetFile.mkdirs();
-        }
-        path=path.replace(header, "");
-        System.out.println("oss临时文件路径["+path+"]=====本地磁盘临时文件路径["+tempPath+"]======切图后临时文件路径["+target+"]");
-        FileUtil.download("temp", path,tempPath);
-        //选中尺寸
-        BufferedImage img =null;
-        try{
-            img = ImageIO.read(new File(tempPath));
-        }catch(Exception e){
-//            log.error("读取图片失败:"+e,e);
-            e.printStackTrace();
-        }
-        //原图尺寸
-        double realW=img.getWidth();
-        double realH=img.getHeight();
-        //示例图尺寸
-        double slW=0;
-        double slH=0;
-        double scale=0;//根据不同类型的图片有不同的比例
-
-//        if ("0".equals(saveFlag) || "1".equals(saveFlag) ){//1 ,2都是风采图,反之则是封面图
-//            if ("0".equals(cssStyle)){//0是竖图，反之则是横图 200 120
-                if(realW/realH>200/120){
-                    //过宽
-                    slH=200 * realH/realW;
-                    slW=200;
-                }else{
-                    //过高
-                    slH=120;
-                    slW=120 * realW/realH;
-                }
-//            }else{
-//                if(realW/realH>300.00/188){
-//                    //过宽
-//                    slH=300 * realH/realW;
-//                    slW=300.00;
-//                }else{
-//                    //过高
-//                    slH=188;
-//                    slW=188 * realW/realH;
-//                }
-//            }
-//        }else{
-//                //过宽
-//            slH=realH;
-//            slW=realW;
-//        }
-
-        //原图所选中位置和区域
-
-        int xx=(new   Double(x*realW/slW)).intValue();
-        int yy=(new   Double(y*realH/slH)).intValue();
-        int ww=(new   Double(w*realW/slW)).intValue();
-        int hh=(new   Double(h*realH/slH)).intValue();
-        System.out.println("选中区域:["+x+","+y+","+w+","+h+"]----原图选中区域:["+xx+","+yy+","+ww+","+hh+"]");
-        //在原图中切图
-        String cutImgPath= ImageUtils.cutImage(tempPath,target,xx,yy,ww,hh);
-        //切好的图缩放到规定比例
-//            ImageUtils.resize(target, target, 446);
-        try {
-            realPath=FileUtil.upload(cutImgPath,"institutionStyle", WebUtils.getCurrentCompanyId()+"");
-        } catch (Exception e) {
-            e.printStackTrace();
-            jsonObject.put("flag","0");
-            jsonObject.put("msg","裁剪框过大");
-            return jsonObject;
-        }
-        FileUtil.deleteFile(target);
-        FileUtil.deleteFile(cutImgPath);
+        if (StringUtils.isNotEmpty(path)) {
+        	Properties props=null;
+            try{
+                props= PropertiesLoaderUtils.loadProperties(resource);
+            }catch(Exception e){
+//                log.error(e,e);
+                e.printStackTrace();
+                jsonObject.put("flag","0");
+                jsonObject.put("msg","获取配置文件失败");
+                return jsonObject;
+            }
+            String fileName=path.substring(path.lastIndexOf("/")+1);
+            //下载图片到这个文件夹下
+            String tempPath=props.getProperty("server.imageupload.tempPath")+"/source/"+fileName;
+            //剪切的图片
+            String target=props.getProperty("server.imageupload.tempPath")+"/target/"+fileName;
+            String header="http://"+props.getProperty("yunduoketang.oss.imagedomain")+"/";
+            File tempPathFile = new File(props.getProperty("server.imageupload.tempPath") + "/source/");
+            if(!tempPathFile.exists()){
+                tempPathFile.mkdirs();
+            }
+            File targetFile = new File(props.getProperty("server.imageupload.tempPath") + "/target/");
+            if(!targetFile.exists()){
+                targetFile.mkdirs();
+            }
+            path=path.replace(header, "");
+            System.out.println("oss临时文件路径["+path+"]=====本地磁盘临时文件路径["+tempPath+"]======切图后临时文件路径["+target+"]");
+            FileUtil.download("temp", path,tempPath);
+            //选中尺寸
+            BufferedImage img =null;
+            try{
+                img = ImageIO.read(new File(tempPath));
+            }catch(Exception e){
+//                log.error("读取图片失败:"+e,e);
+                e.printStackTrace();
+            }
+            //原图尺寸
+            double realW=img.getWidth();
+            double realH=img.getHeight();
+            //示例图尺寸
+            double slW=0;
+            double slH=0;
+            if(realW/realH>200/120){
+                //过宽
+                slH=200 * realH/realW;
+                slW=200;
+            }else{
+                //过高
+                slH=120;
+                slW=120 * realW/realH;
+            }
+            //原图所选中位置和区域
+            int xx=(new   Double(x*realW/slW)).intValue();
+            int yy=(new   Double(y*realH/slH)).intValue();
+            int ww=(new   Double(w*realW/slW)).intValue();
+            int hh=(new   Double(h*realH/slH)).intValue();
+            System.out.println("选中区域:["+x+","+y+","+w+","+h+"]----原图选中区域:["+xx+","+yy+","+ww+","+hh+"]");
+            //在原图中切图
+            String cutImgPath= ImageUtils.cutImage(tempPath,target,xx,yy,ww,hh);
+            try {
+                realPath=FileUtil.upload(cutImgPath,"institutionStyle", WebUtils.getCurrentCompanyId()+"");
+            } catch (Exception e) {
+                e.printStackTrace();
+                jsonObject.put("flag","0");
+                jsonObject.put("msg","裁剪框过大");
+                return jsonObject;
+            }
+            FileUtil.deleteFile(target);
+            FileUtil.deleteFile(cutImgPath);
+		}
+        
         //判断是更新还是新增
         Date date = new Date();
-        institutionStyle.setImgUrl(realPath);
+        if (StringUtils.isNotEmpty(realPath)) {
+        	institutionStyle.setImgUrl(realPath);
+		}
         institutionStyle.setCreateTime(date);
         institutionStyle.setUpdateTime(date);
         institutionStyle.setContent(request.getParameter("content"));
@@ -365,7 +345,6 @@ public class InstitutionStyleController {
         if (user == null) {
         	return "fail";
         }
-
         Integer companyId = user.getCompanyId();
 
         CompanyPayConfig config = companyPayConfigServiceImpl.findByCompanyId(companyId);
