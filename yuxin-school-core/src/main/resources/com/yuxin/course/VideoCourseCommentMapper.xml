@@ -163,7 +163,17 @@
 	<!-- 其他自定义SQL -->
 
 	<select id="queryVideoComCount" resultType="Integer">
-		select count(id) from video_course_comment where is_check = 0
+		SELECT
+			count(vcc.id)
+		FROM
+			video_course_comment vcc
+		INNER JOIN sys_config_teacher sct ON vcc.teacher_id = sct.id
+		WHERE
+			vcc.del_flag = 0
+		AND sct.del_flag = 0
+		AND vcc.company_id = 18113
+		AND vcc.is_check = 0
+		LIMIT 1
 	</select>
 	
 </mapper>
