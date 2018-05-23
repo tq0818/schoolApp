@@ -122,38 +122,44 @@ $(function () {
 //上传临时图片 2为风采  1为视频 0为封面
 function savePic(saveFlag) {
     var fileStr = $("#imgData").val();
-    //.jpg,.jpeg,.gif,.png,.bmp,.ico
-    if(!(fileStr.indexOf(".jpg")>0
-        ||fileStr.indexOf(".jpeg")>0
-        ||fileStr.indexOf(".gif")>0
-        ||fileStr.indexOf(".png")>0
-        ||fileStr.indexOf(".bmp")>0
-        ||fileStr.indexOf(".ico")>0)){
-        alert("上传封面仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
-        return;
+    if(fileStr){
+        if(!(fileStr.indexOf(".jpg")>0
+            ||fileStr.indexOf(".jpeg")>0
+            ||fileStr.indexOf(".gif")>0
+            ||fileStr.indexOf(".png")>0
+            ||fileStr.indexOf(".bmp")>0
+            ||fileStr.indexOf(".ico")>0)){
+            alert("上传封面仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
+            return;
+        }
     }
-    var fileStr = $("#imgDataStyle").val();
-    //.jpg,.jpeg,.gif,.png,.bmp,.ico
-    if(!(fileStr.indexOf(".jpg")>0
-        ||fileStr.indexOf(".jpeg")>0
-        ||fileStr.indexOf(".gif")>0
-        ||fileStr.indexOf(".png")>0
-        ||fileStr.indexOf(".bmp")>0
-        ||fileStr.indexOf(".ico")>0)){
-        alert("上传风采图仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
-        return;
+    var fileStr1 = $("#imgDataStyle").val();
+    if(fileStr1){
+        if(!(fileStr1.indexOf(".jpg")>0
+            ||fileStr1.indexOf(".jpeg")>0
+            ||fileStr1.indexOf(".gif")>0
+            ||fileStr1.indexOf(".png")>0
+            ||fileStr1.indexOf(".bmp")>0
+            ||fileStr1.indexOf(".ico")>0)){
+            alert("上传风采图仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
+            return;
+        }
     }
-    var fileStr = $("#imgDataVideo").val();
+
+    var fileStr2 = $("#imgDataVideo").val();
     //.jpg,.jpeg,.gif,.png,.bmp,.ico
-    if(!(fileStr.indexOf(".jpg")>0
-        ||fileStr.indexOf(".jpeg")>0
-        ||fileStr.indexOf(".gif")>0
-        ||fileStr.indexOf(".png")>0
-        ||fileStr.indexOf(".bmp")>0
-        ||fileStr.indexOf(".ico")>0)){
-        alert("上传视频封面仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
-        return;
+    if(fileStr2){
+        if(!(fileStr2.indexOf(".jpg")>0
+            ||fileStr2.indexOf(".jpeg")>0
+            ||fileStr2.indexOf(".gif")>0
+            ||fileStr2.indexOf(".png")>0
+            ||fileStr2.indexOf(".bmp")>0
+            ||fileStr2.indexOf(".ico")>0)){
+            alert("上传视频封面仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
+            return;
+        }
     }
+
 
     //选择的时候应先清空，
     if (saveFlag == 0){
