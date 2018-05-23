@@ -13,7 +13,6 @@
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/stylesheets/fatstyle.css">
     <style>
         .gobal-progress{display: none !important;} 
-      
     </style>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/institution/elegantDemeanor.css">
 	
@@ -135,27 +134,26 @@
     <div>
         <span class="videoIntro">视频名称:</span>
         <input type="text" style="width: 248px;height: 18px;" class="videoStyle" maxlength="30">
-        <div id="videoFile" style="margin-top: -27px;margin-left: 328px;">
-        <form id="fileupload" method="POST" enctype="multipart/form-data" action="">
-			 <a href="javascript:void(0)" class="addVideo">
-            +
-            <!-- <input type="file"> -->
-            	<input type="file" name="file" accept=".avi,.mp4*,.asf,.sdx,.wmv,.rmvb,.3gp,.mkv,.flv,.f4v,.rm,.ra,.ram,.mpg,.pgeg,.mpe,.vob,.dat,.mov,.3gp,.mts" id="filebutton" class="filebutton" multiple="">
-        	</a>
-			<!-- <table class="table table-hover table-center operate_vedio_table L-table L-table-hover">
-				<thead>
-	 						<tr>
-	 							<th width="480">文件名</th>
-	 							<th width="100">大小</th>
-	 							<th width="300">状态</th>
-	 							<th width="190">操作</th>
-	 						</tr>
-				</thead>
-				<tbody class="files">
-	            </tbody>
-			</table> -->
-		</form>
-		</div>
+        <!-- <div id="videoFile"> -->
+	        <form id="fileupload" method="POST" enctype="multipart/form-data" action="" style="margin-left: 326px;margin-top: -27px">
+				 <a href="javascript:void(0)" class="addVideo">
+	            +
+	            	<input type="file" name="file" accept=".avi,.mp4*,.asf,.sdx,.wmv,.rmvb,.3gp,.mkv,.flv,.f4v,.rm,.ra,.ram,.mpg,.pgeg,.mpe,.vob,.dat,.mov,.3gp,.mts" id="filebutton" class="filebutton" multiple="">
+	        	</a>
+				<table class="table table-hover table-center operate_vedio_table L-table L-table-hover" style="margin-left:-263px;margin-top:10px;">
+					<!-- <thead>
+		 						<tr>
+		 							<th width="480">文件名</th>
+		 							<th width="100">大小</th>
+		 							<th width="300">状态</th>
+		 							<th width="190">操作</th>
+		 						</tr>
+					</thead> -->
+					<tbody class="files">
+		            </tbody>
+				</table>
+			</form>
+		<!-- </div> -->
     </div>
     <div>
         <span class="videoIntro">视频描述:</span>
@@ -236,22 +234,22 @@
             };
 		 var key = [getFileType(file), file.size, (file.lastModifiedDate==null)?0:file.lastModifiedDate.getTime()].join('_');
 		 %}
-		    <tr class="template-upload fade" id="{%=key%}">
-		        <td>
-		            <p class="name" style="margin-top: 6px;">{%=file.name%}</p>
+		    <tr class="template-upload fade" id="{%=key%}" style="height:30px">
+		        <td style="display:none">
+		            <p class="name">{%=file.name%}</p>
 		            <strong class="error text-danger"></strong>
 		        </td>
-		        <td>
-		            <p class="size" style="margin-top: 6px;">处理中...</p>
+		        <td style="display:none">
+		            <p class="size">处理中...</p>
 		        </td>
 				<td class="progressbar">
-					<div style="margin-top:4px; width:150px; display:inline-block;" class="progress progress-striped active mb0 tc_rel" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-						<div class="progress-bar progress-bar-success" style="width:0%;"></div>
-						<div style="margin-top: 3px;" class="tc tc_pos upload_percent progress-u">0%</div>
+					<div style="width:150px; display:inline-block;border: 1px solid;" class="progress progress-striped active mb0 tc_rel" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+						<div class="progress-bar progress-bar-success" style="width:0%;height:20px"></div>
+						<div style="margin-top: -16px;" class="tc tc_pos upload_percent progress-u">0%</div>
 					</div>
-					<span class="rate" style="vertical-align:super; "></span>
+					<span class="rate" style="vertical-align:super;display:none; "></span>
 				</td>
-		        <td class="operate">
+		        <td class="operate" style="display:none">
 		            {% if (!i && !o.options.autoUpload) { %}
 		                <button class="btn btn-primary btn-xs start" style="margin-top:3px;" disabled>
 		                    <i class="glyphicon glyphicon-upload"></i>

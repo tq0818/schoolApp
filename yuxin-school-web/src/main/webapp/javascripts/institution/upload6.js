@@ -154,7 +154,8 @@ function resumeUpload(data) {
                  		alert('您剩余的空间不够存放当前的视频');
                  		return false;
                  	}
-    	            
+    	            var fileSizeMax = 100 * 1024 * 1024;
+    	            var flag = false;//视频超过100M将其设置为true
     	        	 for (var i = 0; i < myfiles.length; i++) {
     	                 var file = myfiles[i];
     	                 // 向父窗口提交数据
@@ -163,7 +164,11 @@ function resumeUpload(data) {
     	                     "name": file.name,
     	                     "size": file.size
     	                 };
-    	                 
+    	                 if(file.size > fileSizeMax){
+    	                	 $.msg("视频大小不能超过100M");
+    	                	 flag = true;
+    	                	 break;
+    	                 }
     	                 var video = {
     	                     index: index
     	                 };
@@ -211,7 +216,9 @@ function resumeUpload(data) {
     	                     });
     	                 postMessageHandler(video);
     	             }
-
+    	        	 if(flag){
+    	        		 return false;
+    	        	 }
     	             fileIndex++;
     	        	
     	        }
