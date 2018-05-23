@@ -12,7 +12,7 @@ var jcrop_apis;
            maxWidth = 150;
            minHeight =30 ;
            minWidth = 30;
-       }else if(picFlag==3){
+       }else if(picFlag==3){ //课程风采
            $scale = 300/120;
            maxHeight = 120;
            maxWidth = 300;

@@ -12,6 +12,7 @@ $(function () {
     $('.addFirstBtn').click(function () {
         fillData("添加一级分类");
         $("#addConfirm").attr("onclick","addData();");
+        $("#addConfirm").html("").html("确认添加");
     });
     $(".btnFile").click(function(){
         $(".coverPopup").show();
@@ -162,6 +163,7 @@ function openDetails(level,updateId){
     }else {//二级
         fillData("二级分类详情");
     }
+    $("#addConfirm").html("").html("保存");
     //绑定更新函数
     $("#addConfirm").attr("onclick","updatedata('2',"+updateId+",'')");
     //查询分类基本信息
@@ -187,6 +189,7 @@ function openDetails(level,updateId){
 function openSecAdd(parentId){
     fillData("添加二级分类");
     $("#addConfirm").attr("onclick","addData("+parentId+");");
+    $("#addConfirm").html("").html("确认添加");
 }
 
 /**
@@ -418,12 +421,12 @@ function savePic() {
     $("#targetStyle").attr("src","");
     var fileStr = $("#imgDataStyle").val();
     //.jpg,.jpeg,.gif,.png,.bmp,.ico
-    if(!(fileStr.indexOf(".jpg")>0
-        ||fileStr.indexOf(".jpeg")>0
-        ||fileStr.indexOf(".gif")>0
-        ||fileStr.indexOf(".png")>0
-        ||fileStr.indexOf(".bmp")>0
-        ||fileStr.indexOf(".ico")>0)){
+    if(!(fileStr.indexOf(".jpg")==(fileStr.length-4)
+        ||fileStr.indexOf(".jpeg")==(fileStr.length-5)
+        ||fileStr.indexOf(".gif")==(fileStr.length-4)
+        ||fileStr.indexOf(".png")==(fileStr.length-4)
+        ||fileStr.indexOf(".bmp")==(fileStr.length-4)
+        ||fileStr.indexOf(".ico")==(fileStr.length-4))){
         alert("上传文件仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
         return;
     }
