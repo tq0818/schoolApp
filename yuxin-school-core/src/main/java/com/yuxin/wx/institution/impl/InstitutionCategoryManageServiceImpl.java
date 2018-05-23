@@ -120,12 +120,37 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
      * @param oldSort 更新前的排序 ， 用于更新其他推荐状态的排序问题
      */
     @Override
-    public void updateRecommendStatusById1(Integer status, Integer id, Integer oldSort) {
+    public boolean updateRecommendStatusById1(Integer status, Integer id, Integer oldSort) {
         Map<String, Object> map = new HashMap<>();
         map.put("isRecommend", status);
         map.put("id", id);
 
-        institutionManageMapper.updateRecommendStatusById1(map);
+        if (status == 0 && null != oldSort) {
+            //取消分类推荐状态，此时需要更新排序
+            institutionManageMapper.increaseSortAfter3(oldSort);
+        } else if (status == 1) {
+            //将一个分类状态变为推荐
+            //获取当前已经是推荐状态的分类的个数num，新的分类sort = num + 1
+            int num = institutionManageMapper.queryRecommendCount3();
+            map.put("sort", num + 1);
+            institutionManageMapper.updateSort3(map);
+        } else if (status == 0 && null == oldSort) {
+            //取消一个分类的推荐状态，因为该分类排序为空，则无法更新其他分类排序
+           ;
+            return  institutionManageMapper.updateRecommendStatusById1(map) == 1;
+        } else {
+            // status 参数传递错误
+            return false;
+        }
+
+       return  institutionManageMapper.updateRecommendStatusById1(map) == 1;
+
+
+        /* Map<String, Object> map = new HashMap<>();
+        map.put("isRecommend", status);
+        map.put("id", id);
+
+        institutionManageMapper.updateRecommendStatusById1(map);*/
     }
 
     /**
@@ -137,6 +162,12 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
         return institutionManageMapper.getCateById(id);
     }
 
+    /**
+     * 调整分类排序，针对针对first_recommend   sort
+     * @param entity
+     * @param isIncrease
+     * @return
+     */
     @Override
     public boolean updateSort(InstitutionCategoryVo entity, boolean isIncrease) {
         if (null == entity) {
@@ -178,6 +209,47 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
 
     }
 
+    /**
+     * 调整分类排序，针对third_recommend  sort3
+     * @param entity
+     * @param isIncrease
+     * @return
+     */
+    @Override
+    public boolean updateSort3(InstitutionCategoryVo entity, boolean isIncrease) {
+        if (null == entity) {
+            //实体为空，无法更新排序
+            return false;
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", entity.getId());
+        try {
+            if (isIncrease) {
+                //提高某个分类的排序
+                //提高自己的排名之前，先把自己前一位降低一个排名
+                int resultNum =  institutionManageMapper.reduceSort3(entity.getSort3() - 1);
+                if(resultNum <= 0){
+                    log.error("=====> 调整分类排序result = "+resultNum);
+                    return false;
+                }
+                map.put("sort", entity.getSort3() - 1);
+                return institutionManageMapper.updateSort3(map) == 1;
+            } else {
+                //降低排名
+                //提高身后的某个分类的排名
+                int resultNum =  institutionManageMapper.increaseSort3(entity.getSort3() + 1);
+                if(resultNum <= 0){
+                    log.error("=====> 调整分类排序result = "+resultNum);
+                    return false;
+                }
+                map.put("sort", entity.getSort3() + 1);
+                return institutionManageMapper.updateSort3(map) == 1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     @Override
     public int queryRecommendCount() {

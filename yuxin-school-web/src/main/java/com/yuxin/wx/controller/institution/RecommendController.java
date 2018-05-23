@@ -220,6 +220,8 @@ public class RecommendController {
         try{
             String method = request.getParameter("method");
             Integer id = Integer.valueOf(request.getParameter("id"));
+            //标记字段，用来标记更新哪个字段，isThird == null ? first_recommend : third_recommend
+            String isThird = request.getParameter("third");
             if(null == method || ( !"up".equals(method) && !"down".equals(method))){
                 json.put("status",0);
                 json.put("msg","参数错误");
@@ -233,7 +235,7 @@ public class RecommendController {
                 return json;
             }
 
-            boolean flag = institutionCategoryService.updateSort(entity,"up".equals(method));
+            boolean flag = (null == isThird ? institutionCategoryService.updateSort(entity,"up".equals(method)) : institutionCategoryService.updateSort3(entity,"up".equals(method)));
             if(flag){
                 json.put("status",1);
                 json.put("msg","操作成功");
@@ -293,6 +295,7 @@ public class RecommendController {
 
             JSONArray arr = JSONArray.parseArray(tree);
             List<InstitutionCategoryVo> list = null;
+            //首页分类推荐
             if("0".equals(type)){
                 list =  institutionCategoryService.queryInstitutionCategorysEnabled();
                 //算法说明 因为推荐分类本身数量比较少，而且 list.size() <= arr.length  , 所以算法复杂度为 list.size() * arr.length
@@ -317,6 +320,7 @@ public class RecommendController {
                 }
 
             }else{
+                //首页列表推荐
                 list = institutionCategoryService.queryInstitutionCategorysEnabled1();
 
                 for(int i = 0; i< arr.size();i++){

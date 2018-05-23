@@ -71,7 +71,7 @@ public interface InstitutionCategoryManageService {
      * @param id
      * @param oldSort 更新前的排序 ， 用于更新其他推荐状态的排序问题
      */
-    void updateRecommendStatusById1(Integer status , Integer id , Integer oldSort);
+    boolean updateRecommendStatusById1(Integer status , Integer id , Integer oldSort);
 
     /**
      * 根据id获取分类信息
@@ -80,7 +80,21 @@ public interface InstitutionCategoryManageService {
      */
     InstitutionCategoryVo getCateById(Integer id);
 
+    /**
+     * 调整分类排序，针对针对first_recommend   sort
+     * @param entity
+     * @param isIncrease
+     * @return
+     */
     boolean updateSort(InstitutionCategoryVo entity , boolean isIncrease);
+
+    /**
+     * 调整分类排序，针对third_recommend  sort3
+     * @param entity
+     * @param isIncrease
+     * @return
+     */
+    boolean updateSort3(InstitutionCategoryVo entity , boolean isIncrease);
 
     /**
      * 获取当前是推荐状态的分类个数

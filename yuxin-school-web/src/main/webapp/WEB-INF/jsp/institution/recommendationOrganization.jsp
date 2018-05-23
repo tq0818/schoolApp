@@ -36,7 +36,7 @@
             <div id="recommendBtn" class="changeBtn">
                 <span>推荐位置</span>
                 <a href="##" class="btn btn-default recommendType btn-mb btn-primary">首页分类推荐</a>
-                <a href="##" class="btn btn-default btn-mb">首页列表推荐</a>
+                <a href="##" class="btn btn-default recommendList btn-mb">首页列表推荐</a>
             </div>
             <div class="classificationRecommendation">
                 <div style="margin: 30px 0 10px 50px;">
@@ -120,6 +120,7 @@
         <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/recommendationOrganizationList.js"></script>
     <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/recommendationOrganization.js"></script>
         <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/recommendationOrganizationType.js"></script>
+        <script type="text/javascript" src="<%=rootPath%>/javascripts/common/tools.js"></script>
 
 </body>
 </html>

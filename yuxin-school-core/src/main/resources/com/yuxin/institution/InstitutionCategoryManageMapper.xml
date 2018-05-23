@@ -23,6 +23,7 @@
         <result property="sort" column="sort" />
         <result property="parentId" column="parent_id" />
         <result property="firstRecommend" column="first_recommend" />
+        <result property="sort3" column="sort3" />
 
     </resultMap>
 
@@ -138,7 +139,8 @@
           `is_enable`,
           `parent_id`,
           `first_recommend`,
-          `sort`
+          `sort`,
+          `sort3`
         FROM
           `institution_category`
         WHERE `code_type` = 0  and is_enable = 1 and `first_recommend` = 1
@@ -163,7 +165,8 @@
         `is_enable`,
         `parent_id`,
         `first_recommend`,
-        `sort`
+        `sort`,
+        `sort3`
         FROM
         `institution_category`
         WHERE `code_type` = 0
@@ -191,9 +194,19 @@
        UPDATE `institution_category` SET `sort` = `sort` - 1 WHERE  is_enable = 1 and `sort` = #{sort}
     </update>
 
+    <!-- 提升指定某个排名的分类的排名 sort3 -->
+    <update id="increaseSort3" parameterType="Integer" >
+        UPDATE `institution_category` SET `sort3` = `sort3` - 1 WHERE  is_enable = 1 and `sort3` = #{sort}
+    </update>
+
     <!-- 提升指定排名后的所有分类的排名 , 用在删除某个分类的时候使用 SET is_enable = 0 -->
     <update id="increaseSortAfter" parameterType="Integer" >
         UPDATE `institution_category` SET `sort` = `sort` - 1 WHERE  is_enable = 1 and `sort` &gt; #{oldSort}
+    </update>
+
+    <!--提升指定排名后的所有分类的排名 sort3-->
+    <update id="increaseSortAfter3" parameterType="Integer" >
+        UPDATE `institution_category` SET `sort3` = `sort3` - 1 WHERE  is_enable = 1 and `sort3` &gt; #{oldSort}
     </update>
 
     <!-- 降低某个排名的分类的排名 -->
@@ -201,11 +214,24 @@
         UPDATE `institution_category` SET `sort` = `sort` + 1 WHERE is_enable = 1  and   `sort` = #{oldSort}
     </update>
 
+    <!-- 降低某个排名的分类的排名 sort3-->
+    <update id="reduceSort3" parameterType="Integer" >
+        UPDATE `institution_category` SET `sort3` = `sort3` + 1 WHERE is_enable = 1  and   `sort3` = #{oldSort}
+    </update>
+
     <update id="updateSort" parameterType="map" >
       UPDATE
           `institution_category`
         SET
           `sort` = #{sort}
+        WHERE `id` = #{id}
+    </update>
+
+    <update id="updateSort3" parameterType="map" >
+        UPDATE
+        `institution_category`
+        SET
+        `sort3` = #{sort}
         WHERE `id` = #{id}
     </update>
 
@@ -218,6 +244,17 @@
 
     </select>
 
+    <select id="queryRecommendCount3"  resultType="int" >
+        SELECT
+        COUNT(id)
+        FROM
+        `institution_category`
+        WHERE `code_type` = 0 AND `is_enable` = 1 and third_recommend = 1
+
+    </select>
+
+
+
     <!--  获取所有的is_enable = 1 的分类数据，并且返回是否为推荐分类 -->
     <select id="queryInstitutionCategorysEnabled"  resultMap="queryCateSimple" >
       SELECT
@@ -227,7 +264,8 @@
           `code_type`,
           `parent_id`,
           `first_recommend`,
-          `sort`
+          `sort`,
+          `sort3`
         FROM
           `institution_category`
         WHERE  `is_enable` = 1
@@ -242,10 +280,10 @@
         `code_type`,
         `parent_id`,
         `third_recommend`,
-        `sort`
+        `sort3` sort
         FROM
         `institution_category`
-        WHERE  `is_enable` = 1
+        WHERE  `is_enable` = 1 ORDER BY sort3  ASC
     </select>
 
     <!-- 获取指定排名后的所有is_enabled = 1的分类  AND `sort` &lt; #{sort} -->
@@ -257,7 +295,8 @@
         `code_type`,
         `parent_id`,
         `first_recommend`,
-        `sort`
+        `sort`,
+        `sort3`
         FROM
         `institution_category`
         WHERE  `is_enable` = 1   order by sort ASC

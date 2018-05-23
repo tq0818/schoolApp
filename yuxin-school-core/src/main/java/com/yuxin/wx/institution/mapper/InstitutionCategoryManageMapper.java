@@ -58,7 +58,7 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
      *更新某个推荐分类的推荐状态  first_recommend
      * @param map
      */
-    void updateRecommendStatusById1(Map<String, Object> map);
+    int updateRecommendStatusById1(Map<String, Object> map);
 
 
     InstitutionCategoryVo getCateById(Integer id);
@@ -72,10 +72,24 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
     int increaseSort(Integer sort);
 
     /**
-     * 提升某个分类排名后的所有分类的排名，用在设置 is_enable = 0 的时候更新排名信息
+     * 提高某个排名分类的排名  sort3
+     * @param sort
+     * @return
+     */
+    int increaseSort3(Integer sort);
+
+    /**
+     * 提升某个分类排名后的所有分类的排名
      * @param sort
      */
     void increaseSortAfter(Integer sort);
+
+    /**
+     * 提升某个分类排名后的所有分类的排名3
+     * @param sort
+     */
+    void increaseSortAfter3(Integer sort);
+
 
     /**
      * 指定降低某个排名的名次一点
@@ -85,16 +99,36 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
     int reduceSort(Integer sort);
 
     /**
+     * 指定降低某个排名的名次一点 , 针对sort3
+     * @param sort
+     * @return
+     */
+    int reduceSort3(Integer sort);
+
+    /**
      * 更新某个分类的排名 key ： sort , id
      *
      * @param map
      */
-    void updateSort(Map<String, Object> map);
+    int updateSort(Map<String, Object> map);
 
     /**
-     * 获取当前分类中是推荐状态的个数
+     * 更新某个分类的排名 key ： sort , id
+     * 针对sort3字段
+     * @param map
+     */
+    int updateSort3(Map<String, Object> map);
+
+    /**
+     * 获取当前分类中是推荐状态的个数 first_recommend
      */
     int queryRecommendCount();
+
+    /**
+     * 获取当前分类中是推荐状态的个数  third_recommend
+     * @return
+     */
+    int queryRecommendCount3();
 
     /**
      * 获取所有`is_enable` = 1  的分类信息
