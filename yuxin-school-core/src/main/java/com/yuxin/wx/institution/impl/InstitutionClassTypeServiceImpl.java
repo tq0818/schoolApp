@@ -288,4 +288,12 @@ public class InstitutionClassTypeServiceImpl extends BaseServiceImpl implements 
     public void addUnderlineClass(Map<String, Object> map) {
         institutionClassTypeMapper.addUnderlineClass(map);
     }
+
+    @Override
+    public int countUnderllineClass(Integer insId, String name) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("insId",insId);
+        map.put("name",name);
+        return institutionClassTypeMapper.countUnderllineClass(map);
+    }
 }

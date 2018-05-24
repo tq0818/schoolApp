@@ -123,7 +123,7 @@
 
 
     <select id="findClassLabels" parameterType="Integer" resultMap="institutionLabelMap">
-        select * from institution_label where label_type=1 and source_flag = 1 and relation_id = #{id}
+        select * from institution_label where label_type=1 and source_flag = 1 and relation_id = #{id} order by  `create_time` desc
     </select>
 
 

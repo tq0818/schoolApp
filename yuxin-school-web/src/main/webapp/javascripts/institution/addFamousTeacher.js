@@ -126,7 +126,7 @@ function getTeacherInfo(){
     }
 
     $.post(rootPath + '/institutionTeacher/teacherInfo',{tid:tid,insId:getInsId()},function(json){
-        console.log(json);
+        //console.log(json);
         if(json.status == 1){
             $("#teacherName").val(json.data.name);
             $("#teacherSchool").val(json.data.school);
@@ -150,6 +150,9 @@ function getTeacherInfo(){
             }
 
 
+            $('.addPic').html('更换头像');
+            $('#teacherTitle').html('老师详情');
+
         }
     })
 
@@ -159,9 +162,9 @@ function getTeacherInfo(){
 
 //点击提交按钮
 var isClick = 0;
+
 $('.closeMechanismCommit').click(function(){
-    if(isClick==1)return;
-    isClick=1;
+
     var param = {
         headUrl:$("#hidHeadImg").val(),
         name:$("#teacherName").val(),
@@ -182,11 +185,15 @@ $('.closeMechanismCommit').click(function(){
         return;
     }
 
-    if(param.summary == ''){
+    if(param.desc == ''){
         $.msg('请填写老师简介');
         return;
     }
 
+    if(param.label == null){
+        $.msg('请不要填写空白标签');
+        return;
+    }
 
 
     var url = (param.id == '' ? '/institutionTeacher/addTeacher' : '/institutionTeacher/updateTeacher');
@@ -212,11 +219,17 @@ $('.closeMechanismCommit').click(function(){
 function getLabels(){
     var labels = new Array();
     var labelSpans = $("#teacherLabelsContainer").find('.systemBtn');
+
     for(var i = 0;i<labelSpans.length;i++){
         labels.push({
             id:$(labelSpans[i]).find('.systemLabel').eq(0).attr('label-id'),
             name:$(labelSpans[i]).find('.systemLabel').eq(0).val()
         })
+
+        if(trim(labels[i].name) == ''){
+            return null;
+        }
+
     }
 return JSON.stringify(labels);
 }
@@ -255,14 +268,16 @@ function savePic() {
     //改变图片时清空图片路径
     $("#targetStyle").attr("src","");
     var fileStr = $("#imgDataStyle").val();
+    var  lowwerFileStr =  fileStr.toLowerCase();
     //.jpg,.jpeg,.gif,.png,.bmp,.ico
-    if(!(fileStr.indexOf(".jpg")==(fileStr.length-4)
-        ||fileStr.indexOf(".jpeg")==(fileStr.length-5)
-        ||fileStr.indexOf(".gif")==(fileStr.length-4)
-        ||fileStr.indexOf(".png")==(fileStr.length-4)
-        ||fileStr.indexOf(".bmp")==(fileStr.length-4)
-        ||fileStr.indexOf(".ico")==(fileStr.length-4))){
-        alert("上传文件仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
+    if(!(lowwerFileStr.indexOf(".jpg")==(fileStr.length-4)
+        ||lowwerFileStr.indexOf(".jpeg")==(fileStr.length-5)
+        ||lowwerFileStr.indexOf(".gif")==(fileStr.length-4)
+        ||lowwerFileStr.indexOf(".png")==(fileStr.length-4)
+        ||lowwerFileStr.indexOf(".bmp")==(fileStr.length-4)
+        ||lowwerFileStr.indexOf(".ico")==(fileStr.length-4)
+            )){
+        alert("上传文件仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
         return;
     }
     $.ajaxFileUpload({

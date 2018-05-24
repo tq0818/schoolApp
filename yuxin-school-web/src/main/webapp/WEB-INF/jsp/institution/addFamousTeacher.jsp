@@ -37,7 +37,7 @@
     <div class="right-side">
         <div class="mainbackground nopadding">
             <div class="heading">
-                <h2 class="h5">添加老师</h2>
+                <h2 class="h5" id="teacherTitle">添加老师</h2>
                 <span class="line"></span>
             </div>
             <div class="addingMechanism" style="display: block;">
@@ -77,15 +77,15 @@
                             </span>
                 </div>
                 <div>
-                    <span class="mechanismName">老师简介-建议上传图片尺寸为100*100px</span>
+                    <span class="mechanismName">老师简介:</span>
                     <p>
                         <textarea name="" id="summary" maxlength="300"  style="width: 390px;height: 84px;
                         border: 1px solid #aeaeae;margin-left: 70px;margin-top: 10px;" ></textarea>
                     </p>
                 </div>
                 <div class="orgBtn">
-                    <a href="##" class="btn btn-primary btn-mb closeMechanism closeMechanismCancel">取消</a>
-                    <a href="##" class="btn btn-primary btn-mb closeMechanism closeMechanismCommit">保存</a>
+                    <a href="javascript:void(0)" class="btn btn-primary btn-mb closeMechanism closeMechanismCancel">取消</a>
+                    <a href="javascript:void(0)" class="btn btn-primary btn-mb closeMechanism closeMechanismCommit">保存</a>
                 </div>
             </div>
         </div>
@@ -102,12 +102,13 @@
         <%--分类图片弹窗--%>
         <div class="mienPopup coverPopup">
             <div class="uploadImageStyle">
-                <label for="">选择老师头像：</label>
+                <label for="">选择老师头像-建议上传图片尺寸为100*100px：</label>
                 <img src="" alt="" id="targetStyle" style="width: 400px;height: 300px;">
                 <a href="javascript:void(0);" class="chooseImg">
                     选择图片
                     <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgDataStyle" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic()" value="重新选择文件"/>
                 </a>
+
             </div>
             <div class="mienBtn">
                 <a href="javascript:void(0)" class="btn btn-sm btn-danger mienHide">取消</a>

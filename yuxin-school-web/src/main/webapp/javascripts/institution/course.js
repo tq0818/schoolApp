@@ -45,6 +45,7 @@ $(function () {
             if($(this).index()==0){
                 $('.courseUnderLine').show();
                 $('.courseOnLine').hide();
+                $('.addClassPopup').hide();
                 nowPage = 0;
                 getClassTypeList();
             }else{
@@ -69,7 +70,8 @@ $(function () {
     });
     $('.closeCoursePopup').click(function () {
         $('.addClassPopup').hide();
-
+        $('#findClassName').val('');
+        $('#findClassTbody').html('');
         getOnlineClassTypeList();
 
     });
@@ -134,7 +136,7 @@ function findOnlineClass(){
             }
 
             if(list.length == 0){
-                html = "<tr><td colspan='5'>没有数据</td></tr>";
+                html = "<tr><td colspan='5'>暂无数据</td></tr>";
             }
 
             $('#findClassTbody').html(html);
@@ -154,6 +156,12 @@ function addOnlineClass(cid){
                 cid: cid,
                 insId: insId
             }, function (json) {
+                if(json == 'success'){
+                    $('.addClassPopup').hide();
+                    $('#findClassName').val('');
+                    $('#findClassTbody').html('');
+                    getOnlineClassTypeList();
+                }
                 $.msg(json == 'success' ? '操作成功' : json);
 
             })
@@ -208,6 +216,11 @@ function getOnlineClassTypeList(){
                     </tr>
                 `;
             }
+
+            if(list.length == undefined || list.length == 0){
+                html += "<tr><td colspan='5'>暂无数据</td></tr>";
+            }
+
 
             $(".paginationOnLine").pagination(json.rowCount,
                 {
@@ -341,9 +354,9 @@ function getClassTypeList(){
                     prev_text: "上一页",
                     current_page:json.pageNo,
                     link_to: "javascript:getClassTypeList()",
-                    num_display_entries: 7,
+                   // num_display_entries: 7,
                     items_per_page: 7,
-                    num_edge_entries: 1,
+                    num_edge_entries: 0,
                     callback: function (page) {
                         nowPage = page;
                         getClassTypeList();
@@ -399,6 +412,7 @@ function controlClass(dom){
         $.post(rootPath + '/institutionClassType/upDownClass', {cid: id}, function (json) {
             $.msg(json == 'success' ? '操作成功' : '操作失败');
             if (json == 'success') {
+                getRecommendCount2();
                 getClassTypeList();
             }
         })

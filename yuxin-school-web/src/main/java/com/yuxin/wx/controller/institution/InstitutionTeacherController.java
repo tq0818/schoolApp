@@ -221,8 +221,13 @@ public class InstitutionTeacherController {
             institutionTeacherService.addTeacher(teacher, insId);
 
             JSONArray arr = JSONArray.parseArray(label);
-            //TODO  label信息处理
+
             for (int i = 0; i < arr.size(); i++) {
+                String name = arr.getJSONObject(i).getString("name");
+                if(null == name || "".equals(name.trim())){
+                    //不添加空白标签
+                    continue;
+                }
                 InstitutionLabelVo vo = new InstitutionLabelVo();
                 vo.setUpdateTime(new Date());
                 vo.setCreateTime(new Date());
@@ -277,14 +282,20 @@ public class InstitutionTeacherController {
 
             for (int i = 0; i < arr.size(); i++) {
                 JSONObject obj = arr.getJSONObject(i);
+                String name = arr.getJSONObject(i).getString("name");
                 if (obj.getString("id") == null) {
+
+                    if(null == name || "".equals(name.trim())){
+                        //不添加空白标签
+                        continue;
+                    }
                     InstitutionLabelVo vo = new InstitutionLabelVo();
                     vo.setUpdateTime(new Date());
                     vo.setCreateTime(new Date());
                     vo.setSourceFlag(2);
                     vo.setLabelType("1");
                     vo.setRelationId(teacher.getId());
-                    vo.setLabelName(arr.getJSONObject(i).getString("name"));
+                    vo.setLabelName(name.trim());
                     // vo.setImgUrl(headUrl);
 
                     labelService.insert(vo);
@@ -292,6 +303,10 @@ public class InstitutionTeacherController {
                     int id = obj.getIntValue("id");
                     for (InstitutionLabelVo listVo : labelVoList) {
                         if (listVo.getId() - id == 0) {
+                            if(null == name || "".equals(name.trim())){
+                                //空白标签不入库
+                                continue;
+                            }
                             listVo.setUpdateTime(new Date());
                             listVo.setLabelName(arr.getJSONObject(i).getString("name"));
                             // vo.setImgUrl(headUrl);
