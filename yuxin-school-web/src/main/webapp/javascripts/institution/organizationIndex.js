@@ -700,7 +700,7 @@ function findInsDate(page) {
             }else{
                 $.each(jsonData.data,function(i,item){
                     var name = item.name;
-                    console.log(name)
+                    name=name.replace(/ /g,"&nbsp");
                     i+1;
                     var isShelves;
                     var isShelvesval;

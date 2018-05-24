@@ -131,7 +131,7 @@
 
 
         </div>
-        <div>
+        <div class="siteChoose">
             <span class="mechanismName">机构地址：</span>
             <select name="eduArea" id="eduArea2" onchange="queryRiseSchoolDict2(1)">
                 <option value="">请选择省份</option>
