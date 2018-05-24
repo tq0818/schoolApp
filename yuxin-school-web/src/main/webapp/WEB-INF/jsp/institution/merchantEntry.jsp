@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@include file="/decorators/import.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!doctype html>
 <html lang="zh-cn">
 <head>
@@ -25,7 +26,6 @@
 <body>
 <input type="hidden" id="pageNo" value='${pageNo}'/>
 <input type="hidden" id="rowCount" value='${rowCount}'/>
-<input type="hidden" id="dimFlagT" value="${dimFlagT}">
     <table class="table table-center" id="tableList">
         <tr data-buy="true">
             <th width="3%">序号</th>
@@ -38,7 +38,7 @@
         </tr>
         <c:forEach var="merchant" items="${result}" varStatus="status">
         	<tr>
-	            <td>${status.index + 1}</td>
+	            <td>${(pageNo-1)*10 +status.index+ 1}</td>
 	            <td>${merchant.mobile}</td>
 	            <td>${merchant.insName}</td>
 	            <td><fmt:formatDate value="${merchant.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
@@ -50,7 +50,14 @@
 	            		 <td>已处理</td>
 	            	</c:otherwise>
 	            </c:choose>
-	            <td class="addRemarks">${merchant.note}</td>
+	            <td class="addRemarks">
+	            	 <c:if test="${fn:length(merchant.note)>30 }">  
+                         ${fn:substring(merchant.note, 0, 30)}  
+                    </c:if>
+                     <c:if test="${fn:length(merchant.note)<=30 }">  
+                        ${merchant.note}
+                   	</c:if>
+	            </td>
 	            <td>
 	                <a href="javascript:updateMerchantEntry(${merchant.id},${merchant.dealStatus})" class="updateStatus">切换状态</a>|
 	                <a href="javascript:void(0)" id="${merchant.id}" value="${merchant.note}" class="addRemarks">添加备注</a>

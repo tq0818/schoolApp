@@ -62,11 +62,15 @@ public class MerchantEntryController {
     	}
     	List<MerchantEntryVo> list = merchantEntryServiceImpl.dimMerchantEntry(merchantEntryVo);
     	Integer count = merchantEntryServiceImpl.dimMerchantEntryCount(merchantEntryVo);
+    	if (page.intValue() - 1 == 1 && list !=null && list.size() == 0) {
+    		page = page.intValue() - 1;
+    		merchantEntryVo.setPage(page);
+    		list = merchantEntryServiceImpl.dimMerchantEntry(merchantEntryVo);
+    		count = merchantEntryServiceImpl.dimMerchantEntryCount(merchantEntryVo);
+		}
     	model.addAttribute("result", list);
     	model.addAttribute("rowCount", count);
     	model.addAttribute("pageNo", page);
-    	model.addAttribute("dimFlag", merchantEntryVo.getDimFlag());
-    	model.addAttribute("dimFlagT", merchantEntryVo.getDimFlag());
     	return "institution/merchantEntry";
     }
     

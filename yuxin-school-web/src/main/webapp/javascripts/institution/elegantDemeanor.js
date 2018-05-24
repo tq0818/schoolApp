@@ -97,7 +97,7 @@ $(function () {
     });
     
     //为图片添加点击事件,以便图片方大
-    $('.imgClick').click(function(){
+    $('.imgClick').dblclick(function(){
     	var url = $(this).attr('src');
     	$('.bigImg').show().attr('src',url);
     	return false;
@@ -155,6 +155,8 @@ $(function () {
         }
 
     });
+    
+    queryInstitutionStyle(1);
 });
 
 //上传临时图片 2为风采  1为视频 0为封面
@@ -279,6 +281,8 @@ function saveCutPic(saveFlag) {
             		//刷新一下页面
             		window.location.href=rootPath +"/institutionStyle/queryInstitutionStyle?relationId="+$("#institutionId").val();
             	}else{
+            		//不管是新增还是更新，将更新id重置为1
+            		$("#updateId").val("");
             		queryInstitutionStyle(1);
             	}
             }else {
@@ -287,6 +291,9 @@ function saveCutPic(saveFlag) {
             if (jcrop_apis){
                 jcrop_apis.destroy();
             }
+        },
+        error:function(){
+        	countAdd = 0;
         }
     });
     $("#chooseDiv").css("display", "none");
@@ -367,4 +374,20 @@ function picFormat(fileStr){
             return true;
     }
 	return false;
+}
+
+//查询风采
+function queryInstitutionStyle(pageNo){
+	$.ajax({
+        url: rootPath + "/institutionStyle/queryInsStyle",
+        data: {"page":pageNo,
+            "pagesize":9,
+            "relationId":$("#institutionId").val(),
+        },beforeSend: function (XMLHttpRequest) {
+        },
+        dataType: "html",
+        success: function (data) {
+            $("#insStyleInfo").html("").html(data);
+        }
+    });
 }

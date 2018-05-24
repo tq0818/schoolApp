@@ -22,27 +22,26 @@
 <input type="hidden" id="rowCount" value='${rowCount}'/>
 <input type="hidden" id="relationId" value='${relationId}'/>
 
-                    <span class="labelName">风采展示:</span>
-                    <ul style="display: inline-block;width: 1160px;">
-                        <li class="addImg mienShow" id="eleShow">
-                            <i class="icon iconfont"></i>
-                        </li>
-                        <c:forEach var="schoolStyle" items="${result}" varStatus="status">
-                        	<li>
-                             <img src="${schoolStyle.imgUrl}" alt="" style="width: 100%;height: 100%"  class="imgClick">
-                            <span class="imgInfo">${schoolStyle.content}</span>
-                            <c:if test="${schoolStyle.isTop == 1}"><a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">已置顶</a></c:if>
-                            <c:if test="${schoolStyle.isTop == 0}"><a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">未置顶</a></c:if>
-                            <div class="listBg">
-                                <c:if test="${schoolStyle.isTop == 1}"><a href="javaScript:void(0)" class="btn btn-warning btn-sm imgTop btnUpdateTop" data-value="0">取消置顶</a></c:if>
-                                <c:if test="${schoolStyle.isTop == 0}"><a href="javaScript:void(0)" class="btn btn-warning btn-sm imgTop btnUpdateTop" data-value="1">置顶</a></c:if>
-                                <a href="javaScript:void(0)" class="btn btn-success btn-sm imgDelete">删除</a>
-                                <a href="javascript:void(0)" class="btn btn-success btn-sm imgChange mienShow btnStyleUpdate" data-value="${schoolStyle.id}" >修改</a>
-                            </div>
-                            </li>
-                        </c:forEach>
-                    </ul>
-               
+      <span class="labelName">风采展示:</span>
+      <ul style="display: inline-block;width: 1160px;">
+          <li class="addImg mienShow" id="eleShow">
+              <i class="icon iconfont"></i>
+          </li>
+          <c:forEach var="schoolStyle" items="${result}" varStatus="status">
+          	<li>
+               <img src="${schoolStyle.imgUrl}" alt="" style="width: 100%;height: 100%"  class="imgClick">
+              <span class="imgInfo">${schoolStyle.content}</span>
+              <c:if test="${schoolStyle.isTop == 1}"><a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">已置顶</a></c:if>
+              <c:if test="${schoolStyle.isTop == 0}"><a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">未置顶</a></c:if>
+              <div class="listBg">
+                  <c:if test="${schoolStyle.isTop == 1}"><a href="javaScript:void(0)" class="btn btn-warning btn-sm imgTop btnUpdateTop" data-value="0">取消置顶</a></c:if>
+                  <c:if test="${schoolStyle.isTop == 0}"><a href="javaScript:void(0)" class="btn btn-warning btn-sm imgTop btnUpdateTop" data-value="1">置顶</a></c:if>
+                  <a href="javaScript:void(0)" class="btn btn-success btn-sm imgDelete">删除</a>
+                  <a href="javascript:void(0)" class="btn btn-success btn-sm imgChange mienShow btnStyleUpdate" data-value="${schoolStyle.id}" >修改</a>
+              </div>
+              </li>
+          </c:forEach>
+      </ul>
 
 </body>
 </html>
@@ -93,7 +92,7 @@
     });
     
     //为图片添加点击事件,以便图片方大
-    $('.imgClick').click(function(){
+    $('.imgClick').dblclick(function(){
     	var url = $(this).attr('src');
     	$('.bigImg').show().attr('src',url);
     	return false;
@@ -121,6 +120,9 @@
 	
 	//删除风采
 	$(".imgDelete").click(function(){
+		if(!confirm("是否删除该图片?")){
+			return ;
+		}
 		var id = $(this).parent().find(".btnStyleUpdate").attr("data-value");
 		var pageNo = $("#pageNo").val();
 		console.log("当前页"+pageNo);

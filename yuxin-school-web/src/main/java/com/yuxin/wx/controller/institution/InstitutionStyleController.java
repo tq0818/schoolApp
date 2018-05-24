@@ -127,7 +127,6 @@ public class InstitutionStyleController {
 	//查询风采图下半部分
 	@RequestMapping(value = "/queryInsStyle")// ,method = RequestMethod.POST
     public String queryInsStyle(HttpServletRequest request,HttpServletResponse response,Model model,InstitutionStyle institutionStyle){
-		//TODO 这里先做一个测试
 		Integer page = institutionStyle.getPage();
 		institutionStyle.setPageSize(9);
 		if (page != null && page.intValue() == 0) {

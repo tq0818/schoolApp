@@ -8,6 +8,7 @@ public class InsVideoVo {
 	private String ccId	;
 	private String ccUserId	; 
 	private String ccApiKey	;
+	private Integer watchCount;
 	public String getCcId() {
 		return ccId;
 	}
@@ -25,6 +26,12 @@ public class InsVideoVo {
 	}
 	public void setCcApiKey(String ccApiKey) {
 		this.ccApiKey = ccApiKey;
+	}
+	public Integer getWatchCount() {
+		return watchCount;
+	}
+	public void setWatchCount(Integer watchCount) {
+		this.watchCount = watchCount;
 	} 
 	
 }

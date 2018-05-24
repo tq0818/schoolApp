@@ -38,40 +38,32 @@ $(function () {
     });
     //时间点击事件#
     $("#startTime").click(function(){
-    	$("#dimMobile").val("");
-    	$("#dimInstitu").val("");
     	$("#dimFlag").attr("value",0);
     });
     $("#endTime").click(function(){
-    	$("#dimMobile").val("");
-    	$("#dimInstitu").val("");
     	$("#dimFlag").attr("value",0);
     });
     //右边搜索条件
     $("#dimMobile").click(function(){
-    	console.log("111");
-    	$("#startTime").val("");
-    	$("#endTime").val("");
-    	$("#dimFlag").attr("value",1);
-    	$('.changeBtn').find('a').each(function (i) {
-    		if(i == 0){
-    			$(this).addClass('btn-primary');
-    		}else{
-    			$(this).removeClass('btn-primary');
-    		}
-    	});
+//    	console.log("111");
+    	$("#dimFlag").attr("value",0);
+//    	$('.changeBtn').find('a').each(function (i) {
+//    		if(i == 0){
+//    			$(this).addClass('btn-primary');
+//    		}else{
+//    			$(this).removeClass('btn-primary');
+//    		}
+//    	});
     });
     $("#dimInstitu").click(function(){
-    	$("#startTime").val("");
-    	$("#endTime").val("");
-    	$("#dimFlag").attr("value",1);
-    	$('.changeBtn').find('a').each(function (i) {
-    		if(i == 0){
-    			$(this).addClass('btn-primary');
-    		}else{
-    			$(this).removeClass('btn-primary');
-    		}
-    	});
+    	$("#dimFlag").attr("value",0);
+//    	$('.changeBtn').find('a').each(function (i) {
+//    		if(i == 0){
+//    			$(this).addClass('btn-primary');
+//    		}else{
+//    			$(this).removeClass('btn-primary');
+//    		}
+//    	});
     });
 });
 
@@ -82,13 +74,9 @@ function queryMerchantEntry(page){
         data: {"page":page,
             "pageSize":10
         },beforeSend: function (XMLHttpRequest) {
-           /* $(".loading").show();
-            $(".loading-bg").show();*/
         },
         dataType: "html",
         success: function (data) {
-//            $(".loading").hide();
-//            $(".loading-bg").hide();
             $(".user-list").html("").html(data);
         }
     });
@@ -106,8 +94,10 @@ function updateMerchantEntry(id,dealStauts){
 	        dataType: "json",
 	        success: function (data) {
 	        	if(data == "success"){
+	        		console.log($("#pageNo").val());
+	        		$("#dimFlag").attr("value",0);
 	        		//成功刷新
-	        		queryMerchantEntry($("#pageNo").val());
+	        		dimMerchantEntry($("#pageNo").val());
 	        	}
 	        }
 	});
@@ -128,8 +118,9 @@ function updateMerchantEntryT(){
 	        		 //保存和取消都应该清理掉上一次的值
 	                $("#updateId").val("");
 	                $("#content").text("");
+	                $("#dimFlag").attr("value",0);
 	        		//成功刷新
-	        		queryMerchantEntry($("#pageNo").val());
+	                dimMerchantEntry($("#pageNo").val());
 	        	}
 	        }
 	});

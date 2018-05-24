@@ -70,7 +70,7 @@
 		 WHERE relation_id = #{relationId}
 		 <if test="sourceFlag != null">AND source_flag = #{sourceFlag}</if>
 		 <if test="type != null">AND type = #{type}</if>
-		 ORDER BY is_top DESC,update_time DESC
+		 ORDER BY is_top DESC,create_time DESC
 		 <if test="page != null and page != 0">
 		 	LIMIT #{firstIndex},#{pageSize}
 		 </if>

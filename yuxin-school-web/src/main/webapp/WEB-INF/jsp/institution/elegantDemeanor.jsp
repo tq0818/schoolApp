@@ -15,7 +15,7 @@
         .gobal-progress{display: none !important;} 
     </style>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/institution/elegantDemeanor.css">
-	
+
 </head>
 <body>
 <input type="hidden" id="x" name="x" value="0"/>
@@ -95,9 +95,8 @@
                 <div class="imgList" id="insStyleInfo">
                 
                	</div>
-                <div class="pages pagination" style="padding-top: 10px;">
-
-                </div>
+               	 <div class="pages pagination">
+     			</div>   
             </div>
 
         </div>
@@ -127,7 +126,7 @@
         <p style="width: 218px;height: 120px;border: 1px solid #e4e4e4;margin: auto;text-align: center;overflow: auto;">
             <img src="" alt="" style="width: 136px;height: 116px;" id="targetVideo">
         </p>
-        <a href="##" class="addPic" style="margin-left: 165px;margin-top: 5px;">
+        <a href="javascript:void(0)" class="addPic" style="margin-left: 165px;margin-top: 5px;">
             选择图片
            <input type="file" class="btn btn-mini btn-primary" id="imgDataVideo" name="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(1)" value="重新选择文件"/>
         </a>
@@ -161,8 +160,8 @@
         <textarea name="" placeholder="请输入视频描述(最多200个字)" class="writeWord" maxlength="200" id="videoContent"></textarea>
     </div>
     <div class="eleBtn">
-        <a href="##" class="btn btn-primary closeVideoUpload">取消</a>
-        <a href="##" class="btn btn-primary closeVideoUpload btnSaveCutPic" onClick="saveCutPic(1)">保存</a>
+        <a href="javascript:void(0)" class="btn btn-primary closeVideoUpload">取消</a>
+        <a href="javascript:void(0)" class="btn btn-primary closeVideoUpload btnSaveCutPic" onClick="saveCutPic(1)">保存</a>
     </div>
 </div>
 <%--风采上传弹窗--%>
@@ -172,7 +171,7 @@
         <p style="width: 300px;height: 300px;border: 1px solid #e4e4e4;margin: auto;text-align: center;overflow: auto;">
             <img src="" alt="" style="margin: auto;width: 300px;height: 300px;" id="targetStyle" class="picStyle">
         </p>
-        <a href="##" class="addPic" style="margin-top: 5px;margin-bottom: 20px;">
+        <a href="javascript:void(0)" class="addPic" style="margin-top: 5px;margin-bottom: 20px;">
             选择图片
            <input type="file" class="btn btn-mini btn-primary" id="imgDataStyle" name="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(2)" value="重新选择文件"/>
         </a>
@@ -182,8 +181,8 @@
         <textarea name="" placeholder="请输入图片描述(最多60个字)" class="writeWord" maxlength="60" id="styleContent"></textarea>
     </div>
     <div class="eleBtn">
-        <a href="##" class="btn btn-primary closeElePic">取消</a>
-        <a href="##" class="btn btn-primary closeElePic btnSaveCutPic" onClick="saveCutPic(2)">保存</a>
+        <a href="javascript:void(0)" class="btn btn-primary closeElePic">取消</a>
+        <a href="javascript:void(0)" class="btn btn-primary closeElePic btnSaveCutPic" onClick="saveCutPic(2)">保存</a>
     </div>
 </div>
 <!-- 封面图片上传 -->
@@ -193,14 +192,14 @@
         <p style="width: 300px;height: 300px;border: 1px solid #e4e4e4;margin: auto;text-align: center;overflow: auto;">
             <img src="" alt="" style="width: 300px;height: 300px;" id="target" class="picStyle">
         </p>
-        <a href="##" class="addPic" style="margin-top: 5px;margin-bottom: 20px;">
+        <a href="javascript:void(0)" class="addPic" style="margin-top: 5px;margin-bottom: 20px;">
            选择图片
            <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(0)" value="重新选择文件"/>
         </a>
     </div>
     <div class="eleBtn">
-        <a href="##" class="btn btn-primary closeElePic">取消</a>
-        <a href="##" class="btn btn-primary closeElePic btnSaveCutPic" onClick="saveCutPic(0)">保存</a>
+        <a href="javascript:void(0)" class="btn btn-primary closeElePic">取消</a>
+        <a href="javascript:void(0)" class="btn btn-primary closeElePic btnSaveCutPic" onClick="saveCutPic(0)">保存</a>
     </div>
 </div>
 
@@ -290,27 +289,7 @@
 <script src="<%=rootPath %>/javascripts/institution/ajaxfileuploadR.js"></script>
 <script src="<%=rootPath %>/javascripts/plus/jquery.units.js"></script>
 <script src="<%=rootPath %>/javascripts/institution/elegantDemeanor.js"></script>
-<script>
-	$(function(){
-		$.ajax({
-	        url: rootPath + "/institutionStyle/queryInsStyle",
-	        data: {"page":0,
-	            "pagesize":9,
-	            "relationId":$("#institutionId").val(),
-	        },beforeSend: function (XMLHttpRequest) {
-	           /* $(".loading").show();
-	            $(".loading-bg").show();*/
-	        },
-	        dataType: "html",
-	        success: function (data) {
-//	            $(".loading").hide();
-//	            $(".loading-bg").hide();
-	            $("#insStyleInfo").html("").html(data);
-	        }
-	    });
-	});
-</script>
 
-
+<script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
 </body>
 </html>
