@@ -220,7 +220,7 @@
         <input type="hidden" id="userId" value="">
         <input id="insUserName" type="hidden" value="">
         <p id="user">账号：cdsywgyxx</p>
-        <p>密码：<input type="password" id="updataPwd"></p>
+        <p>密码：<input type="password" id="updataPwd" maxlength="18"></p>
         <div class="countPopupBtn">
             <a href="javascript:void(0)" class="btn btn-primary btn-mb closeCountPopup cancelManageUser">取消</a>
             <a href="javascript:void(0)" class="btn btn-primary btn-mb closeCountPopup updateManageUser">保存</a>
