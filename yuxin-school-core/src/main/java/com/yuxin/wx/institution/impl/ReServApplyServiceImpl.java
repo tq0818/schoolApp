@@ -46,6 +46,19 @@ public class ReServApplyServiceImpl extends BaseServiceImpl implements ReServApp
             reServApply.setPage((reServApply.getPage()-1)*reServApply.getPageSize());
         }
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+       /* String startTime =null;
+        if(null != reServApply.getStartTime() && !"".equals(reServApply.getStartTime())){
+            startTime = format.format(reServApply.getStartTime());
+        }
+        String endTime = null;
+        if(null != reServApply.getEndTime() && !"".equals(reServApply.getEndTime())){
+            endTime = format.format(reServApply.getEndTime());
+        }
+
+
+
+        reServApply.setStartTimes(startTime);
+        reServApply.setEndTimes(endTime);*/
         //查找机构预约列表
         List<ReServApply> data = reServApplyMapper.findReServApplyList(reServApply);
         Integer count = reServApplyMapper.findReServApplyListCount(reServApply);

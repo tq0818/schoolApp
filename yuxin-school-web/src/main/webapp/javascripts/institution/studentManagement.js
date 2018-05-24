@@ -54,6 +54,10 @@ $(function () {
             }
 
         });
+    $("#not").focus(function () {
+        $("#not").val('');
+
+    })
 });
 
 function searchCount(){
@@ -119,6 +123,18 @@ function initReServApplyList(page) {
     var mobile = $("#mobile").val();
 
 
+    //两个时间不为空时，则需要判断时间大小
+    var from = $(".from").val();
+    var to = $(".to").val();
+    if (from !=null && to != null){
+        if (parseInt(from.replace(/-/g,"")) > parseInt(to.replace(/-/g,""))){
+            $(".from").val("");
+            $(".to").val("");
+            $.msg("左边时间不能晚于右边时间!");
+            return;
+        }
+    }
+
     $.ajax({
         type:"POST",
         url : rootPath +"/InsStudent/findReServApplyList",
@@ -137,7 +153,6 @@ function initReServApplyList(page) {
             $(".loading-bg").show();
         },
         success : function(jsonData) {
-            console.log(jsonData)
             var html ='<tr data-buy="true">' +
                             '<th width="3%">序号</th>' +
                             '<th width="5%">手机号</th>' +
@@ -187,8 +202,8 @@ function initReServApplyList(page) {
                             '<td>'+dealStatus+'</td>'+
                             '<td class="addRemarks">'+note+'</td>'+
                             '<td>'+
-                                '<a href="##" class="changeStatus" data-id="'+item.id+'" data-status="'+item.dealStatus+'">切换状态</a>|'+
-                                '<a href="##" class="addRemarks" data-id="'+item.id+'" data-note="'+note+'">添加备注</a>'+
+                                '<a href="javascript:void(0)" class="changeStatus" data-id="'+item.id+'" data-status="'+item.dealStatus+'">切换状态</a>|'+
+                                '<a href="javascript:void(0)" class="addRemarks" data-id="'+item.id+'" data-note="'+note+'">添加备注</a>'+
                             '</td>'+
                         '</tr>';
                 })
