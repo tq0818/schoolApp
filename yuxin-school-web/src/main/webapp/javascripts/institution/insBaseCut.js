@@ -7,9 +7,9 @@ var jcrop_apis;
         	//picFlag == 1?$("#targetVideo"):$("#targetStyle");
         //特色服务比列
        if (picFlag == 2){
-           $scale = 150/150;
-           maxHeight = 150;
-           maxWidth = 150;
+           $scale = 130/130;
+           maxHeight = 130;
+           maxWidth = 130;
            minHeight =30 ;
            minWidth = 30;
        }else if(picFlag==3){ //课程风采

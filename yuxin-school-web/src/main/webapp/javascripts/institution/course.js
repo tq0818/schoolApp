@@ -182,7 +182,6 @@ function getOnlineClassTypeList(){
             $(".loading-bg").hide();
         },
         success: function (json) {
-         //  console.log(json);
             var list = json.data;
             var html = `
                         <tr data-buy="true">
@@ -423,7 +422,8 @@ function controlClass(dom){
                 $.post(rootPath + '/institutionClassType/delClass', {cid: id,insId:$('#insId').val()}, function (json) {
                     $.msg(json == 'success' ? '操作成功' : '操作失败');
                     if (json == 'success') {
-                        getClassTypeList();
+                        window.location.reload();
+                        //getClassTypeList();
                     }
                 })
             }

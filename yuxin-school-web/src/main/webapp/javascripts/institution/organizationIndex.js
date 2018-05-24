@@ -208,6 +208,19 @@ $(function () {
             labelName.push(systemLabel.eq(i).val());
         }
 
+        let listMachineChi = $('#listMachine').children('div');
+        for(let i=0;i<listMachineChi.length;i++){
+            var quhao = listMachineChi.eq(i).children('input').eq(0).val();
+            var num = listMachineChi.eq(i).children('input').eq(1).val();
+            if(quhao == ""&& num!=""){
+                $.msg("电话号码不完整！");
+                return;
+            }
+            if(quhao != ""&& num==""){
+                $.msg("电话号码不完整！");
+                return;
+            }
+        }
 
         var province = $("#eduArea2").val();
         var city = $("#eduSchool2").val();
