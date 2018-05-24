@@ -97,7 +97,7 @@ function addCourseListener(){
             $('#cover').hide();
 
             //添加完节点后添加监听器
-            $('.deleteBtn').click(function () {
+            $('.deleteBtnStyle').click(function () {
                 var dom = this;
                 $.confirm('是否确定删除该风采图片?',function (data) {
                     if(data){
@@ -155,53 +155,22 @@ function addCourseListener(){
     //
     //添加限制人数监听器，>= 0
     $('#classPersonLimit').bind('input propertychange', 'input' , function(){
-        var val = $('#classPersonLimit').val();
-        if(isNaN(val) || val > 999999){
-            $('#classPersonLimit').val(val.substr(0,val.length - 1));
-            return;
-        }
-
+        personNumLimit();
     })
 
 
     //添加价格输入监听器
     $('#classPrice').bind('input propertychange', 'input' , function(){
-        var price = $('#classPrice').val();
-        if(isNaN(price)){
-            $('#classPrice').val(price.substr(0,price.length - 1));
-            return;
-        }
-        if(!priceTest.test(price)){
-            $('#classPrice').val(price.substr(0,price.length - 1));
-            return;
-        }
-
-        if(price > 99999){
-            $('#classPrice').val(price.substr(0,price.length - 1));
-            return;
-        }
-
+        priceLimit();
     })
 
     // 课程名称事件监听
     $('#className').bind('input propertychange', 'input' , function(){
-        var val = $('#className').val();
-        //不能输入全是空格的字符串
-        if(trim(val) == ''){
-            $('#className').val('');
-            return;
-        }
-
-        //字符串末尾连续多个空格
-        if(val.length - trim(val).length > 1){
-            $('#className').val(val.substr(0,val.length - 1));
-            return;
-        }
-
-        if(!nameTest.test(trim(val))){
-            $('#className').val(val.substr(0,val.length - 1));
-        }
+        classNameLimit();
     })
+
+
+
 
     //课程说明事件监听
     $('textarea').bind('input propertychange', function(){
@@ -257,7 +226,7 @@ function addCourseListener(){
 
 
     //删除风采图片事件监听
-    $('.deleteBtn').click(function () {
+    $('.deleteBtnStyle').click(function () {
         var dom = this;
         $.confirm('是否确定删除该风采图片?',function (data) {
             if(data){
@@ -411,13 +380,15 @@ function savePic() {
     $("#targetStyle").attr("src","");
    // console.log($("#targetStyle").attr("src"));
     var fileStr = $("#imgDataStyle").val();
+    var  lowwerFileStr =  fileStr.toLowerCase();
     //.jpg,.jpeg,.gif,.png,.bmp,.ico
-    if(!(fileStr.indexOf(".jpg")>0
-        ||fileStr.indexOf(".jpeg")>0
-        ||fileStr.indexOf(".gif")>0
-        ||fileStr.indexOf(".png")>0
-        ||fileStr.indexOf(".bmp")>0
-        ||fileStr.indexOf(".ico")>0)){
+    if(!(lowwerFileStr.indexOf(".jpg")==(fileStr.length-4)
+            ||lowwerFileStr.indexOf(".jpeg")==(fileStr.length-5)
+            ||lowwerFileStr.indexOf(".gif")==(fileStr.length-4)
+            ||lowwerFileStr.indexOf(".png")==(fileStr.length-4)
+            ||lowwerFileStr.indexOf(".bmp")==(fileStr.length-4)
+            ||lowwerFileStr.indexOf(".ico")==(fileStr.length-4)
+        )){
         alert("上传文件仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
        //
         $("#imgDataStyle").val('');

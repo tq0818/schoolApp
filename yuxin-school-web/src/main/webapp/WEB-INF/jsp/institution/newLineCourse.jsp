@@ -117,8 +117,8 @@
                     </p>
                 </div>
                 <div class="orgBtn">
-                    <a href="##" class="btn btn-primary btn-mb closeMechanism closeMechanismCancel">取消</a>
-                    <a href="##" class="btn btn-primary btn-mb closeMechanism closeMechanismCommit">保存</a>
+                    <a href="javascript:void(0)" class="btn btn-primary btn-mb closeMechanism closeMechanismCancel">取消</a>
+                    <a href="javascript:void(0)" class="btn btn-primary btn-mb closeMechanism closeMechanismCommit">保存</a>
                 </div>
             </div>
         </div>

@@ -567,13 +567,22 @@ public class InstitutionClassTypeController {
             entity.setSummary(summary);
             entity.setDetaildesc(detail);
 
-            entity.setDelFlag(0);
+
 
             entity.setUpdateTime(new Date());
             if (id <= 0) {
                 //新增线下课程
+
+                //新增线下课程验证课程名重复
+                if(institutionClassTypeService.countUnderllineClass(insId,name) > 0){
+                    json.put("status",0);
+                    json.put("msg","该机构下存在同名课程");
+                    return json;
+                }
+
                 entity.setIsShelves(0);
                 entity.setCreateTime(new Date());
+                entity.setDelFlag(0);
                 entity.setIsRecommend(0);
                 //新增课程不修改数据库，直接将课程中的风采、标签写入数据库
                 institutionClassTypeService.insert(entity);
@@ -637,6 +646,10 @@ public class InstitutionClassTypeController {
                 //风采
                 JSONArray styleArr = JSONArray.parseArray(style);
                 List<InstitutionStyle> styleList = institutionClassTypeService.getStyleByClassId(entity.getId());
+                Map<String,InstitutionStyle> styleMap = new HashMap<>();
+                for(InstitutionStyle vo : styleList){
+                    styleMap.put("key"+vo.getId(),vo);
+                }
                 for(int i=0;i<styleArr.size();i++){
                     JSONObject obj = styleArr.getJSONObject(i);
                     if("".equals(obj.getString("id"))){
@@ -654,9 +667,14 @@ public class InstitutionClassTypeController {
                     }else{
                         for(InstitutionStyle vo : styleList){
                             if(vo.getId() - Integer.valueOf(obj.getString("id")) == 0){
-                                vo.setImgUrl(obj.getString("path"));
-                                vo.setUpdateTime(new Date());
-                                institutionClassTypeService.updateStyle(vo);
+                                if( !(obj.getString("path") != null && obj.getString("path").equals(vo.getImgUrl()) )){
+                                  //图片路径不同才更新数据
+                                    vo.setImgUrl(obj.getString("path"));
+                                    vo.setUpdateTime(new Date());
+                                    institutionClassTypeService.updateStyle(vo);
+                                }
+
+                                styleMap.remove("key"+vo.getId());
                                 continue;
                             }
                         }
@@ -665,9 +683,19 @@ public class InstitutionClassTypeController {
 
                 }
 
+                //将数据库中有但是请求参数中没有的风采删除
+                for (Map.Entry<String, InstitutionStyle> entry : styleMap.entrySet()) {
+                    institutionClassTypeService.delStyle(entry.getValue().getId());
+                }
+
+
                 //标签
                 JSONArray labelArr = JSONArray.parseArray(label);
                 List<InstitutionLabelVo> labelVoList = labelService.getClassLabels(entity.getId());
+                Map<String,InstitutionLabelVo> labelVoMap = new HashMap<>();
+                for(InstitutionLabelVo vo : labelVoList){
+                    labelVoMap.put("key"+vo.getId(),vo);
+                }
                 for(int i=0;i<labelArr.size();i++){
                     JSONObject obj = labelArr.getJSONObject(i);
                     if("".equals(obj.getString("id"))){
@@ -678,19 +706,34 @@ public class InstitutionClassTypeController {
                         labelVo.setSourceFlag(1);
                         labelVo.setCreateTime(new Date());
                         labelVo.setUpdateTime(new Date());
+                        if(labelVo.getLabelName() != null &&  !"".equals(labelVo.getLabelName().trim())){
+                            labelService.insert(labelVo);
+                        }
 
-                        labelService.insert(labelVo);
                     }else{
                         for(InstitutionLabelVo vo : labelVoList){
                             if(vo.getId() - Integer.valueOf(obj.getString("id")) == 0){
-                                vo.setLabelName(obj.getString("name"));
-                                vo.setUpdateTime(new Date());
-                                labelService.update(vo);
+                                if(!(obj.getString("name") != null && obj.getString("name").equals(vo.getLabelName()))){
+                                    //标签名不同才更新数据库
+                                    vo.setLabelName(obj.getString("name"));
+                                    vo.setUpdateTime(new Date());
+                                    labelService.update(vo);
+                                }
+
+                                labelVoMap.remove("key"+vo.getId());
+
+
                             }
                         }
                     }
 
                 }
+
+                //将数据库中有但是请求参数中没有的标签删除
+                for (Map.Entry<String, InstitutionLabelVo> entry : labelVoMap.entrySet()) {
+                    labelService.deleteInstitutionLabelById(entry.getValue().getId());
+                }
+
 
             }
 
@@ -734,7 +777,7 @@ public class InstitutionClassTypeController {
             data.put("fullFace","http://"+propertiesUtil.getProjectImageUrl()+"/"+entity.getCoverUrl());
             data.put("name",entity.getName());
             data.put("summary",entity.getSummary());
-            data.put("price", FloatFormatUtil.format(entity.getPrice(),"0.00"));
+            data.put("price",entity.getPrice() == null ? "0.00" :  FloatFormatUtil.format(entity.getPrice(),"0.00"));
             data.put("limit",entity.getIsReser());
             data.put("limitNum",entity.getReserCount());
             data.put("detail",entity.getDetaildesc());

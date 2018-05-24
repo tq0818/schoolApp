@@ -27,14 +27,33 @@ public class ReServApply implements Serializable{
 	private Date updateTime;
 	private Integer insClassId;//课程id
 	private Integer insId;//机构id
-	private Date startTime;
-	private Date endTime;
+	private String startTime;
+	private String endTime;
+
+	private String  startTimes;
+	private String  endTimes;
 	private Integer page;
 	private Integer pageSize;
 	private Integer sort;//序号
 	private String price;
 	private String note;
 	private String time;
+
+	public String getStartTimes() {
+		return startTimes;
+	}
+
+	public void setStartTimes(String startTimes) {
+		this.startTimes = startTimes;
+	}
+
+	public String getEndTimes() {
+		return endTimes;
+	}
+
+	public void setEndTimes(String endTimes) {
+		this.endTimes = endTimes;
+	}
 
 	public String getTime() {
 		return time;
@@ -108,19 +127,19 @@ public class ReServApply implements Serializable{
 		this.insId = insId;
 	}
 
-	public Date getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Date startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 

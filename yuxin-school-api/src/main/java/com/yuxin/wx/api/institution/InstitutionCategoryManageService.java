@@ -116,6 +116,12 @@ public interface InstitutionCategoryManageService {
     List<InstitutionCategoryVo> queryInstitutionCategorysEnabled1();
 
     /**
+     * 获取首页列表推荐的所有推荐分类
+     * @return
+     */
+    List<InstitutionCategoryVo> queryInstitutionIndexRecommend();
+
+    /**
      * 查询分类总记录
      * @param params
      * @return
@@ -128,6 +134,12 @@ public interface InstitutionCategoryManageService {
      * @return
      */
     int flushSortAll(Integer baseSort);
+
+    /**
+     * 更新所有分类排名
+     * @return
+     */
+    int flushSortAll();
 
 
     List<Map<String,Object>> getIndexRecommendList(int typeId, String name,Integer status , int pageStart, int pageSize);

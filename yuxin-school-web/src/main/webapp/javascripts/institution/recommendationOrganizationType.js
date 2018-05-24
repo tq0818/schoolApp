@@ -61,7 +61,7 @@ function getRecommendTypeList(){
                     prev_text: "上一页",
                     current_page:json.data.pageNo,
                     link_to: "javascript:getRecommendTypeList()",
-                    num_display_entries: 10,
+                    num_display_entries: 3,
                     items_per_page: 10,
                     num_edge_entries: 1,
                     callback: function (page) {

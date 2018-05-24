@@ -15,34 +15,140 @@
 
 
     <select id="findReServApplyIns" resultType="com.yuxin.wx.model.institution.ReServApply">
-        select id,relation_id relationId ,relation_name relationName from reservation_apply where type = 0 GROUP  BY relation_id
+        select * from (
+            SELECT
+                id,
+                relation_id relationId,
+                relation_name relationName
+            FROM
+                reservation_apply
+            WHERE
+                type = 0
+
+            UNION
+
+            SELECT
+                r.id,
+                ii.id relationId,
+                ii.name relationName
+            FROM
+                reservation_apply r
+            LEFT JOIN ins_class_type_relation icr on icr.class_type_id = r.relation_id
+            LEFT JOIN institution_info ii on ii.id = icr.ins_id
+            WHERE
+                r.type = 1
+            )c
+            GROUP BY
+	  c.relationId
     </select>
 
     <select id="findReServApplyList" parameterType="com.yuxin.wx.model.institution.ReServApply" resultType="com.yuxin.wx.model.institution.ReServApply">
-        select r.id,r.mobile,r.relation_name insName,ct.name className,ct.price,r.note,r.deal_status dealStatus,r.create_time createTime from reservation_apply r
-        left join ins_class_type_relation icr on r.relation_id = icr.ins_id
-        LEFT JOIN ins_class_type ct on ct.id = icr.class_type_id
-        where 1=1 and type = 0
+        select * from (
+        SELECT
+        r.id,
+        r.mobile,
+        r.relation_name insName,
+        '' className,
+        '' price,
+        r.note,
+        r.deal_status dealStatus,
+        r.create_time createTime
+        FROM
+        reservation_apply r
+        WHERE
+        1 = 1
+        AND type = 0
         <if test="insId != null and insId != ''">and r.relation_id = #{insId} </if>
         <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
         <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
+        <if test="startTime != null and startTime != '' and endTime == ''"><![CDATA[AND DATE_FORMAT(r.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
         <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
         <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
-        order by r.create_time desc
+
+        UNION
+
+        SELECT
+        r.id,
+        r.mobile,
+        ii.name insName,
+        ct.name className,
+        ct.price,
+        r.note,
+        r.deal_status dealStatus,
+        r.create_time createTime
+        FROM
+        reservation_apply r
+        LEFT JOIN ins_class_type ct ON ct.id = r.relation_id
+        LEFT JOIN ins_class_type_relation icr ON ct.id = icr.class_type_id
+        LEFT JOIN institution_info ii on ii.id = icr.ins_id
+        WHERE
+        1 = 1
+        AND type = 1
+        <if test="insId != null and insId != ''">and ii.id = #{insId} </if>
+        <if test="insClassId != null and insClassId != ''">and ct.id = #{insClassId} </if>
+        <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
+        <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
+        <if test="startTime != null and startTime != '' and endTime == ''"><![CDATA[AND DATE_FORMAT(r.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
+        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        ) c
+        ORDER BY
+        c.createTime DESC
         limit #{page},#{pageSize}
     </select>
 
     <select id="findReServApplyListCount" parameterType="com.yuxin.wx.model.institution.ReServApply" resultType="Integer">
-        select count(1) from reservation_apply r
-        left join ins_class_type_relation icr on r.relation_id = icr.ins_id
-        LEFT JOIN ins_class_type ct on ct.id = icr.class_type_id
-        where 1=1 and type = 0
+        select count(1) from (
+        SELECT
+        r.id,
+        r.mobile,
+        r.relation_name insName,
+        '' className,
+        '' price,
+        r.note,
+        r.deal_status dealStatus,
+        r.create_time createTime
+        FROM
+        reservation_apply r
+        WHERE
+        1 = 1
+        AND type = 0
         <if test="insId != null and insId != ''">and r.relation_id = #{insId} </if>
         <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
         <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
+        <if test="startTime != null and startTime != '' and endTime == ''"><![CDATA[AND DATE_FORMAT(r.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
         <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
         <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
 
+        UNION
+
+        SELECT
+        r.id,
+        r.mobile,
+        ii.name insName,
+        ct.name className,
+        ct.price,
+        r.note,
+        r.deal_status dealStatus,
+        r.create_time createTime
+        FROM
+        reservation_apply r
+        LEFT JOIN ins_class_type ct ON ct.id = r.relation_id
+        LEFT JOIN ins_class_type_relation icr ON ct.id = icr.class_type_id
+        LEFT JOIN institution_info ii on ii.id = icr.ins_id
+        WHERE
+        1 = 1
+        AND type = 1
+        <if test="insId != null and insId != ''">and ii.id = #{insId} </if>
+        <if test="insClassId != null and insClassId != ''">and ct.id = #{insClassId} </if>
+        <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
+        <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
+        <if test="startTime != null and startTime != '' and endTime == ''"><![CDATA[AND DATE_FORMAT(r.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
+        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        ) c
+        ORDER BY
+        c.createTime DESC
     </select>
 
     <select id="findReServApplyClassList" parameterType="com.yuxin.wx.model.institution.ReServApply" resultType="com.yuxin.wx.model.institution.ReServApply">
@@ -73,28 +179,110 @@
 
 
     <select id="findReServApplyMap" parameterType="com.yuxin.wx.model.institution.ReServApply" resultType="Map">
-        select r.id,r.mobile,r.relation_name insName,ct.name className,ct.price,r.note,r.deal_status dealStatus,r.create_time createTime from reservation_apply r
-        left join ins_class_type_relation icr on r.relation_id = icr.ins_id
-        LEFT JOIN ins_class_type ct on ct.id = icr.class_type_id
-        where 1=1 and type = 0
+        SELECT
+        r.id,
+        r.mobile,
+        r.relation_name insName,
+        '' className,
+        '' price,
+        r.note,
+        r.type,
+        r.deal_status dealStatus,
+        r.create_time createTime
+        FROM
+        reservation_apply r
+        WHERE
+        1 = 1
+        AND type = 0
         <if test="insId != null and insId != ''">and r.relation_id = #{insId} </if>
         <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
         <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
+        <if test="startTime != null and startTime != '' and endTime == ''"><![CDATA[AND DATE_FORMAT(r.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
         <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
         <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
-        order by r.create_time desc
+
+
+        UNION
+
+        SELECT
+        r.id,
+        r.mobile,
+        ii.name insName,
+        ct.name className,
+        ct.price,
+        r.note,
+        r.type,
+        r.deal_status dealStatus,
+        r.create_time createTime
+        FROM
+        reservation_apply r
+        LEFT JOIN ins_class_type ct ON ct.id = r.relation_id
+        LEFT JOIN ins_class_type_relation icr ON ct.id = icr.class_type_id
+        LEFT JOIN institution_info ii on ii.id = icr.ins_id
+        WHERE
+        1 = 1
+        AND type = 1
+        <if test="insId != null and insId != ''">and ii.id = #{insId} </if>
+        <if test="insClassId != null and insClassId != ''">and ct.id = #{insClassId} </if>
+        <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
+        <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
+        <if test="startTime != null and startTime != '' and endTime == ''"><![CDATA[AND DATE_FORMAT(r.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
+        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+
     </select>
 
     <select id="findReServApplyClassMap" parameterType="com.yuxin.wx.model.institution.ReServApply" resultType="Map">
-        select r.id,r.mobile,r.relation_name insName,ct.name className,ct.price,r.note,r.type,r.deal_status dealStatus,r.create_time createTime  from reservation_apply r
-        LEFT JOIN ins_class_type ct on ct.id = r.relation_id and r.type = 1
-        left join ins_class_type_relation icr on ct.id = icr.class_type_id
-        LEFT JOIN institution_info ii on ii.id = icr.ins_id and ii.id = #{insId}
-        where 1=1  and ct.id = #{insClassId}
+        SELECT
+        r.id,
+        r.mobile,
+        r.relation_name insName,
+        '' className,
+        '' price,
+        r.note,
+        r.type,
+        r.deal_status dealStatus,
+        r.create_time createTime
+        FROM
+        reservation_apply r
+        WHERE
+        1 = 1
+        AND type = 0
+        <if test="insId != null and insId != ''">and r.relation_id = #{insId} </if>
         <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
         <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
+        <if test="startTime != null and startTime != '' and endTime == ''"><![CDATA[AND DATE_FORMAT(r.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
         <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
         <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
-        order by r.create_time desc
+
+
+        UNION
+
+        SELECT
+        r.id,
+        r.mobile,
+        ii.name insName,
+        ct.name className,
+        ct.price,
+        r.note,
+        r.type,
+        r.deal_status dealStatus,
+        r.create_time createTime
+        FROM
+        reservation_apply r
+        LEFT JOIN ins_class_type ct ON ct.id = r.relation_id
+        LEFT JOIN ins_class_type_relation icr ON ct.id = icr.class_type_id
+        LEFT JOIN institution_info ii on ii.id = icr.ins_id
+        WHERE
+        1 = 1
+        AND type = 1
+        <if test="insId != null and insId != ''">and ii.id = #{insId} </if>
+        <if test="insClassId != null and insClassId != ''">and ct.id = #{insClassId} </if>
+        <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
+        <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
+        <if test="startTime != null and startTime != '' and endTime == ''"><![CDATA[AND DATE_FORMAT(r.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
+        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+
     </select>
 </mapper>

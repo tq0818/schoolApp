@@ -267,13 +267,28 @@ public class RecommendController {
     @RequestMapping(value = "/typeListAll",method = RequestMethod.POST)
     public List<InstitutionCategoryVo> getTypeListAll(HttpServletRequest request) {
         try{
-            String type = request.getParameter("type");
+
+            return   institutionCategoryService.queryInstitutionCategorysEnabled();
+
+           /* String type = request.getParameter("type");
             if("0".equals(type)){
-                return   institutionCategoryService.queryInstitutionCategorysEnabled();
+
             }else{
                 return   institutionCategoryService.queryInstitutionCategorysEnabled1();
-            }
+            }*/
           //  return   institutionCategoryService.queryInstitutionCategorysEnabled();
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/typeIndexListAll",method = RequestMethod.POST)
+    public List<InstitutionCategoryVo> getTypeIndexListAll(HttpServletRequest request) {
+        try{
+
+            return   institutionCategoryService.queryInstitutionCategorysEnabled1();
         }catch (Exception e){
             e.printStackTrace();
             return null;
@@ -309,7 +324,7 @@ public class RecommendController {
                                 //新增
                                 institutionCategoryService.updateRecommendStatusById( 1 ,vo.getId(),null);
                             }else{
-                                if(vo.getFirstRecommend() == 1 && checked != 1){
+                                if((null == vo.getFirstRecommend() || vo.getFirstRecommend() == 1) && checked != 1){
                                     //减少
                                     institutionCategoryService.updateRecommendStatusById( 0 ,vo.getId(),vo.getSort());
                                 }
@@ -319,9 +334,15 @@ public class RecommendController {
                     }
                 }
 
+
+                //更新完推荐状态后，刷新排序
+                institutionCategoryService.flushSortAll();
+
+
+
             }else{
                 //首页列表推荐
-                list = institutionCategoryService.queryInstitutionCategorysEnabled1();
+                list = institutionCategoryService.queryInstitutionCategorysEnabled();
 
                 for(int i = 0; i< arr.size();i++){
 
@@ -334,7 +355,7 @@ public class RecommendController {
                                 //新增
                                 institutionCategoryService.updateRecommendStatusById1( 1 ,vo.getId(),null);
                             }else{
-                                if(vo.getThirdRecommend() == 1 && checked != 1){
+                                if((null == vo.getThirdRecommend() ||  vo.getThirdRecommend() == 1) && checked != 1){
                                     //减少
                                     institutionCategoryService.updateRecommendStatusById1( 0 ,vo.getId(),vo.getSort());
                                 }

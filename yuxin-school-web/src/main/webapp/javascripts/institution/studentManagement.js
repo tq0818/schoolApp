@@ -54,6 +54,10 @@ $(function () {
             }
 
         });
+    $("#not").focus(function () {
+        $("#not").val('');
+
+    })
 });
 
 function searchCount(){
@@ -118,7 +122,18 @@ function initReServApplyList(page) {
     var endTime = $("#endTime").val();
     var mobile = $("#mobile").val();
 
-    console.log(statu,ins,insClass,startTime,endTime,mobile)
+
+    //两个时间不为空时，则需要判断时间大小
+    var from = $(".from").val();
+    var to = $(".to").val();
+    if (from !=null && to != null){
+        if (parseInt(from.replace(/-/g,"")) > parseInt(to.replace(/-/g,""))){
+            $(".from").val("");
+            $(".to").val("");
+            $.msg("左边时间不能晚于右边时间!");
+            return;
+        }
+    }
 
     $.ajax({
         type:"POST",
@@ -168,18 +183,27 @@ function initReServApplyList(page) {
                     }else{
                         note = item.note;
                     }
+                    var className = item.className;
+                    var price = item.price;
+                    if(null == className || className == ''){
+                        className = '-';
+                    }
+                    if(price == null || price == ''){
+                        price = '-';
+                    }
+
                     html+='<tr>'+
                             '<td>'+item.sort+'</td>'+
                             '<td>'+item.mobile+'</td>'+
                             '<td>'+item.insName+'</td>'+
-                            '<td>'+item.className+'</td>'+
-                            '<td>'+item.price+'</td>'+
+                            '<td>'+className+'</td>'+
+                            '<td>'+price+'</td>'+
                             '<td>'+item.time+'</td>'+
                             '<td>'+dealStatus+'</td>'+
                             '<td class="addRemarks">'+note+'</td>'+
                             '<td>'+
-                                '<a href="##" class="changeStatus" data-id="'+item.id+'" data-status="'+item.dealStatus+'">切换状态</a>|'+
-                                '<a href="##" class="addRemarks" data-id="'+item.id+'" data-note="'+note+'">添加备注</a>'+
+                                '<a href="javascript:void(0)" class="changeStatus" data-id="'+item.id+'" data-status="'+item.dealStatus+'">切换状态</a>|'+
+                                '<a href="javascript:void(0)" class="addRemarks" data-id="'+item.id+'" data-note="'+note+'">添加备注</a>'+
                             '</td>'+
                         '</tr>';
                 })
@@ -227,7 +251,6 @@ function initReServApplyList(page) {
 }
 
 function updateReServApply(id,status) {
-console.log(status)
     var dealStatus = '';
     if(status == 0){
         dealStatus = 1;
@@ -251,7 +274,6 @@ console.log(status)
 
 function updateReServApplyNot(id) {
     var not = $("#not").val();
-    console.log(not);
     $.ajax({
         type:"POST",
         url : rootPath +"/InsStudent/updateReServApply",

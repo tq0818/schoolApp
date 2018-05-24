@@ -173,4 +173,6 @@ public interface InstitutionClassTypeMapper {
     int getCountOfOnlineClassyCidInsId(Map<String,Object> map);
 
 
+    int countUnderllineClass(Map<String,Object> map);
+
 }

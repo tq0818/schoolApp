@@ -35,9 +35,9 @@
             <div class="courseUnderLine">
                 <div class="chooseBtn" id="chooseBtn1">
                     <span>上下架状态</span>
-                    <a href="##" class="btn btn-default btn-primary btn-mb">全部</a>
-                    <a href="##" class="btn btn-default  btn-mb">已上架</a>
-                    <a href="##" class="btn btn-default  btn-mb">已下架</a>
+                    <a href="javascript:void(0)" class="btn btn-default btn-primary btn-mb">全部</a>
+                    <a href="javascript:void(0)" class="btn btn-default  btn-mb">已上架</a>
+                    <a href="javascript:void(0)" class="btn btn-default  btn-mb">已下架</a>
                 </div>
                 <div class="imgList" style="width: 80%;margin: auto;display: block;float: none;">
                     <ul id="courseContainer">
@@ -51,11 +51,11 @@
                 <span style="color: #a1a1a1;">功能说明：该功能用将卓鹿的“在线课程”和当前机构进行关联，便于用户查看属于该机构的在线视频课程</span>
                 <div class="chooseBtn" id="chooseBtn2">
                     <span>上下架状态</span>
-                    <a href="##" class="btn btn-default onlineStatus btn-primary btn-mb">全部</a>
-                    <a href="##" class="btn btn-default onlineStatus btn-mb">已关联</a>
-                    <a href="##" class="btn btn-default onlineStatus btn-mb">未关联</a>
+                    <a href="javascript:void(0)" class="btn btn-default onlineStatus btn-primary btn-mb">全部</a>
+                    <a href="javascript:void(0)" class="btn btn-default onlineStatus btn-mb">已关联</a>
+                    <a href="javascript:void(0)" class="btn btn-default onlineStatus btn-mb">未关联</a>
                 </div>
-                <a href="##" class="btn btn-primary btn-mb addCourse" style="float: right;margin-right: 200px;margin-bottom: 10px;">添加课程</a>
+                <a href="javascript:void(0)" class="btn btn-primary btn-mb addCourse" style="float: right;margin-right: 200px;margin-bottom: 10px;">添加课程</a>
                 <div style="width: 80%;margin: auto;">
                     <table class="table table-center" id="tableList">
                         <tbody id="onlineTbody">
@@ -82,12 +82,12 @@
 <div class="addClassPopup">
     <h5>
         添加课程
-        <a href="##" class="btn btn-primary btn-xs closeCoursePopup">关闭</a>
+        <a href="javascript:void(0)" class="btn btn-primary btn-xs closeCoursePopup">关闭</a>
     </h5>
     <div style="text-align: center;margin: 10px;">
         <span>课程名称：</span>
         <input type="text" id="findClassName" placeholder="请输入课程名称" style="width: 300px;height: 25px;margin-right: 5px;">
-        <a href="##" class="btn btn-sm btn-primary findClassBtn">搜索</a>
+        <a href="javascript:void(0)" class="btn btn-sm btn-primary findClassBtn">搜索</a>
     </div>
     <div>
 

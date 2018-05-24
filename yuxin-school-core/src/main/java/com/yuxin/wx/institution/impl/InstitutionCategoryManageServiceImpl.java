@@ -71,6 +71,11 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
         try {
             List<InstitutionCategoryVo> list = institutionManageMapper.queryCateList(map);
             int count = institutionManageMapper.queryCateListCount();
+            if(count > 0 && list.size() == 0){
+                map.put("firstIndex", (pageStart - 1 ) * pageSize);
+                pageStart-- ;
+                list = institutionManageMapper.queryCateList(map);
+            }
             return new PageFinder<InstitutionCategoryVo>(pageStart, pageSize, count, list);
         } catch (Exception e) {
             e.printStackTrace();
@@ -268,6 +273,11 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
     }
 
     @Override
+    public List<InstitutionCategoryVo> queryInstitutionIndexRecommend() {
+        return institutionManageMapper.queryInstitutionCategorysEnabled1();
+    }
+
+    @Override
     public int queryInstitutionCategorysCount(Map<String, Object> params) {
         return institutionManageMapper.queryInstitutionCategorysCount(params);
     }
@@ -302,6 +312,32 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
                 institutionManageMapper.updateSort(map);
                 num++;
             }*/
+
+            institutionManageMapper.exchangeSortIndexType(voList);
+
+            return (null == list ? 0 : list.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+
+    @Override
+    public int flushSortAll() {
+        try {
+
+            //查询所有en_abled = 1的数据，全部更新
+            List<InstitutionCategoryVo> list = institutionManageMapper.queryInstitutionCategorysAfterSort(0);
+            List<CaseWhenVO> voList = new LinkedList<>();
+            CaseWhenVO whenVO = null;
+            int sort = 1;
+            for(InstitutionCategoryVo vo : list){
+                whenVO = new CaseWhenVO();
+                whenVO.setId(vo.getId());
+                whenVO.setSort(sort++);
+                voList.add(whenVO);
+            }
 
             institutionManageMapper.exchangeSortIndexType(voList);
 

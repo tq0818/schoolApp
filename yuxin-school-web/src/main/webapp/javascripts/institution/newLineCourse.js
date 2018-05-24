@@ -3,6 +3,7 @@ var MAX_LABEL = 5;
 
 var nameTest = /^[\u4e00-\u9fa5a-zA-Z\d,\s《》\-`]+$/;
 var priceTest = /^-?\d+\.?\d{0,2}$/;
+var integerTest = /^[0-9]+$/;
 
 //去掉字符串两端的空格
 function trim(str) {
@@ -86,8 +87,18 @@ $(function () {
         }
 
         //验证限制人数
+        if(limit == 1 && (limitNum == null || limitNum == '') ){
+            $.msg('请填写限定预约人数');
+            return;
+        }
+
         if(limit == 1 && limitNum == 0){
-            $.msg('限定预约人数必须大于0');
+            $.msg('限定预约人数只能输入正整数');
+            return;
+        }
+
+        if(detail == null || detail == ''){
+            $.msg('请填写课程详情');
             return;
         }
 
@@ -124,6 +135,7 @@ $(function () {
 
                     $.msg(json.msg,10,function(){
                         window.location.href = rootPath + "/institutionClassType/classTypeMain/"+$("#insId").val()
+                       // window.history.back();
                     });
                 }else{
                     $.msg(json.msg);
@@ -185,7 +197,7 @@ function getUnderLineClassInfo() {
                                 <input type="hidden" value="${data.styles[i].path}"  />
                                 <span class="imgInfo"></span>
                                 <div class="listBg">
-                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
+                                <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn deleteBtnStyle">删除</a>
                                    <a href="javascript:void(0)" data-id="${data.styles[i].id}"  class="btn btn-success alterBtn btn-sm openPopup">修改</a>
                                 </div>
                             </li>
@@ -303,5 +315,62 @@ function flushLiDataI(){
     var list = $("#styleContainer").find('li');
     for(var i = 1;i<list.length;i++){
        $(list[i]).attr('data-i',(i-1));
+    }
+}
+
+
+function personNumLimit(){
+    var val = $('#classPersonLimit').val();
+    if(isNaN(val) || val > 999999){
+        $('#classPersonLimit').val(val.substr(0,val.length - 1));
+        personNumLimit();
+    }
+
+    if(!integerTest.test(val)){
+        $('#classPersonLimit').val(val.substr(0,val.length - 1));
+        personNumLimit();
+    }
+
+    if(parseInt(val) == 0){
+        $('#classPersonLimit').val('');
+        personNumLimit();
+    }
+}
+
+function priceLimit(){
+    var price = $('#classPrice').val();
+    if(isNaN(price)){
+        $('#classPrice').val(price.substr(0,price.length - 1));
+        priceLimit();
+    }
+    if(!priceTest.test(price)){
+        $('#classPrice').val(price.substr(0,price.length - 1));
+        priceLimit();
+    }
+
+    if(price > 99999){
+        $('#classPrice').val(price.substr(0,price.length - 1));
+        priceLimit();
+    }
+}
+
+
+function classNameLimit(){
+    var val = $('#className').val();
+    //不能输入全是空格的字符串
+    if(trim(val) == ''){
+        $('#className').val('');
+        classNameLimit();
+    }
+
+    //字符串末尾连续多个空格
+    if(val.length - trim(val).length > 1){
+        $('#className').val(val.substr(0,val.length - 1));
+        classNameLimit();
+    }
+
+    if(!nameTest.test(trim(val))){
+        $('#className').val(val.substr(0,val.length - 1));
+        classNameLimit();
     }
 }

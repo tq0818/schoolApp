@@ -36,9 +36,9 @@
             <form method="post" id="searchForm" class="userVideoListNew">
                     <div class="marginTop10 changeBtn" id="status">
                         <span>处理状态</span>
-                        <a href="##" class="btn btn-default btn-primary status" data-flag="">全部</a>
-                        <a href="##" class="btn btn-default status" data-flag="1">已处理</a>
-                        <a href="##" class="btn btn-default status" data-flag="0">未处理</a>
+                        <a href="javascript:void(0)" class="btn btn-default btn-primary status" data-flag="">全部</a>
+                        <a href="javascript:void(0)" class="btn btn-default status" data-flag="1">已处理</a>
+                        <a href="javascript:void(0)" class="btn btn-default status" data-flag="0">未处理</a>
                     </div>
 
                     <c:choose>
@@ -107,8 +107,8 @@
                         <td>未处理</td>
                         <td class="addRemarks">备注</td>
                         <td>
-                            <a href="##">切换状态</a>|
-                            <a href="##" class="addRemarks">添加备注</a>
+                            <a href="javascript:void(0)">切换状态</a>|
+                            <a href="javascript:void(0)" class="addRemarks">添加备注</a>
                         </td>
                     </tr>
 
@@ -129,8 +129,8 @@
     <div class="remarks">
         <textarea name="" id="not" placeholder="请输入备注信息"></textarea>
         <div class="remarksBtn">
-            <a href="##" class="btn btn-primary">取消</a>
-            <a href="##" class="btn btn-primary addNot" id="addNote" data-id="">保存</a>
+            <a href="javascript:void(0)" class="btn btn-primary">取消</a>
+            <a href="javascript:void(0)" class="btn btn-primary addNot" id="addNote" data-id="">保存</a>
         </div>
     </div>
 

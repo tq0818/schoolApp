@@ -144,5 +144,7 @@ public interface InstitutionClassTypeService {
 
 	void delStyle(Integer sid);
 
+	int countUnderllineClass(Integer insId,String name);
+
 
 }

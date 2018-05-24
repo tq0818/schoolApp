@@ -16,6 +16,13 @@ $(function () {
 });
 
 
+//去掉字符串两端的空格
+function trim(str) {
+    return str.replace(/(^\s*)|(\s*$)/g, "");
+}
+
+
+
 function getTeacherList(){
     $.post(rootPath+'/institutionTeacher/teacherList',{insId:$('#insId').val()},function(json) {
        // console.log(json);
@@ -38,7 +45,10 @@ function getTeacherList(){
                 html += "</div>";
                 html += "<div>";
                 for(var j in list[i].label){
-                    html += "<a href=\"##\" class=\"btn btn-default\">"+list[i].label[j].name+"</a>";
+                    if(trim(list[i].label[j].name) != ''){
+                        html += "<a href=\"##\" class=\"btn btn-default\">"+list[i].label[j].name+"</a>";
+                    }
+
                 }
 
                 html += " </div>";
