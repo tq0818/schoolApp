@@ -1,6 +1,7 @@
 var nowPage = 0;
 var nowOnlinePage = 0;
 var pageSize = 7;
+var pageOnlineSize = 10;
 var recommendNum = null;
 
 
@@ -44,9 +45,13 @@ $(function () {
             if($(this).index()==0){
                 $('.courseUnderLine').show();
                 $('.courseOnLine').hide();
+                nowPage = 0;
+                getClassTypeList();
             }else{
                 $('.courseUnderLine').hide();
                 $('.courseOnLine').show();
+                nowOnlinePage = 0;
+                getOnlineClassTypeList();
             }
     });
     //二次确认添加课程
@@ -81,7 +86,7 @@ $(function () {
     //获取课程信息
     getClassTypeList()
     //获取线上课程信息
-    getOnlineClassTypeList();
+  //  getOnlineClassTypeList();
 
     //为搜索在线课程按钮添加点击事件
     $('.findClassBtn').click(function(){
@@ -165,7 +170,7 @@ function getOnlineClassTypeList(){
             insId:$('#insId').val(),
             link:getUpDownStatus('chooseBtn2'),
             pageStart:nowOnlinePage,
-            pageSize:pageSize
+            pageSize:pageOnlineSize
         },
         type: 'post',
         beforeSend: function () {
@@ -177,7 +182,7 @@ function getOnlineClassTypeList(){
             $(".loading-bg").hide();
         },
         success: function (json) {
-           console.log(json);
+         //  console.log(json);
             var list = json.data;
             var html = `
                         <tr data-buy="true">
@@ -194,15 +199,11 @@ function getOnlineClassTypeList(){
                         <td>${parseInt(i)+1}</td>
                         <td>${list[i].name}</td>
                         <td class="relationResult">${list[i].isLink == 1 ? '已关联' : '未关联'}</td>
-                        <td>${ 
-                            list[i].isLink == 1 ? 
-                                ( list[i].sort + (parseInt(i) == 0 ? 
-                                "<i data-id='"+list[i].rid+"' data-status='down' class='icon iconfont'>&#xe6e4;</i>" 
-                                : (parseInt(i) == list.length - 1 || list[parseInt(i) + 1].isLink != 1 ? 
-                                    "<i data-id='"+list[i].rid+"' data-status='up' class='icon iconfont'>&#xe6e3;</i>" :
-                                            "<i data-id='"+list[i].rid+"' data-status='up' class='icon iconfont'>&#xe6e3;</i>" + 
-                                            "<i data-id='"+list[i].rid+"' data-status='down' class='icon iconfont'>&#xe6e4;</i>"
-                                     )) ) : "-" 
+                        <td>${
+                            list[i].isLink == 1 ? list[i].sort+
+                                (list[i].sort != 1 ? "<i data-id='"+list[i].rid+"' data-status='up' class='icon iconfont'>&#xe6e3;</i>" :'' )+
+                                (list[i].sort != json.onlineNum ? "<i data-id='"+list[i].rid+"' data-status='down' class='icon iconfont'>&#xe6e4;</i>" : '')
+                                : '-'
                             }</td>
                         <td class="relation" data-id="${list[i].rid}" >${list[i].isLink == 1 ? '取消关联' : '关联'}</td>
                     </tr>
@@ -215,8 +216,8 @@ function getOnlineClassTypeList(){
                     prev_text: "上一页",
                     current_page:json.pageNo,
                     link_to: "javascript:getOnlineClassTypeList()",
-                    num_display_entries: 7,
-                    items_per_page: 7,
+                    num_display_entries: pageOnlineSize,
+                    items_per_page: pageOnlineSize,
                     num_edge_entries: 1,
                     callback: function (page) {
                         nowOnlinePage = page;
@@ -304,6 +305,7 @@ function getClassTypeList(){
             $(".loading-bg").hide();
         },
         success: function (json) {
+            console.log(json);
            var list = json.data;
            var html = `<li class="addImg mienShow" id="">
                             <i class="icon iconfont"></i>

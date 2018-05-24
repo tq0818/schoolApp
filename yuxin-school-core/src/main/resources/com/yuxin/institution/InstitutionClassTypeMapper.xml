@@ -315,6 +315,24 @@
 	</select>
 
 
+	<select id="getOnlineCount" resultType="int" parameterType="map">
+		SELECT
+		COUNT(ct.id)
+		FROM
+		`class_type` ct
+		INNER JOIN `ins_class_type_relation` ictr
+		ON ct.`id` = ictr.`class_type_id`
+		and ictr.`is_link`  = 1
+		AND ictr.`is_online` = 1
+		INNER JOIN `institution_info` info
+		ON ictr.`ins_id` = info.`id`
+		<if test="insId != null ">and info.id = #{insId} </if>
+		ORDER BY ictr.`is_link` DESC,
+		ictr.`id` DESC
+
+	</select>
+
+
 	<select id="findOnlineClassType" resultMap="classTypeOnlineFindResultMap" parameterType="map">
 		SELECT
 		ct.`id` ,
