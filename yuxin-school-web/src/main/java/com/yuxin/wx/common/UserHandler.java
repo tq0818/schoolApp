@@ -59,6 +59,19 @@ public class UserHandler implements HandlerInterceptor {
 					response.sendRedirect(request.getContextPath()+"/index");
 				}
 
+				String url = request.getRequestURL().toString();
+				if(url.contains("/institutionClassType/classTypeMain/")||url.contains("/InsInfoBase/famousTeacher/")){
+					id = url.substring(url.lastIndexOf("/")+1);
+					try{
+						Integer tempId = Integer.parseInt(id);
+						if(tempId!=infoVo.getId()){
+							response.sendRedirect(request.getContextPath()+"/index");
+						}
+					}catch (Exception e){
+						log.info("参数错误");
+						response.sendRedirect(request.getContextPath()+"/index");
+					}
+				}
 			}
 		}
 
