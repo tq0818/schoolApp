@@ -2,6 +2,31 @@ var speId = '';
 $(function () {
     //    左侧active切换
     $selectSubMenus('essential');
+
+    let systemBtnLength = $('.systemBtn').length;
+    if(systemBtnLength<4){
+        $('.addSystem').show();
+    }else{
+        $('.addSystem').hide();
+    }
+
+
+    let systemLength = $('.customLabel').length;
+    if(systemLength<5){
+        $('.customLabelBtn').show();
+    }else{
+        $('.customLabelBtn').hide();
+    }
+
+
+    let specialServiceLength = $('.specialService').length;
+    if(specialServiceLength<10){
+        $('.specialServiceBtn').show();
+    }else{
+        $('.specialServiceBtn').hide();
+    }
+
+
     //系统标签增加和删除
     $('.addSystem').click(function () {
         let systemLength = $('.systemBtn').length;
@@ -126,20 +151,7 @@ var j = 1;
     $('body').on('click','.deletePhone',function () {
         $(this).parent('div').remove();
     });
-    //分页插件
-    $(".pagination").pagination('', {
-        next_text : "下一页",
-        prev_text : "上一页",
-        current_page : 1,
-        link_to : "javascript:void(0)",
-        num_display_entries : 8,
-        items_per_page : 12,
-        num_edge_entries : 1,
-        callback:function(page){
-            var pageNo = page + 1;
 
-        }
-    });
     //点击特色图片出下面图片列表
     $('body').on('click','.iconPic',function () {
         findSpecialServiceImg(1);
@@ -211,8 +223,18 @@ var j = 1;
         var city = $("#eduSchool").val();
         var area = $("#registStatus").val();
         var address = $("#address").val();
-        if(province == ''|| city == ''||area == ''|| address ==''){
+
+        address = address.split(" ").join("");
+        if(address.length == 0){
+            $.msg("详细地址不能为空！");
+            return;
+        }
+        if(province == ''|| city == ''||area == ''){
             $.msg("机构地址不能为空！");
+            return;
+        }
+        if(address ==''){
+            $.msg("详细地址不能为空！");
             return;
         }
         //手机号码判重
@@ -373,7 +395,7 @@ function queryRiseSchoolDict(areaFlag) {
                 }
                 if (areaFlag == 0){
                     html = "<option value=\"\">请选择省份</option>" + html;
-                    $("#eduArea").html("").html(html);
+                    //$("#eduArea").html("").html(html);
                 }else if (areaFlag == 1){
                     if(eduAreaNew == ""){
                         html = "<option value=\"\">请选择市</option>";
@@ -419,7 +441,7 @@ function findSecondCategorys(id,that) {
 
         success:function (data) {
             var html = '';
-            html = "<option value=\"\">请选择二级分类</option>"
+            html += "<option value=\"\">请选择二级分类</option>"
             if(data.length>0){
                 for (var i in data){
                     html = html + "<option value=\""+data[i].id+"\">"+data[i].codeName+"</option>"
@@ -438,22 +460,28 @@ function findSpecialServiceImg(page) {
         data:{"page":page},
         success:function (data) {
             var imgS = data.data;
-            if(imgS.length == 0){
-
-                return;
-            }
-
             var html = '';
             var userType = $("#userType").val();
             if("INSTITUTION_MANAGE"!=userType){
                 html +='<span href="##" class="uploadImg" style="cursor: default;">+</span>';
             }
+            if(imgS.length == 0){
+                $(".imgDiv").html(html);
+                return;
+            }
+
+
             for(var i in imgS){
                 html +='<img src="'+ imgS[i].imgUrl +'" alt="" class="iconListImg" >'
             }
             $(".imgDiv").html(html);
 
-            if (data.rowCount > 55) {
+            var userType =$("#userType").val();
+            var countPage = 55;
+            if(userType =='INSTITUTION_MANAGE'){
+                countPage = 56;
+            }
+            if (data.rowCount > countPage) {
                 $(".pagination").html('');
                 $(".pagination").pagination(data.rowCount,
                     {
@@ -568,6 +596,7 @@ function updataIns() {
         if(listPhoneChi.eq(i).children('input').val() != '' && listPhoneChi.eq(i).children('input').val() != null){
             if(!/^09\d{8}|1[3-9]\d{9}$/.test(listPhoneChi.eq(i).children('input').eq(0).val())){
                 $.msg("手机号格式不正确");
+
                 return;
             }
         }

@@ -75,6 +75,13 @@ public interface InstitutionClassTypeService {
 	int pageOnlineCount(Map<String, Object> map);
 
 	/**
+	 * 获取指定机构线上课程已关联的课程数量
+	 * @param map
+	 * @return
+	 */
+	int getOnlineCount(Map<String, Object> map);
+
+	/**
 	 * 获取线上课程列表信息
 	 * @param map
 	 * @return

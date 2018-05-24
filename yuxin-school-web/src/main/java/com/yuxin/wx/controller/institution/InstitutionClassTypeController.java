@@ -262,7 +262,8 @@ public class InstitutionClassTypeController {
      */
     @ResponseBody
     @RequestMapping(value = "/getOnlineClassTypeList", method = RequestMethod.POST)
-    public PageFinder<ClassTypeOnlineVo> getOnlineClassTypeList(HttpServletRequest request) {
+    public JSONObject getOnlineClassTypeList(HttpServletRequest request) {
+       JSONObject json = new JSONObject();
         try {
             Integer insId = Integer.valueOf(request.getParameter("insId"));
             Integer link = Integer.valueOf(request.getParameter("link"));
@@ -277,12 +278,24 @@ public class InstitutionClassTypeController {
 
             int count = institutionClassTypeService.pageOnlineCount(map);
             List<ClassTypeOnlineVo> list = institutionClassTypeService.pageOnline(map);
+            int onlineClassNum = institutionClassTypeService.getOnlineCount(map);
 
-            return new PageFinder<ClassTypeOnlineVo>(pageStart, pageSize, count, list);
+
+            json.put("pageSize",pageSize);
+            json.put("pageNo",pageStart);
+            json.put("pageCount",count/pageSize + 1);
+            json.put("data",list);
+            json.put("rowCount",count);
+            json.put("onlineNum",onlineClassNum);
+            json.put("status",1);
+            return json;
+
+           // return new PageFinder<ClassTypeOnlineVo>(pageStart, pageSize, count, list);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        json.put("status",0);
+        return json;
     }
 
 
@@ -553,12 +566,13 @@ public class InstitutionClassTypeController {
 
             entity.setSummary(summary);
             entity.setDetaildesc(detail);
-            entity.setIsShelves(0);
+
             entity.setDelFlag(0);
 
             entity.setUpdateTime(new Date());
             if (id <= 0) {
                 //新增线下课程
+                entity.setIsShelves(0);
                 entity.setCreateTime(new Date());
                 entity.setIsRecommend(0);
                 //新增课程不修改数据库，直接将课程中的风采、标签写入数据库

@@ -92,7 +92,12 @@ $(function () {
     //点击审核
     $('body').on('click', '.evaluationIns', function () {
             var commentId = $(this).attr("data-commentId");
-            evaluationIns(commentId);
+        $.confirm('您是否确认审核通过该条评论',function (data) {
+            if(data){
+                evaluationIns(commentId);
+            }
+        })
+
         });
 
 
@@ -111,7 +116,11 @@ $(function () {
     //点击课程审核
     $('body').on('click', '.evaluationInsClass', function () {
         var commentId = $(this).attr("data-commentId");
-        evaluationIns(commentId);
+        $.confirm('您是否确认审核通过该条评论',function (data) {
+            if(data){
+                evaluationIns(commentId);
+            }
+        })
     });
 
     //初始机构化评论
@@ -179,6 +188,11 @@ function initInsComment(page=1,reviewStatus='') {
                         del ='';
                     }
 
+                    var name = item.nickName;
+                    if(item.nickName == '' || item.nickName == null ){
+                        name = item.mobile;
+                    }
+
                     if(score==1){
                         scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
                             '<i class="iconfont">&#xe65e;</i>'+
@@ -221,13 +235,13 @@ function initInsComment(page=1,reviewStatus='') {
                         '</div>'+
                         ' <div class="Y_backcomment_content">'+
                         '<div class="word Y_clear">'+
-                        '<span>'+item.nickName+'</span>'+
+                        '<span>'+name+'</span>'+
                         '<span class="wordcontent" style="word-break:break-all">'+com+'</span>'+
                         '</div>'+
                         '<p class="Y_time Y_mt10">'+
                         '<span>'+item.createTimeText+' </span>'+
                         '<span>'+item.createTimeText2+' </span>'+
-                        '<span>评分:'+ scorehtml+'</span>'+
+                        '<span>'+ scorehtml+'</span>'+
                         '</p>'+
                         '</div>'+
                         _check+
@@ -309,6 +323,11 @@ function initInsClassComment(page=1,reviewStatus='',relationId='') {
                         del ='';
                     }
 
+                    var name = item.nickName;
+                    if(item.nickName == '' || item.nickName == null ){
+                        name = item.mobile;
+                    }
+
                     if(score==1){
                         scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
                             '<i class="iconfont">&#xe65e;</i>'+
@@ -351,13 +370,13 @@ function initInsClassComment(page=1,reviewStatus='',relationId='') {
                         '</div>'+
                         ' <div class="Y_backcomment_content">'+
                         '<div class="word Y_clear">'+
-                        '<span>'+item.nickName+'：'+'</span>'+
+                        '<span>'+name+'：'+'</span>'+
                         '<span class="wordcontent" style="word-break:break-all">'+com+'</span>'+
                         '</div>'+
                         '<p class="Y_time Y_mt10">'+
                         '<span>'+item.createTimeText+' </span>'+
                         '<span>'+item.createTimeText2+' </span>'+
-                        '<span>评分:'+ scorehtml+'</span>'+
+                        '<span>'+ scorehtml+'</span>'+
                         '</p>'+
                         '</div>'+
                         _check+
@@ -414,8 +433,11 @@ function evaluationIns(commentId) {
         },
         success:function(jsonData){
 
-            // initInsComment(currPageClass);
-            location.reload();
+
+            $.msg("审核成功！");
+            initInsComment(currPage);
+            initInsClassComment(currPageClass);
+            //location.reload();
         },
         complete: function (XMLHttpRequest, textStatus) {
             $(".loading").hide();
@@ -439,8 +461,9 @@ function delIns(commentId) {
             $(".loading-bg").show();
         },
         success:function(jsonData){
-            // initInsComment(currPage);
-            location.reload();
+            initInsComment(currPage);
+            initInsClassComment(currPageClass);
+            //location.reload();
 
         },
         complete: function (XMLHttpRequest, textStatus) {

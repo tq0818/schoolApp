@@ -170,8 +170,9 @@
                         <span class="mechanismName">机构地址：</span>
                         <input value="${ins.province}" style="display: none" id="eduAreaCode">
                         <select name="eduArea" id="eduArea" onchange="queryRiseSchoolDict(1)">
-                           <option value="">请选择省份</option>
-                           <option value="${ins.province}" selected >${ins.provinceName}</option>
+                           <%--<option value="">请选择省份</option>--%>
+                            <option value="510000" selected>四川省</option>
+                           <%--<option value="${ins.province}" selected >${ins.provinceName}</option> 需要全部省份放开这里就可以了，然后注释到上面一句,再把js中的数据填充放开--%>
                         </select>
                         <select name="eduSchool" id="eduSchool" onchange="queryRiseSchoolDict(2)">
                             <option value="">请选择市</option>
@@ -259,16 +260,23 @@
                             </c:forEach>
                         </div>
                     </div>
+                <c:if test="${userType != 'INSTITUTION_MANAGE'}">
                     <div>
                         <span>系统标签：</span>
-                            <c:forEach var="label" items="${sysLabel}">
+                        <c:forEach var="label" items="${sysLabel}">
                              <span href="##" class="systemBtn">
                                 <input class="systemLabel sysLabel" label-id="${label.id}" value="${label.labelName}" maxlength="5">
                                 <i class="icon iconfont deleteBtn">&#xe610;</i>
                             </span>
-                            </c:forEach>
+                        </c:forEach>
                         <span class="iconBtn addSystem">+</span>
+                        <%--<c:if test="${fn:length(sysLabel) != 4}">
+                            <span class="iconBtn addSystem">+</span>
+                        </c:if>--%>
+
                     </div>
+                </c:if>
+
                 <div>
                     <span>自定义标签：</span>
 
@@ -318,7 +326,9 @@
                     </p>
                 </div>
                 <div class="orgBtn">
+                    <c:if test="${userType != 'INSTITUTION_MANAGE'}">
                         <a href="javascript:void(0)" class="btn btn-primary btn-mb closeMechanism cancel">取消</a>
+                    </c:if>
                         <a href="javascript:void(0)" class="btn btn-primary btn-mb closeMechanism updateIns">保存</a>
                 </div>
 
@@ -337,8 +347,12 @@
         <div class="mienPopup coverPopup" style="width: 234px; height: 260px; margin-left: -135px;z-index: 1000;">
             <div class="uploadImageStyle">
                 <label for="">特色服务：</label>
-                <img src="" alt="" id="targetStyle" style="width: 400px;height: 300px;">
+                <p style="width: 240px;height: 120px;margin: auto;border: 1px solid #e4e4e4;overflow: auto;">
+                    <img src="" alt="" id="targetStyle" style="width: 400px;height: 300px;">
+                </p>
+
                 <a href="javascript:void(0);" class="chooseImg">
+                    选择图片
                     <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgDataStyle" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic()" value="重新选择文件"/>
                 </a>
             </div>

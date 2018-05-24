@@ -71,9 +71,11 @@
                     </div>
                     <div class="margin10 marginTop10" >
                         <span class="text">创建时间</span>
-                        <input type="text" name="startTime" id="startTime" class="date-picker from"  />
+                        <input type="text" name="startTime" id="startTime" class="date-picker from" readonly />
+                        <span class="add-on"><i class="icon-remove"></i></span>
                         <em>到</em>
-                        <input type="text" name="endTime" id="endTime" class="date-picker to"  />
+                        <input type="text" name="endTime" id="endTime" class="date-picker to"  readonly/>
+                        <span class="add-on"><i class="icon-remove"></i></span>
                         <input type="text" id="insName" name="username" placeholder="请输入机构名称"/>
                         <span><a href="javascript:;" class="btn btn-primary searchContents" style="margin: 0 20px;">查询</a></span>
                         <span style="float: right"><a href="javascript:;" class="btn btn-primary addOrganization" style="margin: 0 20px;">添加机构</a></span>
@@ -118,7 +120,7 @@
             <input type="text" style="width: 460px;" maxlength="20" id="name">
         </div>
         <div id="orgType">
-            <div>
+            <div class="catType">
                 <span class="mechanismName">机构分类：</span>
                 <select name=""  class="findFistCategorys2">
                     <option value="">请选择一级分类</option>
@@ -131,10 +133,11 @@
 
 
         </div>
-        <div>
+        <div class="siteChoose">
             <span class="mechanismName">机构地址：</span>
             <select name="eduArea" id="eduArea2" onchange="queryRiseSchoolDict2(1)">
                 <option value="">请选择省份</option>
+                <option value="510000">四川省</option>
             </select>
             <select name="eduSchool" id="eduSchool2" onchange="queryRiseSchoolDict2(2)">
                 <option value="">请选择市</option>
@@ -147,14 +150,14 @@
         </div>
         <div>
             <span>机构账号：</span>
-            <input type="text" id="userName" placeholder="请输入学校管理员账号">
+            <input type="text" id="userName" placeholder="请输入学校管理员账号" maxlength="30">
             <span style="color: #ff0000;">初始密码为：111111</span>
         </div>
         <div>
             <span style="float: left;">联系电话：</span>
             <div style="display: inline-block" id="listMachine">
-                <div>
-                    <input type="text" placeholder="区号" style="width: 30px;" onkeyup="value=value.replace(/[^\d]/g,'')">-
+                <div class="mobile">
+                    <input type="text" placeholder="区号" style="width: 30px;" class="telephone" onkeyup="value=value.replace(/[^\d]/g,'')">-
                     <input type="text" placeholder="请输入座机号" class="telephone" onkeyup="value=value.replace(/[^\d]/g,'')">
                     <span class="iconBtn addMachine">+</span>
                 </div>
@@ -165,7 +168,7 @@
                 <%--</div>--%>
             </div>
             <div id="listPhone">
-                <div>
+                <div class="phone">
                     <input type="text"  placeholder="请输入手机号" maxlength="11" class="phoneNum" onkeyup="value=value.replace(/[^\d]/g,'')">
                     <span class="iconBtn addPhone" >+</span>
                 </div>
@@ -190,8 +193,8 @@
         </div>
         <div id="orgs">
             <span>是否属于连锁机构：</span>
-            <a href="javascript:void(0)"><input type="radio" name="org" id="isOrg" value="1">是</a>
-            <a href="javascript:void(0)"><input type="radio" name="org" id="noOrg" value="0" checked>否</a>
+            <a href="javascript:void(0)"><input type="radio" name="org" id="isOrg" value="1" >是</a>
+            <a href="javascript:void(0)"><input type="radio" name="org" id="noOrg" value="0" checked="true">否</a>
         </div>
         <div class="orgBtn">
             <a href="javascript:void(0)" class="btn btn-primary btn-mb closeMechanism">取消</a>
@@ -208,7 +211,7 @@
     </div>
     <div class="countPopup sureCount cureatManageUser">
             <h5>创建账号</h5>
-            <p>机构账号：<input type="text" placeholder="请输入学校管理员账号" id="manageUser"></p>
+            <p>机构账号：<input type="text" placeholder="请输入学校管理员账号" id="manageUser" maxlength="30"></p>
             <span>初始密码为：111111</span>
         <div class="countPopupBtn ">
             <a href="javascript:void(0)" class="btn btn-primary btn-mb closeCountPopup cabcelManageUser">取消</a>
@@ -220,7 +223,7 @@
         <input type="hidden" id="userId" value="">
         <input id="insUserName" type="hidden" value="">
         <p id="user">账号：cdsywgyxx</p>
-        <p>密码：<input type="password" id="updataPwd"></p>
+        <p>密码：<input type="password" id="updataPwd" maxlength="18"></p>
         <div class="countPopupBtn">
             <a href="javascript:void(0)" class="btn btn-primary btn-mb closeCountPopup cancelManageUser">取消</a>
             <a href="javascript:void(0)" class="btn btn-primary btn-mb closeCountPopup updateManageUser">保存</a>

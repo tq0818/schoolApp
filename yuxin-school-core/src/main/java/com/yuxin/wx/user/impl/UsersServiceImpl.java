@@ -137,7 +137,7 @@ public class UsersServiceImpl extends BaseServiceImpl implements IUsersService {
 		usersMapper.insertUserCompanyRalation(param);
 
 		Integer curUserId = users.getCurrtUser();
-		String roleCode = "where ap.privilege_name in ('rise_school')";
+		String roleCode = "where ap.privilege_name in ('INSTITUTION_MANAGE')";
 		Map<String,Object>params = new HashMap<String,Object>();
 		params.put("roleCode",roleCode);
 		List<AuthUserRole> roleIds = authUserRoleServiceImpl.queryRoleIds(params);

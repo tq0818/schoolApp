@@ -119,6 +119,12 @@ public class InstitutionClassTypeServiceImpl extends BaseServiceImpl implements 
         return institutionClassTypeMapper.pageOnlineCount(map);
     }
 
+
+    @Override
+    public int getOnlineCount(Map<String, Object> map) {
+        return institutionClassTypeMapper.getOnlineCount(map);
+    }
+
     /**
      * 查询在线课程,包含是否关联
      *

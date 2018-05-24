@@ -119,7 +119,10 @@ $(function () {
             success: function (json) {
                 $.msg(json.msg);
                 if(json.status == 1){
-                    $.msg(json.msg,2000,function(){
+
+                    $('.closeMechanismCommit').unbind();
+
+                    $.msg(json.msg,10,function(){
                         window.location.href = rootPath + "/institutionClassType/classTypeMain/"+$("#insId").val()
                     });
                 }else{
@@ -163,7 +166,11 @@ function getUnderLineClassInfo() {
 
                 //课程封面
                 $('#hidTop').val(data.face);
-                $('#imgTop').html("<img src='" + data.fullFace + "'  alt=\"\" style=\"width: 150px;height: 100px;margin-left: 15px;\">");
+                if(data.face != null && data.face != ''){
+                    $('#imgTop').html("<img src='" + data.fullFace + "'  alt=\"\" style=\"width: 150px;height: 100px;margin-left: 15px;\">");
+                }else{
+                    $('#imgTop').html('');
+                }
 
                 //课程风采
                 var styleHtml = `
@@ -174,7 +181,7 @@ function getUnderLineClassInfo() {
                 for(var i in data.styles){
                     styleHtml += `
                             <li data-i="${i}">
-                                <span><img src="${data.styles[i].url}" alt="" style="width: 100%; max-height: 260px;"></span>
+                                <span class="imgSpan"><img src="${data.styles[i].url}" alt="" style="width: 100%; max-height: 260px;"></span>
                                 <input type="hidden" value="${data.styles[i].path}"  />
                                 <span class="imgInfo"></span>
                                 <div class="listBg">
@@ -290,3 +297,11 @@ function fileChangeCover() {
 }
 
 
+
+
+function flushLiDataI(){
+    var list = $("#styleContainer").find('li');
+    for(var i = 1;i<list.length;i++){
+       $(list[i]).attr('data-i',(i-1));
+    }
+}

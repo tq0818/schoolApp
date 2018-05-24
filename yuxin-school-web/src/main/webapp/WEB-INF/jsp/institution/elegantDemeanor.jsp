@@ -120,13 +120,14 @@
 
 
 <%--视频上传弹窗--%>
-<div class="videoUpload">
+<div class="videoUpload" style="height: 532px;">
     <h5>视频</h5>
     <div>
         <span style="padding-left: 6px;">视频封面:</span>
-        <img src="" alt="" style="width: 136px;height: 116px;" id="targetVideo">
-        <br/>
-        <a href="##" class="addPic" style="margin-left: 97px;margin-top: 5px;">
+        <p style="width: 218px;height: 120px;border: 1px solid #e4e4e4;margin: auto;text-align: center;overflow: auto;">
+            <img src="" alt="" style="width: 136px;height: 116px;" id="targetVideo">
+        </p>
+        <a href="##" class="addPic" style="margin-left: 165px;margin-top: 5px;">
             选择图片
            <input type="file" class="btn btn-mini btn-primary" id="imgDataVideo" name="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(1)" value="重新选择文件"/>
         </a>
@@ -168,8 +169,9 @@
 <div class="elePic" id='elegant'>
     <h5>风采图片</h5>
     <div>
-        <img src="" alt="" style="margin: auto;width: 300px;height: 300px;" id="targetStyle" class="picStyle">
-        <br/>
+        <p style="width: 300px;height: 300px;border: 1px solid #e4e4e4;margin: auto;text-align: center;overflow: auto;">
+            <img src="" alt="" style="margin: auto;width: 300px;height: 300px;" id="targetStyle" class="picStyle">
+        </p>
         <a href="##" class="addPic" style="margin-top: 5px;margin-bottom: 20px;">
             选择图片
            <input type="file" class="btn btn-mini btn-primary" id="imgDataStyle" name="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(2)" value="重新选择文件"/>
@@ -188,8 +190,9 @@
 <div class="elePic" id='cover' style="height: 500px;">
     <h5>封面图片</h5>
     <div>
-        <img src="" alt="" style="width: 300px;height: 300px;" id="target" class="picStyle">
-        <br/>
+        <p style="width: 300px;height: 300px;border: 1px solid #e4e4e4;margin: auto;text-align: center;overflow: auto;">
+            <img src="" alt="" style="width: 300px;height: 300px;" id="target" class="picStyle">
+        </p>
         <a href="##" class="addPic" style="margin-top: 5px;margin-bottom: 20px;">
            选择图片
            <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(0)" value="重新选择文件"/>

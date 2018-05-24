@@ -77,7 +77,6 @@ $(function () {
     $('.cancelManageUser').click(function () {
         $('.editCount').hide();
         $('.cureatManageUser').hide();
-
     });
     //立即创建密码
     $('.immediateCreation').click(function () {
@@ -114,6 +113,50 @@ $(function () {
     });
     $('.closeMechanism').click(function () {
         $('.addingMechanism').hide();
+        //清空机构名
+        $("#name").val('');
+        //清空机构分类
+        var cat = $(".catType");
+        if(cat.length>1){
+            for(var i = 1;i<cat.length;i++){
+                cat.eq(i).remove();
+            }
+        }
+        $(".findFistCategorys2").val('');
+        $(".findSecondCategorys2").val('');
+        //清空地址
+        $("#eduArea2").val('');
+        $("#eduSchool2").val('');
+        $("#registStatus2").val('');
+        $("#address").val('');
+        //清空机构账号
+        $("#userName").val('');
+        //清空联系电话
+        var mobile = $('.mobile');
+        if(mobile.length>1){
+            for(var i =1;i<mobile.length;i++){
+                mobile.eq(i).remove();
+            }
+        }
+        $(".telephone").val('');
+        //清空手机号
+        var phone = $('.phone');
+        if(phone.length>1){
+            for(var i=0;i<phone.length;i++){
+                phone.eq(i).remove();
+            }
+        }
+        $(".phoneNum").val('');
+        //清空系统标签
+        var systemBtn = $('.systemBtn');
+        for(var i = 0;i<systemBtn.length;i++){
+            systemBtn.eq(i).remove();
+        }
+
+        $("#orgs").html('<span>是否属于连锁机构：</span>\n' +
+            '<a href="javascript:void(0)"><input type="radio" name="org" id="isOrg" value="1" >是</a>\n' +
+            '<a href="javascript:void(0)"><input type="radio" name="org" id="noOrg" value="0" checked="true">否</a>');
+
     });
 
     $('.addMechanism').click(function () {
@@ -158,20 +201,40 @@ $(function () {
         let systemLabel = $('.systemLabel');
         let labelName = [];
         for(let i = 0;i<systemLabel.length;i++){
+            if(systemLabel.eq(i).val().split(" ").join("").length == 0){
+                $.msg("存在空的系统标签！");
+                return;
+            }
             labelName.push(systemLabel.eq(i).val());
         }
 
+        let listMachineChi = $('#listMachine').children('div');
+        for(let i=0;i<listMachineChi.length;i++){
+            var quhao = listMachineChi.eq(i).children('input').eq(0).val();
+            var num = listMachineChi.eq(i).children('input').eq(1).val();
+            if(quhao == ""&& num!=""){
+                $.msg("电话号码不完整！");
+                return;
+            }
+            if(quhao != ""&& num==""){
+                $.msg("电话号码不完整！");
+                return;
+            }
+        }
 
         var province = $("#eduArea2").val();
         var city = $("#eduSchool2").val();
         var area = $("#registStatus2").val();
         var address = $("#address").val();
+        address = address.split(" ").join("");
         if(name == ''){
             $.msg("机构名称不能为空！");
         }else if(!onOff){
             $.msg("机构分类不能为空！");
-        }else if(province == ''|| city == ''||area == ''|| address ==''){
+        }else if(province == ''|| city == ''||area == ''){
             $.msg("机构地址不能为空！");
+        }else if(address ==''){
+            $.msg("详细地址不能为空！");
         }else if(arrPhone(insCat,0)==1){
 
          if(arrPhone(telephone,1)==1){
@@ -183,7 +246,7 @@ $(function () {
                      $.confirm('是否确认添加该机构?',function (data) {
                          if(data){
                              addInsInfo();
-                             window.location.reload();
+
                          }
                      })
                  }
@@ -216,7 +279,7 @@ $(function () {
         let systemLength = $('.systemBtn').length;
         if(systemLength<4){
             var _html =
-                `<span href="##" class="systemBtn">
+                `<span href="javascript:void(0)" class="systemBtn">
                 <input class="systemLabel" maxlength="5">
                 <i class="icon iconfont deleteBtn">&#xe610;</i>
             </span>`;
@@ -242,7 +305,7 @@ $(function () {
     $('.addType').click(function () {
         i++;
         let _html = `
-            <div style="padding-left: 80px;margin-top: 6px;">
+            <div style="padding-left: 80px;margin-top: 6px;" class="catType">
                 <select name=""  class="findFistCategorys2">
                     <option value="" >请选择一级分类</option>
                 </select>
@@ -263,8 +326,8 @@ $(function () {
     //添加座机号
     $('.addMachine').click(function () {
         let _html = `
-            <div>
-                    <input type="text" placeholder="区号" style="width: 30px;" onkeyup="value=value.replace(/[^\\d]/g,'')">-
+            <div class="mobile">
+                    <input type="text" placeholder="区号" class="telephone" style="width: 30px;" onkeyup="value=value.replace(/[^\\d]/g,'')">-
                     <input type="text" placeholder="请输入座机号" class="telephone" onkeyup="value=value.replace(/[^\\d]/g,'')">
                     <span class="iconBtn deleteMachine">-</span>
                 </div>
@@ -277,7 +340,7 @@ $(function () {
     //添加手机号
     $('.addPhone').click(function () {
         let _html = `
-            <div>
+            <div class="phone">
                     <input type="text" placeholder="请输入手机号" maxlength="11" class="phoneNum">
                     <span class="iconBtn deletePhone" >-</span>
                 </div>
@@ -356,6 +419,8 @@ $(function () {
 
 
 });
+
+
 
 var curPage = 1;
 
@@ -452,7 +517,7 @@ function queryRiseSchoolDict2(areaFlag) {
                 }
                 if (areaFlag == 0){
                     html = "<option value=\"\">请选择省份</option>" + html;
-                    $("#eduArea2").html("").html(html);
+                    //$("#eduArea2").html("").html(html);
                 }else if (areaFlag == 1){
                     if(eduAreaNew == ""){
                         html = "<option value=\"\">请选择市</option>";
@@ -562,6 +627,9 @@ function findInsDate(page) {
     var registStatus = $("#registStatus").val();
     var findFistCategorys = $("#findFistCategorys").val();
     var findSecondCategorys = $("#findSecondCategorys").val();
+    if(findFistCategorys == '' || findFistCategorys == null){
+        findSecondCategorys == '';
+    }
 
     var isCertifiedVal = '';
     let isCertified = $('#isCertified').children('a');
@@ -614,7 +682,7 @@ function findInsDate(page) {
             "city":eduSchool,
             "area":registStatus,
             "oneLevelId":findFistCategorys,
-            "twoLevelId":findSecondCategorys,
+            "twoLevelId":!findFistCategorys ? findFistCategorys : findSecondCategorys,
             "isCertified":isCertifiedVal,
             "isShelves":isShelvesVal,
             "endTime":endTime,
@@ -628,6 +696,7 @@ function findInsDate(page) {
             $(".loading-bg").show();
         },
         success:function(jsonData){
+
             var html = '\'<tr data-buy="true">' +
                 '<th width="3%">序号</th>' +
                 '<th width="12%">机构名称</th>' +
@@ -646,6 +715,8 @@ function findInsDate(page) {
                     '</tr>'
             }else{
                 $.each(jsonData.data,function(i,item){
+                    var name = item.name;
+                    name=name.replace(/ /g,"&nbsp");
                     i+1;
                     var isShelves;
                     var isShelvesval;
@@ -668,7 +739,7 @@ function findInsDate(page) {
                     html +=
                         '<tr data-buy="false">'+
                         '<td>'+item.sort+'</td>'+
-                        '<td>'+item.name +'</td>'+
+                        '<td>'+name +'</td>'+
                         '<td>'+item.province +'</td>'+
                         '<td>'+item.city +'</td>'+
                         '<td>'+item.area +'</td>'+
@@ -677,10 +748,10 @@ function findInsDate(page) {
                         '<td>'+isShelves+'</td>'+
                         '<td class="authenticationReal">'+isCertified+'</td>'+
                         '<td class="slink">'+
-                        '<a href="##" class="frameLower" data-id="'+item.id+'">'+isShelvesval+'</a>|'+
-                        '<a href="##" class="authentication" data-id="'+item.id+'">'+isCertifiedval+'</a>|'+
-                        '<a href="##" class="countManage" id="countManage" data-id="'+item.id+'">'+'账号管理'+'</a>|'+
-                        '<a href="##" class="manageBtn">'+'管理'+'</a>'+
+                        '<a href="javascript:void(0)" class="frameLower" data-id="'+item.id+'">'+isShelvesval+'</a>|'+
+                        '<a href="javascript:void(0)" class="authentication" data-id="'+item.id+'">'+isCertifiedval+'</a>|'+
+                        '<a href="javascript:void(0)" class="countManage" id="countManage" data-id="'+item.id+'">'+'账号管理'+'</a>|'+
+                        '<a href="javascript:void(0)" class="manageBtn">'+'管理'+'</a>'+
                         '<ul class="none box" style="display: none">'+
                         '<li><a href="'+rootPath+'/InsInfoBase/findInsById?id='+item.id+'">基本信息</a>'+'</li>'+
                         '<li><a href="'+rootPath+'/institutionStyle/queryInstitutionStyle?relationId='+item.id+'">风采管理</a>'+'</li>'+
@@ -885,15 +956,22 @@ function addInsInfo() {
                                     success:function(data){
                                         $('.addingMechanism').hide();
                                         $.msg("添加成功");
+                                        window.location.reload();
 
                                     }
                                 })
                             }else if(data =='用户名已经被注册'){
-                                alert('机构账号已经被注册');
+                                $.msg('机构账号已经被注册');
+                                $('.addingMechanism').show();
+                                return;
                             }else if('只能以字母开头并由数字、字母或下划线组成'){
-                                alert('机构账号只能以字母开头并由数字、字母或下划线组成');
+                                $.msg('机构账号只能以字母开头并由数字、字母或下划线组成');
+                                $('.addingMechanism').show();
+                                return;
                             }else{
-                                alert('机构账号不正确');
+                                $.msg('机构账号不正确');
+                                $('.addingMechanism').show();
+                                return;
                             }
 
                         }
@@ -917,7 +995,8 @@ function addInsInfo() {
                         },
                         success:function(data){
                             $('.addingMechanism').hide();
-                            findInsDate(1);
+                            $.msg("添加成功");
+                            window.location.reload();
                         }
                     })
                 }
@@ -986,7 +1065,26 @@ function cureatManageUser() {
 function updateManageUser() {
     var userId = $("#userId").val();
     var updataPwd = $("#updataPwd").val();
+
+    var reg = /^[0-9a-zA-Z]+$/
+    var str = $("#updataPwd").val();
+    if(!reg.test(str)){
+        $.msg("密码只能为数字或字母！")
+        $('.editCount').show();
+        return;
+    }
+    if(str.length<6){
+        $('.editCount').show();
+        $.msg("密码长度必须大于6位！")
+        return;
+    }
     if(updataPwd == ''){
+        $.msg("密码不能为空！");
+        $('.editCount').show();
+        return;
+    }
+    updataPwd = updataPwd.split(" ").join("");
+    if(updataPwd.length == 0){
         $.msg("密码不能为空！");
         $('.editCount').show();
         return;

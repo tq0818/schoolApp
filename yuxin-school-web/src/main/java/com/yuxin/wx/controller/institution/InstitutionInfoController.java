@@ -224,7 +224,13 @@ public class InstitutionInfoController {
                 }
 
             }
-            insFeaturesVo.setPageSize(55);
+            Users users = WebUtils.getCurrentUser();
+            if(users.getUserType().equals("INSTITUTION_MANAGE")){
+                insFeaturesVo.setPageSize(56);
+            }else{
+                insFeaturesVo.setPageSize(55);
+            }
+
             String header="http://"+propertiesUtil.getProjectImageUrl()+"/";
             List<InsFeaturesVo> specialSer = insFeaturesService.findInsFeaturesVos(insFeaturesVo);
             for(int i=0;i<specialSer.size();i++){
@@ -415,14 +421,14 @@ public class InstitutionInfoController {
         //示例图尺寸
         double slW=0;
         double slH=0;
-        if(realW/realH>150/150){
+        if(realW/realH>130/130){
             //过宽
-            slH=150 * realH/realW;
-            slW=150;
+            slH=130 * realH/realW;
+            slW=130;
         }else{
             //过高
-            slH=150;
-            slW=150 * realW/realH;
+            slH=130;
+            slW=130 * realW/realH;
         }
         //原图所选中位置和区域
 

@@ -85,11 +85,11 @@
                     <span>标签:</span>
                     <div id="labelContainer" for="" style="display: inline-block;margin-left: 15px;">
                             <span id="spanContainerLabel" style="display: inline">
-                                <span href="##" class="systemBtn">
+                               <%-- <span href="##" class="systemBtn">
                                     <input class="systemLabel" maxlength="5" label-id="${label.id}"
                                            value="${label.labelName}">
                                     <i class="icon iconfont deleteBtn deleteLabelBtn">&#xe610;</i>
-                                </span>
+                                </span>--%>
                             </span>
                         <span class="iconBtn addSystem addSystemBtn">+</span>
                     </div>
@@ -161,7 +161,7 @@
     <%--切图弹窗--%>
     <div class="mienPopup coverPopup">
         <div class="uploadImageStyle">
-            <label for="" id="imgTittle">选择老师头像：</label>
+            <label for="" id="imgTittle">选择课程封面：</label>
             <img src="" alt="" id="targetStyle" style="width: 400px;height: 300px;">
             <a href="javascript:void(0);" class="chooseImg">
                 选择图片
