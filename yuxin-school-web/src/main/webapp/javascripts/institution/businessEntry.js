@@ -147,6 +147,15 @@ function dimMerchantEntry(page){
 	var rightTime = $("#endTime").val();
 	var mobile = $("#dimMobile").val();
 	var insName = $("#dimInstitu").val();
+    //两个时间不为空时，则需要判断时间大小
+    if (leftTime !=null && rightTime != null){
+        if (parseInt(leftTime.replace(/-/g,"")) > parseInt(rightTime.replace(/-/g,""))){
+            $("#startTime").val("");
+            $("#endTime").val("");
+            alert("左边时间不能晚于右边时间!");
+            return;
+        }
+    }
 	$.ajax({
         url: rootPath + "/merchantEntry/dimMerchantEntry",
         data: {"page":page,

@@ -7,6 +7,17 @@ $(function () {
         $('.videoUpload').show();
     });
     $('.closeVideoUpload').click(function () {
+    	//如果是保存，则需要判断必录项是否存在值，存在则隐藏，反之则不隐藏
+    	if($(this).hasClass("btnSaveCutPic")){
+    		var videoName = $(".videoStyle").val();
+    		var content = $("#videoContent").val();
+    		var videoId = $("videoId").val();
+    		if(videoName == null || videoName == '' 
+    		  || content == null || content == ''
+    		  || videoId == null || videoId == ''){
+    		  return ;
+    		}
+    	}
         $('.videoUpload').hide();
         //移除剪切图插件对象
         if (jcrop_apis){
@@ -148,43 +159,10 @@ $(function () {
 
 //上传临时图片 2为风采  1为视频 0为封面
 function savePic(saveFlag) {
-	var fileStr = $("#imgData").val();
-    if(fileStr){
-        if(!(fileStr.indexOf(".jpg")==(fileStr.length-4)
-            ||fileStr.indexOf(".jpeg")==(fileStr.length-5)
-            ||fileStr.indexOf(".gif")==(fileStr.length-4)
-            ||fileStr.indexOf(".png")==(fileStr.length-4)
-            ||fileStr.indexOf(".bmp")==(fileStr.length-4)
-            ||fileStr.indexOf(".ico")==(fileStr.length-4))){
-            alert("上传封面仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
-            return;
-        }
-    }
-    var fileStr1 = $("#imgDataStyle").val();
-    if(fileStr1){
-        if(!(fileStr1.indexOf(".jpg")==(fileStr1.length-4)
-            ||fileStr1.indexOf(".jpeg")==(fileStr1.length-5)
-            ||fileStr1.indexOf(".gif")==(fileStr1.length-4)
-            ||fileStr1.indexOf(".png")==(fileStr1.length-4)
-            ||fileStr1.indexOf(".bmp")==(fileStr1.length-4)
-            ||fileStr1.indexOf(".ico")==(fileStr1.length-4))){
-            alert("上传风采图仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
-            return;
-        }
-    }
-
-    var fileStr2 = $("#imgDataVideo").val();
-    //.jpg,.jpeg,.gif,.png,.bmp,.ico
-    if(fileStr2){
-        if(!(fileStr2.indexOf(".jpg")==(fileStr2.length-4)
-            ||fileStr2.indexOf(".jpeg")==(fileStr2.length-5)
-            ||fileStr2.indexOf(".gif")==(fileStr2.length-4)
-            ||fileStr2.indexOf(".png")==(fileStr2.length-4)
-            ||fileStr2.indexOf(".bmp")==(fileStr2.length-4)
-            ||fileStr2.indexOf(".ico")==(fileStr2.length-4))){
-            alert("上传视频封面仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
-            return;
-        }
+	var fileStr = saveFlag == 0?$("#imgData").val():saveFlag==1?$("#imgDataVideo").val():$("#imgDataStyle").val();
+    if(picFormat(fileStr)){
+    	saveFlag == 0?$("#target").attr("src",""):saveFlag==1?$("#targetVideo").attr("src",""):$("#targetStyle").attr("src","");
+        return ;
     }
     //选择的时候应先清空，
     if (saveFlag == 0){
@@ -203,8 +181,6 @@ function savePic(saveFlag) {
         dataType:'json',
         type : "POST",
         success : function(data) {
-            //显示图片
-            // $("#sourcePic").attr("src",data.url);
             //上传成功移除插件
             if (jcrop_apis){
                 jcrop_apis.destroy();
@@ -214,8 +190,6 @@ function savePic(saveFlag) {
                     $("#target").attr("src",data.realPath);
                     $("#target").trigger("change");
                     $(".jcrop-holder").find("img").attr("src",data.realPath);
-//                    $("#btnOne").show();
-//                    $("#btnTwo").show();
                 }else if(saveFlag == 1){
                     $("#targetVideo").attr("src",data.realPath);
                     $("#targetVideo").trigger("change");
@@ -229,7 +203,6 @@ function savePic(saveFlag) {
 
         },
         error:function(arg1,arg2,arg3){
-            //console.log(arg1);
         },
         saveFlag:saveFlag
         // loadingEle:  saveFlag == 1?'#target':'#targetStyle',
@@ -237,12 +210,11 @@ function savePic(saveFlag) {
     });
 }
 
+var countAdd = 0;//用于处理重复提交
 //上传剪切图,返回真实地址并插入数据库中
 function saveCutPic(saveFlag) {
-
-    var windowFlag = $("#windowFlag").val();
     var id = $("#updateId").val();
-    console.log($("#institutionId").val());
+//    console.log($("#institutionId").val());
     //判断图片是否为空或则是未更改就进行保存
     if (saveFlag == 0){//风采图，反之则是封面
         //判断图片是否为空或则是未更改就进行保存
@@ -254,11 +226,6 @@ function saveCutPic(saveFlag) {
         //处理剪切框的宽高
         dealWidthAndHeight(temp);
     }else if(saveFlag == 1){
-    	//判断图片是否为空或则是未更改就进行保存
-//        if (!$("#targetVideo").attr("src")){
-//            $.msg("未选择图片");
-//            return ;
-//        }
         //判断视频名称和视频描述是否为空
         if(!$(".videoStyle").val()||!$("#videoContent").val()){
         	$.msg("有必录项未录入");
@@ -269,29 +236,19 @@ function saveCutPic(saveFlag) {
         	$.msg("未上传视频");
         	return false;
         }
-        //处理重复提交
-//        if(!id){
-//        	if(countAdd != 0){
-//        		alert("请勿重复提交");
-//        		return ;
-//        	}
-//        	countAdd++;
-//        }
     }else {
         //判断图片是否为空或则是未更改就进行保存
         if (!$("#targetStyle").attr("src")){
             $.msg("未选择图片");
             return ;
         }
-        //处理重复提交
-//        if(!id){
-//        	if(countAdd != 0){
-//        		alert("请勿重复提交");
-//        		return ;
-//        	}
-//        	countAdd++;
-//        }
     }
+    //处理重复提交
+  	if(countAdd != 0){
+  		alert("请勿重复提交");
+  		return ;
+  	}
+  	countAdd++;
 
     //上传截取后的图片
     $.ajax({
@@ -306,19 +263,16 @@ function saveCutPic(saveFlag) {
             relationId:$("#institutionId").val(),
             sourceFlag:0,//机构风采
             type:saveFlag,// 0 封面 1视频 2风采
-            windowFlag:windowFlag,
             updateId:id,
             videoName:saveFlag == 1?$(".videoStyle").val():"",
             videoId:saveFlag == 1?$("#videoId").val():"",
             saveFlag:saveFlag,
             oldVideoId:saveFlag == 1?$("#oldVideoId").val():""
-//            cssStyle:$("#btnOne").hasClass("btn-primary")?0:1
         },
         type : "post",
         dataType : "json",
         success : function(data) {
-            // chooseOnePic(data.picOriginalUrl,
-            //     data.realPath);
+        	countAdd = 0;
             //上传成功则重新查询
             if (data.flag == 1){
             	if(saveFlag != 2){
@@ -327,25 +281,12 @@ function saveCutPic(saveFlag) {
             	}else{
             		queryInstitutionStyle(1);
             	}
-               // queryRiseSchoolStyle(1);
-//                if(saveFlag==1){
-//                    $("#target").attr("src","");
-//                    $("#btnOne").hide();
-//                    $("#btnTwo").hide();
-//                }else{
-//                    $("#targetStyle").attr("src","");
-//                }
             }else {
                 $.msg(data.msg);
             }
-//            $("#btnOne").hide();
-//            $("#btnTwo").hide();
             if (jcrop_apis){
                 jcrop_apis.destroy();
             }
-//            $('.opacityPopup').fadeOut();
-//            $('.commonPopup').fadeOut();
-//            $('.coverPopup').fadeOut();
         }
     });
     $("#chooseDiv").css("display", "none");
@@ -413,4 +354,17 @@ function deleteVideo(videoInfoId){
             }
         }
     });
+}
+
+//图片格式
+function picFormat(fileStr){
+	if(!(fileStr.indexOf(".jpg")==(fileStr.length-4)
+            ||fileStr.indexOf(".jpeg")==(fileStr.length-5)
+            ||fileStr.indexOf(".png")==(fileStr.length-4)
+            ||fileStr.indexOf(".bmp")==(fileStr.length-4)
+            ||fileStr.indexOf(".ico")==(fileStr.length-4))){
+            alert("上传封面仅仅支持以下格式:.jpg,.jpeg,.png,.bmp,.ico");
+            return true;
+    }
+	return false;
 }

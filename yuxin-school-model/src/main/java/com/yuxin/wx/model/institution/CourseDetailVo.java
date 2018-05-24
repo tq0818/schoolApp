@@ -24,6 +24,8 @@ public class CourseDetailVo {
 	private Integer reserCount;//预约人数
 	private String mobile;//电话号码
 	private Integer insId;//机构id
+	private String shareUrl;//分享页面地址
+	private String shareName;//分享名称
 	public Integer getCourseInfoId() {
 		return courseInfoId;
 	}
@@ -119,6 +121,18 @@ public class CourseDetailVo {
 	}
 	public void setInsId(Integer insId) {
 		this.insId = insId;
+	}
+	public String getShareUrl() {
+		return shareUrl;
+	}
+	public void setShareUrl(String shareUrl) {
+		this.shareUrl = shareUrl;
+	}
+	public String getShareName() {
+		return shareName;
+	}
+	public void setShareName(String shareName) {
+		this.shareName = shareName;
 	}
 	
 }

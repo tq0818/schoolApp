@@ -34,7 +34,7 @@
                 <h2 class="h5">商家入驻申请</h2>
                 <span class="line"></span>
             </div>
-            <input id="dimFlag" value="" type="hidden" />
+            <input id="dimFlag" value="0" type="hidden" />
             <form method="post" id="searchForm" class="userVideoListNew">
                     <div class="marginTop10 changeBtn" >
                         <span>处理状态</span>

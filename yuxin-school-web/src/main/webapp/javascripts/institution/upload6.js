@@ -350,11 +350,20 @@ $(function () {
 });
 
 window.onbeforeunload = function (e) {
-    if ($('.progress.progress-striped.active.mb0.tc_rel').length) {
-        return '视频上传中，离开页面将无法继续上传？';
-    } else {
-        if (!window.event) {
-            return null;
-        }
-    }
+//    if ($('.progress.progress-striped.active.mb0.tc_rel').length) {
+//        return '视频上传中，离开页面将无法继续上传？';
+//    } else {
+//        if (!window.event) {
+//            return null;
+//        }
+//    }
+	var vl = $('.progress.progress-striped.active.mb0.tc_rel').attr("aria-valuenow");
+	if( vl > 0 && vl < 100){
+//		e.returnValue = "视频上传中，离开页面将无法继续上传!";
+		return '视频上传中，离开页面将无法继续上传？';
+	}else{
+		if (!window.event) {
+          return null;
+      }
+	}
 };

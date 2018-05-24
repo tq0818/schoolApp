@@ -38,6 +38,8 @@ public class InstitutionDetailVo {
 	private Integer isGuessLikeMore;//是否显示换一批
 	private Integer isCollect;//是否收藏
 	private Integer isChain;//
+	private String shareUrl;//分享地址
+	private String shareName;//分享名称
 	public Integer getInstitutionId() {
 		return institutionId;
 	}
@@ -189,6 +191,18 @@ public class InstitutionDetailVo {
 	}
 	public void setIsChain(Integer isChain) {
 		this.isChain = isChain;
+	}
+	public String getShareUrl() {
+		return shareUrl;
+	}
+	public void setShareUrl(String shareUrl) {
+		this.shareUrl = shareUrl;
+	}
+	public String getShareName() {
+		return shareName;
+	}
+	public void setShareName(String shareName) {
+		this.shareName = shareName;
 	}
 	
 }
