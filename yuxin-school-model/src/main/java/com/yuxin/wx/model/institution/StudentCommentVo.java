@@ -1,6 +1,7 @@
 package com.yuxin.wx.model.institution;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -22,6 +23,11 @@ public class StudentCommentVo implements Serializable{
 	private Integer commentThumpCount;//		评论点赞数
 	private Integer isThump;//是否点赞
 	private String commentName;//评论者的昵称
+	private String h5RetTime;//h5页面返回时间
+
+	public String getH5RetTime() {
+		return h5RetTime;
+	}
 	public Integer getCommentId() {
 		return commentId;
 	}
@@ -57,6 +63,9 @@ public class StudentCommentVo implements Serializable{
 	}
 	public void setCommtentTime(Date commtentTime) {
 		this.commtentTime = commtentTime;
+		//格式化时间
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		this.h5RetTime = formatter.format(commtentTime);
 	}
 	public Integer getCommentThumpCount() {
 		return commentThumpCount;
