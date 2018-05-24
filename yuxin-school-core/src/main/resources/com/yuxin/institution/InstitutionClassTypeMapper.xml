@@ -327,6 +327,7 @@
 		class_type ct
 		INNER JOIN company c
 		ON ct.`company_id` = c.`id`
+		AND ct.is_sale = 1
 		AND ct.`name` = #{name}
 		LEFT JOIN `sys_config_item` sci
 		ON ct.`item_third_code` = sci.`item_code`

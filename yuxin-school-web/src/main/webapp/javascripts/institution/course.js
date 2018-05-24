@@ -128,6 +128,10 @@ function findOnlineClass(){
                 `;
             }
 
+            if(list.length == 0){
+                html = "<tr><td colspan='5'>没有数据</td></tr>";
+            }
+
             $('#findClassTbody').html(html);
 
 

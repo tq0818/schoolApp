@@ -52,8 +52,8 @@
                 <div class="chooseBtn" id="chooseBtn2">
                     <span>上下架状态</span>
                     <a href="##" class="btn btn-default onlineStatus btn-primary btn-mb">全部</a>
-                    <a href="##" class="btn btn-default onlineStatus btn-mb">已上架</a>
-                    <a href="##" class="btn btn-default onlineStatus btn-mb">已下架</a>
+                    <a href="##" class="btn btn-default onlineStatus btn-mb">已关联</a>
+                    <a href="##" class="btn btn-default onlineStatus btn-mb">未关联</a>
                 </div>
                 <a href="##" class="btn btn-primary btn-mb addCourse" style="float: right;margin-right: 200px;margin-bottom: 10px;">添加课程</a>
                 <div style="width: 80%;margin: auto;">
