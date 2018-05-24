@@ -224,7 +224,13 @@ public class InstitutionInfoController {
                 }
 
             }
-            insFeaturesVo.setPageSize(55);
+            Users users = WebUtils.getCurrentUser();
+            if(users.getUserType().equals("INSTITUTION_MANAGE")){
+                insFeaturesVo.setPageSize(56);
+            }else{
+                insFeaturesVo.setPageSize(55);
+            }
+
             String header="http://"+propertiesUtil.getProjectImageUrl()+"/";
             List<InsFeaturesVo> specialSer = insFeaturesService.findInsFeaturesVos(insFeaturesVo);
             for(int i=0;i<specialSer.size();i++){

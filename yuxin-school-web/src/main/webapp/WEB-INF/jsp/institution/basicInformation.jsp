@@ -259,16 +259,19 @@
                             </c:forEach>
                         </div>
                     </div>
+                <c:if test="${userType != 'INSTITUTION_MANAGE'}">
                     <div>
                         <span>系统标签：</span>
-                            <c:forEach var="label" items="${sysLabel}">
+                        <c:forEach var="label" items="${sysLabel}">
                              <span href="##" class="systemBtn">
                                 <input class="systemLabel sysLabel" label-id="${label.id}" value="${label.labelName}" maxlength="5">
                                 <i class="icon iconfont deleteBtn">&#xe610;</i>
                             </span>
-                            </c:forEach>
+                        </c:forEach>
                         <span class="iconBtn addSystem">+</span>
                     </div>
+                </c:if>
+
                 <div>
                     <span>自定义标签：</span>
 

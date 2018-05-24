@@ -118,7 +118,7 @@
             <input type="text" style="width: 460px;" maxlength="20" id="name">
         </div>
         <div id="orgType">
-            <div>
+            <div class="catType">
                 <span class="mechanismName">机构分类：</span>
                 <select name=""  class="findFistCategorys2">
                     <option value="">请选择一级分类</option>
@@ -147,14 +147,14 @@
         </div>
         <div>
             <span>机构账号：</span>
-            <input type="text" id="userName" placeholder="请输入学校管理员账号">
+            <input type="text" id="userName" placeholder="请输入学校管理员账号" maxlength="30">
             <span style="color: #ff0000;">初始密码为：111111</span>
         </div>
         <div>
             <span style="float: left;">联系电话：</span>
             <div style="display: inline-block" id="listMachine">
-                <div>
-                    <input type="text" placeholder="区号" style="width: 30px;" onkeyup="value=value.replace(/[^\d]/g,'')">-
+                <div class="mobile">
+                    <input type="text" placeholder="区号" style="width: 30px;" class="telephone" onkeyup="value=value.replace(/[^\d]/g,'')">-
                     <input type="text" placeholder="请输入座机号" class="telephone" onkeyup="value=value.replace(/[^\d]/g,'')">
                     <span class="iconBtn addMachine">+</span>
                 </div>
@@ -165,7 +165,7 @@
                 <%--</div>--%>
             </div>
             <div id="listPhone">
-                <div>
+                <div class="phone">
                     <input type="text"  placeholder="请输入手机号" maxlength="11" class="phoneNum" onkeyup="value=value.replace(/[^\d]/g,'')">
                     <span class="iconBtn addPhone" >+</span>
                 </div>
@@ -190,8 +190,8 @@
         </div>
         <div id="orgs">
             <span>是否属于连锁机构：</span>
-            <a href="javascript:void(0)"><input type="radio" name="org" id="isOrg" value="1">是</a>
-            <a href="javascript:void(0)"><input type="radio" name="org" id="noOrg" value="0" checked>否</a>
+            <a href="javascript:void(0)"><input type="radio" name="org" id="isOrg" value="1" >是</a>
+            <a href="javascript:void(0)"><input type="radio" name="org" id="noOrg" value="0" checked="true">否</a>
         </div>
         <div class="orgBtn">
             <a href="javascript:void(0)" class="btn btn-primary btn-mb closeMechanism">取消</a>
@@ -208,7 +208,7 @@
     </div>
     <div class="countPopup sureCount cureatManageUser">
             <h5>创建账号</h5>
-            <p>机构账号：<input type="text" placeholder="请输入学校管理员账号" id="manageUser"></p>
+            <p>机构账号：<input type="text" placeholder="请输入学校管理员账号" id="manageUser" maxlength="30"></p>
             <span>初始密码为：111111</span>
         <div class="countPopupBtn ">
             <a href="javascript:void(0)" class="btn btn-primary btn-mb closeCountPopup cabcelManageUser">取消</a>
