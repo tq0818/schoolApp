@@ -13,6 +13,7 @@
         <result property="type" column="type" />
 
         <result property="nickName" column="nick_name" />
+        <result property="mobile" column="mobile" />
         <result property="headPicMax" column="head_pic_max" />
         <result property="className" column="className" />
 
@@ -40,7 +41,7 @@
     </update>
 
     <select id="findInsComment" resultMap="commentAppMap" parameterType="com.yuxin.wx.model.institution.CommentApp">
-        select c.*,u.nick_name,u.head_pic_max from comment c
+        select c.*,u.nick_name,u.mobile,u.head_pic_max from comment c
         LEFT JOIN users_front u on c.user_id = u.id
         where c.del_flag = 0 and c.type =0
         <if test="relationId != null and relationId != ''">and c.relation_id = #{relationId}</if>
@@ -58,7 +59,7 @@
 
 
     <select id="findInsClassComment" resultMap="commentAppMap" parameterType="com.yuxin.wx.model.institution.CommentApp">
-        select c.*,u.nick_name,u.head_pic_max,ct.name className from comment c
+        select c.*,u.nick_name,u.mobile,u.head_pic_max,ct.name className from comment c
         JOIN ins_class_type ct on ct.id = c.relation_id
         JOIN ins_class_type_relation ic on ic.class_type_id = ct.id
         JOIN institution_info ii on ii.id = ic.ins_id

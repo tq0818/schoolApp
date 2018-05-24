@@ -28,11 +28,21 @@ public class CommentApp implements Serializable{
 	private Integer page;
 	private Integer pageSize;
 	private String nickName;
+	private String mobile;
 	private String headPicMax;
 	private String className;
 	private String createTimeText;//时间
 	private String createTimeText2;//分钟
 	private Integer insId;
+
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
 
 	public Integer getInsId() {
 		return insId;

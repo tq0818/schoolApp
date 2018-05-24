@@ -627,6 +627,9 @@ function findInsDate(page) {
     var registStatus = $("#registStatus").val();
     var findFistCategorys = $("#findFistCategorys").val();
     var findSecondCategorys = $("#findSecondCategorys").val();
+    if(findFistCategorys == '' || findFistCategorys == null){
+        findSecondCategorys == '';
+    }
 
     var isCertifiedVal = '';
     let isCertified = $('#isCertified').children('a');
@@ -679,7 +682,7 @@ function findInsDate(page) {
             "city":eduSchool,
             "area":registStatus,
             "oneLevelId":findFistCategorys,
-            "twoLevelId":findSecondCategorys,
+            "twoLevelId":!findFistCategorys ? findFistCategorys : findSecondCategorys,
             "isCertified":isCertifiedVal,
             "isShelves":isShelvesVal,
             "endTime":endTime,

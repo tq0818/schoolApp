@@ -269,6 +269,10 @@
                             </span>
                         </c:forEach>
                         <span class="iconBtn addSystem">+</span>
+                        <%--<c:if test="${fn:length(sysLabel) != 4}">
+                            <span class="iconBtn addSystem">+</span>
+                        </c:if>--%>
+
                     </div>
                 </c:if>
 

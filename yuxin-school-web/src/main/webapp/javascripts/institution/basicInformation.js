@@ -2,6 +2,31 @@ var speId = '';
 $(function () {
     //    左侧active切换
     $selectSubMenus('essential');
+
+    let systemBtnLength = $('.systemBtn').length;
+    if(systemBtnLength<4){
+        $('.addSystem').show();
+    }else{
+        $('.addSystem').hide();
+    }
+
+
+    let systemLength = $('.customLabel').length;
+    if(systemLength<5){
+        $('.customLabelBtn').show();
+    }else{
+        $('.customLabelBtn').hide();
+    }
+
+
+    let specialServiceLength = $('.specialService').length;
+    if(specialServiceLength<10){
+        $('.specialServiceBtn').show();
+    }else{
+        $('.specialServiceBtn').hide();
+    }
+
+
     //系统标签增加和删除
     $('.addSystem').click(function () {
         let systemLength = $('.systemBtn').length;
