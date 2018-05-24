@@ -170,8 +170,9 @@
                         <span class="mechanismName">机构地址：</span>
                         <input value="${ins.province}" style="display: none" id="eduAreaCode">
                         <select name="eduArea" id="eduArea" onchange="queryRiseSchoolDict(1)">
-                           <option value="">请选择省份</option>
-                           <option value="${ins.province}" selected >${ins.provinceName}</option>
+                           <%--<option value="">请选择省份</option>--%>
+                            <option value="510000" selected>四川省</option>
+                           <%--<option value="${ins.province}" selected >${ins.provinceName}</option> 需要全部省份放开这里就可以了，然后注释到上面一句,再把js中的数据填充放开--%>
                         </select>
                         <select name="eduSchool" id="eduSchool" onchange="queryRiseSchoolDict(2)">
                             <option value="">请选择市</option>

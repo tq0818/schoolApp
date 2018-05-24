@@ -395,7 +395,7 @@ function queryRiseSchoolDict(areaFlag) {
                 }
                 if (areaFlag == 0){
                     html = "<option value=\"\">请选择省份</option>" + html;
-                    $("#eduArea").html("").html(html);
+                    //$("#eduArea").html("").html(html);
                 }else if (areaFlag == 1){
                     if(eduAreaNew == ""){
                         html = "<option value=\"\">请选择市</option>";

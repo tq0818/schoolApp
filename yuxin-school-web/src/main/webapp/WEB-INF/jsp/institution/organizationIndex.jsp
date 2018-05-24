@@ -137,6 +137,7 @@
             <span class="mechanismName">机构地址：</span>
             <select name="eduArea" id="eduArea2" onchange="queryRiseSchoolDict2(1)">
                 <option value="">请选择省份</option>
+                <option value="510000">四川省</option>
             </select>
             <select name="eduSchool" id="eduSchool2" onchange="queryRiseSchoolDict2(2)">
                 <option value="">请选择市</option>
