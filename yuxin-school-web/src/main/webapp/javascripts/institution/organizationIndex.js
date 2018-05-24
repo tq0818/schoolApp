@@ -266,7 +266,7 @@ $(function () {
         let systemLength = $('.systemBtn').length;
         if(systemLength<4){
             var _html =
-                `<span href="##" class="systemBtn">
+                `<span href="javascript:void(0)" class="systemBtn">
                 <input class="systemLabel" maxlength="5">
                 <i class="icon iconfont deleteBtn">&#xe610;</i>
             </span>`;
@@ -732,10 +732,10 @@ function findInsDate(page) {
                         '<td>'+isShelves+'</td>'+
                         '<td class="authenticationReal">'+isCertified+'</td>'+
                         '<td class="slink">'+
-                        '<a href="##" class="frameLower" data-id="'+item.id+'">'+isShelvesval+'</a>|'+
-                        '<a href="##" class="authentication" data-id="'+item.id+'">'+isCertifiedval+'</a>|'+
-                        '<a href="##" class="countManage" id="countManage" data-id="'+item.id+'">'+'账号管理'+'</a>|'+
-                        '<a href="##" class="manageBtn">'+'管理'+'</a>'+
+                        '<a href="javascript:void(0)" class="frameLower" data-id="'+item.id+'">'+isShelvesval+'</a>|'+
+                        '<a href="javascript:void(0)" class="authentication" data-id="'+item.id+'">'+isCertifiedval+'</a>|'+
+                        '<a href="javascript:void(0)" class="countManage" id="countManage" data-id="'+item.id+'">'+'账号管理'+'</a>|'+
+                        '<a href="javascript:void(0)" class="manageBtn">'+'管理'+'</a>'+
                         '<ul class="none box" style="display: none">'+
                         '<li><a href="'+rootPath+'/InsInfoBase/findInsById?id='+item.id+'">基本信息</a>'+'</li>'+
                         '<li><a href="'+rootPath+'/institutionStyle/queryInstitutionStyle?relationId='+item.id+'">风采管理</a>'+'</li>'+
