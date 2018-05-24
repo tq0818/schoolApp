@@ -118,7 +118,6 @@ function initReServApplyList(page) {
     var endTime = $("#endTime").val();
     var mobile = $("#mobile").val();
 
-    console.log(statu,ins,insClass,startTime,endTime,mobile)
 
     $.ajax({
         type:"POST",
@@ -138,6 +137,7 @@ function initReServApplyList(page) {
             $(".loading-bg").show();
         },
         success : function(jsonData) {
+            console.log(jsonData)
             var html ='<tr data-buy="true">' +
                             '<th width="3%">序号</th>' +
                             '<th width="5%">手机号</th>' +
@@ -168,12 +168,21 @@ function initReServApplyList(page) {
                     }else{
                         note = item.note;
                     }
+                    var className = item.className;
+                    var price = item.price;
+                    if(null == className || className == ''){
+                        className = '-';
+                    }
+                    if(price == null || price == ''){
+                        price = '-';
+                    }
+
                     html+='<tr>'+
                             '<td>'+item.sort+'</td>'+
                             '<td>'+item.mobile+'</td>'+
                             '<td>'+item.insName+'</td>'+
-                            '<td>'+item.className+'</td>'+
-                            '<td>'+item.price+'</td>'+
+                            '<td>'+className+'</td>'+
+                            '<td>'+price+'</td>'+
                             '<td>'+item.time+'</td>'+
                             '<td>'+dealStatus+'</td>'+
                             '<td class="addRemarks">'+note+'</td>'+
@@ -227,7 +236,6 @@ function initReServApplyList(page) {
 }
 
 function updateReServApply(id,status) {
-console.log(status)
     var dealStatus = '';
     if(status == 0){
         dealStatus = 1;
@@ -251,7 +259,6 @@ console.log(status)
 
 function updateReServApplyNot(id) {
     var not = $("#not").val();
-    console.log(not);
     $.ajax({
         type:"POST",
         url : rootPath +"/InsStudent/updateReServApply",
