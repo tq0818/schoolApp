@@ -42,16 +42,16 @@
         <div class="mainbackground nopadding">
             <div class="heading">
                 <h2 class="h5" style="display: inline-block;">评论管理</h2>
-                <span class="evaTitle" style="">机构评论</span>
-                <span class="evaTitle" >课程评论</span>
+                <span class="evaTitle insComment" style="">机构评论</span>
+                <span class="evaTitle insClassComment" >课程评论</span>
                 <span class="line"></span>
             </div>
             <div class="evaScreen">
-                <div style="padding-left: 13px;" >
+                <div style="padding-left: 13px;" id ="status">
                     <span style="font-size: 16px;margin-right: 30px;">审核状态</span>
-                    <a href="javascript:void(0)" class="btn btn-default btn-primary">全部</a>
-                    <a href="javascript:void(0)" class="btn btn-default">待审核</a>
-                    <a href="javascript:void(0)" class="btn btn-default">审核通过</a>
+                    <a href="javascript:void(0)" class="btn btn-default btn-primary" data-review="">全部</a>
+                    <a href="javascript:void(0)" class="btn btn-default" data-review="0">待审核</a>
+                    <a href="javascript:void(0)" class="btn btn-default" data-review="1">审核通过</a>
                 </div>
                 <ul class="comment_all">
 

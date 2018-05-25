@@ -1,5 +1,68 @@
 insId = '';
+
 $(function () {
+    var twoLevelIdI = $("#twoLevelIdI").val();
+    var twoLevelNameI = $("#twoLevelNameI").val();
+
+    if(twoLevelIdI != null && twoLevelIdI != ''){
+        var html ='<option value="">请选择二级分类</option>';
+        html+='<option value="'+twoLevelIdI +'" selected>'+ twoLevelNameI+'</option>'
+        $("#findSecondCategorys").html(html);
+    }
+
+    var isCertifiedI = $("#isCertifiedI").val();
+    var isShelvesI = $("#isShelvesI").val();
+
+    if(isCertifiedI == ''){
+        var html ='';
+        html+='<span>认证状态</span>';
+        html+=' <a href="javascript:void(0)" class="btn btn-default btn-primary btn-mb">全部</a>\n' +
+            '<a href="javascript:void(0)" class="btn btn-default btn-mb">已认证</a>\n' +
+            '<a href="javascript:void(0)" class="btn btn-default btn-mb">未认证</a>'
+        $("#isCertified").html(html);
+    }else if(isCertifiedI == 1){
+        var html ='';
+        html+='<span>认证状态</span>';
+        html+=' <a href="javascript:void(0)" class="btn btn-default  btn-mb">全部</a>\n' +
+            '<a href="javascript:void(0)" class="btn btn-default btn-mb btn-primary">已认证</a>\n' +
+            '<a href="javascript:void(0)" class="btn btn-default btn-mb">未认证</a>'
+        $("#isCertified").html(html);
+    }else if(isCertifiedI == 0){
+        var html ='';
+        html+='<span>认证状态</span>';
+        html+=' <a href="javascript:void(0)" class="btn btn-default  btn-mb">全部</a>\n' +
+            '<a href="javascript:void(0)" class="btn btn-default btn-mb ">已认证</a>\n' +
+            '<a href="javascript:void(0)" class="btn btn-default btn-mb btn-primary">未认证</a>'
+        $("#isCertified").html(html);
+    }
+
+    if(isShelvesI == ''){
+        var html ='';
+        html+='<span>上下架&nbsp&nbsp&nbsp</span>';
+        html+='  <a href="javascript:void(0)" class="btn btn-default btn-primary btn-mb">全部</a>'+
+            '<a href="javascript:void(0)" class="btn btn-default btn-mb">已上架</a>'+
+            '<a href="javascript:void(0)" class="btn btn-default btn-mb">未上架</a>'
+        $("#isShelves").html(html);
+    }else if(isShelvesI == 1){
+        var html ='';
+        html+='<span>上下架&nbsp&nbsp&nbsp</span>';
+        html+='  <a href="javascript:void(0)" class="btn btn-default  btn-mb">全部</a>'+
+            '<a href="javascript:void(0)" class="btn btn-default btn-mb btn-primary">已上架</a>'+
+            '<a href="javascript:void(0)" class="btn btn-default btn-mb">未上架</a>'
+        $("#isShelves").html(html);
+    }else if(isShelvesI == 0){
+        var html ='';
+        html+='<span>上下架&nbsp&nbsp&nbsp</span>';
+        html+='  <a href="javascript:void(0)" class="btn btn-default  btn-mb">全部</a>'+
+            '<a href="javascript:void(0)" class="btn btn-default btn-mb">已上架</a>'+
+            '<a href="javascript:void(0)" class="btn btn-default btn-mb btn-primary">未上架</a>'
+        $("#isShelves").html(html);
+    }
+
+    $("#startTime").val($("#startTimeI").val());
+    $("#endTime").val($("#endTimeI").val());
+    $("#insName").val($("#nameI").val());
+
     //初始化数据
     //initDate();
     //选中二级菜单
@@ -254,15 +317,6 @@ $(function () {
          }
      }
 
-
-
-
-
-
-
-
-
-
     });
 
     //认证状态、推荐状态、上下架按钮效果切换
@@ -272,7 +326,7 @@ $(function () {
             $(this).siblings('a').removeClass('btn-primary');
         }
 
-        findInsDate(1);
+        findInsDate(1,0);
     });
     //系统标签增加和删除
     $('.addSystem').click(function () {
@@ -399,10 +453,10 @@ $(function () {
     //分类筛选
     $('#findFistCategorys').change(function () {
         findSecondCategorys(2);
-        findInsDate(1);
+        findInsDate(1,0);
     });
     $('#findSecondCategorys').change(function () {
-        findInsDate(1);
+        findInsDate(1,0);
     });
 
     //分类筛选
@@ -413,17 +467,17 @@ $(function () {
 
     //搜索数据
     $(".searchContents").click(function () {
-        findInsDate(1);
+        findInsDate(1,0);
     });
 
+    $('body').on('click','.ingInfo',function () {
+        indexParam();
+    })
 
 
 });
 
-
-
 var curPage = 1;
-
 
 //查询省市区
 function queryRiseSchoolDict(areaFlag) {
@@ -459,7 +513,7 @@ function queryRiseSchoolDict(areaFlag) {
                 }
                 if (areaFlag == 0){
                     html = "<option value=\"\">请选择省份</option>" + html;
-                    $("#eduArea").html("").html(html);
+                    //$("#eduArea").html("").html(html);
                 }else if (areaFlag == 1){
                     if(eduAreaNew == ""){
                         html = "<option value=\"\">请选择市</option>";
@@ -474,13 +528,15 @@ function queryRiseSchoolDict(areaFlag) {
                     $("#registStatus").html("").html(html);
                 }
             }
-            findInsDate(1);
+            pagaI = '';
+            findInsDate(1,0);
         }
     });
 }
 
+//选择区域
 function queryInsData() {
-    findInsDate(1);
+    findInsDate(1,0);
 }
 
 //查询省市区
@@ -547,10 +603,20 @@ function findFistCategorys() {
 
         success:function (data) {
             var html = '';
+            var oneLevelId = $("#oneLevelIdI").val();
             html = "<option value=\"\">请选择一级分类</option>"
             if(data.length>0){
                 for (var i in data){
-                    html = html + "<option value=\""+data[i].id+"\">"+data[i].codeName+"</option>"
+                    if(oneLevelId != null && oneLevelId != ''){
+                        if(data[i].id == oneLevelId){
+                            html = html + "<option value=\""+data[i].id+"\" selected>"+data[i].codeName+"</option>"
+                        }else{
+                            html = html + "<option value=\""+data[i].id+"\">"+data[i].codeName+"</option>"
+                        }
+                    }else{
+                        html = html + "<option value=\""+data[i].id+"\">"+data[i].codeName+"</option>"
+                    }
+
                 }
             }
             $("#findFistCategorys").html("").html(html);
@@ -619,9 +685,20 @@ function findSecondCategorys2(catId,that){
     });
 }
 
+
+
 //点击查询获取数据
-function findInsDate(page) {
+function findInsDate(page,flag) {
+
+    var pagaI = $("#pageI").val();
     curPage = page;
+    if(flag != null && flag !=''){
+        if(pagaI != null && pagaI !=''){
+            page = pagaI;
+        }
+    }
+
+
     var eduArea = $("#eduArea").val();
     var eduSchool = $("#eduSchool").val();
     var registStatus = $("#registStatus").val();
@@ -753,7 +830,7 @@ function findInsDate(page) {
                         '<a href="javascript:void(0)" class="countManage" id="countManage" data-id="'+item.id+'">'+'账号管理'+'</a>|'+
                         '<a href="javascript:void(0)" class="manageBtn">'+'管理'+'</a>'+
                         '<ul class="none box" style="display: none">'+
-                        '<li><a href="'+rootPath+'/InsInfoBase/findInsById?id='+item.id+'">基本信息</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/InsInfoBase/findInsById?id='+item.id+'" class="ingInfo">基本信息</a>'+'</li>'+
                         '<li><a href="'+rootPath+'/institutionStyle/queryInstitutionStyle?relationId='+item.id+'">风采管理</a>'+'</li>'+
                         '<li><a href="'+rootPath+'/institutionClassType/classTypeMain/'+item.id+'">课程管理</a>'+'</li>'+
                         '<li><a href="'+rootPath+'/InsInfoBase/famousTeacher/'+item.id+'">名师管理</a>'+'</li>'+
@@ -781,7 +858,7 @@ function findInsDate(page) {
                         num_edge_entries: 1,
                         callback: function (page, jq) {
                             var pageNo = page + 1;
-                            findInsDate(pageNo);
+                            findInsDate(pageNo,0);
                         }
                     });
                 $(".pagination").find("li:first").css("background-color","#fff").css("border","1px solid #999").css('cursor','default');
@@ -807,7 +884,7 @@ function findInsDate(page) {
 
 function searchCount(){
     $("#selectCounts").val($("#selectCount").val());
-    findInsDate(1);
+    findInsDate(1,0);
 }
 
 //修改上下架，认证
@@ -818,7 +895,7 @@ function authFrameLower(id,num,flag) {
         type:"post",
         data:{"id":id,"num":num,"flag":flag},
         success:function(data){
-            findInsDate(curPage);
+            findInsDate(curPage,0);
         }
     })
 }
@@ -923,10 +1000,9 @@ function addInsInfo() {
             "name": name
         },
         success: function (data) {
-            if(data != null && data != ''){
-                $.msg(data.name+"机构已存在！");
+            if(data == null || data == ''){
+                $.msg(name+"机构已存在！");
                 $('.addingMechanism').show();
-                return;
             }else{
                 if(userName != null && userName != ''){
                     $.ajax({
@@ -1003,12 +1079,6 @@ function addInsInfo() {
             }
         }
     });
-
-
-
-
-
-
 }
 
 //创建机构用户
@@ -1032,7 +1102,7 @@ function cureatManageUser() {
                         "countManage":countManage
                     },
                     success:function(data){
-                        findInsDate(curPage);
+                        findInsDate(curPage,0);
                     }
                 })
             }else if(data =='用户名已经被注册'){
@@ -1100,9 +1170,76 @@ function updateManageUser() {
             "userName":userName
         },
         success:function(data){
-            findInsDate(curPage);
+            findInsDate(curPage,0);
         }
     })
+}
+
+//存放首页参数
+function indexParam() {
+    var eduArea = $("#eduArea").val();
+    var eduSchool = $("#eduSchool").val();
+    var registStatus = $("#registStatus").val();
+    var findFistCategorys = $("#findFistCategorys").val();
+    var findSecondCategorys = $("#findSecondCategorys").val();
+    if(findFistCategorys == '' || findFistCategorys == null){
+        findSecondCategorys == '';
+    }
+
+    var isCertifiedVal = '';
+    let isCertified = $('#isCertified').children('a');
+    for(let i=0;i<isCertified.length;i++){
+        if(isCertified.eq(i).hasClass('btn-primary')){
+            if(i==0){
+                isCertifiedVal = '';
+            }else if(i==1){
+                isCertifiedVal = 1;
+            }else{
+                isCertifiedVal = 0;
+            }
+        }
+    }
+
+    var isShelvesVal = '';
+    let isShelves = $('#isShelves').children('a');
+    for(let i=0;i<isShelves.length;i++){
+        if(isShelves.eq(i).hasClass('btn-primary')){
+            if(i==0){
+                isShelvesVal = '';
+            }else if(i==1){
+                isShelvesVal = 1;
+            }else{
+                isShelvesVal = 0;
+            }
+        }
+    }
+
+
+    var endTime = $("#endTime").val();
+    var startTime = $("#startTime").val();
+    var insName = $("#insName").val();
+
+    $.ajax({
+        url:rootPath+"/InsInfoBase/indexParam",
+        type:"post",
+        data:{
+            "province":eduArea,
+            "city":eduSchool,
+            "area":registStatus,
+            "oneLevelId":findFistCategorys,
+            "twoLevelId":!findFistCategorys ? findFistCategorys : findSecondCategorys,
+            "isCertified":isCertifiedVal,
+            "isShelves":isShelvesVal,
+            "endTime":endTime,
+            "startTime":startTime,
+            "name":insName,
+            "page":curPage
+        },
+        success:function(data){
+
+        }
+    })
+
 }
 
 

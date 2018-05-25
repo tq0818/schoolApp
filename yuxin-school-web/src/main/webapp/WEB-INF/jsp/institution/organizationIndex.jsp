@@ -27,6 +27,25 @@
 <jsp:include page="/WEB-INF/jsp/menu/menu_institution.jsp"></jsp:include>
 <div class="u-wrap query overflow">
     <%--<jsp:include page="/WEB-INF/jsp/menu/menu_statistics_query.jsp"></jsp:include>--%>
+    <c:if test="${sessionScope.flag == 1}">
+        <input type="hidden" id="provinceI" value="${sessionScope.province}">
+        <input type="hidden" id="cityI" value="${sessionScope.city}">
+        <input type="hidden" id="areaI" value="${sessionScope.area}">
+        <input type="hidden" id="provicenNameI" value="${sessionScope.provicenName}">
+        <input type="hidden" id="cityNameI" value="${sessionScope.cityName}">
+        <input type="hidden" id="areaNameI" value="${sessionScope.areaName}">
+        <input type="hidden" id="oneLevelIdI" value="${sessionScope.oneLevelId}">
+        <input type="hidden" id="twoLevelIdI" value="${sessionScope.twoLevelId}">
+        <input type="hidden" id="oneLevelNameI" value="${sessionScope.oneLevelName}">
+        <input type="hidden" id="twoLevelNameI" value="${sessionScope.twoLevelName}">
+        <input type="hidden" id="isCertifiedI" value="${sessionScope.isCertified}">
+        <input type="hidden" id="isShelvesI" value="${sessionScope.isShelves}">
+        <input type="hidden" id="endTimeI" value="${sessionScope.endTime}">
+        <input type="hidden" id="startTimeI" value="${sessionScope.startTime}">
+        <input type="hidden" id="nameI" value="${sessionScope.name}">
+        <input type="hidden" id="pageI" value="${sessionScope.page}">
+    </c:if>
+
     <div class="right-side set-system" style="width: 100%">
         <div class="mainbackground nopadding" style="margin: 0 10px;padding-bottom: 100px;">
             <div class="heading">
@@ -39,19 +58,50 @@
                         <span>区域筛选</span>
                         <select name="eduArea" id="eduArea" onchange="queryRiseSchoolDict(1)">
                             <option value="">请选择省份</option>
+                            <c:if test="${sessionScope.flag == 1}">
+                                <c:choose>
+                                    <c:when test="${sessionScope.province != null && sessionScope.province != ''}">
+                                        <option value="510000" selected>四川省</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="510000">四川省</option>
+                                    </c:otherwise>
+                                </c:choose>
+
+                            </c:if>
+                            <c:if test="${sessionScope.flag != 1}">
+                                <option value="510000">四川省</option>
+                            </c:if>
                         </select>
+
                         <select name="eduSchool" id="eduSchool" onchange="queryRiseSchoolDict(2)">
                             <option value="">请选择市</option>
+                            <c:if test="${sessionScope.flag == 1}">
+                                <c:if test="${sessionScope.city != '' && sessionScope.city != null}">
+                                    <option value="${sessionScope.city}" selected>${sessionScope.cityName}</option>
+                                </c:if>
+                            </c:if>
                         </select>
                         <select id="registStatus" name="status" onchange="queryInsData()" >
                             <option value="">请选择区</option>
+                            <c:if test="${sessionScope.flag == 1}">
+                                <c:if test="${sessionScope.area != '' && sessionScope.area != null}">
+                                    <option value="${sessionScope.area}" selected>${sessionScope.areaName}</option>
+                                </c:if>
+                            </c:if>
                         </select>
                     </div>
                     <div class="marginTop10">
                         <span>分类筛选</span>
                         <select name="" id="findFistCategorys">
                             <option value="">请选择一级分类</option>
+                            <c:if test="${sessionScope.flag == 1}">
+                                <c:if test="${sessionScope.oneLevelIdI != '' && sessionScope.oneLevelIdI != null}">
+                                    <option value="${sessionScope.oneLevelIdI}" selected>${sessionScope.oneLevelNameI}</option>
+                                </c:if>
+                            </c:if>
                         </select>
+
                         <select name="" id="findSecondCategorys">
                             <option value="">请选择二级分类</option>
                         </select>
@@ -79,6 +129,7 @@
                         <span style="float: right"><a href="javascript:;" class="btn btn-primary addOrganization" style="margin: 0 20px;">添加机构</a></span>
                     </div>
             </form>
+
             <div class="user-list">
                 <table class="table table-center" id="tableList">
                     <tr data-buy="true">
@@ -101,8 +152,6 @@
         </div>
     </div>
         <input type="hidden" id="selectCounts" value="10">
-
-
     <!-- ajax加载中div开始 -->
     <div class="loading lp-units-loading" style="display:none">
         <p><i></i>加载中,请稍后...</p>
@@ -148,7 +197,7 @@
         </div>
         <div>
             <span>机构账号：</span>
-            <input type="text" id="userName" placeholder="请输入学校管理员账号" maxlength="30">
+            <input type="text" id="userName" placeholder="请输入机构管理员账号" maxlength="30">
             <span style="color: #ff0000;">初始密码为：111111</span>
         </div>
         <div>
@@ -201,7 +250,7 @@
     </div>
     <%--账号管理弹窗    --%>
     <div class="countPopup createCount">
-        <p>该账号还未创建账号，是否立即创建？</p>
+        <p>该机构还未创建账号，是否立即创建？</p>
         <div class="countPopupBtn">
             <a href="javascript:void(0)" class="btn btn-primary btn-mb closeCountPopup canclImmediateCreation">取消</a>
             <a href="javascript:void(0)" class="btn btn-primary btn-mb closeCountPopup immediateCreation">立即创建</a>
@@ -209,7 +258,7 @@
     </div>
     <div class="countPopup sureCount cureatManageUser">
             <h5>创建账号</h5>
-            <p>机构账号：<input type="text" placeholder="请输入学校管理员账号" id="manageUser" maxlength="30"></p>
+            <p>机构账号：<input type="text" placeholder="请输入机构管理员账号" id="manageUser" maxlength="30"></p>
             <span>初始密码为：111111</span>
         <div class="countPopupBtn ">
             <a href="javascript:void(0)" class="btn btn-primary btn-mb closeCountPopup cabcelManageUser">取消</a>

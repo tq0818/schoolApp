@@ -48,8 +48,8 @@
                                 <span>预约课程</span>
                                 <select name="" id="reServApplyClass" onchange="findReServApplyListByClassId()">
                                     <option value="">请选择课程</option>
-                                    <c:forEach items="${insClassList}" var="class">
-                                        <option value="${class.id}">${class.name}</option>
+                                    <c:forEach  var="insclass" items="${insClassList}">
+                                        <option value="${insclass.id}">${insclass.name}</option>
                                     </c:forEach>
                                 </select>
                             </div>

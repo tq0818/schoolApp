@@ -76,4 +76,6 @@ public interface RiseSchoolManageService {
     List<SysDictVo> queryProvince();
     List<SysDictVo> queryCity();
     List<SysDictVo> queryDistrict();
+
+    String queryCodeName(String code);
 }

@@ -336,4 +336,8 @@
       SELECT id,item_code AS itemCode,item_name AS itemName,item_type AS itemType ,parent_code as parentCode
 		FROM sys_rise_school_dict where item_type='DISTRICT'
     </select>
+
+    <select id="queryCodeName" parameterType="String" resultType="String">
+        select item_name from sys_rise_school_dict where item_code = #{code}
+    </select>
 </mapper>

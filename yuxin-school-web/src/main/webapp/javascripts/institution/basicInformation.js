@@ -20,7 +20,7 @@ $(function () {
 
 
     let specialServiceLength = $('.specialService').length;
-    if(specialServiceLength<10){
+    if(specialServiceLength<8){
         $('.specialServiceBtn').show();
     }else{
         $('.specialServiceBtn').hide();
@@ -77,7 +77,7 @@ var j = 1;
     //特色服务增加和删除
     $('.specialServiceBtn').click(function () {
         let specialServiceLength = $('.specialService').length;
-        if(specialServiceLength<10){
+        if(specialServiceLength<8){
             var _html =
                 `   <span href="##" class="specialService">
                                 <img src="../../../images/institution/1.jpg" id="${j}" alt="" style="width: 40px;height: 40px;"  class="iconPic">
@@ -86,7 +86,7 @@ var j = 1;
                     </span>
                 `;
             $(this).before(_html);
-            if(specialServiceLength==9){
+            if(specialServiceLength==7){
                 $(this).hide();
             }
         }
@@ -95,7 +95,7 @@ var j = 1;
     $('body').on('click','.deletespecialService',function () {
         $(this).parents('.specialService').remove();
         let specialServiceLength = $('.specialService').length;
-        if(specialServiceLength<10){
+        if(specialServiceLength<8){
             $('.specialServiceBtn').show();
         }
     });
@@ -178,7 +178,8 @@ var j = 1;
     });
 
     $('body').on('click','.cancel',function () {
-        window.location.href = rootPath + "/InsInfoBase/organizationIndex";
+        window.location.href = rootPath + "/InsInfoBase/organizationIndex?flag=1";
+
     });
     //分类筛选
     $('.findFistCategorys').change(function () {
@@ -545,146 +546,160 @@ function checkData(arr,index){
 //修改机构信息
 function updataIns() {
     var insName = $("#insName").val();
-    var province = $("#eduArea").val();
-    var city = $("#eduSchool").val();
-    var area = $("#registStatus").val();
-    var address = $("#address").val();
 
-    let firstCat='';
-    let secondCat='';
-
-    for(let i=0;i<$('.findFistCategorys').length;i++){
-        firstCat += $('.findFistCategorys').eq(i).val()+',';
-        secondCat += $('.findSecondCategorys').eq(i).val()+',';
-    }
-
-    //系统标签
-    let systemLabel = $('.sysLabel');
-    let labelName = '';
-    for(let i = 0;i<systemLabel.length;i++){
-        if(i == systemLabel.length-1){
-            labelName+= systemLabel.eq(i).val()+',';
-        }else{
-            labelName+= systemLabel.eq(i).val()+',';
-        }
-    }
-
-    //电话号码
-    let listMachine = '';
-    let listMachineChi = $('#listMachine').children('div');
-    for(let i=0;i<listMachineChi.length;i++){
-        var quhao = listMachineChi.eq(i).children('input').eq(0).val();
-        var num = listMachineChi.eq(i).children('input').eq(1).val();
-
-        if(null != quhao && null != num && quhao != '' && num !=''){
-            if(i == listMachineChi.length-1){
-                listMachine+= listMachineChi.eq(i).children('input').eq(0).val()+'-'+
-                    listMachineChi.eq(i).children('input').eq(1).val()
-                ;
-            }else{
-                listMachine+= listMachineChi.eq(i).children('input').eq(0).val()+'-'+
-                    listMachineChi.eq(i).children('input').eq(1).val()+','
-                ;
-            }
-        }
-    }
-
-    //手机号码
-    let listPhone = '';
-    let listPhoneChi = $('#listPhone').children('div');
-    for(let i=0;i<listPhoneChi.length;i++){
-        if(listPhoneChi.eq(i).children('input').val() != '' && listPhoneChi.eq(i).children('input').val() != null){
-            if(!/^09\d{8}|1[3-9]\d{9}$/.test(listPhoneChi.eq(i).children('input').eq(0).val())){
-                $.msg("手机号格式不正确");
-
-                return;
-            }
-        }
-
-        if(i == listPhoneChi.length-1){
-            listPhone+= listPhoneChi.eq(i).children('input').val();
-        }else{
-            listPhone+= listPhoneChi.eq(i).children('input').val()+',';
-        }
-
-    }
-
-    var mobile ='';
-    if(listMachine == '' && listPhone ==''){
-        mobile = '';
-    }else if(listMachine ==''){
-        mobile = listPhone;
-    }else if(listPhone == ''){
-        mobile = listMachine;
-    }else{
-        mobile = listMachine+','+listPhone;
-    }
-
-    //自定义标签
-    let cusLabel = $('.cusLabel');
-    let cusLabelName = '';
-    for(let i = 0;i<cusLabel.length;i++){
-        if(i == cusLabel.length-1){
-            cusLabelName+= cusLabel.eq(i).val()+',';
-        }else{
-            cusLabelName+= cusLabel.eq(i).val()+',';
-        }
-    }
-
-    //特色服务
-    let imgUrl='';
-    let specialName='';
-
-
-    for(let i=0;i<$('.iconPic').length;i++){
-
-        imgUrl += $('.iconPic').eq(i).attr("src")+',';
-        specialName += $('.iconPicName').eq(i).val()+',';
-    }
-    var insId = $("#insId").val();
-    var reservService = $("#reservService").val();
-
-    console.log(province,city,area,address,labelName,mobile,firstCat,secondCat,cusLabelName,specialName,imgUrl)
-
+    //判断机构名称是否重复
     $.ajax({
-        url:rootPath+"/InsInfoBase/updateIns",
-        type:"post",
-        data:{
-            "id":insId,
-            "name":insName,
-            "province":province,
-            "city":city,
-            "area":area,
-            "address":address,
-            "sysLabel":labelName,
-            "mobile":mobile,
-            "oneLevelId":firstCat,
-            "twoLevelId":secondCat,
-
-            "customLabel":cusLabelName,
-            "specialService":specialName,
-            "imgUrl":imgUrl,
-            "reservService":reservService
-
+        url: rootPath + "/InsInfoBase/insCheckName",
+        type: "post",
+        data: {
+            "name": insName
         },
-        beforeSend: function (XMLHttpRequest) {
-            $(".loading").show();
-            $(".loading-bg").show();
-        },
-        success:function(data){
-            if(data == '200'){
-                $.msg("保存成功")
+        success: function (data) {
+            if (data == null || data == '') {
+                $.msg(insName + "机构已存在！");
+                return;
             }else{
-                $.msg("保存失败")
+                var province = $("#eduArea").val();
+                var city = $("#eduSchool").val();
+                var area = $("#registStatus").val();
+                var address = $("#address").val();
+
+                let firstCat='';
+                let secondCat='';
+
+                for(let i=0;i<$('.findFistCategorys').length;i++){
+                    firstCat += $('.findFistCategorys').eq(i).val()+',';
+                    secondCat += $('.findSecondCategorys').eq(i).val()+',';
+                }
+
+                //系统标签
+                let systemLabel = $('.sysLabel');
+                let labelName = '';
+                for(let i = 0;i<systemLabel.length;i++){
+                    if(i == systemLabel.length-1){
+                        labelName+= systemLabel.eq(i).val()+',';
+                    }else{
+                        labelName+= systemLabel.eq(i).val()+',';
+                    }
+                }
+
+                //电话号码
+                let listMachine = '';
+                let listMachineChi = $('#listMachine').children('div');
+                for(let i=0;i<listMachineChi.length;i++){
+                    var quhao = listMachineChi.eq(i).children('input').eq(0).val();
+                    var num = listMachineChi.eq(i).children('input').eq(1).val();
+
+                    if(null != quhao && null != num && quhao != '' && num !=''){
+                        if(i == listMachineChi.length-1){
+                            listMachine+= listMachineChi.eq(i).children('input').eq(0).val()+'-'+
+                                listMachineChi.eq(i).children('input').eq(1).val()
+                            ;
+                        }else{
+                            listMachine+= listMachineChi.eq(i).children('input').eq(0).val()+'-'+
+                                listMachineChi.eq(i).children('input').eq(1).val()+','
+                            ;
+                        }
+                    }
+                }
+
+                //手机号码
+                let listPhone = '';
+                let listPhoneChi = $('#listPhone').children('div');
+                for(let i=0;i<listPhoneChi.length;i++){
+                    if(listPhoneChi.eq(i).children('input').val() != '' && listPhoneChi.eq(i).children('input').val() != null){
+                        if(!/^09\d{8}|1[3-9]\d{9}$/.test(listPhoneChi.eq(i).children('input').eq(0).val())){
+                            $.msg("手机号格式不正确");
+
+                            return;
+                        }
+                    }
+
+                    if(i == listPhoneChi.length-1){
+                        listPhone+= listPhoneChi.eq(i).children('input').val();
+                    }else{
+                        listPhone+= listPhoneChi.eq(i).children('input').val()+',';
+                    }
+
+                }
+
+                var mobile ='';
+                if(listMachine == '' && listPhone ==''){
+                    mobile = '';
+                }else if(listMachine ==''){
+                    mobile = listPhone;
+                }else if(listPhone == ''){
+                    mobile = listMachine;
+                }else{
+                    mobile = listMachine+','+listPhone;
+                }
+
+                //自定义标签
+                let cusLabel = $('.cusLabel');
+                let cusLabelName = '';
+                for(let i = 0;i<cusLabel.length;i++){
+                    if(i == cusLabel.length-1){
+                        cusLabelName+= cusLabel.eq(i).val()+',';
+                    }else{
+                        cusLabelName+= cusLabel.eq(i).val()+',';
+                    }
+                }
+
+                //特色服务
+                let imgUrl='';
+                let specialName='';
+
+
+                for(let i=0;i<$('.iconPic').length;i++){
+
+                    imgUrl += $('.iconPic').eq(i).attr("src")+',';
+                    specialName += $('.iconPicName').eq(i).val()+',';
+                }
+                var insId = $("#insId").val();
+                var reservService = $("#reservService").val();
+
+                console.log(province,city,area,address,labelName,mobile,firstCat,secondCat,cusLabelName,specialName,imgUrl)
+
+                $.ajax({
+                    url:rootPath+"/InsInfoBase/updateIns",
+                    type:"post",
+                    data:{
+                        "id":insId,
+                        "name":insName,
+                        "province":province,
+                        "city":city,
+                        "area":area,
+                        "address":address,
+                        "sysLabel":labelName,
+                        "mobile":mobile,
+                        "oneLevelId":firstCat,
+                        "twoLevelId":secondCat,
+
+                        "customLabel":cusLabelName,
+                        "specialService":specialName,
+                        "imgUrl":imgUrl,
+                        "reservService":reservService
+
+                    },
+                    beforeSend: function (XMLHttpRequest) {
+                        $(".loading").show();
+                        $(".loading-bg").show();
+                    },
+                    success:function(data){
+                        if(data == '200'){
+                            $.msg("保存成功")
+                        }else{
+                            $.msg("保存失败")
+                        }
+                    },
+                    complete: function (XMLHttpRequest, textStatus) {
+                        $(".loading").hide();
+                        $(".loading-bg").hide();
+                    }
+                })
             }
-        },
-        complete: function (XMLHttpRequest, textStatus) {
-            $(".loading").hide();
-            $(".loading-bg").hide();
         }
-    })
-
-
+    });
 
 }
 
@@ -706,7 +721,7 @@ function savePic() {
             ||lowwerFileStr.indexOf(".bmp")==(fileStr.length-4)
             ||lowwerFileStr.indexOf(".ico")==(fileStr.length-4)
         )){
-        alert("上传文件仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
+        alert("上传文件仅仅支持以下格式:.jpg,.jpeg,.png,.bmp,.ico");
         return;
     }
     $.ajaxFileUpload({

@@ -427,7 +427,7 @@ function savePic() {
         ||fileStr.indexOf(".png")==(fileStr.length-4)
         ||fileStr.indexOf(".bmp")==(fileStr.length-4)
         ||fileStr.indexOf(".ico")==(fileStr.length-4))){
-        alert("上传文件仅仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
+        alert("上传文件仅仅支持以下格式:.jpg,.jpeg,.png,.bmp,.ico");
         return;
     }
 

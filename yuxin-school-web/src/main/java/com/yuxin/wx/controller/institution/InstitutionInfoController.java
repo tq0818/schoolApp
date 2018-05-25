@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -61,7 +62,13 @@ public class InstitutionInfoController {
      * @return
      */
     @RequestMapping(value = "/organizationIndex")
-    public String organizationIndex(Model model){
+    public String organizationIndex(HttpServletRequest request,Model model){
+        Object flag = request.getParameter("flag");
+        if(null != flag && !"".equals(flag)){
+            request.getSession().setAttribute("flag",1);
+        }else{
+            request.getSession().setAttribute("flag",0);
+        }
         //商家入驻申请
         try{
             Integer count = merchantEntryService.queryCount();
@@ -95,10 +102,13 @@ public class InstitutionInfoController {
     @ResponseBody
     @RequestMapping(value = "/insCheckName",method = RequestMethod.POST)
     public InstitutionInfoVo insCheckName(String name){
-
-        InstitutionInfoVo insInfoVon = institutionInfoService.insCheckName(name);
-
-        return insInfoVon;
+        try{
+            InstitutionInfoVo insInfoVon = institutionInfoService.insCheckName(name+"");
+            return insInfoVon;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -470,4 +480,56 @@ public class InstitutionInfoController {
         return json;
     }
 
+
+    @RequestMapping(value = "/indexParam" ,method=RequestMethod.POST)
+    public void indexParam(HttpServletRequest request,InstitutionInfoVo insInfoVo){
+        HttpSession session = request.getSession();
+        session.setAttribute("province",insInfoVo.getProvince());
+        session.setAttribute("city",insInfoVo.getCity());
+        session.setAttribute("area",insInfoVo.getArea());
+        //根据code查找codename
+        if(null != insInfoVo.getProvince() && !"".equals(insInfoVo.getProvince())){
+            String provicenName = riseSchoolManageServiceImpl.queryCodeName(insInfoVo.getProvince());
+            session.setAttribute("provicenName",provicenName);
+        }else{
+            session.setAttribute("provicenName","");
+        }
+
+        if(null != insInfoVo.getCity() && !"".equals(insInfoVo.getCity())){
+            String cityName = riseSchoolManageServiceImpl.queryCodeName(insInfoVo.getCity());
+            session.setAttribute("cityName",cityName);
+        }else{
+            session.setAttribute("cityName","");
+        }
+
+        if(null != insInfoVo.getArea() && !"".equals(insInfoVo.getArea())){
+            String areaName = riseSchoolManageServiceImpl.queryCodeName(insInfoVo.getArea());
+            session.setAttribute("areaName",areaName);
+        }else{
+            session.setAttribute("areaName","");
+        }
+
+        session.setAttribute("oneLevelId",insInfoVo.getOneLevelId());
+        session.setAttribute("twoLevelId",insInfoVo.getTwoLevelId());
+        if(null != insInfoVo.getOneLevelId() && !"".equals(insInfoVo.getOneLevelId())){
+            InstitutionCategoryVo categoryVo = institutionCategoryService.getCateById(Integer.parseInt(insInfoVo.getOneLevelId()));
+            session.setAttribute("oneLevelName",categoryVo.getCodeName());
+        }else{
+            session.setAttribute("oneLevelName","");
+        }
+
+        if(null != insInfoVo.getTwoLevelId() && !"".equals(insInfoVo.getTwoLevelId())){
+            InstitutionCategoryVo categoryVo = institutionCategoryService.getCateById(Integer.parseInt(insInfoVo.getTwoLevelId()));
+            session.setAttribute("twoLevelName",categoryVo.getCodeName());
+        }else{
+            session.setAttribute("twoLevelName","");
+        }
+
+        session.setAttribute("isCertified",insInfoVo.getIsCertified());
+        session.setAttribute("isShelves",insInfoVo.getIsShelves());
+        session.setAttribute("endTime",insInfoVo.getEndTime());
+        session.setAttribute("startTime",insInfoVo.getStartTime());
+        session.setAttribute("name",insInfoVo.getName());
+        session.setAttribute("page",insInfoVo.getPage());
+    }
 }

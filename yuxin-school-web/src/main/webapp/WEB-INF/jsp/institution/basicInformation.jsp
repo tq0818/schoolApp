@@ -354,7 +354,7 @@
 
                 <a href="javascript:void(0);" class="chooseImg">
                     选择图片
-                    <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgDataStyle" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic()" value="重新选择文件"/>
+                    <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgDataStyle" accept=".jpg,.jpeg,.png,.bmp,.ico" onchange="savePic()" value="重新选择文件"/>
                 </a>
             </div>
             <div class="mienBtn" style="bottom: 10px; left: 26px; text-align: center;width: 80% !important;">

@@ -91,7 +91,7 @@ public class ReServApplyServiceImpl extends BaseServiceImpl implements ReServApp
         for (int i = 0; i < data.size(); i++) {
             data.get(i).put("id", j);
             j++;
-            if(data.get(i).get("dealStatus") == 1){
+            if((Integer)data.get(i).get("dealStatus") == 1){
                 data.get(i).put("dealStatus","已处理");
             }else{
                 data.get(i).put("dealStatus","未处理");

@@ -145,4 +145,11 @@ public class RiseSchoolManageServiceImpl implements RiseSchoolManageService {
     public List<SysDictVo> queryDistrict() {
         return riseSchoolManageMapper.queryDistrict();
     }
+
+    @Override
+    public String queryCodeName(String code) {
+        return riseSchoolManageMapper.queryCodeName(code);
+    }
+
+
 }

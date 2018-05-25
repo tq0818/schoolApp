@@ -4,11 +4,12 @@ $(function () {
     //添加备注弹窗  //点击备注，弹出弹窗
 
     $('body').on('click','.addRemarks',function () {
-        if($(this).attr("data-note") == null || $(this).attr("data-note") == ''){
-            $("#not").val("请输入备注信息");
+        $("#not").val($(this).attr("data-note"));
+        /*if($(this).attr("data-note") == null || $(this).attr("data-note") == ''){
+            //$("#not").val("请输入备注信息");
         }else{
-            $("#not").val($(this).attr("data-note"));
-        }
+
+        }*/
 
         var id = $(this).attr("data-id");
         $("#addNote").attr("data-id",id)
@@ -54,10 +55,7 @@ $(function () {
             }
 
         });
-    $("#not").focus(function () {
-        $("#not").val('');
 
-    })
 });
 
 function searchCount(){
@@ -154,15 +152,15 @@ function initReServApplyList(page) {
         },
         success : function(jsonData) {
             var html ='<tr data-buy="true">' +
-                            '<th width="50">序号</th>' +
-                            '<th width="100">手机号</th>' +
-                            '<th width="100">预约机构</th>' +
-                            '<th width="100">预约课程</th>' +
-                            '<th width="100">课程价格(元)</th>' +
-                            '<th width="100">提交时间</th>' +
-                            '<th width="100">处理状态</th>' +
-                            '<th width="200">备注</th>' +
-                            '<th width="200">操作</th>' +
+                            '<th width="3%">序号</th>' +
+                            '<th width="5%">手机号</th>' +
+                            '<th width="5%">预约机构</th>' +
+                            '<th width="5%">预约课程</th>' +
+                            '<th width="5%">课程价格(元)</th>' +
+                            '<th width="5%">提交时间</th>' +
+                            '<th width="5%">处理状态</th>' +
+                            '<th width="5%">备注</th>' +
+                            '<th width="5%">操作</th>' +
                         '</tr>';
 
             if(!jsonData||jsonData.data.length==0){
@@ -183,6 +181,11 @@ function initReServApplyList(page) {
                     }else{
                         note = item.note;
                     }
+
+                    if(note.length>30){
+                        note = note.substring(0,30);
+                        note = note+"...";
+                    }
                     var className = item.className;
                     var price = item.price;
                     if(null == className || className == ''){
@@ -193,18 +196,18 @@ function initReServApplyList(page) {
                     }
 
                     html+='<tr>'+
-                            '<td><div style="width: 50px;">'+item.sort+'</div></td>'+
-                            '<td><div style="width: 100px;">'+item.mobile+'</div></td>'+
-                            '<td ><div style="width: 100px;">'+item.insName+'</div></td>'+
-                            '<td ><div style="width: 100px;">'+className+'</div></td>'+
-                            '<td ><div style="width: 100px;">'+price+'</div></td>'+
-                            '<td ><div style="width: 100px;">'+item.time+'</div></td>'+
-                            '<td ><div style="width: 100px;">'+dealStatus+'</div></td>'+
-                            '<td class="addRemarks"><div style="width: 300px;overflow: hidden;white-space: wrap;text-overflow: ellipsis">'+note+'</div></td>'+
-                            '<td width="200"><div style="width: 200px;">'+
+                            '<td>'+item.sort+'</td>'+
+                            '<td>'+item.mobile+'</td>'+
+                            '<td>'+item.insName+'</td>'+
+                            '<td>'+className+'</td>'+
+                            '<td>'+price+'</td>'+
+                            '<td>'+item.time+'</td>'+
+                            '<td>'+dealStatus+'</td>'+
+                            '<td class="note" title="'+item.note+'">'+note+'</td>'+
+                            '<td>'+
                                 '<a href="javascript:void(0)" class="changeStatus" data-id="'+item.id+'" data-status="'+item.dealStatus+'">切换状态</a>|'+
-                                '<a href="javascript:void(0)" class="addRemarks" data-id="'+item.id+'" data-note="'+note+'">添加备注</a>'+
-                            '</div></td>'+
+                                '<a href="javascript:void(0)" class="addRemarks" data-id="'+item.id+'" data-note="'+item.note+'">添加备注</a>'+
+                            '</td>'+
                         '</tr>';
                 })
             }

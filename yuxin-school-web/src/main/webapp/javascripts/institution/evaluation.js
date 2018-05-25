@@ -35,6 +35,20 @@ $(function () {
 
 
     });
+    
+    //点击机构评论
+    $('body').on('click','.insComment',function () {
+        initInsComment();
+        $('.evaScreen').show();
+        $('.curriculum').hide();
+    })
+
+    //点击课程评论
+    $('body').on('click','.insClassComment',function () {
+        initInsClassComment();
+        $('.evaScreen').hide();
+        $('.curriculum').show();
+    })
 
 
     //课程评价筛选
@@ -63,28 +77,13 @@ $(function () {
     });
 
 
-
-    //机构评价和课程评价tab切换
-    $('.evaTitle').click(function () {
-            if ($(this).html() == '机构评价') {
-                $('.evaScreen').show();
-                $('.curriculum').hide();
-            } else {
-                $('.evaScreen').hide();
-                $('.curriculum').show();
-            }
-
-            //课程评价
-            initInsClassComment();
-        });
-
     //删除按钮弹窗
     $('body').on('click', '.delete', function () {
             var commentId = $(this).attr("data-commentId");
             $.confirm("您是否确定删除该条评论？", function (data) {
 
                 if (data) {
-                    delIns(commentId);
+                    delIns(commentId,0);
                 }
             });
         });
@@ -94,7 +93,7 @@ $(function () {
             var commentId = $(this).attr("data-commentId");
         $.confirm('您是否确认审核通过该条评论',function (data) {
             if(data){
-                evaluationIns(commentId);
+                evaluationIns(commentId,0);
             }
         })
 
@@ -108,7 +107,7 @@ $(function () {
         $.confirm("您是否确定删除该条评论？", function (data) {
 
             if (data) {
-                delIns(commentId);
+                delIns(commentId,1);
             }
         });
     });
@@ -118,7 +117,7 @@ $(function () {
         var commentId = $(this).attr("data-commentId");
         $.confirm('您是否确认审核通过该条评论',function (data) {
             if(data){
-                evaluationIns(commentId);
+                evaluationIns(commentId,1);
             }
         })
     });
@@ -235,7 +234,7 @@ function initInsComment(page=1,reviewStatus='') {
                         '</div>'+
                         ' <div class="Y_backcomment_content">'+
                         '<div class="word Y_clear">'+
-                        '<span>'+name+'</span>'+
+                        '<span>'+name+'：'+'</span>'+
                         '<span class="wordcontent" style="word-break:break-all">'+com+'</span>'+
                         '</div>'+
                         '<p class="Y_time Y_mt10">'+
@@ -418,7 +417,7 @@ function initInsClassComment(page=1,reviewStatus='',relationId='') {
 
 
 //审核评论
-function evaluationIns(commentId) {
+function evaluationIns(commentId,flag) {
 
     $.ajax({
         url:rootPath+"/comment/updateComment",
@@ -433,11 +432,35 @@ function evaluationIns(commentId) {
         },
         success:function(jsonData){
 
-
             $.msg("审核成功！");
-            initInsComment(currPage);
-            initInsClassComment(currPageClass);
-            //location.reload();
+            var classId = '';
+            var classList = $("#curriculumClass").children('a');
+            for(var i = 0; i<classList.length;i++){
+                if(classList.eq(i).hasClass("btn-primary")){
+                    classId = classList.eq(i).attr("data-classId");
+                }
+            }
+            var status = '';
+            var statusList = $("#curriculumState").children('a');
+            for(var i = 0;i<statusList.length;i++){
+                if(statusList.eq(i).hasClass("btn-primary")){
+                    status = statusList.eq(i).attr("data-review");
+                }
+
+            }
+
+            var insStatu ='';
+            var insStatus = $("#status").children('a');
+            for(var i=0;i<insStatus.length;i++){
+                if(insStatus.eq(i).hasClass("btn-primary")){
+                    insStatu = insStatus.eq(i).attr("data-review");
+                }
+            }
+            if(flag == 0){
+                initInsComment(currPage,insStatu);
+            }else{
+                initInsClassComment(currPageClass,status,classId);
+            }
         },
         complete: function (XMLHttpRequest, textStatus) {
             $(".loading").hide();
@@ -448,7 +471,7 @@ function evaluationIns(commentId) {
 }
 
 //删除评论
-function delIns(commentId) {
+function delIns(commentId,flag) {
     $.ajax({
         url:rootPath+"/comment/updateComment",
         type:"post",
@@ -461,9 +484,38 @@ function delIns(commentId) {
             $(".loading-bg").show();
         },
         success:function(jsonData){
-            initInsComment(currPage);
-            initInsClassComment(currPageClass);
-            //location.reload();
+            var classId = '';
+            var classList = $("#curriculumClass").children('a');
+            for(var i = 0; i<classList.length;i++){
+                if(classList.eq(i).hasClass("btn-primary")){
+                    classId = classList.eq(i).attr("data-classId");
+                }
+            }
+            var status = '';
+            var statusList = $("#curriculumState").children('a');
+            for(var i = 0;i<statusList.length;i++){
+                if(statusList.eq(i).hasClass("btn-primary")){
+                    status = statusList.eq(i).attr("data-review");
+                }
+
+            }
+
+            var insStatu ='';
+            var insStatus = $("#status").children('a');
+            for(var i=0;i<insStatus.length;i++){
+                if(insStatus.eq(i).hasClass("btn-primary")){
+                    insStatu = insStatus.eq(i).attr("data-review");
+                }
+            }
+
+            console.log(insStatu,status,classId)
+            if(flag == 0){
+                //机构
+                initInsComment(currPage,insStatu);
+            }else{
+                //课程
+                initInsClassComment(currPageClass,status,classId);
+            }
 
         },
         complete: function (XMLHttpRequest, textStatus) {
