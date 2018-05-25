@@ -23,6 +23,7 @@ $(function () {
             $(this).addClass('btn-primary').siblings('a').removeClass('btn-primary');
         }
         nowPage = 0;    //切换标签时，分页重置
+        nowOnlinePage = 0;
         if($(this).hasClass('onlineStatus')){
             getOnlineClassTypeList();
         }else{
@@ -66,6 +67,10 @@ $(function () {
     });
     //添加课程弹窗
     $('.addCourse').click(function () {
+        if($('#userType').val() != 1){
+            $.msg('该用户没有权限');
+            return;
+        }
         $('.addClassPopup').show();
     });
     $('.closeCoursePopup').click(function () {
@@ -221,22 +226,27 @@ function getOnlineClassTypeList(){
                 html += "<tr><td colspan='5'>暂无数据</td></tr>";
             }
 
-
-            $(".paginationOnLine").pagination(json.rowCount,
-                {
-                    next_text: "下一页",
-                    prev_text: "上一页",
-                    current_page:json.pageNo,
-                    link_to: "javascript:getOnlineClassTypeList()",
-                    num_display_entries: pageOnlineSize,
-                    items_per_page: pageOnlineSize,
-                    num_edge_entries: 1,
-                    callback: function (page) {
-                        nowOnlinePage = page;
-                        getOnlineClassTypeList();
+            //解决分页插件不自动隐藏问题
+            if(json.rowCount <= pageOnlineSize){
+                $(".paginationOnLine").html('');
+            }else{
+                $(".paginationOnLine").pagination(json.rowCount,
+                    {
+                        next_text: "下一页",
+                        prev_text: "上一页",
+                        current_page:json.pageNo,
+                        link_to: "javascript:getOnlineClassTypeList()",
+                        num_display_entries: pageOnlineSize,
+                        items_per_page: pageOnlineSize,
+                        num_edge_entries: 1,
+                        callback: function (page) {
+                            nowOnlinePage = page;
+                            getOnlineClassTypeList();
+                        }
                     }
-                }
-            );
+                );
+            }
+
 
 
 
@@ -263,7 +273,10 @@ function getOnlineClassTypeList(){
 
         $('.relation').click(function(){
            // linkClass($(this).attr('data-id'),$(this).html());
-
+            var len = $("#onlineTbody").find('tr').length;
+            if(len <= 2 && getUpDownStatus('chooseBtn2') != 0){
+                nowOnlinePage = nowOnlinePage - pageOnlineSize <= 0 ? 0 : nowOnlinePage - pageOnlineSize ;
+            }
             $.post(rootPath+'/institutionClassType/linkOnlineClass',{
                 insId:$('#insId').val(),
                 rid:$(this).attr('data-id')
@@ -317,7 +330,7 @@ function getClassTypeList(){
             $(".loading-bg").hide();
         },
         success: function (json) {
-            console.log(json);
+          //  console.log(json);
            var list = json.data;
            var html = `<li class="addImg mienShow" id="">
                             <i class="icon iconfont"></i>
@@ -329,9 +342,9 @@ function getClassTypeList(){
 
                                 <span class="imgInfo">${list[i].name}</span>
                                 ${
-                                    list[i].isReser == 1 ? 
+                                    list[i].isRecommend == 1 ? 
                                         "<a href='javascript:void(0)' data-id="+list[i].id+" class='btn btn-primary btn-sm rightShow'>取消推荐</a>" :
-                                        ( recommendNum < 2 && list[i].isReser == 0 && list[i].isShelves == 1  ? 
+                                        ( recommendNum < 2 && list[i].isRecommend == 0 && list[i].isShelves == 1  ? 
                                             "<a href='javascript:void(0)' data-id="+list[i].id+" class='btn btn-primary btn-sm rightShow'>推荐</a>" : 
                                             '')
                                             
@@ -345,24 +358,29 @@ function getClassTypeList(){
            }
 
 
+           //当总条数少于每页分页条数的时候，不显示分页 -- 处理分页插件显示问题
+            if(json.rowCount <= 7){
+               $('.paginationUnderLine').html('');
+            }else{
 
-
-
-            $(".paginationUnderLine").pagination(json.rowCount,
-                {
-                    next_text: "下一页",
-                    prev_text: "上一页",
-                    current_page:json.pageNo,
-                    link_to: "javascript:getClassTypeList()",
-                   // num_display_entries: 7,
-                    items_per_page: 7,
-                    num_edge_entries: 0,
-                    callback: function (page) {
-                        nowPage = page;
-                        getClassTypeList();
+                $(".paginationUnderLine").pagination(json.rowCount,
+                    {
+                        next_text: "下一页",
+                        prev_text: "上一页",
+                        current_page:json.pageNo,
+                        link_to: "javascript:getClassTypeList()",
+                        // num_display_entries: 7,
+                        items_per_page: 7,
+                        num_edge_entries: 0,
+                        callback: function (page) {
+                            nowPage = page;
+                            getClassTypeList();
+                        }
                     }
-                }
-            );
+                );
+            }
+
+
 
 
 
@@ -413,6 +431,13 @@ function controlClass(dom){
             $.msg(json == 'success' ? '操作成功' : '操作失败');
             if (json == 'success') {
                 getRecommendCount2();
+                var len = $("#courseContainer").find('li').length;
+                console.log('重置分页参数前,nowTypePageStart = '+ nowPage  );
+                if(len <= 2 && getUpDownStatus('chooseBtn1') != 0){
+                    //如果当前页只有1个课程，则执行前一页操作
+                    nowPage = nowPage - 1 <= 0 ? 0 : nowPage - 1;
+                }
+
                 getClassTypeList();
             }
         })
@@ -436,8 +461,14 @@ function controlClass(dom){
                 $.post(rootPath + '/institutionClassType/delClass', {cid: id,insId:$('#insId').val()}, function (json) {
                     $.msg(json == 'success' ? '操作成功' : '操作失败');
                     if (json == 'success') {
-                        window.location.reload();
-                        //getClassTypeList();
+                      //  window.location.reload();
+                        var len = $("#courseContainer").find('li').length;
+                        console.log('重置分页参数前,nowTypePageStart = '+ nowPage);
+                        if(len <= 2){
+                            //如果当前页只有1个课程，则执行前一页操作
+                            nowPage = nowPage - 1 <= 0 ? 0 : nowPage - 1;
+                        }
+                        getClassTypeList();
                     }
                 })
             }

@@ -43,8 +43,8 @@
                 </div>
             </div>
             <div class="btnGroup" style="text-align: center;margin-top: 50px;">
-                <a href="##" class="btn cancelBtn btn-primary">取消</a>
-                <a href="##"  class="btn commit btn-primary">保存</a>
+                <a href="javascript:void(0)" class="btn cancelBtn btn-primary">取消</a>
+                <a href="javascript:void(0)"  class="btn commit btn-primary">保存</a>
             </div>
         </div>
     </div>

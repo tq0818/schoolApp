@@ -200,6 +200,7 @@
 			is_reser = #{isReser},
 			reser_count = #{reserCount},
 			summary = #{summary},
+			is_recommend = #{isRecommend},
 			<if test="detaildesc != null and detaildesc != ''">detaildesc = #{detaildesc},</if>
 			is_shelves = #{isShelves},
 			del_flag = #{delFlag},
@@ -385,7 +386,17 @@
 
 
 	<select id="countUnderllineClass" parameterType="map" resultType="Integer" >
-		SELECT COUNT(ict.`id`) FROM `ins_class_type` ict INNER JOIN `ins_class_type_relation` ictr ON ict.`id` = ictr.`class_type_id` AND ictr.`ins_id` = #{insId} AND ict.`name` = #{name}
+		SELECT
+		  COUNT(ict.`id`)
+		FROM
+		  `ins_class_type` ict
+		  INNER JOIN `ins_class_type_relation` ictr
+			ON ict.`id` = ictr.`class_type_id`
+			AND ictr.`ins_id` = #{insId}
+			AND ict.`name` = #{name}
+		<if test="classId != null "> AND ict.`id` != #{classId} </if>
+
+
 	</select>
 
 

@@ -197,6 +197,7 @@ public class RiseSchoolStyleController {
         json.put("flag","1");
         json.put("msg","上传成功");
         json.put("realPath","http://"+propertiesUtil.getProjectImageUrl()+"/"+realPath);
+        json.put("path",realPath);
         return json;
     }
 

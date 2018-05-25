@@ -85,11 +85,7 @@
                     <span>标签:</span>
                     <div id="labelContainer" for="" style="display: inline-block;margin-left: 15px;">
                             <span id="spanContainerLabel" style="display: inline">
-                               <%-- <span href="##" class="systemBtn">
-                                    <input class="systemLabel" maxlength="5" label-id="${label.id}"
-                                           value="${label.labelName}">
-                                    <i class="icon iconfont deleteBtn deleteLabelBtn">&#xe610;</i>
-                                </span>--%>
+
                             </span>
                         <span class="iconBtn addSystem addSystemBtn">+</span>
                     </div>
@@ -152,8 +148,8 @@
             </form>
         </div>
         <div class="eleBtn">
-            <a href="##" class="btn btn-primary closeElePicCancel">取消</a>
-            <a href="##" class="btn btn-primary  closeElePicCommit">保存</a>
+            <a href="javascript:void(0)" class="btn btn-primary closeElePicCancel">取消</a>
+            <a href="javascript:void(0)" class="btn btn-primary  closeElePicCommit">保存</a>
         </div>
     </div>
 

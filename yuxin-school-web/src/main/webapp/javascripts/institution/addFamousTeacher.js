@@ -165,6 +165,12 @@ var isClick = 0;
 
 $('.closeMechanismCommit').click(function(){
 
+    var labelsInfo = getLabels();
+    if(labelsInfo == '标签重复'){
+        $.msg('标签重复');
+        return;
+    }
+
     var param = {
         headUrl:$("#hidHeadImg").val(),
         name:$("#teacherName").val(),
@@ -191,7 +197,7 @@ $('.closeMechanismCommit').click(function(){
     }
 
     if(param.label == null){
-        $.msg('请不要填写空白标签');
+        $.msg('请不要添加空白标签');
         return;
     }
 
@@ -231,6 +237,17 @@ function getLabels(){
         }
 
     }
+
+    //标签判定重复
+    for(var i in labels){
+        for(var j in labels){
+            if(i != j && labels[i].name == labels[j].name){
+                return '标签重复';
+            }
+        }
+    }
+
+
 return JSON.stringify(labels);
 }
 
@@ -272,12 +289,12 @@ function savePic() {
     //.jpg,.jpeg,.gif,.png,.bmp,.ico
     if(!(lowwerFileStr.indexOf(".jpg")==(fileStr.length-4)
         ||lowwerFileStr.indexOf(".jpeg")==(fileStr.length-5)
-        ||lowwerFileStr.indexOf(".gif")==(fileStr.length-4)
+
         ||lowwerFileStr.indexOf(".png")==(fileStr.length-4)
         ||lowwerFileStr.indexOf(".bmp")==(fileStr.length-4)
         ||lowwerFileStr.indexOf(".ico")==(fileStr.length-4)
             )){
-        alert("上传文件仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
+        alert("上传文件仅支持以下格式:.jpg,.jpeg,.png,.bmp,.ico");
         return;
     }
     $.ajaxFileUpload({
@@ -365,6 +382,7 @@ function saveCutPic() {
                 //上传成功返回路径
                 $("#hidHeadImg").val(data.realPath);
                 $('#imgTop').html("<img src='"+data.header+data.realPath+"' alt=\"\" style=\"width: 100px;height: 100px;border-radius: 50px;\">");
+                $('.addPic').html('更换头像');
             }else {
                 // $.msg(data.msg);
             }

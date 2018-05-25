@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="courseOnLine">
-                <span style="color: #a1a1a1;">功能说明：该功能用将卓鹿的“在线课程”和当前机构进行关联，便于用户查看属于该机构的在线视频课程</span>
+                <span style="color: #a1a1a1;">功能说明：该功能用于将卓鹿的“在线课程”和当前机构进行关联，便于用户查看属于该机构的在线视频课程</span>
                 <div class="chooseBtn" id="chooseBtn2">
                     <span>上下架状态</span>
                     <a href="javascript:void(0)" class="btn btn-default onlineStatus btn-primary btn-mb">全部</a>
@@ -112,7 +112,7 @@
 </div>
 
 <input id="insId" type="hidden" value="${insEntity.id}">
-
+<input id="userType" type="hidden" value="${addOnlineFlag}">
 
 
 <script src="<%=rootPath %>/javascripts/riseschool/ajaxfileuploadR.js"></script>

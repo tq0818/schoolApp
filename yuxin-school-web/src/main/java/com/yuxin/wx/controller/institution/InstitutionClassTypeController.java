@@ -7,6 +7,7 @@ import com.yuxin.wx.api.classes.IClassTypeService;
 import com.yuxin.wx.api.institution.InstitutionLabelService;
 import com.yuxin.wx.common.JsonMsg;
 import com.yuxin.wx.model.institution.*;
+import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.utils.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -65,6 +66,13 @@ public class InstitutionClassTypeController {
     public String intoClassTypeMain(Model model, @PathVariable Integer insId) {
         try {
             getInstitution(model, insId);
+            Users user =  WebUtils.getCurrentUser();
+           // model.addAttribute("userType",user.getUserType());
+            //用户是否是机构管理员,保存权限
+            model.addAttribute("addOnlineFlag","INSTITUTION_MANAGE".equalsIgnoreCase(user.getUserType()) ? 1 : 0 );
+            System.out.println("用户类型为 : "+user.getUserType());
+           // model.addAttribute("addOnlineFlag", 1 );
+            //INSTITUTION_MANAGE
             return "institution/course";
         } catch (Exception e) {
             e.printStackTrace();
@@ -146,7 +154,7 @@ public class InstitutionClassTypeController {
             entity.setIsShelves(entity.getIsShelves() == 1 ? 0 : 1);
             //将下架的课程置为不推荐
             if (entity.getIsShelves() == 0) {
-                entity.setIsReser(0);
+                entity.setIsRecommend(0);
             }
             entity.setUpdateTime(new java.util.Date());
 
@@ -208,7 +216,7 @@ public class InstitutionClassTypeController {
                 return JsonMsg.ERROR;
             }
 
-            if (entity.getIsReser() == 0) {
+            if (entity.getIsRecommend() == 0) {
                 //当前课程是处于未推荐状态，要推荐该课程，则需要判断库中推荐课程数量是否超过最大推荐量
                 int num = institutionClassTypeService.getRecommendCountByClassTypeId(insId);
                 if (num >= MAX_RECOMMEND_NUM) {
@@ -216,7 +224,7 @@ public class InstitutionClassTypeController {
                 }
             }
 
-            entity.setIsReser(entity.getIsReser() == 0 ? 1 : 0);
+            entity.setIsRecommend(entity.getIsRecommend() == 1 ? 0 : 1);
             entity.setUpdateTime(new java.util.Date());
 
             //update to database
@@ -637,6 +645,13 @@ public class InstitutionClassTypeController {
 
             } else {
                 //修改课程
+
+                //新增线下课程验证课程名重复
+                if(institutionClassTypeService.countUnderllineClass(insId,name,entity.getId()) > 0){
+                    json.put("status",0);
+                    json.put("msg","该机构下存在同名课程");
+                    return json;
+                }
 
                 entity.setUpdateTime(new Date());
                 //新增课程不修改数据库，直接将课程中的风采、标签写入数据库

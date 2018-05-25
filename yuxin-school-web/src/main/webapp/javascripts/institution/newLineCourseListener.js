@@ -378,6 +378,9 @@ function popAddImg(imgType){
 function savePic() {
     //改变图片时清空图片路径
     $("#targetStyle").attr("src","");
+    if (jcrop_apis){
+        jcrop_apis.destroy();
+    }
    // console.log($("#targetStyle").attr("src"));
     var fileStr = $("#imgDataStyle").val();
     var  lowwerFileStr =  fileStr.toLowerCase();

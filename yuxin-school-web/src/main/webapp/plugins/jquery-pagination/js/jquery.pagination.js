@@ -25,6 +25,10 @@ jQuery.fn.pagination = function(maxentries, opts){
 	maxentries = parseInt(maxentries);//支持string
 	opts.items_per_page = parseInt(opts.items_per_page);//支持string
 	opts.current_page=parseInt(opts.current_page);//支持string
+
+//	console.log(opts);
+ //   console.log('maxentries = '+maxentries);
+
 	if( maxentries <= opts.items_per_page){ return; }
 	return this.each(function() {
 		/**

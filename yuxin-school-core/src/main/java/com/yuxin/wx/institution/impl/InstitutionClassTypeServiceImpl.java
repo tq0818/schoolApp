@@ -296,4 +296,14 @@ public class InstitutionClassTypeServiceImpl extends BaseServiceImpl implements 
         map.put("name",name);
         return institutionClassTypeMapper.countUnderllineClass(map);
     }
+
+
+    @Override
+    public int countUnderllineClass(Integer insId, String name, Integer classId) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("insId",insId);
+        map.put("name",name);
+        map.put("classId",classId);
+        return institutionClassTypeMapper.countUnderllineClass(map);
+    }
 }

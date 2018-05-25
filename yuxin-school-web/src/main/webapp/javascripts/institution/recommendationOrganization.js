@@ -8,9 +8,9 @@ $(function () {
         urlParams = urlParams.substring(1,urlParams.length);
     }
 
-    console.log('urlParams = '+urlParams);
+   // console.log('urlParams = '+urlParams);
     var param =  getParam(urlParams);
-    console.log(param);
+   // console.log(param);
     if(param.type){
         $('.classificationRecommendation').hide();
         $('.listRecommendation').show();
@@ -49,7 +49,7 @@ $(function () {
     $('.changeBtn').children('a').click(function () {
         $(this).addClass('btn-primary');
         $(this).siblings('a').removeClass('btn-primary');
-
+        nowIndexPage = 0;
         getIndexRecommendList();
 
 

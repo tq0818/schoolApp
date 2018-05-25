@@ -23,7 +23,7 @@ function getRecommendTypeList(){
             $(".loading-bg").hide();
         },
         success: function (json) {
-            console.log(json);
+          //  console.log(json);
             var num = json.num;
             var list = json.data.data;
             var html = "";
@@ -55,21 +55,28 @@ function getRecommendTypeList(){
                 html = "<tr><td colspan='5'>没有数据</td></tr>";
             }
 
-            $(".paginationType").pagination(json.data.rowCount,
-                {
-                    next_text: "下一页",
-                    prev_text: "上一页",
-                    current_page:json.data.pageNo,
-                    link_to: "javascript:getRecommendTypeList()",
-                    num_display_entries: 3,
-                    items_per_page: 10,
-                    num_edge_entries: 1,
-                    callback: function (page) {
-                        nowTypePageStart = page;
-                        getRecommendTypeList();
+
+            if(json.data.rowCount <= 10){
+                $(".paginationType").html('');
+            }else{
+                $(".paginationType").pagination(json.data.rowCount,
+                    {
+                        next_text: "下一页",
+                        prev_text: "上一页",
+                        current_page:json.data.pageNo,
+                        link_to: "javascript:getRecommendTypeList()",
+                        num_display_entries: 10,
+                        items_per_page: 10,
+                        num_edge_entries: 0,
+                        callback: function (page) {
+                            nowTypePageStart = page;
+                            getRecommendTypeList();
+                        }
                     }
-                }
-            );
+                );
+            }
+
+
 
 
 
@@ -97,11 +104,16 @@ function getRecommendTypeList(){
             $('.cancelRecommend').click(function(){
                 // linkClass($(this).attr('data-id'),$(this).html());
 
+                var len = $("#typeTbody").find('tr').length;
+                if(len <= 1){
+                    nowTypePageStart = nowTypePageStart - 1 <= 0 ? 0 : nowTypePageStart - 1 ;
+                   // console.log('重置分页参数后,nowTypePageStart = '+ nowTypePageStart);
+                }
                 $.post(rootPath+'/institutionRecommend/changeStatus',{
 
                     id:$(this).attr('data-id')
                 },function(json){
-                    console.log();
+                   // console.log();
                     if(json.status == 1){
                         $.msg('操作成功');
                         getRecommendTypeList();

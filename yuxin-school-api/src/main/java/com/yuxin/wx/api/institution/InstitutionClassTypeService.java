@@ -144,7 +144,22 @@ public interface InstitutionClassTypeService {
 
 	void delStyle(Integer sid);
 
+	/**
+	 * 获取机构下线下课程同名数量，用于新增线下课程
+	 * @param insId
+	 * @param name
+	 * @return
+	 */
 	int countUnderllineClass(Integer insId,String name);
+
+	/**
+	 * 获取机构下线下课程同名数量，用于修改线下课程
+	 * @param insId	机构id
+	 * @param name	课程名
+	 * @param classId	当前课程id
+	 * @return
+	 */
+	int countUnderllineClass(Integer insId,String name,Integer classId);
 
 
 }

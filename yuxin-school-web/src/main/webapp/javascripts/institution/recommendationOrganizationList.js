@@ -36,6 +36,7 @@ function getIndexRecommendList(){
             var hasNextPage = pageNum > nowPage ;
 
             for(var i in list){
+                var showSort = json.data.page*json.data.pageSize + parseInt(i) + 1 ;
                 html += `
                     <tr>
                         <td>${parseInt(i)+1}</td>
@@ -44,9 +45,9 @@ function getIndexRecommendList(){
                         <td>${list[i].lv == 2 ? '二级' : '一级'}</td>
                         <td class="relationResult">${list[i].is_recommend == 1 ? '已推荐' : '未推荐'}</td>
                         <td>${
-                list[i].is_recommend == 1 ? ( (json.data.page*json.data.pageSize + parseInt(i) + 1)
+                list[i].is_recommend == 1 ? ( showSort
                     + ( (json.data.page == 0 && parseInt(i) == 0 ) ? '' : "<i data-id='"+list[i].rid+"' data-status='up' class='icon iconfont'>&#xe6e3;</i>" )
-                    + ((json.data.page*json.data.pageSize + parseInt(i) + 1 >= json.data.recommendNum) ? '' : "<i data-id='"+list[i].rid+"' data-status='down' class='icon iconfont'>&#xe6e4;</i>" ))
+                    + ( (list[parseInt(i)+1] != undefined && list[parseInt(i)+1].is_recommend != 1) || (json.data.page == 0 && json.data.count == 1) ||  (showSort >= json.data.recommendNum) || showSort >= json.data.count ? '' : "<i data-id='"+list[i].rid+"' data-status='down' class='icon iconfont'>&#xe6e4;</i>" ))
                     : '-'
                     }</td>
                         <td class="recomendBtn" data-id="${list[i].rid}" data-insId="${list[i].id}" >${list[i].is_recommend == 1 ? '取消推荐' : '推荐'}</td>
@@ -61,22 +62,26 @@ function getIndexRecommendList(){
 
 
             $("#indexRecommendTbody").html(html);
-
-            $(".paginationIndexRecommend").pagination(json.data.count,
-                {
-                    next_text: "下一页",
-                    prev_text: "上一页",
-                    current_page:json.data.page,
-                    link_to: "javascript:getIndexRecommendList()",
-                    num_display_entries: 8,
-                    items_per_page: 10,
-                    num_edge_entries: 1,
-                    callback: function (page) {
-                        nowIndexPage = page;
-                        getIndexRecommendList();
+            if(json.data.count <= pageSize){
+                $(".paginationIndexRecommend").html('');
+            }else{
+                $(".paginationIndexRecommend").pagination(json.data.count,
+                    {
+                        next_text: "下一页",
+                        prev_text: "上一页",
+                        current_page:json.data.page,
+                        link_to: "javascript:getIndexRecommendList()",
+                        num_display_entries: 10,
+                        items_per_page: 10,
+                        num_edge_entries: 0,
+                        callback: function (page) {
+                            nowIndexPage = page;
+                            getIndexRecommendList();
+                        }
                     }
-                }
-            );
+                );
+
+            }
 
 
 
@@ -213,6 +218,8 @@ function getRecommendTypeData(id){
 
            //给当前a标签添加class
            $(this).parent().addClass('btn-primary');
+
+           nowIndexPage = 0;
 
            getIndexRecommendList();
        })

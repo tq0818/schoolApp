@@ -330,6 +330,7 @@
             ON ir.`two_level_id` = ic2.`id`
         WHERE ( ir.`one_level_id` = #{typeId}
           OR ir.`two_level_id` = #{typeId} )
+          and info.is_shelves = 1
           <if test="name != null and name != ''"> and info.name LIKE '%${name}%' </if>
           <if test="status != null  "> and  ir.`is_recommend` = #{status} </if>
           ORDER BY ir.`is_recommend` DESC,
@@ -350,6 +351,7 @@
         ON ir.`two_level_id` = ic2.`id`
         WHERE ( ir.`one_level_id` = #{typeId}
         OR ir.`two_level_id` = #{typeId} )
+        and info.is_shelves = 1
         <if test="status != null  "> and  ir.`is_recommend` = #{status} </if>
         <if test="typeName != null "> and info.name LIKE  CONCAT('%','${typeName}','%' )  </if>
 
@@ -406,7 +408,7 @@
 
     <!-- 获取所有中间表的排序信息-->
     <select id="getIndexRecommendYesCountAll"  resultType="int" >
-        SELECT COUNT(id) FROM `institution_relation` WHERE `is_recommend` = 1
+        SELECT COUNT(id) FROM `institution_relation` WHERE `is_recommend` = 1  and info.is_shelves = 1
     </select>
 
 
