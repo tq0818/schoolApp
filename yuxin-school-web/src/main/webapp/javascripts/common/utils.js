@@ -867,6 +867,7 @@
         $(".date-picker").datetimepicker({
             format: "yyyy-mm-dd",
             minView: 2,
+            clearBtn: true,  //添加清除按钮，可选值：true/false
             autoclose: true,
             language: "zh-CN"
         });

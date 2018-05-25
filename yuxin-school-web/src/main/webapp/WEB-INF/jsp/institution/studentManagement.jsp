@@ -86,17 +86,17 @@
             </form>
             <div class="user-list">
                 <table class="table table-center" id="tableList">
-                    <tr data-buy="true">
-                        <th width="3%">序号</th>
-                        <th width="5%">手机号</th>
-                        <th width="5%">预约机构</th>
-                        <th width="5%">预约课程</th>
-                        <th width="5%">课程价格(元)</th>
-                        <th width="5%">提交时间</th>
-                        <th width="5%">处理状态</th>
-                        <th width="5%">备注</th>
-                        <th width="5%">操作</th>
-                    </tr>
+                    <%--<tr data-buy="true">--%>
+                        <%--<th width="50">序号</th>--%>
+                        <%--<th width="100">手机号</th>--%>
+                        <%--<th width="100">预约机构</th>--%>
+                        <%--<th width="100">预约课程</th>--%>
+                        <%--<th width="100">课程价格(元)</th>--%>
+                        <%--<th width="100">提交时间</th>--%>
+                        <%--<th width="100">处理状态</th>--%>
+                        <%--<th width="200">备注</th>--%>
+                        <%--<th width="200">操作</th>--%>
+                    <%--</tr>--%>
                     <%--<tr>
                         <td>1</td>
                         <td>18623235314</td>

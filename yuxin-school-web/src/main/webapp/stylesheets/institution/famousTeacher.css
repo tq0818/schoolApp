@@ -3,3 +3,4 @@
 .headerTeacher{height: 36px;line-height: 36px;border-bottom: 2px solid #d7d7d7;}
 .contentTeacher{padding: 0 40px;}
 .contentTeacher>div{height: 40px;line-height: 40px;font-size: 14px;}
+.labelBtn a{margin-right: 15px;}

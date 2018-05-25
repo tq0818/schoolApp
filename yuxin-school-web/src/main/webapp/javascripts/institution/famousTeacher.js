@@ -43,7 +43,7 @@ function getTeacherList(){
                 html += " <label>姓名:</label>";
                 html += "<span>"+list[i].name+"</span>";
                 html += "</div>";
-                html += "<div>";
+                html += "<div class='labelBtn'>";
                 for(var j in list[i].label){
                     if(trim(list[i].label[j].name) != ''){
                         html += "<a href=\"##\" class=\"btn btn-default\">"+list[i].label[j].name+"</a>";

@@ -154,15 +154,15 @@ function initReServApplyList(page) {
         },
         success : function(jsonData) {
             var html ='<tr data-buy="true">' +
-                            '<th width="3%">序号</th>' +
-                            '<th width="5%">手机号</th>' +
-                            '<th width="5%">预约机构</th>' +
-                            '<th width="5%">预约课程</th>' +
-                            '<th width="5%">课程价格(元)</th>' +
-                            '<th width="5%">提交时间</th>' +
-                            '<th width="5%">处理状态</th>' +
-                            '<th width="5%">备注</th>' +
-                            '<th width="5%">操作</th>' +
+                            '<th width="50">序号</th>' +
+                            '<th width="100">手机号</th>' +
+                            '<th width="100">预约机构</th>' +
+                            '<th width="100">预约课程</th>' +
+                            '<th width="100">课程价格(元)</th>' +
+                            '<th width="100">提交时间</th>' +
+                            '<th width="100">处理状态</th>' +
+                            '<th width="200">备注</th>' +
+                            '<th width="200">操作</th>' +
                         '</tr>';
 
             if(!jsonData||jsonData.data.length==0){
@@ -193,18 +193,18 @@ function initReServApplyList(page) {
                     }
 
                     html+='<tr>'+
-                            '<td>'+item.sort+'</td>'+
-                            '<td>'+item.mobile+'</td>'+
-                            '<td>'+item.insName+'</td>'+
-                            '<td>'+className+'</td>'+
-                            '<td>'+price+'</td>'+
-                            '<td>'+item.time+'</td>'+
-                            '<td>'+dealStatus+'</td>'+
-                            '<td class="addRemarks">'+note+'</td>'+
-                            '<td>'+
+                            '<td><div style="width: 50px;">'+item.sort+'</div></td>'+
+                            '<td><div style="width: 100px;">'+item.mobile+'</div></td>'+
+                            '<td ><div style="width: 100px;">'+item.insName+'</div></td>'+
+                            '<td ><div style="width: 100px;">'+className+'</div></td>'+
+                            '<td ><div style="width: 100px;">'+price+'</div></td>'+
+                            '<td ><div style="width: 100px;">'+item.time+'</div></td>'+
+                            '<td ><div style="width: 100px;">'+dealStatus+'</div></td>'+
+                            '<td class="addRemarks"><div style="width: 300px;overflow: hidden;white-space: wrap;text-overflow: ellipsis">'+note+'</div></td>'+
+                            '<td width="200"><div style="width: 200px;">'+
                                 '<a href="javascript:void(0)" class="changeStatus" data-id="'+item.id+'" data-status="'+item.dealStatus+'">切换状态</a>|'+
                                 '<a href="javascript:void(0)" class="addRemarks" data-id="'+item.id+'" data-note="'+note+'">添加备注</a>'+
-                            '</td>'+
+                            '</div></td>'+
                         '</tr>';
                 })
             }

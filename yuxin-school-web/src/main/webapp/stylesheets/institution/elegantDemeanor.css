@@ -20,3 +20,12 @@ line-height: 25px;text-align: center;position: relative;font-size: 12px;}
 .elePic{text-align: center;height: 670px;margin-top: -335px;}
 .bigImg{position: fixed;top: 50%;left: 50%;transform: translate(-50%,-50%);display: none;}
 .videoUpload{overflow-y: auto;}
+
+
+@media screen and (max-width: 1900px) {
+    .labelName{width: 60px;}
+    .imgList li{margin-right: 10px;}
+    .newUl{margin-left: 80px;zoom: .8;}
+    .listBg{width: 162px;}
+    .imgList li{width: 160px;}
+}
