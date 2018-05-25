@@ -97,7 +97,7 @@
                         <th width="5%">备注</th>
                         <th width="5%">操作</th>
                     </tr>
-                    <tr>
+                    <%--<tr>
                         <td>1</td>
                         <td>18623235314</td>
                         <td>九方美术培训学校</td>
@@ -110,7 +110,7 @@
                             <a href="javascript:void(0)">切换状态</a>|
                             <a href="javascript:void(0)" class="addRemarks">添加备注</a>
                         </td>
-                    </tr>
+                    </tr>--%>
 
                 </table>
                 <div class="pages pagination">

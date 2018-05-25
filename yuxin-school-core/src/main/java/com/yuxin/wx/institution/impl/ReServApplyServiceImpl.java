@@ -84,27 +84,19 @@ public class ReServApplyServiceImpl extends BaseServiceImpl implements ReServApp
     }
 
     @Override
-    public List<Map> findReServApplyMap(ReServApply reServApply) {
-        if(null == reServApply.getInsClassId()||"".equals(reServApply.getInsClassId())){
-            //查找机构预约列表
-            List<Map> data = reServApplyMapper.findReServApplyMap(reServApply);
-                int j = 1;
-                for(int i = 0;i<data.size();i++){
-                    data.get(i).put("id",j);
-                    j++;
-                }
-            return data;
-        }else{
-            //查找课程预约类表
-            List<Map> data = reServApplyMapper.findReServApplyClassMap(reServApply);
-            int j = 1;
-            for(int i = 0;i<data.size();i++){
-                data.get(i).put("id",j);
-                j++;
+    public List<Map<Object,Object>> findReServApplyMap(ReServApply reServApply) {
+        //查找机构预约列表
+        List<Map<Object, Object>> data = reServApplyMapper.findReServApplyMap(reServApply);
+        int j = 1;
+        for (int i = 0; i < data.size(); i++) {
+            data.get(i).put("id", j);
+            j++;
+            if(data.get(i).get("dealStatus") == 1){
+                data.get(i).put("dealStatus","已处理");
+            }else{
+                data.get(i).put("dealStatus","未处理");
             }
-            return data;
         }
+        return data;
     }
-
-
 }

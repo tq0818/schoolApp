@@ -125,29 +125,17 @@ private InstitutionInfoService institutionInfoService;
 
     @RequestMapping(value = "/exportStudent")
     public ModelAndView exportStudent(String mobile,Integer dealStatus,Integer insId,Integer insClassId,String startTime,String endTime,Integer page,Integer pageSize) throws ParseException {
-        List<Map> list = new ArrayList<>();
+        List<Map<Object,Object>> list = null;
         ReServApply reServApply = new ReServApply();
-        DateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
-       /* if(!"".equals(startTime) && null != startTime){
-            reServApply.setStartTime(formatter.parse(startTime));
-        }
-        if(!"".equals(endTime) && null != endTime){
-            reServApply.setEndTime(formatter.parse(endTime));
-        }*/
         reServApply.setMobile(mobile);
         reServApply.setDealStatus(dealStatus);
         reServApply.setInsId(insId);
         reServApply.setInsClassId(insClassId);
         reServApply.setPage(page);
         reServApply.setPageSize(pageSize);
+        reServApply.setEndTime(endTime);
+        reServApply.setStartTime(startTime);
         list = reServApplyService.findReServApplyMap(reServApply);
-        for(int i = 0;i<list.size();i++){
-            if(list.get(i).get("dealStatus") == 1){
-                list.get(i).put("dealStatus","已处理");
-            }else{
-                list.get(i).put("dealStatus","未处理");
-            }
-        }
 
         List<Map<String, Object>> lists = new ArrayList<Map<String, Object>>();
         for (Map v : list) {
