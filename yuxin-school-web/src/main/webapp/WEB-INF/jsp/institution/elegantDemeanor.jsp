@@ -93,7 +93,7 @@
                 </div>
                 <br/>
                 <div class="imgList" id="insStyleInfo">
-                
+
                	</div>
                	 <div class="pages pagination">
      			</div>   

@@ -56,7 +56,7 @@
                         <input type="hidden" id="hidTop"/>
                         <br/>
                         <form id="uploadForm" method="post" enctype="multipart/form-data">
-                            <a href="javascript:void(0);" class="addPic" style="margin-top: 5px;margin-bottom: 20px;margin-left: 210px;"
+                            <a href="javascript:void(0);" class="addPic" style="margin-top: 5px;margin-bottom: 20px;margin-left: 120px;"
                                onclick="popAddImg(1);">
                                 添加图片
                                 <%--<input type="file" name="imgData" accept="image/jpg, image/jpeg,image/png,image/bmp">--%>
@@ -66,7 +66,7 @@
                 </div>
                 <div class="imgList">
                     <span>课程风采:</span>
-                    <ul id="styleContainer" style="display: inline-block;margin-left: 15px;">
+                    <ul id="styleContainer" style="display: inline-block;">
                         <li class="addImg mienShow openPopup" id="">
                             <i class="icon iconfont"></i>
                         </li>
