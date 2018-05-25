@@ -16,9 +16,9 @@ $(function () {
 //        }
 //    });
     //添加备注弹窗     //点击备注，弹出弹窗
-    $('.addRemarks').click(function () {
-        $('.remarks').show();
-    });
+//    $('.addRemarks').click(function () {
+//        $('.remarks').show();
+//    });
     $('.remarksBtn').children('a').click(function () {
         $('.remarks').hide();
         console.log("是否清理:"+$("#updateId").val()+" ,"+$("#content").text());
@@ -105,9 +105,8 @@ function updateMerchantEntry(id,dealStauts){
 
 //备注保存
 function updateMerchantEntryT(){
-	console.log($("#updateId").val() +","+$("#content").val());
 	$.ajax({
-		 url: rootPath + "/merchantEntry/updateMerchantEntry",
+		 url: rootPath + "/merchantEntry/updateMerchanrEntryNote",
 	        data: {"id":$("#updateId").val(),
 	            "note":$("#content").val(),
 	        },

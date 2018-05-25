@@ -6,11 +6,19 @@ var jcrop_apis;
         $img = picFlag == 0?$("#target"):picFlag == 1?$("#targetVideo"):$("#targetStyle");
         	//picFlag == 1?$("#targetVideo"):$("#targetStyle");
         //风采图
-        $scale = 300/120;
-        maxHeight = 120;
-        maxWidth = 300;
-        minHeight = 2;
-        minWidth = 5;
+        if(initW > initH){//宽图
+        	$scale = 300/180;
+            maxHeight = 180;
+            maxWidth = 300;
+            minHeight = 3;
+            minWidth = 5;
+        }else{
+        	$scale = 180/300;
+            maxHeight = 300;
+            maxWidth = 180;
+            minHeight = 5;
+            minWidth = 3;
+        }
         sourceWidth=initW;
         sourceHeight=initH;
         var initSize=resizePic();
@@ -43,7 +51,7 @@ var jcrop_apis;
             boundy = bounds[1];
             var scale = parseInt(sourceWidth) / parseInt(sourceHeight);// 长宽比例
             var size = resizePic();
-            if (scale > $scale) {
+            if (sourceWidth > sourceHeight) {
                 jcrop_api.animateTo([0,0,boundx*$scale,boundy*$scale],function () {
 
                 })
@@ -112,7 +120,7 @@ var jcrop_apis;
     function resizePic() {
         var h, w, ml, mt;
         var scale = parseInt(sourceWidth) / parseInt(sourceHeight);// 长宽比例
-        if (scale > $scale) {
+        if (sourceWidth > sourceHeight) {
             // 过宽,宽为100%，高按比例缩
             h = maxWidth * sourceHeight/ sourceWidth;
             w = maxWidth;

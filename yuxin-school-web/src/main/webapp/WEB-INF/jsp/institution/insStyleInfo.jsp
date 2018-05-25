@@ -120,24 +120,24 @@
 	
 	//删除风采
 	$(".imgDelete").click(function(){
-		if(!confirm("是否删除该图片?")){
-			return ;
-		}
 		var id = $(this).parent().find(".btnStyleUpdate").attr("data-value");
-		var pageNo = $("#pageNo").val();
-		console.log("当前页"+pageNo);
-		$.ajax({
-	          url: rootPath + "/institutionStyle/deleteStyle",
-	          data: {"primaryId":id
-	          },
-	          dataType: "json",
-	          success: function (data) {
-	              if(data == "success"){
-	            	  queryInstitutionStyle(pageNo);
-	              }
-	          }
-	      });
-		
+		$.confirm("是否删除该图片?",function(data){
+			if(data){
+				var pageNo = $("#pageNo").val();
+				console.log("当前页"+pageNo);
+				$.ajax({
+			          url: rootPath + "/institutionStyle/deleteStyle",
+			          data: {"primaryId":id
+			          },
+			          dataType: "json",
+			          success: function (data) {
+			              if(data == "success"){
+			            	  queryInstitutionStyle(pageNo);
+			              }
+			          }
+			      });
+			}
+		});
 	});
   //查询风采
   function queryInstitutionStyle(pageNo){

@@ -157,6 +157,7 @@ $(function () {
     });
     
     queryInstitutionStyle(1);
+
 });
 
 //上传临时图片 2为风采  1为视频 0为封面
@@ -164,7 +165,13 @@ function savePic(saveFlag) {
 	var fileStr = saveFlag == 0?$("#imgData").val():saveFlag==1?$("#imgDataVideo").val():$("#imgDataStyle").val();
     if(picFormat(fileStr)){
     	saveFlag == 0?$("#target").attr("src",""):saveFlag==1?$("#targetVideo").attr("src",""):$("#targetStyle").attr("src","");
-        return ;
+    	//移除剪切图插件对象
+        if (jcrop_apis){
+            jcrop_apis.destroy();
+        }
+        //清楚value
+        saveFlag == 0?$("#imgData").val(""):saveFlag==1?$("#imgDataVideo").val(""):$("#imgDataStyle").val("");
+    	return ;
     }
     //选择的时候应先清空，
     if (saveFlag == 0){
@@ -229,13 +236,17 @@ function saveCutPic(saveFlag) {
         dealWidthAndHeight(temp);
     }else if(saveFlag == 1){
         //判断视频名称和视频描述是否为空
-        if(!$(".videoStyle").val()||!$("#videoContent").val()){
-        	$.msg("有必录项未录入");
+        if(!$(".videoStyle").val()){
+        	$.msg("请输入视频名称");
+        	return false;
+        }
+        if(!$("#videoContent").val()){
+        	$.msg("请输入视频描述");
         	return false;
         }
         var videoIds = $("#videoId").val();
         if(videoIds == null || videoIds == '' || videoIds ==0){
-        	$.msg("未上传视频");
+        	$.msg("请上传视频");
         	return false;
         }
     }else {
@@ -346,21 +357,26 @@ function imgInit(flag) {
 function deleteVideo(videoInfoId){
 	//获取到视频的id，上方参数只是视频风采id
 	var videoId = $("#videoId").val();
-	$.ajax({
-        url: rootPath + "/institutionStyle/deleteStyle",
-        data: {"primaryId":videoInfoId,
-        	   "deleteFlag":1,
-        	   "videoId":videoId
-        },
-        dataType: "json",
-        success: function (data) {
-            if(data == "success"){
-            	//刷新页面
-            	//刷新一下页面
-        		window.location.href=rootPath +"/institutionStyle/queryInstitutionStyle?relationId="+$("#institutionId").val();
-            }
-        }
-    });
+	$.confirm("是否删除该视频?",function(data){
+		if(data){
+			$.ajax({
+		        url: rootPath + "/institutionStyle/deleteStyle",
+		        data: {"primaryId":videoInfoId,
+		        	   "deleteFlag":1,
+		        	   "videoId":videoId
+		        },
+		        dataType: "json",
+		        success: function (data) {
+		            if(data == "success"){
+		            	//刷新页面
+		            	//刷新一下页面
+		        		window.location.href=rootPath +"/institutionStyle/queryInstitutionStyle?relationId="+$("#institutionId").val();
+		            }
+		        }
+		    });
+		}
+		
+	});
 }
 
 //图片格式

@@ -238,15 +238,25 @@ public class InstitutionStyleController {
             //示例图尺寸
             double slW=0;
             double slH=0;
-            if(realW/realH>300/120){
-                //过宽
-                slH=300 * realH/realW;
-                slW=300;
+            if(realW > realH){
+                    slH=300 * realH/realW;
+                    slW=300;
+                    //过高
+//                    slH=120;
+//                    slW=120 * realW/realH;
             }else{
-                //过高
-                slH=120;
-                slW=120 * realW/realH;
+              slH=300;
+              slW=300 * realW/realH;
             }
+//            if(realW/realH>300/120){
+//                //过宽
+//                slH=300 * realH/realW;
+//                slW=300;
+//            }else{
+//                //过高
+//                slH=120;
+//                slW=120 * realW/realH;
+//            }
             //原图所选中位置和区域
             int xx=(new   Double(x*realW/slW)).intValue();
             int yy=(new   Double(y*realH/slH)).intValue();
@@ -274,7 +284,6 @@ public class InstitutionStyleController {
         	institutionStyle.setImgUrl(realPath);
 		}
         institutionStyle.setCreateTime(date);
-        institutionStyle.setUpdateTime(date);
         institutionStyle.setContent(request.getParameter("content"));
         if ("1".equals(saveFlag)) {
 			institutionStyle.setName(request.getParameter("videoName"));
@@ -283,6 +292,7 @@ public class InstitutionStyleController {
 			institutionStyle.setId(updateId);
 			institutionStyleServiceImpl.updateInsStyle(institutionStyle);
 		}else{
+			institutionStyle.setUpdateTime(date);
 			institutionStyle.setIsTop(0);
 	        institutionStyle.setIsVideo(institutionStyle.getType().intValue() == 1 ?1:0);
 	        institutionStyleServiceImpl.insertInsStyle(institutionStyle);
@@ -317,7 +327,9 @@ public class InstitutionStyleController {
     @ResponseBody
     @RequestMapping(value="/updateIsTop")
     public String updateIsTop(HttpServletRequest request,InstitutionStyle institutionStyle){
-    	institutionStyle.setUpdateTime(new Date());
+    	if (institutionStyle.getIsTop().intValue() == 1) {
+    		institutionStyle.setUpdateTime(new Date());
+		}
     	institutionStyleServiceImpl.updateInsStyle(institutionStyle);
     	return "success";
     }

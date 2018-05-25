@@ -70,4 +70,11 @@
 	<select id="queryCount" resultType="Integer">
 		select count(1) from merchant_entry where deal_status = 0
 	</select>
+	
+	<update id="updateMerchanrEntryNote" parameterType="com.yuxin.wx.model.institution.MerchantEntryVo">
+		UPDATE merchant_entry
+	   	   SET note = #{note},
+	   	       update_time = #{updateTime}
+		 WHERE id = #{id}
+	</update>
 </mapper>

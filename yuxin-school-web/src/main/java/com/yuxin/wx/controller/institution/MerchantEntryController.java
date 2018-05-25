@@ -86,4 +86,18 @@ public class MerchantEntryController {
     	merchantEntryServiceImpl.updateMerchanrEntry(merchantEntryVo);
     	return "success";
     }
+    
+    
+    /**
+     * 更新商家入驻申请备注
+     * @param merchantEntryVo
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="/updateMerchanrEntryNote",method=RequestMethod.POST)
+    public String updateMerchanrEntryNote(MerchantEntryVo merchantEntryVo){
+    	merchantEntryVo.setUpdateTime(new Date());
+    	merchantEntryServiceImpl.updateMerchanrEntryNote(merchantEntryVo);
+    	return "success";
+    }
 }

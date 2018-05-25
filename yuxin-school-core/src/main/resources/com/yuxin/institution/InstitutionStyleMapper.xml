@@ -51,7 +51,8 @@
 			<if test="name != null and name != ''">name = #{name},</if>
 			<if test="imgUrl != null and imgUrl != ''">img_url = #{imgUrl},</if>
 			<if test="content != null and content != ''">content = #{content},</if>
-			<if test="updateTime != null">update_time = #{updateTime},</if>
+			<if test="updateTime != null ">update_time = #{updateTime},</if>
+			<if test="updateTime == null ">update_time = create_time,</if>
 			<if test="isTop != null">is_top = #{isTop},</if>
 		</trim>
 		<where>
@@ -70,7 +71,7 @@
 		 WHERE relation_id = #{relationId}
 		 <if test="sourceFlag != null">AND source_flag = #{sourceFlag}</if>
 		 <if test="type != null">AND type = #{type}</if>
-		 ORDER BY is_top DESC,create_time DESC
+		 ORDER BY is_top DESC,update_time DESC
 		 <if test="page != null and page != 0">
 		 	LIMIT #{firstIndex},#{pageSize}
 		 </if>

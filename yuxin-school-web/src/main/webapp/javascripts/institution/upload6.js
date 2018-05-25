@@ -21,10 +21,44 @@ $(function () {
                 });
             },
             change: function (e, data) {// change事件，当文件输入框发生改变时，触发文件上传,
-                // 触发时间早于add
-            	console.log(e);
+            	//判断格式
+//.avi,.mp4*,.asf,.sdx,.wmv,.rmvb,.3gp,.mkv,.flv,.f4v,
+//.rm,.ra,.ram,.mpg,.pgeg,.mpe,.vob,.dat,.mov,.mts
+            	var index = data.files[0].name.lastIndexOf(".");
+            	if(index == -1){
+            		alert("这不是一个文件!");
+            		return false;
+            	}
+            	var str = data.files[0].name.substring(index);
+            	if(str != ".avi" && str != ".mp4" &&str != ".asf" && str !=".sdx"
+            		&& str != ".wmv" && str != ".rmvb" && str != ".3gp"
+            		&& str != ".mkv" && str != ".flv" && str != ".f4v"
+            		&& str != ".rm" && str != ".ra" && str != ".ram"
+            		&& str != ".pgeg" && str != ".mpe" && str != ".vob"
+            		&& str != ".dat" && str != ".mov" && str != ".mts"){
+            		alert("支持的视频格式:.avi,.mp4*,.asf,.sdx,.wmv,.rmvb,.3gp,"+"\n"+".mkv,.flv,.f4v,.rm,.ra,.ram,.mpg,.pgeg,.mpe,.vob,.dat,.mov,.mts");
+            		return false;
+            	}
+            	//判断格式和是否能重复上传
+	        	var videoId = $("#videoId").val();
+	        	var oldVideoId = $("#oldVideoId").val();
+            	if(videoId != null && videoId != 0 && oldVideoId != null && videoId != oldVideoId){
+            		alert("视频已上传完毕，如需更换视频，请重新打开窗口");
+            		return false;
+            	}
+            	var fileSizeMax = 100 * 1024 * 1024;
+            	var curSize = data.files[0].size;
+            	if(curSize > fileSizeMax){
+            		alert("视频不能超过100M");
+            		return false;
+            	}
+            	// 触发时间早于add
             	var fileSize = 0;
                 $.each(data.files, function (index, file) {
+                	if(fileSize == 1){
+                		$("#filebutton").val("");
+                		return false;
+                	}
                 	fileSize++;
                 });
                 if(fileSize > 10){
@@ -154,8 +188,8 @@ function resumeUpload(data) {
                  		alert('您剩余的空间不够存放当前的视频');
                  		return false;
                  	}
-    	            var fileSizeMax = 100 * 1024 * 1024;
-    	            var flag = false;//视频超过100M将其设置为true
+//    	            var fileSizeMax = 100 * 1024 * 1024;
+//    	            var flag = false;//视频超过100M将其设置为true
     	        	 for (var i = 0; i < myfiles.length; i++) {
     	                 var file = myfiles[i];
     	                 // 向父窗口提交数据
@@ -164,11 +198,11 @@ function resumeUpload(data) {
     	                     "name": file.name,
     	                     "size": file.size
     	                 };
-    	                 if(file.size > fileSizeMax){
-    	                	 $.msg("视频大小不能超过100M");
-    	                	 flag = true;
-    	                	 break;
-    	                 }
+//    	                 if(file.size > fileSizeMax){
+//    	                	 $.msg("视频大小不能超过100M");
+//    	                	 flag = true;
+//    	                	 break;
+//    	                 }
     	                 var video = {
     	                     index: index
     	                 };
@@ -216,9 +250,9 @@ function resumeUpload(data) {
     	                     });
     	                 postMessageHandler(video);
     	             }
-    	        	 if(flag){
-    	        		 return false;
-    	        	 }
+//    	        	 if(flag){
+//    	        		 return false;
+//    	        	 }
     	             fileIndex++;
     	        	
     	        }

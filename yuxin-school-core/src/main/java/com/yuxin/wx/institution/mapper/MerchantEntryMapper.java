@@ -42,4 +42,9 @@ public interface MerchantEntryMapper {
      * @return
      */
     Integer dimMerchantEntryCount(DimQueryMerchantVo merchantEntryVo);
+    /**
+     * 更新备注
+     * @param merchantEntryVo
+     */
+    void updateMerchanrEntryNote(MerchantEntryVo merchantEntryVo);
 }

@@ -48,5 +48,10 @@ public class MerchantEntryServiceImpl extends BaseServiceImpl implements Merchan
 		return merchantEntryMapper.dimMerchantEntry(merchantEntryVo);
 	}
 
+	@Override
+	public void updateMerchanrEntryNote(MerchantEntryVo merchantEntryVo) {
+		merchantEntryMapper.updateMerchanrEntryNote(merchantEntryVo);
+	}
+
 
 }

@@ -127,7 +127,7 @@
             <img src="" alt="" style="width: 136px;height: 116px;" id="targetVideo">
         </p>
         <a href="javascript:void(0)" class="addPic" style="margin-left: 165px;margin-top: 5px;">
-            选择图片
+            添加图片
            <input type="file" class="btn btn-mini btn-primary" id="imgDataVideo" name="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(1)" value="重新选择文件"/>
         </a>
     </div>
@@ -138,7 +138,7 @@
 	        <form id="fileupload" method="POST" enctype="multipart/form-data" action="" style="margin-left: 329px;margin-top: -29px">
 				 <a href="javascript:void(0)" class="addVideo">
 	            +
-	            	<input type="file" name="file" accept=".avi,.mp4*,.asf,.sdx,.wmv,.rmvb,.3gp,.mkv,.flv,.f4v,.rm,.ra,.ram,.mpg,.pgeg,.mpe,.vob,.dat,.mov,.3gp,.mts" id="filebutton" class="filebutton" multiple="">
+	            	<input type="file" name="file" accept=".avi,.mp4*,.asf,.sdx,.wmv,.rmvb,.3gp,.mkv,.flv,.f4v,.rm,.ra,.ram,.mpg,.pgeg,.mpe,.vob,.dat,.mov,.3gp,.mts" id="filebutton" class="filebutton" multiple="" value="">
 	        	</a>
 				<table class="table table-hover table-center operate_vedio_table L-table L-table-hover" style="margin-left:-263px;margin-top:10px;">
 					<!-- <thead>
@@ -172,7 +172,7 @@
             <img src="" alt="" style="margin: auto;width: 300px;height: 300px;" id="targetStyle" class="picStyle">
         </p>
         <a href="javascript:void(0)" class="addPic" style="margin-top: 5px;margin-bottom: 20px;">
-            选择图片
+            添加图片
            <input type="file" class="btn btn-mini btn-primary" id="imgDataStyle" name="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(2)" value="重新选择文件"/>
         </a>
     </div>
@@ -193,7 +193,7 @@
             <img src="" alt="" style="width: 300px;height: 300px;" id="target" class="picStyle">
         </p>
         <a href="javascript:void(0)" class="addPic" style="margin-top: 5px;margin-bottom: 20px;">
-           选择图片
+           添加图片
            <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(0)" value="重新选择文件"/>
         </a>
     </div>

@@ -41,4 +41,9 @@ public interface MerchantEntryService {
      * @return
      */
     List<MerchantEntryVo> dimMerchantEntry(DimQueryMerchantVo merchantEntryVo);
+    /**
+     * 更新备注
+     * @param merchantEntryVo
+     */
+    void updateMerchanrEntryNote(MerchantEntryVo merchantEntryVo);
 }

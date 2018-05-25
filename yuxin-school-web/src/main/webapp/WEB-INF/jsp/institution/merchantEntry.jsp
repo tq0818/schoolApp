@@ -38,7 +38,7 @@
         </tr>
         <c:forEach var="merchant" items="${result}" varStatus="status">
         	<tr>
-	            <td>${(pageNo-1)*10 +status.index+ 1}</td>
+	            <td>${status.index+ 1}</td>
 	            <td>${merchant.mobile}</td>
 	            <td>${merchant.insName}</td>
 	            <td><fmt:formatDate value="${merchant.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
@@ -50,7 +50,7 @@
 	            		 <td>已处理</td>
 	            	</c:otherwise>
 	            </c:choose>
-	            <td class="addRemarks">
+	            <td class="note" title="${merchant.note}">
 	            	 <c:if test="${fn:length(merchant.note)>30 }">  
                          ${fn:substring(merchant.note, 0, 30)}  
                     </c:if>
@@ -103,4 +103,5 @@ $('.addRemarks').click(function () {
     $("#updateId").val($(this).attr("id"));
     $("#content").val($(this).attr("value"));
 });
+
 </script>
