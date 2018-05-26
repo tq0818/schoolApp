@@ -8,38 +8,42 @@
         update reservation_apply
         <trim prefix="set" suffixOverrides=",">
             <if test="dealStatus != null">deal_status = #{dealStatus},</if>
-            <if test="note != null and note != ''">note = #{note},</if>
+            <if test="note != null">note = #{note},</if>
         </trim>
         <where>id = #{id}</where>
     </update>
 
 
     <select id="findReServApplyIns" resultType="com.yuxin.wx.model.institution.ReServApply">
-        select * from (
-            SELECT
-                id,
-                relation_id relationId,
-                relation_name relationName
-            FROM
-                reservation_apply
-            WHERE
-                type = 0
+        SELECT
+            *
+        FROM
+            (
+                SELECT
+                    r.id,
+                    ii.id relationId,
+                    ii. NAME relationName
+                FROM
+                    reservation_apply r
+                    LEFT JOIN institution_info ii on ii.id = r.relation_id
+                WHERE
+                    type = 0
 
-            UNION
+                UNION
 
-            SELECT
-                r.id,
-                ii.id relationId,
-                ii.name relationName
-            FROM
-                reservation_apply r
-            LEFT JOIN ins_class_type_relation icr on icr.class_type_id = r.relation_id
-            LEFT JOIN institution_info ii on ii.id = icr.ins_id
-            WHERE
-                r.type = 1
-            )c
-            GROUP BY
-	  c.relationId
+                    SELECT
+                        r.id,
+                        ii.id relationId,
+                        ii. NAME relationName
+                    FROM
+                        reservation_apply r
+                    LEFT JOIN ins_class_type_relation icr ON icr.class_type_id = r.relation_id
+                    LEFT JOIN institution_info ii ON ii.id = icr.ins_id
+                    WHERE
+                        r.type = 1
+            ) c
+        GROUP BY
+	    c.relationId
     </select>
 
     <select id="findReServApplyList" parameterType="com.yuxin.wx.model.institution.ReServApply" resultType="com.yuxin.wx.model.institution.ReServApply">
@@ -47,7 +51,7 @@
         SELECT
         r.id,
         r.mobile,
-        r.relation_name insName,
+        ii.name insName,
         '' className,
         '' price,
         r.note,
@@ -55,6 +59,7 @@
         r.create_time createTime
         FROM
         reservation_apply r
+        left join institution_info ii on ii.id = r.relation_id
         WHERE
         1 = 1
         AND type = 0
@@ -236,7 +241,7 @@
         SELECT
         r.id,
         r.mobile,
-        r.relation_name insName,
+        ii.name insName,
         '' className,
         '' price,
         r.note,
@@ -245,6 +250,7 @@
         r.create_time createTime
         FROM
         reservation_apply r
+        left join institution_info ii on ii.id = r.relation_id
         WHERE
         1 = 1
         AND type = 0

@@ -72,6 +72,9 @@
                             </div>
                         </c:otherwise>
                     </c:choose>
+                <input type="hidden" name="dealStatus" id="statu" value="">
+                <input type="hidden" name="insId" id="ins" value="">
+                <input type="hidden" name="insClassId" id="insClass" value="">
                     <div class="marginTop10  "  >
                         <span>预约时间</span>
 
@@ -79,7 +82,7 @@
                         <em>到</em>
                         <input type="text" name="endTime" id="endTime" class="date-picker to"  readonly/>
 
-                        <input type="text" id="mobile" placeholder="手机号"/>
+                        <input type="text" id="mobile" name="mobile" placeholder="手机号"/>
                         <span><a href="javascript:void(0);" class="btn btn-primary search" style="margin: 0 20px;">搜索</a></span>
                         <span style="float: right;"><a href="javascript:void(0);" class="btn btn-primary exportStudent" style="margin: 0 20px;">导出用户</a></span>
                     </div>
@@ -129,7 +132,7 @@
     <div class="remarks">
         <textarea name="" id="not" placeholder="请输入备注信息"></textarea>
         <div class="remarksBtn">
-            <a href="javascript:void(0)" class="btn btn-primary">取消</a>
+            <a href="javascript:void(0)" class="btn btn-primary closeNote">取消</a>
             <a href="javascript:void(0)" class="btn btn-primary addNot" id="addNote" data-id="">保存</a>
         </div>
     </div>

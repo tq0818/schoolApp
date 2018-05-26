@@ -3,13 +3,15 @@ $(function () {
     $selectSubMenu('student');
     //添加备注弹窗  //点击备注，弹出弹窗
 
+    $('body').on('click','.closeNote',function () {
+        $("#not").val('');
+    })
     $('body').on('click','.addRemarks',function () {
-        $("#not").val($(this).attr("data-note"));
-        /*if($(this).attr("data-note") == null || $(this).attr("data-note") == ''){
-            //$("#not").val("请输入备注信息");
-        }else{
+        var note = $(this).attr("data-note");
+        if(note != 'null' && note !=''){
+            $("#not").val(note);
+        }
 
-        }*/
 
         var id = $(this).attr("data-id");
         $("#addNote").attr("data-id",id)
@@ -49,6 +51,47 @@ $(function () {
             if ($("#tableList").find("tr").eq(1).find("td").length <= 1) {
                 $.msg("没有数据可以导出");
             } else {
+                var statu ='';
+                let status = $('#status').children('a');
+                for(let i=0;i<status.length;i++){
+                    if(status.eq(i).hasClass('btn-primary')){
+                        if(i==0){
+                            statu = '';
+                        }else if(i==1){
+                            statu = 1;
+                        }else{
+                            statu = 0;
+                        }
+                    }
+                }
+                //预约机构
+                var ins = $("#reServApplyInsId").val();
+                var insId = $("#insId").val();
+                if(insId != null && insId != ''){
+                    ins = insId;
+                }
+                //预约课程
+                var insClass = $("#reServApplyClass").val();
+
+
+                //两个时间不为空时，则需要判断时间大小
+                var from = $(".from").val();
+                var to = $(".to").val();
+                if (from !=null && to != null){
+                    if (parseInt(from.replace(/-/g,"")) > parseInt(to.replace(/-/g,""))){
+                        $(".from").val("");
+                        $(".to").val("");
+                        $.msg("左边时间不能晚于右边时间!");
+                        return;
+                    }
+                }
+
+                $("#statu").val(statu);
+                $("#ins").val(ins);
+                $("#insClass").val(insClass);
+
+                console.log(statu,ins,insClass)
+
                 $("#searchForm").attr("action",
                     rootPath + "/InsStudent/exportStudent")
                     .submit();
@@ -93,6 +136,7 @@ function findReServApplyClassByInsId() {
 
 //初始化预约列表
 function initReServApplyList(page) {
+
     currtPage = page;
     //处理状态
     var statu ='';
@@ -132,6 +176,7 @@ function initReServApplyList(page) {
             return;
         }
     }
+
 
     $.ajax({
         type:"POST",
@@ -180,12 +225,13 @@ function initReServApplyList(page) {
                         note ='';
                     }else{
                         note = item.note;
+                        if(note.length>30){
+                            note = note.substring(0,30);
+                            note = note+"...";
+                        }
                     }
 
-                    if(note.length>30){
-                        note = note.substring(0,30);
-                        note = note+"...";
-                    }
+
                     var className = item.className;
                     var price = item.price;
                     if(null == className || className == ''){
