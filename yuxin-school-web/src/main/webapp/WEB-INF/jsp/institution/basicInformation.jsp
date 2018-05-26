@@ -33,6 +33,7 @@
             <div class="addingMechanism" style="display: block;">
                     <div style="margin-top: 0;">
                         <span class="mechanismName">机构名称：</span>
+                        <input type="hidden"   value="${ins.name}" id="insNameOld">
                         <input type="text" style="width: 460px;" maxlength="20" value="${ins.name}" id="insName">
                     </div>
                     <div id="orgType">

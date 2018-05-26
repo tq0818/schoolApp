@@ -101,13 +101,17 @@ public class InstitutionInfoController {
      */
     @ResponseBody
     @RequestMapping(value = "/insCheckName",method = RequestMethod.POST)
-    public InstitutionInfoVo insCheckName(String name){
+    public Integer insCheckName(String name){
         try{
-            InstitutionInfoVo insInfoVon = institutionInfoService.insCheckName(name+"");
-            return insInfoVon;
+            InstitutionInfoVo ins = institutionInfoService.insCheckName(name+"");
+            if(ins == null){
+                return 200;
+            }else {
+                return 500;
+            }
         }catch (Exception e){
             e.printStackTrace();
-            return null;
+            return 500;
         }
     }
 
