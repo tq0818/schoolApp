@@ -349,6 +349,7 @@ function saveCutPic() {
                 if(imgType){
                     $('#imgTop').html("<img src='" +data.header+data.realPath + "'  alt=\"\" style=\"width: 150px;height: auto;margin-left: 15px;\">");
                     $('#hidTop').val(data.realPath);
+                    $('.addPicFace').html('更换封面');
                 }else{
                     $('#coverReturn').html("<img src='" +data.header+data.realPath + "'  alt=\"\" style=\"width: 100%; max-height: 190px;\">");
                     $('#hidCoverTop').val(data.realPath);
@@ -387,12 +388,12 @@ function savePic() {
     //.jpg,.jpeg,.gif,.png,.bmp,.ico
     if(!(lowwerFileStr.indexOf(".jpg")==(fileStr.length-4)
             ||lowwerFileStr.indexOf(".jpeg")==(fileStr.length-5)
-            ||lowwerFileStr.indexOf(".gif")==(fileStr.length-4)
+
             ||lowwerFileStr.indexOf(".png")==(fileStr.length-4)
             ||lowwerFileStr.indexOf(".bmp")==(fileStr.length-4)
             ||lowwerFileStr.indexOf(".ico")==(fileStr.length-4)
         )){
-        alert("上传文件仅支持以下格式:.jpg,.jpeg,.gif,.png,.bmp,.ico");
+        alert("上传文件仅支持以下格式:.jpg,.jpeg,.png,.bmp,.ico");
        //
         $("#imgDataStyle").val('');
         /*if(!$("#targetStyle").attr("src")){

@@ -293,7 +293,7 @@
 		ON ictr.`ins_id` = info.`id`
 		<if test="insId != null ">and info.id = #{insId} </if>
 		ORDER BY ictr.`is_link` DESC,
-		ictr.`sort` ASC
+		ictr.`sort` ASC ,ictr.id DESC
 		limit #{firstIndex},#{pageSize}
 
 	</select>

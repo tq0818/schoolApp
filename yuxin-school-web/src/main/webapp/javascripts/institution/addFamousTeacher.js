@@ -1,4 +1,4 @@
-var nameTest = /^[\u4e00-\u9fa5a-zA-Z]+$/;
+var nameTest = /^[\u4e00-\u9fa5a-zA-Z0-9\s]+$/;
 
 $(function () {
     //    左侧active切换
@@ -30,28 +30,16 @@ $(function () {
 
     // 添加老师名称监听器
     $('#teacherName').bind('input propertychange', 'input' , function(){
-        var val = $('#teacherName').val();
-        //不能输入全是空格的字符串
-        if(trim(val) == ''){
-            $('#teacherName').val('');
-            return;
-        }
-
-        //字符串末尾连续多个空格
-        if(val.length - trim(val).length > 1){
-            $('#teacherName').val(val.substr(0,val.length - 1));
-            return;
-        }
-
-        if(!nameTest.test(trim(val))){
-            $('#teacherName').val(val.substr(0,val.length - 1));
-        }
+        nameFileter('teacherName');
     })
+
+
 
 
     //毕业学校监听器
     $('#teacherSchool').bind('input propertychange', 'input' , function(){
-        var val = $('#teacherSchool').val();
+        nameFileter('teacherSchool');
+       /* var val = $('#teacherSchool').val();
         //不能输入全是空格的字符串
         if(trim(val) == ''){
             $('#teacherSchool').val('');
@@ -66,7 +54,7 @@ $(function () {
 
         if(!nameTest.test(trim(val))){
             $('#teacherSchool').val(val.substr(0,val.length - 1));
-        }
+        }*/
     })
 
 
@@ -117,6 +105,27 @@ $(function () {
 
 
 });
+
+
+function nameFileter(id){
+    var val = $('#'+id).val();
+    //不能输入全是空格的字符串
+    if(trim(val) == ''){
+        $('#'+id).val('');
+        return;
+    }
+
+    //字符串末尾连续多个空格
+    if(val.length - trim(val).length > 1){
+        $('#'+id).val(val.substr(0,val.length - 1));
+        nameFileter(id);
+    }
+
+    if(!nameTest.test(trim(val))){
+        $('#'+id).val(val.substr(0,val.length - 1));
+        nameFileter(id);
+    }
+}
 
 
 function getTeacherInfo(){
@@ -191,15 +200,17 @@ $('.closeMechanismCommit').click(function(){
         return;
     }
 
+    if(param.label == null){
+        $.msg('请不要添加空白标签');
+        return;
+    }
+
     if(param.desc == ''){
         $.msg('请填写老师简介');
         return;
     }
 
-    if(param.label == null){
-        $.msg('请不要添加空白标签');
-        return;
-    }
+
 
 
     var url = (param.id == '' ? '/institutionTeacher/addTeacher' : '/institutionTeacher/updateTeacher');
@@ -215,6 +226,7 @@ $('.closeMechanismCommit').click(function(){
             })
         }else{
             isClick = 0;
+            $.msg('操作失败');
         }
     })
 

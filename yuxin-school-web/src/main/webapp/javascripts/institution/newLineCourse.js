@@ -51,13 +51,19 @@ $(function () {
                 name:$(labelSpans[i]).find('.systemLabel').eq(0).val()
             })
         }
-
+      //  console.log(labels);
+        //标签判空、判重
+        var msg = checkLabel(labels);
+        if(null != msg){
+            $.msg(msg);
+            return;
+        }
 
         //课程价格
         var price = $('#classPrice').val();
         //限制报名人数
         var limit = $('input:radio[name="classLimitNum"]:checked').val();
-        console.log('limit = '+limit);
+      //  console.log('limit = '+limit);
        // return;
         //限制预约人数  limit = 1有效
         var limitNum = $('#classPersonLimit').val();
@@ -149,6 +155,26 @@ $(function () {
     addCourseListener();
 
 })
+
+
+function checkLabel(arr){
+    if(null == arr || arr == undefined || arr.length == 0){
+        return null;
+    }
+
+    for(var i = 0;i<arr.length;i++ ){
+        for(var j = 0;j<arr.length;j++){
+            if(arr[j].name == ''){
+                return '标签不能为空';
+            }
+
+            if(i != j && arr[i].name == arr[j].name){
+                return '标签重复';
+            }
+        }
+    }
+
+}
 
 /*function getLimit() {
     var val=$('input:radio[name="classLimitNum"]:checked').val();

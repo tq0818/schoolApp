@@ -59,6 +59,10 @@ function getTeacherList(){
 
             }
 
+            if(list == null || list.length == 0){
+                html = "<div style='width: 100%;padding: 15px;text-align: center;'>没有数据</div>";
+            }
+
             $("#teacherContainer").html(html);
 
 

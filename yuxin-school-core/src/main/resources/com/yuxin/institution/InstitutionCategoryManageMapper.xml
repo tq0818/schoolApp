@@ -408,7 +408,7 @@
 
     <!-- 获取所有中间表的排序信息-->
     <select id="getIndexRecommendYesCountAll"  resultType="int" >
-        SELECT COUNT(id) FROM `institution_relation` WHERE `is_recommend` = 1  and info.is_shelves = 1
+        SELECT COUNT(id) FROM `institution_relation` WHERE `is_recommend` = 1
     </select>
 
 

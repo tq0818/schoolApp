@@ -69,9 +69,9 @@ public class InstitutionClassTypeController {
             Users user =  WebUtils.getCurrentUser();
            // model.addAttribute("userType",user.getUserType());
             //用户是否是机构管理员,保存权限
-            model.addAttribute("addOnlineFlag","INSTITUTION_MANAGE".equalsIgnoreCase(user.getUserType()) ? 1 : 0 );
+          //  model.addAttribute("addOnlineFlag","INSTITUTION_MANAGE".equalsIgnoreCase(user.getUserType()) ? 1 : 0 );
             System.out.println("用户类型为 : "+user.getUserType());
-           // model.addAttribute("addOnlineFlag", 1 );
+            model.addAttribute("addOnlineFlag", 1 );
             //INSTITUTION_MANAGE
             return "institution/course";
         } catch (Exception e) {

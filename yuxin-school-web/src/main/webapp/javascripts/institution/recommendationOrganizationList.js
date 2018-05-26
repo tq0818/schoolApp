@@ -2,11 +2,15 @@
 var nowIndexPage = 0;
 var pageSize = 10;
 function getIndexRecommendList(){
-
+    var typeId = getCurrentTypeId();
+    if(null == typeId){
+        $("#indexRecommendTbody").html("<tr><td colspan='7'>没有数据</td></tr>");
+        return;
+    }
     $.ajax({
         url: rootPath+'/institutionRecommend/getRecommendList',
         data: {
-             typeId:getCurrentTypeId(),
+             typeId:typeId,
              page:nowIndexPage,
              pageSize:pageSize,
              status:getStatus(),
@@ -60,8 +64,8 @@ function getIndexRecommendList(){
                 html = "<tr><td colspan='7'>没有数据</td></tr>";
             }
 
-
             $("#indexRecommendTbody").html(html);
+
             if(json.data.count <= pageSize){
                 $(".paginationIndexRecommend").html('');
             }else{
@@ -140,7 +144,7 @@ function getCurrentTypeId(){
             return $(alist[i]).parent().attr('data-id');
         }
     }
-    return 1;
+    return null;
 }
 
 function getStatus(){
@@ -202,6 +206,8 @@ function getRecommendTypeData(id){
 
        $('#recommendBtnContainor').html(html);
 
+       //初始化好推荐分类按钮后，查询一次列表
+        getIndexRecommendList();
 
        $('.recommendTypeBtn').click(function() {
 

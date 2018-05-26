@@ -213,7 +213,7 @@ public class InstitutionTeacherController {
             InstitutionTeacher teacher = checkTeacherParams(request, true);
             if (null == teacher) {
                 json.put("status", 0);
-                json.put("msg", "请按要求填写信息");
+                json.put("msg", "操作失败");
                 return json;
             }
 
@@ -362,7 +362,7 @@ public class InstitutionTeacherController {
                 tid = Integer.valueOf(request.getParameter("id"));
             }
 
-            if (existBlank(headUrl, name, school, label, desc)) {
+            if (existBlank( name, school,  desc)) {
                 log.error((addFlag ? " 新增 " : " 修改 ") + "名师信息重要参数存在空 ......");
                 return null;
             }

@@ -56,9 +56,9 @@
                         <input type="hidden" id="hidTop"/>
                         <br/>
                         <form id="uploadForm" method="post" enctype="multipart/form-data">
-                            <a href="javascript:void(0);" class="addPic" style="margin-top: 5px;margin-bottom: 20px;margin-left: 120px;"
+                            <a href="javascript:void(0);" class="addPic addPicFace" style="margin-top: 5px;margin-bottom: 20px;margin-left: 120px;"
                                onclick="popAddImg(1);">
-                                添加图片
+                                添加封面
                                 <%--<input type="file" name="imgData" accept="image/jpg, image/jpeg,image/png,image/bmp">--%>
                             </a>
                         </form>
@@ -106,7 +106,7 @@
                     <input type="text" id="classPersonLimit" maxlength="9" style="width: 460px;margin-left: 15px;">
                 </div>
                 <div>
-                    <span class="mechanismName">课程详情:</span>
+                    <span class="mechanismName"><b style="color:red;">*</b>课程详情:</span>
                     <p>
                         <textarea name="" id="classDetail" style="width: 710px;height: 186px;
                         border: 1px solid #aeaeae;margin-left: 10px;margin-top: 10px;" maxlength="300"></textarea>
