@@ -278,7 +278,14 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
         return institutionInfoMapper.insCheckName(name);
     }
 
+    @Override
+    public List<InstitutionInfoVo> queryInsByComment() {
+        return institutionInfoMapper.queryInsByComment();
+    }
 
 
-
+    @Override
+    public List<InstitutionInfoVo> queryInitInsClassList() {
+        return institutionInfoMapper.queryInitInsClassList();
+    }
 }

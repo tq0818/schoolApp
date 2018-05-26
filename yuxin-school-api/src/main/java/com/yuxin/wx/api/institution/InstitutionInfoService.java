@@ -64,5 +64,11 @@ public interface InstitutionInfoService {
     InstitutionInfoVo insCheckName(String name);
 
 
+    List<InstitutionInfoVo> queryInsByComment();
+
+
+    List<InstitutionInfoVo> queryInitInsClassList();
+
+
 
 }

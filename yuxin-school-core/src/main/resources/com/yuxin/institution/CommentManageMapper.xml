@@ -86,4 +86,7 @@
     <select id="commentCuont" resultType="Integer">
         select count(id) from comment where is_check = 0 and del_flag = 0
     </select>
+
+
+
 </mapper>

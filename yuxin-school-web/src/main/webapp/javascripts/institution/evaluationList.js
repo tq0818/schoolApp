@@ -1,4 +1,5 @@
 var reviewStatus = "";
+var insCommntId = "";
 $(function () {
     //    左侧active切换
     $selectSubMenu('review');
@@ -16,7 +17,14 @@ $(function () {
     }
     //筛选样式切换
 
-    $('.evaScreen').children('div').children('a').click(function () {
+
+    $('.evaScreen').children('div').eq(0).children('a').click(function () {
+        $(this).addClass('btn-primary');
+        $(this).siblings('a').removeClass('btn-primary');
+
+    });
+
+    $('.evaScreen').children('div').eq(1).children('a').click(function () {
 
 
         var table = $(this).html();
@@ -31,41 +39,43 @@ $(function () {
         $(this).addClass('btn-primary');
         $(this).siblings('a').removeClass('btn-primary');
 
-        initInsComment(1, reviewStatus);
-
+        initInsComment(1,insCommntId, reviewStatus);
 
     });
+
+    $("#ins").children().click(function () {
+        insCommntId = $(this).attr('data-insId');
+        initInsComment(1,insCommntId, reviewStatus);
+    });
+
 
 
     //课程评价筛选
     $('.curriculum').children('div').children('a').click(function () {
-        // if($(this).html() == '全部' || $(this).html() == '审核通过'){
-        //     $("#evaluation").hide();
-        // }else{
-        //     $("#evaluation").show();
-        // }
         $(this).addClass('btn-primary');
         $(this).siblings('a').removeClass('btn-primary');
     });
 
+
     //课程筛选
     let curriculumClass = '';
-    $('#curriculumClass').children('a').click(function () {
-        curriculumClass = $(this).attr('data-classId');
-        initInsClassComment(1,curriculumState,curriculumClass);
-
+    $('body').on('click','.curriculumClass',function () {
+        $(this).addClass('btn-primary');
+        $(this).siblings('a').removeClass('btn-primary');
+        curriculumClass = $(this).attr('data-insClassId');
+        initInsClassComment(1,insClassId,curriculumState,curriculumClass);
     });
     //状态筛选
     let curriculumState = '';
     $('#curriculumState').children('a').click(function () {
         curriculumState = $(this).attr('data-review');
-        initInsClassComment(1,curriculumState,curriculumClass);
+        initInsClassComment(1,insClassId,curriculumState,curriculumClass);
     });
 
     //点击机构评论
     $('body').on('click','.insComment',function () {
-        console.log("机构评论")
-        initInsComment();
+
+        initInsComment(1,insCommntId, reviewStatus);
         $('.evaScreen').show();
         $('.curriculum').hide();
     })
@@ -73,7 +83,9 @@ $(function () {
     //点击课程评论
     $('body').on('click','.insClassComment',function () {
         console.log("课程评论")
-        initInsClassComment();
+        //获取被评论的课程的机构
+        initInsList();
+        initInsClassComment(1,insClassId,curriculumState,curriculumClass);
         $('.evaScreen').hide();
         $('.curriculum').show();
     })
@@ -130,6 +142,20 @@ $(function () {
     initInsComment();
     $('.evaTitle').eq(0).addClass('active');
 
+    //课程评论下的被评论的课程对应的机构id
+    var insClassId = '';
+    $('body').on('click','.insClass',function () {
+        curriculumClass='';
+        $(this).addClass('btn-primary');
+        $(this).siblings('a').removeClass('btn-primary');
+        insClassId = $(this).attr("data-insid");
+        //查询该机构下的课程
+        findInsClassByInsId(insClassId);
+        initInsClassComment(1,insClassId,curriculumState,curriculumClass);
+    });
+
+
+
 });
 
 
@@ -139,13 +165,14 @@ $(function () {
 var currPage='';
 var currPageClass='';
 //查询机构评论
-function initInsComment(page=1,reviewStatus='') {
+function initInsComment(page=1,insCommntId='',reviewStatus='') {
     currPage = page;
 
     $.ajax({
         url:rootPath+"/comment/findInsComment",
         type:"post",
         data:{
+            "relationId":insCommntId,
             "isCheck":reviewStatus,
             "page":page
         },
@@ -181,6 +208,7 @@ function initInsComment(page=1,reviewStatus='') {
                     if(item.nickName == '' || item.nickName == null ){
                         name = item.mobile;
                     }
+                    var scorehtml ='';
                     if(score==1){
                         scorehtml='<span>评分:</span><span class="Y_mr10" style="color: #fb9f1b;">' +
                             '<i class="iconfont">&#xe65e;</i>'+
@@ -252,7 +280,7 @@ function initInsComment(page=1,reviewStatus='') {
                         num_edge_entries: 1,
                         callback: function (page, jq) {
                             var pageNo = page + 1;
-                            initInsComment(pageNo,reviewStatus);
+                            initInsComment(pageNo,insCommntId,reviewStatus);
                         }
                     });
             } else {
@@ -268,13 +296,14 @@ function initInsComment(page=1,reviewStatus='') {
 }
 
 //机构课程评价
-function initInsClassComment(page=1,reviewStatus='',relationId='') {
+function initInsClassComment(page=1,ins='',reviewStatus='',relationId='') {
     currPageClass = page;
 
     $.ajax({
         url:rootPath+"/comment/findInsClassComment",
         type:"post",
         data:{
+            "insId":ins,
             "relationId":relationId,
             "isCheck":reviewStatus,
             "page":page
@@ -383,7 +412,7 @@ function initInsClassComment(page=1,reviewStatus='',relationId='') {
                         num_edge_entries: 1,
                         callback: function (page, jq) {
                             var pageNo = page + 1;
-                            initInsClassComment(pageNo,reviewStatus);
+                            initInsClassComment(pageNo,ins,reviewStatus,relationId);
                         }
                     });
             } else {
@@ -418,13 +447,44 @@ function evaluationIns(commentId,flag) {
 
             $.msg("审核成功!");
 
+            //机构评论里的状态
+            var insStatu ='';
+            var insStatus = $("#status").children('a');
+            for(var i=0;i<insStatus.length;i++){
+                if(insStatus.eq(i).hasClass("btn-primary")){
+                    insStatu = insStatus.eq(i).attr("data-review");
+                }
+            }
+
+            //机构评论里的机构id
+            var insCommentId ='';
+            var insId = $("#ins").children('a');
+            for(var i=0;i<insId.length;i++){
+                if(insId.eq(i).hasClass("btn-primary")){
+                    insCommentId = insId.eq(i).attr("data-insid");
+                }
+            }
+
+            //课程评论里的机构id
+            var insCommentClassId ='';
+            var insClassId = $("#insClass").children('a');
+            for(var i=0;i<insClassId.length;i++){
+                if(insClassId.eq(i).hasClass("btn-primary")){
+                    insCommentClassId = insClassId.eq(i).attr("data-insid");
+                }
+            }
+
+            //课程id
             var classId = '';
             var classList = $("#curriculumClass").children('a');
             for(var i = 0; i<classList.length;i++){
                 if(classList.eq(i).hasClass("btn-primary")){
-                    classId = classList.eq(i).attr("data-classId");
+                    classId = classList.eq(i).attr("data-insclassid");
                 }
             }
+
+
+            //课程评论里的状态
             var status = '';
             var statusList = $("#curriculumState").children('a');
             for(var i = 0;i<statusList.length;i++){
@@ -434,17 +494,12 @@ function evaluationIns(commentId,flag) {
 
             }
 
-            var insStatu ='';
-            var insStatus = $("#status").children('a');
-            for(var i=0;i<insStatus.length;i++){
-                if(insStatus.eq(i).hasClass("btn-primary")){
-                    insStatu = insStatus.eq(i).attr("data-review");
-                }
-            }
             if(flag == 0){
-                initInsComment(currPage,insStatu);
+                //机构
+                initInsComment(currPage,insCommentId,insStatu);
             }else{
-                initInsClassComment(currPageClass,status,classId);
+                //课程
+                initInsClassComment(currPageClass,insCommentClassId,status,classId);
             }
 
         },
@@ -471,13 +526,44 @@ function delIns(commentId,flag) {
             $(".loading-bg").show();
         },
         success:function(jsonData){
+            //机构评论里的状态
+            var insStatu ='';
+            var insStatus = $("#status").children('a');
+            for(var i=0;i<insStatus.length;i++){
+                if(insStatus.eq(i).hasClass("btn-primary")){
+                    insStatu = insStatus.eq(i).attr("data-review");
+                }
+            }
+
+            //机构评论里的机构id
+            var insCommentId ='';
+            var insId = $("#ins").children('a');
+            for(var i=0;i<insId.length;i++){
+                if(insId.eq(i).hasClass("btn-primary")){
+                    insCommentId = insId.eq(i).attr("data-insid");
+                }
+            }
+
+            //课程评论里的机构id
+            var insCommentClassId ='';
+            var insClassId = $("#insClass").children('a');
+            for(var i=0;i<insClassId.length;i++){
+                if(insClassId.eq(i).hasClass("btn-primary")){
+                    insCommentClassId = insClassId.eq(i).attr("data-insid");
+                }
+            }
+
+            //课程id
             var classId = '';
             var classList = $("#curriculumClass").children('a');
             for(var i = 0; i<classList.length;i++){
                 if(classList.eq(i).hasClass("btn-primary")){
-                    classId = classList.eq(i).attr("data-classId");
+                    classId = classList.eq(i).attr("data-insclassid");
                 }
             }
+
+
+            //课程评论里的状态
             var status = '';
             var statusList = $("#curriculumState").children('a');
             for(var i = 0;i<statusList.length;i++){
@@ -487,21 +573,12 @@ function delIns(commentId,flag) {
 
             }
 
-            var insStatu ='';
-            var insStatus = $("#status").children('a');
-            for(var i=0;i<insStatus.length;i++){
-                if(insStatus.eq(i).hasClass("btn-primary")){
-                    insStatu = insStatus.eq(i).attr("data-review");
-                }
-            }
-
-            console.log(insStatu,status,classId)
             if(flag == 0){
                 //机构
-                initInsComment(currPage,insStatu);
+                initInsComment(currPage,insCommentId,insStatu);
             }else{
                 //课程
-                initInsClassComment(currPageClass,status,classId);
+                initInsClassComment(currPageClass,insCommentClassId,status,classId);
             }
 
 
@@ -513,4 +590,70 @@ function delIns(commentId,flag) {
     })
 
 
+}
+
+
+//课程评论下的机构列表（这里是被评论的课程所对应的机构）
+function initInsList() {
+    $.ajax({
+        url:rootPath+"/comment/initInsClassList",
+        type:"post",
+        beforeSend: function (XMLHttpRequest) {
+            $(".loading").show();
+            $(".loading-bg").show();
+        },
+        success:function(jsonData){
+            var html ='<span style="font-size: 16px;margin-right: 30px;">机构名称</span>\n' +
+                '<a href="javascript:void(0)" class="btn btn-default btn-primary insClass" data-insId="">全部</a>';
+            if(jsonData.length>0){
+                for(var i in jsonData){
+                    html+=' <a href="javascript:void(0)" class="btn btn-default insClass"  data-insId="'+jsonData[i].id+'">'+jsonData[i].name +'</a>';
+                }
+
+                $("#insClass").html(html);
+            }
+
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+            $(".loading").hide();
+            $(".loading-bg").hide();
+        }
+    })
+}
+
+
+//查询机构下的课程
+function findInsClassByInsId(id) {
+    var html ='<span style="font-size: 16px;margin-right: 30px;">课程名称</span>\n' +
+        '<a href="javascript:void(0)" class="btn btn-default btn-primary curriculumClass" data-classId="">全部</a>';
+    if(id == '' ){
+        $("#curriculumClass").html(html);
+        return;
+    }
+    $.ajax({
+        url:rootPath+"/comment/findInsClassByInsId",
+        type:"post",
+        data:{
+            "id":id
+        },
+        beforeSend: function (XMLHttpRequest) {
+            $(".loading").show();
+            $(".loading-bg").show();
+        },
+        success:function(jsonData){
+
+            if(jsonData.length>0){
+                for(var i in jsonData){
+                    html+=' <a href="javascript:void(0)" class="btn btn-default curriculumClass "  data-insClassId="'+jsonData[i].id+'">'+jsonData[i].name +'</a>';
+                }
+
+            }
+            $("#curriculumClass").html(html);
+
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+            $(".loading").hide();
+            $(".loading-bg").hide();
+        }
+    })
 }

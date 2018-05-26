@@ -52,20 +52,20 @@ public class CommentManageController {
     }
 
     /**
-     * 所有机构下的课程
+     * 所有被评论的机构
      * @return
      */
     @RequestMapping(value = "/commentIndex")
     public String commentIndex(Model model, HttpServletRequest request,InstitutionClassTypeVo institutionClassTypeVo){
-        //获取课程名称
-        List<InstitutionClassTypeVo> classTypeVos= null;
+        //获取机构名称
+        List<InstitutionInfoVo> insVos= null;
         try{
-            classTypeVos = institutionClassTypeService.queryAllByIns(institutionClassTypeVo);
+            insVos = institutionInfoService.queryInsByComment();
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        model.addAttribute("classTypeVos",classTypeVos);
+        model.addAttribute("insVos",insVos);
         return "institution/evaluationList";
     }
 
@@ -138,4 +138,31 @@ public class CommentManageController {
     }
 
 
+    @ResponseBody
+    @RequestMapping(value = "/initInsClassList")
+    public List<InstitutionInfoVo> initInsClassList(){
+        List<InstitutionInfoVo> insVos= null;
+        try{
+            insVos = institutionInfoService.queryInitInsClassList();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return  insVos;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/findInsClassByInsId")
+    public List<InstitutionClassTypeVo> findInsClassByInsId(Model model, HttpServletRequest request,InstitutionClassTypeVo institutionClassTypeVo){
+        String id = request.getParameter("id");
+        //获取课程名称
+        List<InstitutionClassTypeVo> classTypeVos= null;
+        try{
+            classTypeVos = institutionClassTypeService.queryAllByIns(institutionClassTypeVo);
+            return classTypeVos;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

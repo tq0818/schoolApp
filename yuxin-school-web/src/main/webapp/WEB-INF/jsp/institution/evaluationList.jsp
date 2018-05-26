@@ -46,6 +46,13 @@
                 <span class="line"></span>
             </div>
             <div class="evaScreen">
+                <div style="padding-left: 13px;margin: 30px 0;" id="ins" >
+                    <span style="font-size: 16px;margin-right: 30px;">机构名称</span>
+                    <a href="javascript:void(0)" class="btn btn-default btn-primary" data-insId="">全部</a>
+                    <c:forEach var="ins" items="${insVos}">
+                        <a href="javascript:void(0)" class="btn btn-default"  data-insId="${ins.id}">${ins.name}</a>
+                    </c:forEach>
+                </div>
                 <div style="padding-left: 13px;" id ="status">
                     <span style="font-size: 16px;margin-right: 30px;">审核状态</span>
                     <a href="javascript:void(0)" class="btn btn-default btn-primary" data-review="">全部</a>
@@ -60,12 +67,13 @@
 
 
             <div class="curriculum ">
+                <div style="padding-left: 13px;margin: 30px 0;" id="insClass" >
+                    <span style="font-size: 16px;margin-right: 30px;">机构名称</span>
+                    <a href="javascript:void(0)" class="btn btn-default btn-primary" data-insId="">全部</a>
+                </div>
                 <div style="padding-left: 13px;margin: 30px 0;" id="curriculumClass" >
                     <span style="font-size: 16px;margin-right: 30px;">课程名称</span>
-                    <a href="javascript:void(0)" class="btn btn-default btn-primary">全部</a>
-                    <c:forEach var="cla" items="${classTypeVos}">
-                        <a href="javascript:void(0)" class="btn btn-default"  data-classId="${cla.id}">${cla.name}</a>
-                    </c:forEach>
+                    <a href="javascript:void(0)" class="btn btn-default btn-primary" data-classId="">全部</a>
                 </div>
                 <div style="padding-left: 13px;" id="curriculumState">
                     <span style="font-size: 16px;margin-right: 30px;">审核状态</span>

@@ -1,5 +1,5 @@
 insId = '';
-var insPage = $("#pageI").val();
+
 
 $(function () {
     var twoLevelIdI = $("#twoLevelIdI").val();
@@ -326,8 +326,14 @@ $(function () {
             $(this).addClass('btn-primary');
             $(this).siblings('a').removeClass('btn-primary');
         }
-
-        findInsDate(1,'');
+        $("#pageI").val('');
+        findInsDate(1);
+    });
+    $('#isCertified').children('a').click(function () {
+        $("#isCertifiedI").val('');
+    });
+    $('#isShelves').children('a').click(function () {
+        $("#isShelvesI").val('');
     });
     //系统标签增加和删除
     $('.addSystem').click(function () {
@@ -454,10 +460,14 @@ $(function () {
     //分类筛选
     $('#findFistCategorys').change(function () {
         findSecondCategorys(2);
-        findInsDate(1,'');
+        $("#pageI").val('');
+        $("#oneLevelIdI").val('');
+        $("#twoLevelIdI").val('');
+        findInsDate(1);
     });
     $('#findSecondCategorys').change(function () {
-        findInsDate(1,'');
+        $("#pageI").val('');
+        findInsDate(1);
     });
 
     //分类筛选
@@ -468,7 +478,8 @@ $(function () {
 
     //搜索数据
     $(".searchContents").click(function () {
-        findInsDate(1,'');
+        $("#pageI").val('');
+        findInsDate(1);
     });
 
     $('body').on('click','.ingInfo',function () {
@@ -482,12 +493,16 @@ var curPage = 1;
 
 //查询省市区
 function queryRiseSchoolDict(areaFlag) {
+
     var itemType = '';
     var itemCode = '';
     var eduAreaNew = $("#eduArea").val();
     if (areaFlag == 0){
         itemType = 'PROVINCE';
     }else if (areaFlag == 1){
+        $("#provinceI").val('');
+        $("#cityI").val('');
+        $("#areaI").val('');
         itemType = 'CITY';
         itemCode = $("#eduArea").val();
     }else if (areaFlag == 2){
@@ -529,14 +544,16 @@ function queryRiseSchoolDict(areaFlag) {
                     $("#registStatus").html("").html(html);
                 }
             }
-            findInsDate(1,'');
+            $("#pageI").val('');
+            findInsDate(1);
         }
     });
 }
 
 //选择区域
 function queryInsData() {
-    findInsDate(1,'');
+    $("#pageI").val('');
+    findInsDate(1);
 }
 
 //查询省市区
@@ -688,21 +705,21 @@ function findSecondCategorys2(catId,that){
 
 
 //点击查询获取数据
-function findInsDate(page,flag) {
-
+function findInsDate(page) {
+    var insPage = $("#pageI").val();
     curPage = page;
 
-    if(flag != ''){
-        if(insPage != null && insPage !=''){
-            page = insPage;
-        }
+    if(insPage != null && insPage !=''){
+        page = insPage;
     }
+
 
     var eduArea = $("#eduArea").val();
     var eduSchool = $("#eduSchool").val();
     var registStatus = $("#registStatus").val();
     var findFistCategorys = $("#findFistCategorys").val();
     var findSecondCategorys = $("#findSecondCategorys").val();
+    console.log("1:"+findFistCategorys,",2:"+findSecondCategorys)
     if(findFistCategorys == '' || findFistCategorys == null){
         findSecondCategorys == '';
     }
@@ -857,7 +874,8 @@ function findInsDate(page,flag) {
                         num_edge_entries: 1,
                         callback: function (page, jq) {
                             var pageNo = page + 1;
-                            findInsDate(pageNo,'');
+                            $("#pageI").val('');
+                            findInsDate(pageNo);
                         }
                     });
                 $(".pagination").find("li:first").css("background-color","#fff").css("border","1px solid #999").css('cursor','default');
@@ -883,7 +901,8 @@ function findInsDate(page,flag) {
 
 function searchCount(){
     $("#selectCounts").val($("#selectCount").val());
-    findInsDate(1,'');
+    $("#pageI").val('');
+    findInsDate(1);
 }
 
 //修改上下架，认证
@@ -894,7 +913,8 @@ function authFrameLower(id,num,flag) {
         type:"post",
         data:{"id":id,"num":num,"flag":flag},
         success:function(data){
-            findInsDate(curPage,'');
+            //$("#pageI").val('');
+            findInsDate(curPage);
         }
     })
 }
@@ -1101,7 +1121,8 @@ function cureatManageUser() {
                         "countManage":countManage
                     },
                     success:function(data){
-                        findInsDate(curPage,'');
+                        //$("#pageI").val('');
+                        findInsDate(curPage);
                     }
                 })
             }else if(data =='用户名已经被注册'){
@@ -1169,7 +1190,8 @@ function updateManageUser() {
             "userName":userName
         },
         success:function(data){
-            findInsDate(curPage,'');
+            //$("#pageI").val('');
+            findInsDate(curPage);
         }
     })
 }
@@ -1239,6 +1261,18 @@ function indexParam() {
         }
     })
 
+}
+
+function clearStartTime() {
+    $("#startTimeI").val();
+}
+
+function clearEndTime() {
+    $("#endTimeI").val();
+}
+
+function clearName() {
+    $("#nameI").val('');
 }
 
 

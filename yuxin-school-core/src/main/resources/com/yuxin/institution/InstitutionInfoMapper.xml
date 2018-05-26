@@ -178,4 +178,17 @@
     <select id="insCheckName" parameterType="String" resultMap="institutionInfoMap" >
         select * from institution_info where name = #{name}
     </select>
+
+    <select id="queryInsByComment" parameterType="map" resultMap="institutionInfoMap">
+        select ii.id,ii.name from comment c
+        LEFT JOIN institution_info ii on ii.id = c.relation_id
+        where type = 0 GROUP BY id
+    </select>
+
+    <select id="queryInitInsClassList" parameterType="map" resultMap="institutionInfoMap">
+        select ii.id,ii.name,c.id commentId,c.relation_id,c.content from `comment` c
+        LEFT JOIN ins_class_type_relation icr on icr.class_type_id = c.relation_id
+        LEFT JOIN institution_info ii on ii.id = icr.ins_id
+        where type = 1 GROUP BY ii.id
+    </select>
 </mapper>

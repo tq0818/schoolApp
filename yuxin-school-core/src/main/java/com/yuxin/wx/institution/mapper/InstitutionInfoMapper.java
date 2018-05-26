@@ -61,4 +61,9 @@ public interface InstitutionInfoMapper {
      * @return
      */
     InstitutionInfoVo insCheckName(String name);
+
+
+    List<InstitutionInfoVo> queryInsByComment();
+
+    List<InstitutionInfoVo> queryInitInsClassList();
 }
