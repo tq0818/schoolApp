@@ -92,6 +92,12 @@ public class InstitutionClassTypeServiceImpl extends BaseServiceImpl implements 
     }
 
     @Override
+    public Integer findIsrecommendCount(Map<String, Object> map) {
+        return institutionClassTypeMapper.findIsrecommendCount(map);
+    }
+
+
+    @Override
     public int getRecommendCountByClassTypeId(Integer insId) {
         return institutionClassTypeMapper.getRecommendCountByClassTypeId(insId);
     }

@@ -330,8 +330,8 @@ function getClassTypeList(){
             $(".loading-bg").hide();
         },
         success: function (json) {
-          //  console.log(json);
-           var list = json.data;
+           var isrecommendCount = json.isrecommendCount;
+           var list = json.page.data;
            var html = `<li class="addImg mienShow" id="">
                             <i class="icon iconfont"></i>
                        </li>`;
@@ -344,7 +344,7 @@ function getClassTypeList(){
                                 ${
                                     list[i].isRecommend == 1 ? 
                                         "<a href='javascript:void(0)' data-id="+list[i].id+" class='btn btn-primary btn-sm rightShow'>取消推荐</a>" :
-                                        ( recommendNum < 2 && list[i].isRecommend == 0 && list[i].isShelves == 1  ? 
+                                        ( isrecommendCount < 2 && list[i].isRecommend == 0 && list[i].isShelves == 1  ? 
                                             "<a href='javascript:void(0)' data-id="+list[i].id+" class='btn btn-primary btn-sm rightShow'>推荐</a>" : 
                                             '')
                                             
@@ -359,15 +359,15 @@ function getClassTypeList(){
 
 
            //当总条数少于每页分页条数的时候，不显示分页 -- 处理分页插件显示问题
-            if(json.rowCount <= 7){
+            if(json.page.rowCount <= 7){
                $('.paginationUnderLine').html('');
             }else{
 
-                $(".paginationUnderLine").pagination(json.rowCount,
+                $(".paginationUnderLine").pagination(json.page.rowCount,
                     {
                         next_text: "下一页",
                         prev_text: "上一页",
-                        current_page:json.pageNo,
+                        current_page:json.page.pageNo,
                         link_to: "javascript:getClassTypeList()",
                         // num_display_entries: 7,
                         items_per_page: 7,

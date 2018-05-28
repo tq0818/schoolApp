@@ -706,6 +706,7 @@ function updataIns() {
                         success:function(data){
                             if(data == '200'){
                                 $.msg("保存成功")
+                                window.location.reload();
                             }else{
                                 $.msg("保存失败")
                             }
@@ -747,6 +748,7 @@ function updataIns() {
             success:function(data){
                 if(data == '200'){
                     $.msg("保存成功")
+                    window.location.reload();
                 }else{
                     $.msg("保存失败")
                 }
