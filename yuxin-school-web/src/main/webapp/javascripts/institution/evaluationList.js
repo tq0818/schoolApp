@@ -1,5 +1,15 @@
 var reviewStatus = "";
 var insCommntId = "";
+
+var pageNoIns = '';
+var dataSizeIns = '';
+var pageCountIns = '';
+var reviewStatusIns = '';
+
+var pageNoClass = '';
+var dataSizeClass = '';
+var pageCountClass = '';
+var reviewStatusClass = '';
 $(function () {
     //    左侧active切换
     $selectSubMenu('review');
@@ -82,7 +92,6 @@ $(function () {
 
     //点击课程评论
     $('body').on('click','.insClassComment',function () {
-        console.log("课程评论")
         //获取被评论的课程的机构
         initInsList();
         initInsClassComment(1,insClassId,curriculumState,curriculumClass);
@@ -181,6 +190,11 @@ function initInsComment(page=1,insCommntId='',reviewStatus='') {
             $(".loading-bg").show();
         },
         success:function(data){
+            pageNoIns = data.comment.pageNo;
+            dataSizeIns = data.comment.data.length;
+            pageCountIns = data.comment.pageCount;
+            reviewStatusIns = reviewStatus;
+
             var userType = data.usersType;
             var jsonData = data.comment;
             var html ='';
@@ -298,7 +312,6 @@ function initInsComment(page=1,insCommntId='',reviewStatus='') {
 //机构课程评价
 function initInsClassComment(page=1,ins='',reviewStatus='',relationId='') {
     currPageClass = page;
-
     $.ajax({
         url:rootPath+"/comment/findInsClassComment",
         type:"post",
@@ -313,6 +326,12 @@ function initInsClassComment(page=1,ins='',reviewStatus='',relationId='') {
             $(".loading-bg").show();
         },
         success:function(data){
+            pageNoClass = data.comment.pageNo;
+            dataSizeClass = data.comment.data.length;
+            pageCountClass = data.comment.pageCount;
+            reviewStatusClass = reviewStatus;
+
+
             var userType = data.usersType;
             var jsonData = data.comment;
             var html ='';
@@ -431,7 +450,6 @@ function initInsClassComment(page=1,ins='',reviewStatus='',relationId='') {
 
 //审核评论
 function evaluationIns(commentId,flag) {
-
     $.ajax({
         url:rootPath+"/comment/updateComment",
         type:"post",
@@ -494,6 +512,24 @@ function evaluationIns(commentId,flag) {
 
             }
 
+
+            if(insStatu == 0 && insStatu != '' && insStatus != null){
+                if(pageNoIns != 0){
+                    if(dataSizeIns ==1 && pageNoIns +1 == pageCountIns){
+                        currPage = currPage - 1;
+                    }
+                }
+            }
+
+            if(status == 0 && status != '' && status != null){
+                if(pageNoClass != 0){
+                    if(dataSizeClass ==1 && pageNoClass +1 == pageCountClass){
+                        currPageClass = currPageClass - 1;
+                    }
+                }
+            }
+
+
             if(flag == 0){
                 //机构
                 initInsComment(currPage,insCommentId,insStatu);
@@ -513,7 +549,6 @@ function evaluationIns(commentId,flag) {
 
 //删除评论
 function delIns(commentId,flag) {
-
     $.ajax({
         url:rootPath+"/comment/updateComment",
         type:"post",
@@ -571,6 +606,17 @@ function delIns(commentId,flag) {
                     status = statusList.eq(i).attr("data-review");
                 }
 
+            }
+
+            if(pageNoIns != 0 ){
+                if(dataSizeIns ==1 && pageNoIns +1 == pageCountIns){
+                    currPage = currPage - 1;
+                }
+            }
+            if(pageNoClass != 0){
+                if(dataSizeClass ==1 && pageNoClass +1 == pageCountClass){
+                    currPageClass = currPageClass - 1;
+                }
             }
 
             if(flag == 0){
