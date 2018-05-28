@@ -77,7 +77,7 @@
         r.mobile,
         ii.name insName,
         ct.name className,
-        ct.price,
+        cast(ct.price as   decimal(10,   2)) price,
         r.note,
         r.deal_status dealStatus,
         r.create_time createTime
