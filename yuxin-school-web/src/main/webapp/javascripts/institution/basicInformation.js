@@ -779,7 +779,7 @@ function savePic() {
     //.jpg,.jpeg,.gif,.png,.bmp,.ico
     if(!(lowwerFileStr.indexOf(".jpg")==(fileStr.length-4)
             ||lowwerFileStr.indexOf(".jpeg")==(fileStr.length-5)
-            ||lowwerFileStr.indexOf(".gif")==(fileStr.length-4)
+            /*||lowwerFileStr.indexOf(".gif")==(fileStr.length-4)*/
             ||lowwerFileStr.indexOf(".png")==(fileStr.length-4)
             ||lowwerFileStr.indexOf(".bmp")==(fileStr.length-4)
             ||lowwerFileStr.indexOf(".ico")==(fileStr.length-4)
