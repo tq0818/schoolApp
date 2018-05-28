@@ -223,11 +223,11 @@
                                     </c:if>
                                     <c:if test="${vs.count > 1}">
                                         <c:choose>
-                                            <c:when test="${vs.count==fn:length(tells)}">
-                                                <span class="iconBtn deleteMachine">-</span>
+                                            <c:when test="${vs.index == 0}">
+                                                <span class="iconBtn addMachine" >+</span>
                                             </c:when>
                                             <c:otherwise>
-                                                <span class="iconBtn addMachine" >+</span>
+                                                <span class="iconBtn deleteMachine">-</span>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:if>
@@ -249,11 +249,11 @@
                                     </c:if>
                                     <c:if test="${vs.count > 1}">
                                         <c:choose>
-                                            <c:when test="${vs.count==fn:length(mobiles)}">
-                                                <span class="iconBtn deletePhone" >-</span>
+                                            <c:when test="${vs.index == 0}">
+                                                <span class="iconBtn addPhone" >+</span>
                                             </c:when>
                                             <c:otherwise>
-                                                <span class="iconBtn addPhone" >+</span>
+                                                <span class="iconBtn deletePhone" >-</span>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:if>

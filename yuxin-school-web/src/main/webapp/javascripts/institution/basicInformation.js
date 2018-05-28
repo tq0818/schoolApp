@@ -642,7 +642,7 @@ function updataIns() {
     let cusLabel = $('.cusLabel');
     let cusLabelName = '';
     for(let i = 0;i<cusLabel.length;i++){
-        var cusLabelNames = systemLabel.eq(i).val();
+        var cusLabelNames = cusLabel.eq(i).val();
         cusLabelNames = cusLabelNames.split(" ").join("");
         if(cusLabelNames.length != 0){
             cusLabelName+= cusLabel.eq(i).val()+',';
