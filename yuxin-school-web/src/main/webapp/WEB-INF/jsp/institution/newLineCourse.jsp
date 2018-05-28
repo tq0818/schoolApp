@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<%=rootPath %>/stylesheets/splitscreen.css">
     <link rel="stylesheet" href="<%=rootPath %>/stylesheets/fonts/iconfont.css">
     <link rel="stylesheet" href="<%=rootPath %>/stylesheets/riseschool/schoolDetails.css">
-    <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/mine.css">
+    <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/mine.css">s
     <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
     <link rel="stylesheet" type="text/css" href="<%=rootPath %>/plugins/jcrop/css/jquery.Jcrop.css"/>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/riseschool/mbox.css">
@@ -28,6 +28,9 @@
             border: 1px solid #e0dfe3;border-radius: 3px;margin: 5px 0;}
         .chooseImg input{position: absolute;width: 100%;height: 100%;left: 0;top: 0;opacity: 0;}
         .coverPopup{z-index: 1000;}
+        .mienPopup>div {
+            width: 100%;
+        }
          
     </style>
 
