@@ -8,4 +8,6 @@ public interface InstitutionRelationMapper {
 
     void delete(Integer id);
 
+    void update(InstitutionRelationVo institutionRelationVo);
+
 }

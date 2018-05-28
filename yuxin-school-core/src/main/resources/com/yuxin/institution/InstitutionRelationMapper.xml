@@ -6,14 +6,18 @@
         id,
         ins_id,
         one_level_id,
-        two_level_id
+        two_level_id,
+        sort,
+        is_recommend
     </sql>
 
     <sql id="entity_properties">
         #{id},
         #{insId},
         #{oneLevelId},
-        #{twoLevelId}
+        #{twoLevelId},
+        #{sort},
+        #{isRecommend}
     </sql>
 
     <insert id="insert" parameterType="com.yuxin.wx.model.institution.InstitutionRelationVo" useGeneratedKeys="true" keyProperty="id">
@@ -24,5 +28,14 @@
     <delete id="delete" parameterType="Integer">
         delete from institution_relation where ins_id = #{id}
     </delete>
+
+    <update id="update" parameterType="com.yuxin.wx.model.institution.InstitutionRelationVo">
+        update institution_relation
+        <trim prefix="set" suffixOverrides=",">
+            <if test="isRecommend != null">is_recommend = #{isRecommend},</if>
+        </trim>
+        <where>ins_id = #{insId}</where>
+
+    </update>
 
 </mapper>

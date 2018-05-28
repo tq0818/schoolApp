@@ -5,10 +5,7 @@ import com.yuxin.wx.api.institution.*;
 import com.yuxin.wx.api.riseschool.RiseSchoolManageService;
 import com.yuxin.wx.api.user.IUsersService;
 import com.yuxin.wx.common.PageFinder;
-import com.yuxin.wx.model.institution.InsFeaturesVo;
-import com.yuxin.wx.model.institution.InstitutionCategoryVo;
-import com.yuxin.wx.model.institution.InstitutionInfoVo;
-import com.yuxin.wx.model.institution.InstitutionLabelVo;
+import com.yuxin.wx.model.institution.*;
 import com.yuxin.wx.model.riseschool.SysDictVo;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.util.ImageUtils;
@@ -57,6 +54,8 @@ public class InstitutionInfoController {
     private MerchantEntryService merchantEntryService;
     @Autowired
     private RiseSchoolManageService riseSchoolManageServiceImpl;
+    @Autowired
+    private InstitutionRelationService institutionRelationService;
     /**
      * 机构首页
      * @return
@@ -308,10 +307,17 @@ public class InstitutionInfoController {
         institutionInfoVo.setId(Integer.parseInt(id));
         if(flag .equals("0")){
             institutionInfoVo.setIsShelves(Integer.parseInt(num));
+            if(num.equals("0")){
+                //下架机构
+                InstitutionRelationVo institutionRelationVo = new InstitutionRelationVo();
+                institutionRelationVo.setInsId(Integer.parseInt(id));
+                institutionRelationVo.setIsRecommend(0);
+                institutionRelationService.update(institutionRelationVo);
+            }
         }else{
             institutionInfoVo.setIsCertified(Integer.parseInt(num));
         }
-        institutionInfoVo.setUpdateTime(date);
+            institutionInfoVo.setUpdateTime(date);
         try{
             institutionInfoService.update(institutionInfoVo);
             return 200;

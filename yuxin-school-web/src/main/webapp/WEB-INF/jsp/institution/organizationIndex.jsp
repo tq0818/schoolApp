@@ -75,10 +75,10 @@
                     </div>
                     <div class="margin10 marginTop10" >
                         <span class="text">创建时间</span>
-                        <input type="text" name="startTime" id="startTime" class="date-picker from" readonly onchange="clearStartTime()"/>
+                        <input type="text" name="startTime" id="startTime" class="date-picker from" readonly />
                         <em>到</em>
-                        <input type="text" name="endTime" id="endTime" class="date-picker to"  readonly onchange="clearEndTime()"/>
-                        <input type="text" id="insName" name="username" placeholder="请输入机构名称" onchange="clearName()"/>
+                        <input type="text" name="endTime" id="endTime" class="date-picker to"  readonly />
+                        <input type="text" id="insName" name="username" placeholder="请输入机构名称" />
                         <span><a href="javascript:;" class="btn btn-primary searchContents" style="margin: 0 20px;">查询</a></span>
                         <span style="float: right"><a href="javascript:;" class="btn btn-primary addOrganization" style="margin: 0 20px;">添加机构</a></span>
                     </div>
