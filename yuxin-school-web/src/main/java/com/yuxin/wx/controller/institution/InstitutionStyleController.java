@@ -265,6 +265,7 @@ public class InstitutionStyleController {
             System.out.println("选中区域:["+x+","+y+","+w+","+h+"]----原图选中区域:["+xx+","+yy+","+ww+","+hh+"]");
             //在原图中切图
             String cutImgPath= ImageUtils.cutImage(tempPath,target,xx,yy,ww,hh);
+            ImageUtils.resize(target, target, 446);
             try {
                 realPath=FileUtil.upload(cutImgPath,"institutionStyle", WebUtils.getCurrentCompanyId()+"");
             } catch (Exception e) {
@@ -344,6 +345,28 @@ public class InstitutionStyleController {
 			if (!StringUtils.isEmpty(videoId)) {
 				//删除视频表
 				delVideo(Integer.parseInt(videoId));
+			}
+		}else{
+			//提前判断page为2时是否还存在数据，不存在则返回1
+	    	String pageNos = request.getParameter("pageNo");
+	    	if (StringUtils.isNotEmpty(pageNos)) {
+	    		Integer page = Integer.parseInt(pageNos);
+	    		if (page.intValue() - 1 == 1) {
+	    			//获取机构id
+		    		String relationId = request.getParameter("relationId");
+		    		InstitutionStyle institutionStyle = new InstitutionStyle();
+		    		institutionStyle.setRelationId(Integer.parseInt(relationId));
+		    		institutionStyle.setPageSize(9);
+		    		institutionStyle.setPage(page);
+		    		//查询风采图@
+		    		institutionStyle.setSourceFlag(0);
+		    		institutionStyle.setType(2);
+		    		List<InstitutionStyle> styleInfoList = institutionStyleServiceImpl.queryInstitutionStyle(institutionStyle);
+		    		if(styleInfoList == null || styleInfoList.size() == 0){
+		    			return "reset";
+		    		}
+				}
+				
 			}
 		}
     	return "success";

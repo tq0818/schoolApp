@@ -21,7 +21,6 @@
 <input type="hidden" id="pageNo" value='${pageNo}'/>
 <input type="hidden" id="rowCount" value='${rowCount}'/>
 <input type="hidden" id="relationId" value='${relationId}'/>
-
       <span class="labelName">风采展示:</span>
       <ul style="display: inline-block;width: auto;" class="newUl">
           <li class="addImg mienShow" id="eleShow">
@@ -42,30 +41,35 @@
               </li>
           </c:forEach>
       </ul>
-
+	  
 </body>
 </html>
 <script type="text/javascript" src="<%=rootPath%>/javascripts/plus/jquery.pagination.js"></script>
 <script>
-
-    $(".pagination").pagination('${rowCount}', {
-        next_text : "下一页",
-        prev_text : "上一页",
-        current_page :'${pageNo - 1}',
-        link_to : "javascript:void(0)",
-        num_display_entries : 9,
-        items_per_page : 9,
-        num_edge_entries : 1,
-        callback:function(page){
-            var pageNo = page + 1;
-            console.log(pageNo);
-            queryInstitutionStyle(pageNo);
-        }
-    });
+ $(function(){
+	 console.log("总数"+$("#rowCount").val());
+	 console.log("页码 "+$("#pageNo").val());
+	 $(".pagination").pagination('${rowCount}', {
+	        next_text : "下一页",
+	        prev_text : "上一页",
+	        current_page :'${pageNo - 1}',
+	        link_to : "javascript:void(0)",
+	        num_display_entries : 9,
+	        items_per_page : 9,
+	        num_edge_entries : 1,
+	        callback:function(page,jq){
+	        	console.log("page:"+page);
+	            var pageNo = page + 1;
+	            console.log(pageNo);
+	            queryInstitutionStyle(pageNo);
+	        }
+	    }); 
+ });
     
     //点击风采上传弹窗
     $('#eleShow').click(function () {
         $('#elegant').show();
+        $("#imgDataStyle").siblings().text("").text("添加图片");
     });
     $('.closeElePic').click(function () {
         $('#elegant').hide();
@@ -82,13 +86,14 @@
         $('#elegant').show();
         $("#updateId").attr("value",$(this).attr("data-value"));
         console.log($(this).parent());
-        $("#targetStyle").attr("src",$(this).parent().siblings(".imgClick").attr("src"));
+        $("#targetStyle").attr("src",$(this).parent().siblings(".imgClick").attr("src")).attr("style","");
         $("#styleContent").val($(this).parent().siblings(".imgInfo").text());
 	      //初始化xywh
 	   	 $("#x").val("0");
 	   	 $("#y").val("0");
 	   	 $("#w").val("0");
 	   	 $("#h").val("0");
+	   	 $("#imgDataStyle").siblings().text("").text("更改图片");
     });
     
     //为图片添加点击事件,以便图片方大
@@ -124,15 +129,20 @@
 		$.confirm("是否删除该图片?",function(data){
 			if(data){
 				var pageNo = $("#pageNo").val();
-				console.log("当前页"+pageNo);
+				var relationId = $("#relationId").val();
+				console.log("当前页"+pageNo+","+relationId);
 				$.ajax({
 			          url: rootPath + "/institutionStyle/deleteStyle",
-			          data: {"primaryId":id
+			          data: {"primaryId":id,
+			        	  "pageNo":pageNo,
+			        	  "relationId":relationId
 			          },
 			          dataType: "json",
 			          success: function (data) {
 			              if(data == "success"){
 			            	  queryInstitutionStyle(pageNo);
+			              }else if(data == "reset"){//刷新
+			            	  window.location.href=rootPath +"/institutionStyle/queryInstitutionStyle?relationId="+relationId; 
 			              }
 			          }
 			      });

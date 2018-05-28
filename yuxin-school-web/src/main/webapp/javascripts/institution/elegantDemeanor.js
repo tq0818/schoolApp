@@ -49,7 +49,7 @@ $(function () {
     	 $('.videoUpload').show();
     	 $(".videoStyle").val($("#videoInfoName").val());
          $(".writeWord").val($("#videoInfoContent").val());
-         $("#targetVideo").attr("src",$("#videoInfoImg").attr("src"));
+         $("#targetVideo").attr("src",$("#videoInfoImg").attr("src")).attr("style","");
          //将更新id设置到updateId上去
     	 $("#updateId").val($("#videoInfoId").val());
          //初始化xywh
@@ -57,11 +57,14 @@ $(function () {
     	 $("#y").val("0");
     	 $("#w").val("0");
     	 $("#h").val("0");
+    	 //
+    	 $("#imgDataVideo").siblings().text("").text("更改图片");
     });
 
     //点击风采上传弹窗
     $('#eleShow').click(function () {
         $('#elegant').show();
+        $("#imgDataStyle").siblings().text("").text("添加图片");
     });
     $('.closeElePic').click(function () {
         $('#elegant').hide();
@@ -77,8 +80,8 @@ $(function () {
     $(".btnUpdateCover").click(function () {
     	console.log($(this).attr("data-value"));
     	 $('#cover').show();
-    	 //将原有图片设置上去
-    	 $('#target').attr("src",$(this).attr("data-value"));
+    	 //将原有图片设置上去 //将图片框的样式去掉，让其自动伸展
+    	 $('#target').attr("src",$(this).attr("data-value")).attr("style","");
     	 //将更新id设置到updateId上去
     	 $("#updateId").val($("#coverId").val());
     	 //初始化xywh
@@ -86,6 +89,8 @@ $(function () {
     	 $("#y").val("0");
     	 $("#w").val("0");
     	 $("#h").val("0");
+    	 //修改文字
+    	 $("#imgData").siblings().text("").text("更改图片");
     });
     //关闭大图
     $(document).click(function(){
