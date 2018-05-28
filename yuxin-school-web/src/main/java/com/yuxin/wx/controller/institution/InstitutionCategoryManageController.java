@@ -223,14 +223,14 @@ public class InstitutionCategoryManageController {
                 slW=100 * realW/realH;
             }
         }else if("3".equals(insFlag)){
-            if(realW/realH>300/200){
+            if(realW/realH>180/120){
                 //过宽
-                slH=300 * realH/realW;
-                slW=300;
+                slH=180 * realH/realW;
+                slW=180;
             }else{
                 //过高
-                slH=200;
-                slW=200 * realW/realH;
+                slH=120;
+                slW=120 * realW/realH;
             }
         }else if("4".equals(insFlag)){
             if(realW/realH>300/120){

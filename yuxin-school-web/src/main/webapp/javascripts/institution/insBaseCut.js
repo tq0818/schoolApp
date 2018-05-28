@@ -13,11 +13,11 @@ var jcrop_apis;
            minHeight =30 ;
            minWidth = 30;
        }else if(picFlag==3){ //封面
-           $scale = 300/200;
-           maxHeight = 200;
-           maxWidth = 300;
-           minHeight =2 ;
-           minWidth = 3;
+           $scale = 180/120;
+           maxHeight = 120;
+           maxWidth = 180;
+           minHeight =10 ;
+           minWidth = 15;
        }else if(picFlag==4){
            $scale = 300/120;
            maxHeight = 120;
