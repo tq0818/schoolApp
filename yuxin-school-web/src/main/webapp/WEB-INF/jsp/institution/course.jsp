@@ -55,7 +55,9 @@
                     <a href="javascript:void(0)" class="btn btn-default onlineStatus btn-mb">已关联</a>
                     <a href="javascript:void(0)" class="btn btn-default onlineStatus btn-mb">未关联</a>
                 </div>
+                <c:if test="${userType != 'INSTITUTION_MANAGE'}">
                 <a href="javascript:void(0)" class="btn btn-primary btn-mb addCourse" style="float: right;margin-right: 200px;margin-bottom: 10px;">添加课程</a>
+                </c:if>
                 <div style="width: 80%;margin: auto;">
                     <table class="table table-center" id="tableList">
                         <tbody id="onlineTbody">

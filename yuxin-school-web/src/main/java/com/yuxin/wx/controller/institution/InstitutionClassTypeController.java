@@ -72,6 +72,7 @@ public class InstitutionClassTypeController {
           //  model.addAttribute("addOnlineFlag","INSTITUTION_MANAGE".equalsIgnoreCase(user.getUserType()) ? 1 : 0 );
             System.out.println("用户类型为 : "+user.getUserType());
             model.addAttribute("addOnlineFlag", 1 );
+            model.addAttribute("userType", user.getUserType() );
             //INSTITUTION_MANAGE
             return "institution/course";
         } catch (Exception e) {
