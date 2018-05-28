@@ -642,7 +642,7 @@ function updataIns() {
     let cusLabel = $('.cusLabel');
     let cusLabelName = '';
     for(let i = 0;i<cusLabel.length;i++){
-        var cusLabelNames = systemLabel.eq(i).val();
+        var cusLabelNames = cusLabel.eq(i).val();
         cusLabelNames = cusLabelNames.split(" ").join("");
         if(cusLabelNames.length != 0){
             cusLabelName+= cusLabel.eq(i).val()+',';
@@ -662,6 +662,8 @@ function updataIns() {
     }
     var insId = $("#insId").val();
     var reservService = $("#reservService").val();
+
+    console.log(labelName,cusLabelName,specialName);
 
     if(insName != insNameOle){
 
@@ -777,7 +779,7 @@ function savePic() {
     //.jpg,.jpeg,.gif,.png,.bmp,.ico
     if(!(lowwerFileStr.indexOf(".jpg")==(fileStr.length-4)
             ||lowwerFileStr.indexOf(".jpeg")==(fileStr.length-5)
-            ||lowwerFileStr.indexOf(".gif")==(fileStr.length-4)
+            /*||lowwerFileStr.indexOf(".gif")==(fileStr.length-4)*/
             ||lowwerFileStr.indexOf(".png")==(fileStr.length-4)
             ||lowwerFileStr.indexOf(".bmp")==(fileStr.length-4)
             ||lowwerFileStr.indexOf(".ico")==(fileStr.length-4)

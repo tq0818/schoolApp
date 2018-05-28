@@ -107,7 +107,11 @@ public class InstitutionCategoryManageController {
             if("1".equals(flag)){
                 String isEnable = request.getParameter("enable");
                 if("1".equals(isEnable)){
+                    //禁用
                     insCate.setIsEnable(0);
+                    insCate.setFirstRecommend(0);
+                    insCate.setSecondRecommend(0);
+                    insCate.setThirdRecommend(0);
                 }else{
                     insCate.setIsEnable(1);
                 }

@@ -4,4 +4,6 @@ import com.yuxin.wx.model.institution.InstitutionRelationVo;
 
 public interface InstitutionRelationService {
     void insert(InstitutionRelationVo institutionRelationVo);
+
+    void update(InstitutionRelationVo institutionRelationVo);
 }

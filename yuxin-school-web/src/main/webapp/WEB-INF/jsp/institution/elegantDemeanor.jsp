@@ -50,7 +50,7 @@
                             </c:when>
                             <c:otherwise>
                             	<li>
-		                            <img src="${coverInfo.imgUrl}" alt="" style="width: 100%;height: auto" class="imgClick">
+		                            <img src="${coverInfo.imgUrl}" alt="" style="width: 100%;height: 100%" class="imgClick">
 		                            <input id="coverId" value="${coverInfo.id}" type="hidden"/>
 		                            <span class="imgInfo">学校建筑内部图</span>
 		                            <a href="javascript:void(0)" class="btn btn-primary btn-sm rightShow">封面图片</a>
@@ -76,7 +76,7 @@
 							</c:when>
 							<c:otherwise>
 								<li>
-		                            <img src="${videoInfo.imgUrl}" alt="" style="width: 100%;height: auto"  class="imgClick" id="videoInfoImg">
+		                            <img src="${videoInfo.imgUrl}" alt="" style="width: 100%;height:100%"  class="imgClick" id="videoInfoImg">
 		                             <input id="videoInfoId" value="${videoInfo.id}" type="hidden"/>
 		                             <input id="videoInfoName" value="${videoInfo.name}" type="hidden"/>
 		                             <input id="videoInfoContent" value="${videoInfo.content}" type="hidden"/>
@@ -119,15 +119,15 @@
 
 
 <%--视频上传弹窗--%>
-<div class="videoUpload" style="height: 532px;">
+<div class="videoUpload" style="height: 705px;">
     <h5>视频</h5>
     <div>
         <span style="padding-left: 6px;">视频封面:</span>
-        <p style="width: 218px;height: 120px;border: 1px solid #e4e4e4;margin: auto;text-align: center;overflow: auto;">
-            <img src="" alt="" style="width: 136px;height: 116px;" id="targetVideo">
+        <p style="width: 304px;height: 304px;border: 1px solid #e4e4e4;margin: auto;text-align: center;overflow: auto;">
+            <img src="" alt="" style="width: 300px;height: 300px;" id="targetVideo">
         </p>
         <a href="javascript:void(0)" class="addPic" style="margin-left: 165px;margin-top: 5px;">
-            添加图片
+           	<span>添加图片</span>
            <input type="file" class="btn btn-mini btn-primary" id="imgDataVideo" name="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(1)" value="重新选择文件"/>
         </a>
     </div>
@@ -172,7 +172,7 @@
             <img src="" alt="" style="margin: auto;width: 300px;height: 300px;" id="targetStyle" class="picStyle">
         </p>
         <a href="javascript:void(0)" class="addPic" style="margin-top: 5px;margin-bottom: 20px;">
-            添加图片
+            <span>添加图片</span>
            <input type="file" class="btn btn-mini btn-primary" id="imgDataStyle" name="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(2)" value="重新选择文件"/>
         </a>
     </div>
@@ -193,7 +193,7 @@
             <img src="" alt="" style="width: 300px;height: 300px;" id="target" class="picStyle">
         </p>
         <a href="javascript:void(0)" class="addPic" style="margin-top: 5px;margin-bottom: 20px;">
-           添加图片
+          <span>添加图片</span>
            <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgData" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic(0)" value="重新选择文件"/>
         </a>
     </div>
