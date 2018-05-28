@@ -169,68 +169,62 @@ function getTeacherInfo(){
 }
 
 
+
 //点击提交按钮
 var isClick = 0;
 
+
 $('.closeMechanismCommit').click(function(){
 
-    var labelsInfo = getLabels();
-    if(labelsInfo == '标签重复'){
-        $.msg('标签重复');
-        return;
-    }
-
-    var param = {
-        headUrl:$("#hidHeadImg").val(),
-        name:$("#teacherName").val(),
-        school:$("#teacherSchool").val(),
-        label:getLabels(),
-        desc:$('#summary').val(),
-        id:$("#hidId").val(),
-        insId:getInsId()
-    }
-
-    if(param.name == ''){
-        $.msg('请填写老师名称');
-        return;
-    }
-
-    if(param.school == ''){
-        $.msg('请填写老师毕业院校');
-        return;
-    }
-
-    if(param.label == null){
-        $.msg('请不要添加空白标签');
-        return;
-    }
-
-    if(param.desc == ''){
-        $.msg('请填写老师简介');
-        return;
-    }
-
-
-
-
-    var url = (param.id == '' ? '/institutionTeacher/addTeacher' : '/institutionTeacher/updateTeacher');
-
-    $.post(rootPath+url,param,function(json) {
-       // console.log(json);
-        if(json.status == 1){
-            $.msg('操作成功',50,function () {
-
-               $('.closeMechanismCommit').unbind();
-
-                window.location.href = rootPath + "/InsInfoBase/famousTeacher/"+getInsId();
-            })
-        }else{
-            isClick = 0;
-            $.msg('操作失败');
+        var labelsInfo = getLabels();
+        if(labelsInfo == '标签重复'){
+            $.msg('标签重复');
+            return;
         }
-    })
 
+        var param = {
+            headUrl:$("#hidHeadImg").val(),
+            name:$("#teacherName").val(),
+            school:$("#teacherSchool").val(),
+            label:getLabels(),
+            desc:$('#summary').val(),
+            id:$("#hidId").val(),
+            insId:getInsId()
+        }
 
+        if(param.name == ''){
+            $.msg('请填写老师名称');
+            return;
+        }
+
+        if(param.school == ''){
+            $.msg('请填写老师毕业院校');
+            return;
+        }
+
+        if(param.label == null){
+            $.msg('请不要添加空白标签');
+            return;
+        }
+
+        if(param.desc == ''){
+            $.msg('请填写老师简介');
+            return;
+        }
+
+        var url = (param.id == '' ? '/institutionTeacher/addTeacher' : '/institutionTeacher/updateTeacher');
+
+        $.post(rootPath+url,param,function(json) {
+            // console.log(json);
+            if(json.status == 1){
+                $.msg('操作成功');
+                window.history.go(-1);
+                //window.location.href = rootPath + "/InsInfoBase/famousTeacher/"+getInsId();
+            }else{
+                isClick = 0;
+                $.msg('操作失败');
+            }
+        })
 });
 
 

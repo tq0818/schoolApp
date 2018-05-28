@@ -71,6 +71,7 @@ public class ReServApplyServiceImpl extends BaseServiceImpl implements ReServApp
             pageFinder.getData().get(i).setTime(format.format(pageFinder.getData().get(i).getCreateTime()));
             j++;
         }
+        //点击了预约课程时，移除预约的机构，只保留该课程的预约信息
         if(null != reServApply.getInsClassId() && !"".equals(reServApply.getInsClassId())){
             for(int i = 0;i<pageFinder.getData().size();i++){
                 if( null == pageFinder.getData().get(i).getClassName() || "".equals(pageFinder.getData().get(i).getClassName()) ){

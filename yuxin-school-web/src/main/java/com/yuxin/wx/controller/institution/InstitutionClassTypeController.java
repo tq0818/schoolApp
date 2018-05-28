@@ -72,6 +72,7 @@ public class InstitutionClassTypeController {
           //  model.addAttribute("addOnlineFlag","INSTITUTION_MANAGE".equalsIgnoreCase(user.getUserType()) ? 1 : 0 );
             System.out.println("用户类型为 : "+user.getUserType());
             model.addAttribute("addOnlineFlag", 1 );
+            model.addAttribute("userType", user.getUserType() );
             //INSTITUTION_MANAGE
             return "institution/course";
         } catch (Exception e) {
@@ -89,12 +90,20 @@ public class InstitutionClassTypeController {
      */
     @ResponseBody
     @RequestMapping(value = "/getClassTypeList", method = RequestMethod.POST)
-    public PageFinder<InstitutionClassTypeVo> getClassTypeList(HttpServletRequest request) {
+    public JSONObject getClassTypeList(HttpServletRequest request) {
+        JSONObject jsonObject = new JSONObject();
         try {
             Integer insId = Integer.valueOf(request.getParameter("insId"));
             Integer status = Integer.valueOf(request.getParameter("status"));
             Integer pageStart = Integer.valueOf(request.getParameter("pageStart"));
             Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
+
+            Map<String, Object> map = new HashMap<>();
+            Integer status2 = Integer.valueOf(request.getParameter("status"));
+            map.put("isShelves",status2);
+            map.put("insId",insId);
+            Integer isrecommendCount = institutionClassTypeService.findIsrecommendCount(map);
+
 
             PageFinder<InstitutionClassTypeVo> page = institutionClassTypeService.page(insId, status, pageStart, pageSize);
             List<InstitutionClassTypeVo> list = page.getData();
@@ -104,7 +113,9 @@ public class InstitutionClassTypeController {
                     list.get(i).setFullCoverUrl("http://"+propertiesUtil.getProjectImageUrl()+"/"+list.get(i).getCoverUrl());
                 }
             }
-            return page;
+            jsonObject.put("page",page);
+            jsonObject.put("isrecommendCount",isrecommendCount);
+            return jsonObject;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -216,13 +227,13 @@ public class InstitutionClassTypeController {
                 return JsonMsg.ERROR;
             }
 
-            if (entity.getIsRecommend() == 0) {
+           /* if (entity.getIsRecommend() == 0) {
                 //当前课程是处于未推荐状态，要推荐该课程，则需要判断库中推荐课程数量是否超过最大推荐量
                 int num = institutionClassTypeService.getRecommendCountByClassTypeId(insId);
                 if (num >= MAX_RECOMMEND_NUM) {
                     return "该机构推荐课程已经达到最大个数" + MAX_RECOMMEND_NUM;
                 }
-            }
+            }*/
 
             entity.setIsRecommend(entity.getIsRecommend() == 1 ? 0 : 1);
             entity.setUpdateTime(new java.util.Date());

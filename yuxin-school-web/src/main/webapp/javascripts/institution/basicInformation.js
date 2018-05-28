@@ -275,14 +275,28 @@ var j = 1;
         let systemLabel = $('.sysLabel');
         let labelName = [];
         for(let i = 0;i<systemLabel.length;i++){
-            labelName.push(systemLabel.eq(i).val());
+            var labelNames = systemLabel.eq(i).val();
+            labelNames = labelNames.split(" ").join("");
+            if(labelNames.length !=0){
+                labelName.push(systemLabel.eq(i).val());
+            }else{
+                $.msg("系统标签名称不能为空！");
+                return;
+            }
         }
 
         //自定义标签判重
         let cusLabel = $('.cusLabel');
         let cusLabelArr = [];
         for(let i = 0;i<cusLabel.length;i++){
-            cusLabelArr.push(cusLabel.eq(i).val());
+            var cusLabelName = cusLabel.eq(i).val();
+            cusLabelName = cusLabelName.split(" ").join("");
+            if(cusLabelName.length !=0){
+                cusLabelArr.push(cusLabel.eq(i).val());
+            }else{
+                $.msg("自定义标签名称不能为空！");
+                return;
+            }
         }
 
         //特色服务标签判重
@@ -566,9 +580,9 @@ function updataIns() {
     let systemLabel = $('.sysLabel');
     let labelName = '';
     for(let i = 0;i<systemLabel.length;i++){
-        if(i == systemLabel.length-1){
-            labelName+= systemLabel.eq(i).val()+',';
-        }else{
+        var labelNames = systemLabel.eq(i).val();
+        labelNames = labelNames.split(" ").join("");
+        if(labelNames.length != 0){
             labelName+= systemLabel.eq(i).val()+',';
         }
     }
@@ -628,11 +642,12 @@ function updataIns() {
     let cusLabel = $('.cusLabel');
     let cusLabelName = '';
     for(let i = 0;i<cusLabel.length;i++){
-        if(i == cusLabel.length-1){
-            cusLabelName+= cusLabel.eq(i).val()+',';
-        }else{
+        var cusLabelNames = systemLabel.eq(i).val();
+        cusLabelNames = cusLabelNames.split(" ").join("");
+        if(cusLabelNames.length != 0){
             cusLabelName+= cusLabel.eq(i).val()+',';
         }
+
     }
 
     //特色服务
@@ -663,9 +678,6 @@ function updataIns() {
                     return;
                 }else{
 
-
-                    console.log(province,city,area,address,labelName,mobile,firstCat,secondCat,cusLabelName,specialName,imgUrl)
-
                     $.ajax({
                         url:rootPath+"/InsInfoBase/updateIns",
                         type:"post",
@@ -694,6 +706,7 @@ function updataIns() {
                         success:function(data){
                             if(data == '200'){
                                 $.msg("保存成功")
+                                window.location.reload();
                             }else{
                                 $.msg("保存失败")
                             }
@@ -735,6 +748,7 @@ function updataIns() {
             success:function(data){
                 if(data == '200'){
                     $.msg("保存成功")
+                    window.location.reload();
                 }else{
                     $.msg("保存失败")
                 }

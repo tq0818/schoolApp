@@ -249,10 +249,23 @@
 		INNER JOIN institution_info info ON ictr.`ins_id` = info.`id`
 		<if test="insId != null and insId != ''">and info.id = #{insId} </if>
 
-		order by ict.`is_reser` DESC , ict.is_shelves DESC , ict.create_time DESC
+		order by ict.`is_recommend` DESC , ict.is_shelves DESC , ict.create_time DESC
 
 		limit #{firstIndex},#{pageSize}
 	</select>
+
+	<select id="findIsrecommendCount" parameterType="map" resultType="Integer" >
+		SELECT
+			count(1)
+		FROM
+			ins_class_type ict
+		INNER JOIN ins_class_type_relation ictr ON ict.`id` = ictr.`class_type_id`
+		INNER JOIN institution_info info ON ictr.`ins_id` = info.`id`
+		AND ictr.is_online = 0 and ict.is_recommend = 1
+
+		<if test="insId != null and insId != ''">and info.id = #{insId} </if>
+	</select>
+
 	
 	<select id="pageCount" resultType="int" parameterType="map">
 		SELECT COUNT(ict.id) FROM  ins_class_type  ict 
@@ -344,9 +357,11 @@
 		ictr.id rid
 		FROM
 		class_type ct
-		INNER JOIN company c
-		ON ct.`company_id` = c.`id`
-		AND ct.is_sale = 1
+		INNER JOIN commodity_product_realtion cp on cp.product_id = ct.id
+		INNER JOIN commodity cy on cy.id = cp.com_id
+		INNER JOIN app_shelves ap on ap.comdity_id = cy.id
+		INNER JOIN company c ON ct.`company_id` = c.`id`
+		AND  ap.is_shelves =1
 		AND ct.`name` = #{name}
 		LEFT JOIN `sys_config_item` sci
 		ON ct.`item_third_code` = sci.`item_code`

@@ -5,10 +5,7 @@ import com.yuxin.wx.api.institution.*;
 import com.yuxin.wx.api.riseschool.RiseSchoolManageService;
 import com.yuxin.wx.api.user.IUsersService;
 import com.yuxin.wx.common.PageFinder;
-import com.yuxin.wx.model.institution.InsFeaturesVo;
-import com.yuxin.wx.model.institution.InstitutionCategoryVo;
-import com.yuxin.wx.model.institution.InstitutionInfoVo;
-import com.yuxin.wx.model.institution.InstitutionLabelVo;
+import com.yuxin.wx.model.institution.*;
 import com.yuxin.wx.model.riseschool.SysDictVo;
 import com.yuxin.wx.model.user.Users;
 import com.yuxin.wx.util.ImageUtils;
@@ -57,6 +54,8 @@ public class InstitutionInfoController {
     private MerchantEntryService merchantEntryService;
     @Autowired
     private RiseSchoolManageService riseSchoolManageServiceImpl;
+    @Autowired
+    private InstitutionRelationService institutionRelationService;
     /**
      * 机构首页
      * @return
@@ -308,10 +307,17 @@ public class InstitutionInfoController {
         institutionInfoVo.setId(Integer.parseInt(id));
         if(flag .equals("0")){
             institutionInfoVo.setIsShelves(Integer.parseInt(num));
+            if(num.equals("0")){
+                //下架机构
+                InstitutionRelationVo institutionRelationVo = new InstitutionRelationVo();
+                institutionRelationVo.setInsId(Integer.parseInt(id));
+                institutionRelationVo.setIsRecommend(0);
+                institutionRelationService.update(institutionRelationVo);
+            }
         }else{
             institutionInfoVo.setIsCertified(Integer.parseInt(num));
         }
-        institutionInfoVo.setUpdateTime(date);
+            institutionInfoVo.setUpdateTime(date);
         try{
             institutionInfoService.update(institutionInfoVo);
             return 200;
@@ -484,56 +490,4 @@ public class InstitutionInfoController {
         return json;
     }
 
-
-    @RequestMapping(value = "/indexParam" ,method=RequestMethod.POST)
-    public void indexParam(HttpServletRequest request,InstitutionInfoVo insInfoVo){
-        HttpSession session = request.getSession();
-        session.setAttribute("province",insInfoVo.getProvince());
-        session.setAttribute("city",insInfoVo.getCity());
-        session.setAttribute("area",insInfoVo.getArea());
-        //根据code查找codename
-        if(null != insInfoVo.getProvince() && !"".equals(insInfoVo.getProvince())){
-            String provicenName = riseSchoolManageServiceImpl.queryCodeName(insInfoVo.getProvince());
-            session.setAttribute("provicenName",provicenName);
-        }else{
-            session.setAttribute("provicenName","");
-        }
-
-        if(null != insInfoVo.getCity() && !"".equals(insInfoVo.getCity())){
-            String cityName = riseSchoolManageServiceImpl.queryCodeName(insInfoVo.getCity());
-            session.setAttribute("cityName",cityName);
-        }else{
-            session.setAttribute("cityName","");
-        }
-
-        if(null != insInfoVo.getArea() && !"".equals(insInfoVo.getArea())){
-            String areaName = riseSchoolManageServiceImpl.queryCodeName(insInfoVo.getArea());
-            session.setAttribute("areaName",areaName);
-        }else{
-            session.setAttribute("areaName","");
-        }
-
-        session.setAttribute("oneLevelId",insInfoVo.getOneLevelId());
-        session.setAttribute("twoLevelId",insInfoVo.getTwoLevelId());
-        if(null != insInfoVo.getOneLevelId() && !"".equals(insInfoVo.getOneLevelId())){
-            InstitutionCategoryVo categoryVo = institutionCategoryService.getCateById(Integer.parseInt(insInfoVo.getOneLevelId()));
-            session.setAttribute("oneLevelName",categoryVo.getCodeName());
-        }else{
-            session.setAttribute("oneLevelName","");
-        }
-
-        if(null != insInfoVo.getTwoLevelId() && !"".equals(insInfoVo.getTwoLevelId())){
-            InstitutionCategoryVo categoryVo = institutionCategoryService.getCateById(Integer.parseInt(insInfoVo.getTwoLevelId()));
-            session.setAttribute("twoLevelName",categoryVo.getCodeName());
-        }else{
-            session.setAttribute("twoLevelName","");
-        }
-
-        session.setAttribute("isCertified",insInfoVo.getIsCertified());
-        session.setAttribute("isShelves",insInfoVo.getIsShelves());
-        session.setAttribute("endTime",insInfoVo.getEndTime());
-        session.setAttribute("startTime",insInfoVo.getStartTime());
-        session.setAttribute("name",insInfoVo.getName());
-        session.setAttribute("page",insInfoVo.getPage());
-    }
 }

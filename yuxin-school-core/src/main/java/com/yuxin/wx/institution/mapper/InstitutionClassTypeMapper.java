@@ -92,6 +92,8 @@ public interface InstitutionClassTypeMapper {
      */
     int getRecommendCountByClassTypeId(Integer insId);
 
+    Integer findIsrecommendCount(Map<String, Object> map);
+
     /**
      * 根据条件获取在线课程列表信息
      *

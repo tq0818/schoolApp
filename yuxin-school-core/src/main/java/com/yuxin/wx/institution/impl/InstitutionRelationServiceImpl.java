@@ -17,4 +17,9 @@ public class InstitutionRelationServiceImpl implements InstitutionRelationServic
     public void insert(InstitutionRelationVo institutionRelationVo) {
         institutionRelationMapper.insert(institutionRelationVo);
     }
+
+    @Override
+    public void update(InstitutionRelationVo institutionRelationVo) {
+        institutionRelationMapper.update(institutionRelationVo);
+    }
 }

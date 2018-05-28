@@ -1,69 +1,9 @@
 insId = '';
-
+var pageNo = '';
+var pageCount = '';
+var size = '';
 
 $(function () {
-    var twoLevelIdI = $("#twoLevelIdI").val();
-    var twoLevelNameI = $("#twoLevelNameI").val();
-
-    if(twoLevelIdI != null && twoLevelIdI != ''){
-        var html ='<option value="">请选择二级分类</option>';
-        html+='<option value="'+twoLevelIdI +'" selected>'+ twoLevelNameI+'</option>'
-        $("#findSecondCategorys").html(html);
-    }
-
-    var isCertifiedI = $("#isCertifiedI").val();
-    var isShelvesI = $("#isShelvesI").val();
-
-    if(isCertifiedI == ''){
-        var html ='';
-        html+='<span>认证状态</span>';
-        html+=' <a href="javascript:void(0)" class="btn btn-default btn-primary btn-mb">全部</a>\n' +
-            '<a href="javascript:void(0)" class="btn btn-default btn-mb">已认证</a>\n' +
-            '<a href="javascript:void(0)" class="btn btn-default btn-mb">未认证</a>'
-        $("#isCertified").html(html);
-    }else if(isCertifiedI == 1){
-        var html ='';
-        html+='<span>认证状态</span>';
-        html+=' <a href="javascript:void(0)" class="btn btn-default  btn-mb">全部</a>\n' +
-            '<a href="javascript:void(0)" class="btn btn-default btn-mb btn-primary">已认证</a>\n' +
-            '<a href="javascript:void(0)" class="btn btn-default btn-mb">未认证</a>'
-        $("#isCertified").html(html);
-    }else if(isCertifiedI == 0){
-        var html ='';
-        html+='<span>认证状态</span>';
-        html+=' <a href="javascript:void(0)" class="btn btn-default  btn-mb">全部</a>\n' +
-            '<a href="javascript:void(0)" class="btn btn-default btn-mb ">已认证</a>\n' +
-            '<a href="javascript:void(0)" class="btn btn-default btn-mb btn-primary">未认证</a>'
-        $("#isCertified").html(html);
-    }
-
-    if(isShelvesI == ''){
-        var html ='';
-        html+='<span>上下架&nbsp&nbsp&nbsp</span>';
-        html+='  <a href="javascript:void(0)" class="btn btn-default btn-primary btn-mb">全部</a>'+
-            '<a href="javascript:void(0)" class="btn btn-default btn-mb">已上架</a>'+
-            '<a href="javascript:void(0)" class="btn btn-default btn-mb">未上架</a>'
-        $("#isShelves").html(html);
-    }else if(isShelvesI == 1){
-        var html ='';
-        html+='<span>上下架&nbsp&nbsp&nbsp</span>';
-        html+='  <a href="javascript:void(0)" class="btn btn-default  btn-mb">全部</a>'+
-            '<a href="javascript:void(0)" class="btn btn-default btn-mb btn-primary">已上架</a>'+
-            '<a href="javascript:void(0)" class="btn btn-default btn-mb">未上架</a>'
-        $("#isShelves").html(html);
-    }else if(isShelvesI == 0){
-        var html ='';
-        html+='<span>上下架&nbsp&nbsp&nbsp</span>';
-        html+='  <a href="javascript:void(0)" class="btn btn-default  btn-mb">全部</a>'+
-            '<a href="javascript:void(0)" class="btn btn-default btn-mb">已上架</a>'+
-            '<a href="javascript:void(0)" class="btn btn-default btn-mb btn-primary">未上架</a>'
-        $("#isShelves").html(html);
-    }
-
-    $("#startTime").val($("#startTimeI").val());
-    $("#endTime").val($("#endTimeI").val());
-    $("#insName").val($("#nameI").val());
-
     //初始化数据
     //initDate();
     //选中二级菜单
@@ -482,10 +422,6 @@ $(function () {
         findInsDate(1);
     });
 
-    $('body').on('click','.ingInfo',function () {
-        indexParam();
-    })
-
 
 });
 
@@ -789,6 +725,10 @@ function findInsDate(page) {
             $(".loading-bg").show();
         },
         success:function(jsonData){
+            pageNo = jsonData.pageNo;
+            pageCount = jsonData.pageCount;
+            size = jsonData.data.length;
+
 
             var html = '\'<tr data-buy="true">' +
                 '<th width="3%">序号</th>' +
@@ -846,11 +786,11 @@ function findInsDate(page) {
                         '<a href="javascript:void(0)" class="countManage" id="countManage" data-id="'+item.id+'">'+'账号管理'+'</a>|'+
                         '<a href="javascript:void(0)" class="manageBtn">'+'管理'+'</a>'+
                         '<ul class="none box" style="display: none">'+
-                        '<li><a href="'+rootPath+'/InsInfoBase/findInsById?id='+item.id+'" class="ingInfo">基本信息</a>'+'</li>'+
-                        '<li><a href="'+rootPath+'/institutionStyle/queryInstitutionStyle?relationId='+item.id+'">风采管理</a>'+'</li>'+
-                        '<li><a href="'+rootPath+'/institutionClassType/classTypeMain/'+item.id+'">课程管理</a>'+'</li>'+
-                        '<li><a href="'+rootPath+'/InsInfoBase/famousTeacher/'+item.id+'">名师管理</a>'+'</li>'+
-                        '<li><a href="'+rootPath+'/comment/insCommentIndex?id='+item.id+'">评论管理</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/InsInfoBase/findInsById?id='+item.id+'" class="ingInfo" target="_blank">基本信息</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/institutionStyle/queryInstitutionStyle?relationId='+item.id+'" target="_blank">风采管理</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/institutionClassType/classTypeMain/'+item.id+'" target="_blank">课程管理</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/InsInfoBase/famousTeacher/'+item.id+'" target="_blank">名师管理</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/comment/insCommentIndex?id='+item.id+'" target="_blank">评论管理</a>'+'</li>'+
                         '</ul>'+
                         '</td>'+
                         '</tr>'
@@ -907,6 +847,52 @@ function searchCount(){
 
 //修改上下架，认证
 function authFrameLower(id,num,flag) {
+    var isCertifiedVal = '2';
+    let isCertified = $('#isCertified').children('a');
+    for(let i=0;i<isCertified.length;i++){
+        if(isCertified.eq(i).hasClass('btn-primary')){
+            if(i==0){
+                isCertifiedVal = '2';
+            }else if(i==1){
+                isCertifiedVal = 1;
+            }else{
+                isCertifiedVal = 0;
+            }
+        }
+    }
+
+    var isShelvesVal = '2';
+    let isShelves = $('#isShelves').children('a');
+    for(let i=0;i<isShelves.length;i++){
+        if(isShelves.eq(i).hasClass('btn-primary')){
+            if(i==0){
+                isShelvesVal = '2';
+            }else if(i==1){
+                isShelvesVal = 1;
+            }else{
+                isShelvesVal = 0;
+            }
+        }
+    }
+
+    console.log(isCertifiedVal,isShelvesVal,curPage);
+
+
+    if(isCertifiedVal != '2' || isShelvesVal !='2'){
+        if(isCertifiedVal != '2' && isShelvesVal == '2' && flag == 1){
+            if(pageNo+1 == pageCount && size == 1){
+                curPage = curPage - 1;
+            }
+        }else if(isShelvesVal != '2' && isCertifiedVal == '2' && flag == 0){
+            if(pageNo+1 == pageCount && size == 1){
+                curPage = curPage - 1;
+            }
+        }else if(isCertifiedVal != '2' && isShelvesVal != '2'){
+            if(pageNo+1 == pageCount && size == 1){
+                curPage = curPage - 1;
+            }
+        }
+    }
 
     $.ajax({
         url:rootPath+"/InsInfoBase/authFrameLower",
@@ -914,6 +900,7 @@ function authFrameLower(id,num,flag) {
         data:{"id":id,"num":num,"flag":flag},
         success:function(data){
             //$("#pageI").val('');
+            console.log(curPage);
             findInsDate(curPage);
         }
     })
@@ -1190,89 +1177,10 @@ function updateManageUser() {
             "userName":userName
         },
         success:function(data){
-            //$("#pageI").val('');
             findInsDate(curPage);
         }
     })
 }
 
-//存放首页参数
-function indexParam() {
-    var eduArea = $("#eduArea").val();
-    var eduSchool = $("#eduSchool").val();
-    var registStatus = $("#registStatus").val();
-    var findFistCategorys = $("#findFistCategorys").val();
-    var findSecondCategorys = $("#findSecondCategorys").val();
-    if(findFistCategorys == '' || findFistCategorys == null){
-        findSecondCategorys == '';
-    }
-
-    var isCertifiedVal = '';
-    let isCertified = $('#isCertified').children('a');
-    for(let i=0;i<isCertified.length;i++){
-        if(isCertified.eq(i).hasClass('btn-primary')){
-            if(i==0){
-                isCertifiedVal = '';
-            }else if(i==1){
-                isCertifiedVal = 1;
-            }else{
-                isCertifiedVal = 0;
-            }
-        }
-    }
-
-    var isShelvesVal = '';
-    let isShelves = $('#isShelves').children('a');
-    for(let i=0;i<isShelves.length;i++){
-        if(isShelves.eq(i).hasClass('btn-primary')){
-            if(i==0){
-                isShelvesVal = '';
-            }else if(i==1){
-                isShelvesVal = 1;
-            }else{
-                isShelvesVal = 0;
-            }
-        }
-    }
-
-
-    var endTime = $("#endTime").val();
-    var startTime = $("#startTime").val();
-    var insName = $("#insName").val();
-
-    $.ajax({
-        url:rootPath+"/InsInfoBase/indexParam",
-        type:"post",
-        data:{
-            "province":eduArea,
-            "city":eduSchool,
-            "area":registStatus,
-            "oneLevelId":findFistCategorys,
-            "twoLevelId":!findFistCategorys ? findFistCategorys : findSecondCategorys,
-            "isCertified":isCertifiedVal,
-            "isShelves":isShelvesVal,
-            "endTime":endTime,
-            "startTime":startTime,
-            "name":insName,
-            "page":curPage
-        },
-        success:function(data){
-
-        }
-    })
-
-}
-
-function clearStartTime() {
-    $("#startTimeI").val();
-}
-
-function clearEndTime() {
-    $("#endTimeI").val();
-}
-
-function clearName() {
-    $("#nameI").val('');
-}
 
 

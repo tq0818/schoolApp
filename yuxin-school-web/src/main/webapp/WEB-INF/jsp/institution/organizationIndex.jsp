@@ -27,24 +27,6 @@
 <jsp:include page="/WEB-INF/jsp/menu/menu_institution.jsp"></jsp:include>
 <div class="u-wrap query overflow">
     <%--<jsp:include page="/WEB-INF/jsp/menu/menu_statistics_query.jsp"></jsp:include>--%>
-    <c:if test="${sessionScope.flag == 1}">
-        <input type="hidden" id="provinceI" value="${sessionScope.province}">
-        <input type="hidden" id="cityI" value="${sessionScope.city}">
-        <input type="hidden" id="areaI" value="${sessionScope.area}">
-        <input type="hidden" id="provicenNameI" value="${sessionScope.provicenName}">
-        <input type="hidden" id="cityNameI" value="${sessionScope.cityName}">
-        <input type="hidden" id="areaNameI" value="${sessionScope.areaName}">
-        <input type="hidden" id="oneLevelIdI" value="${sessionScope.oneLevelId}">
-        <input type="hidden" id="twoLevelIdI" value="${sessionScope.twoLevelId}">
-        <input type="hidden" id="oneLevelNameI" value="${sessionScope.oneLevelName}">
-        <input type="hidden" id="twoLevelNameI" value="${sessionScope.twoLevelName}">
-        <input type="hidden" id="isCertifiedI" value="${sessionScope.isCertified}">
-        <input type="hidden" id="isShelvesI" value="${sessionScope.isShelves}">
-        <input type="hidden" id="endTimeI" value="${sessionScope.endTime}">
-        <input type="hidden" id="startTimeI" value="${sessionScope.startTime}">
-        <input type="hidden" id="nameI" value="${sessionScope.name}">
-        <input type="hidden" id="pageI" value="${sessionScope.page}">
-    </c:if>
 
     <div class="right-side set-system" style="width: 100%">
         <div class="mainbackground nopadding" style="margin: 0 10px;padding-bottom: 100px;">
@@ -58,48 +40,20 @@
                         <span>区域筛选</span>
                         <select name="eduArea" id="eduArea" onchange="queryRiseSchoolDict(1)">
                             <option value="">请选择省份</option>
-                            <c:if test="${sessionScope.flag == 1}">
-                                <c:choose>
-                                    <c:when test="${sessionScope.province != null && sessionScope.province != ''}">
-                                        <option value="510000" selected>四川省</option>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <option value="510000">四川省</option>
-                                    </c:otherwise>
-                                </c:choose>
-
-                            </c:if>
-                            <c:if test="${sessionScope.flag != 1}">
-                                <option value="510000">四川省</option>
-                            </c:if>
+                            <option value="510000">四川省</option>
                         </select>
 
                         <select name="eduSchool" id="eduSchool" onchange="queryRiseSchoolDict(2)">
                             <option value="">请选择市</option>
-                            <c:if test="${sessionScope.flag == 1}">
-                                <c:if test="${sessionScope.city != '' && sessionScope.city != null}">
-                                    <option value="${sessionScope.city}" selected>${sessionScope.cityName}</option>
-                                </c:if>
-                            </c:if>
                         </select>
                         <select id="registStatus" name="status" onchange="queryInsData()" >
                             <option value="">请选择区</option>
-                            <c:if test="${sessionScope.flag == 1}">
-                                <c:if test="${sessionScope.area != '' && sessionScope.area != null}">
-                                    <option value="${sessionScope.area}" selected>${sessionScope.areaName}</option>
-                                </c:if>
-                            </c:if>
                         </select>
                     </div>
                     <div class="marginTop10">
                         <span>分类筛选</span>
                         <select name="" id="findFistCategorys">
                             <option value="">请选择一级分类</option>
-                            <c:if test="${sessionScope.flag == 1}">
-                                <c:if test="${sessionScope.oneLevelIdI != '' && sessionScope.oneLevelIdI != null}">
-                                    <option value="${sessionScope.oneLevelIdI}" selected>${sessionScope.oneLevelNameI}</option>
-                                </c:if>
-                            </c:if>
                         </select>
 
                         <select name="" id="findSecondCategorys">
@@ -121,10 +75,10 @@
                     </div>
                     <div class="margin10 marginTop10" >
                         <span class="text">创建时间</span>
-                        <input type="text" name="startTime" id="startTime" class="date-picker from" readonly onchange="clearStartTime()"/>
+                        <input type="text" name="startTime" id="startTime" class="date-picker from" readonly />
                         <em>到</em>
-                        <input type="text" name="endTime" id="endTime" class="date-picker to"  readonly onchange="clearEndTime()"/>
-                        <input type="text" id="insName" name="username" placeholder="请输入机构名称" onchange="clearName()"/>
+                        <input type="text" name="endTime" id="endTime" class="date-picker to"  readonly />
+                        <input type="text" id="insName" name="username" placeholder="请输入机构名称" />
                         <span><a href="javascript:;" class="btn btn-primary searchContents" style="margin: 0 20px;">查询</a></span>
                         <span style="float: right"><a href="javascript:;" class="btn btn-primary addOrganization" style="margin: 0 20px;">添加机构</a></span>
                     </div>
