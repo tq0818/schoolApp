@@ -663,6 +663,8 @@ function updataIns() {
     var insId = $("#insId").val();
     var reservService = $("#reservService").val();
 
+    console.log(labelName,cusLabelName,specialName);
+
     if(insName != insNameOle){
 
         //判断机构名称是否重复
