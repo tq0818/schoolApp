@@ -270,7 +270,7 @@ function addCourseListener(){
         $(".loading").show();
         $(".loading-bg").show();
        // window.history.back()
-       window.location.href = '/institutionClassType/classTypeMain/'+$("#insId").val();
+       window.location.href = rootPath+'/institutionClassType/classTypeMain/'+$("#insId").val();
 
     })
 
@@ -396,7 +396,7 @@ function savePic() {
             ||lowwerFileStr.indexOf(".ico")==(fileStr.length-4)
         )){
         alert("上传文件仅支持以下格式:.jpg,.jpeg,.png,.bmp,.ico");
-       //
+       //closeMechanismCancel
         $("#imgDataStyle").val('');
         /*if(!$("#targetStyle").attr("src")){
 
