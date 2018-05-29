@@ -1,6 +1,6 @@
 .labelName{font-size: 14px;float: left;display: inline-block;width: 170px;text-align: right;padding-right: 20px;}
 .imgList li{margin-top: 0 !important;margin-bottom: 40px;}
-.listBg{display: block !important;}
+/*.listBg{display: block !important;}*/
 .imgList ul{padding: 0 !important;}
 .imgList{float: none;}
 .videoUpload,.elePic{display: none;padding: 0 18px;width: 408px;height: 512px;background: #fff;position: fixed;left: 50%;top: 50%;margin-left: -204px;
