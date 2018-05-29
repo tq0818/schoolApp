@@ -47,12 +47,15 @@
                 <span class="line"></span>
             </div>
             <div class="evaScreen">
-                <div style="padding-left: 13px;" id ="status">
-                    <span style="font-size: 16px;margin-right: 30px;">审核状态</span>
-                    <a href="javascript:void(0)" class="btn btn-default btn-primary" data-review="">全部</a>
-                    <a href="javascript:void(0)" class="btn btn-default" data-review="0">待审核</a>
-                    <a href="javascript:void(0)" class="btn btn-default" data-review="1">审核通过</a>
-                </div>
+                <c:if test="${userType != 'INSTITUTION_MANAGE'}">
+                    <div style="padding-left: 13px;" id ="status">
+                        <span style="font-size: 16px;margin-right: 30px;">审核状态</span>
+                        <a href="javascript:void(0)" class="btn btn-default btn-primary" data-review="">全部</a>
+                        <a href="javascript:void(0)" class="btn btn-default" data-review="0">待审核</a>
+                        <a href="javascript:void(0)" class="btn btn-default" data-review="1">审核通过</a>
+                    </div>
+                </c:if>
+
                 <ul class="comment_all">
 
                 </ul>
@@ -68,12 +71,15 @@
                         <a href="javascript:void(0)" class="btn btn-default"  data-classId="${cla.id}">${cla.name}</a>
                     </c:forEach>
                 </div>
-                <div style="padding-left: 13px;" id="curriculumState">
-                    <span style="font-size: 16px;margin-right: 30px;">审核状态</span>
-                    <a href="javascript:void(0)" class="btn btn-default btn-primary" data-review="">全部</a>
-                    <a href="javascript:void(0)" class="btn btn-default" data-review="0">待审核</a>
-                    <a href="javascript:void(0)" class="btn btn-default" data-review="1">审核通过</a>
-                </div>
+                <c:if test="${userType != 'INSTITUTION_MANAGE'}">
+                    <div style="padding-left: 13px;" id="curriculumState">
+                        <span style="font-size: 16px;margin-right: 30px;">审核状态</span>
+                        <a href="javascript:void(0)" class="btn btn-default btn-primary" data-review="">全部</a>
+                        <a href="javascript:void(0)" class="btn btn-default" data-review="0">待审核</a>
+                        <a href="javascript:void(0)" class="btn btn-default" data-review="1">审核通过</a>
+                    </div>
+                </c:if>
+
                 <ul class="comment_all">
 
                 </ul>
