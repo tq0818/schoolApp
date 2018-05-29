@@ -100,7 +100,7 @@
                            style="width: 460px;margin-left: 15px;">
                 </div>
                 <div>
-                    <span>是否限定预约人数:</span>
+                    <span style="width: 120px;">是否限定预约人数:</span>
                     <input type="radio" name="classLimitNum" id="classLimitNumYes" class="limitYes" value="1" style="margin-left: 15px;">是
                     <input type="radio" name="classLimitNum" id="classLimitNumNo" class="limitNo" value="0" checked="checked">否
                 </div>
