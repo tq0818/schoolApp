@@ -386,11 +386,12 @@ function deleteVideo(videoInfoId){
 
 //图片格式
 function picFormat(fileStr){
-	if(!(fileStr.indexOf(".jpg")==(fileStr.length-4)
-            ||fileStr.indexOf(".jpeg")==(fileStr.length-5)
-            ||fileStr.indexOf(".png")==(fileStr.length-4)
-            ||fileStr.indexOf(".bmp")==(fileStr.length-4)
-            ||fileStr.indexOf(".ico")==(fileStr.length-4))){
+	var fileStrLow = fileStr.toLowerCase();
+	if(!(fileStrLow.indexOf(".jpg")==(fileStrLow.length-4)
+            ||fileStrLow.indexOf(".jpeg")==(fileStrLow.length-5)
+            ||fileStrLow.indexOf(".png")==(fileStrLow.length-4)
+            ||fileStrLow.indexOf(".bmp")==(fileStrLow.length-4)
+            ||fileStrLow.indexOf(".ico")==(fileStrLow.length-4))){
             alert("上传封面仅仅支持以下格式:.jpg,.jpeg,.png,.bmp,.ico");
             return true;
     }

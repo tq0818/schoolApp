@@ -11,7 +11,7 @@ public class CourseDetailVo {
 	private Integer courseInfoId;//		课程id
 	private Integer isReservFull;//		预约人数是否已满(0否 1已满)
 	private String courseName;//		课程名称
-	private String courseInfoDeac;//		课程介绍
+	private String courseInfoDeac;//		课程详情
 	private Float courseInfoPrice;//		课程价格
 	private List<String> courseInfoSign;//		课程标签
 	private List<CourseImg> courseImgList;//		课程图片集合
@@ -26,6 +26,7 @@ public class CourseDetailVo {
 	private Integer insId;//机构id
 	private String shareUrl;//分享页面地址
 	private String shareName;//分享名称
+	private String coverUrl;//封面图
 	public Integer getCourseInfoId() {
 		return courseInfoId;
 	}
@@ -133,6 +134,12 @@ public class CourseDetailVo {
 	}
 	public void setShareName(String shareName) {
 		this.shareName = shareName;
+	}
+	public String getCoverUrl() {
+		return coverUrl;
+	}
+	public void setCoverUrl(String coverUrl) {
+		this.coverUrl = coverUrl;
 	}
 	
 }

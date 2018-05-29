@@ -166,15 +166,15 @@ function addCourseListener(){
     })
 
     // 课程名称事件监听
-    $('#className').bind('input propertychange', 'input' , function(){
+    /*$('#className').bind('input propertychange', 'input' , function(){
         classNameLimit();
     })
-
+*/
 
 
 
     //课程说明事件监听
-    $('textarea').bind('input propertychange', function(){
+   /* $('textarea').bind('input propertychange', function(){
         var val = $('#classDetail').val();
         //不能输入全是空格的字符串
         if(trim(val) == ''){
@@ -191,7 +191,7 @@ function addCourseListener(){
         if(!nameTest.test(trim(val))){
             $('#classDetail').val(val.substr(0,val.length - 1));
         }
-    })
+    })*/
 
     //添加课程标签
     $('.addSystemBtn').click(function () {
@@ -270,7 +270,7 @@ function addCourseListener(){
         $(".loading").show();
         $(".loading-bg").show();
        // window.history.back()
-       window.location.href = '/institutionClassType/classTypeMain/'+$("#insId").val();
+       window.location.href = rootPath+'/institutionClassType/classTypeMain/'+$("#insId").val();
 
     })
 
@@ -396,7 +396,7 @@ function savePic() {
             ||lowwerFileStr.indexOf(".ico")==(fileStr.length-4)
         )){
         alert("上传文件仅支持以下格式:.jpg,.jpeg,.png,.bmp,.ico");
-       //
+       //closeMechanismCancel
         $("#imgDataStyle").val('');
         /*if(!$("#targetStyle").attr("src")){
 
