@@ -219,7 +219,7 @@ function getUnderLineClassInfo() {
                 for(var i in data.styles){
                     styleHtml += `
                             <li data-i="${i}">
-                                <span class="imgSpan"><img src="${data.styles[i].url}" alt="" style="width: 100%; max-height: 260px;"></span>
+                                <span class="imgSpan"><img src="${data.styles[i].url}" alt="" style="width: 100%; height:auto;"></span>
                                 <input type="hidden" value="${data.styles[i].path}"  />
                                 <span class="imgInfo"></span>
                                 <div class="listBg">
