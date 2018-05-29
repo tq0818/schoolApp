@@ -1,6 +1,11 @@
 /* 该js用于首页列表推荐使用 */
 var nowIndexPage = 0;
 var pageSize = 10;
+
+
+var pageCount = '';
+var pageNo = '';
+var dataSize2 = '';
 function getIndexRecommendList(){
     var typeId = getCurrentTypeId();
     if(null == typeId){
@@ -26,6 +31,17 @@ function getIndexRecommendList(){
             $(".loading-bg").hide();
         },
         success: function (json) {
+            var size = json.data.count;
+            var page = size%10;
+             pageCount = '';
+            if(page ==0){
+                pageCount = parseInt(size/10);
+            }else{
+                pageCount = parseInt(size/10)+1;
+            }
+             pageNo = json.data.page+1;
+             dataSize2 = json.data.list.length;
+
             var recommendBtnContainor = '';
             var recommendBtnContainorList = $("#recommendBtnContainor").children('a');
             for(var i =0;i<recommendBtnContainorList.length;i++){
@@ -38,7 +54,6 @@ function getIndexRecommendList(){
 
                 }
             }
-            console.log(recommendBtnContainor)
 
 
             if(json.status != 1){
@@ -134,6 +149,16 @@ function getIndexRecommendList(){
                     rid:$(this).attr('data-id'),
                     typeId:getCurrentTypeId()
                 },function(json){
+                    var recommendStatusBtn = $('.recommendStatusBtn');
+                    for(var i = 0;i<recommendStatusBtn.length;i++){
+                        if(recommendStatusBtn.eq(i).hasClass('btn-primary') && recommendStatusBtn.eq(i).text() != '全部'){
+                            if(pageNo = pageCount && dataSize2 == 1){
+                                nowIndexPage = nowIndexPage - 1;
+                            }
+                        }
+                    }
+
+
                     if(json == 'success'){
                         $.msg('操作成功');
                         getIndexRecommendList();
