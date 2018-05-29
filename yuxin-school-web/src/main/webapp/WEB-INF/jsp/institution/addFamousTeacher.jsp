@@ -26,6 +26,11 @@
             border: 1px solid #e0dfe3;border-radius: 3px;margin: 5px 0;}
         .chooseImg input{position: absolute;width: 100%;height: 100%;left: 0;top: 0;opacity: 0;}
         .coverPopup{z-index: 1000;}
+        .mienPopup>div {
+            /*display: inline-block;*/
+             width: 100%;
+            /*float: left;*/
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/institution/addFamousTeacher.css">
 </head>

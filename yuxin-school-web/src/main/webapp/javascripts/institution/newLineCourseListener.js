@@ -1,5 +1,15 @@
 $(function(){
     /**
+     * btn显示隐藏
+     */
+    $('body').on('mouseover',' #styleContainer li',function () {
+        $(this).children('.listBg').show();
+    });
+    $('body').on('mouseleave',' #styleContainer li',function () {
+        $(this).children('.listBg').hide();
+    });
+
+    /**
      *初始化截图
      */
     $(".uploadImageStyle").on("change","#targetStyle", function() {
@@ -166,15 +176,15 @@ function addCourseListener(){
     })
 
     // 课程名称事件监听
-    $('#className').bind('input propertychange', 'input' , function(){
+    /*$('#className').bind('input propertychange', 'input' , function(){
         classNameLimit();
     })
-
+*/
 
 
 
     //课程说明事件监听
-    $('textarea').bind('input propertychange', function(){
+   /* $('textarea').bind('input propertychange', function(){
         var val = $('#classDetail').val();
         //不能输入全是空格的字符串
         if(trim(val) == ''){
@@ -191,7 +201,7 @@ function addCourseListener(){
         if(!nameTest.test(trim(val))){
             $('#classDetail').val(val.substr(0,val.length - 1));
         }
-    })
+    })*/
 
     //添加课程标签
     $('.addSystemBtn').click(function () {
@@ -251,7 +261,7 @@ function addCourseListener(){
         $('#hidCoverFid').val($(this).attr('data-id'));
         //保存当前修改的是哪一个li，用于点击确认的时候更新数据
         $('#hidCoverSort').val($(baseNode).eq(0).attr('data-i'));
-        $('#cover').show();
+       // $('#cover').show();
     });
 
     //课程标签删除监听器
@@ -270,7 +280,7 @@ function addCourseListener(){
         $(".loading").show();
         $(".loading-bg").show();
        // window.history.back()
-       window.location.href = '/institutionClassType/classTypeMain/'+$("#insId").val();
+       window.location.href = rootPath+'/institutionClassType/classTypeMain/'+$("#insId").val();
 
     })
 
@@ -393,10 +403,9 @@ function savePic() {
 
             ||lowwerFileStr.indexOf(".png")==(fileStr.length-4)
             ||lowwerFileStr.indexOf(".bmp")==(fileStr.length-4)
-            ||lowwerFileStr.indexOf(".ico")==(fileStr.length-4)
         )){
-        alert("上传文件仅支持以下格式:.jpg,.jpeg,.png,.bmp,.ico");
-       //
+        alert("上传文件仅支持以下格式:.jpg,.jpeg,.png,.bmp");
+       //closeMechanismCancel
         $("#imgDataStyle").val('');
         /*if(!$("#targetStyle").attr("src")){
 

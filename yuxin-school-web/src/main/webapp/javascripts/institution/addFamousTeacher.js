@@ -319,12 +319,11 @@ function savePic() {
     //.jpg,.jpeg,.gif,.png,.bmp,.ico
     if(!(lowwerFileStr.indexOf(".jpg")==(fileStr.length-4)
         ||lowwerFileStr.indexOf(".jpeg")==(fileStr.length-5)
-
         ||lowwerFileStr.indexOf(".png")==(fileStr.length-4)
         ||lowwerFileStr.indexOf(".bmp")==(fileStr.length-4)
-        ||lowwerFileStr.indexOf(".ico")==(fileStr.length-4)
             )){
-        alert("上传文件仅支持以下格式:.jpg,.jpeg,.png,.bmp,.ico");
+        $("#imgDataStyle").val('');
+        alert("上传文件仅支持以下格式:.jpg,.jpeg,.png,.bmp");
         return;
     }
     $.ajaxFileUpload({

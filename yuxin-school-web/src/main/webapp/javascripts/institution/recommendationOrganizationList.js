@@ -152,8 +152,10 @@ function getIndexRecommendList(){
                     var recommendStatusBtn = $('.recommendStatusBtn');
                     for(var i = 0;i<recommendStatusBtn.length;i++){
                         if(recommendStatusBtn.eq(i).hasClass('btn-primary') && recommendStatusBtn.eq(i).text() != '全部'){
-                            if(pageNo = pageCount && dataSize2 == 1){
-                                nowIndexPage = nowIndexPage - 1;
+                            if(pageCount != 1){
+                                if(pageNo = pageCount && dataSize2 == 1){
+                                    nowIndexPage = nowIndexPage - 1;
+                                }
                             }
                         }
                     }
