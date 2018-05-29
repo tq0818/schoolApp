@@ -166,15 +166,15 @@ function addCourseListener(){
     })
 
     // 课程名称事件监听
-    $('#className').bind('input propertychange', 'input' , function(){
+    /*$('#className').bind('input propertychange', 'input' , function(){
         classNameLimit();
     })
-
+*/
 
 
 
     //课程说明事件监听
-    $('textarea').bind('input propertychange', function(){
+   /* $('textarea').bind('input propertychange', function(){
         var val = $('#classDetail').val();
         //不能输入全是空格的字符串
         if(trim(val) == ''){
@@ -191,7 +191,7 @@ function addCourseListener(){
         if(!nameTest.test(trim(val))){
             $('#classDetail').val(val.substr(0,val.length - 1));
         }
-    })
+    })*/
 
     //添加课程标签
     $('.addSystemBtn').click(function () {

@@ -79,13 +79,20 @@ $(function () {
             return ;
         }
 
+        if(trim(summary) == ''){
+            $.msg('请填写描述信息');
+            return ;
+        }
+
+
+
         //描述可为空
-        if(trim(summary) != ''){
+        /*if(trim(summary) != ''){
             if(!nameTest.test(summary)){
                 $.msg('描述信息不能含有特殊字符');
                 return;
             }
-        }
+        }*/
 
         //验证价格
         if(trim(price) == ''){
@@ -101,6 +108,11 @@ $(function () {
         if(limit == 1 && limitNum == 0){
             $.msg('限定预约人数只能输入正整数');
             return;
+        }
+
+        if(trim(detail) == ''){
+            $.msg('请填写课程详情');
+            return ;
         }
 
         if(detail == null || detail == ''){
