@@ -6,3 +6,7 @@ background: #fff;display: none;overflow-y: auto;}
 .addClassPopup h5{text-align: center;height: 60px;line-height: 60px;font-size: 16px;border-bottom: 1px solid #f6f6f6;}
 .addClassPopup h5 a{float: right;margin: 10px;}
 .relation{cursor: pointer;}
+@media screen and (max-width: 1400px) {
+    .imgList ul{width: 900px;height: 600px;}
+    .imgList li{margin-right: 20px !important;}
+}

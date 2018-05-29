@@ -1,4 +1,3 @@
-body{min-width: 1366px;}
 .labelName{font-size: 14px;float: left;display: inline-block;width: 170px;text-align: right;padding-right: 20px;}
 .imgList li{margin-top: 0 !important;margin-bottom: 40px;}
 .listBg{display: block !important;}
@@ -24,7 +23,7 @@ line-height: 25px;text-align: center;position: relative;font-size: 12px;}
 
 @media screen and (max-width: 1900px) {
     .labelName{width: 60px;}
-    .imgList li{margin-right: 10px;}
+    .imgList li{margin-right: 30px;}
     .newUl{margin-left: 80px;zoom: .8;}
     .listBg{width: 162px;}
     .imgList li{width: 160px;}
