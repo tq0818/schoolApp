@@ -79,9 +79,12 @@ $(function () {
             return ;
         }
 
-        if(trim(summary) == ''){
-            $.msg('请填写描述信息');
-            return ;
+        if(summary.length!=0){
+            summary = summary.split(" ").join("");
+            if(summary.length == 0){
+                $.msg('请填写描述信息');
+                return;
+            }
         }
 
 
