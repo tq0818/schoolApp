@@ -393,9 +393,8 @@ function savePic() {
 
             ||lowwerFileStr.indexOf(".png")==(fileStr.length-4)
             ||lowwerFileStr.indexOf(".bmp")==(fileStr.length-4)
-            ||lowwerFileStr.indexOf(".ico")==(fileStr.length-4)
         )){
-        alert("上传文件仅支持以下格式:.jpg,.jpeg,.png,.bmp,.ico");
+        alert("上传文件仅支持以下格式:.jpg,.jpeg,.png,.bmp");
        //closeMechanismCancel
         $("#imgDataStyle").val('');
         /*if(!$("#targetStyle").attr("src")){
