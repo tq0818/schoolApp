@@ -54,9 +54,11 @@ public class CommentManageController {
             e.printStackTrace();
         }
         InstitutionInfoVo institutionInfoVo = institutionInfoService.findInstitutionInfoById(Integer.parseInt(id));
+        Users users = WebUtils.getCurrentUser();
         model.addAttribute("classTypeVos",classTypeVos);
         model.addAttribute("insId",id);
         model.addAttribute("ins",institutionInfoVo);
+        model.addAttribute("userType",users.getUserType());
         return "institution/evaluation";
     }
 

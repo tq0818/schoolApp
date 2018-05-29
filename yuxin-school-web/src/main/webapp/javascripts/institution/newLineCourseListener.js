@@ -85,7 +85,7 @@ function addCourseListener(){
                         <input type="hidden" value="${imgUrl}"  />
                         <span class="imgInfo"></span>
                         <div class="listBg">
-                        <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
+                        <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn deleteBtnStyle">删除</a>
                            <a href="javascript:void(0)" data-id=""  class="btn btn-success alterBtn btn-sm openPopup">修改</a>
                         </div>
                     </li>
@@ -357,7 +357,7 @@ function saveCutPic() {
                     $('.closeElePicCommit').click();
                 }
             }else {
-                 $.msg(data.msg);
+                 //$.msg(data.msg);后台没有定义msg
             }
             $("#targetStyle").attr("src","");
             if (jcrop_apis){
