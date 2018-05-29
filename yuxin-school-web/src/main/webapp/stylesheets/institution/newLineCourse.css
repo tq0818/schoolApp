@@ -3,7 +3,7 @@
 .mechanismName{background: url(../../images/institution/xing.png) no-repeat 0px center;}
 /*.deleteBtn{position: static;}*/
 .imgList li{margin-right: 40px !important;}
-.imgList li img{width: 100% !important;height: 100% !important;}
+.imgList li img{width: 100% !important;}
 #styleContainer{margin-left: 15px }
 .deleteBtnStyle{margin-top: 23px !important;margin-right: 20px !important;}
 .alterBtn {float: left;margin-top: 10px !important;margin-left: 20px !important;}

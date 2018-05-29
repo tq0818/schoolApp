@@ -732,15 +732,15 @@ function findInsDate(page) {
 
             var html = '\'<tr data-buy="true">' +
                 '<th width="3%">序号</th>' +
-                '<th width="12%">机构名称</th>' +
+                '<th width="13%">机构名称</th>' +
                 '<th width="5%">省份</th>' +
                 '<th width="5%">市</th>' +
                 '<th width="5%">区</th>' +
-                '<th width="5%">一级分类</th>' +
-                '<th width="30%">二级分类</th>'+
+                '<th width="6%">一级分类</th>' +
+                '<th width="25%">二级分类</th>'+
                 '<th width="5%">上下架状态</th>'+
                 '<th width="5%">认证状态</th>'+
-                '<th width="15%">操作</th>'+
+                '<th width="18%">操作</th>'+
                 '</tr>';
             if(!jsonData||jsonData.data.length==0){
                 html+='<tr >'+

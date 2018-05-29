@@ -1,5 +1,15 @@
 $(function(){
     /**
+     * btn显示隐藏
+     */
+    $('body').on('mouseover',' #styleContainer li',function () {
+        $(this).children('.listBg').show();
+    });
+    $('body').on('mouseleave',' #styleContainer li',function () {
+        $(this).children('.listBg').hide();
+    });
+
+    /**
      *初始化截图
      */
     $(".uploadImageStyle").on("change","#targetStyle", function() {
