@@ -65,7 +65,7 @@
     </delete>
 
     <select id="findSysLabelByInsId" parameterType="Integer" resultMap="institutionLabelMap">
-      select * from institution_label where label_type=0 and source_flag = 0 and relation_id = #{id}
+      select * from institution_label where label_type=0 and source_flag = 0 and relation_id = #{id} order by id asc
     </select>
 
     <!-- 根据机构id获取自定义标签列表 -->
@@ -110,11 +110,11 @@
 
 
     <select id="findCustomLabelByInsId" parameterType="Integer" resultMap="institutionLabelMap">
-      select * from institution_label where label_type=1 and source_flag = 0 and relation_id = #{id}
+      select * from institution_label where label_type=1 and source_flag = 0 and relation_id = #{id} order by id asc
     </select>
 
     <select id="findSpecialServiceByInsId" parameterType="Integer" resultMap="institutionLabelMap">
-      select * from institution_label where label_type=2 and source_flag = 0 and relation_id = #{id}
+      select * from institution_label where label_type=2 and source_flag = 0 and relation_id = #{id} order by id asc
     </select>
 
     <select id="findSpecialServiceByInsIdCount" parameterType="Integer" resultMap="institutionLabelMap">

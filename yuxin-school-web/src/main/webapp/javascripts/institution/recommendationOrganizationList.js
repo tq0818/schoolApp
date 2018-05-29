@@ -1,6 +1,11 @@
 /* 该js用于首页列表推荐使用 */
 var nowIndexPage = 0;
 var pageSize = 10;
+
+
+var pageCount = '';
+var pageNo = '';
+var dataSize2 = '';
 function getIndexRecommendList(){
     var typeId = getCurrentTypeId();
     if(null == typeId){
@@ -26,7 +31,31 @@ function getIndexRecommendList(){
             $(".loading-bg").hide();
         },
         success: function (json) {
-          //  console.log(json);
+            var size = json.data.count;
+            var page = size%10;
+             pageCount = '';
+            if(page ==0){
+                pageCount = parseInt(size/10);
+            }else{
+                pageCount = parseInt(size/10)+1;
+            }
+             pageNo = json.data.page+1;
+             dataSize2 = json.data.list.length;
+
+            var recommendBtnContainor = '';
+            var recommendBtnContainorList = $("#recommendBtnContainor").children('a');
+            for(var i =0;i<recommendBtnContainorList.length;i++){
+                if(recommendBtnContainorList.eq(i).hasClass("btn-primary")){
+                    if(i == 0){
+                        recommendBtnContainor = recommendBtnContainorList.eq(i).children('span').eq(0).text();
+                    }else{
+                        recommendBtnContainor = recommendBtnContainorList.eq(i).children('span').eq(1).text();
+                    }
+
+                }
+            }
+
+
             if(json.status != 1){
                 $.msg(json.msg);
                 return;
@@ -45,8 +74,8 @@ function getIndexRecommendList(){
                     <tr>
                         <td>${parseInt(i)+1}</td>
                         <td>${list[i].name}</td>
-                        <td>${list[i].lv == 2 ? list[i].name2 : list[i].name1}</td>
-                        <td>${list[i].lv == 2 ? '二级' : '一级'}</td>
+                        <td>`+recommendBtnContainor+`</td>
+                        
                         <td class="relationResult">${list[i].is_recommend == 1 ? '已推荐' : '未推荐'}</td>
                         <td>${
                 list[i].is_recommend == 1 ? ( showSort
@@ -120,6 +149,16 @@ function getIndexRecommendList(){
                     rid:$(this).attr('data-id'),
                     typeId:getCurrentTypeId()
                 },function(json){
+                    var recommendStatusBtn = $('.recommendStatusBtn');
+                    for(var i = 0;i<recommendStatusBtn.length;i++){
+                        if(recommendStatusBtn.eq(i).hasClass('btn-primary') && recommendStatusBtn.eq(i).text() != '全部'){
+                            if(pageNo = pageCount && dataSize2 == 1){
+                                nowIndexPage = nowIndexPage - 1;
+                            }
+                        }
+                    }
+
+
                     if(json == 'success'){
                         $.msg('操作成功');
                         getIndexRecommendList();

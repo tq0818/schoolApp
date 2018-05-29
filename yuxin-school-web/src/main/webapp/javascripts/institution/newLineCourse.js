@@ -206,6 +206,7 @@ function getUnderLineClassInfo() {
                 $('#hidTop').val(data.face);
                 if(data.face != null && data.face != ''){
                     $('#imgTop').html("<img src='" + data.fullFace + "'  alt=\"\" style=\"width: 150px;height: 100px;margin-left: 15px;\">");
+                    $('.addPicFace').html('更换封面');
                 }else{
                     $('#imgTop').html('');
                 }
@@ -219,7 +220,7 @@ function getUnderLineClassInfo() {
                 for(var i in data.styles){
                     styleHtml += `
                             <li data-i="${i}">
-                                <span class="imgSpan"><img src="${data.styles[i].url}" alt="" style="width: 100%; max-height: 260px;"></span>
+                                <span class="imgSpan"><img src="${data.styles[i].url}" alt="" style="width: 100%; height:auto;"></span>
                                 <input type="hidden" value="${data.styles[i].path}"  />
                                 <span class="imgInfo"></span>
                                 <div class="listBg">

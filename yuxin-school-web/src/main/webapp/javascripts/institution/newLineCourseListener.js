@@ -49,7 +49,8 @@ function addCourseListener(){
         $('#hidCoverFid').val('');
         $('#hidCoverSort').val('');
         $('#coverReturn').html('');
-        $('#cover').show();
+        popAddImg();
+        //$('#cover').show();
     });
 
     //弹出层取消按钮事件
@@ -84,7 +85,7 @@ function addCourseListener(){
                         <input type="hidden" value="${imgUrl}"  />
                         <span class="imgInfo"></span>
                         <div class="listBg">
-                        <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn">删除</a>
+                        <a href="javascript:void(0)" class="btn btn-warning btn-sm deleteBtn deleteBtnStyle">删除</a>
                            <a href="javascript:void(0)" data-id=""  class="btn btn-success alterBtn btn-sm openPopup">修改</a>
                         </div>
                     </li>
@@ -351,11 +352,12 @@ function saveCutPic() {
                     $('#hidTop').val(data.realPath);
                     $('.addPicFace').html('更换封面');
                 }else{
-                    $('#coverReturn').html("<img src='" +data.header+data.realPath + "'  alt=\"\" style=\"width: 100%; max-height: 190px;\">");
+                    $('#coverReturn').html("<img src='" +data.header+data.realPath + "'  alt=\"\" style=\"width: 100%; height: auto;\">");
                     $('#hidCoverTop').val(data.realPath);
+                    $('.closeElePicCommit').click();
                 }
             }else {
-                 $.msg(data.msg);
+                 //$.msg(data.msg);后台没有定义msg
             }
             $("#targetStyle").attr("src","");
             if (jcrop_apis){
@@ -370,9 +372,9 @@ function popAddImg(imgType){
     $("#imgType").val(imgType);
     $.commonPopup();
     if(imgType){
-        $("#imgTittle").html("上传课程封面图-建议上传图片尺寸为300*120px");
+        $("#imgTittle").html("上传课程封面图-建议上传图片尺寸为180*120px");
     }else{
-        $("#imgTittle").html("上传课程风采图-建议上传图片尺寸为300*120px");
+        $("#imgTittle").html("上传课程风采图-建议上传图片尺寸为750*300px");
     }
 }
 

@@ -29,3 +29,4 @@ cursor: default;}
 #listPhone>div{margin-left: 73px;margin-top: 14px;}
 #listPhone>div input{width: 440px !important;}
 .siteChoose select{width: 150px;}
+.clear{cursor: pointer;}

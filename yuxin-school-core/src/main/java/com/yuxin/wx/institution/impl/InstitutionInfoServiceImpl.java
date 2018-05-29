@@ -105,6 +105,7 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
                 institutionRelationVo.setInsId(institutionInfoVo.getId());
                 institutionRelationVo.setOneLevelId(Integer.parseInt(catOne[i]));
                 institutionRelationVo.setTwoLevelId(Integer.parseInt(catTwo[i]));
+                institutionRelationVo.setIsRecommend(0);
                 institutionRelationMapper.insert(institutionRelationVo);
             }
 
@@ -198,7 +199,7 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
             String labels = institutionInfoVo.getSysLabel().substring(0,institutionInfoVo.getSysLabel().lastIndexOf(","));
             String[] labelArr = labels.split(",");//标签数组
             //插入机构标签表
-            for(int i =labelArr.length-1;i>=0;i--){
+            for(int i = 0; i<labelArr.length;i++){
                 institutionLabelVo.setId(null);
                 institutionLabelVo.setCreateTime(date);
                 institutionLabelVo.setUpdateTime(date);
@@ -215,7 +216,7 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
             String labels = institutionInfoVo.getCustomLabel().substring(0,institutionInfoVo.getCustomLabel().lastIndexOf(","));
             String[] labelArr = labels.split(",");//标签数组
             //插入机构标签表
-            for(int i =labelArr.length-1;i>=0;i--){
+            for(int i = 0; i<labelArr.length;i++){
                 institutionLabelVo.setId(null);
                 institutionLabelVo.setCreateTime(date);
                 institutionLabelVo.setUpdateTime(date);
@@ -234,7 +235,7 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
             String labels2 = institutionInfoVo.getSpecialService().substring(0,institutionInfoVo.getSpecialService().lastIndexOf(","));
             String[] labelArr2 = labels2.split(",");//标签数组
             //插入机构标签表
-            for(int i =labelArr.length-1;i>=0;i--){
+            for(int i = 0; i<labelArr.length;i++){
                 institutionLabelVo.setId(null);
                 institutionLabelVo.setCreateTime(date);
                 institutionLabelVo.setUpdateTime(date);

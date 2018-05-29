@@ -86,7 +86,7 @@
                             <th width="3%">序号</th>
                             <th width="12%">机构名称</th>
                             <th width="5%">所属分类</th>
-                            <th width="5%">分类级别</th>
+                            <%--<th width="5%">分类级别</th>--%>
                             <th width="5%">推荐状态</th>
                             <th width="5%">排序</th>
                             <th width="30%">操作</th>
@@ -119,7 +119,7 @@
     <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
         <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/recommendationOrganizationList.js"></script>
     <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/recommendationOrganization.js"></script>
-        <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/recommendationOrganizationType.js"></script>
+    <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/recommendationOrganizationType.js"></script>
         <script type="text/javascript" src="<%=rootPath%>/javascripts/common/tools.js"></script>
 
 </body>

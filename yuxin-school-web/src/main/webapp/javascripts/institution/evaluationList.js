@@ -115,9 +115,10 @@ $(function () {
     //点击审核
     $('body').on('click', '.evaluationIns', function () {
         var commentId = $(this).attr("data-commentId");
+        var userId =  $(this).attr("data-userId");
         $.confirm('您是否确认审核通过该条评论',function (data) {
             if(data){
-                evaluationIns(commentId,0);
+                evaluationIns(userId,commentId,0);
             }
         })
 
@@ -139,9 +140,10 @@ $(function () {
     //点击课程审核
     $('body').on('click', '.evaluationInsClass', function () {
         var commentId = $(this).attr("data-commentId");
+        var userId =  $(this).attr("data-userId");
         $.confirm('您是否确认审核通过该条评论',function (data) {
             if(data){
-                evaluationIns(commentId,1);
+                evaluationIns(userId,commentId,1);
             }
         })
 
@@ -208,7 +210,7 @@ function initInsComment(page=1,insCommntId='',reviewStatus='') {
                     let  _check = "";
 
                     if(check==0){
-                        _check = '<button  class="evaluationIns" id="evaluation" data-commentId="'+item.id+'">审核通过</button>';
+                        _check = '<button  class="evaluationIns" id="evaluation" data-commentId="'+item.id+'" data-userId="'+item.userId+'">审核通过</button>';
                     }
 
                     var del = '<button class="delete " id="delete" data-commentId="'+item.id+'">删除</button>';
@@ -346,7 +348,7 @@ function initInsClassComment(page=1,ins='',reviewStatus='',relationId='') {
                     let  _check = "";
 
                     if(check==0){
-                        _check = '<button  class="evaluationInsClass" id="evaluation" data-commentId="'+item.id+'">审核通过</button>';
+                        _check = '<button  class="evaluationInsClass" id="evaluation" data-commentId="'+item.id+'" data-userId="'+item.userId+'">审核通过</button>';
                     }
 
                     var del = '<button class="deleteClass" id="delete" data-commentId="'+item.id+'">删除</button>';
@@ -449,13 +451,14 @@ function initInsClassComment(page=1,ins='',reviewStatus='',relationId='') {
 
 
 //审核评论
-function evaluationIns(commentId,flag) {
+function evaluationIns(userId,commentId,flag) {
     $.ajax({
         url:rootPath+"/comment/updateComment",
         type:"post",
         data:{
             "id":commentId,
-            "isCheck":1
+            "isCheck":1,
+            "userId":userId
         },
         beforeSend: function (XMLHttpRequest) {
             $(".loading").show();

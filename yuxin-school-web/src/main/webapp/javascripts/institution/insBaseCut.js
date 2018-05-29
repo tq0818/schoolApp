@@ -12,18 +12,18 @@ var jcrop_apis;
            maxWidth = 130;
            minHeight =30 ;
            minWidth = 30;
-       }else if(picFlag==3){ //课程风采
-           $scale = 300/120;
+       }else if(picFlag==3){ //封面
+           $scale = 180/120;
            maxHeight = 120;
-           maxWidth = 300;
+           maxWidth = 180;
            minHeight =10 ;
-           minWidth = 25;
+           minWidth = 15;
        }else if(picFlag==4){
            $scale = 300/120;
            maxHeight = 120;
            maxWidth = 300;
-           minHeight =10 ;
-           minWidth = 25;
+           minHeight =6 ;
+           minWidth = 15;
        }else{//老师头像比列
             $scale = 100/100;
             maxHeight = 100;
@@ -45,7 +45,7 @@ var jcrop_apis;
             onChange : showCoords,
             onSelect : showCoords,
             onRelease: clearCoords,
-            aspectRatio : picFlag==4?0:$scale,
+            aspectRatio : $scale,
             allowMove : true,
             bgColor : "#f2f2f2",
             borderOpacity : 0.4,
@@ -132,7 +132,7 @@ var jcrop_apis;
     function resizePic() {
         var h, w, ml, mt;
         var scale = parseInt(sourceWidth) / parseInt(sourceHeight);// 长宽比例
-        if (scale > $scale) {
+        if (sourceWidth > sourceHeight) {
             // 过宽,宽为100%，高按比例缩
             h = maxWidth * sourceHeight/ sourceWidth;
             w = maxWidth;

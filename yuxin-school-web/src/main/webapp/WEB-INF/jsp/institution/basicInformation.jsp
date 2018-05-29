@@ -223,11 +223,11 @@
                                     </c:if>
                                     <c:if test="${vs.count > 1}">
                                         <c:choose>
-                                            <c:when test="${vs.count==fn:length(tells)}">
-                                                <span class="iconBtn deleteMachine">-</span>
+                                            <c:when test="${vs.index == 0}">
+                                                <span class="iconBtn addMachine" >+</span>
                                             </c:when>
                                             <c:otherwise>
-                                                <span class="iconBtn addMachine" >+</span>
+                                                <span class="iconBtn deleteMachine">-</span>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:if>
@@ -249,11 +249,11 @@
                                     </c:if>
                                     <c:if test="${vs.count > 1}">
                                         <c:choose>
-                                            <c:when test="${vs.count==fn:length(mobiles)}">
-                                                <span class="iconBtn deletePhone" >-</span>
+                                            <c:when test="${vs.index == 0}">
+                                                <span class="iconBtn addPhone" >+</span>
                                             </c:when>
                                             <c:otherwise>
-                                                <span class="iconBtn addPhone" >+</span>
+                                                <span class="iconBtn deletePhone" >-</span>
                                             </c:otherwise>
                                         </c:choose>
                                     </c:if>
@@ -292,30 +292,22 @@
                 <div>
                             <span>特色服务：</span>
                     <c:forEach var="spe" items="${specialSer}" varStatus="vs">
-                                <c:choose>
-                                    <c:when test="${vs.count==0}">
-
-                                    </c:when>
-                                    <c:otherwise>
-                                        <c:choose>
-                                            <c:when test="${spe.imgUrl == ''}">
-                                                <span href="##" class="specialService">
-                                                    <img src="../../../images/institution/1.jpg" alt="" class="iconPic" id="${spe.id}">
-                                                     <input class="systemLabel iconPicName" label-id="${spe.id}" value="${spe.labelName}" maxlength="5">
-                                                    <i class="icon iconfont deletespecialService">&#xe610;</i>
-                                                </span>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <span href="##" class="specialService">
-                                                    <img src="${spe.imgUrl}" alt="" class="iconPic" id="${spe.id}">
-                                                     <input class="systemLabel iconPicName" label-id="${spe.id}" value="${spe.labelName}" maxlength="5">
-                                                    <i class="icon iconfont deletespecialService">&#xe610;</i>
-                                                </span>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:otherwise>
-                                </c:choose>
-
+                        <c:choose>
+                            <c:when test="${spe.imgUrl == ''}">
+                                <span href="##" class="specialService">
+                                    <img src="../../../images/institution/1.jpg" alt="" class="iconPic" id="${spe.id}">
+                                    <input class="systemLabel iconPicName" label-id="${spe.id}" value="${spe.labelName}" maxlength="5">
+                                    <i class="icon iconfont deletespecialService">&#xe610;</i>
+                                </span>
+                            </c:when>
+                            <c:otherwise>
+                                <span href="##" class="specialService">
+                                    <img src="${spe.imgUrl}" alt="" class="iconPic" id="${spe.id}">
+                                    <input class="systemLabel iconPicName" label-id="${spe.id}" value="${spe.labelName}" maxlength="5">
+                                    <i class="icon iconfont deletespecialService">&#xe610;</i>
+                                </span>
+                            </c:otherwise>
+                        </c:choose>
                     </c:forEach>
                             <span class="iconBtn specialServiceBtn">+</span>
                 </div>
