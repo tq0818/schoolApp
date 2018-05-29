@@ -100,16 +100,16 @@
                            style="width: 460px;margin-left: 15px;">
                 </div>
                 <div>
-                    <span>是否限定预约人数:</span>
+                    <span style="width: 120px;">是否限定预约人数:</span>
                     <input type="radio" name="classLimitNum" id="classLimitNumYes" class="limitYes" value="1" style="margin-left: 15px;">是
                     <input type="radio" name="classLimitNum" id="classLimitNumNo" class="limitNo" value="0" checked="checked">否
                 </div>
                 <div style="display: none" id="limitContainer">
-                    <span><b style="color:red;">*</b>限定预约人数:</span>
+                    <span>限定预约人数:</span>
                     <input type="text" id="classPersonLimit" maxlength="9" style="width: 460px;margin-left: 15px;">
                 </div>
                 <div>
-                    <span class="mechanismName"><b style="color:red;">*</b>课程详情:</span>
+                    <span class="mechanismName">课程详情:</span>
                     <p>
                         <textarea name="" id="classDetail" style="width: 710px;height: 186px;
                         border: 1px solid #aeaeae;margin-left: 10px;margin-top: 10px;" maxlength="300"></textarea>

@@ -12,4 +12,18 @@
 <%--新增样式end--%>
 <%--新增script begin--%>
 <script src="<%=rootPath %>/javascripts/addNewCommonScript.js" ></script>
+<script>
+    //日期插件调整
+    $(document).click(function () {
+        $('.datetimepicker').hide();
+    });
+    //阻止冒泡
+    $('.date-picker').click(function () {
+        return false;
+    });
+    $('.date-picker1').click(function () {
+        return false;
+    });
+
+</script>
 <%--新增script end--%>
