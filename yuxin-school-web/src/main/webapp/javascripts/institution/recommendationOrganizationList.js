@@ -26,7 +26,21 @@ function getIndexRecommendList(){
             $(".loading-bg").hide();
         },
         success: function (json) {
-          //  console.log(json);
+            var recommendBtnContainor = '';
+            var recommendBtnContainorList = $("#recommendBtnContainor").children('a');
+            for(var i =0;i<recommendBtnContainorList.length;i++){
+                if(recommendBtnContainorList.eq(i).hasClass("btn-primary")){
+                    if(i == 0){
+                        recommendBtnContainor = recommendBtnContainorList.eq(i).children('span').eq(0).text();
+                    }else{
+                        recommendBtnContainor = recommendBtnContainorList.eq(i).children('span').eq(1).text();
+                    }
+
+                }
+            }
+            console.log(recommendBtnContainor)
+
+
             if(json.status != 1){
                 $.msg(json.msg);
                 return;
@@ -45,8 +59,8 @@ function getIndexRecommendList(){
                     <tr>
                         <td>${parseInt(i)+1}</td>
                         <td>${list[i].name}</td>
-                        <td>${list[i].lv == 2 ? list[i].name2 : list[i].name1}</td>
-                        <td>${list[i].lv == 2 ? '二级' : '一级'}</td>
+                        <td>`+recommendBtnContainor+`</td>
+                        
                         <td class="relationResult">${list[i].is_recommend == 1 ? '已推荐' : '未推荐'}</td>
                         <td>${
                 list[i].is_recommend == 1 ? ( showSort

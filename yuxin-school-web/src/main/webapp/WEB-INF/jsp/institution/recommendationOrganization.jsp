@@ -86,7 +86,7 @@
                             <th width="3%">序号</th>
                             <th width="12%">机构名称</th>
                             <th width="5%">所属分类</th>
-                            <th width="5%">分类级别</th>
+                            <%--<th width="5%">分类级别</th>--%>
                             <th width="5%">推荐状态</th>
                             <th width="5%">排序</th>
                             <th width="30%">操作</th>
