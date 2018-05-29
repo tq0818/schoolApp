@@ -13,6 +13,7 @@ $(function () {
         fillData("添加一级分类");
         $("#addConfirm").attr("onclick","addData();");
         $("#addConfirm").html("").html("确认添加");
+        $(".btnFile").html("").html("选择图标");
     });
     $(".btnFile").click(function(){
         $(".coverPopup").show();
@@ -163,6 +164,7 @@ function openDetails(level,updateId){
     }else {//二级
         fillData("二级分类详情");
     }
+    $(".btnFile").html('').html("更新图标");
     $("#addConfirm").html("").html("保存");
     //绑定更新函数
     $("#addConfirm").attr("onclick","updatedata('2',"+updateId+",'')");
@@ -188,6 +190,7 @@ function openDetails(level,updateId){
  */
 function openSecAdd(parentId){
     fillData("添加二级分类");
+    $(".btnFile").html("").html("选择图标");
     $("#addConfirm").attr("onclick","addData("+parentId+");");
     $("#addConfirm").html("").html("确认添加");
 }
@@ -426,7 +429,7 @@ function savePic() {
         ||fileStr.indexOf(".png")==(fileStr.length-4)
         ||fileStr.indexOf(".bmp")==(fileStr.length-4)
         )){
-        alert("上传文件仅仅支持以下格式:.jpg,.jpeg,.png,.bmp");
+        alert("上传文件仅支持以下格式:.jpg,.jpeg,.png,.bmp");
         $("#imgDataStyle").val('');
         return;
     }

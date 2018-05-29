@@ -261,7 +261,7 @@ function addCourseListener(){
         $('#hidCoverFid').val($(this).attr('data-id'));
         //保存当前修改的是哪一个li，用于点击确认的时候更新数据
         $('#hidCoverSort').val($(baseNode).eq(0).attr('data-i'));
-        $('#cover').show();
+       // $('#cover').show();
     });
 
     //课程标签删除监听器
