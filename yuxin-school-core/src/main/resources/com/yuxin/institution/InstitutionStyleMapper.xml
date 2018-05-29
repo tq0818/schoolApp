@@ -50,7 +50,7 @@
 		<trim prefix="set" suffixOverrides=",">
 			<if test="name != null and name != ''">name = #{name},</if>
 			<if test="imgUrl != null and imgUrl != ''">img_url = #{imgUrl},</if>
-			<if test="content != null and content != ''">content = #{content},</if>
+			content = #{content},
 			<if test="updateTime != null ">update_time = #{updateTime},</if>
 			<if test="updateTime == null ">update_time = create_time,</if>
 			<if test="isTop != null">is_top = #{isTop},</if>

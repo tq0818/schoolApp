@@ -27,6 +27,7 @@ public class CourseDetailVo {
 	private String shareUrl;//分享页面地址
 	private String shareName;//分享名称
 	private String coverUrl;//封面图
+	private String stringPrice;//
 	public Integer getCourseInfoId() {
 		return courseInfoId;
 	}
@@ -140,6 +141,12 @@ public class CourseDetailVo {
 	}
 	public void setCoverUrl(String coverUrl) {
 		this.coverUrl = coverUrl;
+	}
+	public String getStringPrice() {
+		return stringPrice;
+	}
+	public void setStringPrice(String stringPrice) {
+		this.stringPrice = stringPrice;
 	}
 	
 }

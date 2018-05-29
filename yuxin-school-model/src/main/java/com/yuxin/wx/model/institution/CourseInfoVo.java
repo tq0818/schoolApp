@@ -21,6 +21,7 @@ public class CourseInfoVo implements Serializable{
 	private Float courseInfoPrice;		//课程价格
 	private Integer courseInfoRemain;		//剩余名额
 	private Integer isSupportAppoint;		//是否支持预约(0否1是)
+	private String stringPrice;//价格
 	public Integer getCourseInfoId() {
 		return courseInfoId;
 	}
@@ -68,6 +69,12 @@ public class CourseInfoVo implements Serializable{
 	}
 	public void setIsSupportAppoint(Integer isSupportAppoint) {
 		this.isSupportAppoint = isSupportAppoint;
+	}
+	public String getStringPrice() {
+		return stringPrice;
+	}
+	public void setStringPrice(String stringPrice) {
+		this.stringPrice = stringPrice;
 	}
 	
 }

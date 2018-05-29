@@ -241,11 +241,11 @@ function saveCutPic(saveFlag) {
         dealWidthAndHeight(temp);
     }else if(saveFlag == 1){
         //判断视频名称和视频描述是否为空
-        if(!$(".videoStyle").val()){
+        if(!$(".videoStyle").val()||isNull($(".videoStyle").val())){
         	$.msg("请输入视频名称");
         	return false;
         }
-        if(!$("#videoContent").val()){
+        if(!$("#videoContent").val()||isNull($("#videoContent").val())){
         	$.msg("请输入视频描述");
         	return false;
         }
@@ -391,8 +391,8 @@ function picFormat(fileStr){
             ||fileStrLow.indexOf(".jpeg")==(fileStrLow.length-5)
             ||fileStrLow.indexOf(".png")==(fileStrLow.length-4)
             ||fileStrLow.indexOf(".bmp")==(fileStrLow.length-4)
-            ||fileStrLow.indexOf(".ico")==(fileStrLow.length-4))){
-            alert("上传封面仅仅支持以下格式:.jpg,.jpeg,.png,.bmp,.ico");
+            )){
+            alert("上传封面仅仅支持以下格式:.jpg,.jpeg,.png,.bmp");
             return true;
     }
 	return false;
@@ -412,4 +412,11 @@ function queryInstitutionStyle(pageNo){
             $("#insStyleInfo").html("").html(data);
         }
     });
+}
+
+function isNull(str){
+	if ( str == "" ) return true;
+	var regu = "^[ ]+$";
+	var re = new RegExp(regu);
+	return re.test(str);
 }
