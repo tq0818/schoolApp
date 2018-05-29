@@ -119,7 +119,7 @@
     <script type="text/javascript" src="<%=rootPath %>/javascripts/common/utils.js"></script>
         <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/recommendationOrganizationList.js"></script>
     <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/recommendationOrganization.js"></script>
-        <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/recommendationOrganizationType.js"></script>
+    <script type="text/javascript" src="<%=rootPath%>/javascripts/institution/recommendationOrganizationType.js"></script>
         <script type="text/javascript" src="<%=rootPath%>/javascripts/common/tools.js"></script>
 
 </body>

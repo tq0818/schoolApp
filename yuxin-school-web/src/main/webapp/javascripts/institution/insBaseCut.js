@@ -132,7 +132,7 @@ var jcrop_apis;
     function resizePic() {
         var h, w, ml, mt;
         var scale = parseInt(sourceWidth) / parseInt(sourceHeight);// 长宽比例
-        if (scale > $scale) {
+        if (sourceWidth > sourceHeight) {
             // 过宽,宽为100%，高按比例缩
             h = maxWidth * sourceHeight/ sourceWidth;
             w = maxWidth;

@@ -206,6 +206,7 @@ function getUnderLineClassInfo() {
                 $('#hidTop').val(data.face);
                 if(data.face != null && data.face != ''){
                     $('#imgTop').html("<img src='" + data.fullFace + "'  alt=\"\" style=\"width: 150px;height: 100px;margin-left: 15px;\">");
+                    $('.addPicFace').html('更换封面');
                 }else{
                     $('#imgTop').html('');
                 }

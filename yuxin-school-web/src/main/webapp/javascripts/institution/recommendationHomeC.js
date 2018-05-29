@@ -1,8 +1,7 @@
 var zTree; //用于保存创建的树节点
 
 $(function () {
-
-
+    $selectSubMenu('recommendation');
 
     getTreeData();
 
