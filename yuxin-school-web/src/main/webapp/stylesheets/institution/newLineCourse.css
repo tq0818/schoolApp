@@ -3,10 +3,12 @@
 .mechanismName{background: url(../../images/institution/xing.png) no-repeat 0px center;}
 /*.deleteBtn{position: static;}*/
 .imgList li{margin-right: 40px !important;}
-#styleContainer{margin-left: 80px }
-.deleteBtnStyle{margin-top: 25px !important;margin-right: 20px !important;}
+.imgList li img{width: 100% !important;height: 100% !important;}
+#styleContainer{margin-left: 15px }
+.deleteBtnStyle{margin-top: 23px !important;margin-right: 20px !important;}
 .alterBtn {float: left;margin-top: 10px !important;margin-left: 20px !important;}
 .addingMechanism img{width: 100%;height: 100%;}
+.mienPopup label{font-size: 12px;}
 @media screen and (max-width: 1900px){
     .imgList li{margin-right: 10px !important;}
 }
