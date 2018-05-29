@@ -105,6 +105,7 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
                 institutionRelationVo.setInsId(institutionInfoVo.getId());
                 institutionRelationVo.setOneLevelId(Integer.parseInt(catOne[i]));
                 institutionRelationVo.setTwoLevelId(Integer.parseInt(catTwo[i]));
+                institutionRelationVo.setIsRecommend(0);
                 institutionRelationMapper.insert(institutionRelationVo);
             }
 

@@ -29,17 +29,17 @@ $(function () {
 
 
     // 添加老师名称监听器
-    $('#teacherName').bind('input propertychange', 'input' , function(){
+    /*$('#teacherName').bind('input propertychange', 'input' , function(){
         nameFileter('teacherName');
-    })
+    })*/
 
 
 
 
     //毕业学校监听器
-    $('#teacherSchool').bind('input propertychange', 'input' , function(){
+    /*$('#teacherSchool').bind('input propertychange', 'input' , function(){
         nameFileter('teacherSchool');
-       /* var val = $('#teacherSchool').val();
+       /!* var val = $('#teacherSchool').val();
         //不能输入全是空格的字符串
         if(trim(val) == ''){
             $('#teacherSchool').val('');
@@ -54,8 +54,8 @@ $(function () {
 
         if(!nameTest.test(trim(val))){
             $('#teacherSchool').val(val.substr(0,val.length - 1));
-        }*/
-    })
+        }*!/
+    })*/
 
 
 
@@ -192,21 +192,45 @@ $('.closeMechanismCommit').click(function(){
             insId:getInsId()
         }
 
+
+        var name = param.name;
+        name = name.split(" ").join("");
+        if(name.length == 0){
+            $.msg("请填写老师名称");
+            return;
+        }
+
         if(param.name == ''){
+
             $.msg('请填写老师名称');
             return;
         }
 
+
+        var nameSchool = param.school;
+        nameSchool = nameSchool.split(" ").join("");
+        if(nameSchool.length == 0){
+            $.msg("请填写老师毕业院校");
+            return;
+        }
         if(param.school == ''){
             $.msg('请填写老师毕业院校');
             return;
         }
+
+
 
         if(param.label == null){
             $.msg('请不要添加空白标签');
             return;
         }
 
+        var teacher = param.desc;
+        teacher = teacher.split(" ").join("");
+        if(teacher.length == 0){
+            $.msg("请填写老师简介");
+            return;
+        }
         if(param.desc == ''){
             $.msg('请填写老师简介');
             return;
