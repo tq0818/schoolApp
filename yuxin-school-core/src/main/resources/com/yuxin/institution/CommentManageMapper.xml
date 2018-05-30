@@ -46,6 +46,7 @@
         where c.del_flag = 0 and c.type =0
         <if test="relationId != null and relationId != ''">and c.relation_id = #{relationId}</if>
         <if test="isCheck != null ">and c.is_check = #{isCheck}</if>
+        <if test="userType != null and userType != ''">and c.is_check = 1</if>
         ORDER BY c.create_time desc
         limit #{page},#{pageSize}
     </select>
@@ -55,6 +56,7 @@
         where 1=1 and del_flag = 0 and type = 0
         <if test="relationId != null and relationId != ''">and c.relation_id = #{relationId}</if>
         <if test="isCheck != null ">and c.is_check = #{isCheck}</if>
+        <if test="userType != null and userType != ''">and c.is_check = 1</if>
     </select>
 
 
@@ -68,6 +70,7 @@
         <if test="insId != null and insId != ''">and ii.id = #{insId}</if>
         <if test="relationId != null and relationId != ''">and c.relation_id = #{relationId}</if>
         <if test="isCheck != null  ">and c.is_check = #{isCheck}</if>
+        <if test="userType != null and userType != ''">and c.is_check = 1</if>
         ORDER BY c.create_time desc
         limit #{page},#{pageSize}
     </select>
@@ -81,6 +84,7 @@
         <if test="insId != null and insId != ''">and ii.id = #{insId}</if>
         <if test="relationId != null and relationId != ''">and c.relation_id = #{relationId}</if>
         <if test="isCheck != null  ">and c.is_check = #{isCheck}</if>
+        <if test="userType != null and userType != ''">and c.is_check = 1</if>
     </select>
 
     <select id="commentCuont" resultType="Integer">
