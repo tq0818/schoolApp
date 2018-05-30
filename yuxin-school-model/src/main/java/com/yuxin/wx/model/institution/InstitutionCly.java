@@ -3,6 +3,8 @@ package com.yuxin.wx.model.institution;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * 机构分类
  * @author hello
@@ -70,13 +72,21 @@ public class InstitutionCly implements Serializable{
 		return reServationPackage;
 	}
 	public void setReServationPackage(String reServationPackage) {
-		this.reServationPackage = reServationPackage;
+		if (StringUtils.isBlank(reServationPackage)) {
+			this.reServationPackage = null;
+		}else {
+			this.reServationPackage = reServationPackage;
+		}
 	}
 	public String getCourseInfoName() {
 		return courseInfoName;
 	}
 	public void setCourseInfoName(String courseInfoName) {
-		this.courseInfoName = courseInfoName;
+		if (StringUtils.isBlank(courseInfoName)) {
+			this.courseInfoName = null;
+		}else {
+			this.courseInfoName = courseInfoName;
+		}
 	}
 	public Integer getIsCertified() {
 		return isCertified;
