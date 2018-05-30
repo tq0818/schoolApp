@@ -26,7 +26,11 @@
     </insert>
 
     <delete id="delete" parameterType="Integer">
-        delete from institution_relation where ins_id = #{id}
+        delete from institution_relation where id = #{id}
+    </delete>
+
+    <delete id="deleteByInsIdOneIdTwoId" parameterType="Integer">
+        delete from institution_relation where ins_id = #{insId} and one_level_id = #{oneLevelId} and two_level_id = #{twoLevelId}
     </delete>
 
     <update id="update" parameterType="com.yuxin.wx.model.institution.InstitutionRelationVo">
@@ -37,5 +41,14 @@
         <where>ins_id = #{insId}</where>
 
     </update>
+
+
+    <select id="findByinsIdOneIdTwoId" parameterType="com.yuxin.wx.model.institution.InstitutionRelationVo" resultType="com.yuxin.wx.model.institution.InstitutionRelationVo">
+        select id,ins_id insId, one_level_id oneLevelId , two_level_id twoLevelId,sort,is_recommend isRecommend from institution_relation where ins_id = #{insId} and one_level_id = #{oneLevelId} and two_level_id = #{twoLevelId}
+    </select>
+
+    <select id="findByinsId" parameterType="Integer" resultType="com.yuxin.wx.model.institution.InstitutionRelationVo">
+        select id,ins_id insId, one_level_id oneLevelId , two_level_id twoLevelId,sort,is_recommend isRecommend from institution_relation where ins_id = #{insId}
+    </select>
 
 </mapper>
