@@ -2,6 +2,8 @@ package com.yuxin.wx.model.institution;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.yuxin.wx.vo.commodity.ClassTypeInfoVO;
 
 /**
@@ -40,6 +42,7 @@ public class InstitutionDetailVo {
 	private Integer isChain;//
 	private String shareUrl;//分享地址
 	private String shareName;//分享名称
+	private List<String> institutionSysList;//机构详情中机构系统标签
 	public Integer getInstitutionId() {
 		return institutionId;
 	}
@@ -80,7 +83,11 @@ public class InstitutionDetailVo {
 		return reServationPackage;
 	}
 	public void setReServationPackage(String reServationPackage) {
-		this.reServationPackage = reServationPackage;
+		if (StringUtils.isBlank(reServationPackage)) {
+			this.reServationPackage = null;
+		} else {
+			this.reServationPackage = reServationPackage;
+		}
 	}
 	public String getInstitutionAddress() {
 		return institutionAddress;
@@ -203,6 +210,12 @@ public class InstitutionDetailVo {
 	}
 	public void setShareName(String shareName) {
 		this.shareName = shareName;
+	}
+	public List<String> getInstitutionSysList() {
+		return institutionSysList;
+	}
+	public void setInstitutionSysList(List<String> institutionSysList) {
+		this.institutionSysList = institutionSysList;
 	}
 	
 }
