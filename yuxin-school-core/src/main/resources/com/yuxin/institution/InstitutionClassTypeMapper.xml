@@ -362,6 +362,8 @@
 		INNER JOIN app_shelves ap on ap.comdity_id = cy.id
 		INNER JOIN company c ON ct.`company_id` = c.`id`
 		AND  ap.is_shelves =1
+		and ct.origin_type = 1
+		and ct.del_flag = 0
 		AND ct.`name` = #{name}
 		LEFT JOIN `sys_config_item` sci
 		ON ct.`item_third_code` = sci.`item_code`
