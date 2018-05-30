@@ -656,7 +656,9 @@ function initInsList() {
                 '<a href="javascript:void(0)" class="btn btn-default btn-primary insClass" data-insId="">全部</a>';
             if(jsonData.length>0){
                 for(var i in jsonData){
-                    html+=' <a href="javascript:void(0)" class="btn btn-default insClass"  data-insId="'+jsonData[i].id+'">'+jsonData[i].name +'</a>';
+                    if(jsonData[i]){
+                        html+=' <a href="javascript:void(0)" class="btn btn-default insClass"  data-insId="'+jsonData[i].id+'">'+jsonData[i].name +'</a>';
+                    }
                 }
 
                 $("#insClass").html(html);
