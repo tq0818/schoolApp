@@ -2,6 +2,18 @@
 $(function () {
     //    左侧active切换
     $selectSubMenus('elegantDemeano');
+
+    /**
+     * btn显示隐藏
+     */
+    $('body').on('mouseover',' li',function () {
+        $(this).children('.listBg').show();
+    });
+    $('body').on('mouseleave','li',function () {
+        $(this).children('.listBg').hide();
+    });
+
+
     //点击视频上传出视频上传弹窗
     $('#videoUp').click(function () {
         $('.videoUpload').show();

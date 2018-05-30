@@ -164,7 +164,7 @@ function openDetails(level,updateId){
     }else {//二级
         fillData("二级分类详情");
     }
-    $(".btnFile").html('').html("更新图标");
+    $(".btnFile").html('').html("更改图标");
     $("#addConfirm").html("").html("保存");
     //绑定更新函数
     $("#addConfirm").attr("onclick","updatedata('2',"+updateId+",'')");

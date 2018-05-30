@@ -119,11 +119,12 @@
 
 
 <%--视频上传弹窗--%>
-<div class="videoUpload" style="height: 705px;">
+<div class="videoUpload">
     <h5>视频</h5>
     <div>
         <span style="padding-left: 6px;">视频封面:</span>
-        <p style="width: 304px;height: 304px;border: 1px solid #e4e4e4;margin: auto;text-align: center;overflow: auto;">
+        <%--<p style="width: 304px;height: 304px;border: 1px solid #e4e4e4;margin: auto;text-align: center;overflow: auto;">--%>
+        <p style="width: 260px;height: 260px;border: 1px solid #e4e4e4;margin: auto;text-align: center;overflow: auto;">
             <img src="" alt="" style="width: 300px;height: 300px;" id="targetVideo">
         </p>
         <a href="javascript:void(0)" class="addPic" style="margin-left: 165px;margin-top: 5px;">

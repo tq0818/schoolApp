@@ -34,7 +34,15 @@ public class CommentApp implements Serializable{
 	private String createTimeText;//时间
 	private String createTimeText2;//分钟
 	private Integer insId;
+	private String userType;
 
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
 
 	public String getMobile() {
 		return mobile;

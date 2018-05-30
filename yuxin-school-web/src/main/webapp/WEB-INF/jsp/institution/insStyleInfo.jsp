@@ -22,7 +22,7 @@
 <input type="hidden" id="rowCount" value='${rowCount}'/>
 <input type="hidden" id="relationId" value='${relationId}'/>
       <span class="labelName">风采展示:</span>
-      <ul style="display: inline-block;width: auto;" class="newUl">
+      <ul style="width: auto;" class="newUl">
           <li class="addImg mienShow" id="eleShow">
               <i class="icon iconfont"></i>
           </li>

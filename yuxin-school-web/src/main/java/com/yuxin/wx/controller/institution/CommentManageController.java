@@ -92,6 +92,9 @@ public class CommentManageController {
         Users users = WebUtils.getCurrentUser();
         try{
             json.put("usersType",users.getUserType());
+            if(users.getUserType().equals("INSTITUTION_MANAGE")){
+                commentApp.setUserType(users.getUserType());
+            }
             json.put("comment",commentManageService.findInsComment(commentApp));
             return json;
         }catch (Exception e){
@@ -112,6 +115,9 @@ public class CommentManageController {
         Users users = WebUtils.getCurrentUser();
         try {
             json.put("usersType",users.getUserType());
+            if(users.getUserType().equals("INSTITUTION_MANAGE")){
+                commentApp.setUserType(users.getUserType());
+            }
             json.put("comment",commentManageService.findInsClassComment(commentApp));
             return json;
         }catch (Exception e){

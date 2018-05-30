@@ -88,15 +88,6 @@ $(function () {
         }
 
 
-
-        //描述可为空
-        /*if(trim(summary) != ''){
-            if(!nameTest.test(summary)){
-                $.msg('描述信息不能含有特殊字符');
-                return;
-            }
-        }*/
-
         //验证价格
         if(trim(price) == ''){
             price = '0.00';
@@ -179,13 +170,20 @@ function checkLabel(arr){
 
     for(var i = 0;i<arr.length;i++ ){
         for(var j = 0;j<arr.length;j++){
-            if(arr[j].name == ''){
-                return '标签不能为空';
+            if(arr[j].name != ''){
+                var name = arr[j].name;
+                name = name.split(" ").join('');
+                if(name.length ==0){
+                    return '标签不能为空';
+                }
             }
 
-            if(i != j && arr[i].name == arr[j].name){
-                return '标签重复';
+            if(arr[i].name != '' && arr[j].name){
+                if(i != j && arr[i].name == arr[j].name){
+                    return '标签重复';
+                }
             }
+
         }
     }
 

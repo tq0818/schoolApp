@@ -1,6 +1,7 @@
 package com.yuxin.wx.institution.impl;
 
 import com.yuxin.wx.api.auth.IAuthUserRoleService;
+import com.yuxin.wx.api.institution.InstitutionCategoryManageService;
 import com.yuxin.wx.api.institution.InstitutionInfoService;
 import com.yuxin.wx.api.user.IUsersService;
 import com.yuxin.wx.common.BaseServiceImpl;
@@ -18,10 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional
@@ -43,6 +41,9 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
 
     @Autowired
     private IAuthUserRoleService authUserRoleServiceImpl;
+
+    @Autowired
+    private InstitutionCategoryManageService institutionCategoryService;
 
     @Override
     @Transactional
@@ -168,8 +169,7 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
     @Transactional
     public void updateInsById(InstitutionInfoVo institutionInfoVo) {
         institutionInfoMapper.update(institutionInfoVo);
-        //删除原机构分类
-        institutionRelationMapper.delete(institutionInfoVo.getId());
+
         //删除原系统标签,自定义标签,原特色服务标签
         institutionLabelMapper.deleteByInsId(institutionInfoVo.getId());
 
@@ -184,15 +184,38 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
             catTwo = institutionInfoVo.getTwoLevelId().split(",");
         }
 
-        //插入机构分类关系表
-        InstitutionRelationVo institutionRelationVo = new InstitutionRelationVo();
-        for(int i =0;i<catOne.length;i++){
-            institutionRelationVo.setId(null);
-            institutionRelationVo.setInsId(institutionInfoVo.getId());
-            institutionRelationVo.setOneLevelId(Integer.parseInt(catOne[i]));
-            institutionRelationVo.setTwoLevelId(Integer.parseInt(catTwo[i]));
-            institutionRelationMapper.insert(institutionRelationVo);
+        //查询改机构的所有分类情况
+        List<InstitutionRelationVo> insRsOle = institutionRelationMapper.findByinsId(institutionInfoVo.getId());
+        //将insRsOle放入map注意放入的key
+        Map<String,InstitutionRelationVo> mapOle = new HashMap<>();
+        for(int i = 0;i<insRsOle.size();i++){
+            mapOle.put(insRsOle.get(i).getOneLevelId().toString()+insRsOle.get(i).getTwoLevelId().toString(),insRsOle.get(i));
         }
+
+        for(int i = 0;i<catOne.length;i++){
+            if(mapOle.get(catOne[i]+catTwo[i]) != null){
+                mapOle.remove(catOne[i]+catTwo[i]);
+            }else{
+                InstitutionRelationVo institutionRelationVo = new InstitutionRelationVo();
+                institutionRelationVo.setInsId(institutionInfoVo.getId());
+                institutionRelationVo.setOneLevelId(Integer.parseInt(catOne[i]));
+                institutionRelationVo.setTwoLevelId(Integer.parseInt(catTwo[i]));
+                institutionRelationVo.setIsRecommend(0);
+                institutionRelationMapper.insert(institutionRelationVo);
+            }
+        }
+
+        for(String key :mapOle.keySet()){
+            if(null != mapOle.get(key).getIsRecommend() && mapOle.get(key).getIsRecommend() == 1){
+                Map<String,Object> map = new HashMap<>();
+                map.put("rid",mapOle.get(key).getId());
+                map.put("insId",mapOle.get(key).getInsId());
+                map.put("typeId",mapOle.get(key).getOneLevelId());
+                int num = institutionCategoryService.alterIndexRecommendStatus(map);
+            }
+            institutionRelationMapper.delete(mapOle.get(key).getId());
+        }
+
         //插入新系统标签
         InstitutionLabelVo institutionLabelVo = new InstitutionLabelVo();
         if(null != institutionInfoVo.getSysLabel() && !"".equals(institutionInfoVo.getSysLabel())){
