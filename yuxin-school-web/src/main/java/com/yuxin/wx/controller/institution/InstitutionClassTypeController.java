@@ -643,6 +643,11 @@ public class InstitutionClassTypeController {
                     JSONObject obj = labelArr.getJSONObject(i);
                     InstitutionLabelVo labelVo = new InstitutionLabelVo();
                     labelVo.setLabelName(obj.getString("name"));
+                    if(null == obj.getString("name") || "".equals(obj.getString("name"))){
+                        labelVo.setLabelName(null);
+                    }else{
+                        labelVo.setLabelName(obj.getString("name"));
+                    }
                     labelVo.setRelationId(newId);
                     labelVo.setLabelType("1");
                     labelVo.setSourceFlag(1);
@@ -726,7 +731,11 @@ public class InstitutionClassTypeController {
                     JSONObject obj = labelArr.getJSONObject(i);
                     if("".equals(obj.getString("id"))){
                         InstitutionLabelVo labelVo = new InstitutionLabelVo();
-                        labelVo.setLabelName(obj.getString("name"));
+                        if(null == obj.getString("name") || "".equals(obj.getString("name"))){
+                            labelVo.setLabelName(null);
+                        }else{
+                            labelVo.setLabelName(obj.getString("name"));
+                        }
                         labelVo.setRelationId(entity.getId());
                         labelVo.setLabelType("1");
                         labelVo.setSourceFlag(1);
@@ -741,7 +750,11 @@ public class InstitutionClassTypeController {
                             if(vo.getId() - Integer.valueOf(obj.getString("id")) == 0){
                                 if(!(obj.getString("name") != null && obj.getString("name").equals(vo.getLabelName()))){
                                     //标签名不同才更新数据库
-                                    vo.setLabelName(obj.getString("name"));
+                                    if(null == obj.getString("name") || "".equals(obj.getString("name"))){
+                                        vo.setLabelName(null);
+                                    }else{
+                                        vo.setLabelName(obj.getString("name"));
+                                    }
                                     vo.setUpdateTime(new Date());
                                     labelService.update(vo);
                                 }
