@@ -35,7 +35,7 @@ $(function () {
             		&& str != ".mkv" && str != ".flv" && str != ".f4v"
             		&& str != ".rm" && str != ".ra" && str != ".ram"
             		&& str != ".pgeg" && str != ".mpe" && str != ".vob"
-            		&& str != ".dat" && str != ".mov" && str != ".mts"){
+            		&& str != ".dat" && str != ".mov" && str != ".mts"&&str != ".mpg"){
             		alert("支持的视频格式:.avi,.mp4*,.asf,.sdx,.wmv,.rmvb,.3gp,"+"\n"+".mkv,.flv,.f4v,.rm,.ra,.ram,.mpg,.pgeg,.mpe,.vob,.dat,.mov,.mts");
             		return false;
             	}

@@ -230,7 +230,7 @@ function saveCutPic(saveFlag) {
     var id = $("#updateId").val();
 //    console.log($("#institutionId").val());
     //判断图片是否为空或则是未更改就进行保存
-    if (saveFlag == 0){//风采图，反之则是封面
+    if (saveFlag == 0){//封面
         //判断图片是否为空或则是未更改就进行保存
         if (!$("#target").attr("src")){
             $.msg("未选择图片");
@@ -392,7 +392,7 @@ function picFormat(fileStr){
             ||fileStrLow.indexOf(".png")==(fileStrLow.length-4)
             ||fileStrLow.indexOf(".bmp")==(fileStrLow.length-4)
             )){
-            alert("上传封面仅仅支持以下格式:.jpg,.jpeg,.png,.bmp");
+            alert("上传封面仅支持以下格式:.jpg,.jpeg,.png,.bmp");
             return true;
     }
 	return false;
@@ -416,7 +416,8 @@ function queryInstitutionStyle(pageNo){
 
 function isNull(str){
 	if ( str == "" ) return true;
-	var regu = "^[ ]+$";
+//	var regu = "^[ ]+$";
+	var regu ="\r|\n|\\s";
 	var re = new RegExp(regu);
 	return re.test(str);
 }

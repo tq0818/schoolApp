@@ -238,25 +238,26 @@ public class InstitutionStyleController {
             //示例图尺寸
             double slW=0;
             double slH=0;
-            if(realW > realH){
+            if ("0".equals(saveFlag)) {
+            	if(realW/realH>300/180){
+                    //过宽
                     slH=300 * realH/realW;
                     slW=300;
+                }else{
                     //过高
-//                    slH=120;
-//                    slW=120 * realW/realH;
-            }else{
-              slH=300;
-              slW=300 * realW/realH;
-            }
-//            if(realW/realH>300/120){
-//                //过宽
-//                slH=300 * realH/realW;
-//                slW=300;
-//            }else{
-//                //过高
-//                slH=120;
-//                slW=120 * realW/realH;
-//            }
+                    slH=180;
+                    slW=180 * realW/realH;
+                }
+			} else {
+				if(realW > realH){
+                    slH=300 * realH/realW;
+                    slW=300;
+	            }else{
+		            slH=300;
+		            slW=300 * realW/realH;
+	            }
+			}
+            
             //原图所选中位置和区域
             int xx=(new   Double(x*realW/slW)).intValue();
             int yy=(new   Double(y*realH/slH)).intValue();

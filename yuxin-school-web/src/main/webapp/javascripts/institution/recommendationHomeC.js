@@ -140,7 +140,8 @@ function createTree(url, treeId) {
 
     var setting = { //设置
         check: {
-            enable: true
+            enable: true,
+            chkboxType : { "Y" : "", "N" : "" }
         },
         view: {
             showLine: true, //显示辅助线

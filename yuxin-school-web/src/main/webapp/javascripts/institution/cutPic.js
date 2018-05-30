@@ -6,7 +6,7 @@ var jcrop_apis;
         $img = picFlag == 0?$("#target"):picFlag == 1?$("#targetVideo"):$("#targetStyle");
         	//picFlag == 1?$("#targetVideo"):$("#targetStyle");
         //风采图
-        if(initW > initH){//宽图
+        if(initW > initH || picFlag == 0){//宽图
         	$scale = 300/180;
             maxHeight = 180;
             maxWidth = 300;
@@ -21,7 +21,7 @@ var jcrop_apis;
         }
         sourceWidth=initW;
         sourceHeight=initH;
-        var initSize=resizePic();
+        var initSize=resizePic(picFlag);
         var jcrop_api;
         var scale = parseInt(sourceWidth) / parseInt(sourceHeight)
         if(scale > $scale){
@@ -50,8 +50,8 @@ var jcrop_apis;
             boundx = bounds[0];
             boundy = bounds[1];
             var scale = parseInt(sourceWidth) / parseInt(sourceHeight);// 长宽比例
-            var size = resizePic();
-            if (sourceWidth > sourceHeight) {
+            var size = resizePic(picFlag);
+        	if (sourceWidth > sourceHeight) {
                 jcrop_api.animateTo([0,0,boundx*$scale,boundy*$scale],function () {
 
                 })
@@ -61,6 +61,7 @@ var jcrop_apis;
                 })
 
             }
+            
         });
         jcrop_apis = jcrop_api;
 
@@ -117,32 +118,59 @@ var jcrop_apis;
         $('#h').val('');
     }
 
-    function resizePic() {
+    function resizePic(picFlag) {
         var h, w, ml, mt;
         var scale = parseInt(sourceWidth) / parseInt(sourceHeight);// 长宽比例
-        if (sourceWidth > sourceHeight) {
-            // 过宽,宽为100%，高按比例缩
-            h = maxWidth * sourceHeight/ sourceWidth;
-            w = maxWidth;
-            ml = 0;
-            mt = (maxHeight - h) / 2;
-            $img.css("height", h+"px").css("width", w+"px");
-            // 改左侧图大小
-            $('.jcrop-holder').find("img").css("height", h + "px").css("width", w + "px");
-            // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
-            // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
-        } else {
-            // 过高,高为100%，宽按比例缩
-            h = maxHeight;
-            w = maxHeight * sourceWidth/sourceHeight;
-            ml = (maxWidth - w) / 2;
-            mt = 0;
-            $img.css("height", h+"px").css("width", w+"px");
-            // 改左侧图大小
-            $('.jcrop-holder').find("img").css("height", h + "px").css("width", w + "px");
-            // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
-            // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
-        }
+//        if(picFlag == 0){
+//        	if (scale > $scale) {
+//                // 过宽,宽为100%，高按比例缩
+//                h = maxWidth * sourceHeight/ sourceWidth;
+//                w = maxWidth;
+//                ml = 0;
+//                mt = (maxHeight - h) / 2;
+//                $img.css("height", h+"px").css("width", w+"px");
+//                // 改左侧图大小
+//                $('.jcrop-holder').find("img").css("height", h + "px").css("width", w + "px");
+//                // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
+//                // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
+//            } else {
+//                // 过高,高为100%，宽按比例缩
+//                h = maxHeight;
+//                w = maxHeight * sourceWidth/sourceHeight;
+//                ml = (maxWidth - w) / 2;
+//                mt = 0;
+//                $img.css("height", h+"px").css("width", w+"px");
+//                // 改左侧图大小
+//                $('.jcrop-holder').find("img").css("height", h + "px").css("width", w + "px");
+//                // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
+//                // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
+//            }
+//        }else{
+        	if (sourceWidth > sourceHeight) {
+                // 过宽,宽为100%，高按比例缩
+                h = maxWidth * sourceHeight/ sourceWidth;
+                w = maxWidth;
+                ml = 0;
+                mt = (maxHeight - h) / 2;
+                $img.css("height", h+"px").css("width", w+"px");
+                // 改左侧图大小
+                $('.jcrop-holder').find("img").css("height", h + "px").css("width", w + "px");
+                // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
+                // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
+            } else {
+                // 过高,高为100%，宽按比例缩
+                h = maxHeight;
+                w = maxHeight * sourceWidth/sourceHeight;
+                ml = (maxWidth - w) / 2;
+                mt = 0;
+                $img.css("height", h+"px").css("width", w+"px");
+                // 改左侧图大小
+                $('.jcrop-holder').find("img").css("height", h + "px").css("width", w + "px");
+                // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
+                // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
+            }
+//        }
+        
         var c = {};
         c.w = w;
         c.h = h;
