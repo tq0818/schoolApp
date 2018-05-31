@@ -43,6 +43,16 @@ public class PageLogRecordVo extends BaseEntity {
      */
     private String pkId;
 
+    /**
+     *  1:机构 2:课程 （机构内对应id类型）
+     */
+    private String type;
+
+    /**
+     * 预约类型：点击预约按钮：1.预约机构  2.预约机构礼包 3.课程预约 4.点击打电话   提交预约按钮：11.提交机构预约 21.提交机构礼包预约 31.提交课程预约
+     */
+    private String reservationType;
+
 
     /**
      * 初始化实体数据
@@ -66,6 +76,30 @@ public class PageLogRecordVo extends BaseEntity {
 
 
     public PageLogRecordVo() {
+    }
+
+    public String getPkId() {
+        return pkId;
+    }
+
+    public void setPkId(String pkId) {
+        this.pkId = pkId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getReservationType() {
+        return reservationType;
+    }
+
+    public void setReservationType(String reservationType) {
+        this.reservationType = reservationType;
     }
 
     public String getPageNo() {
@@ -116,11 +150,5 @@ public class PageLogRecordVo extends BaseEntity {
         this.recordType = recordType;
     }
 
-    public String getPkId() {
-        return pkId;
-    }
 
-    public void setPkId(String pk_id) {
-        this.pkId = pkId;
-    }
 }
