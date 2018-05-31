@@ -43,6 +43,7 @@ public class UserHandler implements HandlerInterceptor {
 		}
 
 		//机构用户拦截
+		String url = request.getRequestURL().toString();
 		Users user = WebUtils.getCurrentUser(request);
 		if("INSTITUTION_MANAGE".equals(user.getUserType())){
 			Map<String,Object> params = new HashMap<String,Object>();
@@ -59,7 +60,6 @@ public class UserHandler implements HandlerInterceptor {
 					response.sendRedirect(request.getContextPath()+"/index");
 				}
 
-				String url = request.getRequestURL().toString();
 				if(url.contains("/institutionClassType/classTypeMain/")||url.contains("/InsInfoBase/famousTeacher/")){
 					id = url.substring(url.lastIndexOf("/")+1);
 					try{
@@ -73,6 +73,10 @@ public class UserHandler implements HandlerInterceptor {
 					}
 				}
 			}
+		}
+		//清理session
+		if(url.contains("/InsInfoBase/organizationIndex") && !"review".equals(request.getQueryString())){
+			request.getSession().removeAttribute("chooseParams");
 		}
 
 		return true;

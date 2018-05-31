@@ -6,10 +6,10 @@
 <!-- 二级导航 -->
 <div class="left-side">
     <div class="left-side-title">
-        <%--<c:if test="${userType != 'INSTITUTION_MANAGE'}">
+        <c:if test="${userType != 'INSTITUTION_MANAGE'}">
             <i class="icon iconfont" style="float: left;color: #cdcccc;font-size: 20px;margin-left: 2px;" id="backUp">&#xe650;</i>
         </c:if>
---%>
+
         <%--<em title='${company.companyName }' style='overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width: 200px;display : inline-block;'>${company.companyName }</em>--%>
         <em title='${ins.name}' style='overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width: 190px;display : inline-block;'>${ins.name}</em>
         <!-- <span class="iconfont return-pic hcancle">&#xe650;</span> -->
@@ -47,7 +47,11 @@
     }
     //点击返回，返回上一级
     $('#backUp').click(function () {
-        window.history.go(-1);
+        if(document.referrer.indexOf('/InsInfoBase/organizationIndex')>0){
+            window.location.href=rootPath+'/InsInfoBase/organizationIndex?review';
+        }else{
+            window.history.go(-1);
+        }
     });
 </script>
 

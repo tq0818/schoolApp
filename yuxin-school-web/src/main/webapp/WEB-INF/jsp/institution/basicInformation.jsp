@@ -319,9 +319,9 @@
                     </p>
                 </div>
                 <div class="orgBtn">
-                    <%--<c:if test="${userType != 'INSTITUTION_MANAGE'}">
-                        <a href="javascript:void(0)" class="btn btn-primary btn-mb closeMechanism cancel">取消</a>
-                    </c:if>--%>
+                    <c:if test="${userType != 'INSTITUTION_MANAGE'}">
+                        <a href="<%=rootPath %>/InsInfoBase/organizationIndex?review" class="btn btn-primary btn-mb closeMechanism cancel">取消</a>
+                    </c:if>
                         <a href="javascript:void(0)" class="btn btn-primary btn-mb closeMechanism updateIns">保存</a>
                 </div>
 

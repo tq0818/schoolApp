@@ -423,6 +423,7 @@ $(function () {
     });
 
 
+
 });
 
 var curPage = 1;
@@ -567,12 +568,18 @@ function findFistCategorys() {
                             html = html + "<option value=\""+data[i].id+"\">"+data[i].codeName+"</option>"
                         }
                     }else{
-                        html = html + "<option value=\""+data[i].id+"\">"+data[i].codeName+"</option>"
+                        if($("#hasOneLevelId").val()==data[i].id){
+                            html = html + "<option selected value=\""+data[i].id+"\">"+data[i].codeName+"</option>"
+                        }else{
+                            html = html + "<option value=\""+data[i].id+"\">"+data[i].codeName+"</option>"
+
+                        }
                     }
 
                 }
             }
             $("#findFistCategorys").html("").html(html);
+            findSecondCategorys();
         }
     });
 
@@ -591,7 +598,11 @@ function findSecondCategorys() {
             html = "<option value=\"\">请选择二级分类</option>"
             if(data.length>0){
                 for (var i in data){
-                    html = html + "<option value=\""+data[i].id+"\">"+data[i].codeName+"</option>"
+                    if($("#hasTwoLevelId").val()==data[i].id){
+                        html = html + "<option selected value=\""+data[i].id+"\">"+data[i].codeName+"</option>"
+                    }else{
+                        html = html + "<option value=\""+data[i].id+"\">"+data[i].codeName+"</option>"
+                    }
                 }
             }
             $("#findSecondCategorys").html("").html(html);
@@ -653,8 +664,8 @@ function findInsDate(page) {
     var eduArea = $("#eduArea").val();
     var eduSchool = $("#eduSchool").val();
     var registStatus = $("#registStatus").val();
-    var findFistCategorys = $("#findFistCategorys").val();
-    var findSecondCategorys = $("#findSecondCategorys").val();
+    var findFistCategorys = $("#findFistCategorys").val()?$("#findFistCategorys").val():$("#hasOneLevelId").val();
+    var findSecondCategorys = $("#findSecondCategorys").val()?$("#findSecondCategorys").val():$("#hasTwoLevelId").val();
     console.log("1:"+findFistCategorys,",2:"+findSecondCategorys)
     if(findFistCategorys == '' || findFistCategorys == null){
         findSecondCategorys == '';
@@ -717,8 +728,8 @@ function findInsDate(page) {
             "endTime":endTime,
             "startTime":startTime,
             "name":insName,
-            "page":page,
-            "pageSize":$("#selectCounts").val() || 10
+            "page":$("#hasPage").val()?$("#hasPage").val():page,
+            "pageSize":$("#hasPageSize").val() || $("#selectCounts").val() || 10
         },
         beforeSend: function (XMLHttpRequest) {
             $(".loading").show();
@@ -786,11 +797,11 @@ function findInsDate(page) {
                         '<a href="javascript:void(0)" class="countManage" id="countManage" data-id="'+item.id+'">'+'账号管理'+'</a>|'+
                         '<a href="javascript:void(0)" class="manageBtn">'+'管理'+'</a>'+
                         '<ul class="none box" style="display: none">'+
-                        '<li><a href="'+rootPath+'/InsInfoBase/findInsById?id='+item.id+'" class="ingInfo" target="_blank">基本信息</a>'+'</li>'+
-                        '<li><a href="'+rootPath+'/institutionStyle/queryInstitutionStyle?relationId='+item.id+'" target="_blank">风采管理</a>'+'</li>'+
-                        '<li><a href="'+rootPath+'/institutionClassType/classTypeMain/'+item.id+'" target="_blank">课程管理</a>'+'</li>'+
-                        '<li><a href="'+rootPath+'/InsInfoBase/famousTeacher/'+item.id+'" target="_blank">名师管理</a>'+'</li>'+
-                        '<li><a href="'+rootPath+'/comment/insCommentIndex?id='+item.id+'" target="_blank">评论管理</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/InsInfoBase/findInsById?id='+item.id+'" class="ingInfo">基本信息</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/institutionStyle/queryInstitutionStyle?relationId='+item.id+'">风采管理</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/institutionClassType/classTypeMain/'+item.id+'">课程管理</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/InsInfoBase/famousTeacher/'+item.id+'" >名师管理</a>'+'</li>'+
+                        '<li><a href="'+rootPath+'/comment/insCommentIndex?id='+item.id+'">评论管理</a>'+'</li>'+
                         '</ul>'+
                         '</td>'+
                         '</tr>'
@@ -830,6 +841,13 @@ function findInsDate(page) {
             } else {
                 $(".pagination").html('');
             }
+
+            $("#hasPage").val('');
+            $("#hasPageSize").val('');
+            $("#hasOneLevelId").val('');
+            $("#hasTwoLevelId").val('');
+            $("#hasIsCertified").val('');
+            $("#hasIsShelves").val('');
 
         },
         complete: function (XMLHttpRequest, textStatus) {

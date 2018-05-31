@@ -13,6 +13,7 @@ import com.yuxin.wx.utils.FileUtil;
 import com.yuxin.wx.utils.HttpPostRequest;
 import com.yuxin.wx.utils.PropertiesUtil;
 import com.yuxin.wx.utils.WebUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/InsInfoBase")
@@ -56,6 +55,7 @@ public class InstitutionInfoController {
     private RiseSchoolManageService riseSchoolManageServiceImpl;
     @Autowired
     private InstitutionRelationService institutionRelationService;
+
     /**
      * 机构首页
      * @return
@@ -75,6 +75,26 @@ public class InstitutionInfoController {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+
+        //获取已经选中参数
+        InstitutionInfoVo insInfoVo = null==request.getSession().getAttribute("chooseParams")?null: (InstitutionInfoVo) request.getSession().getAttribute("chooseParams");
+        if(null!=insInfoVo){
+            Map<String,Object> map = new HashMap<String,Object>();
+            //获取市
+            if(StringUtils.isNotBlank(insInfoVo.getProvince())){
+                map.put("itemType","CITY");
+                map.put("parentCode",insInfoVo.getProvince());
+                model.addAttribute("cityList",riseSchoolManageServiceImpl.queryRiseSchoolDict(map));
+            }
+            //获取区
+            if(StringUtils.isNotBlank(insInfoVo.getCity())){
+                map.put("itemType","DISTRICT");
+                map.put("parentCode",insInfoVo.getCity());
+                model.addAttribute("areaList",riseSchoolManageServiceImpl.queryRiseSchoolDict(map));
+            }
+            model.addAttribute("chooseParams",insInfoVo);
+        }
         return "institution/organizationIndex";
     }
 
@@ -86,10 +106,13 @@ public class InstitutionInfoController {
      */
     @ResponseBody
     @RequestMapping(value = "/insData",method = RequestMethod.POST)
-    public PageFinder<InstitutionInfoVo> findIns(Model model, InstitutionInfoVo insInfoVo){
+    public PageFinder<InstitutionInfoVo> findIns(Model model, InstitutionInfoVo insInfoVo,HttpServletRequest request){
         //insInfoVo.setPageSize(10);
+        int page = insInfoVo.getPage();
         PageFinder<InstitutionInfoVo> pageFinder = institutionInfoService.findInstitutionInfos(insInfoVo);
         model.addAttribute("insList",pageFinder);
+        insInfoVo.setPage(page);
+        request.getSession().setAttribute("chooseParams",insInfoVo);
         return pageFinder;
     }
 
