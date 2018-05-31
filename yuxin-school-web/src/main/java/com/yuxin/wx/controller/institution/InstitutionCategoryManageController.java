@@ -2,8 +2,10 @@ package com.yuxin.wx.controller.institution;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yuxin.wx.api.institution.InstitutionCategoryManageService;
+import com.yuxin.wx.api.institution.InstitutionRelationService;
 import com.yuxin.wx.common.PageFinder;
 import com.yuxin.wx.model.institution.InstitutionCategoryVo;
+import com.yuxin.wx.model.institution.InstitutionRelationVo;
 import com.yuxin.wx.util.ImageUtils;
 import com.yuxin.wx.utils.FileUtil;
 import com.yuxin.wx.utils.PropertiesUtil;
@@ -38,6 +40,9 @@ public class InstitutionCategoryManageController {
 
     @Autowired
     private PropertiesUtil propertiesUtil;
+
+    @Autowired
+    private InstitutionRelationService institutionRelationService;
 
 
     /**
@@ -103,6 +108,7 @@ public class InstitutionCategoryManageController {
             InstitutionCategoryVo insCate = new InstitutionCategoryVo();
             String flag = request.getParameter("flag");
             String ids = request.getParameter("ids");
+            String catId = request.getParameter("catId");
             //启用禁用切换
             if("1".equals(flag)){
                 String isEnable = request.getParameter("enable");
@@ -112,6 +118,13 @@ public class InstitutionCategoryManageController {
                     insCate.setFirstRecommend(0);
                     insCate.setSecondRecommend(0);
                     insCate.setThirdRecommend(0);
+                    //修改该分类下的机构为未推荐状态
+                    /*String[] catIds = ids.split(",");
+                    InstitutionRelationVo institutionRelationVo = new InstitutionRelationVo();
+                    institutionRelationVo.setIsRecommend(0);
+                    institutionRelationVo.setOneLevelId(Integer.parseInt(catId));
+                    institutionRelationVo.setSort(null);
+                    institutionRelationService.updateByOneId(institutionRelationVo);*/
                 }else{
                     insCate.setIsEnable(1);
                 }

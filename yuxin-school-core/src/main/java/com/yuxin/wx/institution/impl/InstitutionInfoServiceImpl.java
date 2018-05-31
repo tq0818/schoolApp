@@ -189,12 +189,12 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
         //将insRsOle放入map注意放入的key
         Map<String,InstitutionRelationVo> mapOle = new HashMap<>();
         for(int i = 0;i<insRsOle.size();i++){
-            mapOle.put(insRsOle.get(i).getOneLevelId().toString()+insRsOle.get(i).getTwoLevelId().toString(),insRsOle.get(i));
+            mapOle.put(insRsOle.get(i).getOneLevelId().toString()+","+insRsOle.get(i).getTwoLevelId().toString(),insRsOle.get(i));
         }
 
         for(int i = 0;i<catOne.length;i++){
-            if(mapOle.get(catOne[i]+catTwo[i]) != null){
-                mapOle.remove(catOne[i]+catTwo[i]);
+            if(mapOle.get(catOne[i]+","+catTwo[i]) != null){
+                mapOle.remove(catOne[i]+","+catTwo[i]);
             }else{
                 InstitutionRelationVo institutionRelationVo = new InstitutionRelationVo();
                 institutionRelationVo.setInsId(institutionInfoVo.getId());
@@ -206,11 +206,12 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
         }
 
         for(String key :mapOle.keySet()){
-            if(null != mapOle.get(key).getIsRecommend() && mapOle.get(key).getIsRecommend() == 1){
+            if(null != mapOle.get(key).getIsRecommend() && mapOle.get(key).getIsRecommend() != 0){
                 Map<String,Object> map = new HashMap<>();
                 map.put("rid",mapOle.get(key).getId());
                 map.put("insId",mapOle.get(key).getInsId());
                 map.put("typeId",mapOle.get(key).getOneLevelId());
+                map.put("level",1);
                 int num = institutionCategoryService.alterIndexRecommendStatus(map);
             }
             institutionRelationMapper.delete(mapOle.get(key).getId());

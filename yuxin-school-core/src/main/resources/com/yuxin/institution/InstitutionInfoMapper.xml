@@ -112,7 +112,7 @@
 
     <select id="findInstitutionInfos" resultMap="institutionInfoMap" parameterType="com.yuxin.wx.model.institution.InstitutionInfoVo">
         select ii.id,ii.name,s.item_name as province,s1.item_name as city,s2.item_name as area,ii.is_shelves,ii.is_certified,ii.create_time,
-        GROUP_CONCAT(ic.code_name) firstcodeName,GROUP_CONCAT(ic1.code_name) secondcodeName,GROUP_CONCAT(ic.id) oneLevelId,GROUP_CONCAT(ic1.id) twoLevelId
+        GROUP_CONCAT(distinct ic.code_name) firstcodeName,GROUP_CONCAT(ic1.code_name) secondcodeName,GROUP_CONCAT(distinct ic.id) oneLevelId,GROUP_CONCAT(ic1.id) twoLevelId
         from institution_info ii
 		left JOIN sys_rise_school_dict s on s.item_code = ii.province
         left JOIN sys_rise_school_dict s1 on s1.item_code = ii.city

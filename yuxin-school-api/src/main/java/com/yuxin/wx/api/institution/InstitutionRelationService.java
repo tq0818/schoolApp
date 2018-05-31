@@ -6,4 +6,6 @@ public interface InstitutionRelationService {
     void insert(InstitutionRelationVo institutionRelationVo);
 
     void update(InstitutionRelationVo institutionRelationVo);
+
+    void updateByOneId(InstitutionRelationVo institutionRelationVo);
 }

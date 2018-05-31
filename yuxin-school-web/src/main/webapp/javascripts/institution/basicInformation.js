@@ -663,7 +663,15 @@ function updataIns() {
     var insId = $("#insId").val();
     var reservService = $("#reservService").val();
 
-    console.log(labelName,cusLabelName,specialName);
+    if(reservService != ''){
+        reservService = reservService.replace(/\ +/g,"");
+        reservService = reservService.replace(/[\r\n]/g,"");
+        reservService = reservService.split(" ").join("");
+        if(reservService.length == 0){
+            $.msg("预约服务部能为全空格");
+            return;
+        }
+    }
 
     if(insName != insNameOle){
 
