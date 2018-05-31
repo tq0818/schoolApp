@@ -188,7 +188,7 @@
 </div>
 <!-- 封面图片上传 -->
 <div class="elePic" id='cover' style="height: 500px;">
-    <h5>封面图片</h5>
+    <h5>封面图片-建议上传图片尺寸为200*120px</h5>
     <div>
         <p style="width: 300px;height: 300px;border: 1px solid #e4e4e4;margin: auto;text-align: center;overflow: auto;">
             <img src="" alt="" style="width: 300px;height: 300px;" id="target" class="picStyle">

@@ -290,7 +290,7 @@
                     <span class="iconBtn customLabelBtn">+</span>
                 </div>
                 <div>
-                            <span>特色服务：</span>
+                            <span>特色服务</span>
                     <c:forEach var="spe" items="${specialSer}" varStatus="vs">
                         <c:choose>
                             <c:when test="${spe.imgUrl == ''}">
@@ -339,8 +339,8 @@
 
         <%--特色服务图片弹窗--%>
         <div class="mienPopup coverPopup" style="width: 234px; height: 260px; margin-left: -135px;z-index: 1000;">
-            <div class="uploadImageStyle">
-                <label for="">特色服务：</label>
+            <div class="uploadImageStyle" style="text-align: center;width: 100%;;">
+                <label for="" style="font-size: 8px;">特色服务-建议上传图片尺寸为130*130px</label>
                 <p style="width: 240px;height: 120px;margin: auto;border: 1px solid #e4e4e4;overflow: auto;">
                     <img src="" alt="" id="targetStyle" style="width: 400px;height: 300px;">
                 </p>
