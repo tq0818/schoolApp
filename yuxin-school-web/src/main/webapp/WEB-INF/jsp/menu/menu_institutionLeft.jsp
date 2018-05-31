@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/decorators/import.jsp"%>
 <style>
-    .left-side li.active{background: #3faafb;}
+    .left-side li.active{background: #3faafb !important;}
 </style>
 <!-- 二级导航 -->
 <div class="left-side">
