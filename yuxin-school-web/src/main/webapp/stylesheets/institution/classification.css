@@ -15,5 +15,5 @@ font-size: 12px;text-decoration: none;margin-left: 60px;margin-top: 5px;}
 .paddingLeft{padding-left: 4px;}
 
 @media screen and (max-width: 1400px){
-    .btn{padding: 8px 0;}
+    .detailSeconPopupBtn{padding: 8px 5px;}
 }

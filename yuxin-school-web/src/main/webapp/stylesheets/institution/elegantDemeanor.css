@@ -21,7 +21,6 @@ line-height: 25px;text-align: center;position: relative;font-size: 12px;}
 .bigImg{position: fixed;top: 50%;left: 50%;transform: translate(-50%,-50%);display: none;}
 .videoUpload{overflow-y: auto;}
 .newUl{margin-left: 190px;}
-
 @media screen and (max-width: 1400px) {
     .labelName{width: 60px;}
     .imgList li{margin-right: 20px;}
@@ -29,5 +28,6 @@ line-height: 25px;text-align: center;position: relative;font-size: 12px;}
     .listBg{width: 162px;}
     .imgList li{width: 160px;}
     .videoUpload,.elePic{height: 505px;}
+    .imgList a{padding: 5px !important;}
 
 }

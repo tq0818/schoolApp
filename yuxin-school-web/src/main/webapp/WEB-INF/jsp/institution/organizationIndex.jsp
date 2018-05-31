@@ -70,7 +70,6 @@
                                 </c:choose>
                             </c:forEach>
                         </select>
-
                         <select id="registStatus" name="status" onchange="queryInsData()" >
                             <option value="">请选择区</option>
                             <c:forEach items="${areaList}" var="area">
@@ -134,6 +133,7 @@
                         <th width="5%">认证状态</th>
                         <th width="18%">操作</th>
                     </tr>
+
                 </table>
                 <div class="pages pagination">
                 </div>

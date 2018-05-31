@@ -352,6 +352,9 @@ public class InstitutionStyleController {
 	    	String pageNos = request.getParameter("pageNo");
 	    	if (StringUtils.isNotEmpty(pageNos)) {
 	    		Integer page = Integer.parseInt(pageNos);
+	    		if(page.intValue() == 1){
+	    			return "reset";
+	    		}
 	    		if (page.intValue() - 1 == 1) {
 	    			//获取机构id
 		    		String relationId = request.getParameter("relationId");
