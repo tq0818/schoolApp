@@ -105,7 +105,7 @@
                     <input type="radio" name="classLimitNum" id="classLimitNumNo" class="limitNo" value="0" checked="checked">否
                 </div>
                 <div style="display: none" id="limitContainer">
-                    <span>限定预约人数:</span>
+                    <span style="width: 100px;">限定预约人数:</span>
                     <input type="text" id="classPersonLimit" maxlength="9" style="width: 460px;margin-left: 15px;">
                 </div>
                 <div>
