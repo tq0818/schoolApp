@@ -105,7 +105,7 @@
                     <input type="radio" name="classLimitNum" id="classLimitNumNo" class="limitNo" value="0" checked="checked">否
                 </div>
                 <div style="display: none" id="limitContainer">
-                    <span>限定预约人数:</span>
+                    <span style="width: 100px;">限定预约人数:</span>
                     <input type="text" id="classPersonLimit" maxlength="9" style="width: 460px;margin-left: 15px;">
                 </div>
                 <div>
@@ -159,9 +159,11 @@
 
     <%--切图弹窗--%>
     <div class="mienPopup coverPopup">
-        <div class="uploadImageStyle">
+        <div class="uploadImageStyle" style="text-align: center;">
             <label for="" id="imgTittle">选择课程封面：</label>
-            <img src="" alt="" id="targetStyle" style="width: 400px;height: 300px;">
+            <p style="width: 300px;height: 300px;margin: auto;border: 1px solid #e4e4e4;overflow: auto;">
+                <img src="" alt="" id="targetStyle" style="width: 400px;height: 300px;">
+            </p>
             <a href="javascript:void(0);" class="chooseImg">
                 选择图片
                 <input type="file" class="btn btn-mini btn-primary" name="imgData" id="imgDataStyle" accept=".jpg,.jpeg,.gif,.png,.bmp,.ico" onchange="savePic()" value="重新选择文件"/>

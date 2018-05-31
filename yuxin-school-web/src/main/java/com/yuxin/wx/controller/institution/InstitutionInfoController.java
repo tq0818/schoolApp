@@ -459,6 +459,7 @@ public class InstitutionInfoController {
         System.out.println("选中区域:["+x+","+y+","+w+","+h+"]----原图选中区域:["+xx+","+yy+","+ww+","+hh+"]");
         //在原图中切图
         String cutImgPath= ImageUtils.cutImage(tempPath,target,xx,yy,ww,hh);
+        ImageUtils.resize(target,target,130);
         //切好的图缩放到规定比例
         String realPath=null;
         try {

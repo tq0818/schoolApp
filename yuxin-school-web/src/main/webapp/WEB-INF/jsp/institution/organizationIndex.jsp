@@ -98,7 +98,7 @@
                         <th width="5%">认证状态</th>
                         <th width="18%">操作</th>
                     </tr>
-]
+
                 </table>
                 <div class="pages pagination">
                 </div>
