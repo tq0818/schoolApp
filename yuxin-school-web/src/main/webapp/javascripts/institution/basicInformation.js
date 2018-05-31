@@ -820,6 +820,9 @@ function saveCutPic() {
         $.msg("未选择图片");
         return ;
     }
+    var temp = $("#targetStyle").attr("style").split(";");
+    //处理剪切框的宽高
+    dealWidthAndHeight(temp);
     //上传截取后的图片
     $.ajax({
         url : rootPath + "/InsInfoBase/saveCutPic",
@@ -847,5 +850,24 @@ function saveCutPic() {
     })
 }
 
+//处理获取的图片像素
+function dealWidthAndHeight(temp){
 
+    var w = 0;
+    var h = 0;
+    for(var i=0;i<temp.length;i++){
+        if(temp[i].indexOf("width")!=-1){
+            w = temp[i].split(":")[1].replace("px","");
+        }
+        if(temp[i].indexOf("height")!=-1){
+            h = temp[i].split(":")[1].replace("px","");
+        }
+    }
+    if (parseFloat($("#w").val()) > parseFloat(w)){
+        $("#w").val(w);
+    }
+    if (parseFloat($("#h").val()) > parseFloat(h)){
+        $("#h").val(h);
+    }
+}
 
