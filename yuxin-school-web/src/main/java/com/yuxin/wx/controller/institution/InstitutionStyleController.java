@@ -248,6 +248,16 @@ public class InstitutionStyleController {
                     slH=180;
                     slW=180 * realW/realH;
                 }
+			}else if("1".equals(saveFlag)){
+				if(realW/realH>300/168.75){
+                    //过宽
+                    slH=300 * realH/realW;
+                    slW=300;
+                }else{
+                    //过高
+                    slH=168.75;
+                    slW=168.75 * realW/realH;
+                }
 			} else {
 				if(realW > realH){
                     slH=300 * realH/realW;
@@ -266,7 +276,7 @@ public class InstitutionStyleController {
             System.out.println("选中区域:["+x+","+y+","+w+","+h+"]----原图选中区域:["+xx+","+yy+","+ww+","+hh+"]");
             //在原图中切图
             String cutImgPath= ImageUtils.cutImage(tempPath,target,xx,yy,ww,hh);
-            ImageUtils.resize(target, target, 446);
+//            ImageUtils.resize(target, target, 200);
             try {
                 realPath=FileUtil.upload(cutImgPath,"institutionStyle", WebUtils.getCurrentCompanyId()+"");
             } catch (Exception e) {

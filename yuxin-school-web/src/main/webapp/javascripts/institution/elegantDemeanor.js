@@ -30,6 +30,8 @@ $(function () {
     		  return ;
     		}
     	}
+    	//清除更新值
+    	$("#updateId").val("");
         $('.videoUpload').hide();
         //移除剪切图插件对象
         if (jcrop_apis){
@@ -87,6 +89,7 @@ $(function () {
     });
     $('.closeElePic').click(function () {
         $('#cover').hide();
+        $("#updateId").val("");
     });
     //点击修改封面弹窗
     $(".btnUpdateCover").click(function () {
@@ -116,6 +119,13 @@ $(function () {
     //为图片添加点击事件,以便图片方大
     $('.imgClick').dblclick(function(){
     	var url = $(this).attr('src');
+    	var theImage = new Image(); 
+    	theImage.src = url;
+    	if(theImage.width > theImage.height){
+    		$('.bigImg').attr("style","width:40%");
+    	}else{
+    		$('.bigImg').attr("style","height:40%");
+    	}
     	$('.bigImg').show().attr('src',url);
     	return false;
     });
@@ -266,6 +276,9 @@ function saveCutPic(saveFlag) {
         	$.msg("请上传视频");
         	return false;
         }
+        var temp = $("#targetVideo").attr("style").split(";");
+        //处理剪切框的宽高
+        dealWidthAndHeight(temp);
     }else {
         //判断图片是否为空或则是未更改就进行保存
         if (!$("#targetStyle").attr("src")){
@@ -352,23 +365,23 @@ function dealWidthAndHeight(temp){
 }
 
 //图片初始函数
-function imgInit(flag) {
-    var theImage = new Image();
-    console.log($(this).attr("src"));
-    theImage.src = $(this).attr("src");
-    if (theImage.complete) {
-        sourceHeight = theImage.height;
-        sourceWidth = theImage.width;
-        $.init(sourceWidth, sourceHeight,flag);
-    } else {
-        theImage.onload = function () {
-            sourceHeight = theImage.height;
-            sourceWidth = theImage.width;
-            $.init(sourceWidth, sourceHeight,flag);
-        };
-    };
-
-}
+//function imgInit(flag) {
+//    var theImage = new Image();
+//    console.log($(this).attr("src"));
+//    theImage.src = $(this).attr("src");
+//    if (theImage.complete) {
+//        sourceHeight = theImage.height;
+//        sourceWidth = theImage.width;
+//        $.init(sourceWidth, sourceHeight,flag);
+//    } else {
+//        theImage.onload = function () {
+//            sourceHeight = theImage.height;
+//            sourceWidth = theImage.width;
+//            $.init(sourceWidth, sourceHeight,flag);
+//        };
+//    };
+//
+//}
 
 //删除视频
 function deleteVideo(videoInfoId){

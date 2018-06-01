@@ -11,6 +11,10 @@
             });
             //搜索按钮点击时搜索
             $(".search-icon").on("click", function () {
+            	if($(".searchTeacher").val() == ""){
+            		alert("请输入老师姓名!");
+            		return ;
+            	}
                 $this.searchTeacherName();
             });
             //点击老师搜索评论

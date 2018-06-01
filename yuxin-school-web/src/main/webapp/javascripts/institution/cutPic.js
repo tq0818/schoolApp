@@ -5,20 +5,37 @@ var jcrop_apis;
     $.init=function(initW,initH,picFlag) {
         $img = picFlag == 0?$("#target"):picFlag == 1?$("#targetVideo"):$("#targetStyle");
         	//picFlag == 1?$("#targetVideo"):$("#targetStyle");
-        //风采图
-        if(initW > initH || picFlag == 0){//宽图
+        if(picFlag == 0){
         	$scale = 300/180;
             maxHeight = 180;
             maxWidth = 300;
             minHeight = 3;
             minWidth = 5;
+        }else if(picFlag == 1){
+        	//视频图
+        	$scale = 300/168.75;
+            maxHeight = 168.75;
+            maxWidth = 300;
+            minHeight = 9;
+            minWidth = 16;
+
         }else{
-        	$scale = 180/300;
-            maxHeight = 300;
-            maxWidth = 180;
-            minHeight = 5;
-            minWidth = 3;
+        	 //风采图
+            if(initW > initH){//宽图
+            	$scale = 300/180;
+                maxHeight = 180;
+                maxWidth = 300;
+                minHeight = 3;
+                minWidth = 5;
+            }else{
+            	$scale = 180/300;
+                maxHeight = 300;
+                maxWidth = 180;
+                minHeight = 5;
+                minWidth = 3;
+            }
         }
+       
         sourceWidth=initW;
         sourceHeight=initH;
         var initSize=resizePic(picFlag);
@@ -121,31 +138,31 @@ var jcrop_apis;
     function resizePic(picFlag) {
         var h, w, ml, mt;
         var scale = parseInt(sourceWidth) / parseInt(sourceHeight);// 长宽比例
-//        if(picFlag == 0){
-//        	if (scale > $scale) {
-//                // 过宽,宽为100%，高按比例缩
-//                h = maxWidth * sourceHeight/ sourceWidth;
-//                w = maxWidth;
-//                ml = 0;
-//                mt = (maxHeight - h) / 2;
-//                $img.css("height", h+"px").css("width", w+"px");
-//                // 改左侧图大小
-//                $('.jcrop-holder').find("img").css("height", h + "px").css("width", w + "px");
-//                // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
-//                // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
-//            } else {
-//                // 过高,高为100%，宽按比例缩
-//                h = maxHeight;
-//                w = maxHeight * sourceWidth/sourceHeight;
-//                ml = (maxWidth - w) / 2;
-//                mt = 0;
-//                $img.css("height", h+"px").css("width", w+"px");
-//                // 改左侧图大小
-//                $('.jcrop-holder').find("img").css("height", h + "px").css("width", w + "px");
-//                // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
-//                // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
-//            }
-//        }else{
+        if(picFlag == 1){
+        	if (scale > $scale) {
+                // 过宽,宽为100%，高按比例缩
+                h = maxWidth * sourceHeight/ sourceWidth;
+                w = maxWidth;
+                ml = 0;
+                mt = (maxHeight - h) / 2;
+                $img.css("height", h+"px").css("width", w+"px");
+                // 改左侧图大小
+                $('.jcrop-holder').find("img").css("height", h + "px").css("width", w + "px");
+                // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
+                // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
+            } else {
+                // 过高,高为100%，宽按比例缩
+                h = maxHeight;
+                w = maxHeight * sourceWidth/sourceHeight;
+                ml = (maxWidth - w) / 2;
+                mt = 0;
+                $img.css("height", h+"px").css("width", w+"px");
+                // 改左侧图大小
+                $('.jcrop-holder').find("img").css("height", h + "px").css("width", w + "px");
+                // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
+                // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
+            }
+        }else{
         	if (sourceWidth > sourceHeight) {
                 // 过宽,宽为100%，高按比例缩
                 h = maxWidth * sourceHeight/ sourceWidth;
@@ -169,7 +186,7 @@ var jcrop_apis;
                 // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
                 // $('.jcrop-holder').css("height", h + "px").css("width",w + "px");
             }
-//        }
+        }
         
         var c = {};
         c.w = w;

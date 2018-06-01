@@ -80,6 +80,7 @@
         //关闭后将添加图片的格式框恢复原状
         $(".picStyle").attr("src","").attr("style","").attr("style","margin: auto;width: 300px;height: 300px;");
         $(".writeWord").val("");
+        $("#updateId").val("");
     });
     //点击修改风采 btnStyleUpdate
     $('.btnStyleUpdate').click(function () {
@@ -99,6 +100,13 @@
     //为图片添加点击事件,以便图片方大
     $('.imgClick').dblclick(function(){
     	var url = $(this).attr('src');
+    	var theImage = new Image(); 
+    	theImage.src = url;
+    	if(theImage.width > theImage.height){
+    		$('.bigImg').attr("style","width:40%");
+    	}else{
+    		$('.bigImg').attr("style","height:40%");
+    	}
     	$('.bigImg').show().attr('src',url);
     	return false;
     });

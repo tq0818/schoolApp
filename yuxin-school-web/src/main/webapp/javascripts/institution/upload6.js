@@ -29,7 +29,7 @@ $(function () {
             		alert("这不是一个文件!");
             		return false;
             	}
-            	var str = data.files[0].name.substring(index);
+            	var str = data.files[0].name.substring(index).toLowerCase();
             	if(str != ".avi" && str != ".mp4" &&str != ".asf" && str !=".sdx"
             		&& str != ".wmv" && str != ".rmvb" && str != ".3gp"
             		&& str != ".mkv" && str != ".flv" && str != ".f4v"
