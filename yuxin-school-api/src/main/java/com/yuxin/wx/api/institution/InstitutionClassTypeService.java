@@ -52,6 +52,8 @@ public interface InstitutionClassTypeService {
 	 * @return
 	 */
 	List<InstitutionClassTypeVo> queryAllByIns(InstitutionClassTypeVo institutionClassTypeVo);
+
+	List<InstitutionClassTypeVo> queryReServApplyAllByIns(InstitutionClassTypeVo institutionClassTypeVo);
 	
 	
 	 PageFinder<InstitutionClassTypeVo> page(Integer insId,Integer status,int pageStart,int pageSize);

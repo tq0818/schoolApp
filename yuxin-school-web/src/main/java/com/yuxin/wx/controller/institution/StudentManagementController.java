@@ -61,7 +61,7 @@ private InstitutionInfoService institutionInfoService;
                 InstitutionClassTypeVo institutionClassTypeVo = new InstitutionClassTypeVo();
                 institutionClassTypeVo.setId(institutionInfoVo.getId());
                 model.addAttribute("insId",institutionInfoVo.getId());
-                model.addAttribute("insClassList",institutionClassTypeService.queryAllByIns(institutionClassTypeVo));
+                model.addAttribute("insClassList",institutionClassTypeService.queryReServApplyAllByIns(institutionClassTypeVo));
             }
             model.addAttribute("usesType",users.getUserType());
 
@@ -84,7 +84,7 @@ private InstitutionInfoService institutionInfoService;
         InstitutionClassTypeVo institutionClassTypeVo = new InstitutionClassTypeVo();
         institutionClassTypeVo.setId(insId);
 
-        return institutionClassTypeService.queryAllByIns(institutionClassTypeVo);
+        return institutionClassTypeService.queryReServApplyAllByIns(institutionClassTypeVo);
     }
 
     /**

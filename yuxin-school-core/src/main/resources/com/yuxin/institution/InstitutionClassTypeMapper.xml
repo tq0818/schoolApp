@@ -233,6 +233,20 @@
         ORDER BY ct.create_time desc
 
 	</select>
+
+	<select id="queryReServApplyAllByIns" resultMap="classTypeResultMap" parameterType="Integer">
+		SELECT
+		ct. NAME,
+		ct.id
+		FROM
+		ins_class_type ct
+		LEFT JOIN ins_class_type_relation ict ON ict.class_type_id = ct.id
+		LEFT JOIN institution_info ii ON ii.id = ict.ins_id
+		WHERE
+		<if test="id != null and id !=''">  ii.id = #{id} </if>
+		ORDER BY ct.create_time desc
+
+	</select>
 	
 	<!-- 使用like用法：columnName like concat('%',#columnName#,'%') -->
 	<sql id="page_where">

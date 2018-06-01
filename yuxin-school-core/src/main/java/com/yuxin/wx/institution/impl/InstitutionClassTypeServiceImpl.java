@@ -65,6 +65,17 @@ public class InstitutionClassTypeServiceImpl extends BaseServiceImpl implements 
         return institutionClassTypeMapper.queryAllByIns(institutionClassTypeVo);
     }
 
+    @Override
+    public List<InstitutionClassTypeVo> queryReServApplyAllByIns(InstitutionClassTypeVo institutionClassTypeVo) {
+        try{
+            return institutionClassTypeMapper.queryReServApplyAllByIns(institutionClassTypeVo);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
 
     @Override
     public PageFinder<InstitutionClassTypeVo> page(Integer insId, Integer status, int pageStart, int pageSize) {

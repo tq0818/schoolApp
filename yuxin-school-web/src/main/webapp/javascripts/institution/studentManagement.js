@@ -131,6 +131,9 @@ function findReServApplyClassByInsId() {
         }
     });
 
+    if(!insId){
+        $('#reServApplyClass').html('<option value="">请选择课程</option>');
+    }
     initReServApplyList(1);
 }
 

@@ -68,6 +68,8 @@ public interface InstitutionClassTypeMapper {
      */
     List<InstitutionClassTypeVo> queryAllByIns(InstitutionClassTypeVo institutionClassTypeVo);
 
+    List<InstitutionClassTypeVo> queryReServApplyAllByIns(InstitutionClassTypeVo institutionClassTypeVo);
+
     /**
      * 根据条件获取课程列表
      *
