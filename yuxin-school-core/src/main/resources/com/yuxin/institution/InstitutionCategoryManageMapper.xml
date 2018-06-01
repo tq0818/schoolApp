@@ -351,8 +351,8 @@
         ON ir.`one_level_id` = ic1.`id`
         LEFT JOIN `institution_category` ic2
         ON ir.`two_level_id` = ic2.`id`
-        WHERE ( ir.`one_level_id` = 86
-        OR ir.`two_level_id` = 86)
+        WHERE ( ir.`one_level_id` = #{typeId}
+        OR ir.`two_level_id` = #{typeId})
         and info.is_shelves = 1
         <if test="status != null  "> and  ir.`is_recommend` = #{status} </if>
         <if test="typeName != null "> and info.name LIKE  CONCAT('%','${typeName}','%' )  </if>
@@ -368,7 +368,8 @@
     <update id="alterIndexRecommendStatusYes" parameterType="map"  >
         UPDATE `institution_relation` SET
         `is_recommend` = #{isRecommend}
-        , `sort` = #{sort} WHERE one_level_id = #{oneId} and two_level_id = #{twoId} and ins_id = #{insId}
+        <if test="isROld == 0 "> , `sort` = #{sort} </if>
+         WHERE one_level_id = #{oneId} and two_level_id = #{twoId} and ins_id = #{insId}
     </update>
 
     <!-- 更新指定list中的所有排序信息 -->

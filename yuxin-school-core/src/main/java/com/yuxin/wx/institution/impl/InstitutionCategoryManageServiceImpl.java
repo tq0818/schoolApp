@@ -405,6 +405,7 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
                         }
                         map.put("oneId",infoList.get(i).get("one_level_id"));
                         map.put("twoId",infoList.get(i).get("two_level_id"));
+                        map.put("isROld",infoList.get(i).get("is_recommend"));
 
                         //将一个机构置为推荐状态的时候需要更新排名信息
                         //获取指定分类下当前推荐状态为1的数量
@@ -427,6 +428,7 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
                         }
                         map.put("oneId",infoList.get(i).get("one_level_id"));
                         map.put("twoId",infoList.get(i).get("two_level_id"));
+                        map.put("isROld",infoList.get(i).get("is_recommend"));
 
                         //将一个机构置为推荐状态的时候需要更新排名信息
                         //获取指定分类下当前推荐状态为1的数量
