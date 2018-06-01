@@ -201,7 +201,10 @@ function savePic(saveFlag) {
 }
 
 //上传剪切图,返回真实地址并插入数据库中
+var isClickSave = 0;
 function saveCutPic(saveFlag) {
+    if(isClickSave==1)return;
+    isClickSave=1;
     var windowFlag = $("#windowFlag").val();
     var id = $("#updateId").val();
     //判断图片是否为空或则是未更改就进行保存
@@ -209,6 +212,7 @@ function saveCutPic(saveFlag) {
         //判断图片是否为空或则是未更改就进行保存
         if (!$("#target").attr("src")){
             $.msg("未选择图片");
+            isClickSave=0;
             return ;
         }
         var temp = $("#target").attr("style").split(";");
@@ -218,12 +222,14 @@ function saveCutPic(saveFlag) {
         //判断图片是否为空或则是未更改就进行保存
         if (!$("#targetStyle").attr("src")){
             $.msg("未选择图片");
+            isClickSave=0;
             return ;
         }
         //处理重复提交
         if(!id){
         	if(countAdd != 0){
         		alert("请勿重复提交");
+                isClickSave=0;
         		return ;
         	}
         	countAdd++;
@@ -271,6 +277,7 @@ function saveCutPic(saveFlag) {
             $('.opacityPopup').fadeOut();
             $('.commonPopup').fadeOut();
             $('.coverPopup').fadeOut();
+            isClickSave=0;
         }
     })
     $("#chooseDiv").css("display", "none");
