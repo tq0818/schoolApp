@@ -179,6 +179,13 @@ function openDetails(level,updateId){
             //填充名称
             $("#insCatName").val(result.codeName);
             $("#target").attr("src",result.imgUrl);
+
+            if(result.imgUrl){
+                $(".btnFile").html('').html("更改图标");
+            }else{
+                $(".btnFile").html('').html("选择图标");
+            }
+
         }
     });
 
@@ -240,6 +247,7 @@ function queryAllData(pageNo){
  */
 function updatedata(flag,id,enable){
 
+
     //获取一级id下所有二级id
     var ids = '';
     var codeName = '';
@@ -262,7 +270,7 @@ function updatedata(flag,id,enable){
                     ids+=$(this).attr("id").split("_")[0]+",";
                 });
                 ids+=id;
-                goUpdateData(ids,codeName,flag,enable,imgUrl);
+                goUpdateData(id,ids,codeName,flag,enable,imgUrl);
             }
         });
 
@@ -302,16 +310,17 @@ function updatedata(flag,id,enable){
             return;
         }
         var imgUrl = $("#imgUrl").val();
-        goUpdateData(ids,codeName,flag,enable,imgUrl);
+        goUpdateData(id,ids,codeName,flag,enable,imgUrl);
     }
 
 }
 
-function goUpdateData(ids,codeName,flag,enable,imgUrl){
+function goUpdateData(id,ids,codeName,flag,enable,imgUrl){
     $.ajax({
         type:"POST",
         url: rootPath + "/insCateManage/querySingleInsCateByName",
         data: {
+
             id:ids,
             codeName:codeName,
             flag:flag
@@ -325,6 +334,7 @@ function goUpdateData(ids,codeName,flag,enable,imgUrl){
                     type:"POST",
                     url: rootPath + "/insCateManage/updateInsCate",
                     data: {
+                        catId:id,
                         flag:flag,
                         ids:ids,
                         enable:enable,

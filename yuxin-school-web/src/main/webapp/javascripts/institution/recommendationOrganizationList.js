@@ -43,17 +43,21 @@ function getIndexRecommendList(){
              dataSize2 = json.data.list.length;
 
             var recommendBtnContainor = '';
+            var level = '';
             var recommendBtnContainorList = $("#recommendBtnContainor").children('a');
             for(var i =0;i<recommendBtnContainorList.length;i++){
                 if(recommendBtnContainorList.eq(i).hasClass("btn-primary")){
                     if(i == 0){
                         recommendBtnContainor = recommendBtnContainorList.eq(i).children('span').eq(0).text();
+                        level = recommendBtnContainorList.eq(i).children('span').eq(0).attr("data-level");
                     }else{
                         recommendBtnContainor = recommendBtnContainorList.eq(i).children('span').eq(1).text();
+                        level = recommendBtnContainorList.eq(i).children('span').eq(1).attr("data-level");
                     }
 
                 }
             }
+
 
 
             if(json.status != 1){
@@ -69,21 +73,78 @@ function getIndexRecommendList(){
             var hasNextPage = pageNum > nowPage ;
 
             for(var i in list){
+                var statu = '';
+                var statu2 = '';
+                var flag = '';
+                var isR = list[i].is_recommend;
+                if(isR == 1 && level ==1){
+                    statu='取消推荐';
+                    statu2='已推荐';
+                    flag ='0';
+                }else if(isR == 1 && level ==2){
+                    statu='推荐';
+                    statu2='未推荐';
+                    flag ='1';
+                }else if(isR == 2 && level ==1){
+                    statu='推荐';
+                    statu2='未推荐';
+                    flag ='1';
+                }else if(isR == 2 && level ==2){
+                    statu='取消推荐';
+                    statu2='已推荐';
+                    flag ='0';
+                }else if(isR == 3 && level ==1){
+                    statu='取消推荐';
+                    statu2='已推荐';
+                    flag ='0';
+                }else if(isR == 3 && level ==2){
+                    statu='取消推荐';
+                    statu2='已推荐';
+                    flag ='0';
+                }else if(isR == 0 && level ==2){
+                    statu='推荐';
+                    statu2='未推荐';
+                    flag ='1';
+                }else if(isR == 0 && level ==1){
+                    statu='推荐';
+                    statu2='未推荐';
+                    flag ='1';
+                }
+
+                var isR = list[i].is_recommend;
+                if(isR == 0){
+                    isR = 0;
+                }else if(isR == 1 && level == 1){
+                    isR = 1;
+                }else if(isR == 1 && level == 2){
+                    isR = 0;
+                }else if(isR == 2 && level == 1){
+                    isR = 0;
+                }else if(isR == 2 && level == 2){
+                    isR = 1;
+                }else if(isR == 3 && level == 1){
+                    isR = 1;
+                }else if(isR == 3 && level == 2){
+                    isR = 1;
+                }
+
                 var showSort = json.data.page*json.data.pageSize + parseInt(i) + 1 ;
+                console.log('json.data.page = '+json.data.page);
+                console.log("i = "+i);
                 html += `
                     <tr>
                         <td>${parseInt(i)+1}</td>
                         <td>${list[i].name}</td>
                         <td>`+recommendBtnContainor+`</td>
                         
-                        <td class="relationResult">${list[i].is_recommend == 1 ? '已推荐' : '未推荐'}</td>
+                        <td class="relationResult">${statu2}</td>
                         <td>${
-                list[i].is_recommend == 1 ? ( showSort
+                    isR == 1 ? ( showSort
                     + ( (json.data.page == 0 && parseInt(i) == 0 ) ? '' : "<i data-id='"+list[i].rid+"' data-status='up' class='icon iconfont'>&#xe6e3;</i>" )
-                    + ( (list[parseInt(i)+1] != undefined && list[parseInt(i)+1].is_recommend != 1) || (json.data.page == 0 && json.data.count == 1) ||  (showSort >= json.data.recommendNum) || showSort >= json.data.count ? '' : "<i data-id='"+list[i].rid+"' data-status='down' class='icon iconfont'>&#xe6e4;</i>" ))
+                    + ( (list[parseInt(i)+1] != undefined && list[parseInt(i)+1].is_recommend == 0) || (json.data.page == 0 && json.data.count == 1) ||  (showSort >= json.data.recommendNum) || showSort >= json.data.count ? '' : "<i data-id='"+list[i].rid+"' data-status='down' class='icon iconfont'>&#xe6e4;</i>" ))
                     : '-'
                     }</td>
-                        <td class="recomendBtn" data-id="${list[i].rid}" data-insId="${list[i].id}" >${list[i].is_recommend == 1 ? '取消推荐' : '推荐'}</td>
+                        <td class="recomendBtn" data-id="${list[i].rid}" data-insId="${list[i].id}" data-level = "${level}" data-flag = "${flag}">`+statu+`</td>
                     </tr>
                 `;
             }
@@ -144,10 +205,15 @@ function getIndexRecommendList(){
             $('.recomendBtn').click(function(){
                 // linkClass($(this).attr('data-id'),$(this).html());
 
+                var level = $(this).attr('data-level');
+                var flag = $(this).attr('data-flag');
+
                 $.post(rootPath+'/institutionRecommend/updateIndexRecommendStatus',{
                     insId:$(this).attr('data-insId'),
                     rid:$(this).attr('data-id'),
-                    typeId:getCurrentTypeId()
+                    typeId:getCurrentTypeId(),
+                    level:level,
+                    flag:flag
                 },function(json){
                     var recommendStatusBtn = $('.recommendStatusBtn');
                     for(var i = 0;i<recommendStatusBtn.length;i++){
@@ -220,12 +286,14 @@ function getRecommendTypeData(id){
 
     json = arr;
 
+        console.log(json)
+
     var html = '<span>推荐分类</span>';
         if(!id){
             for(var i in json){
-                html += parseInt(i) == 0 ? "<a href=\"javascript:void(0)\" data-id='"+json[i].id+"'  class=\"btn  btn-default btn-primary btn-sm\">" :  "<a href=\"##\" data-id='"+json[i].id+"' class=\"btn  btn-default  btn-sm\">";
+                html += parseInt(i) == 0 ? "<a href=\"javascript:void(0)\" data-id='"+json[i].id+"'  data-level='"+json[i].codeLevel+"' class=\"btn  btn-default btn-primary btn-sm\">" :  "<a href=\"##\" data-id='"+json[i].id+"' data-level='"+json[i].codeLevel+"' class=\"btn  btn-default  btn-sm\">";
                 html += parseInt(i) == 0 ?'':"<span class='pullLeft' data-id='"+json[i].id+"'>&lt;</span>";
-                html += "<span data-id='"+json[i].id+"' class='recommendTypeBtn'>"+json[i].codeName+"</span>";
+                html += "<span data-id='"+json[i].id+"' data-level='"+json[i].codeLevel+"' class='recommendTypeBtn'>"+json[i].codeName+"</span>";
                 html += parseInt(i) == json.length - 1 ? '' : "<span class='pullRight' data-id='"+json[i].id+"'>&gt;</span>";
                 html += '</a>';
 
@@ -233,9 +301,9 @@ function getRecommendTypeData(id){
         }else{
 
             for(var i in json){
-                html += json[i].id == id ? "<a href=\"javascript:void(0)\" data-id='"+json[i].id+"'  class=\"btn  btn-default btn-primary btn-sm\">" :  "<a href=\"##\" data-id='"+json[i].id+"' class=\"btn  btn-default  btn-sm\">";
+                html += json[i].id == id ? "<a href=\"javascript:void(0)\" data-id='"+json[i].id+"' data-level='"+json[i].codeLevel+"' class=\"btn  btn-default btn-primary btn-sm\">" :  "<a href=\"##\" data-id='"+json[i].id+"' data-level='"+json[i].codeLevel+"' class=\"btn  btn-default  btn-sm\">";
                 html += parseInt(i) == 0 ?'':"<span class='pullLeft' data-id='"+json[i].id+"'>&lt;</span>";
-                html += "<span data-id='"+json[i].id+"' class='recommendTypeBtn'>"+json[i].codeName+"</span>";
+                html += "<span data-id='"+json[i].id+"' data-level='"+json[i].codeLevel+"' class='recommendTypeBtn'>"+json[i].codeName+"</span>";
                 html += parseInt(i) == json.length - 1 ? '' : "<span class='pullRight' data-id='"+json[i].id+"'>&gt;</span>";
                 html += '</a>';
 

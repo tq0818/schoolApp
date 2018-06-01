@@ -12,6 +12,8 @@ public interface InstitutionRelationMapper {
 
     void update(InstitutionRelationVo institutionRelationVo);
 
+    void updateByOneId(InstitutionRelationVo institutionRelationVo);
+
     //根据分类id，机构id，查询该机构是否为推荐状态
     InstitutionRelationVo findByinsIdOneIdTwoId(InstitutionRelationVo institutionRelationVo);
 
