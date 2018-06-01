@@ -334,6 +334,7 @@ function updateReServApplyNot(id) {
         async: false,
         dataType:"json",
         success : function(data) {
+            $("#not").val("");
             initReServApplyList(currtPage);
         }
     });
