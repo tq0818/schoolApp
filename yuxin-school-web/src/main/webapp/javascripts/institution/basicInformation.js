@@ -668,7 +668,7 @@ function updataIns() {
         reservService = reservService.replace(/[\r\n]/g,"");
         reservService = reservService.split(" ").join("");
         if(reservService.length == 0){
-            $.msg("预约服务部能为全空格");
+            $.msg("预约服务不能为全空格");
             return;
         }
     }
