@@ -289,7 +289,7 @@
                     </c:forEach>
                     <span class="iconBtn customLabelBtn">+</span>
                 </div>
-                <div>
+                <div style="width:655px;">
                             <span>特色服务</span>
                     <c:forEach var="spe" items="${specialSer}" varStatus="vs">
                         <c:choose>

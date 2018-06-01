@@ -52,7 +52,7 @@
 	            </c:choose>
 	            <td class="note" title="${merchant.note}">
 	            	 <c:if test="${fn:length(merchant.note)>30 }">  
-                         ${fn:substring(merchant.note, 0, 30)}  
+                         ${fn:substring(merchant.note, 0, 30)}...
                     </c:if>
                      <c:if test="${fn:length(merchant.note)<=30 }">  
                         ${merchant.note}
