@@ -90,8 +90,6 @@ $(function () {
                 $("#ins").val(ins);
                 $("#insClass").val(insClass);
 
-                console.log(statu,ins,insClass)
-
                 $("#searchForm").attr("action",
                     rootPath + "/InsStudent/exportStudent")
                     .submit();

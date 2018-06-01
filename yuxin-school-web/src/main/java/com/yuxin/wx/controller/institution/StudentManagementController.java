@@ -137,6 +137,16 @@ private InstitutionInfoService institutionInfoService;
         reServApply.setStartTime(startTime);
         list = reServApplyService.findReServApplyMap(reServApply);
 
+        if(null != insClassId && !"".equals(insClassId)){
+            for(int i = 0;i<list.size();i++){
+                if(null == list.get(i).get("className") || "".equals(list.get(i).get("className"))){
+                    list.remove(i);
+                    i--;
+                }
+            }
+        }
+
+
         List<Map<String, Object>> lists = new ArrayList<Map<String, Object>>();
         for (Map v : list) {
             lists.add(v);
