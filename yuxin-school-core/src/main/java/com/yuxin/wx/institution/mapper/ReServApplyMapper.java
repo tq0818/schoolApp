@@ -33,12 +33,17 @@ public interface ReServApplyMapper {
 
     Integer findReServApplyListCount(ReServApply reServApply);
 
+    List<ReServApply> findReServApplyListByClassId(ReServApply reServApply);
+
+    Integer findReServApplyListCountByClassId(ReServApply reServApply);
+
     List<ReServApply> findReServApplyClassList(ReServApply reServApply);
 
     Integer findReServApplyClassListCount(ReServApply reServApply);
 
 
     List<Map <Object,Object>> findReServApplyMap(ReServApply reServApply);
+    List<Map <Object,Object>> findReServApplyMapByClass(ReServApply reServApply);
 
     List<Map> findReServApplyClassMap(ReServApply reServApply);
 }

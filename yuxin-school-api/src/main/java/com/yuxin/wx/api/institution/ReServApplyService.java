@@ -31,4 +31,5 @@ public interface ReServApplyService {
     PageFinder<ReServApply> findReServApplyList(ReServApply reServApply) throws ParseException;
 
     List<Map<Object,Object>> findReServApplyMap(ReServApply reServApply);
+    List<Map<Object,Object>> findReServApplyMapByClass(ReServApply reServApply);
 }

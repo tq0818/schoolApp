@@ -250,7 +250,7 @@ function initReServApplyList(page) {
                             '<td>'+price+'</td>'+
                             '<td>'+item.time+'</td>'+
                             '<td>'+dealStatus+'</td>'+
-                            '<td class="note" title="'+item.note+'">'+note+'</td>'+
+                            '<td class="note" title="'+(!note?note:item.note)+'">'+note+'</td>'+
                             '<td>'+
                                 '<a href="javascript:void(0)" class="changeStatus" data-id="'+item.id+'" data-status="'+item.dealStatus+'">切换状态</a>|'+
                                 '<a href="javascript:void(0)" class="addRemarks" data-id="'+item.id+'" data-note="'+item.note+'">添加备注</a>'+
