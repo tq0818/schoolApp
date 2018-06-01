@@ -156,6 +156,58 @@
         c.createTime DESC
     </select>
 
+    <select id="findReServApplyListByClassId" parameterType="com.yuxin.wx.model.institution.ReServApply" resultType="com.yuxin.wx.model.institution.ReServApply">
+        SELECT
+        r.id,
+        r.mobile,
+        ii.name insName,
+        ct.name className,
+        cast(ct.price as   decimal(10,   2)) price,
+        r.note,
+        r.deal_status dealStatus,
+        r.create_time createTime
+        FROM
+        reservation_apply r
+        LEFT JOIN ins_class_type ct ON ct.id = r.relation_id
+        LEFT JOIN ins_class_type_relation icr ON ct.id = icr.class_type_id
+        LEFT JOIN institution_info ii on ii.id = icr.ins_id
+        WHERE
+        1 = 1
+        AND type = 1
+        <if test="insId != null and insId != ''">and ii.id = #{insId} </if>
+        <if test="insClassId != null and insClassId != ''">and ct.id = #{insClassId} </if>
+        <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
+        <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
+        <if test="startTime != null and startTime != '' and endTime == ''"><![CDATA[AND DATE_FORMAT(r.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
+        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        ORDER BY
+        r.create_time DESC
+        limit #{page},#{pageSize}
+    </select>
+
+    <select id="findReServApplyListCountByClassId" parameterType="com.yuxin.wx.model.institution.ReServApply" resultType="Integer">
+
+        SELECT
+        count(1)
+        FROM
+        reservation_apply r
+        LEFT JOIN ins_class_type ct ON ct.id = r.relation_id
+        LEFT JOIN ins_class_type_relation icr ON ct.id = icr.class_type_id
+        LEFT JOIN institution_info ii on ii.id = icr.ins_id
+        WHERE
+        1 = 1
+        AND type = 1
+        <if test="insId != null and insId != ''">and ii.id = #{insId} </if>
+        <if test="insClassId != null and insClassId != ''">and ct.id = #{insClassId} </if>
+        <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
+        <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
+        <if test="startTime != null and startTime != '' and endTime == ''"><![CDATA[AND DATE_FORMAT(r.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
+        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+
+    </select>
+
     <select id="findReServApplyClassList" parameterType="com.yuxin.wx.model.institution.ReServApply" resultType="com.yuxin.wx.model.institution.ReServApply">
         select r.id,r.mobile,r.relation_name insName,ct.name className,ct.price,r.note,r.type,r.deal_status dealStatus,r.create_time createTime  from reservation_apply r
         LEFT JOIN ins_class_type ct on ct.id = r.relation_id and r.type = 1
@@ -210,6 +262,36 @@
         UNION
 
         SELECT
+        r.id,
+        r.mobile,
+        ii.name insName,
+        ct.name className,
+        ct.price,
+        r.note,
+        r.type,
+        r.deal_status dealStatus,
+        r.create_time createTime
+        FROM
+        reservation_apply r
+        LEFT JOIN ins_class_type ct ON ct.id = r.relation_id
+        LEFT JOIN ins_class_type_relation icr ON ct.id = icr.class_type_id
+        LEFT JOIN institution_info ii on ii.id = icr.ins_id
+        WHERE
+        1 = 1
+        AND type = 1
+        <if test="insId != null and insId != ''">and ii.id = #{insId} </if>
+        <if test="insClassId != null and insClassId != ''">and ct.id = #{insClassId} </if>
+        <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
+        <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
+        <if test="startTime != null and startTime != '' and endTime == ''"><![CDATA[AND DATE_FORMAT(r.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
+        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+
+    </select>
+
+
+    <select id="findReServApplyMapByClass" parameterType="com.yuxin.wx.model.institution.ReServApply" resultType="Map">
+       SELECT
         r.id,
         r.mobile,
         ii.name insName,

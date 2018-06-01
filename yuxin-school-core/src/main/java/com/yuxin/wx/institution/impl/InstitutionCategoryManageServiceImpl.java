@@ -349,13 +349,14 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
     }
 
     @Override
-    public List<Map<String, Object>> getIndexRecommendList(int typeId, String name,Integer status, int pageStart, int pageSize) {
+    public List<Map<String, Object>> getIndexRecommendList(int typeId, String name,Integer status, int pageStart, int pageSize,int level) {
         Map<String, Object> map = new HashMap<>();
         map.put("typeId", typeId);
         map.put("name", name);
         map.put("pageStart", pageStart);
         map.put("pageSize", pageSize);
         map.put("status",status);
+        map.put("level",level);
         // int count = institutionManageMapper.getIndexRecommendListCount(map);
         List<Map<String, Object>> list = institutionManageMapper.getIndexRecommendList(map);
 
@@ -363,11 +364,12 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
     }
 
     @Override
-    public int getIndexRecommendListCount(int typeId, String name,Integer status) {
+    public int getIndexRecommendListCount(int typeId, String name,Integer status,int level) {
         Map<String, Object> map = new HashMap<>();
         map.put("typeId", typeId);
         map.put("typeName", (null == name || "".equals(name.trim())) ? null : name);
         map.put("status",status);
+        map.put("level",level);
 
         return institutionManageMapper.getIndexRecommendListCount(map);
     }
@@ -382,39 +384,154 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
 
         //获取中间表排序数据
         Map<String, Object> info = institutionManageMapper.getIndexRecommendInfo(map);
+        List<Map<String, Object>> infoList = institutionManageMapper.getIndexRecommendInfoList(map);
         if (null == info) {
             return -1;
         }
 
-        if (0 == (Integer) info.get("is_recommend")) {
-            //将一个机构置为推荐状态的时候需要更新排名信息
-            //获取指定分类下当前推荐状态为1的数量
-            int count = institutionManageMapper.getIndexRecommendYesCountAll();
-            map.put("sort", count + 1);
-            return institutionManageMapper.alterIndexRecommendStatusYes(map);
-        } else {
+        //flag=1时是推荐否则是取消推荐
+        if(1==map.get("flag")){
+            //如果推荐的是二级分类则不需要循环修改（当一个机构挂的分类下有多个二级分类时，又同时挂了这多个二级分类，那么在推荐该一级分类时institution_relation中的数据多条数据都要修改，所以需要循环）
+            if(2 == map.get("level")){
+                for(int i= 0;i<infoList.size();i++){
+                    //这里infoList查询的该机构挂的所有分类，但是只需要修改当前分类的推荐状态
+                    if(map.get("typeId") == infoList.get(i).get("two_level_id")){
+                        if (2 == (Integer) infoList.get(i).get("is_recommend") && 1 == map.get("level")) {
+                            map.put("isRecommend",3);
+                        }else if(1 == (Integer) infoList.get(i).get("is_recommend") && 2 == map.get("level")) {
+                            map.put("isRecommend",3);
+                        }else if(0 == (Integer) infoList.get(i).get("is_recommend") && 1 == map.get("level")){
+                            map.put("isRecommend",1);
+                        }else if(0 == (Integer) infoList.get(i).get("is_recommend") && 2 == map.get("level")){
+                            map.put("isRecommend",2);
+                        }
+                        map.put("oneId",infoList.get(i).get("one_level_id"));
+                        map.put("twoId",infoList.get(i).get("two_level_id"));
+                        map.put("isROld",infoList.get(i).get("is_recommend"));
+
+                        //将一个机构置为推荐状态的时候需要更新排名信息
+                        //获取指定分类下当前推荐状态为1的数量
+                        int count = institutionManageMapper.getIndexRecommendYesCountAll();
+                        map.put("sort", count + 1);
+                        institutionManageMapper.alterIndexRecommendStatusYes(map);
+                    }
+                }
+            }else{
+                for(int i= 0;i<infoList.size();i++){
+                    if(infoList.get(i).get("one_level_id") == map.get("typeId")){
+                        if (2 == (Integer) infoList.get(i).get("is_recommend") && 1 == map.get("level")) {
+                            map.put("isRecommend",3);
+                        }else if(1 == (Integer) infoList.get(i).get("is_recommend") && 2 == map.get("level")) {
+                            map.put("isRecommend",3);
+                        }else if(0 == (Integer) infoList.get(i).get("is_recommend") && 1 == map.get("level")){
+                            map.put("isRecommend",1);
+                        }else if(0 == (Integer) infoList.get(i).get("is_recommend") && 2 == map.get("level")){
+                            map.put("isRecommend",2);
+                        }
+                        map.put("oneId",infoList.get(i).get("one_level_id"));
+                        map.put("twoId",infoList.get(i).get("two_level_id"));
+                        map.put("isROld",infoList.get(i).get("is_recommend"));
+
+                        //将一个机构置为推荐状态的时候需要更新排名信息
+                        //获取指定分类下当前推荐状态为1的数量
+                        int count = institutionManageMapper.getIndexRecommendYesCountAll();
+                        map.put("sort", count + 1);
+                        institutionManageMapper.alterIndexRecommendStatusYes(map);
+                    }
+                }
+            }
+
+            return 1;
+        }else{
             //将一个机构置为不推荐状态的时候需要更新排其后的所有机构排名
             //获取指定排名后的所有中间表排名信息
-            Integer sort = (Integer) info.get("sort");
-            List<Map<String,Object>> list = institutionManageMapper.getRelationAfterSortAll(sort);
-            if(null == list || list.size() == 0){
-                return institutionManageMapper.alterIndexRecommendStatusNo(map);
+            if(2 == map.get("level")){
+                for(int i= 0;i<infoList.size();i++){
+                    if(map.get("typeId") == infoList.get(i).get("two_level_id")){
+                        Integer sort = (Integer) infoList.get(i).get("sort");
+                        map.put("sort",sort);
+
+                        if(3 == (Integer) infoList.get(i).get("is_recommend") && 1 == map.get("level")){
+                            map.put("isRecommend",2);
+                        }else if(3 == (Integer) infoList.get(i).get("is_recommend") && 2 == map.get("level")){
+                            map.put("isRecommend",1);
+                        }else if(1 == (Integer) infoList.get(i).get("is_recommend") && 1 == map.get("level")){
+                            map.put("isRecommend",0);
+                        }else if(2 == (Integer) infoList.get(i).get("is_recommend") && 2 == map.get("level")){
+                            map.put("isRecommend",0);
+                        }
+                        map.put("oneId",infoList.get(i).get("one_level_id"));
+                        map.put("twoId",infoList.get(i).get("two_level_id"));
+
+                        List<Map<String,Object>> list = institutionManageMapper.getRelationAfterSortAll(sort);
+                        if(null == list || list.size() == 0){
+
+                            institutionManageMapper.alterIndexRecommendStatusNo(map);
+                        }
+
+                        List<CaseWhenVO> caseWhenVOList = new LinkedList<>();
+                        CaseWhenVO vo = null;
+                        for(Map<String,Object> tempMap : list){
+                            vo = new CaseWhenVO();
+                            vo.setId((Integer)tempMap.get("id"));
+                            vo.setSort(sort++);
+                            caseWhenVOList.add(vo);
+                        }
+                        if(1 == infoList.get(i).get("is_recommend") || 2 == infoList.get(i).get("is_recommend")){
+                            //更新排序
+                            if(null != list && list.size() != 0){
+                                institutionManageMapper.increaseIndexRecommendAfterAll(caseWhenVOList);
+                            }
+                        }
+                        institutionManageMapper.alterIndexRecommendStatusNo(map);
+                    }
+                }
+            }else{
+                for(int i= 0;i<infoList.size();i++){
+                    List<Map<String, Object>> infoList2 = institutionManageMapper.getIndexRecommendInfoList(map);
+                    if(infoList2.get(i).get("one_level_id") == map.get("typeId")){
+                        Integer sort = (Integer) infoList2.get(i).get("sort");
+                        map.put("sort",sort);
+
+                        if(3 == (Integer) infoList2.get(i).get("is_recommend") && 1 == map.get("level")){
+                            map.put("isRecommend",2);
+                        }else if(3 == (Integer) infoList2.get(i).get("is_recommend") && 2 == map.get("level")){
+                            map.put("isRecommend",1);
+                        }else if(1 == (Integer) infoList2.get(i).get("is_recommend") && 1 == map.get("level")){
+                            map.put("isRecommend",0);
+                        }else if(2 == (Integer) infoList2.get(i).get("is_recommend") && 2 == map.get("level")){
+                            map.put("isRecommend",0);
+                        }
+                        map.put("oneId",infoList2.get(i).get("one_level_id"));
+                        map.put("twoId",infoList2.get(i).get("two_level_id"));
+
+                        List<Map<String,Object>> list = institutionManageMapper.getRelationAfterSortAll(sort);
+                        if(null == list || list.size() == 0){
+
+                            institutionManageMapper.alterIndexRecommendStatusNo(map);
+                        }
+
+                        List<CaseWhenVO> caseWhenVOList = new LinkedList<>();
+                        CaseWhenVO vo = null;
+                        for(Map<String,Object> tempMap : list){
+                            vo = new CaseWhenVO();
+                            vo.setId((Integer)tempMap.get("id"));
+                            vo.setSort(sort++);
+                            caseWhenVOList.add(vo);
+                        }
+                        if(1 == infoList2.get(i).get("is_recommend") || 2 == infoList2.get(i).get("is_recommend")){
+                            //更新排序
+                            if(null != list && list.size() != 0){
+                                institutionManageMapper.increaseIndexRecommendAfterAll(caseWhenVOList);
+                            }
+                        }
+                        institutionManageMapper.alterIndexRecommendStatusNo(map);
+                    }
+                }
             }
 
-            List<CaseWhenVO> caseWhenVOList = new LinkedList<>();
-            CaseWhenVO vo = null;
-            for(Map<String,Object> tempMap : list){
-                vo = new CaseWhenVO();
-                vo.setId((Integer)tempMap.get("id"));
-                vo.setSort(sort++);
-                caseWhenVOList.add(vo);
-            }
-            //更新排序
-            institutionManageMapper.increaseIndexRecommendAfterAll(caseWhenVOList);
-
-            return institutionManageMapper.alterIndexRecommendStatusNo(map);
         }
-
+        return 1;
 
     }
 

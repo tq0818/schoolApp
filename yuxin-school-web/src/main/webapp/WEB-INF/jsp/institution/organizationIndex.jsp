@@ -23,6 +23,12 @@
     <link rel="stylesheet" type="text/css" href="<%=rootPath%>/stylesheets/institution/organizationIndex.css">
 </head>
 <body onload="refresh()">
+<input id="hasOneLevelId" value="${chooseParams.oneLevelId}" type="hidden"/>
+<input id="hasTwoLevelId" value="${chooseParams.twoLevelId}" type="hidden"/>
+<input id="hasIsCertified" value="${chooseParams.isCertified}" type="hidden"/>
+<input id="hasIsShelves" value="${chooseParams.isShelves}" type="hidden"/>
+<input id="hasPage" value="${chooseParams.page}" type="hidden"/>
+<input id="hasPageSize" value="${chooseParams.pageSize}" type="hidden"/>
 <!-- 二级导航 -->
 <jsp:include page="/WEB-INF/jsp/menu/menu_institution.jsp"></jsp:include>
 <div class="u-wrap query overflow">
@@ -40,14 +46,42 @@
                         <span>区域筛选</span>
                         <select name="eduArea" id="eduArea" onchange="queryRiseSchoolDict(1)">
                             <option value="">请选择省份</option>
-                            <option value="510000">四川省</option>
+                            <c:choose>
+                                <c:when test="${empty chooseParams.province}">
+                                    <option value="510000">四川省</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option selected value="510000">四川省</option>
+                                </c:otherwise>
+                            </c:choose>
+
                         </select>
 
                         <select name="eduSchool" id="eduSchool" onchange="queryRiseSchoolDict(2)">
                             <option value="">请选择市</option>
+                            <c:forEach items="${cityList}" var="city">
+                                <c:choose>
+                                    <c:when test="${chooseParams.city == city.itemCode}">
+                                        <option selected value="${city.itemCode}">${city.itemName}</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="${city.itemCode}">${city.itemName}</option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
                         </select>
                         <select id="registStatus" name="status" onchange="queryInsData()" >
                             <option value="">请选择区</option>
+                            <c:forEach items="${areaList}" var="area">
+                                <c:choose>
+                                    <c:when test="${chooseParams.area == area.itemCode}">
+                                        <option selected value="${area.itemCode}">${area.itemName}</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="${area.itemCode}">${area.itemName}</option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
                         </select>
                     </div>
                     <div class="marginTop10">
@@ -62,16 +96,17 @@
                     </div>
                     <div class="marginTop10 changeBtn " id="isCertified" >
                         <span>认证状态</span>
-                        <a href="javascript:void(0)" class="btn btn-default btn-primary btn-mb">全部</a>
-                        <a href="javascript:void(0)" class="btn btn-default btn-mb">已认证</a>
-                        <a href="javascript:void(0)" class="btn btn-default btn-mb">未认证</a>
+
+                        <a href="javascript:void(0)" class="btn btn-default btn-mb  <c:if test="${empty chooseParams.isCertified}"> btn-primary </c:if>">全部</a>
+                        <a href="javascript:void(0)" class="btn btn-default btn-mb  <c:if test="${chooseParams.isCertified eq 1}"> btn-primary </c:if>">已认证</a>
+                        <a href="javascript:void(0)" class="btn btn-default btn-mb  <c:if test="${chooseParams.isCertified eq 0}"> btn-primary </c:if>">未认证</a>
                     </div>
 
                     <div  class="marginTop10 changeBtn" id="isShelves">
                         <span>上下架&nbsp&nbsp&nbsp</span>
-                        <a href="javascript:void(0)" class="btn btn-default btn-primary btn-mb">全部</a>
-                        <a href="javascript:void(0)" class="btn btn-default btn-mb">已上架</a>
-                        <a href="javascript:void(0)" class="btn btn-default btn-mb">未上架</a>
+                        <a href="javascript:void(0)" class="btn btn-default  <c:if test="${empty chooseParams.isShelves}"> btn-primary </c:if> btn-mb">全部</a>
+                        <a href="javascript:void(0)" class="btn btn-default btn-mb  <c:if test="${chooseParams.isShelves eq 1}"> btn-primary </c:if>">已上架</a>
+                        <a href="javascript:void(0)" class="btn btn-default btn-mb  <c:if test="${chooseParams.isShelves eq 0}"> btn-primary </c:if>">未上架</a>
                     </div>
                     <div class="margin10 marginTop10" >
                         <span class="text">创建时间</span>
@@ -105,7 +140,7 @@
             </div>
         </div>
     </div>
-        <input type="hidden" id="selectCounts" value="10">
+        <input type="hidden" id="selectCounts" value="${empty chooseParams.pageSize or chooseParams.pageSize eq 0 ? 10 : chooseParams.pageSize}">
     <!-- ajax加载中div开始 -->
     <div class="loading lp-units-loading" style="display:none">
         <p><i></i>加载中,请稍后...</p>

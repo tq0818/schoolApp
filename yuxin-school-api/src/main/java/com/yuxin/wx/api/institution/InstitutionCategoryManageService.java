@@ -142,9 +142,9 @@ public interface InstitutionCategoryManageService {
     int flushSortAll();
 
 
-    List<Map<String,Object>> getIndexRecommendList(int typeId, String name,Integer status , int pageStart, int pageSize);
+    List<Map<String,Object>> getIndexRecommendList(int typeId, String name,Integer status , int pageStart, int pageSize,int level);
 
-    int getIndexRecommendListCount(int typeId, String name,Integer status);
+    int getIndexRecommendListCount(int typeId, String name,Integer status,int level);
 
     /**
      * 获取指定分类的机构状态是推荐的个数

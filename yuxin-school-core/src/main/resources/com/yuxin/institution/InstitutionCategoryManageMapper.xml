@@ -332,15 +332,18 @@
           OR ir.`two_level_id` = #{typeId} )
           and info.is_shelves = 1
           <if test="name != null and name != ''"> and info.name LIKE '%${name}%' </if>
-          <if test="status != null  "> and  ir.`is_recommend` = #{status} </if>
+          <if test="status != null and status == 2 and status != '' "> and  ir.`is_recommend` != #{level} and ir.`is_recommend` != 3</if>
+        <if test="status != null and status == 1 and status != '' "> and  (ir.`is_recommend` = #{level} or ir.`is_recommend` = 3) </if>
+          GROUP BY info.id
           ORDER BY ir.`is_recommend` DESC,
                    ir.`sort` ASC
           LIMIT #{pageStart} , #{pageSize}
     </select>
 
     <select id="getIndexRecommendListCount" parameterType="Map" resultType="int">
-        SELECT
-          COUNT(info.id)
+        select count(1) from
+        (SELECT
+        info.id
         FROM
         `institution_info` info
         INNER JOIN `institution_relation` ir
@@ -350,20 +353,25 @@
         LEFT JOIN `institution_category` ic2
         ON ir.`two_level_id` = ic2.`id`
         WHERE ( ir.`one_level_id` = #{typeId}
-        OR ir.`two_level_id` = #{typeId} )
+        OR ir.`two_level_id` = #{typeId})
         and info.is_shelves = 1
-        <if test="status != null  "> and  ir.`is_recommend` = #{status} </if>
+        <if test="status != null and status == 2 and status != '' "> and  ir.`is_recommend` != #{level} and ir.`is_recommend` != 3</if>
+        <if test="status != null and status == 1 and status != '' "> and  (ir.`is_recommend` = #{level} or ir.`is_recommend` = 3) </if>
         <if test="typeName != null "> and info.name LIKE  CONCAT('%','${typeName}','%' )  </if>
-
+        GROUP BY info.id
+        ) as c
     </select>
 
     <!-- 更新首页列表推荐的某个机构的推荐状态 -->
     <update id="alterIndexRecommendStatusNo" parameterType="map"  >
-        UPDATE `institution_relation` SET `is_recommend` = 0 WHERE id = #{rid} and ins_id = #{insId}
+        UPDATE `institution_relation` SET `is_recommend` = ${isRecommend} WHERE one_level_id = #{oneId} and two_level_id = #{twoId} and ins_id = #{insId}
     </update>
 
     <update id="alterIndexRecommendStatusYes" parameterType="map"  >
-        UPDATE `institution_relation` SET `is_recommend` = 1 , `sort` = #{sort} WHERE id = #{rid} and ins_id = #{insId}
+        UPDATE `institution_relation` SET
+        `is_recommend` = #{isRecommend}
+        <if test="isROld == 0 "> , `sort` = #{sort} </if>
+         WHERE one_level_id = #{oneId} and two_level_id = #{twoId} and ins_id = #{insId}
     </update>
 
     <!-- 更新指定list中的所有排序信息 -->
@@ -381,7 +389,7 @@
 
     <!---->
     <select id="getRelationAfterSortAll" parameterType="Integer" resultType="map">
-        SELECT `id` FROM `institution_relation` WHERE `is_recommend` = 1 AND `sort` &gt; #{sort}
+        SELECT `id` FROM `institution_relation` WHERE `is_recommend` != 0 AND `sort` &gt; #{sort}
     </select>
 
     <!-- 获取指定排序指定更新方法周围的关联信息，适用于首页列表推荐箭头调整排序业务 -->
@@ -390,7 +398,7 @@
           *
         FROM
         `institution_relation`
-        WHERE `is_recommend` = 1
+        WHERE `is_recommend` != 0
         <if test="type == 1 "> AND `one_level_id` = #{typeId} </if>
         <if test="type == 2 "> AND `two_level_id` = #{typeId} </if>
         <if test="flag == 1 ">  AND `sort` &lt; #{sort}  </if>
@@ -406,9 +414,14 @@
        <if test="insId != null and insId != '' "> AND `ins_id` = #{insId} </if>
    </select>
 
+    <select id="getIndexRecommendInfoList" parameterType="map" resultType="map" >
+        SELECT * FROM `institution_relation` WHERE 1=1
+        <if test="insId != null and insId != '' "> AND `ins_id` = #{insId} </if>
+    </select>
+
     <!-- 获取所有中间表的排序信息-->
     <select id="getIndexRecommendYesCountAll"  resultType="int" >
-        SELECT COUNT(id) FROM `institution_relation` WHERE `is_recommend` = 1
+        SELECT COUNT(id) FROM `institution_relation` WHERE `is_recommend` != 0
     </select>
 
 

@@ -61,7 +61,7 @@ private InstitutionInfoService institutionInfoService;
                 InstitutionClassTypeVo institutionClassTypeVo = new InstitutionClassTypeVo();
                 institutionClassTypeVo.setId(institutionInfoVo.getId());
                 model.addAttribute("insId",institutionInfoVo.getId());
-                model.addAttribute("insClassList",institutionClassTypeService.queryAllByIns(institutionClassTypeVo));
+                model.addAttribute("insClassList",institutionClassTypeService.queryReServApplyAllByIns(institutionClassTypeVo));
             }
             model.addAttribute("usesType",users.getUserType());
 
@@ -84,7 +84,7 @@ private InstitutionInfoService institutionInfoService;
         InstitutionClassTypeVo institutionClassTypeVo = new InstitutionClassTypeVo();
         institutionClassTypeVo.setId(insId);
 
-        return institutionClassTypeService.queryAllByIns(institutionClassTypeVo);
+        return institutionClassTypeService.queryReServApplyAllByIns(institutionClassTypeVo);
     }
 
     /**
@@ -97,12 +97,6 @@ private InstitutionInfoService institutionInfoService;
     public PageFinder<ReServApply> findReServApplyList(String mobile,Integer dealStatus,Integer insId,Integer insClassId,String startTime,String endTime,Integer page,Integer pageSize) throws ParseException {
         ReServApply reServApply = new ReServApply();
         DateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
-        /*if(!"".equals(startTime) && null != startTime){
-            reServApply.setStartTime(formatter.parse(startTime));
-        }
-        if(!"".equals(endTime) && null != endTime){
-            reServApply.setEndTime(formatter.parse(endTime));
-        }*/
         reServApply.setMobile(mobile);
         reServApply.setDealStatus(dealStatus);
         reServApply.setInsId(insId);
@@ -135,7 +129,22 @@ private InstitutionInfoService institutionInfoService;
         reServApply.setPageSize(pageSize);
         reServApply.setEndTime(endTime);
         reServApply.setStartTime(startTime);
-        list = reServApplyService.findReServApplyMap(reServApply);
+        if(null != insClassId && !"".equals(insClassId)){
+            list = reServApplyService.findReServApplyMapByClass(reServApply);
+        }else{
+            list = reServApplyService.findReServApplyMap(reServApply);
+        }
+
+
+        /*if(null != insClassId && !"".equals(insClassId)){
+            for(int i = 0;i<list.size();i++){
+                if(null == list.get(i).get("className") || "".equals(list.get(i).get("className"))){
+                    list.remove(i);
+                    i--;
+                }
+            }
+        }*/
+
 
         List<Map<String, Object>> lists = new ArrayList<Map<String, Object>>();
         for (Map v : list) {

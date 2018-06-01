@@ -22,4 +22,9 @@ public class InstitutionRelationServiceImpl implements InstitutionRelationServic
     public void update(InstitutionRelationVo institutionRelationVo) {
         institutionRelationMapper.update(institutionRelationVo);
     }
+
+    @Override
+    public void updateByOneId(InstitutionRelationVo institutionRelationVo) {
+        institutionRelationMapper.updateByOneId(institutionRelationVo);
+    }
 }

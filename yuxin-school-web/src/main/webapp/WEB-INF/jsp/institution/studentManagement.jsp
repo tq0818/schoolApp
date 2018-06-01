@@ -60,7 +60,10 @@
                                 <select id="reServApplyInsId" onchange="findReServApplyClassByInsId()">
                                     <option value="">请选择机构</option>
                                     <c:forEach var="ins" items="${insList}">
-                                        <option value="${ins.relationId}">${ins.relationName}</option>
+                                        <c:if test="${ins.relationId != '' and ins.relationId != null}">
+                                            <option value="${ins.relationId}">${ins.relationName}</option>
+                                        </c:if>
+
                                     </c:forEach>
                                 </select>
                             </div>

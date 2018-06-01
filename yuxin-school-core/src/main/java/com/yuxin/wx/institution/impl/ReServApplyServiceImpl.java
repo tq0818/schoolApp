@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -46,40 +47,28 @@ public class ReServApplyServiceImpl extends BaseServiceImpl implements ReServApp
             reServApply.setPage((reServApply.getPage()-1)*reServApply.getPageSize());
         }
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-       /* String startTime =null;
-        if(null != reServApply.getStartTime() && !"".equals(reServApply.getStartTime())){
-            startTime = format.format(reServApply.getStartTime());
+        Integer count = 0;
+        List<ReServApply> data = null;
+        if(null != reServApply.getInsClassId() && !"".equals(reServApply.getInsClassId())){
+            //查找机构预约列表
+            data = reServApplyMapper.findReServApplyListByClassId(reServApply);
+            count = reServApplyMapper.findReServApplyListCountByClassId(reServApply);
+       }else{
+           //查找机构预约列表
+           data = reServApplyMapper.findReServApplyList(reServApply);
+           count = reServApplyMapper.findReServApplyListCount(reServApply);
+       }
+
+        int j=1;
+        for(int i = 0;i<data.size();i++){
+            data.get(i).setSort(j);
+            data.get(i).setTime(format.format(data.get(i).getCreateTime()));
+            j++;
         }
-        String endTime = null;
-        if(null != reServApply.getEndTime() && !"".equals(reServApply.getEndTime())){
-            endTime = format.format(reServApply.getEndTime());
-        }
-
-
-
-        reServApply.setStartTimes(startTime);
-        reServApply.setEndTimes(endTime);*/
-        //查找机构预约列表
-        List<ReServApply> data = reServApplyMapper.findReServApplyList(reServApply);
-        Integer count = reServApplyMapper.findReServApplyListCount(reServApply);
 
         PageFinder<ReServApply> pageFinder = new PageFinder<>(reServApply.getPage()/reServApply.getPageSize(),reServApply.getPageSize(),count,data);
 
-        int j=1;
-        for(int i = 0;i<pageFinder.getData().size();i++){
-            pageFinder.getData().get(i).setSort(j);
-            pageFinder.getData().get(i).setTime(format.format(pageFinder.getData().get(i).getCreateTime()));
-            j++;
-        }
-        //点击了预约课程时，移除预约的机构，只保留该课程的预约信息
-        if(null != reServApply.getInsClassId() && !"".equals(reServApply.getInsClassId())){
-            for(int i = 0;i<pageFinder.getData().size();i++){
-                if( null == pageFinder.getData().get(i).getClassName() || "".equals(pageFinder.getData().get(i).getClassName()) ){
-                    pageFinder.getData().remove(i);
-                    i--;
-                }
-            }
-        }
+
 
         return pageFinder;
     }
@@ -88,6 +77,24 @@ public class ReServApplyServiceImpl extends BaseServiceImpl implements ReServApp
     public List<Map<Object,Object>> findReServApplyMap(ReServApply reServApply) {
         //查找机构预约列表
         List<Map<Object, Object>> data = reServApplyMapper.findReServApplyMap(reServApply);
+        int j = 1;
+        for (int i = 0; i < data.size(); i++) {
+            data.get(i).put("id", j);
+            j++;
+            if((Integer)data.get(i).get("dealStatus") == 1){
+                data.get(i).put("dealStatus","已处理");
+            }else{
+                data.get(i).put("dealStatus","未处理");
+            }
+        }
+        return data;
+    }
+
+
+    @Override
+    public List<Map<Object,Object>> findReServApplyMapByClass(ReServApply reServApply) {
+        //查找机构预约列表
+        List<Map<Object, Object>> data = reServApplyMapper.findReServApplyMapByClass(reServApply);
         int j = 1;
         for (int i = 0; i < data.size(); i++) {
             data.get(i).put("id", j);

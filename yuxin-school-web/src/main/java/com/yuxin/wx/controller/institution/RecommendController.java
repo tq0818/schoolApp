@@ -48,16 +48,17 @@ public class RecommendController {
             Integer page = Integer.valueOf(request.getParameter("page"));
             Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
             Integer typeId = Integer.valueOf(request.getParameter("typeId"));
+            Integer level = Integer.valueOf(request.getParameter("level"));
             String status = request.getParameter("status");
             Integer iStatus = null;
             if(null == status ||  "".equals(status)){
                 iStatus = null;
             }else{
-                iStatus = "1".equals(status) ? 1 : 0;
+                iStatus = "1".equals(status) ? 1 : 2;
             }
 
-            int count = institutionCategoryService.getIndexRecommendListCount(typeId,name,iStatus);
-            List<Map<String,Object>> list = institutionCategoryService.getIndexRecommendList(typeId,name,iStatus,page*pageSize,pageSize);
+            int count = institutionCategoryService.getIndexRecommendListCount(typeId,name,iStatus,level);
+            List<Map<String,Object>> list = institutionCategoryService.getIndexRecommendList(typeId,name,iStatus,page*pageSize,pageSize,level);
 
             int recommendAll = institutionCategoryService.getIndexRecommendYesCount(typeId);
 
@@ -97,10 +98,15 @@ public class RecommendController {
             //获取当前分类编号，用于定制排序方案
             Integer typeId = Integer.valueOf(request.getParameter("typeId"));
 
+            Integer level = Integer.valueOf(request.getParameter("level"));
+            Integer flag = Integer.valueOf(request.getParameter("flag"));
+
             Map<String,Object> map = new HashMap<>();
             map.put("rid",rid);
             map.put("insId",insId);
             map.put("typeId",typeId);
+            map.put("level",level);
+            map.put("flag",flag);
             int num = institutionCategoryService.alterIndexRecommendStatus(map);
             if(num != 1){
                 log.error("====> 更新首页列表推荐失败,num = "+num + "insId = "+insId + "rid = " + rid);

@@ -42,6 +42,16 @@
 
     </update>
 
+    <update id="updateByOneId" parameterType="com.yuxin.wx.model.institution.InstitutionRelationVo">
+        update institution_relation
+        <trim prefix="set" suffixOverrides=",">
+            <if test="isRecommend != null">is_recommend = #{isRecommend}, sort = null</if>
+        </trim>
+
+        <where>one_level_id = #{oneLevelId}</where>
+
+    </update>
+
 
     <select id="findByinsIdOneIdTwoId" parameterType="com.yuxin.wx.model.institution.InstitutionRelationVo" resultType="com.yuxin.wx.model.institution.InstitutionRelationVo">
         select id,ins_id insId, one_level_id oneLevelId , two_level_id twoLevelId,sort,is_recommend isRecommend from institution_relation where ins_id = #{insId} and one_level_id = #{oneLevelId} and two_level_id = #{twoLevelId}

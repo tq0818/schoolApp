@@ -101,7 +101,36 @@ function addCourseListener(){
                     </li>
            `;
 
-            $("#styleContainer").append(html);
+           var liList =  $('#styleContainer').find('li');
+           var liArr = "";
+
+            liArr += liList[0].outerHTML;
+            liArr += html;
+           if(liList.length > 1){
+               for(var i = 1;i<liList.length;i++){
+                   liArr += liList[i].outerHTML;
+               }
+           }
+
+            $("#styleContainer").html(liArr);
+
+
+            $('.openPopup').click(function () {
+                var num = $("#styleContainer").find('li').length - 1;
+                if (num >= MAX_STYLE && !$(this).hasClass('alterBtn')) {
+                    $.msg('已超过课程风采数量');
+                    return;
+                }
+                $("#hidCoverTop").val('');
+                $('#hidCoverFid').val('');
+                $('#hidCoverSort').val('');
+                $('#coverReturn').html('');
+                popAddImg();
+                //$('#cover').show();
+            });
+
+
+           // $("#styleContainer").append(html);
 
             $('#fileUploadInput').val('');
 
