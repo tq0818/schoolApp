@@ -7,6 +7,15 @@ var pageCount = '';
 var pageNo = '';
 var dataSize2 = '';
 function getIndexRecommendList(){
+    var level = '';
+    var alist = $('#recommendBtnContainor').children('a');
+    for(var i = 0;i<alist.length;i++){
+        if(alist.eq(i).hasClass("btn-primary")){
+            level = alist.eq(i).attr("data-level");
+        }
+    }
+
+    console.log(level)
     var typeId = getCurrentTypeId();
     if(null == typeId){
         $("#indexRecommendTbody").html("<tr><td colspan='7'>没有数据</td></tr>");
@@ -15,6 +24,7 @@ function getIndexRecommendList(){
     $.ajax({
         url: rootPath+'/institutionRecommend/getRecommendList',
         data: {
+            level:level,
              typeId:typeId,
              page:nowIndexPage,
              pageSize:pageSize,
@@ -129,8 +139,6 @@ function getIndexRecommendList(){
                 }
 
                 var showSort = json.data.page*json.data.pageSize + parseInt(i) + 1 ;
-                console.log('json.data.page = '+json.data.page);
-                console.log("i = "+i);
                 html += `
                     <tr>
                         <td>${parseInt(i)+1}</td>
@@ -286,7 +294,6 @@ function getRecommendTypeData(id){
 
     json = arr;
 
-        console.log(json)
 
     var html = '<span>推荐分类</span>';
         if(!id){

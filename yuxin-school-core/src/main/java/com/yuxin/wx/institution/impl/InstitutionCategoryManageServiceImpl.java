@@ -349,13 +349,14 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
     }
 
     @Override
-    public List<Map<String, Object>> getIndexRecommendList(int typeId, String name,Integer status, int pageStart, int pageSize) {
+    public List<Map<String, Object>> getIndexRecommendList(int typeId, String name,Integer status, int pageStart, int pageSize,int level) {
         Map<String, Object> map = new HashMap<>();
         map.put("typeId", typeId);
         map.put("name", name);
         map.put("pageStart", pageStart);
         map.put("pageSize", pageSize);
         map.put("status",status);
+        map.put("level",level);
         // int count = institutionManageMapper.getIndexRecommendListCount(map);
         List<Map<String, Object>> list = institutionManageMapper.getIndexRecommendList(map);
 
@@ -363,11 +364,12 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
     }
 
     @Override
-    public int getIndexRecommendListCount(int typeId, String name,Integer status) {
+    public int getIndexRecommendListCount(int typeId, String name,Integer status,int level) {
         Map<String, Object> map = new HashMap<>();
         map.put("typeId", typeId);
         map.put("typeName", (null == name || "".equals(name.trim())) ? null : name);
         map.put("status",status);
+        map.put("level",level);
 
         return institutionManageMapper.getIndexRecommendListCount(map);
     }

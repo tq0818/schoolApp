@@ -48,16 +48,17 @@ public class RecommendController {
             Integer page = Integer.valueOf(request.getParameter("page"));
             Integer pageSize = Integer.valueOf(request.getParameter("pageSize"));
             Integer typeId = Integer.valueOf(request.getParameter("typeId"));
+            Integer level = Integer.valueOf(request.getParameter("level"));
             String status = request.getParameter("status");
             Integer iStatus = null;
             if(null == status ||  "".equals(status)){
                 iStatus = null;
             }else{
-                iStatus = "1".equals(status) ? 1 : 0;
+                iStatus = "1".equals(status) ? 1 : 2;
             }
 
-            int count = institutionCategoryService.getIndexRecommendListCount(typeId,name,iStatus);
-            List<Map<String,Object>> list = institutionCategoryService.getIndexRecommendList(typeId,name,iStatus,page*pageSize,pageSize);
+            int count = institutionCategoryService.getIndexRecommendListCount(typeId,name,iStatus,level);
+            List<Map<String,Object>> list = institutionCategoryService.getIndexRecommendList(typeId,name,iStatus,page*pageSize,pageSize,level);
 
             int recommendAll = institutionCategoryService.getIndexRecommendYesCount(typeId);
 
