@@ -202,7 +202,7 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
      * 获取当前推荐的机构数量
      * @return
      */
-    int getIndexRecommendYesCountAll();
+    int getIndexRecommendYesCountAll(Map<String,Object>params);
 
     /**
      *获取指定id的分类信息
@@ -246,4 +246,6 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
     int queryInsRecommendMaxSort(Map<String, Object> map);
 
     void updateRecommendIns(Map<String, Object> map);
+
+    List<String> queryOldCateIdsByInsId(Map<String, Object> params);
 }

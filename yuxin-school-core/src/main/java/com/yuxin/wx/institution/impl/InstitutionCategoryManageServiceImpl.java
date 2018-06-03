@@ -589,7 +589,9 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
 
     @Override
     public int getIndexRecommendYesCount(Integer typeId) {
-        return institutionManageMapper.getIndexRecommendYesCountAll();
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("typeId",typeId);
+        return institutionManageMapper.getIndexRecommendYesCountAll(params);
        /*
         Map<String,Object> typeEntity = institutionManageMapper.getTypeEntityById(typeId);
         if (null == typeEntity ) {

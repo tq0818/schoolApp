@@ -6,6 +6,7 @@ import com.yuxin.wx.api.institution.InstitutionInfoService;
 import com.yuxin.wx.api.user.IUsersService;
 import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.common.PageFinder;
+import com.yuxin.wx.institution.mapper.InstitutionCategoryManageMapper;
 import com.yuxin.wx.institution.mapper.InstitutionInfoMapper;
 import com.yuxin.wx.institution.mapper.InstitutionLabelMapper;
 import com.yuxin.wx.institution.mapper.InstitutionRelationMapper;
@@ -44,6 +45,9 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
 
     @Autowired
     private InstitutionCategoryManageService institutionCategoryService;
+
+    @Autowired
+    private InstitutionCategoryManageMapper institutionManageMapper;
 
     @Override
     @Transactional
@@ -187,6 +191,8 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
             catTwo = institutionInfoVo.getTwoLevelId().split(",");
         }
 
+        //机构分类存储容器
+        Map<String,Object> cateNew = new HashMap<String,Object>();
         //插入机构分类关系表
         InstitutionRelationVo institutionRelation = new InstitutionRelationVo();
         for(int i =0;i<catOne.length;i++){
@@ -195,13 +201,59 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
             institutionRelation.setOneLevelId(Integer.parseInt(catOne[i]));
             institutionRelation.setTwoLevelId(Integer.parseInt(catTwo[i]));
             institutionRelationMapper.insert(institutionRelation);
+
+            //存储一二级分类
+            cateNew.put(catOne[i],true);
+            cateNew.put(catTwo[i],true);
         }
 
 
         /**
          * 对该机构的分类推荐情况做修改
          */
-        //查询改机构的所有分类情况
+        Map<String,Object> params = new HashMap<String,Object>();
+        //1.查询处推荐表里该机构已经对应有的分类
+        params.put("insId",institutionInfoVo.getId());
+        List<String> cateOldIds = institutionManageMapper.queryOldCateIdsByInsId(params);
+        if(null!=cateOldIds&&cateOldIds.size()>0){
+            for(String cateId : cateOldIds){
+                boolean isExsit = (boolean) cateNew.get(cateId);
+                if(isExsit){
+                    //1.1有相同的分类不做任何操作 相同的部分移除掉
+                    cateNew.remove(cateId);
+                    continue;
+                }else{
+                    //1.2新增分类没有 原有机构分类有 直接做删除操作
+                }
+            }
+            //1.2新增分类有   原有机构分类里没有则需要查询该部分机构是否已经推荐
+            //1.2.1推荐了  插入该分类对应机构数据
+            //1.2.2没有推荐 不做处理
+        }else{
+
+        }
+
+
+
+
+
+
+
+/*        //TODO 将修改的机构重新如表
+        Map<String,Object> params = new HashMap<String,Object>();
+        //1.查出该机构已经挂载在哪些分类下
+        params.put("insId",institutionInfoVo.getId());
+        List<String> cateOldIds = institutionManageMapper.queryOldCateIdsByInsId(params);
+        //2.取出这些分类 和当前修复的分类作比对
+        if(null==cateOldIds || cateOldIds.size()==0){//说明该机构还未挂载到任何已经推荐的分类下
+
+        }else{//已经挂载到部分已经推荐的分类下
+
+        }*/
+        //2.1 如果分类已经存在 则不需要做任何操作
+        //2.2 如果分类不存在则需要插入数据
+        //2.3 如果取出分类在重新保存的分类里找不到则需要删除该数据
+/*        //查询改机构的所有分类情况
         List<InstitutionRelationVo> insRsOle = institutionRelationMapper.findByinsId(institutionInfoVo.getId());
         //将insRsOle放入map注意放入的key
         Map<String,InstitutionRelationVo> mapOle = new HashMap<>();
@@ -220,7 +272,7 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
                 institutionRelationVo.setIsRecommend(0);
                 institutionRelationMapper.insert(institutionRelationVo);
             }
-        }
+        }*/
 
        /* for(String key :mapOle.keySet()){
             if(null != mapOle.get(key).getIsRecommend() && mapOle.get(key).getIsRecommend() != 0){
@@ -235,14 +287,7 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
         }*/
 
 
-        //TODO 将修改的机构重新如表
 
-        //1.查处该机构已经挂载在哪些分类下了
-
-        //2.取出这些分类 和当前修复的分类作比对
-            //2.1 如果分类已经存在 则不需要做任何操作
-            //2.2 如果分类不存在则需要插入数据
-            //2.3 如果取出分类在重新保存的分类里找不到则需要删除该数据
         //插入新系统标签
         InstitutionLabelVo institutionLabelVo = new InstitutionLabelVo();
         if(null != institutionInfoVo.getSysLabel() && !"".equals(institutionInfoVo.getSysLabel())){

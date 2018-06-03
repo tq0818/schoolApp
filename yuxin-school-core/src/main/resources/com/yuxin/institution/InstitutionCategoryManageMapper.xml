@@ -426,8 +426,8 @@
     </select>
 
     <!-- 获取所有中间表的排序信息-->
-    <select id="getIndexRecommendYesCountAll"  resultType="int" >
-        SELECT COUNT(id) FROM `ins_recommend` WHERE `is_recommend` = 1
+    <select id="getIndexRecommendYesCountAll"  resultType="int" parameterType="map">
+        SELECT COUNT(id) FROM `ins_recommend` WHERE `cate_id` = #{typeId}
     </select>
 
 
@@ -499,7 +499,7 @@
 
 
     <select id="queryInsRecommendMaxSort" parameterType="map" resultType="int">
-        select case when max(sort) is null then 0 else max(sort) end  from ins_recommend where cate_id=#{cateId} and is_recommend=1
+        select case when max(sort) is null then 0 else max(sort) end  from ins_recommend where cate_id=#{cateId}
     </select>
 
     <update id="updateRecommendIns" parameterType="map">
@@ -510,4 +510,8 @@
         </choose>
         WHERE id =#{rid} and ins_id=${insId}
     </update>
+
+    <select id="queryOldCateIdsByInsId" parameterType="map" resultType="String">
+        select cate_id from ins_recommend where ins_id=#{insId}
+    </select>
 </mapper>
