@@ -6,10 +6,12 @@ import com.yuxin.wx.api.institution.InstitutionInfoService;
 import com.yuxin.wx.api.user.IUsersService;
 import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.common.PageFinder;
+import com.yuxin.wx.institution.mapper.InstitutionCategoryManageMapper;
 import com.yuxin.wx.institution.mapper.InstitutionInfoMapper;
 import com.yuxin.wx.institution.mapper.InstitutionLabelMapper;
 import com.yuxin.wx.institution.mapper.InstitutionRelationMapper;
 import com.yuxin.wx.model.auth.AuthUserRole;
+import com.yuxin.wx.model.institution.IndexRecommendVo;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
 import com.yuxin.wx.model.institution.InstitutionLabelVo;
 import com.yuxin.wx.model.institution.InstitutionRelationVo;
@@ -44,6 +46,9 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
 
     @Autowired
     private InstitutionCategoryManageService institutionCategoryService;
+
+    @Autowired
+    private InstitutionCategoryManageMapper institutionCategoryManageMapper;
 
     @Override
     @Transactional
@@ -106,9 +111,48 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
                 institutionRelationVo.setInsId(institutionInfoVo.getId());
                 institutionRelationVo.setOneLevelId(Integer.parseInt(catOne[i]));
                 institutionRelationVo.setTwoLevelId(Integer.parseInt(catTwo[i]));
-                institutionRelationVo.setIsRecommend(0);
                 institutionRelationMapper.insert(institutionRelationVo);
             }
+
+            //插入机构分类推荐关系表
+            //去掉重复的一级分类
+            List<Integer> list = new ArrayList<Integer>();
+            for (int i=0; i<catOne.length; i++) {
+                if(!list.contains(Integer.parseInt(catOne[i]))) {
+                    list.add(Integer.parseInt(catOne[i]));
+                }
+            }
+            List<IndexRecommendVo> insInfo = new ArrayList<>();
+
+            for(int i = 0;i<list.size();i++){
+                IndexRecommendVo indexRecommendVo = new IndexRecommendVo();
+                Map<String, Object> map = new HashMap<>();
+                map.put("cateId",list.get(i));
+                int maxSort = institutionCategoryManageMapper.queryInsRecommendMaxSort(map);
+                if(maxSort != 0){
+                    indexRecommendVo.setInsId(institutionInfoVo.getId());
+                    indexRecommendVo.setStatus(0);
+                    indexRecommendVo.setTid(list.get(i));
+                    indexRecommendVo.setSort(maxSort+1);
+                    insInfo.add(indexRecommendVo);
+                }
+            }
+
+            for(int i = 0;i<catTwo.length;i++){
+                IndexRecommendVo indexRecommendVo = new IndexRecommendVo();
+                Map<String, Object> map = new HashMap<>();
+                map.put("cateId",Integer.parseInt(catOne[i]));
+                int maxSort = institutionCategoryManageMapper.queryInsRecommendMaxSort(map);
+                if(maxSort != 0){
+                    indexRecommendVo.setInsId(institutionInfoVo.getId());
+                    indexRecommendVo.setStatus(0);
+                    indexRecommendVo.setTid(Integer.parseInt(catTwo[i]));
+                    indexRecommendVo.setSort(maxSort+1);
+                    insInfo.add(indexRecommendVo);
+                }
+            }
+
+            institutionCategoryManageMapper.batchInsertRecommendInfo(insInfo);
 
             if(null != institutionInfoVo.getSysLabel() && !"".equals(institutionInfoVo.getSysLabel())){
                 String labels = institutionInfoVo.getSysLabel().substring(0,institutionInfoVo.getSysLabel().lastIndexOf(","));
@@ -201,6 +245,14 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
         /**
          * 对该机构的分类推荐情况做修改
          */
+        //TODO 将修改的机构重新如表
+
+        //1.查处该机构已经挂载在哪些分类下了
+
+        //2.取出这些分类 和当前修复的分类作比对
+        //2.1 如果分类已经存在 则不需要做任何操作
+        //2.2 如果分类不存在则需要插入数据
+        //2.3 如果取出分类在重新保存的分类里找不到则需要删除该数据
         //查询改机构的所有分类情况
         List<InstitutionRelationVo> insRsOle = institutionRelationMapper.findByinsId(institutionInfoVo.getId());
         //将insRsOle放入map注意放入的key
@@ -222,7 +274,7 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
             }
         }
 
-       /* for(String key :mapOle.keySet()){
+        for(String key :mapOle.keySet()){
             if(null != mapOle.get(key).getIsRecommend() && mapOle.get(key).getIsRecommend() != 0){
                 Map<String,Object> map = new HashMap<>();
                 map.put("rid",mapOle.get(key).getId());
@@ -232,17 +284,12 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
                 int num = institutionCategoryService.alterIndexRecommendStatus(map);
             }
             institutionRelationMapper.delete(mapOle.get(key).getId());
-        }*/
+        }
 
 
-        //TODO 将修改的机构重新如表
 
-        //1.查处该机构已经挂载在哪些分类下了
 
-        //2.取出这些分类 和当前修复的分类作比对
-            //2.1 如果分类已经存在 则不需要做任何操作
-            //2.2 如果分类不存在则需要插入数据
-            //2.3 如果取出分类在重新保存的分类里找不到则需要删除该数据
+
         //插入新系统标签
         InstitutionLabelVo institutionLabelVo = new InstitutionLabelVo();
         if(null != institutionInfoVo.getSysLabel() && !"".equals(institutionInfoVo.getSysLabel())){

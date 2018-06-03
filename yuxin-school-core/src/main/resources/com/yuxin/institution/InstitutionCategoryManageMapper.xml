@@ -499,7 +499,7 @@
 
 
     <select id="queryInsRecommendMaxSort" parameterType="map" resultType="int">
-        select case when max(sort) is null then 0 else max(sort) end  from ins_recommend where cate_id=#{cateId} and is_recommend=1
+        select case when max(sort) is null then 0 else max(sort) end  from ins_recommend where cate_id=#{cateId}
     </select>
 
     <update id="updateRecommendIns" parameterType="map">
