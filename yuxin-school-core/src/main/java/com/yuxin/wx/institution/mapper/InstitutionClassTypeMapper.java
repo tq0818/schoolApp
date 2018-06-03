@@ -178,5 +178,7 @@ public interface InstitutionClassTypeMapper {
 
 
     int countUnderllineClass(Map<String,Object> map);
+    
+    void updateDelFlag(Integer courseId);
 
 }

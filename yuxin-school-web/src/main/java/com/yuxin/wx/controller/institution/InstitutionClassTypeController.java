@@ -1,14 +1,13 @@
 package com.yuxin.wx.controller.institution;
 
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.yuxin.wx.api.classes.IClassTypeService;
-import com.yuxin.wx.api.institution.InstitutionLabelService;
-import com.yuxin.wx.common.JsonMsg;
-import com.yuxin.wx.model.institution.*;
-import com.yuxin.wx.model.user.Users;
-import com.yuxin.wx.utils.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.shiro.SecurityUtils;
@@ -20,18 +19,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.yuxin.wx.api.institution.InstitutionClassTypeService;
-import com.yuxin.wx.api.institution.InstitutionInfoService;
-import com.yuxin.wx.common.PageFinder;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.yuxin.wx.api.classes.IClassTypeService;
+import com.yuxin.wx.api.institution.InstitutionClassTypeService;
+import com.yuxin.wx.api.institution.InstitutionInfoService;
+import com.yuxin.wx.api.institution.InstitutionLabelService;
+import com.yuxin.wx.common.JsonMsg;
+import com.yuxin.wx.common.PageFinder;
+import com.yuxin.wx.model.institution.ClassTypeOnlineFindVo;
+import com.yuxin.wx.model.institution.ClassTypeOnlineVo;
+import com.yuxin.wx.model.institution.InstitutionClassTypeVo;
+import com.yuxin.wx.model.institution.InstitutionInfoVo;
+import com.yuxin.wx.model.institution.InstitutionLabelVo;
+import com.yuxin.wx.model.institution.InstitutionStyle;
+import com.yuxin.wx.model.user.Users;
+import com.yuxin.wx.utils.FileUtil;
+import com.yuxin.wx.utils.FloatFormatUtil;
+import com.yuxin.wx.utils.PropertiesUtil;
+import com.yuxin.wx.utils.StringUtil;
+import com.yuxin.wx.utils.WebUtils;
 
 @Controller
 @RequestMapping("/institutionClassType")
@@ -195,13 +205,13 @@ public class InstitutionClassTypeController {
             if (null == entity) {
                 return JsonMsg.ERROR;
             }
-
+            institutionClassTypeService.updateDelFlag(cid);
             //del from database
-            institutionClassTypeService.deleteById(entity.getId());
-            Map<String, Object> map = new HashMap<>();
-            map.put("insId", insId);
-            map.put("cid", cid);
-            institutionClassTypeService.deleteRelation(map);
+//            institutionClassTypeService.deleteById(entity.getId());
+//            Map<String, Object> map = new HashMap<>();
+//            map.put("insId", insId);
+//            map.put("cid", cid);
+//            institutionClassTypeService.deleteRelation(map);
         } catch (Exception e) {
             e.printStackTrace();
             return JsonMsg.ERROR;

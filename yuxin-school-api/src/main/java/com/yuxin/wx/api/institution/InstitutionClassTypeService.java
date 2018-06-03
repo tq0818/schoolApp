@@ -164,6 +164,10 @@ public interface InstitutionClassTypeService {
 	 * @return
 	 */
 	int countUnderllineClass(Integer insId,String name,Integer classId);
-
-
+	
+	/**
+	 * 删除课程信息
+	 * @param courseId
+	 */
+	void updateDelFlag(Integer courseId);
 }

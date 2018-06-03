@@ -323,4 +323,9 @@ public class InstitutionClassTypeServiceImpl extends BaseServiceImpl implements 
         map.put("classId",classId);
         return institutionClassTypeMapper.countUnderllineClass(map);
     }
+
+	@Override
+	public void updateDelFlag(Integer courseId) {
+		institutionClassTypeMapper.updateDelFlag(courseId);
+	}
 }

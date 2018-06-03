@@ -259,6 +259,7 @@
 		SELECT ict.* FROM  ins_class_type  ict 
 		INNER JOIN ins_class_type_relation ictr ON ict.`id` = ictr.`class_type_id`
 		and ictr.is_online = 0
+		and ict.del_flag = 0
 		<if test="isShelves != null "> and ict.is_shelves = #{isShelves} </if>
 		INNER JOIN institution_info info ON ictr.`ins_id` = info.`id`
 		<if test="insId != null and insId != ''">and info.id = #{insId} </if>
@@ -273,7 +274,7 @@
 			count(1)
 		FROM
 			ins_class_type ict
-		INNER JOIN ins_class_type_relation ictr ON ict.`id` = ictr.`class_type_id`
+		INNER JOIN ins_class_type_relation ictr ON ict.`id` = ictr.`class_type_id` AND ict.del_flag = 0
 		INNER JOIN institution_info info ON ictr.`ins_id` = info.`id`
 		AND ictr.is_online = 0 and ict.is_recommend = 1
 
@@ -285,6 +286,7 @@
 		SELECT COUNT(ict.id) FROM  ins_class_type  ict 
 		INNER JOIN ins_class_type_relation ictr ON ict.`id` = ictr.`class_type_id`
 		and ictr.is_online = 0
+		and ict.del_flag = 0
 		<if test="isShelves != null "> and ict.is_shelves = #{isShelves} </if>
 		INNER JOIN institution_info info ON ictr.`ins_id` = info.`id`
 		<if test="insId != null and insId != ''">and info.id = #{insId}</if>
@@ -443,7 +445,12 @@
 
 
 	</select>
-
+	
+	<update id="updateDelFlag" parameterType="Integer">
+		update ins_class_type 
+		   set del_flag = 1
+		 where id = #{courseId}
+	</update>
 
 
 </mapper>

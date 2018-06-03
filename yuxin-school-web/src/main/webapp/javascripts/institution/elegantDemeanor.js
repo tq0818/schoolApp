@@ -441,6 +441,7 @@ function queryInstitutionStyle(pageNo){
 
 function isNull(str){
 	if ( str == "" ) return true;
+	str = str.replace(/\s/g,"");
 //	var regu = "^[ ]+$";
 	var regu ="\r|\n|\\s";
 	var re = new RegExp(regu);
