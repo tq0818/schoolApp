@@ -173,6 +173,9 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
         //删除原系统标签,自定义标签,原特色服务标签
         institutionLabelMapper.deleteByInsId(institutionInfoVo.getId());
 
+        //删除原机构分类
+        institutionRelationMapper.delete(institutionInfoVo.getId());
+
         Date date = new Date();
         //插入新机构分类
         String [] catOne=null;
@@ -184,6 +187,20 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
             catTwo = institutionInfoVo.getTwoLevelId().split(",");
         }
 
+        //插入机构分类关系表
+        InstitutionRelationVo institutionRelation = new InstitutionRelationVo();
+        for(int i =0;i<catOne.length;i++){
+            institutionRelation.setId(null);
+            institutionRelation.setInsId(institutionInfoVo.getId());
+            institutionRelation.setOneLevelId(Integer.parseInt(catOne[i]));
+            institutionRelation.setTwoLevelId(Integer.parseInt(catTwo[i]));
+            institutionRelationMapper.insert(institutionRelation);
+        }
+
+
+        /**
+         * 对该机构的分类推荐情况做修改
+         */
         //查询改机构的所有分类情况
         List<InstitutionRelationVo> insRsOle = institutionRelationMapper.findByinsId(institutionInfoVo.getId());
         //将insRsOle放入map注意放入的key

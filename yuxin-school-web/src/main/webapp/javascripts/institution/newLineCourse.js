@@ -1,5 +1,5 @@
 var MAX_STYLE = 7;
-var MAX_LABEL = 5;
+var MAX_LABEL = 4;
 
 var nameTest = /^[\u4e00-\u9fa5a-zA-Z\d,\s《》\-`]+$/;
 var priceTest = /^-?\d+\.?\d{0,2}$/;

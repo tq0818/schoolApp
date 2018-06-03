@@ -706,7 +706,7 @@ function updataIns() {
                             "customLabel":cusLabelName,
                             "specialService":specialName,
                             "imgUrl":imgUrl,
-                            "reservService":reservService
+                            "reservService":$("#reservService").val()
 
                         },
                         beforeSend: function (XMLHttpRequest) {
@@ -748,7 +748,7 @@ function updataIns() {
                 "customLabel":cusLabelName,
                 "specialService":specialName,
                 "imgUrl":imgUrl,
-                "reservService":reservService
+                "reservService":$("#reservService").val()
 
             },
             beforeSend: function (XMLHttpRequest) {

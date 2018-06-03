@@ -893,21 +893,23 @@ function authFrameLower(id,num,flag) {
         }
     }
 
-    console.log(isCertifiedVal,isShelvesVal,curPage);
+    console.log(isCertifiedVal,isShelvesVal,curPage,pageCount);
 
 
     if(isCertifiedVal != '2' || isShelvesVal !='2'){
-        if(isCertifiedVal != '2' && isShelvesVal == '2' && flag == 1){
-            if(pageNo+1 == pageCount && size == 1){
-                curPage = curPage - 1;
-            }
-        }else if(isShelvesVal != '2' && isCertifiedVal == '2' && flag == 0){
-            if(pageNo+1 == pageCount && size == 1){
-                curPage = curPage - 1;
-            }
-        }else if(isCertifiedVal != '2' && isShelvesVal != '2'){
-            if(pageNo+1 == pageCount && size == 1){
-                curPage = curPage - 1;
+        if(pageCount != 1){
+            if(isCertifiedVal != '2' && isShelvesVal == '2' && flag == 1){
+                if(pageNo+1 == pageCount && size == 1){
+                    curPage = curPage - 1;
+                }
+            }else if(isShelvesVal != '2' && isCertifiedVal == '2' && flag == 0){
+                if(pageNo+1 == pageCount && size == 1){
+                    curPage = curPage - 1;
+                }
+            }else if(isCertifiedVal != '2' && isShelvesVal != '2'){
+                if(pageNo+1 == pageCount && size == 1){
+                    curPage = curPage - 1;
+                }
             }
         }
     }
