@@ -257,8 +257,8 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
         List<String> cateOldIds = institutionCategoryManageMapper.queryOldCateIdsByInsId(params);
         if(null!=cateOldIds&&cateOldIds.size()>0){
             for(String cateId : cateOldIds){
-                boolean isExsit = (boolean) cateNew.get(cateId);
-                if(isExsit){
+                Object isExsit =  cateNew.get(cateId);
+                if(isExsit!=null){
                     //1.1有相同的分类不做任何操作 相同的部分移除掉
                     cateNew.remove(cateId);
                     continue;
