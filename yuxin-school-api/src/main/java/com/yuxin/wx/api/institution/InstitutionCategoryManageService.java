@@ -168,6 +168,7 @@ public interface InstitutionCategoryManageService {
      * @return
      */
     int getIndexRecommendYesCount(Integer typeId);
+    int getIndexRecommendYesSum(Integer typeId);
 
     int getMaxSortByTypeId(Integer typeId);
 

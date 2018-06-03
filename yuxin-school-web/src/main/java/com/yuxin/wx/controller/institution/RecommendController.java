@@ -60,7 +60,8 @@ public class RecommendController {
             int count = institutionCategoryService.getIndexRecommendListCount(typeId,name,iStatus,level);
             List<Map<String,Object>> list = institutionCategoryService.getIndexRecommendList(typeId,name,iStatus,page*pageSize,pageSize,level);
 
-            int recommendAll = institutionCategoryService.getIndexRecommendYesCount(typeId);
+            //int recommendAll = institutionCategoryService.getIndexRecommendYesCount(typeId);
+            int recommendAll = institutionCategoryService.getIndexRecommendYesSum(typeId);
 
             int maxSort = institutionCategoryService.getMaxSortByTypeId(typeId);
 

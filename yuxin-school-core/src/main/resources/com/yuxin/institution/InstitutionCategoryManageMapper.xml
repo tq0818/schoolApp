@@ -430,6 +430,11 @@
         SELECT COUNT(id) FROM `ins_recommend` WHERE `cate_id` = #{typeId}
     </select>
 
+    <!-- 获取所有中间表的排序信息-->
+    <select id="getIndexRecommendYesSum"  resultType="int" parameterType="map">
+        SELECT COUNT(id) FROM `ins_recommend` WHERE `cate_id` = #{typeId} and is_recommend = 1
+    </select>
+
 
     <select id="getTypeEntityById" parameterType="Integer" resultType="map">
         SELECT * FROM  `institution_category` WHERE id = #{id} limit 1

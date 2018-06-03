@@ -486,7 +486,7 @@
 					<div class="form-group">
 						<label class="col-md-2 control-label">紧急联系人电话</label>
 						<div class="col-md-2">
-							<input class="form-control" id="uEmergencyPhone" name="uEmergencyPhone" type="text" />
+							<input class="form-control" id="uEmergencyPhone" name="uEmergencyPhone" type="text" maxlength="11"/>
 							<span class="tips" style="color:red;"></span>
 						</div>
 						<label class="col-md-2 control-label">邮箱</label>
