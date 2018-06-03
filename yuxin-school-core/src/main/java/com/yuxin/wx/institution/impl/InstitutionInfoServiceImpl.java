@@ -205,7 +205,7 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
             }
         }
 
-        for(String key :mapOle.keySet()){
+       /* for(String key :mapOle.keySet()){
             if(null != mapOle.get(key).getIsRecommend() && mapOle.get(key).getIsRecommend() != 0){
                 Map<String,Object> map = new HashMap<>();
                 map.put("rid",mapOle.get(key).getId());
@@ -215,8 +215,17 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
                 int num = institutionCategoryService.alterIndexRecommendStatus(map);
             }
             institutionRelationMapper.delete(mapOle.get(key).getId());
-        }
+        }*/
 
+
+        //TODO 将修改的机构重新如表
+
+        //1.查处该机构已经挂载在哪些分类下了
+
+        //2.取出这些分类 和当前修复的分类作比对
+            //2.1 如果分类已经存在 则不需要做任何操作
+            //2.2 如果分类不存在则需要插入数据
+            //2.3 如果取出分类在重新保存的分类里找不到则需要删除该数据
         //插入新系统标签
         InstitutionLabelVo institutionLabelVo = new InstitutionLabelVo();
         if(null != institutionInfoVo.getSysLabel() && !"".equals(institutionInfoVo.getSysLabel())){

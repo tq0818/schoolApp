@@ -3,7 +3,9 @@ package com.yuxin.wx.institution.mapper;
 
 import com.yuxin.wx.common.BaseMapper;
 import com.yuxin.wx.model.institution.CaseWhenVO;
+import com.yuxin.wx.model.institution.IndexRecommendVo;
 import com.yuxin.wx.model.institution.InstitutionCategoryVo;
+import com.yuxin.wx.model.institution.InstitutionInfoVo;
 
 import java.util.List;
 import java.util.Map;
@@ -235,4 +237,13 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
 
    Map<String,Object> getAroundRelation(Map<String,Object> map);
 
+    List<IndexRecommendVo> queryInsInfoByTypeId(Map<String, Object> map);
+
+    void batchInsertRecommendInfo(List<IndexRecommendVo> insInfo);
+
+    void deletRecommendInsInfo(Map<String, Object> map);
+
+    int queryInsRecommendMaxSort(Map<String, Object> map);
+
+    void updateRecommendIns(Map<String, Object> map);
 }

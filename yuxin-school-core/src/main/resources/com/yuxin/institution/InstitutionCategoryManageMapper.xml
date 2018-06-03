@@ -313,27 +313,22 @@
           ir.id rid,
           ir.`is_recommend`,
           ir.`sort`,
-          ir.`one_level_id`,
-          ir.`two_level_id`,
+          ir.`cate_id` as one_level_id,
           ic1.`code_name` name1,
-          ic2.`code_name` name2,
-          IF(ISNULL(ic2.`code_level`), 1, 2) lv,
-          ic1.`first_recommend` icRecommend1,
-          ic2.`first_recommend` icRecommend2
+          ic1.`first_recommend` icRecommend1
         FROM
           `institution_info` info
-          INNER JOIN `institution_relation` ir
+          INNER JOIN `ins_recommend` ir
             ON info.`id` = ir.`ins_id`
           LEFT JOIN `institution_category` ic1
-            ON ir.`one_level_id` = ic1.`id`
-          LEFT JOIN `institution_category` ic2
-            ON ir.`two_level_id` = ic2.`id`
-        WHERE ( ir.`one_level_id` = #{typeId}
-          OR ir.`two_level_id` = #{typeId} )
+            ON ir.`cate_id` = ic1.`id`
+        WHERE ir.`cate_id` = #{typeId}
           and info.is_shelves = 1
-          <if test="name != null and name != ''"> and info.name LIKE '%${name}%' </if>
-          <if test="status != null and status == 2 and status != '' "> and  ir.`is_recommend` != #{level} and ir.`is_recommend` != 3</if>
-        <if test="status != null and status == 1 and status != '' "> and  (ir.`is_recommend` = #{level} or ir.`is_recommend` = 3) </if>
+          <if test="name != null and name != ''"> and info.name LIKE '%${typeName}%' </if>
+        <choose>
+            <when test="status == 1">and  ir.is_recommend=1</when>
+            <when test="status == 2">and  ir.is_recommend=0</when>
+        </choose>
           GROUP BY info.id
           ORDER BY ir.`is_recommend` DESC,
                    ir.`sort` ASC
@@ -341,7 +336,7 @@
     </select>
 
     <select id="getIndexRecommendListCount" parameterType="Map" resultType="int">
-        select count(1) from
+       <!-- select count(1) from
         (SELECT
         info.id
         FROM
@@ -359,6 +354,18 @@
         <if test="status != null and status == 1 and status != '' "> and  (ir.`is_recommend` = #{level} or ir.`is_recommend` = 3) </if>
         <if test="typeName != null "> and info.name LIKE  CONCAT('%','${typeName}','%' )  </if>
         GROUP BY info.id
+        ) as c-->
+        select count(1) from
+        (
+            select ii.id from institution_info ii
+            join ins_recommend ir on ii.id=ir.ins_id
+            where ii.is_shelves=1 and ir.cate_id=#{typeId}
+            <choose>
+                <when test="status == 1">and  ir.is_recommend=1</when>
+                <when test="status == 2">and  ir.is_recommend=0</when>
+            </choose>
+            <if test="typeName != null "> and ii.name LIKE  CONCAT('%','${typeName}','%' )  </if>
+            GROUP BY ii.id
         ) as c
     </select>
 
@@ -397,10 +404,9 @@
         SELECT
           *
         FROM
-        `institution_relation`
-        WHERE `is_recommend` != 0
-        <if test="type == 1 "> AND `one_level_id` = #{typeId} </if>
-        <if test="type == 2 "> AND `two_level_id` = #{typeId} </if>
+        `ins_recommend`
+        WHERE `is_recommend` =1
+      and cate_id = #{typeId}
         <if test="flag == 1 ">  AND `sort` &lt; #{sort}  </if>
         <if test="flag == 0 ">  AND `sort` &gt; #{sort}  </if>
         <if test="flag == 1 ">  ORDER BY `sort` DESC   </if>
@@ -410,7 +416,7 @@
 
     <!-- 获取首页列表推荐的某个机构的推荐状态  -->
    <select id="getIndexRecommendInfo" parameterType="map" resultType="map" >
-       SELECT * FROM `institution_relation` WHERE `id` = #{rid}
+       SELECT * FROM `ins_recommend` WHERE `id` = #{rid}
        <if test="insId != null and insId != '' "> AND `ins_id` = #{insId} </if>
    </select>
 
@@ -421,7 +427,7 @@
 
     <!-- 获取所有中间表的排序信息-->
     <select id="getIndexRecommendYesCountAll"  resultType="int" >
-        SELECT COUNT(id) FROM `institution_relation` WHERE `is_recommend` != 0
+        SELECT COUNT(id) FROM `ins_recommend` WHERE `is_recommend` = 1
     </select>
 
 
@@ -440,7 +446,7 @@
 
     <!-- 交换两个关联表的排序 -->
     <update id="exchangeSortByCaseWhen" parameterType="java.util.List" >
-        UPDATE `institution_relation` SET `sort` = CASE `id`
+        UPDATE `ins_recommend` SET `sort` = CASE `id`
 
         <foreach collection="list" index="index" item="item"  separator=" " >
             WHEN ${item.id} THEN ${item.sort}
@@ -472,5 +478,36 @@
        SELECT IF(ISNULL(MAX(sort)),0,MAX(sort)) maxSort FROM `institution_relation` WHERE `is_recommend` = 1 AND `two_level_id` =  #{typeId}
     </select>
 
+    <select id="queryInsInfoByTypeId" parameterType="map" resultType="com.yuxin.wx.model.institution.IndexRecommendVo">
+        select (@rowNo := @rowNo+1) as sort,t.* from (
+            select DISTINCT ins_id as insId,case when one_level_id=#{id} then one_level_id else two_level_id end as tid,0 as status
+            from institution_relation where one_level_id=#{id} or two_level_id=#{id}
+        )t,(select  @rowNo :=0)tt
+    </select>
 
+    <insert id="batchInsertRecommendInfo" parameterType="java.util.List" useGeneratedKeys="true">
+        INSERT INTO `ins_recommend` (`ins_id`, `cate_id`, `is_recommend`, `sort`)
+        values
+        <foreach item="item" collection="list" separator="," >
+            (#{item.insId},#{item.tid},#{item.status},#{item.sort})
+        </foreach>
+    </insert>
+
+    <delete id="deletRecommendInsInfo" parameterType="map">
+        delete from ins_recommend where cate_id in (${id})
+    </delete>
+
+
+    <select id="queryInsRecommendMaxSort" parameterType="map" resultType="int">
+        select case when max(sort) is null then 0 else max(sort) end  from ins_recommend where cate_id=#{cateId} and is_recommend=1
+    </select>
+
+    <update id="updateRecommendIns" parameterType="map">
+        update ins_recommend set
+        <choose>
+            <when test="flag==1"> is_recommend=1,sort=#{sort}</when>
+            <otherwise>is_recommend=0</otherwise>
+        </choose>
+        WHERE id =#{rid} and ins_id=${insId}
+    </update>
 </mapper>
