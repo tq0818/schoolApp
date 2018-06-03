@@ -481,7 +481,7 @@
         </div>
         <p class="text-center">
             <a href="javascript:classTypePic();" class="btn btn-primary">确定</a>
-            <a href="javascript:;" class="btn btn-default close">取消</a>
+            <a href="javascript:void(0)" class="btn btn-default close hidenChooseDiv">取消</a>
         </p>
     </div>
 </div>
@@ -634,6 +634,13 @@
 				fileName: 'imgData'
 			});
 		}
+
+
+
+		$('body').on('click','.hidenChooseDiv',function () {
+			$("#chooseDiv").hide();
+            $("#stopDiv").hide();
+        })
 	</script>
 </body>
 </html>
