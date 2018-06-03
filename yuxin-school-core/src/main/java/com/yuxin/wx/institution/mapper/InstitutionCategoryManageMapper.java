@@ -198,11 +198,14 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
 
     List<Map<String, Object>> getIndexRecommendInfoList(Map<String,Object> map);
 
+
+    int getIndexRecommendYesCountAll(Map<String,Object>params);
+
     /**
      * 获取当前推荐的机构数量
      * @return
      */
-    int getIndexRecommendYesCountAll(Map<String,Object>params);
+    int getIndexRecommendYesSum(Map<String,Object>params);
 
     /**
      *获取指定id的分类信息

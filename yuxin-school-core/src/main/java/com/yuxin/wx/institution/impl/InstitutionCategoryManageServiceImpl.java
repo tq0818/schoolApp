@@ -610,6 +610,14 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
 */
     }
 
+
+    @Override
+    public int getIndexRecommendYesSum(Integer typeId) {
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("typeId",typeId);
+        return institutionManageMapper.getIndexRecommendYesSum(params);
+    }
+
     /**
      *
      * @param typeId    当前分类id

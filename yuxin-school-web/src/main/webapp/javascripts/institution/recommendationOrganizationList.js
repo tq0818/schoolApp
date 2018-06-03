@@ -87,39 +87,7 @@ function getIndexRecommendList(){
                 var statu2 = '';
                 var flag = '';
                 var isR = list[i].is_recommend;
-                /*if(isR == 1 && level ==1){
-                    statu='取消推荐';
-                    statu2='已推荐';
-                    flag ='0';
-                }else if(isR == 1 && level ==2){
-                    statu='推荐';
-                    statu2='未推荐';
-                    flag ='1';
-                }else if(isR == 2 && level ==1){
-                    statu='推荐';
-                    statu2='未推荐';
-                    flag ='1';
-                }else if(isR == 2 && level ==2){
-                    statu='取消推荐';
-                    statu2='已推荐';
-                    flag ='0';
-                }else if(isR == 3 && level ==1){
-                    statu='取消推荐';
-                    statu2='已推荐';
-                    flag ='0';
-                }else if(isR == 3 && level ==2){
-                    statu='取消推荐';
-                    statu2='已推荐';
-                    flag ='0';
-                }else if(isR == 0 && level ==2){
-                    statu='推荐';
-                    statu2='未推荐';
-                    flag ='1';
-                }else if(isR == 0 && level ==1){
-                    statu='推荐';
-                    statu2='未推荐';
-                    flag ='1';
-                }*/
+
                 if(isR == 1){
                     statu='取消推荐';
                     statu2='已推荐';
@@ -129,23 +97,6 @@ function getIndexRecommendList(){
                     statu2='未推荐';
                     flag ='1';
                 }
-
-              /*  var isR = list[i].is_recommend;
-                if(isR == 0){
-                    isR = 0;
-                }else if(isR == 1 && level == 1){
-                    isR = 1;
-                }else if(isR == 1 && level == 2){
-                    isR = 0;
-                }else if(isR == 2 && level == 1){
-                    isR = 0;
-                }else if(isR == 2 && level == 2){
-                    isR = 1;
-                }else if(isR == 3 && level == 1){
-                    isR = 1;
-                }else if(isR == 3 && level == 2){
-                    isR = 1;
-                }*/
 
                 var showSort = json.data.page*json.data.pageSize + parseInt(i) + 1 ;
                 html += `
