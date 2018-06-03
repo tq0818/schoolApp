@@ -6,6 +6,7 @@ import com.yuxin.wx.api.institution.InstitutionInfoService;
 import com.yuxin.wx.api.user.IUsersService;
 import com.yuxin.wx.common.BaseServiceImpl;
 import com.yuxin.wx.common.PageFinder;
+import com.yuxin.wx.institution.mapper.InstitutionCategoryManageMapper;
 import com.yuxin.wx.institution.mapper.InstitutionInfoMapper;
 import com.yuxin.wx.institution.mapper.InstitutionLabelMapper;
 import com.yuxin.wx.institution.mapper.InstitutionRelationMapper;
@@ -253,7 +254,7 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
         Map<String,Object> params = new HashMap<String,Object>();
         //1.查询处推荐表里该机构已经对应有的分类
         params.put("insId",institutionInfoVo.getId());
-        List<String> cateOldIds = institutionManageMapper.queryOldCateIdsByInsId(params);
+        List<String> cateOldIds = institutionCategoryManageMapper.queryOldCateIdsByInsId(params);
         if(null!=cateOldIds&&cateOldIds.size()>0){
             for(String cateId : cateOldIds){
                 boolean isExsit = (boolean) cateNew.get(cateId);
