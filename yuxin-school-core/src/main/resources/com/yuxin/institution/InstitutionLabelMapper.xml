@@ -83,7 +83,8 @@
         WHERE label_type = 1
           AND source_flag = 2
           AND info.`id` = #{id}
-          ORDER BY il.`create_time` desc
+          ORDER BY il.`create_time` desc,
+          il.id desc
     </select>
 
     <select id="findTeacherLabelByTeacherId" parameterType="Integer" resultMap="institutionLabelMap">
@@ -105,7 +106,7 @@
 
     <!-- 根据名师id获取自定义标签列表 -->
     <select id="getTeacherLabelsByTeacherId" parameterType="Integer" resultMap="institutionLabelMap">
-        select * from institution_label where label_type = 1 and source_flag = 2 and relation_id = #{id} ORDER BY `create_time` desc
+        select * from institution_label where label_type = 1 and source_flag = 2 and relation_id = #{id} ORDER BY `create_time` desc,id desc
     </select>
 
 
