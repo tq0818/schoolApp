@@ -324,7 +324,7 @@
             ON ir.`cate_id` = ic1.`id`
         WHERE ir.`cate_id` = #{typeId}
           and info.is_shelves = 1
-          <if test="name != null and name != ''"> and info.name LIKE '%${typeName}%' </if>
+          <if test="name != null and name != ''"> and info.name LIKE '%${name}%' </if>
         <choose>
             <when test="status == 1">and  ir.is_recommend=1</when>
             <when test="status == 2">and  ir.is_recommend=0</when>
