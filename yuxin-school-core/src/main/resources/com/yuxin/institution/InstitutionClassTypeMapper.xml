@@ -314,20 +314,15 @@
 		ictr.`sort`
 		FROM
 		`class_type` ct
-		INNER JOIN commodity_product_realtion cp on cp.product_id = ct.id
-		INNER JOIN commodity cy on cy.id = cp.com_id
-		INNER JOIN app_shelves ap on ap.comdity_id = cy.id
 		INNER JOIN `ins_class_type_relation` ictr
 		ON ct.`id` = ictr.`class_type_id`
 		<if test="link != null ">and ictr.`is_link`  = #{link} </if>
 		AND ictr.`is_online` = 1
-		AND  ap.is_shelves =1
-		and ct.del_flag = 0
 		INNER JOIN `institution_info` info
 		ON ictr.`ins_id` = info.`id`
 		<if test="insId != null ">and info.id = #{insId} </if>
 		ORDER BY ictr.`is_link` DESC,
-		ictr.`sort` ASC ,ictr.id DESC
+		ictr.`sort` ASC
 		limit #{firstIndex},#{pageSize}
 
 	</select>
@@ -337,15 +332,10 @@
 		COUNT(ct.id)
 		FROM
 		`class_type` ct
-		INNER JOIN commodity_product_realtion cp on cp.product_id = ct.id
-		INNER JOIN commodity cy on cy.id = cp.com_id
-		INNER JOIN app_shelves ap on ap.comdity_id = cy.id
 		INNER JOIN `ins_class_type_relation` ictr
 		ON ct.`id` = ictr.`class_type_id`
 		<if test="link != null ">and ictr.`is_link`  = #{link} </if>
 		AND ictr.`is_online` = 1
-		AND  ap.is_shelves =1
-		and ct.del_flag = 0
 		INNER JOIN `institution_info` info
 		ON ictr.`ins_id` = info.`id`
 		<if test="insId != null ">and info.id = #{insId} </if>
@@ -360,15 +350,10 @@
 		COUNT(ct.id)
 		FROM
 		`class_type` ct
-		INNER JOIN commodity_product_realtion cp on cp.product_id = ct.id
-		INNER JOIN commodity cy on cy.id = cp.com_id
-		INNER JOIN app_shelves ap on ap.comdity_id = cy.id
 		INNER JOIN `ins_class_type_relation` ictr
 		ON ct.`id` = ictr.`class_type_id`
 		and ictr.`is_link`  = 1
 		AND ictr.`is_online` = 1
-		AND  ap.is_shelves =1
-		and ct.del_flag = 0
 		INNER JOIN `institution_info` info
 		ON ictr.`ins_id` = info.`id`
 		<if test="insId != null ">and info.id = #{insId} </if>
