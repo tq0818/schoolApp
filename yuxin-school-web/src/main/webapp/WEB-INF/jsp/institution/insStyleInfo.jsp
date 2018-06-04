@@ -116,11 +116,13 @@
 		var id = $(this).parent().find(".btnStyleUpdate").attr("data-value");
 		//
 		var isTop = $(this).attr("data-value");
-		console.log(id,isTop);
+		console.log("111");
+		console.log($(this).parent().siblings(".imgInfo").text());
 		$.ajax({
 	          url: rootPath + "/institutionStyle/updateIsTop",
 	          data: {"id":id,
-	              "isTop":isTop
+	              "isTop":isTop,
+	              "content":$(this).parent().siblings(".imgInfo").text()
 	          },
 	          dataType: "json",
 	          success: function (data) {
