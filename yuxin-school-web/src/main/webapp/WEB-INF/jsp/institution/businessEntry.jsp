@@ -75,6 +75,9 @@
             <a href="javascript:updateMerchantEntryT()" class="btn btn-primary" id="updateNote">保存</a>
         </div>
     </div>
+   <%--显示备注详细信息弹窗    --%>
+
+   <textarea  class="remarksT"></textarea>
 
     <script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="<%=rootPath%>/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
