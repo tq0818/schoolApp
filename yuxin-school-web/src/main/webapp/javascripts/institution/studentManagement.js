@@ -3,7 +3,12 @@ $(function () {
     $selectSubMenu('student');
     //备注详情弹窗
     $('body').on('click','.note',function () {
+        var note = $(this).attr("title");
+        if(note.length == 0){
+            return;
+        }
        $('.remarksT').fadeIn();
+        $('.remarksT').val($(this).attr("title"));
        $.commonPopup();
     });
     $('body').on('click','.commonPopup',function () {
