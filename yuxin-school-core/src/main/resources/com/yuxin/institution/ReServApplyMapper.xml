@@ -236,10 +236,11 @@
 
 
     <select id="findReServApplyMap" parameterType="com.yuxin.wx.model.institution.ReServApply" resultType="Map">
+        select * from (
         SELECT
         r.id,
         r.mobile,
-        r.relation_name insName,
+        ii.name insName,
         '' className,
         '' price,
         r.note,
@@ -248,15 +249,20 @@
         r.create_time createTime
         FROM
         reservation_apply r
+        left join institution_info ii on ii.id = r.relation_id
         WHERE
         1 = 1
         AND type = 0
         <if test="insId != null and insId != ''">and r.relation_id = #{insId} </if>
         <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
         <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
-        <if test="startTime != null and startTime != '' and endTime == ''"><![CDATA[AND DATE_FORMAT(r.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
-        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
-        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime == ''">
+            <![CDATA[AND DATE_FORMAT(r.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
+        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") =
+            STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND
+            DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND
+            STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
 
 
         UNION
@@ -283,10 +289,14 @@
         <if test="insClassId != null and insClassId != ''">and ct.id = #{insClassId} </if>
         <if test="mobile != null and mobile != ''">and r.mobile = #{mobile} </if>
         <if test="dealStatus != null ">and r.deal_status = #{dealStatus} </if>
-        <if test="startTime != null and startTime != '' and endTime == ''"><![CDATA[AND DATE_FORMAT(r.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
-        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") = STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
-        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
-
+        <if test="startTime != null and startTime != '' and endTime == ''">
+            <![CDATA[AND DATE_FORMAT(r.create_time,"%Y-%m-%d") >= STR_TO_DATE(#{startTime},"%Y-%m-%d")]]></if>
+        <if test="endTime != null and endTime != '' and startTime == ''">AND DATE_FORMAT(r.create_time,"%Y-%m-%d") =
+            STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">AND
+            DATE_FORMAT(r.create_time,"%Y-%m-%d") BETWEEN STR_TO_DATE(#{startTime},"%Y-%m-%d") AND
+            STR_TO_DATE(#{endTime},"%Y-%m-%d")</if>
+        )c ORDER BY createTime desc
     </select>
 
 

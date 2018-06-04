@@ -748,11 +748,6 @@
             if ($("#changePw").valid()) {
                 var id = $("#userId").val();
                 var password = $("#nPassword").val();
-                var password2 = $("#nPassword").val().split(" ").join('');
-                if(password.length != password2.length){
-                    $.msg("卓鹿：密码由6-18个字符组成（不含空格）");
-                    return;
-                }
                 $.ajax({
                     type: 'post',
                     url: rootPath + "/student/changePassword",

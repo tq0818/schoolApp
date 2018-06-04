@@ -477,7 +477,13 @@ function queryRiseSchoolDict(areaFlag) {
                     html2 = "<option value=\"\">请选择区</option>";
                     $("#registStatus").html("").html(html2);
                 }else if (areaFlag == 2){
-                    html = "<option value=\"\">请选择区</option>" + html;
+                    var eduSchool = $("#eduSchool").val();
+                    if(eduSchool == ""){
+                        html = "<option value=\"\">请选择区</option>" ;
+                    }else{
+                        html = "<option value=\"\">请选择区</option>" + html;
+                    }
+
                     $("#registStatus").html("").html(html);
                 }
             }
@@ -538,8 +544,15 @@ function queryRiseSchoolDict2(areaFlag) {
                     html2 = "<option value=\"\">请选择区</option>";
                     $("#registStatus2").html("").html(html2);
                 }else if (areaFlag == 2){
-                    html = "<option value=\"\">请选择区</option>" + html;
+                    var eduSchool = $("#eduSchool2").val();
+                    if(eduSchool == ""){
+                        html = "<option value=\"\">请选择区</option>" ;
+                    }else{
+                        html = "<option value=\"\">请选择区</option>" + html;
+                    }
+
                     $("#registStatus2").html("").html(html);
+
                 }
             }
         }

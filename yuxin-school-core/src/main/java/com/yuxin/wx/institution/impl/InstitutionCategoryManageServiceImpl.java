@@ -52,11 +52,16 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
         this.flushSortAll(minSort);
 
         //如果是禁用删除掉相应分类下
-        if(0==insCatInfo.getIsEnable()){
-            Map<String,Object>params = new HashMap<String,Object>();
-            params.put("id",insCatInfo.getIds());
-            institutionManageMapper.deletRecommendInsInfo(params);
+        try{
+            if(null!=insCatInfo.getIsEnable() &&  0 == insCatInfo.getIsEnable()){
+                Map<String,Object>params = new HashMap<String,Object>();
+                params.put("id",insCatInfo.getIds());
+                institutionManageMapper.deletRecommendInsInfo(params);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
     }
 
     @Override

@@ -86,7 +86,7 @@
             <if test="city != null and city != ''">city = #{city},</if>
             <if test="area != null and area != ''">area = #{area},</if>
             <if test="address != null and address != ''">address = #{address},</if>
-            mobile = #{mobile},
+            <if test="mobile != null and mobile != ''">mobile = #{mobile},</if>
             <if test="isChain != null and isChain != ''">is_chain = #{isChain},</if>
             <if test="chainId != null and chainId != ''">chain_id = #{chainId},</if>
             <if test="chainName != null and chainName != ''">chain_name = #{chainName},</if>

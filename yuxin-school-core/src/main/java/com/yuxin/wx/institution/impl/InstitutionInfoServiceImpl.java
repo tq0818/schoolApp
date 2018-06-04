@@ -152,7 +152,9 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
                 }
             }
 
-            institutionCategoryManageMapper.batchInsertRecommendInfo(insInfo);
+            if(insInfo.size()>0){
+                institutionCategoryManageMapper.batchInsertRecommendInfo(insInfo);
+            }
 
             if(null != institutionInfoVo.getSysLabel() && !"".equals(institutionInfoVo.getSysLabel())){
                 String labels = institutionInfoVo.getSysLabel().substring(0,institutionInfoVo.getSysLabel().lastIndexOf(","));
@@ -288,7 +290,9 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
                     insInfo.add(indexRecommendVo);
                 }
             }
-            institutionCategoryManageMapper.batchInsertRecommendInfo(insInfo);
+            if(insInfo.size() >0){
+                institutionCategoryManageMapper.batchInsertRecommendInfo(insInfo);
+            }
         }
 
 
