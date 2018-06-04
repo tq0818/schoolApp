@@ -291,8 +291,6 @@ function saveCutPic(saveFlag) {
   		alert("请勿重复提交");
   		return ;
   	}
-  	countAdd++;
-
     //上传截取后的图片
     $.ajax({
         url : rootPath + "/institutionStyle/saveCutPic",
@@ -314,8 +312,11 @@ function saveCutPic(saveFlag) {
         },
         type : "post",
         dataType : "json",
+        beforeSend: function () {
+        	countAdd++;
+        },
         success : function(data) {
-        	countAdd = 0;
+        	//countAdd = 0;
             //上传成功则重新查询
             if (data.flag == 1){
             	if(saveFlag != 2){
@@ -332,6 +333,12 @@ function saveCutPic(saveFlag) {
             if (jcrop_apis){
                 jcrop_apis.destroy();
             }
+        },
+        complete: function () {
+        	//特殊处理
+        	if(saveFlag == 2){
+        		countAdd = 0;
+        	}
         },
         error:function(){
         	countAdd = 0;
