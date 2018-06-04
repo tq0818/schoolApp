@@ -363,18 +363,22 @@ function goUpdateData(id,ids,codeName,flag,enable,imgUrl){
  * parentId is null the first
  * else the second
  */
+var isClickSave = 0;
 function addData(parentId){
-
+    if(isClickSave ==1)return;
+    isClickSave = 1;
     var codeName = $("#insCatName").val();
     //校验分类名称 长度5  只允许输入文本 标点包括英文状态下的'/.
     if(!codeName || !$.trim(codeName)){
         alert("请输入分类名称");
+        isClickSave = 0;
         return;
     }
     var regex = new RegExp("^([\u4E00-\uFA29]|[\uE7C7-\uE7F3]|[a-zA-Z0-9]|[.']){1,10}$");
     var res = regex.test(codeName);
     if(!res){
         alert("分类名称只支持英文/汉字/英文状态下的.和'/数字");
+        isClickSave = 0;
         return;
     }
     var imgUrl = $("#imgUrl").val();
@@ -389,6 +393,7 @@ function addData(parentId){
         dataType: "json",
         success: function (data) {
             if(data.flag=='1'){
+                isClickSave = 0;
                 alert("该分类名称已经存在");
             }else{
                 $.ajax({
@@ -404,10 +409,12 @@ function addData(parentId){
                         if(data.flag=='1'){
                             queryAllData($("#pageNo").val());
                             hideTk();
+                            isClickSave = 0;
                         }else{
                             if(flag=='1'){
                                 $.msg("禁用失败请稍后再试");
                             }
+                            isClickSave = 0;
                         }
                     }
                 });

@@ -1,6 +1,15 @@
 $(function () {
     //选中二级菜单
     $selectSubMenu('organizationIndex');
+    //备注详情弹窗
+    $('body').on('click','.note',function () {
+        $('.remarksT').fadeIn();
+        $.commonPopup();
+    });
+    $('body').on('click','.commonPopup',function () {
+        $('.remarksT').fadeOut();
+        $(this).fadeOut();
+    });
     //分页插件
 //    $(".pagination").pagination('', {
 //        next_text : "下一页",

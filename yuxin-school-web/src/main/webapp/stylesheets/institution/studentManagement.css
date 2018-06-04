@@ -3,3 +3,5 @@
 .remarks textarea{width: 394px;height: 85px;resize: none;margin: auto;}
 .remarksBtn{text-align: center;}
 .remarksBtn a{margin: 10px 30px;}
+.remarksT{width: 600px;height: 400px;position: fixed;left: 50%;top: 50%;transform: translateX(-50%) translateY(-50%);
+font-size: 14px;color: #666;overflow-y: auto;display: none;z-index: 10000;resize: none;}
