@@ -1,6 +1,15 @@
 $(function () {
     //选中二级菜单
     $selectSubMenu('student');
+    //备注详情弹窗
+    $('body').on('click','.note',function () {
+       $('.remarksT').fadeIn();
+       $.commonPopup();
+    });
+    $('body').on('click','.commonPopup',function () {
+        $('.remarksT').fadeOut();
+        $(this).fadeOut();
+    });
     //添加备注弹窗  //点击备注，弹出弹窗
 
     $('body').on('click','.closeNote',function () {
