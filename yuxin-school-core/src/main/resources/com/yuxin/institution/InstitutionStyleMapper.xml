@@ -52,7 +52,7 @@
 			<if test="imgUrl != null and imgUrl != ''">img_url = #{imgUrl},</if>
 			content = #{content},
 			<if test="updateTime != null ">update_time = #{updateTime},</if>
-			<if test="updateTime == null ">update_time = create_time,</if>
+			<if test="updateFlag == null ">update_time = create_time,</if>
 			<if test="isTop != null">is_top = #{isTop},</if>
 		</trim>
 		<where>

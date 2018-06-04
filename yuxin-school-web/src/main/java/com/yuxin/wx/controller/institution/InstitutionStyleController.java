@@ -302,6 +302,7 @@ public class InstitutionStyleController {
 		}
         if (updateId != null) {
 			institutionStyle.setId(updateId);
+			institutionStyle.setUpdateFlag("1");
 			institutionStyleServiceImpl.updateInsStyle(institutionStyle);
 		}else{
 			institutionStyle.setUpdateTime(date);
@@ -340,6 +341,7 @@ public class InstitutionStyleController {
     @RequestMapping(value="/updateIsTop")
     public String updateIsTop(HttpServletRequest request,InstitutionStyle institutionStyle){
     	if (institutionStyle.getIsTop().intValue() == 1) {
+    		institutionStyle.setUpdateFlag("1");
     		institutionStyle.setUpdateTime(new Date());
 		}
     	institutionStyleServiceImpl.updateInsStyle(institutionStyle);

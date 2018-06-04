@@ -21,6 +21,7 @@ public class InstitutionStyle extends BaseModel{
 	private Date createTime;//创建时间
 	private Date updateTime;//更新时间
 	private Integer isTop;//是否置顶 0 否 1 是
+	private String updateFlag;//更新标志，根据这个标志判断是否需要更新更新时间
 	public Integer getId() {
 		return id;
 	}
@@ -86,6 +87,12 @@ public class InstitutionStyle extends BaseModel{
 	}
 	public void setIsTop(Integer isTop) {
 		this.isTop = isTop;
+	}
+	public String getUpdateFlag() {
+		return updateFlag;
+	}
+	public void setUpdateFlag(String updateFlag) {
+		this.updateFlag = updateFlag;
 	}
 	
 }
