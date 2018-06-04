@@ -49,7 +49,7 @@ public class ReServApplyServiceImpl extends BaseServiceImpl implements ReServApp
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Integer count = 0;
         List<ReServApply> data = null;
-        if(null != reServApply.getInsClassId() && !"".equals(reServApply.getInsClassId())){
+        if(null != reServApply.getInsClassId() && !"".equals(reServApply.getInsClassId()+"")){
             //查找机构预约列表
             data = reServApplyMapper.findReServApplyListByClassId(reServApply);
             count = reServApplyMapper.findReServApplyListCountByClassId(reServApply);

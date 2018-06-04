@@ -242,8 +242,8 @@
 		ins_class_type ct
 		LEFT JOIN ins_class_type_relation ict ON ict.class_type_id = ct.id
 		LEFT JOIN institution_info ii ON ii.id = ict.ins_id
-		WHERE
-		<if test="id != null and id !=''">  ii.id = #{id} </if>
+		WHERE 1=1
+		<if test="id != null and id !=''"> and ii.id = #{id} </if>
 		ORDER BY ct.create_time desc
 
 	</select>
