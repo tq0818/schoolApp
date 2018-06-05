@@ -113,10 +113,12 @@ $(function () {
 
     //添加机构弹窗
     $('.addOrganization').click(function () {
-        $('.addingMechanism').show();
+        $('.addingMechanism').fadeIn();
+        $.commonPopup();
     });
     $('.closeMechanism').click(function () {
-        $('.addingMechanism').hide();
+        $('.addingMechanism').fadeOut();
+        $('.commonPopup').fadeOut();
         //清空机构名
         $("#name").val('');
         //清空机构分类
@@ -1069,7 +1071,8 @@ function addInsInfo() {
                                         "twoLevelId":secondCat
                                     },
                                     success:function(data){
-                                        $('.addingMechanism').hide();
+                                        $('.addingMechanism').fadeOut();
+                                        $('.commonPopup').fadeOut();
                                         $.msg("添加成功");
                                         window.location.reload();
 
