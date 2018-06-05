@@ -94,7 +94,7 @@ $(function () {
             var userId = $(this).attr("data-userId");
         $.confirm('您是否确认审核通过该条评论',function (data) {
             if(data){
-                evaluationIns(userId,commentId,0);
+                evaluationIns(0,userId,commentId,0);
             }
         })
 
@@ -119,7 +119,7 @@ $(function () {
         var userId = $(this).attr("data-userId");
         $.confirm('您是否确认审核通过该条评论',function (data) {
             if(data){
-                evaluationIns(userId,commentId,1);
+                evaluationIns(1,userId,commentId,1);
             }
         })
     });
@@ -419,7 +419,7 @@ function initInsClassComment(page=1,reviewStatus='',relationId='') {
 
 
 //审核评论
-function evaluationIns(userId,commentId,flag) {
+function evaluationIns(flag,userId,commentId,flag) {
 
     $.ajax({
         url:rootPath+"/comment/updateComment",
@@ -427,7 +427,8 @@ function evaluationIns(userId,commentId,flag) {
         data:{
             "id":commentId,
             "isCheck":1,
-            "userId":userId
+            "userId":userId,
+            "flag":flag
         },
         beforeSend: function (XMLHttpRequest) {
             $(".loading").show();

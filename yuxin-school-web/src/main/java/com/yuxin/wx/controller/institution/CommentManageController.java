@@ -132,7 +132,7 @@ public class CommentManageController {
      */
     @ResponseBody
     @RequestMapping(value = "/updateComment",method = RequestMethod.POST)
-    public Integer update(CommentApp commentApp){
+    public Integer update(String flag ,CommentApp commentApp){
         try{
             commentManageService.update(commentApp);
             if(commentApp.getIsCheck() == 1){
@@ -140,7 +140,16 @@ public class CommentManageController {
                 Map<String,String> map = new HashMap<String,String>();
                 map.put("userName",user.getNickName());
                 //String url = request.getRequestURI().replace(request.getContextPath(),"");
-                noticeAndScoreServiceImpl.sendMsg("/classModule/throughComment",String.valueOf(commentApp.getUserId()),map);
+                if(null != flag && !"".equals(flag)){
+                    if("1".equals(flag)){
+                        //课程审核
+                        noticeAndScoreServiceImpl.sendMsg("/classModule/throughComment",String.valueOf(commentApp.getUserId()),map);
+                    }else{
+                        //机构审核
+                        noticeAndScoreServiceImpl.sendMsg("/comment/updateComment",String.valueOf(commentApp.getUserId()),map);
+                    }
+                }
+
             }
             return 200;
         }catch (Exception e){
