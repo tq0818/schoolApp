@@ -186,7 +186,7 @@
         </div>
         <div>
             <span>机构账号：</span>
-            <input type="text" id="userName" placeholder="请输入机构管理员账号" maxlength="30">
+            <input type="text" id="userName" placeholder="请输入机构管理员账号" maxlength="20">
             <span style="color: #ff0000;">初始密码为：111111</span>
         </div>
         <div>
@@ -247,7 +247,7 @@
     </div>
     <div class="countPopup sureCount cureatManageUser">
             <h5>创建账号</h5>
-            <p>机构账号：<input type="text" placeholder="请输入机构管理员账号" id="manageUser" maxlength="30"></p>
+            <p>机构账号：<input type="text" placeholder="请输入机构管理员账号" id="manageUser" maxlength="20"></p>
             <span>初始密码为：111111</span>
         <div class="countPopupBtn ">
             <a href="javascript:void(0)" class="btn btn-primary btn-mb closeCountPopup cabcelManageUser">取消</a>
