@@ -1,3 +1,6 @@
 .evaTitle{font-size: 1.8rem;display: inline-block;margin-right: 50px;cursor: pointer;}
 .heading >span.active{color: #ff9900;}
 .curriculum{display: none;}
+@media screen and (max-width: 1400px){
+    ul.comment_all .Y_backcomment_content{width: 70%;}
+}
