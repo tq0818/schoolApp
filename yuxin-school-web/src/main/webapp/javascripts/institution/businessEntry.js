@@ -3,8 +3,11 @@ $(function () {
     $selectSubMenu('organizationIndex');
     //备注详情弹窗
     $('body').on('click','.note',function () {
-        $('.remarksT').fadeIn();
-        $.commonPopup();
+    	if($(this).attr("title")){
+    		 $('.remarksT').fadeIn();
+    		 $('.remarksT').val($(this).attr("title"));
+    	     $.commonPopup();
+    	}
     });
     $('body').on('click','.commonPopup',function () {
         $('.remarksT').fadeOut();
