@@ -153,13 +153,25 @@ $(function () {
 
 //上传临时图片 1为风采 2为封面
 function savePic(saveFlag) {
+	//判断是否支持图片格式
+//    var fileStr = saveFlag == 1?$("#imgData").val():$("#imgDataStyle").val();
+//    if(picFormat(fileStr)){
+//    	saveFlag == 1?$("#target").attr("src",""):$("#targetStyle").attr("src","");
+//    	//移除剪切图插件对象
+//        if (jcrop_apis){
+//            jcrop_apis.destroy();
+//        }
+//        //清楚value
+//        saveFlag == 1?$("#imgData").val(""):$("#imgDataStyle").val("");
+//    	return ;
+//    }
     //选择的时候应先清空，
     if (saveFlag == 1){
         $("#target").attr("src","");
     }else {
         $("#targetStyle").attr("src","");
     }
-
+    
     // $(".jcrop-holder").attr("style","display:block");
     // $($($(".jcrop-holder").find("div")[0]).find("div")[0]).hide();
     $.ajaxFileUpload({
@@ -386,3 +398,17 @@ function dealWidthAndHeight(temp){
     }
 }
 
+
+//图片格式
+function picFormat(fileStr){
+	var fileStrLow = fileStr.toLowerCase();
+	if(!(fileStrLow.indexOf(".jpg")==(fileStrLow.length-4)
+          ||fileStrLow.indexOf(".jpeg")==(fileStrLow.length-5)
+          ||fileStrLow.indexOf(".png")==(fileStrLow.length-4)
+          ||fileStrLow.indexOf(".bmp")==(fileStrLow.length-4)
+          )){
+          alert("上传封面仅支持以下格式:.jpg,.jpeg,.png,.bmp");
+          return true;
+  }
+	return false;
+}
