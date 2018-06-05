@@ -573,14 +573,14 @@
 						<input type="hidden" id="userId">
 						<label class="col-md-3 control-label">输入新密码<i class="iconfont ico">&#xe605;</i></label>
 						<div class="col-md-3">
-							<input type="password" id="nPassword" name="nPassword" class="form-control" placeholder="">
+							<input type="password" id="nPassword" name="nPassword" class="form-control" placeholder="" maxlength="18" />
 							<span class="help-block" style="color:red;"></span>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label">重复输入新密码<i class="iconfont ico">&#xe605;</i></label>
 						<div class="col-md-3">
-							<input class="form-control" id="rPassword" name="rPassword" type="password" />
+							<input class="form-control" id="rPassword" name="rPassword" type="password" maxlength="18" />
 							<span class="tips" style="color:red;"></span>
 						</div>
 					</div>

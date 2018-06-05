@@ -68,8 +68,8 @@
     </select>
 
     <!--获取指定ids最小排序-->
-    <select id="queryMinSortByIds" resultType="Integer" parameterType="com.yuxin.wx.model.institution.InstitutionCategoryVo">
-       select min(sort) from institution_category where id in(${ids})
+    <select id="queryMinSortByIds" resultType="String" parameterType="com.yuxin.wx.model.institution.InstitutionCategoryVo">
+       select concat(min(sort),'_',min(sort3)) from institution_category where id in(${ids})
     </select>
 
     <!--根据条件查询分类-->
@@ -304,6 +304,22 @@
 
     </select>
 
+    <!-- 获取指定排名后的所有is_enabled = 1的分类  AND `sort` &lt; #{sort} -->
+    <select id="queryInstitutionCategorysAfterSort3" parameterType="Integer"  resultMap="queryCateSimple" >
+        SELECT
+        `id`,
+        `code_name`,
+        `code_level`,
+        `code_type`,
+        `parent_id`,
+        `first_recommend`,
+        `sort`,
+        `sort3`
+        FROM
+        `institution_category`
+        WHERE  `is_enable` = 1  AND third_recommend = 1  order by sort3 ASC
+
+    </select>
 
     <!-- 首页列表推荐 - 获取列表 -->
     <select id="getIndexRecommendList" parameterType="map" resultType="map">
@@ -471,6 +487,19 @@
         </foreach>
 
         ELSE sort
+
+        END
+    </update>
+
+    <!-- 批量更新首页分类推荐 -->
+    <update id="exchangeSort3IndexType" parameterType="java.util.List" >
+        UPDATE `institution_category` SET `sort3` = CASE `id`
+
+        <foreach collection="list" index="index" item="item"  separator=" " >
+            WHEN ${item.id} THEN ${item.sort}
+        </foreach>
+
+        ELSE sort3
 
         END
     </update>

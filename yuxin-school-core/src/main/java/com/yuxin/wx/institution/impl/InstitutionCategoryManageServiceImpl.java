@@ -10,6 +10,7 @@ import com.yuxin.wx.model.institution.CaseWhenVO;
 import com.yuxin.wx.model.institution.IndexRecommendVo;
 import com.yuxin.wx.model.institution.InstitutionCategoryVo;
 import com.yuxin.wx.model.institution.InstitutionInfoVo;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.ObjectFactory;
@@ -47,11 +48,16 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
     public void updateInstitutionCategoryInfo(InstitutionCategoryVo insCatInfo) {
         institutionManageMapper.update(insCatInfo);
         //获取禁用ids最小排序
-        Integer minSort = institutionManageMapper.queryMinSortByIds(insCatInfo);
-        //更新排序
-        this.flushSortAll(minSort);
+        String minSort = institutionManageMapper.queryMinSortByIds(insCatInfo);
+        if(StringUtils.isNotBlank(minSort)){
+            //更新排序 一类推荐排序
+            this.flushSortAll(Integer.parseInt(minSort.split("_")[0]));
+            //更新排序 二类推荐排序
+            this.flushSort3All(Integer.parseInt(minSort.split("_")[1]));
+        }
 
-        //如果是禁用删除掉相应分类下
+
+        //如果是禁用删除掉相应分类下已推荐机构
         try{
             if(null!=insCatInfo.getIsEnable() &&  0 == insCatInfo.getIsEnable()){
                 Map<String,Object>params = new HashMap<String,Object>();
@@ -341,6 +347,41 @@ public class InstitutionCategoryManageServiceImpl extends BaseServiceImpl implem
             }*/
 
             institutionManageMapper.exchangeSortIndexType(voList);
+
+            return (null == list ? 0 : list.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public int flushSort3All(Integer baseSort) {
+        try {
+            if(baseSort <= 0){
+                return -1;
+            }
+
+            //查询所有en_abled = 1的数据，全部更新
+            List<InstitutionCategoryVo> list = institutionManageMapper.queryInstitutionCategorysAfterSort3(baseSort);
+            List<CaseWhenVO> voList = new LinkedList<>();
+            CaseWhenVO whenVO = null;
+            int sort = 1;
+            for(InstitutionCategoryVo vo : list){
+                whenVO = new CaseWhenVO();
+                whenVO.setId(vo.getId());
+                whenVO.setSort(sort++);
+                voList.add(whenVO);
+            }
+           /* Map<String, Object> map = new HashMap<>();
+            int num = 0;
+            for (int i = 0; i < list.size(); i++) {
+                map.put("sort", baseSort + i);
+                map.put("id", list.get(i).getId());
+                institutionManageMapper.updateSort(map);
+                num++;
+            }*/
+
+            institutionManageMapper.exchangeSort3IndexType(voList);
 
             return (null == list ? 0 : list.size());
         } catch (Exception e) {

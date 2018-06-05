@@ -156,7 +156,7 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
      * @param insCatInfo
      * @return
      */
-    Integer queryMinSortByIds(InstitutionCategoryVo insCatInfo);
+    String queryMinSortByIds(InstitutionCategoryVo insCatInfo);
 
 
     List<InstitutionCategoryVo> queryInstitutionCategorysAfterSort(Integer sort);
@@ -251,4 +251,8 @@ public interface InstitutionCategoryManageMapper extends BaseMapper<InstitutionC
     void updateRecommendIns(Map<String, Object> map);
 
     List<String> queryOldCateIdsByInsId(Map<String, Object> params);
+
+    List<InstitutionCategoryVo> queryInstitutionCategorysAfterSort3(Integer baseSort);
+
+    void exchangeSort3IndexType(List<CaseWhenVO> voList);
 }
