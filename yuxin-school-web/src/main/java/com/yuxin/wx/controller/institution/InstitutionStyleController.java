@@ -413,7 +413,7 @@ public class InstitutionStyleController {
 
         String description = fileName;
         //TODO
-        String notify_url = this.propertiesUtil.getHostUrl() + "/video/ccNotify";
+        String notify_url = this.propertiesUtil.getHostUrl() + "/institutionStyle/ccNotify";
         String format = "json";
         long time = System.currentTimeMillis();
         String salt = config.getCcApiKey();
