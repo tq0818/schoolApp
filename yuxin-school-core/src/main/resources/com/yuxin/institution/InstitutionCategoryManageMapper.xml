@@ -128,6 +128,7 @@
         left join institution_category ic on ic.id = ir.one_level_id
         left JOIN institution_category ic1 on ic1.id = ir.two_level_id
         where ii.id=#{id}
+        ORDER BY ir.id asc
     </select>
 
     <!-- 推荐机构管理-首页分类推荐 - 列表  -->
