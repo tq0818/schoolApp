@@ -64,7 +64,7 @@ public class StudentCommentVo implements Serializable{
 	public void setCommtentTime(Date commtentTime) {
 		this.commtentTime = commtentTime;
 		//格式化时间
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		this.h5RetTime = formatter.format(commtentTime);
 	}
 	public Integer getCommentThumpCount() {
