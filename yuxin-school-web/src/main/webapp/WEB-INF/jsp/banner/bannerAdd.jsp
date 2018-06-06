@@ -177,8 +177,12 @@ a:link {
     color: #333;
     text-decoration: none;
 }
+#cke_22 ,#cke_23{
+	display:none;
+}
 
 </style>
+
 </head>
 <body style="position:relative;">
 <input type="hidden" id="bannerType" value="${bannerType }">

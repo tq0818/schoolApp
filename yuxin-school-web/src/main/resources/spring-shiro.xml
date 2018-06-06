@@ -34,6 +34,7 @@
 
     <property name="filterChainDefinitions">
         <value>
+        	/institutionStyle/ccNotify=anon
 			/call7moor/callback*=anon
             /check/validate/*=anon
         	/=user

@@ -178,6 +178,10 @@ padding-top: 40px;
          color: #333;
          text-decoration: none;
      }
+     
+     #cke_22 ,#cke_23{
+		display:none;
+	}
 
 </style>
 </head>
