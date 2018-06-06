@@ -422,9 +422,9 @@ function picFormat(fileStr){
 	if(!(fileStrLow.indexOf(".jpg")==(fileStrLow.length-4)
             ||fileStrLow.indexOf(".jpeg")==(fileStrLow.length-5)
             ||fileStrLow.indexOf(".png")==(fileStrLow.length-4)
-            ||fileStrLow.indexOf(".bmp")==(fileStrLow.length-4)
+            /*||fileStrLow.indexOf(".bmp")==(fileStrLow.length-4)*/
             )){
-            alert("上传封面仅支持以下格式:.jpg,.jpeg,.png,.bmp");
+            alert("上传封面仅支持以下格式:.jpg,.jpeg,.png");
             return true;
     }
 	return false;
