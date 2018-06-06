@@ -426,6 +426,7 @@
 			ON ict.`id` = ictr.`class_type_id`
 			AND ictr.`ins_id` = #{insId}
 			AND ict.`name` = #{name}
+			and ict.del_flag = 0
 		<if test="classId != null "> AND ict.`id` != #{classId} </if>
 
 
