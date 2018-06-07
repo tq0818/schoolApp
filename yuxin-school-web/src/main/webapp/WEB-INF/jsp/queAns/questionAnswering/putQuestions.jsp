@@ -32,6 +32,7 @@
 		#cke_36{display : none !important;}
 		#cke_14{display : none !important;}
 		.findQuestion span{margin-right:2px !important;}
+		#cke_71_uiElement{display : none !important;}
 	</style>	
 </head>
 
