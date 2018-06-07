@@ -141,7 +141,7 @@
     </div>
     <%--显示备注详细信息弹窗    --%>
 
-    <textarea  class="remarksT">
+    <textarea  class="remarksT" readonly>
 
     </textarea>
 
