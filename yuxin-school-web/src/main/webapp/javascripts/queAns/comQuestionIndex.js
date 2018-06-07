@@ -439,6 +439,9 @@ $(function(){
 				});
 			},
 			delQue : function(id,pageNo){
+				if(!pageNo){
+					pageNo = 1;
+				}
 				$.ajax({
 					url : rootPath + "/Question/del/"+id,
 					type : "post",
