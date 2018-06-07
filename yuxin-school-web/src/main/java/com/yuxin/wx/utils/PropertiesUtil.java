@@ -135,17 +135,6 @@ public class PropertiesUtil {
 	private  @Value("${server.imageupload.tempPath}")
 	String tempPath;
 
-	private  @Value("${mapKey}")
-	String mapKey;
-
-	public String getMapKey() {
-		return mapKey;
-	}
-
-	public void setMapKey(String mapKey) {
-		this.mapKey = mapKey;
-	}
-
 	public String getTempPath() {
 		return tempPath;
 	}
