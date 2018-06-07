@@ -773,7 +773,7 @@ function findInsDate(page) {
                 '</tr>';
             if(!jsonData||jsonData.data.length==0){
                 html+='<tr >'+
-                    '<td colspan="10">暂无数据</td>'+
+                    '<td colspan="11">暂无数据</td>'+
                     '</tr>'
             }else{
                 $.each(jsonData.data,function(i,item){
