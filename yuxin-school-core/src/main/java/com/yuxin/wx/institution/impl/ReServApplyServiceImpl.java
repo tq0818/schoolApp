@@ -46,7 +46,7 @@ public class ReServApplyServiceImpl extends BaseServiceImpl implements ReServApp
         }else{
             reServApply.setPage((reServApply.getPage()-1)*reServApply.getPageSize());
         }
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Integer count = 0;
         List<ReServApply> data = null;
         if(null != reServApply.getInsClassId() && !"".equals(reServApply.getInsClassId()+"")){

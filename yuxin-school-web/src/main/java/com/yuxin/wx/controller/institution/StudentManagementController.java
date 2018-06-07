@@ -1,6 +1,5 @@
 package com.yuxin.wx.controller.institution;
 
-import cn.jpush.api.report.UsersResult;
 import com.yuxin.wx.api.institution.InstitutionClassTypeService;
 import com.yuxin.wx.api.institution.InstitutionInfoService;
 import com.yuxin.wx.api.institution.ReServApplyService;
@@ -144,10 +143,11 @@ private InstitutionInfoService institutionInfoService;
                 }
             }
         }*/
-
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         List<Map<String, Object>> lists = new ArrayList<Map<String, Object>>();
         for (Map v : list) {
+            v.put("createTime",format.format(v.get("createTime")));
             lists.add(v);
         }
         String titles = "";

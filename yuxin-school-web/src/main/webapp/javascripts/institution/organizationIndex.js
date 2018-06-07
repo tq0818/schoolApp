@@ -402,10 +402,7 @@ $(function () {
     //分类筛选
     $('#findFistCategorys').change(function () {
         findSecondCategorys(2);
-        $("#pageI").val('');
-        $("#oneLevelIdI").val('');
-        $("#twoLevelIdI").val('');
-        findInsDate(1);
+
     });
     $('#findSecondCategorys').change(function () {
         $("#pageI").val('');
@@ -621,6 +618,7 @@ function findSecondCategorys() {
                 }
             }
             $("#findSecondCategorys").html("").html(html);
+            findInsDate(1);
         }
     });
 
@@ -681,7 +679,11 @@ function findInsDate(page) {
     var registStatus = $("#registStatus").val();
     var findFistCategorys = $("#findFistCategorys").val()?$("#findFistCategorys").val():$("#hasOneLevelId").val();
     var findSecondCategorys = $("#findSecondCategorys").val()?$("#findSecondCategorys").val():$("#hasTwoLevelId").val();
-    console.log("1:"+findFistCategorys,",2:"+findSecondCategorys)
+
+
+
+
+    console.log("1:"+$("#findSecondCategorys").val(),",2:"+$("#hasTwoLevelId").val())
     if(findFistCategorys == '' || findFistCategorys == null){
         findSecondCategorys == '';
     }
@@ -737,7 +739,7 @@ function findInsDate(page) {
             "city":eduSchool,
             "area":registStatus,
             "oneLevelId":findFistCategorys,
-            "twoLevelId":!findFistCategorys ? findFistCategorys : findSecondCategorys,
+            "twoLevelId":findSecondCategorys,
             "isCertified":isCertifiedVal,
             "isShelves":isShelvesVal,
             "endTime":endTime,
@@ -757,14 +759,15 @@ function findInsDate(page) {
 
 
             var html = '\'<tr data-buy="true">' +
-                '<th width="3%">序号</th>' +
-                '<th width="13%">机构名称</th>' +
+                '<th width="2%">序号</th>' +
+                '<th width="10%">机构名称</th>' +
                 '<th width="5%">省份</th>' +
                 '<th width="5%">市</th>' +
                 '<th width="5%">区</th>' +
                 '<th width="6%">一级分类</th>' +
-                '<th width="25%">二级分类</th>'+
-                '<th width="5%">上下架状态</th>'+
+                '<th width="24%">二级分类</th>'+
+                '<th width="6%">创建时间</th>'+
+                '<th width="6%">上下架状态</th>'+
                 '<th width="5%">认证状态</th>'+
                 '<th width="18%">操作</th>'+
                 '</tr>';
@@ -804,6 +807,7 @@ function findInsDate(page) {
                         '<td>'+item.area +'</td>'+
                         '<td>'+item.firstcodeName +'</td>'+
                         '<td>'+item.secondcodeName +'</td>'+
+                        '<td>'+item.createTimes +'</td>'+
                         '<td>'+isShelves+'</td>'+
                         '<td class="authenticationReal">'+isCertified+'</td>'+
                         '<td class="slink">'+
@@ -951,6 +955,13 @@ function addInsInfo() {
     var address = $("#address").val();
     var userName = $("#userName").val();
 
+
+    var provinceName = $("#eduArea2 option:selected").text();
+    var cityName = $("#eduSchool2 option:selected").text();
+    var areaName = $("#registStatus2 option:selected").text();
+
+    var addressName = provinceName+cityName+areaName+address;
+
     let firstCat='';
     let secondCat='';
 
@@ -1068,7 +1079,8 @@ function addInsInfo() {
                                         "mobile":mobile,
                                         "isChains":org,
                                         "oneLevelId":firstCat,
-                                        "twoLevelId":secondCat
+                                        "twoLevelId":secondCat,
+                                        "addressName":addressName
                                     },
                                     success:function(data){
                                         $('.addingMechanism').fadeOut();
@@ -1109,7 +1121,8 @@ function addInsInfo() {
                             "mobile":mobile,
                             "isChains":org,
                             "oneLevelId":firstCat,
-                            "twoLevelId":secondCat
+                            "twoLevelId":secondCat,
+                            "addressName":addressName
                         },
                         success:function(data){
                             $('.addingMechanism').hide();

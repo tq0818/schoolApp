@@ -58,6 +58,15 @@ public class InstitutionInfoVo extends BaseEntity {
     private String pwd;
     private Integer userId;
     private Integer currtUser;
+    private String createTimes;
+
+    public String getCreateTimes() {
+        return createTimes;
+    }
+
+    public void setCreateTimes(String createTimes) {
+        this.createTimes = createTimes;
+    }
 
     public Integer getCurrtUser() {
         return currtUser;

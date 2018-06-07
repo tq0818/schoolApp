@@ -21,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -202,9 +204,12 @@ public class InstitutionInfoServiceImpl extends BaseServiceImpl implements Insti
             }else{
                 insInfoVo.setPage((insInfoVo.getPage()-1)*insInfoVo.getPageSize());
             }
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
             List<InstitutionInfoVo> data = institutionInfoMapper.findInstitutionInfos(insInfoVo);
             for(int i = 0; i<data.size();i++){
                 data.get(i).setSort(i+1);
+                data.get(i).setCreateTimes(format.format(data.get(i).getCreateTime()));
             }
             Integer rowCount = institutionInfoMapper.findInstitutionInfosCount(insInfoVo);
             PageFinder<InstitutionInfoVo> pageFinder=new PageFinder<>(insInfoVo.getPage()/insInfoVo.getPageSize() ,insInfoVo.getPageSize(),rowCount,data);

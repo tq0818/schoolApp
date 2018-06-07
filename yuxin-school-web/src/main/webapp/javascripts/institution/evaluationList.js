@@ -400,7 +400,7 @@ function initInsClassComment(page=1,ins='',reviewStatus='',relationId='') {
                     }
                     html+='<li class="Y_clear">'+
                         '<div class="headpic">'+
-                        '<img src="'+(item.headPicMax ? item.headPicMax :  rootPath + "/images/teachers.png")+'" alt="" width="50" height="50">'+
+                        '<img src="'+(item.headPicMax ? item.headPicMax :  rootPath + "/images/user/head_top.png")+'" alt="" width="50" height="50">'+
                         '</div>'+
                         ' <div class="Y_backcomment_content">'+
                         '<div class="word Y_clear">'+

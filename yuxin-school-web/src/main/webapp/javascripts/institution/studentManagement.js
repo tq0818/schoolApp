@@ -1,3 +1,6 @@
+var pageCount2 = '';
+var pageNo2 = '';
+var dataSize2  = '';
 $(function () {
     //选中二级菜单
     $selectSubMenu('student');
@@ -211,6 +214,9 @@ function initReServApplyList(page) {
             $(".loading-bg").show();
         },
         success : function(jsonData) {
+            pageCount2 = jsonData.pageCount;
+            pageNo2 = jsonData.pageNo+1;
+            dataSize2 = jsonData.data.length;
             var html ='<tr data-buy="true">' +
                             '<th width="3%">序号</th>' +
                             '<th width="5%">手机号</th>' +
@@ -321,6 +327,22 @@ function updateReServApply(id,status) {
     }else{
         dealStatus = 0;
     }
+
+    //处理状态
+    var statu2 =2;
+    let status2 = $('#status').children('a');
+    for(let i=0;i<status2.length;i++){
+        if(status2.eq(i).hasClass('btn-primary')){
+            if(i==0){
+                statu2 = 2;
+            }else if(i==1){
+                statu2 = 1;
+            }else{
+                statu2 = 0;
+            }
+        }
+    }
+
     $.ajax({
         type:"POST",
         url : rootPath +"/InsStudent/updateReServApply",
@@ -331,6 +353,13 @@ function updateReServApply(id,status) {
         async: false,
         dataType:"json",
         success : function(data) {
+            if(statu2 != 2){
+                if(pageCount2 != 1){
+                    if(pageNo2 == pageCount2 && dataSize2 == 1){
+                        currtPage = currtPage -1;
+                    }
+                }
+            }
             initReServApplyList(currtPage);
         }
     });
