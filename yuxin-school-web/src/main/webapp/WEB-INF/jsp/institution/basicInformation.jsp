@@ -261,8 +261,8 @@
                             </c:forEach>
                         </div>
                     </div>
-                <c:if test="${userType != 'INSTITUTION_MANAGE'}">
-                    <div>
+
+                    <div <c:if test="${userType == 'INSTITUTION_MANAGE'}">style="display:none;" </c:if>>
                         <span>系统标签：</span>
                         <c:forEach var="label" items="${sysLabel}">
                              <span href="##" class="systemBtn">
@@ -276,7 +276,7 @@
                         </c:if>--%>
 
                     </div>
-                </c:if>
+
 
                 <div>
                     <span>自定义标签：</span>
