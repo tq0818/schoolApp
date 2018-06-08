@@ -40,7 +40,7 @@
         	<tr>
 	            <td>${status.index+ 1}</td>
 	            <td>${merchant.mobile}</td>
-	            <td>${merchant.insName}</td>
+	            <td><pre>${merchant.insName}</pre></td>
 	            <td><fmt:formatDate value="${merchant.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 	            <c:choose>
 	            	<c:when test="${merchant.dealStatus == 0}">
